@@ -1,0 +1,173 @@
+﻿// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:BaseRepository
+// Guid:90f7fb47-4210-4453-8208-34fddae801b4
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-05-08 下午 09:35:56
+// ----------------------------------------------------------------
+
+using SqlSugar;
+using SqlSugar.IOC;
+using System.Linq.Expressions;
+using ZhaiFanhuaBlog.IRepositories.Bases;
+using ZhaiFanhuaBlog.Models.Blogs;
+using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Sites;
+using ZhaiFanhuaBlog.Models.Users;
+
+namespace ZhaiFanhuaBlog.Repositories.Bases;
+
+/// <summary>
+/// 仓库基类
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
+public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
+{
+    public BaseRepository(ISqlSugarClient? context = null) : base(context)
+    {
+        base.Context = DbScoped.Sugar;
+        //// 创建数据库
+        //base.Context.DbMaintenance.CreateDatabase();
+        //// 创建表
+        //base.Context.CodeFirst.InitTables(
+        //    //Sites
+        //    typeof(SiteConfiguration),
+        //    typeof(SiteLog),
+        //    typeof(SiteSkin),
+
+        //    // Users
+        //    typeof(UserAuthority),
+        //    typeof(UserRole),
+        //    typeof(UserRoleAuthority),
+        //    typeof(UserAccount),
+        //    typeof(UserOauth),
+        //    typeof(UserLogin),
+        //    typeof(UserStatistic),
+        //    typeof(UserNotice),
+        //    typeof(UserFollow),
+        //    typeof(UserCollectCategory),
+        //    typeof(UserCollect),
+
+        //    // Roots
+        //    typeof(RootState),
+        //    typeof(RootAnnouncement),
+        //    typeof(RootAuditCategory),
+        //    typeof(RootAudit),
+        //    typeof(RootFriendlyLink),
+
+        //    // Blogs
+        //    typeof(BlogCategory),
+        //    typeof(BlogArticle),
+        //    typeof(BlogTag),
+        //    typeof(BlogArticleTag),
+        //    typeof(BlogComment),
+        //    typeof(BlogCommentPoll),
+        //    typeof(BlogPoll));
+    }
+
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateAsync(TEntity entity)
+    {
+        return await base.InsertAsync(entity);
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteAsync(Guid guid)
+    {
+        return await base.DeleteByIdAsync(guid);
+    }
+
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="guids"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteBatchAsync(Guid[] guids)
+    {
+        object[] newguids = guids.Select(x => x as dynamic).ToArray();
+        return await base.DeleteByIdsAsync(newguids);
+    }
+
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual new async Task<bool> UpdateAsync(TEntity entity)
+    {
+        return await base.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// Guid查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public virtual async Task<TEntity> FindAsync(Guid guid)
+    {
+        return await base.GetByIdAsync(guid);
+    }
+
+    /// <summary>
+    /// 自定义条件查找
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <returns></returns>
+    public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+    {
+        return await base.GetSingleAsync(func);
+    }
+
+    /// <summary>
+    /// 查询所有
+    /// </summary>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync()
+    {
+        return await base.GetListAsync();
+    }
+
+    /// <summary>
+    /// 自定义条件查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+    {
+        return await base.GetListAsync(func);
+    }
+
+    /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="pageIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
+    {
+        return await base.Context.Queryable<TEntity>().ToPageListAsync(pageIndex, pageSize, totalCount);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <param name="pageIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
+    {
+        return await base.Context.Queryable<TEntity>().Where(func).ToPageListAsync(pageIndex, pageSize, totalCount);
+    }
+}
