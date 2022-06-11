@@ -8,7 +8,7 @@ This is the back end of the ZhaiFanhuaBlog application, which is based on DotNet
 
 
 
-用到的技术或
+用到的技术、框架或工具：
 
 .NET6
 
