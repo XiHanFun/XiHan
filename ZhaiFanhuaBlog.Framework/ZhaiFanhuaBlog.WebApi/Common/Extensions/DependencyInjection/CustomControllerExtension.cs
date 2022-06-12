@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ControllerExtension
+// FileName:CustomControllerExtension
 // Guid:8e7e9059-8ee8-4afb-a9f7-3f608305ef55
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,9 +13,9 @@ using Newtonsoft.Json.Serialization;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// ControllerExtension
+/// CustomControllerExtension
 /// </summary>
-public static class ControllerExtension
+public static class CustomControllerExtension
 {
     /// <summary>
     /// Controllers扩展

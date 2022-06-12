@@ -14,6 +14,7 @@ using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.ViewModels.Response.Model;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -43,25 +44,22 @@ public class UserController : ControllerBase
     /// <param name="userAuthorityDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    /// //[TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
+    [TypeFilter(typeof(CustomAllActionResultFilterAttribute))]
     [HttpPost("Authorities")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<string> CreateAccountsAuthority([FromServices] IMapper iMapper, UserAuthorityDto userAuthorityDto)
+    public async Task<MessageModel> CreateAccountsAuthority([FromServices] IMapper iMapper, UserAuthorityDto userAuthorityDto)
     {
-        string result;
+        MessageModel messageModel = new MessageModel();
         try
         {
             if (string.IsNullOrEmpty(userAuthorityDto.Name)) throw new ArgumentNullException(userAuthorityDto.Name, "权限名称不能为空！");
             var userAuthority = iMapper.Map<UserAuthority>(userAuthorityDto);
-            MessageModel<UserAuthority> messageModel = new MessageModel<UserAuthority>();
             messageModel = await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority);
-            if (messageModel.Success) result = "成功";
-            else result = "失败";
         }
         catch (Exception)
         {
             throw;
         }
-        return result;
+        return messageModel;
     }
 }

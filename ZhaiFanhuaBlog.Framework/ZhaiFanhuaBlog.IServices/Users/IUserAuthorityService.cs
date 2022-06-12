@@ -15,5 +15,5 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserAuthorityService : IBaseService<UserAuthority>
 {
-    Task<MessageModel<UserAuthority>> CreateUserAuthorityAsync(UserAuthority userAuthority);
+    Task<MessageModel> CreateUserAuthorityAsync(UserAuthority userAuthority);
 }

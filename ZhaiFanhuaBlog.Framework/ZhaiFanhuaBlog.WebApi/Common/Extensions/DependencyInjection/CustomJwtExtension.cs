@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:JWTExtension
+// FileName:CustomJwtExtension
 // Guid:fcc7eece-77f0-4f6c-bc50-fbb21dc9d96f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@ using ZhaiFanhuaBlog.ViewModels.Response;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// JWTExtension
+/// CustomJwtExtension
 /// </summary>
-public static class JWTExtension
+public static class CustomJwtExtension
 {
     /// <summary>
     /// JWT扩展
@@ -56,7 +56,7 @@ public static class JWTExtension
                                  {
                                      // 跳过默认的处理逻辑，返回下面的模型数据
                                      context.HandleResponse();
-                                     return Task.FromResult(ResultMessage<object>.Unauthorized());
+                                     return Task.FromResult(ResponseResult.Unauthorized());
                                  }
                              };
                          });

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CorsExtension
+// FileName:CustomCorsExtension
 // Guid:031b8d2e-2f06-4b1c-af6d-7a4a0fde77ef
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -10,9 +10,9 @@
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// CorsExtension
+/// CustomCorsExtension
 /// </summary>
-public static class CorsExtension
+public static class CustomCorsExtension
 {
     /// <summary>
     /// Cors扩展

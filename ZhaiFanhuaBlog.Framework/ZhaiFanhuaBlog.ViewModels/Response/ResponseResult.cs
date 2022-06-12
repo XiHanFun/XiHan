@@ -16,16 +16,16 @@ namespace ZhaiFanhuaBlog.ViewModels.Response;
 /// <summary>
 /// 返回信息
 /// </summary>
-public class ResultMessage<TEntity>
+public class ResponseResult
 {
     /// <summary>
     /// 返回成功 200
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel<TEntity> OK(TEntity data)
+    public static MessageModel OK(object data)
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -43,9 +43,9 @@ public class ResultMessage<TEntity>
     /// <param name="pageSize"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static PageModel<TEntity> OK(int pageIndex, int totalCount, int dataCount, int pageSize, List<TEntity> data)
+    public static PageModel OK(int pageIndex, int totalCount, int dataCount, int pageSize, List<object> data)
     {
-        return new PageModel<TEntity>
+        return new PageModel
         {
             PageIndex = pageIndex,
             TotalCount = totalCount,
@@ -61,9 +61,9 @@ public class ResultMessage<TEntity>
     /// <param name="dataCount"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static TableModel<TEntity> OK(int dataCount, List<TEntity> data)
+    public static TableModel OK(int dataCount, List<object> data)
     {
-        return new TableModel<TEntity>
+        return new TableModel
         {
             Code = ResultCode.OK,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
@@ -76,13 +76,14 @@ public class ResultMessage<TEntity>
     /// 返回失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> BadRequest()
+    public static MessageModel BadRequest()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.BadRequest),
+            Data = null,
         };
     }
 
@@ -90,13 +91,14 @@ public class ResultMessage<TEntity>
     /// 返回失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> Unauthorized()
+    public static MessageModel Unauthorized()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.Unauthorized,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Unauthorized),
+            Data = null,
         };
     }
 
@@ -104,13 +106,14 @@ public class ResultMessage<TEntity>
     /// 返回失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> Forbidden()
+    public static MessageModel Forbidden()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.Forbidden,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Forbidden),
+            Data = null,
         };
     }
 
@@ -119,13 +122,14 @@ public class ResultMessage<TEntity>
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static MessageModel<TEntity> NotFound(string message)
+    public static MessageModel NotFound()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.NotFound,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotFound) + $",{message}",
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotFound),
+            Data = null,
         };
     }
 
@@ -134,13 +138,14 @@ public class ResultMessage<TEntity>
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static MessageModel<TEntity> InternalServerError(string message)
+    public static MessageModel InternalServerError()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.InternalServerError,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.InternalServerError) + $",{message}",
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.InternalServerError),
+            Data = null,
         };
     }
 
@@ -148,13 +153,14 @@ public class ResultMessage<TEntity>
     /// 返回失败，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> NotImplemented()
+    public static MessageModel NotImplemented()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.NotImplemented,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotImplemented),
+            Data = null,
         };
     }
 }

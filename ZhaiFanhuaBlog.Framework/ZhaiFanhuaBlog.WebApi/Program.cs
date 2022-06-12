@@ -25,13 +25,14 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        ConsoleHelper.WriteInfoLine("Log Start……");
-        var log = builder.Logging;
-        // log.AddLog4Net(@"Common/Config/log4net.config");
-        ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
+
         ConsoleHelper.WriteInfoLine("Configuration Start……");
         var config = builder.Configuration;
         ConsoleHelper.WriteSuccessLine("Configuration Started Successfully！");
+        ConsoleHelper.WriteInfoLine("Log Start……");
+        var log = builder.Logging;
+        log.AddCustomLog(config);
+        ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
         ConsoleHelper.WriteInfoLine("Services Start……");
 
         var services = builder.Services;

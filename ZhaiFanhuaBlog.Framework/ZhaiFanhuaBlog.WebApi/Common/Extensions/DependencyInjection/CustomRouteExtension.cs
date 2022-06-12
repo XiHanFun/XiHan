@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RouteExtension
+// FileName:CustomRouteExtension
 // Guid:110bb71a-7214-4344-8aea-ce3de16c4cae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -10,9 +10,9 @@
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// RouteExtension
+/// CustomRouteExtension
 /// </summary>
-public static class RouteExtension
+public static class CustomRouteExtension
 {
     /// <summary>
     /// Route扩展

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SqlSugarExtension
+// FileName:CustomSqlSugarExtension
 // Guid:49736281-4a15-48db-ba3e-b66124a931d4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,9 +12,9 @@ using SqlSugar.IOC;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// SqlSugarExtension
+/// CustomSqlSugarExtension
 /// </summary>
-public static class SqlSugarExtension
+public static class CustomSqlSugarExtension
 {
     /// <summary>
     /// SqlSugar扩展

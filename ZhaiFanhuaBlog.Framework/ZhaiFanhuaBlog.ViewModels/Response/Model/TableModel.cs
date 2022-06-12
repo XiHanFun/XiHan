@@ -14,7 +14,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 /// <summary>
 /// 表格数据(支持分页)
 /// </summary>
-public class TableModel<TEntity>
+public class TableModel
 {
     /// <summary>
     /// 返回编码
@@ -34,5 +34,5 @@ public class TableModel<TEntity>
     /// <summary>
     /// 返回数据
     /// </summary>
-    public List<TEntity>? Data { get; set; }
+    public List<object>? Data { get; set; }
 }

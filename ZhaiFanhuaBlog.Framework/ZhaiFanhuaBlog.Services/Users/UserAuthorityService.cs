@@ -29,14 +29,15 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         base._iBaseRepository = iUserAuthorityRepository;
     }
 
-    public async Task<MessageModel<UserAuthority>> CreateUserAuthorityAsync(UserAuthority userAuthority)
+    public async Task<MessageModel> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
-        MessageModel<UserAuthority> messageModel = new MessageModel<UserAuthority>();
+        MessageModel messageModel = new MessageModel();
         userAuthority.TypeKey = "UserAuthority";
         userAuthority.StateKey = 1;
         var result = await _IUserAuthorityRepository.CreateAsync(userAuthority);
         if (result)
         {
+            userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
             messageModel.Code = ResultCode.OK;
             messageModel.Success = true;
             messageModel.Message = "用户权限添加成功";

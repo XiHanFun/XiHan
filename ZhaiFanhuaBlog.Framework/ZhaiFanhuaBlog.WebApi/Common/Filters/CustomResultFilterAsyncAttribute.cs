@@ -7,7 +7,10 @@
 // CreateTime:2022-02-04 下午 07:34:46
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ZhaiFanhuaBlog.ViewModels.Response;
+using ZhaiFanhuaBlog.ViewModels.Response.Model;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -17,14 +20,24 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     /// <summary>
-    /// 构造函数
+    /// 在某结果执行时
     /// </summary>
     /// <param name="context"></param>
     /// <param name="next"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
+    public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        throw new NotImplementedException();
+        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
+        if (context.Result is MessageModel)
+        {
+            MessageModel messageModel = (MessageModel)context.Result;
+            if (messageModel.Success)
+            {
+                context.Result = (IActionResult)ResponseResult.OK(messageModel.Data!);
+            }
+        }
+        await next.Invoke();
+        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");
     }
 }

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CacheExtension
+// FileName:CustomCacheExtension
 // Guid:5c45f05d-b77a-4ffa-8975-77aff404eb20
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -10,9 +10,9 @@
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// CacheExtension
+/// CustomCacheExtension
 /// </summary>
-public static class CacheExtension
+public static class CustomCacheExtension
 {
     /// <summary>
     /// Cache扩展

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SwaggerExtension
+// FileName:CustomSwaggerExtension
 // Guid:3848533d-fd63-44ea-96a0-b7d9511eecd8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// SwaggerExtension
+/// CustomSwaggerExtension
 /// </summary>
-public static class SwaggerExtension
+public static class CustomSwaggerExtension
 {
     /// <summary>
     /// Swagger服务扩展

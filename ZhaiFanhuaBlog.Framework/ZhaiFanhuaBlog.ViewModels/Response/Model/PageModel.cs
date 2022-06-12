@@ -12,7 +12,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 /// <summary>
 /// 通用分页信息类
 /// </summary>
-public class PageModel<TEntity>
+public class PageModel
 {
     /// <summary>
     /// 当前页标
@@ -37,5 +37,5 @@ public class PageModel<TEntity>
     /// <summary>
     /// 返回数据
     /// </summary>
-    public List<TEntity>? Data { get; set; }
+    public List<object>? Data { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IOCExtension
+// FileName:CustomIocExtension
 // Guid:2340e05b-ffd7-4a19-84bc-c3f73517b696
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -27,9 +27,9 @@ using ZhaiFanhuaBlog.Services.Users;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// IOCExtension
+/// CustomIocExtension
 /// </summary>
-public static class IOCExtension
+public static class CustomIocExtension
 {
     /// <summary>
     /// Services扩展

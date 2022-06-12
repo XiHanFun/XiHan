@@ -22,13 +22,17 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
     // 内存缓存
     private readonly IMemoryCache _memoryCache;
 
+    private readonly IConfiguration _config;
+
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="memoryCache"></param>
-    public CustomResourceFilterAsyncAttribute(IMemoryCache memoryCache)
+    /// <param name="config"></param>
+    public CustomResourceFilterAsyncAttribute(IMemoryCache memoryCache, IConfiguration config)
     {
         _memoryCache = memoryCache;
+        _config = config;
     }
 
     /// <summary>

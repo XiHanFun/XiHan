@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AutoMapperExtension
+// FileName:CustomAutoMapperExtension
 // Guid:4960fc12-c08b-426e-abf1-efaf35db4d9f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,9 +13,9 @@ using ZhaiFanhuaBlog.ViewModels.Users;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// AutoMapperExtension
+/// CustomAutoMapperExtension
 /// </summary>
-public static class AutoMapperExtension
+public static class CustomAutoMapperExtension
 {
     /// <summary>
     /// AutoMapper扩展
