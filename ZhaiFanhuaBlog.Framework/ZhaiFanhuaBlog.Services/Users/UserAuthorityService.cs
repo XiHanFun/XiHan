@@ -11,8 +11,6 @@ using ZhaiFanhuaBlog.IRepositories.Users;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Bases;
-using ZhaiFanhuaBlog.ViewModels.Response.Enum;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
 
 namespace ZhaiFanhuaBlog.Services.Users;
 
@@ -29,27 +27,12 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         base._iBaseRepository = iUserAuthorityRepository;
     }
 
-    public async Task<MessageModel> CreateUserAuthorityAsync(UserAuthority userAuthority)
+    public async Task<UserAuthority> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
-        MessageModel messageModel = new MessageModel();
         userAuthority.TypeKey = "UserAuthority";
         userAuthority.StateKey = 1;
         var result = await _IUserAuthorityRepository.CreateAsync(userAuthority);
-        if (result)
-        {
-            userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
-            messageModel.Code = ResultCode.OK;
-            messageModel.Success = true;
-            messageModel.Message = "用户权限添加成功";
-            messageModel.Data = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
-        }
-        else
-        {
-            messageModel.Code = ResultCode.InternalServerError;
-            messageModel.Success = false;
-            messageModel.Message = "用户权限添加失败";
-            messageModel.Data = null;
-        }
-        return messageModel;
+        if (result) userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
+        return userAuthority;
     }
 }

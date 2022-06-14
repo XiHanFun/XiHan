@@ -29,13 +29,9 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
-        if (context.Result is MessageModel)
+        if (context.Result != null)
         {
-            MessageModel messageModel = (MessageModel)context.Result;
-            if (messageModel.Success)
-            {
-                context.Result = (IActionResult)ResponseResult.OK(messageModel.Data!);
-            }
+            context.Result = (IActionResult)ResponseResult.OK((JsonResult)context.Result);
         }
         await next.Invoke();
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");
