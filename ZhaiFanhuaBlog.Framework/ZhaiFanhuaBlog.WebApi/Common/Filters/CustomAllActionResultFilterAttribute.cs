@@ -120,12 +120,12 @@ public class CustomAllActionResultFilterAttribute : ActionFilterAttribute
     public override void OnResultExecuting(ResultExecutingContext context)
     {
         Console.WriteLine("CustomResultFilterAttribute.OnResultExecuting");
-        if (context.Result is MessageModel)
+        if (context.Result is MessageModel<object>)
         {
-            MessageModel messageModel = (MessageModel)context.Result;
+            MessageModel<object> messageModel = (MessageModel<object>)context.Result;
             if (messageModel.Success)
             {
-                context.Result = (IActionResult)ResponseResult.OK(messageModel.Data!);
+                context.Result = (IActionResult)ResponseResult<object>.OK(messageModel.Data!);
             }
         }
     }
@@ -149,13 +149,9 @@ public class CustomAllActionResultFilterAttribute : ActionFilterAttribute
     public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
-        if (context.Result is MessageModel)
+        if (context.Result != null)
         {
-            MessageModel messageModel = (MessageModel)context.Result;
-            if (messageModel.Success)
-            {
-                context.Result = (IActionResult)ResponseResult.OK(messageModel.Data!);
-            }
+            context.Result = (IActionResult)ResponseResult<object>.OK(context.Result);
         }
         await next.Invoke();
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");

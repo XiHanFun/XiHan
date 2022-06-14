@@ -27,13 +27,9 @@ public class CustomResultFilterAttribute : Attribute, IResultFilter
     public void OnResultExecuting(ResultExecutingContext context)
     {
         Console.WriteLine("CustomResultFilterAttribute.OnResultExecuting");
-        if (context.Result is MessageModel)
+        if (context.Result != null)
         {
-            MessageModel messageModel = (MessageModel)context.Result;
-            if (messageModel.Success)
-            {
-                context.Result = (IActionResult)ResponseResult.OK(messageModel.Data!);
-            }
+            context.Result = (IActionResult)ResponseResult<object>.OK(context.Result);
         }
     }
 
