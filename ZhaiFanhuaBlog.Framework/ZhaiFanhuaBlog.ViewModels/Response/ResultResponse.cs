@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ResultMessage
+// FileName:ResultResponse
 // Guid:3874a6ae-1ebc-49ab-b4a3-55e76dc68945
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,43 +16,66 @@ namespace ZhaiFanhuaBlog.ViewModels.Response;
 /// <summary>
 /// 返回信息
 /// </summary>
-public class ResponseResult<TEntity>
+public class ResultResponse
 {
     /// <summary>
     /// 返回成功 200
     /// </summary>
-    /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel<TEntity> OK(TEntity data)
+    public static MessageModel Continue()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = true,
-            Code = ResultCode.OK,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
-            Data = data,
+            Code = ResultCode.Continue,
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Continue),
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
     /// <summary>
     /// 返回成功 200
     /// </summary>
-    /// <param name="pageIndex"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="dataCount"></param>
-    /// <param name="pageSize"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static PageModel<TEntity> OK(int pageIndex, int totalCount, int dataCount, int pageSize, List<TEntity> data)
+    public static MessageModel OK(dynamic data)
     {
-        return new PageModel<TEntity>
+        return new MessageModel
         {
             Success = true,
-            PageIndex = pageIndex,
-            TotalCount = totalCount,
-            DataCount = dataCount,
-            PageSize = pageSize,
+            Code = ResultCode.OK,
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
             Data = data,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+    }
+
+    /// <summary>
+    /// 返回成功 200
+    /// </summary>
+    /// <param name="pageIndex">当前页标</param>
+    /// <param name="pageSize">每页大小</param>
+    /// <param name="totalCount">总页数</param>
+    /// <param name="dataCount">数据总数</param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static MessageModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
+    {
+        return new MessageModel
+        {
+            Success = true,
+            Code = ResultCode.OK,
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
+            Data = new PageModel
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                DataCount = dataCount,
+                Data = data
+            },
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -62,15 +85,19 @@ public class ResponseResult<TEntity>
     /// <param name="dataCount"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static TableModel<TEntity> OK(int dataCount, List<TEntity> data)
+    public static MessageModel OK(int dataCount, List<dynamic> data)
     {
-        return new TableModel<TEntity>
+        return new MessageModel
         {
             Success = true,
             Code = ResultCode.OK,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
-            DataCount = dataCount,
-            Data = data,
+            Data = new TableModel
+            {
+                DataCount = dataCount,
+                Data = data
+            },
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -78,14 +105,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> BadRequest()
+    public static MessageModel BadRequest(string message)
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.BadRequest),
-            Data = default,
+            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.BadRequest) + message,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -93,14 +121,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> Unauthorized()
+    public static MessageModel Unauthorized()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.Unauthorized,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Unauthorized),
-            Data = default,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -108,14 +137,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> Forbidden()
+    public static MessageModel Forbidden()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.Forbidden,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Forbidden),
-            Data = default,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -123,14 +153,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> NotFound()
+    public static MessageModel NotFound()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.NotFound,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotFound),
-            Data = default,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -138,14 +169,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> InternalServerError()
+    public static MessageModel InternalServerError()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.InternalServerError,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.InternalServerError),
-            Data = default,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -153,14 +185,15 @@ public class ResponseResult<TEntity>
     /// 返回失败，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static MessageModel<TEntity> NotImplemented()
+    public static MessageModel NotImplemented()
     {
-        return new MessageModel<TEntity>
+        return new MessageModel
         {
             Success = false,
             Code = ResultCode.NotImplemented,
             Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotImplemented),
-            Data = default,
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 }

@@ -56,7 +56,7 @@ public static class CustomJwtExtension
                                  {
                                      // 跳过默认的处理逻辑，返回下面的模型数据
                                      context.HandleResponse();
-                                     return Task.FromResult(ResponseResult.Unauthorized());
+                                     return Task.FromResult(ResultResponse.Unauthorized());
                                  }
                              };
                          });

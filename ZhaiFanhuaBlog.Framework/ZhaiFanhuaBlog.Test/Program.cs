@@ -19,9 +19,9 @@ public class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Hello ZhaiFanhuaBlog.Test!");
-        UtilsTest commonTest = new();
+        // UtilsTest commonTest = new();
 
-        // AnyTest anyTest = new AnyTest();
+        AnyTest anyTest = new AnyTest();
         _ = Console.ReadKey();
     }
 }

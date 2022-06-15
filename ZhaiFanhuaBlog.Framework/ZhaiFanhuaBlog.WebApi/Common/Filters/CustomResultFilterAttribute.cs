@@ -29,7 +29,7 @@ public class CustomResultFilterAttribute : Attribute, IResultFilter
         Console.WriteLine("CustomResultFilterAttribute.OnResultExecuting");
         if (context.Result != null)
         {
-            context.Result = (IActionResult)ResponseResult<object>.OK(context.Result);
+            context.Result = (IActionResult)ResultResponse.OK(context.Result);
         }
     }
 
