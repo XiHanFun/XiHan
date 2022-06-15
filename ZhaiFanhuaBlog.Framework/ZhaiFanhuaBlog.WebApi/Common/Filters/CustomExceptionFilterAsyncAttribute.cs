@@ -52,6 +52,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters
             }
             // 标记异常已经处理过了
             context.ExceptionHandled = true;
+            await Task.CompletedTask;
             Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync After");
         }
 
