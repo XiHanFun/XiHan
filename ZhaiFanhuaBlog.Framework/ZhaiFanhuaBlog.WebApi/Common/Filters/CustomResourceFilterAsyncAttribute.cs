@@ -56,7 +56,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         if (_memoryCache.TryGetValue(url, out object value))
         {
             // 请求构造函数和方法
-            context.Result = value as ActionResult;
+            context.Result = value as JsonResult;
         }
         else
         {
@@ -64,7 +64,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
             _ = await next.Invoke();
             // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
             _memoryCache.Set(url, context.Result, TimeSpan.FromDays(1));
-            Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync After");
         }
+        Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync After");
     }
 }

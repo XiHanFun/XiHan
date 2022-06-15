@@ -16,6 +16,7 @@ using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Response.Model;
+using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers;
 
@@ -27,19 +28,18 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers;
 [Produces("application/json")]
 public class AuthorizeController : ControllerBase
 {
-    private readonly IConfiguration _IConfiguration;
-    private readonly IUserAccountService _IUserAccountService;
+    private readonly IConfiguration _configuration;
+    private readonly IUserAccountService _userAccountService;
 
     /// <summary>
-    /// 构造函数注入32000001
-47/    /// </summary>
-
+    /// 构造函数注入
+    /// </summary>
     /// <param name="configuration"></param>
     /// <param name="userAccountService"></param>
     public AuthorizeController(IConfiguration configuration, IUserAccountService userAccountService)
     {
-        _IConfiguration = configuration;
-        _IUserAccountService = userAccountService;
+        _configuration = configuration;
+        _userAccountService = userAccountService;
     }
 
     /// <summary>
@@ -48,8 +48,8 @@ public class AuthorizeController : ControllerBase
     /// <param name="accountName"></param>
     /// <param name="accountPassword"></param>
     /// <returns></returns>
-    [HttpPost("Get/Token/{AccountName}/{AccountPassword}")]
-    public async Task<MessageModel> GetTokenByAccountName(string accountName, string accountPassword)
+    [HttpPost("Get/Token/{accountName}")]
+    public async Task<string> GetTokenByAccountName(string accountName, string accountPassword)
     {
         try
         {
@@ -58,7 +58,7 @@ public class AuthorizeController : ControllerBase
             if (accountName.Length > 10 || accountPassword.Length > 64)
                 throw new Exception("账号或密码长度不匹配!");
             // 获取用户
-            var account = await _IUserAccountService.FindAsync(u => u.Name == accountName);
+            var account = await _userAccountService.FindAsync(u => u.Name == accountName);
             if (account == null)
                 throw new Exception("账号不存在，请先注册账号!");
             if (account.Password != MD5Helper.EncryptMD5(Encoding.UTF8, accountPassword))
@@ -68,21 +68,21 @@ public class AuthorizeController : ControllerBase
                 new Claim(ClaimTypes.Name, account.Name??""),
                // new Claim(ClaimTypes.Role, account.Role)
             };
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration["Auth:JWT:IssuerSigningKey"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Auth:JWT:IssuerSigningKey"]));
             var token = new JwtSecurityToken(
-                issuer: _IConfiguration["Auth:JWT:SiteDomain"],
-                audience: _IConfiguration["Auth:JWT:SiteDomain"],
+                issuer: _configuration["Auth:JWT:SiteDomain"],
+                audience: _configuration["Auth:JWT:SiteDomain"],
                 claims: AccountClaims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
+                expires: DateTime.Now.AddMinutes(_configuration.GetValue<int>("Auth:JWT:Expires")),
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             );
             var result = new JwtSecurityTokenHandler().WriteToken(token);
-            return ResultResponse.OK(result);
+            return result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 }

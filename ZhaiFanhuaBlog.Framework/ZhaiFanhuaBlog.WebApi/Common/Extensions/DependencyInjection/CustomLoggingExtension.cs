@@ -26,7 +26,7 @@ public static class CustomLoggingExtension
     /// <exception cref="NotImplementedException"></exception>
     public static ILoggingBuilder AddCustomLog(this ILoggingBuilder builder, IConfiguration config)
     {
-        string logType = config.GetSection("Logging:Type").Get<string>();
+        string logType = config.GetValue<string>("Logging:Type");
         builder = logType switch
         {
             "Log4Net" => builder.AddLog4Net(@"Common/Config/Log4Net.config"),

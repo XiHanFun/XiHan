@@ -53,7 +53,18 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         var controller = context.Controller.ToString();
         // 请求方法
         var action = context.ActionDescriptor.DisplayName;
-        _logger.LogInformation($"请求路径为【{url}】，请求方式为【{method}】，执行了【{controller}】控制器的【{action}】方法，请求参数为【{para}】");
+        var ip = string.Empty;
+        if (context.HttpContext.Request.Headers.ContainsKey("X-Real-IP"))
+        {
+            ip = context.HttpContext.Request.Headers["X-Real-IP"].ToString();
+        }
+        if (context.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For"))
+        {
+            ip = context.HttpContext.Request.Headers["X-Forwarded-For"].ToString();
+        }
+
+        string message = $"请求路径为【{url}】，请求方式为【{method}】，执行了【{controller}】控制器的【{action}】方法，请求参数为【{para}】,客人端IP地址为【{ip}】";
+        _logger.LogInformation(message);
         // 请求构造函数和方法
         ActionExecutedContext actionExecuted = await next.Invoke();
         // 执行结果

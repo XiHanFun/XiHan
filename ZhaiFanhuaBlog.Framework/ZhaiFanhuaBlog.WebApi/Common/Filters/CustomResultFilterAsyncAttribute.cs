@@ -10,7 +10,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ZhaiFanhuaBlog.ViewModels.Response;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -31,7 +30,7 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
         if (context.Result != null)
         {
-            context.Result = (IActionResult)ResultResponse.OK((JsonResult)context.Result);
+            context.Result = new JsonResult(ResultResponse.OK(context.Result));
         }
         await next.Invoke();
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");

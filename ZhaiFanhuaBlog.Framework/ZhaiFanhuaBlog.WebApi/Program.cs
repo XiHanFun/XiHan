@@ -56,11 +56,19 @@ public class Program
         ConsoleHelper.WriteInfoLine("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            // 只要状态码不是200，都能进入错误页面
+            app.UseStatusCodePagesWithReExecute("/Error");
+            app.UseExceptionHandler(error =>
+            {
+                error.Run(async context =>
+                {
+                    context.Response.StatusCode = 200;
+                    context.Response.ContentType = "text/html";
+                    await context.Response.WriteAsJsonAsync("ERROR");
+                });
+            });
             app.UseHsts();
         }
         // Swagger

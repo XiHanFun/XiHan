@@ -27,7 +27,7 @@ public static class CustomCorsExtension
             // 默认策略
             options.AddDefaultPolicy(builder =>
             {
-                string[] origins = config.GetSection("Cors:Origins").Get<string[]>();
+                string[] origins = config.GetValue<string[]>("Cors:Origins");
                 // 配置允许访问的域名
                 builder.WithOrigins(origins)
                 // 允许任何方法

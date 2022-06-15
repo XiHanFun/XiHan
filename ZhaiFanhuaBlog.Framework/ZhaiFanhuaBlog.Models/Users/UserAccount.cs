@@ -79,8 +79,8 @@ public class UserAccount : BaseEntity
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
-    /// 注册Ip地址
+    /// 上次登录Ip地址
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)")]
-    public IPAddress? RegisterIp { get; set; }
+    public IPAddress? LastLoginIp { get; set; }
 }

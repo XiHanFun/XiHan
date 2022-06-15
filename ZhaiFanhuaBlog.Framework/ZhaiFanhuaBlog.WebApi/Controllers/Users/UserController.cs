@@ -43,7 +43,6 @@ public class UserController : ControllerBase
     /// <param name="userAuthorityDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    [TypeFilter(typeof(CustomAllActionResultFilterAttribute))]
     [HttpPost("Authorities")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
     public async Task<UserAuthorityDto> CreateAccountsAuthority([FromServices] IMapper iMapper, [FromBody] UserAuthorityDto userAuthorityDto)

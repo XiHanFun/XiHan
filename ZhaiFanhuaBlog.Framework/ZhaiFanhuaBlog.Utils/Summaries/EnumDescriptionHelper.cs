@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:EnumSummaryHelper
+// FileName:EnumDescriptionHelper
 // Guid:23f4fdd1-650e-49f7-bdc6-7ba00110a2ac
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,16 +13,16 @@ using System.Reflection;
 namespace ZhaiFanhuaBlog.Utils.Summaries;
 
 /// <summary>
-/// 枚举注释帮助类
+/// 枚举描述帮助类
 /// </summary>
-public static class EnumSummaryHelper
+public static class EnumDescriptionHelper
 {
     /// <summary>
     /// 获取枚举的中文描述
     /// </summary>
     /// <param name="enumObj"></param>
     /// <returns></returns>
-    public static string GetEnumSummary(Enum enumObj)
+    public static string GetEnumDescription(Enum enumObj)
     {
         try
         {
