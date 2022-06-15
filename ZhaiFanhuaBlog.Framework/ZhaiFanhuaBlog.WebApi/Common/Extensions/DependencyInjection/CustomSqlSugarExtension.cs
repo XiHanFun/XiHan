@@ -24,42 +24,43 @@ public static class CustomSqlSugarExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomSqlSugar(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSqlSugar(config["Database:Type"] switch
+        string databaseType = config.GetValue<string>("Database:Type");
+        services.AddSqlSugar(databaseType switch
         {
             "MySql" => new IocConfig()
             {
                 DbType = IocDbType.MySql,
-                ConnectionString = config["Database:ConnectionString:MySql"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:MySql"),
                 IsAutoCloseConnection = true
             },
             "SqlServer" => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = config["Database:ConnectionString:SqlServer"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:SqlServer"),
                 IsAutoCloseConnection = true
             },
             "Sqlite" => new IocConfig()
             {
                 DbType = IocDbType.Sqlite,
-                ConnectionString = config["Database:ConnectionString:Sqlite"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:Sqlite"),
                 IsAutoCloseConnection = true
             },
             "Oracle" => new IocConfig()
             {
                 DbType = IocDbType.Oracle,
-                ConnectionString = config["Database:ConnectionString:Oracle"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:Oracle"),
                 IsAutoCloseConnection = true
             },
             "PostgreSQL" => new IocConfig()
             {
                 DbType = IocDbType.PostgreSQL,
-                ConnectionString = config["Database:ConnectionString:PostgreSQL"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:PostgreSQL"),
                 IsAutoCloseConnection = true
             },
             _ => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = config["Database:ConnectionString:SqlServer"],
+                ConnectionString = config.GetValue<string>("Database:ConnectionString:SqlServer"),
                 IsAutoCloseConnection = true
             }
         });
