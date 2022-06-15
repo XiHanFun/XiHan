@@ -7,6 +7,8 @@
 // CreateTime:2022-05-08 下午 11:41:35
 // ----------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace ZhaiFanhuaBlog.ViewModels.Response.Enum;
 
 /// <summary>
@@ -14,43 +16,27 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Enum;
 /// </summary>
 public enum ResultCode
 {
-    /// <summary>
-    /// 继续操作
-    /// </summary>
+    [Description("继续操作")]
     Continue = 100,
 
-    /// <summary>
-    /// 访问成功
-    /// </summary>
+    [Description("访问成功")]
     OK = 200,
 
-    /// <summary>
-    /// 访问出错
-    /// </summary>
+    [Description("访问出错")]
     BadRequest = 400,
 
-    /// <summary>
-    /// 访问未授权
-    /// </summary>
+    [Description("访问未授权")]
     Unauthorized = 401,
 
-    /// <summary>
-    /// 内容禁止访问
-    /// </summary>
+    [Description("内容禁止访问")]
     Forbidden = 403,
 
-    /// <summary>
-    /// 数据未找到
-    /// </summary>
+    [Description("数据未找到")]
     NotFound = 404,
 
-    /// <summary>
-    /// 服务器内部错误
-    /// </summary>
+    [Description("服务器内部错误")]
     InternalServerError = 500,
 
-    /// <summary>
-    /// 功能未实施
-    /// </summary>
+    [Description("功能未实施")]
     NotImplemented = 501,
 }

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ResultMessage
+// FileName:ResultResponse
 // Guid:3874a6ae-1ebc-49ab-b4a3-55e76dc68945
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,59 +16,88 @@ namespace ZhaiFanhuaBlog.ViewModels.Response;
 /// <summary>
 /// 返回信息
 /// </summary>
-public class ResponseResult
+public class ResultResponse
 {
+    /// <summary>
+    /// 返回成功 200
+    /// </summary>
+    /// <returns></returns>
+    public static MessageModel Continue()
+    {
+        return new MessageModel
+        {
+            Success = true,
+            Code = ResultCode.Continue,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Continue),
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+    }
+
     /// <summary>
     /// 返回成功 200
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel OK(object data)
+    public static MessageModel OK(dynamic data)
     {
         return new MessageModel
         {
             Success = true,
             Code = ResultCode.OK,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
             Data = data,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
     /// <summary>
     /// 返回成功 200
     /// </summary>
-    /// <param name="pageIndex"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="dataCount"></param>
-    /// <param name="pageSize"></param>
+    /// <param name="pageIndex">当前页标</param>
+    /// <param name="pageSize">每页大小</param>
+    /// <param name="totalCount">总页数</param>
+    /// <param name="dataCount">数据总数</param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static PageModel OK(int pageIndex, int totalCount, int dataCount, int pageSize, List<object> data)
+    public static MessageModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
     {
-        return new PageModel
+        return new MessageModel
         {
-            PageIndex = pageIndex,
-            TotalCount = totalCount,
-            DataCount = dataCount,
-            PageSize = pageSize,
-            Data = data,
-        };
-    }
-
-    /// <summary>
-    /// 返回成功 200
-    /// </summary>
-    /// <param name="dataCount"></param>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    public static TableModel OK(int dataCount, List<object> data)
-    {
-        return new TableModel
-        {
+            Success = true,
             Code = ResultCode.OK,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.OK),
-            DataCount = dataCount,
-            Data = data,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
+            Data = new PageModel
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                DataCount = dataCount,
+                Data = data
+            },
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+    }
+
+    /// <summary>
+    /// 返回成功 200
+    /// </summary>
+    /// <param name="dataCount"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static MessageModel OK(int dataCount, List<dynamic> data)
+    {
+        return new MessageModel
+        {
+            Success = true,
+            Code = ResultCode.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
+            Data = new TableModel
+            {
+                DataCount = dataCount,
+                Data = data
+            },
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -76,14 +105,15 @@ public class ResponseResult
     /// 返回失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static MessageModel BadRequest()
+    public static MessageModel BadRequest(string message)
     {
         return new MessageModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.BadRequest),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.BadRequest) + "," + message,
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -97,8 +127,9 @@ public class ResponseResult
         {
             Success = false,
             Code = ResultCode.Unauthorized,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Unauthorized),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Unauthorized),
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -112,15 +143,15 @@ public class ResponseResult
         {
             Success = false,
             Code = ResultCode.Forbidden,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.Forbidden),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Forbidden),
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
     /// <summary>
     /// 返回失败，数据未找到 404
     /// </summary>
-    /// <param name="message"></param>
     /// <returns></returns>
     public static MessageModel NotFound()
     {
@@ -128,15 +159,15 @@ public class ResponseResult
         {
             Success = false,
             Code = ResultCode.NotFound,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotFound),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotFound),
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
     /// <summary>
     /// 返回失败，服务器内部错误 500
     /// </summary>
-    /// <param name="message"></param>
     /// <returns></returns>
     public static MessageModel InternalServerError()
     {
@@ -144,8 +175,9 @@ public class ResponseResult
         {
             Success = false,
             Code = ResultCode.InternalServerError,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.InternalServerError),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.InternalServerError),
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -159,8 +191,9 @@ public class ResponseResult
         {
             Success = false,
             Code = ResultCode.NotImplemented,
-            Message = EnumSummaryHelper.GetEnumSummary(ResultCode.NotImplemented),
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotImplemented),
             Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 }

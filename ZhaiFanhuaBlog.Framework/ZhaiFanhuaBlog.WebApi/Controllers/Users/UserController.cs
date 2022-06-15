@@ -11,7 +11,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -44,22 +43,21 @@ public class UserController : ControllerBase
     /// <param name="userAuthorityDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    [TypeFilter(typeof(CustomAllActionResultFilterAttribute))]
     [HttpPost("Authorities")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<MessageModel> CreateAccountsAuthority([FromServices] IMapper iMapper, UserAuthorityDto userAuthorityDto)
+    public async Task<UserAuthorityDto> CreateAccountsAuthority([FromServices] IMapper iMapper, [FromBody] UserAuthorityDto userAuthorityDto)
     {
-        MessageModel messageModel = new MessageModel();
         try
         {
             if (string.IsNullOrEmpty(userAuthorityDto.Name)) throw new ArgumentNullException(userAuthorityDto.Name, "权限名称不能为空！");
             var userAuthority = iMapper.Map<UserAuthority>(userAuthorityDto);
-            messageModel = await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority);
+            userAuthority = await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority);
+            if (userAuthority != null) userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);
         }
         catch (Exception)
         {
             throw;
         }
-        return messageModel;
+        return userAuthorityDto;
     }
 }

@@ -7,6 +7,9 @@
 // CreateTime:2022-05-28 下午 11:29:28
 // ----------------------------------------------------------------
 
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
@@ -22,31 +25,34 @@ public static class CustomCacheExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomCache(this IServiceCollection services, IConfiguration config)
     {
-        if (config.GetValue<bool>("Cache:MemoryCache:IsEnabled"))
+        if (config.GetValue<bool>("Cache:IsEnabled"))
         {
-            switch (config["Cache:Type"])
+            if (config.GetValue<bool>("Cache:MemoryCache:IsEnabled"))
             {
-                // 内存缓存
-                case "MemoryCache":
-                    services.AddMemoryCache();
-                    break;
-                // 分布式缓存
-                case "DistributedCache":
-                    //services.AddDistributedMemoryCache(options =>
-                    //{
-                    //    // CSRedisClient实例化的对象注册成全局单例
-                    //    var redis = new CSRedis.CSRedisClient(config["Cache:ConnectionString:Redis"]);
-                    //    services.AddSingleton(redis);
-                    //});
-                    break;
-                // 响应缓存
-                case "ResponseCache":
-                    services.AddResponseCaching();
-                    break;
-                // 默认使用内存缓存
-                default:
-                    services.AddMemoryCache();
-                    break;
+                services.AddMemoryCache();
+            }
+            if (config.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
+            {
+                //// CSRedis
+                //services.AddDistributedMemoryCache(options =>
+                //{
+                //    // CSRedisClient实例化的对象注册成全局单例
+                //    var redis = new CSRedis.CSRedisClient(config["Cache:ConnectionString:Redis"]);
+                //    services.AddSingleton(redis);
+                //});
+                // StackExchangeRedis
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = config.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
+                    options.InstanceName = "SampleInstance";
+                });
+                services.AddOptions();
+                // services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
+                services.AddSingleton<IDistributedCache, RedisCache>();
+            }
+            if (config.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
+            {
+                services.AddResponseCaching();
             }
         }
         return services;

@@ -17,14 +17,14 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 public class MessageModel
 {
     /// <summary>
-    /// 状态码
-    /// </summary>
-    public ResultCode Code { get; set; }
-
-    /// <summary>
     /// 是否成功
     /// </summary>
     public bool Success { get; set; }
+
+    /// <summary>
+    /// 状态码
+    /// </summary>
+    public ResultCode Code { get; set; }
 
     /// <summary>
     /// 返回信息
@@ -32,7 +32,12 @@ public class MessageModel
     public string? Message { get; set; }
 
     /// <summary>
-    /// 返回数据集合
+    /// 数据集合
     /// </summary>
-    public object? Data { get; set; }
+    public dynamic? Data { get; set; }
+
+    /// <summary>
+    /// 时间戳
+    /// </summary>
+    public long Timestamp { get; set; }
 }

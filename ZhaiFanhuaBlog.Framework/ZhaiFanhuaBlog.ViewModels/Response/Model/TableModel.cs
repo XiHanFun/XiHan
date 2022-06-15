@@ -17,22 +17,12 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 public class TableModel
 {
     /// <summary>
-    /// 返回编码
-    /// </summary>
-    public ResultCode Code { get; set; }
-
-    /// <summary>
-    /// 返回信息
-    /// </summary>
-    public string? Message { get; set; }
-
-    /// <summary>
     /// 数据总数
     /// </summary>
     public int DataCount { get; set; }
 
     /// <summary>
-    /// 返回数据
+    /// 数据集合
     /// </summary>
-    public List<object>? Data { get; set; }
+    public List<dynamic>? Data { get; set; }
 }

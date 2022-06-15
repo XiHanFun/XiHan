@@ -34,7 +34,6 @@ public class Program
         log.AddCustomLog(config);
         ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
         ConsoleHelper.WriteInfoLine("Services Start……");
-
         var services = builder.Services;
         // Controllers
         services.AddCustomControllers(config);
@@ -56,13 +55,8 @@ public class Program
         ConsoleHelper.WriteInfoLine("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
+        // HTTP 严格传输安全
+        app.UseHsts();
         // Swagger
         app.UseCustomSwagger(config);
         // 跨域

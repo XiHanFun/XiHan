@@ -9,6 +9,7 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -25,7 +26,15 @@ public static class CustomControllerExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomControllers(this IServiceCollection services, IConfiguration config)
     {
-        services.AddControllers().AddNewtonsoftJson(options =>
+        services.AddControllers(options =>
+        {
+            // 全局注入过滤器
+            options.Filters.Add<CustomActionFilterAsyncAttribute>();
+            options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
+            options.Filters.Add<CustomResultFilterAsyncAttribute>();
+            //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
+        })
+        .AddNewtonsoftJson(options =>
         {
             // 首字母小写(驼峰样式)
             options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

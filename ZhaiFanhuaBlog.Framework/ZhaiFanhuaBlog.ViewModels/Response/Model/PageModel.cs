@@ -7,6 +7,8 @@
 // CreateTime:2022-02-20 下午 08:39:31
 // ----------------------------------------------------------------
 
+using System.DirectoryServices.Protocols;
+
 namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 
 /// <summary>
@@ -20,6 +22,11 @@ public class PageModel
     public int PageIndex { get; set; }
 
     /// <summary>
+    /// 每页大小
+    /// </summary>
+    public int PageSize { set; get; }
+
+    /// <summary>
     /// 总页数
     /// </summary>
     public int TotalCount { get; set; }
@@ -30,12 +37,7 @@ public class PageModel
     public int DataCount { get; set; }
 
     /// <summary>
-    /// 每页大小
+    /// 数据集合
     /// </summary>
-    public int PageSize { set; get; }
-
-    /// <summary>
-    /// 返回数据
-    /// </summary>
-    public List<object>? Data { get; set; }
+    public List<dynamic>? Data { get; set; }
 }
