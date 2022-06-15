@@ -31,7 +31,7 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
         if (context.Result != null)
         {
-            context.Result = (IActionResult)ResponseResult.OK((JsonResult)context.Result);
+            context.Result = (IActionResult)ResultResponse.OK((JsonResult)context.Result);
         }
         await next.Invoke();
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");

@@ -14,27 +14,17 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 /// <summary>
 /// 通用分页信息类
 /// </summary>
-public class PageModel<TEntity>
+public class PageModel
 {
-    /// <summary>
-    /// 是否成功
-    /// </summary>
-    public bool Success { get; set; }
-
-    /// <summary>
-    /// 状态码
-    /// </summary>
-    public ResultCode Code { get; set; }
-
-    /// <summary>
-    /// 返回信息
-    /// </summary>
-    public string? Message { get; set; }
-
     /// <summary>
     /// 当前页标
     /// </summary>
     public int PageIndex { get; set; }
+
+    /// <summary>
+    /// 每页大小
+    /// </summary>
+    public int PageSize { set; get; }
 
     /// <summary>
     /// 总页数
@@ -47,17 +37,7 @@ public class PageModel<TEntity>
     public int DataCount { get; set; }
 
     /// <summary>
-    /// 每页大小
-    /// </summary>
-    public int PageSize { set; get; }
-
-    /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Data { get; set; }
-
-    /// <summary>
-    /// 时间戳
-    /// </summary>
-    public long Timestamp { get; set; }
+    public List<dynamic>? Data { get; set; }
 }

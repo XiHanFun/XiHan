@@ -14,23 +14,8 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 /// <summary>
 /// 表格数据(支持分页)
 /// </summary>
-public class TableModel<TEntity>
+public class TableModel
 {
-    /// <summary>
-    /// 是否成功
-    /// </summary>
-    public bool Success { get; set; }
-
-    /// <summary>
-    /// 状态码
-    /// </summary>
-    public ResultCode Code { get; set; }
-
-    /// <summary>
-    /// 返回信息
-    /// </summary>
-    public string? Message { get; set; }
-
     /// <summary>
     /// 数据总数
     /// </summary>
@@ -39,10 +24,5 @@ public class TableModel<TEntity>
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Data { get; set; }
-
-    /// <summary>
-    /// 时间戳
-    /// </summary>
-    public long Timestamp { get; set; }
+    public List<dynamic>? Data { get; set; }
 }

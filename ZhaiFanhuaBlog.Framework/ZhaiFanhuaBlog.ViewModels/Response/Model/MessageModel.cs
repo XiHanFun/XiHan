@@ -14,7 +14,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
 /// <summary>
 /// 通用返回信息类
 /// </summary>
-public class MessageModel<TEntity>
+public class MessageModel
 {
     /// <summary>
     /// 是否成功
@@ -34,7 +34,7 @@ public class MessageModel<TEntity>
     /// <summary>
     /// 数据集合
     /// </summary>
-    public TEntity? Data { get; set; }
+    public dynamic? Data { get; set; }
 
     /// <summary>
     /// 时间戳
