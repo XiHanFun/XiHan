@@ -31,8 +31,8 @@ public static class CustomControllerExtension
             // 全局注入过滤器
             options.Filters.Add<CustomActionFilterAsyncAttribute>();
             options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
-            options.Filters.Add<CustomResourceFilterAsyncAttribute>();
             options.Filters.Add<CustomResultFilterAsyncAttribute>();
+            //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
         })
         .AddNewtonsoftJson(options =>
         {

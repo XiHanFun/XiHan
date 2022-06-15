@@ -34,7 +34,6 @@ public class Program
         log.AddCustomLog(config);
         ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
         ConsoleHelper.WriteInfoLine("Services Start……");
-
         var services = builder.Services;
         // Controllers
         services.AddCustomControllers(config);
@@ -56,21 +55,8 @@ public class Program
         ConsoleHelper.WriteInfoLine("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
-        if (!app.Environment.IsDevelopment())
-        {
-            // 只要状态码不是200，都能进入错误页面
-            app.UseStatusCodePagesWithReExecute("/Error");
-            app.UseExceptionHandler(error =>
-            {
-                error.Run(async context =>
-                {
-                    context.Response.StatusCode = 200;
-                    context.Response.ContentType = "text/html";
-                    await context.Response.WriteAsJsonAsync("ERROR");
-                });
-            });
-            app.UseHsts();
-        }
+        // HTTP 严格传输安全
+        app.UseHsts();
         // Swagger
         app.UseCustomSwagger(config);
         // 跨域
