@@ -35,4 +35,39 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         if (result) userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
         return userAuthority;
     }
+
+    public async Task<bool> DeleteUserAuthorityAsync(Guid guid)
+    {
+        var userAuthority = await _IUserAuthorityRepository.FindAsync(guid);
+        if (userAuthority != null)
+        {
+            userAuthority.DeleteTime = DateTime.Now;
+            var result = await _IUserAuthorityRepository.UpdateAsync(userAuthority);
+            return result;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public async Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority)
+    {
+        userAuthority.ModifyTime = DateTime.Now;
+        var result = await _IUserAuthorityRepository.UpdateAsync(userAuthority);
+        if (result) userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
+        return userAuthority;
+    }
+
+    public async Task<UserAuthority> FindUserAuthorityAsync(Guid guid)
+    {
+        var userAuthority = await _IUserAuthorityRepository.FindAsync(guid);
+        return userAuthority;
+    }
+
+    public async Task<List<UserAuthority>> QueryUserAuthoritiesAsync()
+    {
+        var userAuthority = await _IUserAuthorityRepository.QueryAsync();
+        return userAuthority;
+    }
 }

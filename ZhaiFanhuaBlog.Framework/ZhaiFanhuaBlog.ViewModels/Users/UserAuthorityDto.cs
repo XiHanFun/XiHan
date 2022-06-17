@@ -7,7 +7,7 @@
 // CreateTime:2022-05-15 下午 06:07:09
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.Models.Bases;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 

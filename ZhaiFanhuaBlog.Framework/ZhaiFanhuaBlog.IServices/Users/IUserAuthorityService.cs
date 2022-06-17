@@ -9,11 +9,18 @@
 
 using ZhaiFanhuaBlog.IServices.Bases;
 using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserAuthorityService : IBaseService<UserAuthority>
 {
     Task<UserAuthority> CreateUserAuthorityAsync(UserAuthority userAuthority);
+
+    Task<bool> DeleteUserAuthorityAsync(Guid guid);
+
+    Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority);
+
+    Task<UserAuthority> FindUserAuthorityAsync(Guid guid);
+
+    Task<List<UserAuthority>> QueryUserAuthoritiesAsync();
 }

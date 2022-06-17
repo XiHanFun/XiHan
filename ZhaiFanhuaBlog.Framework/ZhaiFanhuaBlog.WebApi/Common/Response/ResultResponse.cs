@@ -8,18 +8,18 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Utils.Summaries;
-using ZhaiFanhuaBlog.ViewModels.Response.Enum;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
+using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
+using ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
-namespace ZhaiFanhuaBlog.ViewModels.Response;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response;
 
 /// <summary>
-/// 返回信息
+/// 请求信息
 /// </summary>
 public class ResultResponse
 {
     /// <summary>
-    /// 返回成功 200
+    /// 请求成功 200
     /// </summary>
     /// <returns></returns>
     public static MessageModel Continue()
@@ -35,7 +35,23 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回成功 200
+    /// 请求成功 200
+    /// </summary>
+    /// <returns></returns>
+    public static MessageModel OK()
+    {
+        return new MessageModel
+        {
+            Success = true,
+            Code = ResultCode.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
+            Data = null,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+    }
+
+    /// <summary>
+    /// 请求成功，返回通用数据 200
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
@@ -52,7 +68,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回成功 200
+    /// 请求成功，返回分页数据 200
     /// </summary>
     /// <param name="pageIndex">当前页标</param>
     /// <param name="pageSize">每页大小</param>
@@ -80,7 +96,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回成功 200
+    /// 请求成功，返回表格数据 200
     /// </summary>
     /// <param name="dataCount"></param>
     /// <param name="data"></param>
@@ -102,7 +118,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，访问出错 400
+    /// 请求失败，访问出错 400
     /// </summary>
     /// <returns></returns>
     public static MessageModel BadRequest(string message)
@@ -118,7 +134,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，访问未授权 401
+    /// 请求失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
     public static MessageModel Unauthorized()
@@ -134,7 +150,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，内容禁止访问 403
+    /// 请求失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
     public static MessageModel Forbidden()
@@ -150,7 +166,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，数据未找到 404
+    /// 请求失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
     public static MessageModel NotFound()
@@ -166,7 +182,23 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，服务器内部错误 500
+    /// 请求失败，参数不合法 422
+    /// </summary>
+    /// <returns></returns>
+    public static MessageModel UnprocessableEntity(List<dynamic> data)
+    {
+        return new MessageModel
+        {
+            Success = false,
+            Code = ResultCode.UnprocessableEntity,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.UnprocessableEntity),
+            Data = data,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        };
+    }
+
+    /// <summary>
+    /// 请求失败，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
     public static MessageModel InternalServerError()
@@ -182,7 +214,7 @@ public class ResultResponse
     }
 
     /// <summary>
-    /// 返回失败，功能未实施 501
+    /// 请求失败，功能未实施 501
     /// </summary>
     /// <returns></returns>
     public static MessageModel NotImplemented()

@@ -7,12 +7,12 @@
 // CreateTime:2022-02-20 下午 08:35:52
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Response.Enum;
+using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
 
-namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
-/// 通用返回信息类
+/// 返回通用数据类
 /// </summary>
 public class MessageModel
 {

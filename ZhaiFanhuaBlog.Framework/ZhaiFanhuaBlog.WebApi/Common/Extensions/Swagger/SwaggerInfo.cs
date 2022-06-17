@@ -57,6 +57,28 @@ internal class SwaggerInfo
                     Title = "博客后台接口",
                     Description = "这是用于管理的博客后台接口"
                 }
+            },
+             new SwaggerInfo
+            {
+                UrlPrefix = SwaggerGroup.Authorize,
+                GroupName = SwaggerGroup.Authorize,
+                OpenApiInfo = new OpenApiInfo
+                {
+                    Version= SwaggerVersion.v1,
+                    Title = "博客授权接口",
+                    Description = "这是用于登录的博客授权接口"
+                }
+            },
+              new SwaggerInfo
+            {
+                UrlPrefix = SwaggerGroup.Test,
+                GroupName = SwaggerGroup.Test,
+                OpenApiInfo = new OpenApiInfo
+                {
+                    Version= SwaggerVersion.v1,
+                    Title = "博客测试接口",
+                    Description = "这是用于测试的博客测试接口"
+                }
             }
         };
 }

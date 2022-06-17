@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 /// <summary>
 /// 异步资源过滤器属性（一般用于缓存）
 /// </summary>
-[AttributeUsage(AttributeTargets.All)]
+[AttributeUsage(AttributeTargets.Class)]
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 内存缓存

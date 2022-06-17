@@ -7,9 +7,7 @@
 // CreateTime:2022-02-20 下午 08:44:39
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Response.Enum;
-
-namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
 /// 表格数据(支持分页)

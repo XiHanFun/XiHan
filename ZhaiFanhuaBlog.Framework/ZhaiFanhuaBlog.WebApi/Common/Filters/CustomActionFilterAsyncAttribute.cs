@@ -15,11 +15,11 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 /// <summary>
 /// 请求过滤器属性(一般用于记录日志)
 /// </summary>
-[AttributeUsage(AttributeTargets.All)]
+[AttributeUsage(AttributeTargets.Class)]
 public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志组件
-    private readonly ILogger<CustomActionFilterAsyncAttribute> _logger;
+    private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
 
     /// <summary>
     /// 构造函数
@@ -27,7 +27,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     /// <param name="logger"></param>
     public CustomActionFilterAsyncAttribute(ILogger<CustomActionFilterAsyncAttribute> logger)
     {
-        _logger = logger;
+        _ILogger = logger;
     }
 
     /// <summary>
@@ -53,23 +53,13 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         var controller = context.Controller.ToString();
         // 请求方法
         var action = context.ActionDescriptor.DisplayName;
-        var ip = string.Empty;
-        if (context.HttpContext.Request.Headers.ContainsKey("X-Real-IP"))
-        {
-            ip = context.HttpContext.Request.Headers["X-Real-IP"].ToString();
-        }
-        if (context.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For"))
-        {
-            ip = context.HttpContext.Request.Headers["X-Forwarded-For"].ToString();
-        }
-
-        string message = $"请求路径为【{url}】，请求方式为【{method}】，执行了【{controller}】控制器的【{action}】方法，请求参数为【{para}】,客人端IP地址为【{ip}】";
-        _logger.LogInformation(message);
+        string message = $"请求路径为【{url}】，请求方式为【{method}】，执行了【{controller}】控制器的【{action}】方法，请求参数为【{para}】";
+        _ILogger.LogInformation(message);
         // 请求构造函数和方法
         ActionExecutedContext actionExecuted = await next.Invoke();
         // 执行结果
         var result = JsonConvert.SerializeObject(actionExecuted.Result);
-        _logger.LogInformation($"执行结果为{result}");
+        _ILogger.LogInformation($"执行结果为{result}");
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");
     }
 }

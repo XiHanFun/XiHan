@@ -27,43 +27,43 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.Sugar;
-        //// 创建数据库
-        //base.Context.DbMaintenance.CreateDatabase();
-        //// 创建表
-        //base.Context.CodeFirst.InitTables(
-        //    //Sites
-        //    typeof(SiteConfiguration),
-        //    typeof(SiteLog),
-        //    typeof(SiteSkin),
+        // 创建数据库
+        base.Context.DbMaintenance.CreateDatabase();
+        // 创建表
+        base.Context.CodeFirst.InitTables(
+            //Sites
+            typeof(SiteConfiguration),
+            typeof(SiteLog),
+            typeof(SiteSkin),
 
-        //    // Users
-        //    typeof(UserAuthority),
-        //    typeof(UserRole),
-        //    typeof(UserRoleAuthority),
-        //    typeof(UserAccount),
-        //    typeof(UserOauth),
-        //    typeof(UserLogin),
-        //    typeof(UserStatistic),
-        //    typeof(UserNotice),
-        //    typeof(UserFollow),
-        //    typeof(UserCollectCategory),
-        //    typeof(UserCollect),
+            // Users
+            typeof(UserAuthority),
+            typeof(UserRole),
+            typeof(UserRoleAuthority),
+            typeof(UserAccount),
+            typeof(UserOauth),
+            typeof(UserLogin),
+            typeof(UserStatistic),
+            typeof(UserNotice),
+            typeof(UserFollow),
+            typeof(UserCollectCategory),
+            typeof(UserCollect),
 
-        //    // Roots
-        //    typeof(RootState),
-        //    typeof(RootAnnouncement),
-        //    typeof(RootAuditCategory),
-        //    typeof(RootAudit),
-        //    typeof(RootFriendlyLink),
+            // Roots
+            typeof(RootState),
+            typeof(RootAnnouncement),
+            typeof(RootAuditCategory),
+            typeof(RootAudit),
+            typeof(RootFriendlyLink),
 
-        //    // Blogs
-        //    typeof(BlogCategory),
-        //    typeof(BlogArticle),
-        //    typeof(BlogTag),
-        //    typeof(BlogArticleTag),
-        //    typeof(BlogComment),
-        //    typeof(BlogCommentPoll),
-        //    typeof(BlogPoll));
+            // Blogs
+            typeof(BlogCategory),
+            typeof(BlogArticle),
+            typeof(BlogTag),
+            typeof(BlogArticleTag),
+            typeof(BlogComment),
+            typeof(BlogCommentPoll),
+            typeof(BlogPoll));
     }
 
     /// <summary>

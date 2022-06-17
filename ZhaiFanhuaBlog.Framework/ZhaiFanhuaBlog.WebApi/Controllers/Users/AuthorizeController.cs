@@ -14,9 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
-using ZhaiFanhuaBlog.ViewModels.Response;
-using ZhaiFanhuaBlog.ViewModels.Response.Model;
-using ZhaiFanhuaBlog.WebApi.Common.Filters;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers;
 
@@ -48,6 +46,7 @@ public class AuthorizeController : ControllerBase
     /// <param name="accountName"></param>
     /// <param name="accountPassword"></param>
     /// <returns></returns>
+    [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
     [HttpPost("Get/Token/{accountName}")]
     public async Task<string> GetTokenByAccountName(string accountName, string accountPassword)
     {

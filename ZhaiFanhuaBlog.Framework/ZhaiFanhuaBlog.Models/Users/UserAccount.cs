@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using SqlSugar;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using ZhaiFanhuaBlog.Models.Bases;
 
@@ -22,18 +23,21 @@ public class UserAccount : BaseEntity
     /// 用户名
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
+    [Range(6, 20, ErrorMessage = "用户名不能为空")]
     public string? Name { get; set; } = null;
 
     /// <summary>
     /// 用户密码（MD5加密）
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(64)")]
+    [Required(ErrorMessage = "用户密码不能为空")]
     public string? Password { get; set; } = null;
 
     /// <summary>
     /// 电子邮件
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [Required(ErrorMessage = "用户密码不能为空")]
     public string? Email { get; set; } = null;
 
     /// <summary>

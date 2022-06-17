@@ -9,62 +9,62 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ZhaiFanhuaBlog.ViewModels.Response;
+using ZhaiFanhuaBlog.WebApi.Common.Response;
 
-namespace ZhaiFanhuaBlog.WebApi.Common.Filters
+namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
+
+/// <summary>
+/// 异步异常处理过滤器属性（一般用于捕捉异常）
+/// </summary>
+[AttributeUsage(AttributeTargets.Class)]
+public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
+    // 日志组件
+    private readonly ILogger<CustomExceptionFilterAsyncAttribute> _ILogger;
+
     /// <summary>
-    /// 异步异常处理过滤器属性（一般用于捕捉异常）
+    /// 构造函数
     /// </summary>
-    public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
+    /// <param name="logger"></param>
+    public CustomExceptionFilterAsyncAttribute(ILogger<CustomExceptionFilterAsyncAttribute> logger)
     {
-        // 日志组件
-        private readonly ILogger<CustomExceptionFilterAsyncAttribute> _logger;
+        _ILogger = logger;
+    }
 
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="logger"></param>
-        public CustomExceptionFilterAsyncAttribute(ILogger<CustomExceptionFilterAsyncAttribute> logger)
+    /// <summary>
+    /// 当异常发生时
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task OnExceptionAsync(ExceptionContext context)
+    {
+        Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync Before");
+        // 异常是否被处理过，没有则在这里处理
+        if (context.ExceptionHandled == false)
         {
-            _logger = logger;
+            // 写入日志
+            _ILogger.LogError(context.HttpContext.Request.Path, context.Exception);
+            //// 判断是否Ajax请求，是就返回Json
+            //if (this.IsAjaxRequest(context.HttpContext.Request))
+            //{
+            context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
+            //}
         }
+        // 标记异常已经处理过了
+        context.ExceptionHandled = true;
+        await Task.CompletedTask;
+        Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync After");
+    }
 
-        /// <summary>
-        /// 当异常发生时
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task OnExceptionAsync(ExceptionContext context)
-        {
-            Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync Before");
-            // 异常是否被处理过，没有则在这里处理
-            if (context.ExceptionHandled == false)
-            {
-                // 写入日志
-                _logger.LogError(context.HttpContext.Request.Path, context.Exception);
-                //// 判断是否Ajax请求，是就返回Json
-                //if (this.IsAjaxRequest(context.HttpContext.Request))
-                //{
-                context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
-                //}
-            }
-            // 标记异常已经处理过了
-            context.ExceptionHandled = true;
-            await Task.CompletedTask;
-            Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync After");
-        }
-
-        /// <summary>
-        /// 判断是否Ajax请求
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        private bool IsAjaxRequest(HttpRequest request)
-        {
-            string header = request.Headers["X-Request-With"];
-            return "XMLHttpRequest".Equals(header);
-        }
+    /// <summary>
+    /// 判断是否Ajax请求
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    private bool IsAjaxRequest(HttpRequest request)
+    {
+        string header = request.Headers["X-Request-With"];
+        return "XMLHttpRequest".Equals(header);
     }
 }

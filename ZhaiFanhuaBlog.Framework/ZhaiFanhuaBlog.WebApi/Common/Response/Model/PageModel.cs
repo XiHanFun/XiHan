@@ -7,12 +7,10 @@
 // CreateTime:2022-02-20 下午 08:39:31
 // ----------------------------------------------------------------
 
-using System.DirectoryServices.Protocols;
-
-namespace ZhaiFanhuaBlog.ViewModels.Response.Model;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
-/// 通用分页信息类
+/// 分页数据类
 /// </summary>
 public class PageModel
 {
