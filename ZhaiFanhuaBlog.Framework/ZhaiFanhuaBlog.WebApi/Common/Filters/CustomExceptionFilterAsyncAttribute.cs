@@ -19,7 +19,6 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 [AttributeUsage(AttributeTargets.Class)]
 public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
-    // 日志组件
     private readonly ILogger<CustomExceptionFilterAsyncAttribute> _ILogger;
 
     /// <summary>
@@ -43,13 +42,12 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            // 写入日志
-            _ILogger.LogError(context.HttpContext.Request.Path, context.Exception);
-            //// 判断是否Ajax请求，是就返回Json
+            // 判断是否Ajax请求，是就返回Json
             //if (this.IsAjaxRequest(context.HttpContext.Request))
             //{
             context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
             //}
+            _ILogger.LogError(context.HttpContext.Request.Path, context.Exception);
         }
         // 标记异常已经处理过了
         context.ExceptionHandled = true;

@@ -7,7 +7,6 @@
 // CreateTime:2022-06-17 上午 04:42:29
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -28,7 +27,7 @@ public class TestController : ControllerBase
     /// <param name="str"></param>
     /// <returns></returns>
     [HttpPost("Test1")]
-    public async Task<string> Test1(string? str)
+    public string Test1(string? str)
     {
         return "测试字符串：" + str;
     }

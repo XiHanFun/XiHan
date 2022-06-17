@@ -36,6 +36,8 @@ public class Program
         ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
         ConsoleHelper.WriteInfoLine("Services Start……");
         var services = builder.Services;
+        // Cache
+        services.AddCustomCache(config);
         // Controllers
         services.AddCustomControllers(config);
         // Swagger

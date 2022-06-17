@@ -10,6 +10,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -19,20 +20,21 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 [AttributeUsage(AttributeTargets.Class)]
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
-    // 内存缓存
-    private readonly IMemoryCache _memoryCache;
-
-    private readonly IConfiguration _config;
+    private readonly ILogger<CustomResourceFilterAsyncAttribute> _ILogger;
+    private readonly IMemoryCache _IMemoryCache;
+    private readonly IConfiguration _IConfiguration;
 
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="logger"></param>
     /// <param name="memoryCache"></param>
     /// <param name="config"></param>
-    public CustomResourceFilterAsyncAttribute(IMemoryCache memoryCache, IConfiguration config)
+    public CustomResourceFilterAsyncAttribute(IConfiguration config, ILogger<CustomResourceFilterAsyncAttribute> logger, IMemoryCache memoryCache)
     {
-        _memoryCache = memoryCache;
-        _config = config;
+        _IConfiguration = config;
+        _ILogger = logger;
+        _IMemoryCache = memoryCache;
     }
 
     /// <summary>
@@ -49,21 +51,22 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         // 请求路径
         string path = context.HttpContext.Request.Path;
         // 请求参数
-        string para = context.HttpContext.Request.QueryString.Value ?? string.Empty;
-        // 请求地址
-        string url = (host + path + para).ToLower();
+        string queryString = context.HttpContext.Request.QueryString.Value ?? string.Empty;
         // 若存在此资源，直接返回缓存资源
-        if (_memoryCache.TryGetValue(url, out object value))
+        if (_IMemoryCache.TryGetValue(host + path + queryString, out object value))
         {
             // 请求构造函数和方法
-            context.Result = value as JsonResult;
+            context.Result = value as ActionResult;
+            _ILogger.LogInformation($"资源【{host + path + queryString}】已缓存结果【{context.Result}】");
         }
         else
         {
-            // 请求构造函数和方法
-            _ = await next.Invoke();
+            // 调用下一个过滤器
+            ResourceExecutedContext resourceExecuted = await next();
             // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
-            _memoryCache.Set(url, context.Result, TimeSpan.FromDays(1));
+            TimeSpan SyncTimeout = TimeSpan.FromSeconds(_IConfiguration.GetValue<int>("Cache:SyncTimeout"));
+            _IMemoryCache.Set(host + path + queryString, resourceExecuted.Result as ActionResult, SyncTimeout);
+            _ILogger.LogInformation($"资源【{host + path + queryString}】开始缓存【{resourceExecuted.Result}】");
         }
         Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync After");
     }

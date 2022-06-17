@@ -30,7 +30,6 @@ public class ResultResponse
             Code = ResultCode.Continue,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Continue),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -46,7 +45,6 @@ public class ResultResponse
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -63,7 +61,6 @@ public class ResultResponse
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
             Data = data,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -91,7 +88,6 @@ public class ResultResponse
                 DataCount = dataCount,
                 Data = data
             },
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -113,7 +109,6 @@ public class ResultResponse
                 DataCount = dataCount,
                 Data = data
             },
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -129,7 +124,6 @@ public class ResultResponse
             Code = ResultCode.BadRequest,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.BadRequest) + "," + message,
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -145,7 +139,6 @@ public class ResultResponse
             Code = ResultCode.Unauthorized,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Unauthorized),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -161,7 +154,6 @@ public class ResultResponse
             Code = ResultCode.Forbidden,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Forbidden),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -177,7 +169,6 @@ public class ResultResponse
             Code = ResultCode.NotFound,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotFound),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -193,7 +184,6 @@ public class ResultResponse
             Code = ResultCode.UnprocessableEntity,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.UnprocessableEntity),
             Data = data,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -209,7 +199,6 @@ public class ResultResponse
             Code = ResultCode.InternalServerError,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.InternalServerError),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 
@@ -225,7 +214,6 @@ public class ResultResponse
             Code = ResultCode.NotImplemented,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotImplemented),
             Data = null,
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
     }
 }

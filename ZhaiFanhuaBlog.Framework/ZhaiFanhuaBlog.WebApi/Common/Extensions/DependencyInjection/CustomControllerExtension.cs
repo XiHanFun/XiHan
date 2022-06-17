@@ -7,7 +7,6 @@
 // CreateTime:2022-05-30 上午 03:17:15
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -30,9 +29,10 @@ public static class CustomControllerExtension
         services.AddControllers(options =>
         {
             // 全局注入过滤器
-            options.Filters.Add<CustomActionFilterAsyncAttribute>();
             options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
-            //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
+            options.Filters.Add<CustomResourceFilterAsyncAttribute>();
+            options.Filters.Add<CustomActionFilterAsyncAttribute>();
+            options.Filters.Add<CustomResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(options =>
         {
             //关闭默认模型验证
