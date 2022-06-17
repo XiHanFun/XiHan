@@ -7,6 +7,7 @@
 // CreateTime:2022-05-17 下午 04:01:21
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.HttpOverrides;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -55,16 +56,34 @@ public class Program
         ConsoleHelper.WriteInfoLine("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
-        // HTTP 严格传输安全
-        app.UseHsts();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            // 异常页面
+            app.UseExceptionHandler("/Home/Error");
+            // HTTP 严格传输安全
+            app.UseHsts();
+        }
+        // nginx 反向代理获取真实IP
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
         // Swagger
         app.UseCustomSwagger(config);
         // 跨域
         app.UseCors();
-        // 跳转https
+        // 添加状态码拦截中间件
+        //app.UseUnifyResultStatusCodes();
+        // 强制https跳转
         app.UseHttpsRedirection();
         // 使用静态文件
         app.UseStaticFiles();
+        // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
+        //app.UseSerilogRequestLogging();
         // 路由
         app.UseRouting();
         // 鉴权

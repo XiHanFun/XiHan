@@ -7,6 +7,7 @@
 // CreateTime:2022-05-30 上午 03:17:15
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -31,8 +32,11 @@ public static class CustomControllerExtension
             // 全局注入过滤器
             options.Filters.Add<CustomActionFilterAsyncAttribute>();
             options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
-            options.Filters.Add<CustomResultFilterAsyncAttribute>();
             //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
+        }).ConfigureApiBehaviorOptions(options =>
+        {
+            //关闭默认模型验证
+            options.SuppressModelStateInvalidFilter = true;
         })
         .AddNewtonsoftJson(options =>
         {
@@ -45,7 +49,6 @@ public static class CustomControllerExtension
             // 忽略空值
             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         });
-        services.AddEndpointsApiExplorer();
         return services;
     }
 }
