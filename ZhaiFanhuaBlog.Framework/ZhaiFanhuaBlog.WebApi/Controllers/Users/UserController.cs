@@ -13,6 +13,7 @@ using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -48,7 +49,6 @@ public class UserController : ControllerBase
     {
         try
         {
-            if (string.IsNullOrEmpty(userAuthorityDto.Name)) throw new ArgumentNullException(userAuthorityDto.Name, "权限名称不能为空！");
             var userAuthority = iMapper.Map<UserAuthority>(userAuthorityDto);
             userAuthority = await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority);
             if (userAuthority != null) userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);

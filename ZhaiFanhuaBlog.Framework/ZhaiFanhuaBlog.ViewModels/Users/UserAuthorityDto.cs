@@ -24,11 +24,13 @@ public class UserAuthorityDto
     /// <summary>
     /// 权限名称
     /// </summary>
+    [Required(ErrorMessage = "权限名称不能为空")]
     public string? Name { get; set; }
 
     /// <summary>
     /// 权限类型
     /// </summary>
+    [Required(ErrorMessage = "权限类型不能为空")]
     public string? Type { get; set; }
 
     /// <summary>

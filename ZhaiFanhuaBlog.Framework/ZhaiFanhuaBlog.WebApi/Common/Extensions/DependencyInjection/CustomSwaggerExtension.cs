@@ -29,6 +29,9 @@ public static class CustomSwaggerExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomSwagger(this IServiceCollection services, IConfiguration config)
     {
+        // 用于最小API
+        services.AddEndpointsApiExplorer();
+        // 配置Swagger
         services.AddSwaggerGen(options =>
         {
             //生成多个文档显示

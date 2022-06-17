@@ -7,8 +7,6 @@
 // CreateTime:2022-06-17 上午 03:17:37
 // ----------------------------------------------------------------
 
-using Newtonsoft.Json;
-
 namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
@@ -17,9 +15,19 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 public class ValidationModel
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="field"></param>
+    /// <param name="message"></param>
+    public ValidationModel(string? field, string? message)
+    {
+        Field = field;
+        Message = message;
+    }
+
+    /// <summary>
     /// 字段
     /// </summary>
-    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
     public string? Field { get; }
 
     /// <summary>
