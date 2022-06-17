@@ -62,14 +62,14 @@ public class UserController : ControllerBase
     /// <summary>
     /// 删除用户权限
     /// </summary>
-    /// <param name="userAuthorityGuid"></param>
+    /// <param name="guid"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    [HttpDelete("Authority/{userAuthorityGuid}")]
+    [HttpDelete("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<bool> DeleteUserAuthority([FromRoute] Guid userAuthorityGuid)
+    public async Task<bool> DeleteUserAuthority([FromRoute] Guid guid)
     {
-        var result = await _IUserAuthorityService.DeleteUserAuthorityAsync(userAuthorityGuid);
+        var result = await _IUserAuthorityService.DeleteUserAuthorityAsync(guid);
         return result;
     }
 
@@ -77,13 +77,13 @@ public class UserController : ControllerBase
     /// 修改用户权限
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="userAuthorityGuid"></param>
+    /// <param name="guid"></param>
     /// <param name="userAuthorityDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    [HttpPut("Authority/{userAuthorityGuid}")]
+    [HttpPut("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<UserAuthorityDto> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid userAuthorityGuid, [FromBody] UserAuthorityDto userAuthorityDto)
+    public async Task<UserAuthorityDto> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] UserAuthorityDto userAuthorityDto)
     {
         try
         {
@@ -103,13 +103,13 @@ public class UserController : ControllerBase
     /// 查找用户权限
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="userAuthorityGuid"></param>
+    /// <param name="guid"></param>
     /// <returns></returns>
-    [HttpGet("Authority/{userAuthorityGuid}")]
+    [HttpGet("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<UserAuthorityDto?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid userAuthorityGuid)
+    public async Task<UserAuthorityDto?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(userAuthorityGuid);
+        var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
         if (userAuthority != null)
         {
             UserAuthorityDto userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);

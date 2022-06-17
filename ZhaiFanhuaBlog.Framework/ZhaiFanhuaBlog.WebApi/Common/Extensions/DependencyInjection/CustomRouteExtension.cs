@@ -24,7 +24,7 @@ public static class CustomRouteExtension
     {
         services.AddRouting(route =>
         {
-            route.LowercaseUrls = false;
+            route.LowercaseUrls = true;
             route.LowercaseQueryStrings = true;
         });
         return services;
