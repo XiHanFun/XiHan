@@ -176,14 +176,19 @@ public class ResultResponse
     /// 请求失败，参数不合法 422
     /// </summary>
     /// <returns></returns>
-    public static MessageModel UnprocessableEntity(List<dynamic> data)
+    public static MessageModel UnprocessableEntity(int dataCount, List<dynamic> data)
     {
         return new MessageModel
         {
             Success = false,
             Code = ResultCode.UnprocessableEntity,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.UnprocessableEntity),
-            Data = data,
+            Data = new DtoModel
+            {
+                DataCount = dataCount,
+                Data = data,
+                ReturnStatus = ReturnStatus.Error
+            },
         };
     }
 

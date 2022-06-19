@@ -13,7 +13,7 @@ using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
 namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
-/// 返回通用数据类
+/// 通用数据类
 /// </summary>
 public class MessageModel
 {
@@ -36,11 +36,6 @@ public class MessageModel
     /// 数据集合
     /// </summary>
     public dynamic? Data { get; set; } = null;
-
-    /// <summary>
-    /// 返回状态
-    /// </summary>
-    public ReturnStatus ReturnStatus { get; set; } = ReturnStatus.Success;
 
     /// <summary>
     /// 时间戳

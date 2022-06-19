@@ -47,7 +47,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             var validResult = context.ModelState.Keys
                 .SelectMany(key => context!.ModelState[key]!.Errors.Select(x => new ValidationModel(key, x.ErrorMessage)))
                 .ToList<dynamic>();
-            context.Result = new JsonResult(ResultResponse.UnprocessableEntity(validResult));
+            context.Result = new JsonResult(ResultResponse.UnprocessableEntity(validResult.Count, validResult));
         }
         else
         {

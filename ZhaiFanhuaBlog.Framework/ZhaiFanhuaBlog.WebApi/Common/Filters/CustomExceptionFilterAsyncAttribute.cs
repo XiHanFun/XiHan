@@ -42,11 +42,20 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            // 判断是否Ajax请求，是就返回Json
-            //if (this.IsAjaxRequest(context.HttpContext.Request))
-            //{
-            context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
-            //}
+            if (context.Exception is ApplicationException)
+            {
+                // 应用程序业务级异常
+                // 判断是否Ajax请求，是就返回Json
+                //if (this.IsAjaxRequest(context.HttpContext.Request))
+                //{
+                context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
+                //}
+            }
+            else
+            {
+                // 系统级别异常，不直接明文显示
+                context.Result = new JsonResult(ResultResponse.InternalServerError());
+            }
             _ILogger.LogError(context.HttpContext.Request.Path, context.Exception);
         }
         // 标记异常已经处理过了
