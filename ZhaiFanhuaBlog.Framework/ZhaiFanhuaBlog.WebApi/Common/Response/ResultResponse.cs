@@ -22,14 +22,14 @@ public class ResultResponse
     /// 请求成功 200
     /// </summary>
     /// <returns></returns>
-    public static MessageModel Continue()
+    public static ResultModel Continue()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.Continue,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Continue),
-            Data = null,
+            Data = null
         };
     }
 
@@ -37,14 +37,29 @@ public class ResultResponse
     /// 请求成功 200
     /// </summary>
     /// <returns></returns>
-    public static MessageModel OK()
+    public static ResultModel OK()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
-            Data = null,
+            Data = null
+        };
+    }
+
+    /// <summary>
+    /// 请求成功 200
+    /// </summary>
+    /// <returns></returns>
+    public static ResultModel OK(string messageData)
+    {
+        return new ResultModel
+        {
+            Success = true,
+            Code = ResultCode.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
+            Data = messageData
         };
     }
 
@@ -53,14 +68,14 @@ public class ResultResponse
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel OK(dynamic data)
+    public static ResultModel OK(dynamic data)
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
-            Data = data,
+            Data = data
         };
     }
 
@@ -73,9 +88,9 @@ public class ResultResponse
     /// <param name="dataCount">数据总数</param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
+    public static ResultModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -87,7 +102,7 @@ public class ResultResponse
                 TotalCount = totalCount,
                 DataCount = dataCount,
                 Data = data
-            },
+            }
         };
     }
 
@@ -97,9 +112,9 @@ public class ResultResponse
     /// <param name="dataCount"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static MessageModel OK(int dataCount, List<dynamic> data)
+    public static ResultModel OK(int dataCount, List<dynamic> data)
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -108,7 +123,7 @@ public class ResultResponse
             {
                 DataCount = dataCount,
                 Data = data
-            },
+            }
         };
     }
 
@@ -116,14 +131,14 @@ public class ResultResponse
     /// 请求失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static MessageModel BadRequest(string message)
+    public static ResultModel BadRequest(string message)
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.BadRequest) + "," + message,
-            Data = null,
+            Data = null
         };
     }
 
@@ -131,14 +146,14 @@ public class ResultResponse
     /// 请求失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static MessageModel Unauthorized()
+    public static ResultModel Unauthorized()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.Unauthorized,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Unauthorized),
-            Data = null,
+            Data = null
         };
     }
 
@@ -146,14 +161,14 @@ public class ResultResponse
     /// 请求失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static MessageModel Forbidden()
+    public static ResultModel Forbidden()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.Forbidden,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Forbidden),
-            Data = null,
+            Data = null
         };
     }
 
@@ -161,14 +176,14 @@ public class ResultResponse
     /// 请求失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static MessageModel NotFound()
+    public static ResultModel NotFound()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.NotFound,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotFound),
-            Data = null,
+            Data = null
         };
     }
 
@@ -176,9 +191,9 @@ public class ResultResponse
     /// 请求失败，参数不合法 422
     /// </summary>
     /// <returns></returns>
-    public static MessageModel UnprocessableEntity(int dataCount, List<dynamic> data)
+    public static ResultModel UnprocessableEntity(int dataCount, List<dynamic> data)
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.UnprocessableEntity,
@@ -186,9 +201,8 @@ public class ResultResponse
             Data = new DtoModel
             {
                 DataCount = dataCount,
-                Data = data,
-                ReturnStatus = ReturnStatus.Error
-            },
+                Data = data
+            }
         };
     }
 
@@ -196,14 +210,14 @@ public class ResultResponse
     /// 请求失败，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static MessageModel InternalServerError()
+    public static ResultModel InternalServerError()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.InternalServerError,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.InternalServerError),
-            Data = null,
+            Data = null
         };
     }
 
@@ -211,14 +225,14 @@ public class ResultResponse
     /// 请求失败，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static MessageModel NotImplemented()
+    public static ResultModel NotImplemented()
     {
-        return new MessageModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.NotImplemented,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotImplemented),
-            Data = null,
+            Data = null
         };
     }
 }

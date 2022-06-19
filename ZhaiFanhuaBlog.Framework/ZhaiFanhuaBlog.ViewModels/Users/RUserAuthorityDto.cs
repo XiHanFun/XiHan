@@ -1,20 +1,20 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserAuthorityDto
-// Guid:e063ddee-794e-4927-9617-5f0cc77815b9
+// FileName:RUserAuthorityDto
+// Guid:4c8f44cb-945c-43cb-89a3-7f3bdf13a63a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-15 下午 06:07:09
+// CreateTime:2022-06-20 上午 12:32:39
 // ----------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
+using ZhaiFanhuaBlog.ViewModels.Bases;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
 /// <summary>
-/// 用户权限
+/// 返回用户权限
 /// </summary>
-public class UserAuthorityDto
+public class RUserAuthorityDto : RBaseDto
 {
     /// <summary>
     /// 父级权限
@@ -24,13 +24,11 @@ public class UserAuthorityDto
     /// <summary>
     /// 权限名称
     /// </summary>
-    [Required(ErrorMessage = "权限名称不能为空")]
     public string? Name { get; set; }
 
     /// <summary>
     /// 权限类型
     /// </summary>
-    [Required(ErrorMessage = "权限类型不能为空")]
     public string? Type { get; set; }
 
     /// <summary>

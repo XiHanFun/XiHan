@@ -17,6 +17,18 @@ namespace ZhaiFanhuaBlog.Utils.Verifications;
 public static class RegexHelper
 {
     /// <summary>
+    /// Guid格式验证（a480500f-a181-4d3d-8ada-461f69eecfdd）
+    /// </summary>
+    /// <param name="guid">Guid</param>
+    /// <returns></returns>
+    public static bool IsGuid(string guid)
+    {
+        Regex regex = new(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", RegexOptions.IgnoreCase);
+        Match result = regex.Match(guid);
+        return result.Success;
+    }
+
+    /// <summary>
     /// 电话号码（正确格式为：xxx-xxxxxxx或xxxx-xxxxxxxx）
     /// </summary>
     /// <param name="str"></param>

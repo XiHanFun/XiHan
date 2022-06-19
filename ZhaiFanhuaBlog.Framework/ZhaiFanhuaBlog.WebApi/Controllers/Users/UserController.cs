@@ -13,6 +13,7 @@ using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Common.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -35,28 +36,30 @@ public class UserController : ControllerBase
         _IUserAuthorityService = iUserAuthorityService;
     }
 
+    #region 用户权限
+
     /// <summary>
-    /// 添加用户权限
+    /// 新增用户权限
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="userAuthorityDto"></param>
+    /// <param name="cDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     [HttpPost("Authority")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<UserAuthorityDto> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] UserAuthorityDto userAuthorityDto)
+    public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         try
         {
-            var userAuthority = iMapper.Map<UserAuthority>(userAuthorityDto);
-            userAuthority = await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority);
-            if (userAuthority != null) userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);
+            var userAuthority = iMapper.Map<UserAuthority>(cDto);
+            if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
+                return ResultResponse.OK("新增用户权限成功");
+            return ResultResponse.BadRequest("新增用户权限失败");
         }
-        catch (Exception)
+        catch (ApplicationException ex)
         {
-            throw;
+            throw new ApplicationException(ex.Message);
         }
-        return userAuthorityDto;
     }
 
     /// <summary>
@@ -67,10 +70,11 @@ public class UserController : ControllerBase
     /// <exception cref="ArgumentNullException"></exception>
     [HttpDelete("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<bool> DeleteUserAuthority([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserAuthority([FromRoute] Guid guid)
     {
-        var result = await _IUserAuthorityService.DeleteUserAuthorityAsync(guid);
-        return result;
+        if (await _IUserAuthorityService.DeleteUserAuthorityAsync(guid))
+            return ResultResponse.OK("删除用户权限成功");
+        return ResultResponse.BadRequest("删除用户权限失败");
     }
 
     /// <summary>
@@ -78,25 +82,29 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
-    /// <param name="userAuthorityDto"></param>
+    /// <param name="cDto"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     [HttpPut("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<UserAuthorityDto> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] UserAuthorityDto userAuthorityDto)
+    public async Task<ResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAuthorityDto cDto)
     {
         try
         {
-            if (string.IsNullOrEmpty(userAuthorityDto.Name)) throw new ArgumentNullException(userAuthorityDto.Name, "权限名称不能为空！");
-            var userAuthority = iMapper.Map<UserAuthority>(userAuthorityDto);
+            var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
+            userAuthority.ParentId = cDto.ParentId;
+            userAuthority.Name = cDto.Name;
+            userAuthority.Type = cDto.Type;
+            userAuthority.Description = cDto.Description;
             userAuthority = await _IUserAuthorityService.ModifyUserAuthorityAsync(userAuthority);
-            if (userAuthority != null) userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);
+            if (userAuthority != null)
+                return ResultResponse.OK(iMapper.Map<RUserAuthorityDto>(userAuthority));
+            return ResultResponse.BadRequest("修改用户权限失败");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            throw new ApplicationException(ex.Message);
         }
-        return userAuthorityDto;
     }
 
     /// <summary>
@@ -107,15 +115,12 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpGet("Authority/{guid}")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<UserAuthorityDto?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
         if (userAuthority != null)
-        {
-            UserAuthorityDto userAuthorityDto = iMapper.Map<UserAuthorityDto>(userAuthority);
-            return userAuthorityDto;
-        }
-        return null;
+            return ResultResponse.OK(iMapper.Map<RUserAuthorityDto>(userAuthority));
+        return ResultResponse.BadRequest("该用户权限不存在");
     }
 
     /// <summary>
@@ -125,14 +130,19 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpGet("Authority")]
     [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-    public async Task<List<UserAuthorityDto>?> FindUserAuthority([FromServices] IMapper iMapper)
+    public async Task<ResultModel> FindUserAuthority([FromServices] IMapper iMapper)
     {
-        var userAuthority = await _IUserAuthorityService.QueryUserAuthoritiesAsync();
-        if (userAuthority.Count != 0)
-        {
-            List<UserAuthorityDto> userAuthoritiesDto = iMapper.Map<List<UserAuthorityDto>>(userAuthority);
-            return userAuthoritiesDto;
-        }
-        return null;
+        var userAuthorities = await _IUserAuthorityService.QueryUserAuthoritiesAsync();
+        if (userAuthorities.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserAuthorityDto>>(userAuthorities));
+        return ResultResponse.BadRequest("未查询到用户权限");
     }
+
+    #endregion 用户权限
+
+    #region 用户角色
+
+    //
+
+    #endregion 用户角色
 }

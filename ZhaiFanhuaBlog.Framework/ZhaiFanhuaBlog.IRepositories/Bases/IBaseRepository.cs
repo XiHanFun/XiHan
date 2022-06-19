@@ -26,7 +26,7 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
 
     Task<bool> UpdateAsync(TEntity entity);
 
-    Task<TEntity> FindAsync(Guid guid);
+    Task<TEntity> FindAsync(Guid? guid);
 
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
 

@@ -44,15 +44,20 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         // 不为空就做处理
         if (context.Result != null)
         {
-            if (context.Result is ObjectResult objectResult)
+            if (context.Result is ResultModel resultModel)
+            {
+                // 如果是通用数据类返回结果，则转换为json结果
+                context.Result = new JsonResult(resultModel);
+            }
+            else if (context.Result is ObjectResult objectResult)
             {
                 // 如果是对象结果，则转换为json结果
-                context.Result = new JsonResult(ResultResponse.OK(objectResult!.Value!));
+                context.Result = new JsonResult(objectResult!.Value!);
             }
             else if (context.Result is ContentResult contentResult)
             {
                 // 如果是内容结果，则转换为json结果
-                context.Result = new JsonResult(ResultResponse.OK(contentResult!.Content!));
+                context.Result = new JsonResult(contentResult!.Content!);
             }
             else if (context.Result is JsonResult jsonResult)
             {

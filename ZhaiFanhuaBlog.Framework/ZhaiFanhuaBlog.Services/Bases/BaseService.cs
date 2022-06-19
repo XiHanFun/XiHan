@@ -68,7 +68,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public async Task<TEntity> FindAsync(Guid guid)
+    public async Task<TEntity> FindAsync(Guid? guid)
     {
         return await _iBaseRepository.FindAsync(guid);
     }

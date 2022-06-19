@@ -29,7 +29,8 @@ public static class CustomAutoMapperExtension
         services.AddAutoMapper(mapper =>
         {
             // User
-            mapper.CreateMap<UserAuthority, UserAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserAuthority, CUserAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserAuthority, RUserAuthorityDto>().ReverseMap();
         });
         return services;
     }

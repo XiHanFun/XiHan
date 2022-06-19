@@ -27,32 +27,39 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         base._iBaseRepository = iUserAuthorityRepository;
     }
 
-    public async Task<UserAuthority> CreateUserAuthorityAsync(UserAuthority userAuthority)
+    public async Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
+        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(userAuthority.ParentId) == null)
+            throw new ApplicationException("父级权限不存在");
         userAuthority.TypeKey = "UserAuthority";
         userAuthority.StateKey = 1;
+        userAuthority.SoftDeleteLock = false;
         var result = await _IUserAuthorityRepository.CreateAsync(userAuthority);
-        if (result) userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
-        return userAuthority;
+        return result;
     }
 
     public async Task<bool> DeleteUserAuthorityAsync(Guid guid)
     {
         var userAuthority = await _IUserAuthorityRepository.FindAsync(guid);
-        if (userAuthority != null)
+        if (userAuthority == null)
+            throw new ApplicationException("权限不存在");
+        if (userAuthority.SoftDeleteLock)
         {
             userAuthority.DeleteTime = DateTime.Now;
-            var result = await _IUserAuthorityRepository.UpdateAsync(userAuthority);
-            return result;
+            return await _IUserAuthorityRepository.UpdateAsync(userAuthority);
         }
         else
         {
-            return false;
+            return await _IUserAuthorityRepository.DeleteAsync(guid);
         }
     }
 
     public async Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority)
     {
+        if (await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId) == null)
+            throw new ApplicationException("权限不存在");
+        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(userAuthority.ParentId) == null)
+            throw new ApplicationException("父级权限不存在");
         userAuthority.ModifyTime = DateTime.Now;
         var result = await _IUserAuthorityRepository.UpdateAsync(userAuthority);
         if (result) userAuthority = await _IUserAuthorityRepository.FindAsync(userAuthority.BaseId);
@@ -67,7 +74,11 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<List<UserAuthority>> QueryUserAuthoritiesAsync()
     {
-        var userAuthority = await _IUserAuthorityRepository.QueryAsync();
-        return userAuthority;
+        var userAuthority = from rs in await _IUserAuthorityRepository.QueryAsync()
+                            where rs.DeleteTime != null && rs.StateKey == 1
+                            orderby rs.CreateTime descending
+                            orderby rs.Name descending
+                            select rs;
+        return userAuthority.ToList();
     }
 }

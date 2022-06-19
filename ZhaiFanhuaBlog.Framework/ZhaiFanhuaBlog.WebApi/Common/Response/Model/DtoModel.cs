@@ -7,8 +7,6 @@
 // CreateTime:2022-06-17 上午 03:17:37
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
-
 namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
@@ -25,26 +23,21 @@ public class DtoModel
     /// 数据集合
     /// </summary>
     public List<dynamic>? Data { get; set; }
-
-    /// <summary>
-    /// 返回状态
-    /// </summary>
-    public ReturnStatus ReturnStatus { get; set; }
 }
 
 /// <summary>
 /// 验证字段
 /// </summary>
-public class ValidationModel
+public class ValidationError
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="field"></param>
     /// <param name="message"></param>
-    public ValidationModel(string? field, string? message)
+    public ValidationError(string? field, string? message)
     {
-        Field = field;
+        Field = field != string.Empty ? field : null;
         Message = message;
     }
 
