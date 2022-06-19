@@ -23,3 +23,5 @@ jobs:
       run: dotnet build --no-restore  ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal  ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
+    - name: Run
+      run: dotnet /ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.WebApi/bin/Debug/net6.0/ZhaiFanhuaBlog.WebApi.dll
