@@ -27,30 +27,26 @@ public static class CustomCacheExtension
     {
         if (config.GetValue<bool>("Cache:IsEnabled"))
         {
+            // 内存中缓存
             if (config.GetValue<bool>("Cache:MemoryCache:IsEnabled"))
             {
                 services.AddMemoryCache();
             }
-            if (config.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
+            // 分布式缓存
+            else if (config.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
             {
-                //// CSRedis
-                //services.AddDistributedMemoryCache(options =>
-                //{
-                //    // CSRedisClient实例化的对象注册成全局单例
-                //    var redis = new CSRedis.CSRedisClient(config["Cache:ConnectionString:Redis"]);
-                //    services.AddSingleton(redis);
-                //});
-                // StackExchangeRedis
+                //// 分布式内存缓存（分布式内存缓存不是真正的分布式缓存，一般用于在开发和测试场景中，它允许在未来实现真正的分布式缓存解决方案。）
+                //services.AddDistributedMemoryCache();
+                // 分布式 Redis 缓存
                 services.AddStackExchangeRedisCache(options =>
                 {
                     options.Configuration = config.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
-                    options.InstanceName = "SampleInstance";
+                    options.InstanceName = config.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
                 });
-                services.AddOptions();
-                // services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
                 services.AddSingleton<IDistributedCache, RedisCache>();
             }
-            if (config.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
+            // 响应缓存
+            else if (config.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
             {
                 services.AddResponseCaching();
             }

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CustomLoggingExtension
+// FileName:CustomLogExtension
 // Guid:17417bc3-81d3-4124-a1e6-efe266d535cb
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,12 +13,12 @@ using Serilog;
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
 /// <summary>
-/// CustomLoggingExtension
+/// CustomLogExtension
 /// </summary>
-public static class CustomLoggingExtension
+public static class CustomLogExtension
 {
     /// <summary>
-    /// Logging扩展
+    /// 日志扩展
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>
@@ -34,6 +34,7 @@ public static class CustomLoggingExtension
             "NLog" => builder.AddNLog(@"Common/Config/NLog.config"),
             _ => throw new NotImplementedException(),
         };
+        builder.AddSimpleConsole();
         return builder;
     }
 }

@@ -20,9 +20,9 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 [AttributeUsage(AttributeTargets.Class)]
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
+    private readonly IConfiguration _IConfiguration;
     private readonly ILogger<CustomResourceFilterAsyncAttribute> _ILogger;
     private readonly IMemoryCache _IMemoryCache;
-    private readonly IConfiguration _IConfiguration;
 
     /// <summary>
     /// 构造函数
@@ -56,17 +56,30 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         if (_IMemoryCache.TryGetValue(host + path + queryString, out object value))
         {
             // 请求构造函数和方法
-            context.Result = value as ActionResult;
+            context.Result = value as JsonResult;
             _ILogger.LogInformation($"资源【{host + path + queryString}】已缓存结果【{context.Result}】");
         }
         else
         {
-            // 调用下一个过滤器
+            // 请求构造函数和方法,调用下一个过滤器
             ResourceExecutedContext resourceExecuted = await next();
-            // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
-            TimeSpan SyncTimeout = TimeSpan.FromSeconds(_IConfiguration.GetValue<int>("Cache:SyncTimeout"));
-            _IMemoryCache.Set(host + path + queryString, resourceExecuted.Result as ActionResult, SyncTimeout);
-            _ILogger.LogInformation($"资源【{host + path + queryString}】开始缓存【{resourceExecuted.Result}】");
+            // 执行结果
+            try
+            {
+                // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
+                if (resourceExecuted.Result != null)
+                {
+                    TimeSpan SyncTimeout = TimeSpan.FromMinutes(_IConfiguration.GetValue<int>("Cache:SyncTimeout"));
+                    var result = resourceExecuted.Result as JsonResult;
+                    _IMemoryCache.Set(host + path + queryString, result, SyncTimeout);
+                    _ILogger.LogInformation($"资源【{host + path + queryString}】开始缓存【{result}】");
+                    _ILogger.LogInformation($"请求结果为【{result}】");
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("日志未获取到结果，返回的数据无法序列化;");
+            }
         }
         Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync After");
     }
