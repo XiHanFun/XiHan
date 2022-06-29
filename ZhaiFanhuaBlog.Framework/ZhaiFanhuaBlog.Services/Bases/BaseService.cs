@@ -21,16 +21,36 @@ namespace ZhaiFanhuaBlog.Services.Bases;
 public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, new()
 {
     //通过在子类的构造函数中注入
-    protected IBaseRepository<TEntity> _iBaseRepository;
+    protected IBaseRepository<TEntity> _IBaseRepository;
 
     /// <summary>
     /// 新增
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public async Task<bool> CreateAsync(TEntity entity)
+    public virtual async Task<bool> CreateAsync(TEntity entity)
     {
-        return await _iBaseRepository.CreateAsync(entity);
+        return await _IBaseRepository.CreateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateAsync(TEntity[] entities)
+    {
+        return await _IBaseRepository.CreateBatchAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateAsync(List<TEntity> entities)
+    {
+        return await _IBaseRepository.CreateBatchAsync(entities);
     }
 
     /// <summary>
@@ -38,9 +58,9 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteAsync(Guid guid)
+    public virtual async Task<bool> DeleteAsync(Guid guid)
     {
-        return await _iBaseRepository.DeleteAsync(guid);
+        return await _IBaseRepository.DeleteAsync(guid);
     }
 
     /// <summary>
@@ -48,9 +68,19 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteBatchAsync(Guid[] guids)
+    public virtual async Task<bool> DeleteAsync(Guid[] guids)
     {
-        return await _iBaseRepository.DeleteBatchAsync(guids);
+        return await _IBaseRepository.DeleteBatchAsync(guids);
+    }
+
+    /// <summary>
+    /// 自定义条件删除
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+    {
+        return await _IBaseRepository.DeleteAsync(func);
     }
 
     /// <summary>
@@ -58,9 +88,29 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateAsync(TEntity entity)
+    public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
-        return await _iBaseRepository.UpdateAsync(entity);
+        return await _IBaseRepository.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量修改
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> UpdateAsync(TEntity[] entities)
+    {
+        return await _IBaseRepository.UpdateBatchAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量修改
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
+    {
+        return await _IBaseRepository.UpdateBatchAsync(entities);
     }
 
     /// <summary>
@@ -68,62 +118,62 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public async Task<TEntity> FindAsync(Guid? guid)
+    public virtual async Task<TEntity> FindAsync(Guid? guid)
     {
-        return await _iBaseRepository.FindAsync(guid);
+        return await _IBaseRepository.FindAsync(guid);
     }
 
     /// <summary>
     /// 自定义条件查找
     /// </summary>
-    /// <param name="func"></param>
+    /// <param name="func">自定义条件</param>
     /// <returns></returns>
-    public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+    public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _iBaseRepository.FindAsync(func);
+        return await _IBaseRepository.FindAsync(func);
     }
 
     /// <summary>
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    public async Task<List<TEntity>> QueryAsync()
+    public virtual async Task<List<TEntity>> QueryAsync()
     {
-        return await _iBaseRepository.QueryAsync();
+        return await _IBaseRepository.QueryAsync();
     }
 
     /// <summary>
     /// 自定义条件查询
     /// </summary>
-    /// <param name="func"></param>
+    /// <param name="func">自定义条件</param>
     /// <returns></returns>
-    public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _iBaseRepository.QueryAsync(func);
+        return await _IBaseRepository.QueryAsync(func);
     }
 
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="pageIndex"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="totalCount"></param>
+    /// <param name="pageIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _iBaseRepository.QueryAsync(pageIndex, pageSize, totalCount);
+        return await _IBaseRepository.QueryAsync(pageIndex, pageSize, totalCount);
     }
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="func"></param>
-    /// <param name="pageIndex"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="totalCount"></param>
+    /// <param name="func">自定义条件</param>
+    /// <param name="pageIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _iBaseRepository.QueryAsync(func, pageIndex, pageSize, totalCount);
+        return await _IBaseRepository.QueryAsync(func, pageIndex, pageSize, totalCount);
     }
 }

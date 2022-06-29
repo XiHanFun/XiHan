@@ -7,7 +7,7 @@
 // CreateTime:2022-06-02 下午 09:11:24
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Utils.Summaries;
+namespace ZhaiFanhuaBlog.Utils.Summary;
 
 /// <summary>
 /// 类注释帮助类

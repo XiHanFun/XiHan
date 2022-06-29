@@ -24,6 +24,6 @@ public class UserFollowService : BaseService<UserFollow>, IUserFollowService
     public UserFollowService(IUserFollowRepository iUserFollowRepository)
     {
         _IUserFollowRepository = iUserFollowRepository;
-        base._iBaseRepository = iUserFollowRepository;
+        base._IBaseRepository = iUserFollowRepository;
     }
 }

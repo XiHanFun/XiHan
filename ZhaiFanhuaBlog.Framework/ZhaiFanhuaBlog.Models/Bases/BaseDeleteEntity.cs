@@ -17,6 +17,11 @@ namespace ZhaiFanhuaBlog.Models.Bases;
 public abstract class BaseDeleteEntity<Tkey> : BaseModifyEntity<Guid>
 {
     /// <summary>
+    /// 软删除锁（是否支持软删除：是为1，表示软删除；否为0，表示物理删除）
+    /// </summary>
+    public virtual bool SoftDeleteLock { get; set; } = true;
+
+    /// <summary>
     /// 删除用户
     /// </summary>
     [SugarColumn(IsNullable = true)]

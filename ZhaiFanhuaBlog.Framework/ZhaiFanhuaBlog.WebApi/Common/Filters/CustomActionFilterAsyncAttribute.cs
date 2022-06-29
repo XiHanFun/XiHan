@@ -73,7 +73,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             {
                 if (actionExecuted.Result != null)
                 {
-                    var result = JsonConvert.SerializeObject(actionExecuted.Result);
+                    var result = actionExecuted.Result as ActionResult;
                     _ILogger.LogInformation($"请求结果为【{result}】");
                 }
             }

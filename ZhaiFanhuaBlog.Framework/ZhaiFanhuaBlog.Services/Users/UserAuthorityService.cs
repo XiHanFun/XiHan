@@ -15,7 +15,7 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// 账户权限
+/// UserAuthorityService
 /// </summary>
 public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthorityService
 {
@@ -24,15 +24,13 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
     public UserAuthorityService(IUserAuthorityRepository iUserAuthorityRepository)
     {
         _IUserAuthorityRepository = iUserAuthorityRepository;
-        base._iBaseRepository = iUserAuthorityRepository;
+        base._IBaseRepository = iUserAuthorityRepository;
     }
 
     public async Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
         if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(userAuthority.ParentId) == null)
             throw new ApplicationException("父级权限不存在");
-        userAuthority.TypeKey = "UserAuthority";
-        userAuthority.StateKey = 1;
         userAuthority.SoftDeleteLock = false;
         var result = await _IUserAuthorityRepository.CreateAsync(userAuthority);
         return result;
@@ -75,7 +73,7 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
     public async Task<List<UserAuthority>> QueryUserAuthoritiesAsync()
     {
         var userAuthority = from rs in await _IUserAuthorityRepository.QueryAsync()
-                            where rs.DeleteTime != null && rs.StateKey == 1
+                            where rs.DeleteTime != null
                             orderby rs.CreateTime descending
                             orderby rs.Name descending
                             select rs;

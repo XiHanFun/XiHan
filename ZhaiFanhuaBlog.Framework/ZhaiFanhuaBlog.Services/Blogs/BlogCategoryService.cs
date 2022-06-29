@@ -24,6 +24,6 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     public BlogCategoryService(IBlogCategoryRepository iBlogCategoryRepository)
     {
         _IBlogCategoryRepository = iBlogCategoryRepository;
-        _iBaseRepository = iBlogCategoryRepository;
+        base._IBaseRepository = iBlogCategoryRepository;
     }
 }

@@ -24,6 +24,6 @@ public class UserStatisticService : BaseService<UserStatistic>, IUserStatisticSe
     public UserStatisticService(IUserStatisticRepository iUserStatisticRepository)
     {
         _IUserStatisticRepository = iUserStatisticRepository;
-        base._iBaseRepository = iUserStatisticRepository;
+        base._IBaseRepository = iUserStatisticRepository;
     }
 }

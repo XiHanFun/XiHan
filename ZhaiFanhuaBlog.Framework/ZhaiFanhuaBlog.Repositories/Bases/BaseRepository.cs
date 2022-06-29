@@ -77,6 +77,26 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateBatchAsync(TEntity[] entities)
+    {
+        return await base.InsertRangeAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateBatchAsync(List<TEntity> entities)
+    {
+        return await base.InsertRangeAsync(entities);
+    }
+
+    /// <summary>
     /// 删除
     /// </summary>
     /// <param name="guid"></param>
@@ -98,6 +118,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 自定义条件删除
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    public virtual new async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+    {
+        return await base.DeleteAsync(func);
+    }
+
+    /// <summary>
     /// 修改
     /// </summary>
     /// <param name="entity"></param>
@@ -105,6 +135,26 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
         return await base.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量修改
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> UpdateBatchAsync(TEntity[] entities)
+    {
+        return await base.UpdateRangeAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量修改
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> UpdateBatchAsync(List<TEntity> entities)
+    {
+        return await base.UpdateRangeAsync(entities);
     }
 
     /// <summary>

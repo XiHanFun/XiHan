@@ -9,7 +9,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace ZhaiFanhuaBlog.Utils.Infos;
+namespace ZhaiFanhuaBlog.Utils.Info;
 
 /// <summary>
 /// 环境信息帮助类

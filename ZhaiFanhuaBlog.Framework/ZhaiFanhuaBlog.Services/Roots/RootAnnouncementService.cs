@@ -24,6 +24,6 @@ public class RootAnnouncementService : BaseService<RootAnnouncement>, IRootAnnou
     public RootAnnouncementService(IRootAnnouncementRepository iRootAnnouncementRepository)
     {
         _IRootAnnouncementRepository = iRootAnnouncementRepository;
-        _iBaseRepository = iRootAnnouncementRepository;
+        base._IBaseRepository = iRootAnnouncementRepository;
     }
 }

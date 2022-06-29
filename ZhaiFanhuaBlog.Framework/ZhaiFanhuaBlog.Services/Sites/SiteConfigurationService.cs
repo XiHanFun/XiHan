@@ -24,6 +24,6 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
     public SiteConfigurationService(ISiteConfigurationRepository iSiteConfigurationRepository)
     {
         _ISiteConfigurationRepository = iSiteConfigurationRepository;
-        _iBaseRepository = iSiteConfigurationRepository;
+        base._IBaseRepository = iSiteConfigurationRepository;
     }
 }

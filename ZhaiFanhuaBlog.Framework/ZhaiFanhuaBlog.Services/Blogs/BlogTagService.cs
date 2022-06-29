@@ -24,6 +24,6 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
     public BlogTagService(IBlogTagRepository iBlogTagRepository)
     {
         _IBlogTagRepository = iBlogTagRepository;
-        _iBaseRepository = iBlogTagRepository;
+        base._IBaseRepository = iBlogTagRepository;
     }
 }

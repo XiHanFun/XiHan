@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
-using ZhaiFanhuaBlog.Utils.Infos;
+using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;

@@ -24,6 +24,6 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
     public BlogCommentPollService(IBlogCommentPollRepository iBlogCommentPollRepository)
     {
         _IBlogCommentPollRepository = iBlogCommentPollRepository;
-        _iBaseRepository = iBlogCommentPollRepository;
+        base._IBaseRepository = iBlogCommentPollRepository;
     }
 }

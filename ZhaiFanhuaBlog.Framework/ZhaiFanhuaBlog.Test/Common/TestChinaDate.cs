@@ -1,29 +1,28 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AnyTest
-// Guid:f8932e35-8e81-4091-9f48-dbf7552df18c
+// FileName:TestChinaDate
+// Guid:59adf8de-21a2-455a-9f25-c865fceb8231
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-01 上午 11:32:21
+// CreateTime:2022-06-30 上午 02:14:37
 // ----------------------------------------------------------------
 
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Date;
 using ZhaiFanhuaBlog.Utils.Formats;
 
-namespace ZhaiFanhuaBlog.Test;
+namespace ZhaiFanhuaBlog.Test.Common;
 
 /// <summary>
-/// AnyTest
+/// 测试农历
 /// </summary>
-public class AnyTest
+public static class TestChinaDate
 {
-    public AnyTest()
+    public static void ChinaDate()
     {
-        //DateTime dateTime1 = DateTime.Now;
-        //DateTime dateTime2 = DateTime.Now.AddDays(1).AddHours(10).AddMinutes(15).AddSeconds(26);
-        //Console.WriteLine(TimeFormatHelper.ParseTimeMilliseconds(dateTime1, dateTime2));
-        Console.WriteLine("开始");
+        DateTime dateTime1 = DateTime.Now;
+        DateTime dateTime2 = DateTime.Now.AddDays(1).AddHours(10).AddMinutes(15).AddSeconds(26);
+        Console.WriteLine(TimeFormatHelper.ParseTimeMilliseconds(dateTime1, dateTime2));
         ChineseCalendar c = new ChineseCalendar(new DateTime(2022, 10, 1));
         StringBuilder dayInfo = new StringBuilder();
         dayInfo.Append("阳历：" + c.DateString + "\r\n");
@@ -41,6 +40,5 @@ public class AnyTest
         dayInfo.Append("星宿：" + c.ChineseConstellation + "\r\n");
         dayInfo.Append("星座：" + c.Constellation + "\r\n");
         Console.WriteLine(dayInfo.ToString());
-        Console.WriteLine("结束");
     }
 }

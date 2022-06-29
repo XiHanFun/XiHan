@@ -56,7 +56,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         if (_IMemoryCache.TryGetValue(host + path + queryString, out object value))
         {
             // 请求构造函数和方法
-            context.Result = value as JsonResult;
+            context.Result = value as ActionResult;
             _ILogger.LogInformation($"资源【{host + path + queryString}】已缓存结果【{context.Result}】");
         }
         else
@@ -70,7 +70,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                 if (resourceExecuted.Result != null)
                 {
                     TimeSpan SyncTimeout = TimeSpan.FromMinutes(_IConfiguration.GetValue<int>("Cache:SyncTimeout"));
-                    var result = resourceExecuted.Result as JsonResult;
+                    var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(host + path + queryString, result, SyncTimeout);
                     _ILogger.LogInformation($"资源【{host + path + queryString}】开始缓存【{result}】");
                     _ILogger.LogInformation($"请求结果为【{result}】");

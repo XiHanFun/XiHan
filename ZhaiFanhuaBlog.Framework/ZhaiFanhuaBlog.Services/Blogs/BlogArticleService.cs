@@ -24,6 +24,6 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     public BlogArticleService(IBlogArticleRepository iBlogArticleRepository)
     {
         _IBlogArticleRepository = iBlogArticleRepository;
-        _iBaseRepository = iBlogArticleRepository;
+        base._IBaseRepository = iBlogArticleRepository;
     }
 }

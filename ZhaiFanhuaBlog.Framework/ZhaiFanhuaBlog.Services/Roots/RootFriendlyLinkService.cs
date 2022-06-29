@@ -24,6 +24,6 @@ public class RootFriendlyLinkService : BaseService<RootFriendlyLink>, IRootFrien
     public RootFriendlyLinkService(IRootFriendlyLinkRepository iRootFriendlyLinkRepository)
     {
         _IRootFriendlyLinkRepository = iRootFriendlyLinkRepository;
-        _iBaseRepository = iRootFriendlyLinkRepository;
+        base._IBaseRepository = iRootFriendlyLinkRepository;
     }
 }

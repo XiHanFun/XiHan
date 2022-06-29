@@ -9,7 +9,7 @@
 
 using System.Reflection;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.Infos;
+using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 

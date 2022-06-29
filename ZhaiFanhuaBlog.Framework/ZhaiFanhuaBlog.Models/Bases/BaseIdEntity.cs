@@ -21,9 +21,4 @@ public abstract class BaseIdEntity<TKey> : IBaseEntity<Guid>
     /// </summary>
     [SugarColumn(IsPrimaryKey = true)]
     public virtual Guid BaseId { get; set; } = new Guid();
-
-    /// <summary>
-    /// 软删除锁（是否支持软删除，支持为1，不支持为0）
-    /// </summary>
-    public virtual bool SoftDeleteLock { get; set; } = true;
 }

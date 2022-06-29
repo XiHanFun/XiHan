@@ -22,22 +22,22 @@ public class RootState : BaseDeleteEntity<Guid>
     /// </summary>
     /// <returns></returns>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string? TypeKey { get; set; } = null;
+    public string TypeKey { get; set; } = string.Empty;
 
     /// <summary>
     /// 类型名称（中文表名称）
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string? TypeName { get; set; } = null;
+    public string TypeName { get; set; } = string.Empty;
 
     /// <summary>
     /// 状态代码 正常值(1)
     /// </summary>
-    public int StateKey { get; set; }
+    public int StateKey { get; set; } = 1;
 
     /// <summary>
     /// 状态名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string? StateName { get; set; } = null;
+    [SugarColumn(ColumnDataType = "nvarchar(100)")]
+    public string StateName { get; set; } = string.Empty;
 }

@@ -10,7 +10,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ZhaiFanhuaBlog.Utils.Infos;
+namespace ZhaiFanhuaBlog.Utils.Info;
 
 /// <summary>
 /// 应用信息帮助类

@@ -24,6 +24,6 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
     public UserRoleAuthorityService(IUserRoleAuthorityRepository iUserRoleAuthorityRepository)
     {
         _IUserRoleAuthorityRepository = iUserRoleAuthorityRepository;
-        base._iBaseRepository = iUserRoleAuthorityRepository;
+        base._IBaseRepository = iUserRoleAuthorityRepository;
     }
 }

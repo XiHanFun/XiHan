@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using SqlSugar;
+using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.Models.Bases;
 
@@ -17,13 +18,13 @@ namespace ZhaiFanhuaBlog.Models.Bases;
 public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
 {
     /// <summary>
-    /// 类型代码
+    /// 状态主键
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public virtual string TypeKey { get; set; } = string.Empty;
+    public virtual Guid StateGuid { get; set; }
 
     /// <summary>
-    /// 状态代码 正常值(1)
+    /// 状态
     /// </summary>
-    public virtual int StateKey { get; set; }
+    [SugarColumn(IsIgnore = true)]
+    public RootState? RootState { get; set; }
 }

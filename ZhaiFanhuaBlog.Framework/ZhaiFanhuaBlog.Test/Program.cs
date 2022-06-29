@@ -16,12 +16,15 @@ namespace ZhaiFanhuaBlog.Test;
 /// </summary>
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         Console.WriteLine("Hello ZhaiFanhuaBlog.Test!");
-        // UtilsTest commonTest = new();
-
-        AnyTest anyTest = new AnyTest();
+        //TestChinaDate.ChinaDate();
+        //await TestCodeFirst.CodeFirst();
+        //TestDiskInformation.DiskInformation();
+        //TestEncryption.Encryption();
+        //TestResourceMigration.ResourceMigration();
+        return;
         _ = Console.ReadKey();
     }
 }

@@ -24,6 +24,6 @@ public class SiteLogService : BaseService<SiteLog>, ISiteLogService
     public SiteLogService(ISiteLogRepository iSiteLogRepository)
     {
         _ISiteLogRepository = iSiteLogRepository;
-        _iBaseRepository = iSiteLogRepository;
+        base._IBaseRepository = iSiteLogRepository;
     }
 }

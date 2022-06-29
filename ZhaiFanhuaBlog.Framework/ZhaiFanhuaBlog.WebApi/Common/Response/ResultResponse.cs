@@ -7,7 +7,7 @@
 // CreateTime:2022-05-08 下午 11:46:50
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.Utils.Summaries;
+using ZhaiFanhuaBlog.Utils.Summary;
 using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
 using ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 

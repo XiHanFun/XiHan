@@ -24,6 +24,6 @@ public class UserOauthService : BaseService<UserOauth>, IUserOauthService
     public UserOauthService(IUserOauthRepository iUserOauthRepository)
     {
         _IUserOauthRepository = iUserOauthRepository;
-        base._iBaseRepository = iUserOauthRepository;
+        base._IBaseRepository = iUserOauthRepository;
     }
 }

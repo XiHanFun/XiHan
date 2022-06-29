@@ -10,7 +10,7 @@
 using System.Runtime.InteropServices;
 using ZhaiFanhuaBlog.Utils.Formats;
 
-namespace ZhaiFanhuaBlog.Utils.Infos;
+namespace ZhaiFanhuaBlog.Utils.Info;
 
 /// <summary>
 /// 系统信息帮助类

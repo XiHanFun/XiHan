@@ -10,7 +10,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace ZhaiFanhuaBlog.Utils.Verifications;
+namespace ZhaiFanhuaBlog.Utils.Verification;
 
 /// <summary>
 /// 邮件帮助类

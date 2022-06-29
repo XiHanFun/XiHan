@@ -10,7 +10,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ZhaiFanhuaBlog.Utils.Summaries;
+namespace ZhaiFanhuaBlog.Utils.Summary;
 
 /// <summary>
 /// 枚举描述帮助类

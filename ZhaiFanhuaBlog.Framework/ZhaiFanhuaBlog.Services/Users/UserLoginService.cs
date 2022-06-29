@@ -24,6 +24,6 @@ public class UserLoginService : BaseService<UserLogin>, IUserLoginService
     public UserLoginService(IUserLoginRepository iUserLoginRepository)
     {
         _IUserLoginRepository = iUserLoginRepository;
-        base._iBaseRepository = iUserLoginRepository;
+        base._IBaseRepository = iUserLoginRepository;
     }
 }

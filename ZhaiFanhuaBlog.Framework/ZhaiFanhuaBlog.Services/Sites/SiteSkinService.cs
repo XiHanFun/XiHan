@@ -24,6 +24,6 @@ public class SiteSkinService : BaseService<SiteSkin>, ISiteSkinService
     public SiteSkinService(ISiteSkinRepository iSiteSkinRepository)
     {
         _ISiteSkinRepository = iSiteSkinRepository;
-        _iBaseRepository = iSiteSkinRepository;
+        base._IBaseRepository = iSiteSkinRepository;
     }
 }

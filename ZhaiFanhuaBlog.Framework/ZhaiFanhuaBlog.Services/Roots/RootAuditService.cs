@@ -24,6 +24,6 @@ public class RootAuditService : BaseService<RootAudit>, IRootAuditService
     public RootAuditService(IRootAuditRepository iRootAuditRepository)
     {
         _IRootAuditRepository = iRootAuditRepository;
-        _iBaseRepository = iRootAuditRepository;
+        base._IBaseRepository = iRootAuditRepository;
     }
 }

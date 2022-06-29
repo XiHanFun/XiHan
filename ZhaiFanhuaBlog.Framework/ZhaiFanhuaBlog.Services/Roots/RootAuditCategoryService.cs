@@ -24,6 +24,6 @@ public class RootAuditCategoryService : BaseService<RootAuditCategory>, IRootAud
     public RootAuditCategoryService(IRootAuditCategoryRepository iRootAuditCategoryRepository)
     {
         _IRootAuditCategoryRepository = iRootAuditCategoryRepository;
-        _iBaseRepository = iRootAuditCategoryRepository;
+        base._IBaseRepository = iRootAuditCategoryRepository;
     }
 }

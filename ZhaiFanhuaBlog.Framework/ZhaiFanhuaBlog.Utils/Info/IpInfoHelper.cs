@@ -10,7 +10,7 @@
 using System.Net.Sockets;
 using System.Net;
 
-namespace ZhaiFanhuaBlog.Utils.Infos;
+namespace ZhaiFanhuaBlog.Utils.Info;
 
 public static class IpInfoHelper
 {

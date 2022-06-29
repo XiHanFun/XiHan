@@ -24,6 +24,6 @@ public class UserNoticeService : BaseService<UserNotice>, IUserNoticeService
     public UserNoticeService(IUserNoticeRepository iUserNoticeRepository)
     {
         _IUserNoticeRepository = iUserNoticeRepository;
-        base._iBaseRepository = iUserNoticeRepository;
+        base._IBaseRepository = iUserNoticeRepository;
     }
 }

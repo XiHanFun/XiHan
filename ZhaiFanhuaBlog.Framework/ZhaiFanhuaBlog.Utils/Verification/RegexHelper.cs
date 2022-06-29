@@ -9,7 +9,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace ZhaiFanhuaBlog.Utils.Verifications;
+namespace ZhaiFanhuaBlog.Utils.Verification;
 
 /// <summary>
 /// 字符验证帮助类

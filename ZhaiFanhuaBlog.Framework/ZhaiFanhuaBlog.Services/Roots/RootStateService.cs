@@ -24,6 +24,44 @@ public class RootStateService : BaseService<RootState>, IRootStateService
     public RootStateService(IRootStateRepository iRootStateRepository)
     {
         _IRootStateRepository = iRootStateRepository;
-        _iBaseRepository = iRootStateRepository;
+        base._IBaseRepository = iRootStateRepository;
     }
+
+    /// <summary>
+    /// 初始化状态
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> InitRootStatesAsync()
+    {
+        return await _IRootStateRepository.CreateBatchAsync(RootStates);
+    }
+
+    public List<RootState> RootStates = new()
+    {
+        // All 总状态
+        new RootState{
+            TypeKey = "All",
+            TypeName = "总状态",
+            StateKey = 3,
+            StateName = "异常",
+        },
+        new RootState{
+            TypeKey = "All",
+            TypeName = "总状态",
+            StateKey = 2,
+            StateName = "审核",
+        },
+        new RootState{
+            TypeKey = "All",
+            TypeName = "总状态",
+            StateKey = 1,
+            StateName = "正常",
+        },
+        new RootState{
+            TypeKey = "All",
+            TypeName = "总状态",
+            StateKey = 0,
+            StateName = "删除",
+        }
+    };
 }

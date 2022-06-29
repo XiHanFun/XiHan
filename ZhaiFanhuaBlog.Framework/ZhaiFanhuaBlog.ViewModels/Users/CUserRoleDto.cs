@@ -8,7 +8,7 @@
 // ----------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
-using ZhaiFanhuaBlog.Utils.Verifications;
+using ZhaiFanhuaBlog.Utils.Verification;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 

@@ -24,6 +24,6 @@ public class UserCollectService : BaseService<UserCollect>, IUserCollectService
     public UserCollectService(IUserCollectRepository iUserCollectRepository)
     {
         _IUserCollectRepository = iUserCollectRepository;
-        base._iBaseRepository = iUserCollectRepository;
+        base._IBaseRepository = iUserCollectRepository;
     }
 }

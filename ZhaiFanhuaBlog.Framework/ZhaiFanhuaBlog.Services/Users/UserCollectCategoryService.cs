@@ -24,6 +24,6 @@ public class UserCollectCategoryService : BaseService<UserCollectCategory>, IUse
     public UserCollectCategoryService(IUserCollectCategoryRepository iUserCollectCategoryRepository)
     {
         _IUserCollectCategoryRepository = iUserCollectCategoryRepository;
-        base._iBaseRepository = iUserCollectCategoryRepository;
+        base._IBaseRepository = iUserCollectCategoryRepository;
     }
 }
