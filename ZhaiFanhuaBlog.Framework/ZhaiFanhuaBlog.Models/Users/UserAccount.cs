@@ -87,4 +87,13 @@ public class UserAccount : BaseEntity
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)")]
     public IPAddress? LastLoginIp { get; set; }
+
+    /// <summary>
+    /// 用户角色
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    public IEnumerable<UserRole>? UserRoles { get; set; }
+
+    [SugarColumn(IsIgnore = true)]
+    public IEnumerable<UserAccountRole>? UserAccountRoles { get; set; }
 }

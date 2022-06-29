@@ -78,14 +78,12 @@ public class Program
         app.UseCustomSwagger(config);
         // 跨域
         app.UseCors();
-        // 添加状态码拦截中间件
-        //app.UseUnifyResultStatusCodes();
         // 强制https跳转
         app.UseHttpsRedirection();
         // 使用静态文件
         app.UseStaticFiles();
         // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
-        //app.UseSerilogRequestLogging();
+        //app.UseSerilog();
         // 路由
         app.UseRouting();
         // 鉴权

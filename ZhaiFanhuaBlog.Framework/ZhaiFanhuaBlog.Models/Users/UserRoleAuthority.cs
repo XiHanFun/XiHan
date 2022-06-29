@@ -25,4 +25,9 @@ public class UserRoleAuthority : BaseEntity
     /// 权限
     /// </summary>
     public Guid AuthorityId { get; set; }
+
+    /// <summary>
+    /// 权限类型（0:可访问，1:可授权）
+    /// </summary>
+    public int AuthorityType { get; set; }
 }
