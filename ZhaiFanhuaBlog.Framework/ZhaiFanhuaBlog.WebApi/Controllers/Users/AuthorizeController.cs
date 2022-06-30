@@ -24,6 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
 public class AuthorizeController : ControllerBase
 {
     private readonly IConfiguration _configuration;
@@ -46,7 +47,6 @@ public class AuthorizeController : ControllerBase
     /// <param name="accountName"></param>
     /// <param name="accountPassword"></param>
     /// <returns></returns>
-    [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
     [HttpPost("Get/Token/{accountName}")]
     public async Task<string> GetTokenByAccountName(string accountName, string accountPassword)
     {
