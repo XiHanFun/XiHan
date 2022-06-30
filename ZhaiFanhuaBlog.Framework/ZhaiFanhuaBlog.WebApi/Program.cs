@@ -69,7 +69,7 @@ public class Program
             // HTTP 严格传输安全
             app.UseHsts();
         }
-        // nginx 反向代理获取真实IP
+        // Nginx 反向代理获取真实IP
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
