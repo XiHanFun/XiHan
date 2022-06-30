@@ -61,10 +61,10 @@ public static class TestCodeFirst
             {
                 var rootState = new RootState
                 {
-                    TypeKey = ws.Cells[row, col].Value.ToString(),
-                    TypeName = ws.Cells[row, col + 1].Value.ToString(),
-                    StateKey = int.Parse(ws.Cells[row, col + 2].Value.ToString()),
-                    StateName = ws.Cells[row, col + 3].Value.ToString()
+                    //TypeKey = ws.Cells[row, col].Value.ToString(),
+                    //TypeName = ws.Cells[row, col + 1].Value.ToString(),
+                    //StateKey = int.Parse(ws.Cells[row, col + 2].Value.ToString()),
+                    //StateName = ws.Cells[row, col + 3].Value.ToString()
                 };
                 rootStateList.Add(rootState);
                 row += 1;

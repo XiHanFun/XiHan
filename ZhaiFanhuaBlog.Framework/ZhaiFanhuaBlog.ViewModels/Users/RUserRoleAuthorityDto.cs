@@ -1,21 +1,21 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserRoleAuthority
-// Guid:73293770-9bdc-4646-a03f-fba5cd908868
+// FileName:RUserRoleAuthorityDto
+// Guid:6a7a2b89-3373-4fc3-8836-c40cf08db2d6
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 04:51:28
+// CreateTime:2022-07-01 上午 03:31:07
 // ----------------------------------------------------------------
 
-using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Users;
 
-namespace ZhaiFanhuaBlog.Models.Users;
+namespace ZhaiFanhuaBlog.ViewModels.Users;
 
 /// <summary>
-/// 用户角色权限关联表
+/// RUserRoleAuthorityDto
 /// </summary>
-public class UserRoleAuthority : BaseEntity
+public class RUserRoleAuthorityDto : BaseEntity
 {
     /// <summary>
     /// 角色
@@ -35,12 +35,10 @@ public class UserRoleAuthority : BaseEntity
     /// <summary>
     /// 用户角色
     /// </summary>
-    [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 
     /// <summary>
     /// 用户权限
     /// </summary>
-    [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserAuthority>? UserAuthorities { get; set; }
 }

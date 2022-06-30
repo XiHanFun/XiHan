@@ -60,12 +60,12 @@ public class RBaseDto
     public DateTime? DeleteTime { get; set; }
 
     /// <summary>
-    /// 类型代码
+    /// 类型名称（中文表名称）
     /// </summary>
-    public string? TypeKey { get; set; }
+    public string? TypeName { get; set; }
 
     /// <summary>
-    /// 状态代码 正常值(1)
+    /// 状态名称
     /// </summary>
-    public int StateKey { get; set; }
+    public string? StateName { get; set; }
 }

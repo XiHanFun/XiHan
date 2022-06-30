@@ -27,14 +27,14 @@ public class CUserAuthorityDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(10, ErrorMessage = "{0}不能多于{1}个字")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限类型
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(10, ErrorMessage = "{0}不能多于{1}个字")]
-    public string? Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限描述
