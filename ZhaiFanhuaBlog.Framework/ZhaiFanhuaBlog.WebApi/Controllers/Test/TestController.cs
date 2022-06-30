@@ -10,10 +10,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
+namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 
 /// <summary>
-/// 测试
+/// 测试接口
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]

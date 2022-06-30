@@ -14,7 +14,7 @@ using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 
 /// <summary>
-/// RootController
+/// 系统管理
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
