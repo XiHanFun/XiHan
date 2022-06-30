@@ -22,5 +22,5 @@ public interface IUserRoleService : IBaseService<UserRole>
 
     Task<UserRole> FindUserRoleAsync(Guid guid);
 
-    Task<List<UserRole>> QueryUserAuthoritiesAsync();
+    Task<List<UserRole>> QueryUserRolesAsync();
 }

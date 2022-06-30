@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Test;
 /// </summary>
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static Task Main(string[] args)
     {
         Console.WriteLine("Hello ZhaiFanhuaBlog.Test!");
         //TestChinaDate.ChinaDate();
@@ -24,7 +24,7 @@ public class Program
         //TestDiskInformation.DiskInformation();
         //TestEncryption.Encryption();
         //TestResourceMigration.ResourceMigration();
-        return;
-        _ = Console.ReadKey();
+        Console.ReadKey();
+        return Task.CompletedTask;
     }
 }

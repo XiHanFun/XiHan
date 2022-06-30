@@ -131,14 +131,14 @@ public class ResultResponse
     /// 请求失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static ResultModel BadRequest(string message)
+    public static ResultModel BadRequest(string messageData)
     {
         return new ResultModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.BadRequest) + "," + message,
-            Data = null
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.BadRequest),
+            Data = messageData
         };
     }
 

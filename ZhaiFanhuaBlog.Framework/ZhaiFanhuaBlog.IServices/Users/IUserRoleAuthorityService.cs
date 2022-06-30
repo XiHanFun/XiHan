@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IUserRoleAuthorityService
+// FileName:IUserRoleAuthorityAuthorityService
 // Guid:619a9c65-08b5-b2c7-0e17-57a30f09e61d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,4 +14,13 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserRoleAuthorityService : IBaseService<UserRoleAuthority>
 {
+    Task<bool> CreateUserRoleAuthorityAsync(UserRoleAuthority userRole);
+
+    Task<bool> DeleteUserRoleAuthorityAsync(Guid guid);
+
+    Task<UserRoleAuthority> ModifyUserRoleAuthorityAsync(UserRoleAuthority userRole);
+
+    Task<UserRoleAuthority> FindUserRoleAuthorityAsync(Guid guid);
+
+    Task<List<UserRoleAuthority>> QueryUserRoleAuthoritiesAsync();
 }
