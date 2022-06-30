@@ -77,6 +77,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 新增返回Guid
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<Guid> CreateReturnGuidAsync(TEntity entity)
+    {
+        return Guid.Parse((await base.InsertReturnBigIdentityAsync(entity)).ToString());
+    }
+
+    /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>

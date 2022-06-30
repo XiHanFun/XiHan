@@ -92,8 +92,5 @@ public class UserAccount : BaseEntity
     /// 用户角色
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public IEnumerable<UserRole>? UserRoles { get; set; }
-
-    [SugarColumn(IsIgnore = true)]
-    public IEnumerable<UserAccountRole>? UserAccountRoles { get; set; }
+    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

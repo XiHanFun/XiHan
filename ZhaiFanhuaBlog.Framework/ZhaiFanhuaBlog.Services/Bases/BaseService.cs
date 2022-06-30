@@ -34,6 +34,16 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     }
 
     /// <summary>
+    /// 新增返回Guid
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<Guid> CreateReturnGuidAsync(TEntity entity)
+    {
+        return await _IBaseRepository.CreateReturnGuidAsync(entity);
+    }
+
+    /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>

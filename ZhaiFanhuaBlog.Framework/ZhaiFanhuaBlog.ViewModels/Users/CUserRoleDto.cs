@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
-using ZhaiFanhuaBlog.Utils.Verification;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
@@ -28,7 +27,7 @@ public class CUserRoleDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(10, ErrorMessage = "{0}不能多于{1}个字")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述

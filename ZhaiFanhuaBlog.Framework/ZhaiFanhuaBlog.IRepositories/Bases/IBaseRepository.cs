@@ -20,6 +20,8 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
 {
     Task<bool> CreateAsync(TEntity entity);
 
+    Task<Guid> CreateReturnGuidAsync(TEntity entity);
+
     Task<bool> CreateBatchAsync(TEntity[] entities);
 
     Task<bool> CreateBatchAsync(List<TEntity> entities);
