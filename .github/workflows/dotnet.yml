@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ZhaiFanhuaBlog.Framework
+        working-directory: ./ZhaiFanhuaBlog.Framework/
 
     steps:
     # 拉取代码
@@ -26,8 +26,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
+      run: dotnet restore ZhaiFanhuaBlog.sln
     - name: Build
-      run: dotnet build --no-restore ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
+      run: dotnet build --no-restore ZhaiFanhuaBlog.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
+      run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
