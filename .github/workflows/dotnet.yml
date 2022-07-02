@@ -13,9 +13,6 @@ jobs:
   build:
     # 服务器环境：最新版 Ubuntu
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .\ZhaiFanhuaBlog.Framework\
 
     steps:
     # 拉取代码
