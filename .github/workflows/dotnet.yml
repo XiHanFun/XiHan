@@ -24,8 +24,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet ZhaiFanhuaBlog.sln
+      run: dotnet .\ZhaiFanhuaBlog.sln
     - name: Build
-      run: dotnet build --no-restore ZhaiFanhuaBlog.sln
+      run: dotnet build --no-restore .\ZhaiFanhuaBlog.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
+      run: dotnet test --no-build --verbosity normal .\ZhaiFanhuaBlog.sln
