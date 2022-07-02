@@ -23,7 +23,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
+      run: dotnet restore ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
     - name: Build
       run: dotnet build --no-restore ZhaiFanhuaBlog.Framework/ZhaiFanhuaBlog.sln
     - name: Test
