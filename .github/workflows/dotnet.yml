@@ -15,17 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ZhaiFanhuaBlog.Framework
+        working-directory: .\ZhaiFanhuaBlog.Framework
 
     steps:
+    # 拉取代码
     - uses: actions/checkout@v3
+    # 环境
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet .\ZhaiFanhuaBlog.sln
+      run: dotnet ZhaiFanhuaBlog.sln
     - name: Build
-      run: dotnet build --no-restore .\ZhaiFanhuaBlog.sln
+      run: dotnet build --no-restoreZhaiFanhuaBlog.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal .\ZhaiFanhuaBlog.sln
+      run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
