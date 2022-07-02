@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .\ZhaiFanhuaBlog.Framework
+        working-directory: .\ZhaiFanhuaBlog.Framework\
 
     steps:
     # 拉取代码
@@ -28,6 +28,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet ZhaiFanhuaBlog.sln
     - name: Build
-      run: dotnet build --no-restoreZhaiFanhuaBlog.sln
+      run: dotnet build --no-restore ZhaiFanhuaBlog.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
