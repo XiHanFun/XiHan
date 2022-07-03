@@ -188,6 +188,21 @@ public class ResultResponse
     }
 
     /// <summary>
+    /// 请求失败，数据未找到 404
+    /// </summary>
+    /// <returns></returns>
+    public static ResultModel NotFound(string messageData)
+    {
+        return new ResultModel
+        {
+            Success = false,
+            Code = ResultCode.NotFound,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.NotFound),
+            Data = messageData
+        };
+    }
+
+    /// <summary>
     /// 请求失败，参数不合法 422
     /// </summary>
     /// <returns></returns>

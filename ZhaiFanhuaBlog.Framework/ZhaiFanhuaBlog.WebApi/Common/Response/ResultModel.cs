@@ -30,7 +30,7 @@ public class ResultModel
     /// <summary>
     /// 返回信息
     /// </summary>
-    public string? Message { get; set; } = EnumDescriptionHelper.GetEnumDescription(ResultCode.UnprocessableEntity);
+    public string? Message { get; set; } = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK);
 
     /// <summary>
     /// 数据集合

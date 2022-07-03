@@ -89,19 +89,27 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
 
     public async Task<List<UserRoleAuthority>> QueryUserRoleAuthoritiesAsync()
     {
-        var userRoleAuthorities = new List<UserRoleAuthority>();
-        var userRoleAuthority = from userroleauthority in await _IUserRoleAuthorityRepository.QueryAsync()
-                                join rootstate in await _IRootStateRepository.QueryAsync() on userroleauthority.StateGuid equals rootstate.BaseId
-                                where rootstate.StateKey.Equals(1)
-                                orderby userroleauthority.CreateTime descending
-                                select userroleauthority;
-
-        foreach (var item in userRoleAuthority.ToList())
-        {
-            item.UserRoles = await _IUserRoleRepository.QueryAsync(e => e.BaseId == item.RoleId);
-            item.UserAuthorities = await _IUserAuthorityRepository.QueryAsync(e => e.BaseId == item.AuthorityId);
-            userRoleAuthorities.Add(item);
-        }
+        var userRoleAuthorities = from userroleauthorities in await _IUserRoleAuthorityRepository.QueryAsync()
+                                  join rootstates in await _IRootStateRepository.QueryAsync() on userroleauthorities.StateGuid equals rootstates.BaseId
+                                  join userroles in await _IUserRoleRepository.QueryAsync() on userroleauthorities.RoleId equals userroles.BaseId
+                                  join userauthorities in await _IUserAuthorityRepository.QueryAsync() on userroleauthorities.AuthorityId equals userauthorities.BaseId
+                                  where rootstates.StateKey.Equals(1)
+                                  orderby userroleauthorities.CreateTime descending
+                                  select userroleauthorities;
+        //select new UserRoleAuthority
+        //{
+        //    BaseId = userroleauthority.BaseId,
+        //    RoleId = userroleauthority.RoleId,
+        //    AuthorityId = userroleauthority.AuthorityId,
+        //    StateGuid = userroleauthority.StateGuid,
+        //    SoftDeleteLock = userroleauthority.SoftDeleteLock,
+        //    CreateTime = userroleauthority.CreateTime,
+        //    ModifyTime = userroleauthority.ModifyTime,
+        //    DeleteTime = userroleauthority.DeleteTime,
+        //    RootState = rootstate,
+        //    UserRoles = (IEnumerable<UserRole>)userroles,
+        //    UserAuthorities = (IEnumerable<UserAuthority>)userauthorities
+        //};
         return userRoleAuthorities.ToList();
     }
 }

@@ -51,6 +51,8 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         }
         else
         {
+            // 请求IP
+            string ip = context.HttpContext.Connection.RemoteIpAddress == null ? string.Empty : context.HttpContext.Connection.RemoteIpAddress.ToString();
             // 请求域名
             string host = context.HttpContext.Request.Host.Value;
             // 请求路径
@@ -63,9 +65,13 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             string headers = JsonConvert.SerializeObject(context.HttpContext.Request.Headers);
             // 请求Cookie
             string cookies = JsonConvert.SerializeObject(context.HttpContext.Request.Cookies);
-            // 请求IP
-            string ip = context.HttpContext.Connection.RemoteIpAddress == null ? string.Empty : context.HttpContext.Connection.RemoteIpAddress.ToString();
-            _ILogger.LogInformation($"发出请求【{host + path + queryString}】，请求方法为【{method}】，请求头【{headers}】，请求Cookie【{cookies}】方法，请求IP为【{ip}】");
+            string info = $"------------------\n" +
+                    $"\t 【请求IP】：{ip}\n" +
+                    $"\t 【请求地址】：{host + path + queryString}\n" +
+                    $"\t 【请求方法】：{method}\n" +
+                    $"\t 【请求头】：{headers}\n" +
+                    $"\t 【请求Cookie】：{cookies}";
+            _ILogger.LogInformation(info);
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
             // 执行结果

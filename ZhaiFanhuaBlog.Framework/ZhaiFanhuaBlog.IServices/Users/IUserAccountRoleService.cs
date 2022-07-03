@@ -17,4 +17,13 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 /// </summary>
 public interface IUserAccountRoleService : IBaseService<UserAccountRole>
 {
+    Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole);
+
+    Task<bool> DeleteUserAccountRoleAsync(Guid guid);
+
+    Task<UserAccountRole> ModifyUserAccountRoleAsync(UserAccountRole userAccountRole);
+
+    Task<UserAccountRole> FindUserAccountRoleAsync(Guid guid);
+
+    Task<List<UserAccountRole>> QueryUserAccountRolesAsync();
 }

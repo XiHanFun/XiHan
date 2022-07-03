@@ -7,6 +7,7 @@
 // CreateTime:2022-05-09 下午 05:14:15
 // ----------------------------------------------------------------
 
+using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Users;
@@ -25,4 +26,16 @@ public class UserAccountRole : BaseEntity
     /// 角色
     /// </summary>
     public Guid RoleId { get; set; }
+
+    /// <summary>
+    /// 用户账户
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    public virtual IEnumerable<UserAccount>? UserAccounts { get; set; }
+
+    /// <summary>
+    /// 用户角色
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

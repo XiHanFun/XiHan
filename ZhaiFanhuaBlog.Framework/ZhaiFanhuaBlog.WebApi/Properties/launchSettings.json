@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ZhaiFanhuaBlog.WebApi-Development": {
+    "ZhaiFanhuaBlog.WebApi-Dev": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "",
@@ -19,7 +19,7 @@
       "applicationUrl": "http://localhost:9708",
       "dotnetRunMessages": true
     },
-    "ZhaiFanhuaBlog.WebApi-Production": {
+    "ZhaiFanhuaBlog.WebApi-Pro": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "",

@@ -35,6 +35,10 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<UserRole, RUserRoleDto>().ReverseMap();
             mapper.CreateMap<UserRoleAuthority, CUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
+            mapper.CreateMap<UserAccount, RUserAccountDto>().ReverseMap();
+            //mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
+            //mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
         });
         return services;
     }

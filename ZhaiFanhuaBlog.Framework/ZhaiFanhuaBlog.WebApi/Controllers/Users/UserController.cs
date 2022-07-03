@@ -120,8 +120,8 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
-    [HttpGet("Authority")]
-    public async Task<ResultModel> QueryUserAuthority([FromServices] IMapper iMapper)
+    [HttpGet("Authorities")]
+    public async Task<ResultModel> QueryUserAuthorities([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserAuthorityService.QueryUserAuthoritiesAsync();
         if (userAuthorities.Count != 0)
@@ -130,87 +130,6 @@ public class UserController : ControllerBase
     }
 
     #endregion 用户权限
-
-    #region 用户角色权限
-
-    /// <summary>
-    /// 新增用户角色权限
-    /// </summary>
-    /// <param name="iMapper"></param>
-    /// <param name="cDto"></param>
-    /// <returns></returns>
-    [HttpPost("RoleAuthority")]
-    public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
-    {
-        var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
-        if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userAuthority))
-            return ResultResponse.OK("新增用户角色权限成功");
-        return ResultResponse.BadRequest("新增用户角色权限失败");
-    }
-
-    /// <summary>
-    /// 删除用户角色权限
-    /// </summary>
-    /// <param name="guid"></param>
-    /// <returns></returns>
-    [HttpDelete("RoleAuthority/{guid}")]
-    public async Task<ResultModel> DeleteUserRoleAuthority([FromRoute] Guid guid)
-    {
-        if (await _IUserRoleAuthorityService.DeleteUserRoleAuthorityAsync(guid))
-            return ResultResponse.OK("删除用户角色权限成功");
-        return ResultResponse.BadRequest("删除用户角色权限失败");
-    }
-
-    /// <summary>
-    /// 修改用户角色权限
-    /// </summary>
-    /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
-    /// <param name="cDto"></param>
-    /// <returns></returns>
-    [HttpPut("RoleAuthority/{guid}")]
-    public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
-    {
-        var userAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
-        userAuthority.AuthorityId = cDto.AuthorityId;
-        userAuthority.RoleId = cDto.RoleId;
-        userAuthority.AuthorityType = cDto.AuthorityType;
-        userAuthority = await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userAuthority);
-        if (userAuthority != null)
-            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
-        return ResultResponse.BadRequest("修改用户角色权限失败");
-    }
-
-    /// <summary>
-    /// 查找用户角色权限
-    /// </summary>
-    /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
-    /// <returns></returns>
-    [HttpGet("RoleAuthority/{guid}")]
-    public async Task<ResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
-    {
-        var userAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
-        if (userAuthority != null)
-            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
-        return ResultResponse.BadRequest("该用户角色权限不存在");
-    }
-
-    /// <summary>
-    /// 查询用户角色权限
-    /// </summary>
-    /// <param name="iMapper"></param>
-    /// <returns></returns>
-    [HttpGet("RoleAuthority")]
-    public async Task<ResultModel> QueryUserRoleAuthority([FromServices] IMapper iMapper)
-    {
-        var userAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserRoleAuthorityDto>>(userAuthorities));
-        return ResultResponse.BadRequest("未查询到用户角色权限");
-    }
-
-    #endregion 用户角色权限
 
     #region 用户角色
 
@@ -282,8 +201,8 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
-    [HttpGet("Role")]
-    public async Task<ResultModel> QueryUserRole([FromServices] IMapper iMapper)
+    [HttpGet("Roles")]
+    public async Task<ResultModel> QueryUserRoles([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserRoleService.QueryUserRolesAsync();
         if (userAuthorities.Count != 0)
@@ -295,13 +214,234 @@ public class UserController : ControllerBase
 
     #region 用户账户
 
-    ///
+    /// <summary>
+    /// 新增用户账户
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPost("Account")]
+    public async Task<ResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
+    {
+        var userAccount = iMapper.Map<UserAccount>(cDto);
+        if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
+            return ResultResponse.OK("新增用户账户成功");
+        return ResultResponse.BadRequest("新增用户账户失败");
+    }
+
+    /// <summary>
+    /// 删除用户账户
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpDelete("Account/{guid}")]
+    public async Task<ResultModel> DeleteUserAccount([FromRoute] Guid guid)
+    {
+        if (await _IUserAccountService.DeleteUserAccountAsync(guid))
+            return ResultResponse.OK("删除用户账户成功");
+        return ResultResponse.BadRequest("删除用户账户失败");
+    }
+
+    /// <summary>
+    /// 修改用户账户
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPut("Account/{guid}")]
+    public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountDto cDto)
+    {
+        var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
+        userAccount.Name = cDto.Name;
+        userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
+        if (userAccount != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
+        return ResultResponse.BadRequest("修改用户账户失败");
+    }
+
+    /// <summary>
+    /// 查找用户账户
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpGet("Account/{guid}")]
+    public async Task<ResultModel?> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    {
+        var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
+        if (userAccount != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
+        return ResultResponse.BadRequest("该用户账户不存在");
+    }
+
+    /// <summary>
+    /// 查询用户账户
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <returns></returns>
+    [HttpGet("Accounts")]
+    public async Task<ResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
+    {
+        var userAuthorities = await _IUserAccountService.QueryUserAccountsAsync();
+        if (userAuthorities.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserAccountDto>>(userAuthorities));
+        return ResultResponse.BadRequest("未查询到用户账户");
+    }
 
     #endregion 用户账户
 
-    #region 用户账户角色
+    #region 为用户角色分配权限
 
-    ///
+    /// <summary>
+    /// 新增用户角色权限
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPost("Role/Authority")]
+    public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
+    {
+        var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
+        if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userAuthority))
+            return ResultResponse.OK("新增用户角色权限成功");
+        return ResultResponse.BadRequest("新增用户角色权限失败");
+    }
 
-    #endregion 用户账户角色
+    /// <summary>
+    /// 删除用户角色权限
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpDelete("Role/Authority/{guid}")]
+    public async Task<ResultModel> DeleteUserRoleAuthority([FromRoute] Guid guid)
+    {
+        if (await _IUserRoleAuthorityService.DeleteUserRoleAuthorityAsync(guid))
+            return ResultResponse.OK("删除用户角色权限成功");
+        return ResultResponse.BadRequest("删除用户角色权限失败");
+    }
+
+    /// <summary>
+    /// 修改用户角色权限
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPut("Role/Authority/{guid}")]
+    public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
+    {
+        var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
+        if (await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userAuthority) != null)
+            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
+        return ResultResponse.BadRequest("修改用户角色权限失败");
+    }
+
+    /// <summary>
+    /// 查找用户角色权限
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpGet("Role/Authority/{guid}")]
+    public async Task<ResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    {
+        var userAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
+        if (userAuthority != null)
+            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
+        return ResultResponse.BadRequest("该用户角色权限不存在");
+    }
+
+    /// <summary>
+    /// 查询用户角色权限
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <returns></returns>
+    [HttpGet("Role/Authorities")]
+    public async Task<ResultModel> QueryUserRoleAuthorities([FromServices] IMapper iMapper)
+    {
+        var userAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
+        if (userAuthorities.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserRoleAuthorityDto>>(userAuthorities));
+        return ResultResponse.BadRequest("未查询到用户角色权限");
+    }
+
+    #endregion 为用户角色分配权限
+
+    #region 为用户账户分配角色
+
+    /// <summary>
+    /// 新增用户账户角色
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPost("Account/Role")]
+    public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
+    {
+        var userAuthority = iMapper.Map<UserAccountRole>(cDto);
+        if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAuthority))
+            return ResultResponse.OK("新增用户账户角色成功");
+        return ResultResponse.BadRequest("新增用户账户角色失败");
+    }
+
+    /// <summary>
+    /// 删除用户账户角色
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpDelete("Account/Role/{guid}")]
+    public async Task<ResultModel> DeleteUserAccountRole([FromRoute] Guid guid)
+    {
+        if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid))
+            return ResultResponse.OK("删除用户账户角色成功");
+        return ResultResponse.BadRequest("删除用户账户角色失败");
+    }
+
+    /// <summary>
+    /// 修改用户账户角色
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <param name="cDto"></param>
+    /// <returns></returns>
+    [HttpPut("Account/Role/{guid}")]
+    public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountRoleDto cDto)
+    {
+        var userAuthority = iMapper.Map<UserAccountRole>(cDto);
+        if (await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAuthority) != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAuthority));
+        return ResultResponse.BadRequest("修改用户账户角色失败");
+    }
+
+    /// <summary>
+    /// 查找用户账户角色
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpGet("Account/Role/{guid}")]
+    public async Task<ResultModel?> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    {
+        var userAuthority = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
+        if (userAuthority != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAuthority));
+        return ResultResponse.BadRequest("该用户账户角色不存在");
+    }
+
+    /// <summary>
+    /// 查询用户账户角色
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <returns></returns>
+    [HttpGet("Account/Roles")]
+    public async Task<ResultModel> QueryUserAccountRoles([FromServices] IMapper iMapper)
+    {
+        var userAuthorities = await _IUserAccountRoleService.QueryUserAccountRolesAsync();
+        if (userAuthorities.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserAccountRoleDto>>(userAuthorities));
+        return ResultResponse.OK("未查询到用户账户角色");
+    }
+
+    #endregion 为用户账户分配角色
 }

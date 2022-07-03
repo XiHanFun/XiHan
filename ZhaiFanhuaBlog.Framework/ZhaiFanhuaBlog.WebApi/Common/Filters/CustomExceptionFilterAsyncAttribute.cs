@@ -9,6 +9,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ZhaiFanhuaBlog.WebApi.Common.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -56,7 +58,27 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
                 // 系统级别异常，不直接明文显示
                 context.Result = new JsonResult(ResultResponse.InternalServerError());
             }
-            _ILogger.LogError(context.HttpContext.Request.Path, context.Exception);
+            // 请求IP
+            string ip = context.HttpContext.Connection.RemoteIpAddress == null ? string.Empty : context.HttpContext.Connection.RemoteIpAddress.ToString();
+            // 请求域名
+            string host = context.HttpContext.Request.Host.Value;
+            // 请求路径
+            string path = context.HttpContext.Request.Path;
+            // 请求参数
+            string queryString = context.HttpContext.Request.QueryString.Value ?? string.Empty;
+            // 请求方法
+            string method = context.HttpContext.Request.Method;
+            // 请求头
+            string headers = JsonConvert.SerializeObject(context.HttpContext.Request.Headers);
+            // 请求Cookie
+            string cookies = JsonConvert.SerializeObject(context.HttpContext.Request.Cookies);
+            string error = $"------------------\n" +
+                    $"\t 【请求IP】：{ip}\n" +
+                    $"\t 【请求地址】：{host + path + queryString}\n" +
+                    $"\t 【请求方法】：{method}\n" +
+                    $"\t 【请求头】：{headers}\n" +
+                    $"\t 【请求Cookie】：{cookies}";
+            _ILogger.LogError(context.Exception, error);
         }
         // 标记异常已经处理过了
         context.ExceptionHandled = true;

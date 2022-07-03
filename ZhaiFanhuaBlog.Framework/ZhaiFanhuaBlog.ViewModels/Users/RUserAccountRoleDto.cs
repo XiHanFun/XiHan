@@ -1,10 +1,10 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RUserRoleAuthorityDto
-// Guid:6a7a2b89-3373-4fc3-8836-c40cf08db2d6
+// FileName:RUserAccountRoleDto
+// Guid:8a96fb06-2712-4560-9c8d-e4493e97e557
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-07-01 上午 03:31:07
+// CreateTime:2022-07-03 下午 07:10:03
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.ViewModels.Bases;
@@ -12,32 +12,27 @@ using ZhaiFanhuaBlog.ViewModels.Bases;
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
 /// <summary>
-/// RUserRoleAuthorityDto
+/// RUserAccountRoleDto
 /// </summary>
-public class RUserRoleAuthorityDto : RBaseDto
+public class RUserAccountRoleDto : RBaseDto
 {
+    /// <summary>
+    /// 账户
+    /// </summary>
+    public Guid AccountId { get; set; }
+
     /// <summary>
     /// 角色
     /// </summary>
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 权限
+    /// 用户账户
     /// </summary>
-    public Guid AuthorityId { get; set; }
-
-    /// <summary>
-    /// 权限类型（0:可访问，1:可授权）
-    /// </summary>
-    public int AuthorityType { get; set; }
+    public virtual IEnumerable<RUserAccountDto>? UserAccounts { get; set; }
 
     /// <summary>
     /// 用户角色
     /// </summary>
     public virtual IEnumerable<RUserRoleDto>? UserRoles { get; set; }
-
-    /// <summary>
-    /// 用户权限
-    /// </summary>
-    public virtual IEnumerable<RUserAuthorityDto>? UserAuthorities { get; set; }
 }
