@@ -13,7 +13,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
+using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
@@ -42,35 +44,55 @@ public class AuthorizeController : ControllerBase
     }
 
     /// <summary>
-    /// 用户名获取 Token
+    /// 用户名获取Token
     /// </summary>
-    /// <param name="accountName"></param>
-    /// <param name="accountPassword"></param>
     /// <returns></returns>
-    [HttpPost("Token/{accountName}")]
-    public async Task<string> GetTokenByAccountName(string accountName, string accountPassword)
+    [HttpPost("Token/AccountName")]
+    public async Task<string> GetTokenByAccountName(CUserAccountLoginByNameDto cDto)
+    {
+        // 根据用户名获取用户
+        var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Name);
+        if (userAccount == null)
+            throw new Exception("该用户名账号不存在，请先注册账号");
+        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
+            throw new Exception("密码错误，请重新登录");
+        return GetToken(userAccount);
+    }
+
+    /// <summary>
+    /// 邮箱获取Token
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("Token/AccountEmail")]
+    public async Task<string> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cDto)
+    {
+        // 根据邮箱获取用户
+        var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Email);
+        if (userAccount == null)
+            throw new Exception("该邮箱账号不存在，请先注册账号");
+        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
+            throw new Exception("密码错误，请重新登录");
+        return GetToken(userAccount);
+    }
+
+    /// <summary>
+    /// 获取Token
+    /// </summary>
+    /// <param name="userAccount"></param>
+    /// <returns></returns>
+    private string GetToken(UserAccount userAccount)
     {
         try
         {
-            if (string.IsNullOrEmpty(accountName) || string.IsNullOrEmpty(accountPassword))
-                throw new Exception("请输入账号或密码!");
-            if (accountName.Length > 10 || accountPassword.Length > 64)
-                throw new Exception("账号或密码长度不匹配!");
-            // 获取用户
-            var account = await _IUserAccountService.FindAsync(u => u.Name == accountName);
-            if (account == null)
-                throw new Exception("账号不存在，请先注册账号!");
-            if (account.Password != MD5Helper.EncryptMD5(Encoding.UTF8, accountPassword))
-                throw new Exception("密码错误，请重新登录!");
             var AccountClaims = new Claim[]{
-                new Claim(ClaimTypes.NameIdentifier, account.BaseId.ToString()),
-                new Claim(ClaimTypes.Name, account.Name??""),
-                //new Claim(ClaimTypes.Role, account.UserRoles!.FirstOrDefault()!.ToString()??""),
+                new Claim(ClaimTypes.NameIdentifier, userAccount.BaseId.ToString()),
+                new Claim(ClaimTypes.Name, userAccount.Name),
+                //new Claim(ClaimTypes.Role, userAccount.UserRoles!.FirstOrDefault()!.ToString()??""),
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration["Auth:JWT:IssuerSigningKey"]));
             var token = new JwtSecurityToken(
-                issuer: _IConfiguration["Auth:JWT:SiteDomain"],
-                audience: _IConfiguration["Auth:JWT:SiteDomain"],
+                issuer: _IConfiguration["Configuration:Domain"],
+                audience: _IConfiguration["Configuration:Domain"],
                 claims: AccountClaims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),

@@ -8,9 +8,12 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Response;
@@ -21,6 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// 用户管理
 /// </summary>
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
@@ -61,6 +65,7 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserAuthority>(cDto);
+        userAuthority.CreateId = Guid.Parse(User.FindFirst("NameIdentifier")!.Value);
         if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
             return ResultResponse.OK("新增用户权限成功");
         return ResultResponse.BadRequest("新增用户权限失败");
@@ -220,9 +225,12 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("Account")]
     public async Task<ResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
     {
+        // 密码加密
+        cDto.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password);
         var userAccount = iMapper.Map<UserAccount>(cDto);
         if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
             return ResultResponse.OK("新增用户账户成功");
@@ -266,6 +274,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Account/{guid}")]
     public async Task<ResultModel?> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {

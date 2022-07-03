@@ -7,16 +7,20 @@
 // CreateTime:2022-07-03 上午 02:45:57
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 
 /// <summary>
 /// 博客管理
 /// </summary>
-[ApiExplorerSettings(GroupName = "")]
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
+[Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Reception)]
 public class BlogController : ControllerBase
 {
 }

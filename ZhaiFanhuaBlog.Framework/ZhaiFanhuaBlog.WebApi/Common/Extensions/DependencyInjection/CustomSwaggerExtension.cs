@@ -40,7 +40,7 @@ public static class CustomSwaggerExtension
                 //添加文档介绍
                 options.SwaggerDoc(swaggerinfo.UrlPrefix, new OpenApiInfo
                 {
-                    Version = swaggerinfo.OpenApiInfo!.Version,
+                    Version = $"The Current Version: Full-{swaggerinfo.OpenApiInfo!.Version}",
                     Title = swaggerinfo.OpenApiInfo!.Title,
                     Description = swaggerinfo.OpenApiInfo!.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact

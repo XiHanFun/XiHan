@@ -7,6 +7,7 @@
 // CreateTime:2022-06-17 上午 04:42:29
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -16,6 +17,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 /// 测试接口
 /// </summary>
 [ApiController]
+[AllowAnonymous]
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Test)]

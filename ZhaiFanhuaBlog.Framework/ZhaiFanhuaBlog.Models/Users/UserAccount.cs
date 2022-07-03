@@ -25,16 +25,16 @@ public class UserAccount : BaseEntity
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户密码（MD5加密）
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(64)")]
-    public string Password { get; set; } = string.Empty;
-
-    /// <summary>
     /// 电子邮件
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(50)")]
     public string Email { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 用户密码（MD5加密）
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(64)")]
+    public string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
@@ -82,7 +82,7 @@ public class UserAccount : BaseEntity
     /// 上次登录Ip地址
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
-    public IPAddress? LastLoginIp { get; set; } = new IPAddress(new byte[] { 0, 0, 0, 0 });
+    public virtual byte[]? LastLoginIp { get; set; } = new IPAddress(new byte[] { 0, 0, 0, 0 }).GetAddressBytes();
 
     /// <summary>
     /// 用户角色

@@ -37,14 +37,14 @@ public static class CustomJwtExtension
                                  ValidateIssuer = true,
                                  // 是否验证接收者
                                  ValidateAudience = true,
-                                 // 是否调用对签名securityToken的SecurityKey进行验证
+                                 // 是否调用对签名SecurityToken的SecurityKey进行验证
                                  ValidateIssuerSigningKey = true,
                                  // 是否验证失效时间
                                  ValidateLifetime = true,
                                  // 颁发者
-                                 ValidIssuer = config.GetValue<string>("Auth:JWT:SiteDomain"),
+                                 ValidIssuer = config.GetValue<string>("Configuration:Domain"),
                                  // 接收者
-                                 ValidAudience = config.GetValue<string>("Auth:JWT:SiteDomain"),
+                                 ValidAudience = config.GetValue<string>("Configuration:Domain"),
                                  // 签名秘钥
                                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
                                  // 设置过期缓冲时间,若为0，过期时间一到立即失效

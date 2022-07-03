@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Middlewares\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -55,6 +51,10 @@
     <Content Update="Common\Config\Serilog.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Middlewares\" />
   </ItemGroup>
 
 </Project>

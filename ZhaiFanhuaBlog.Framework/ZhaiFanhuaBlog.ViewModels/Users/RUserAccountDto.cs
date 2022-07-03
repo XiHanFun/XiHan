@@ -23,11 +23,6 @@ public class RUserAccountDto : RBaseDto
     public string? Name { get; set; }
 
     /// <summary>
-    /// 用户密码（MD5加密）
-    /// </summary>
-    public string? Password { get; set; }
-
-    /// <summary>
     /// 电子邮件
     /// </summary>
     public string? Email { get; set; }
@@ -68,7 +63,12 @@ public class RUserAccountDto : RBaseDto
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
+    /// 上次登录Ip地址
+    /// </summary>
+    public virtual byte[]? LastLoginIp { get; set; }
+
+    /// <summary>
     /// 用户角色
     /// </summary>
-    public virtual UserRole? UserRoles { get; set; }
+    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

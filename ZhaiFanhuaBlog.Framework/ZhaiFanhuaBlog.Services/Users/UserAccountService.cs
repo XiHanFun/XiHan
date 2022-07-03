@@ -40,7 +40,6 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
             throw new ApplicationException("账户名称或邮箱已注册");
         userAccount.SoftDeleteLock = true;
         userAccount.StateGuid = (await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == 1)).BaseId;
-        userAccount.LastLoginIp = new IPAddress(new byte[] { 127, 0, 0, 1 });
         var result = await _IUserAccountRepository.CreateAsync(userAccount);
         return result;
     }
