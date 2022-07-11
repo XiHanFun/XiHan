@@ -104,15 +104,15 @@ public static class CustomSwaggerExtension
             {
                 //切换版本操作,参数一是使用的哪个json文件,参数二是个名字
                 options.SwaggerEndpoint($"/swagger/{swaggerinfo.UrlPrefix}/swagger.json", swaggerinfo.OpenApiInfo!.Title);
-                // API页面Title
-                options.DocumentTitle = $"{swaggerinfo.GroupName}-{config.GetValue<string>("Configuration:Name")}接口文档";
             });
             // 模型的默认扩展深度，设置为 -1 完全隐藏模型
             options.DefaultModelsExpandDepth(-1);
-            // API文档仅展开标记
-            options.DocExpansion(DocExpansion.None);
             // API前缀设置为空
             options.RoutePrefix = string.Empty;
+            // API页面标题
+            options.DocumentTitle = $"{config.GetValue<string>("Configuration:Name")}接口文档";
+            // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
+            options.DocExpansion(DocExpansion.None);
         });
         return app;
     }

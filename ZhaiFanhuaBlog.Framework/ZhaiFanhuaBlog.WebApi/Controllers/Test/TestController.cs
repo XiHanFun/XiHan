@@ -33,4 +33,16 @@ public class TestController : ControllerBase
     {
         return "测试字符串：" + str;
     }
+
+    /// <summary>
+    /// 测试2  过时接口
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    [HttpPost("Test2")]
+    [Obsolete]
+    public string Test2(string? str)
+    {
+        return "测试字符串：" + str;
+    }
 }

@@ -77,9 +77,4 @@ public class CUserAccountDto
     /// 上次登录Ip地址
     /// </summary>
     public virtual byte[]? LastLoginIp { get; set; } = new IPAddress(new byte[] { 0, 0, 0, 0 }).GetAddressBytes();
-
-    /// <summary>
-    /// 用户角色
-    /// </summary>
-    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using Microsoft.OpenApi.Models;
+using ZhaiFanhuaBlog.Utils.Summary;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -43,7 +44,7 @@ internal class SwaggerInfo
                 OpenApiInfo = new OpenApiInfo
                 {
                     Version= SwaggerVersion.v1,
-                    Title = "博客前台接口",
+                    Title = "前台接口",
                     Description = "这是用于普通用户浏览的博客前台接口",
                 }
             },
@@ -54,7 +55,7 @@ internal class SwaggerInfo
                 OpenApiInfo = new OpenApiInfo
                 {
                     Version= SwaggerVersion.v1,
-                    Title = "博客后台接口",
+                    Title = "后台接口",
                     Description = "这是用于管理的博客后台接口"
                 }
             },
@@ -65,7 +66,7 @@ internal class SwaggerInfo
                 OpenApiInfo = new OpenApiInfo
                 {
                     Version= SwaggerVersion.v1,
-                    Title = "博客授权接口",
+                    Title = "授权接口",
                     Description = "这是用于登录的博客授权接口"
                 }
             },
@@ -76,7 +77,7 @@ internal class SwaggerInfo
                 OpenApiInfo = new OpenApiInfo
                 {
                     Version= SwaggerVersion.v1,
-                    Title = "博客测试接口",
+                    Title = "测试接口",
                     Description = "这是用于测试的博客测试接口"
                 }
             }

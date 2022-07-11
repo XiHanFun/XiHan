@@ -7,6 +7,7 @@
 // CreateTime:2021-12-28 下午 11:47:21
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,6 +25,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// 登录授权
 /// </summary>
 [ApiController]
+[AllowAnonymous]
 [Route("api/[controller]")]
 [Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
