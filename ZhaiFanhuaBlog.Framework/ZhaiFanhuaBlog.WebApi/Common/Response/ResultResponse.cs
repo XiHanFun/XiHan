@@ -8,10 +8,10 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Utils.Summary;
-using ZhaiFanhuaBlog.Models.Response.Enum;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
+using ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
-namespace ZhaiFanhuaBlog.Models.Response;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response;
 
 /// <summary>
 /// 请求信息
@@ -22,9 +22,9 @@ public class ResultResponse
     /// 请求成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel Continue()
+    public static ResultModel Continue()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.Continue,
@@ -37,9 +37,9 @@ public class ResultResponse
     /// 请求成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel OK()
+    public static ResultModel OK()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -52,9 +52,9 @@ public class ResultResponse
     /// 请求成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel OK(string messageData)
+    public static ResultModel OK(string messageData)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -68,9 +68,9 @@ public class ResultResponse
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static BaseResultModel OK(dynamic data)
+    public static ResultModel OK(dynamic data)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
@@ -88,14 +88,14 @@ public class ResultResponse
     /// <param name="dataCount">数据总数</param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static BaseResultModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
+    public static ResultModel OK(int pageIndex, int pageSize, int totalCount, int dataCount, List<dynamic> data)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
-            Data = new BasePageModel
+            Data = new PageModel
             {
                 PageIndex = pageIndex,
                 PageSize = pageSize,
@@ -112,14 +112,14 @@ public class ResultResponse
     /// <param name="dataCount"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static BaseResultModel OK(int dataCount, List<dynamic> data)
+    public static ResultModel OK(int dataCount, List<dynamic> data)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = true,
             Code = ResultCode.OK,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.OK),
-            Data = new BaseTableModel
+            Data = new TableModel
             {
                 DataCount = dataCount,
                 Data = data
@@ -131,9 +131,9 @@ public class ResultResponse
     /// 请求失败，访问出错 400
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel BadRequest(string messageData)
+    public static ResultModel BadRequest(string messageData)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.BadRequest,
@@ -146,9 +146,9 @@ public class ResultResponse
     /// 请求失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel Unauthorized()
+    public static ResultModel Unauthorized()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.Unauthorized,
@@ -161,9 +161,9 @@ public class ResultResponse
     /// 请求失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel Forbidden()
+    public static ResultModel Forbidden()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.Forbidden,
@@ -176,9 +176,9 @@ public class ResultResponse
     /// 请求失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel NotFound()
+    public static ResultModel NotFound()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.NotFound,
@@ -191,9 +191,9 @@ public class ResultResponse
     /// 请求失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel NotFound(string messageData)
+    public static ResultModel NotFound(string messageData)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.NotFound,
@@ -206,14 +206,14 @@ public class ResultResponse
     /// 请求失败，参数不合法 422
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel UnprocessableEntity(int dataCount, List<dynamic> data)
+    public static ResultModel UnprocessableEntity(int dataCount, List<dynamic> data)
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.UnprocessableEntity,
             Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.UnprocessableEntity),
-            Data = new BaseDtoModel
+            Data = new DtoModel
             {
                 DataCount = dataCount,
                 Data = data
@@ -225,9 +225,9 @@ public class ResultResponse
     /// 请求失败，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel InternalServerError()
+    public static ResultModel InternalServerError()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.InternalServerError,
@@ -240,9 +240,9 @@ public class ResultResponse
     /// 请求失败，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static BaseResultModel NotImplemented()
+    public static ResultModel NotImplemented()
     {
-        return new BaseResultModel
+        return new ResultModel
         {
             Success = false,
             Code = ResultCode.NotImplemented,

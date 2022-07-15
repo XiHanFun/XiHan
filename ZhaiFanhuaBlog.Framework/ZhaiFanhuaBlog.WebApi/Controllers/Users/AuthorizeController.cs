@@ -24,9 +24,11 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// <summary>
 /// 登录授权
 /// </summary>
+[ApiController]
 [AllowAnonymous]
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
 public class AuthorizeController : ControllerBase
 {
     private readonly IConfiguration _IConfiguration;
@@ -99,7 +101,7 @@ public class AuthorizeController : ControllerBase
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             );
             var result = new JwtSecurityTokenHandler().WriteToken(token);
-            return $"Bearer {result}";
+            return result;
         }
         catch (Exception)
         {

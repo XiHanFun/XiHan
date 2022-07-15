@@ -27,7 +27,7 @@ public class UserLogin : BaseEntity
     /// 登录Ip地址
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)")]
-    public virtual byte[]? LoginIp { get; set; }
+    public IPAddress? LoginIp { get; set; }
 
     /// <summary>
     /// 代理信息

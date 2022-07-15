@@ -60,7 +60,7 @@ public static class CustomSwaggerExtension
             {
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Description = "在下框中请求头中输入【Token】进行身份验证",
+                Description = "在下框中请求头中输入【Bearer token】进行身份验证",
                 Name = "Authorization",
                 BearerFormat = "JWT",
                 Scheme = "Bearer"
