@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BaseDtoModel
+// FileName:DtoModel
 // Guid:f5a8be81-8e6c-4c3d-92a4-1fedd51f1ecc
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-17 上午 03:17:37
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Bases;
+namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
 
 /// <summary>
 /// 验证数据类
 /// </summary>
-public class BaseDtoModel
+public class DtoModel
 {
     /// <summary>
     /// 数据总数

@@ -20,16 +20,9 @@ public static class TestDiskInformation
     public static void DiskInformation()
     {
         Console.WriteLine($@"【C盘】磁盘大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetHardDiskSpace(@"C:\"))}；");
-        Console.WriteLine($@"【C盘】磁盘空余大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetHardDiskFreeSpace(@"C:\"))}；");
+        Console.WriteLine($@"【C盘】磁盘大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetHardDiskFreeSpace(@"C:\"))}；");
         Console.WriteLine($@"【C盘】磁盘空闲占比：{DirFileHelper.ProportionOfHardDiskFreeSpace(@"C:\")}；");
-        Console.WriteLine($@"【D:\DataMine\Repository】目录大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetDirectorySize(@"D:\DataMine\Repository"))}；");
-        Console.WriteLine($@"【D:\DataMine\Repository\ZhaiFanhuaBlog.Framework\README.md】文件大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetFileSize(@"D:\DataMine\Repository\ZhaiFanhuaBlog.Framework\README.md"))}；");
-
-        string[]? directories = DirFileHelper.GetDirectories(@"D:\");
-        Console.WriteLine($@"【D:\】目录：");
-        foreach (string directory in directories)
-        {
-            Console.WriteLine(directory);
-        }
+        Console.WriteLine($@"【D:\Repository\ZhaiFanhuaBlog】目录大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetDirectorySize(@"D:\Repository\ZhaiFanhuaBlog"))}；");
+        Console.WriteLine($@"【D:\Repository\ZhaiFanhuaBlog\README.md】文件大小：{FileSizeFormatHelper.ParseFileSizeBytes(DirFileHelper.GetFileSize(@"D:\Repository\ZhaiFanhuaBlog\README.md"))}；");
     }
 }

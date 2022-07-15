@@ -10,7 +10,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using ZhaiFanhuaBlog.Models.Response;
+using ZhaiFanhuaBlog.WebApi.Common.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 

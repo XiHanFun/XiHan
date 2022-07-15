@@ -71,7 +71,7 @@ public class BlogArticle : BaseEntity
     public bool IsEssence { get; set; } = false;
 
     /// <summary>
-    /// 是否是转发文章 是(true)否(false)
+    /// 是否是转发文章
     /// </summary>
     public bool IsForward { get; set; } = false;
 
