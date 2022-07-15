@@ -27,6 +27,7 @@ public static class CustomCorsExtension
             // 默认策略
             options.AddDefaultPolicy(builder =>
             {
+                // 支持多个域名端口，端口号后不可带/符号
                 string[] origins = config.GetSection("Cors:Origins").Get<string[]>();
                 // 配置允许访问的域名
                 builder.WithOrigins(origins)

@@ -26,6 +26,8 @@ public static class CustomControllerExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomControllers(this IServiceCollection services, IConfiguration config)
     {
+        // 注入HttpContextAccessor实例
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddControllers(options =>
         {
             // 全局注入过滤器

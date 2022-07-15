@@ -9,7 +9,7 @@
 
 using System.ComponentModel;
 
-namespace ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
+namespace ZhaiFanhuaBlog.Models.Response.Enum;
 
 /// <summary>
 /// 结果状态码

@@ -79,10 +79,10 @@ public class UserAccount : BaseEntity
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
-    /// 上次登录Ip地址
+    /// 注册Ip地址
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
-    public virtual byte[]? LastLoginIp { get; set; } = new IPAddress(new byte[] { 0, 0, 0, 0 }).GetAddressBytes();
+    public virtual byte[]? RegisterIp { get; set; }
 
     /// <summary>
     /// 用户角色

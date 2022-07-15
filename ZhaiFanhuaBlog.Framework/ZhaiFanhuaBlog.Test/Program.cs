@@ -21,7 +21,7 @@ public class Program
         Console.WriteLine("Hello ZhaiFanhuaBlog.Test!");
         //TestChinaDate.ChinaDate();
         //await TestCodeFirst.CodeFirst();
-        //TestDiskInformation.DiskInformation();
+        TestDiskInformation.DiskInformation();
         //TestEncryption.Encryption();
         //TestResourceMigration.ResourceMigration();
         Console.ReadKey();
