@@ -74,7 +74,7 @@ public class CUserAccountDto
     public DateTime? Birthday { get; set; }
 
     /// <summary>
-    /// 上次登录Ip地址
+    /// 注册Ip地址
     /// </summary>
-    public virtual byte[]? LastLoginIp { get; set; } = new IPAddress(new byte[] { 0, 0, 0, 0 }).GetAddressBytes();
+    public virtual byte[]? RegisterIp { get; set; }
 }

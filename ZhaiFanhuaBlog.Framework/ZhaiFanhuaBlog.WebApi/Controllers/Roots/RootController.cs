@@ -17,10 +17,9 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 /// <summary>
 /// 系统管理
 /// </summary>
-[ApiController]
 [Authorize]
-[Route("api/[controller]")]
-[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[Route("api/[controller]"), Produces("application/json")]
+[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : ControllerBase
 {
     private readonly IRootStateService _IRootStateService;

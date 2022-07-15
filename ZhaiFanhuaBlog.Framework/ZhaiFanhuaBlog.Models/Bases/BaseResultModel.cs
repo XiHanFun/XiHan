@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ResultModel
+// FileName:BaseResultModel
 // Guid:4abbac7e-e91a-4ad2-a048-9f4c16a43464
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,14 +8,14 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Utils.Summary;
-using ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
+using ZhaiFanhuaBlog.Models.Response.Enum;
 
-namespace ZhaiFanhuaBlog.WebApi.Common.Response;
+namespace ZhaiFanhuaBlog.Models.Bases;
 
 /// <summary>
 /// 通用数据类
 /// </summary>
-public class ResultModel
+public class BaseResultModel
 {
     /// <summary>
     /// 是否成功

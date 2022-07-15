@@ -63,9 +63,9 @@ public class RUserAccountDto : RBaseDto
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
-    /// 上次登录Ip地址
+    /// 注册Ip地址
     /// </summary>
-    public virtual byte[]? LastLoginIp { get; set; }
+    public virtual string? RegisterIp { get; set; }
 
     /// <summary>
     /// 用户角色
