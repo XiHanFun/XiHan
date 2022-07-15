@@ -7,6 +7,7 @@
 // CreateTime:2022-05-30 上午 02:57:37
 // ----------------------------------------------------------------
 
+using System.Net;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
@@ -36,7 +37,9 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<UserRoleAuthority, CUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
-            mapper.CreateMap<UserAccount, RUserAccountDto>().ReverseMap();
+            mapper.CreateMap<UserAccount, RUserAccountDto>()
+            .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : (new IPAddress(o.RegisterIp)).ToString()))
+            .ReverseMap();
             //mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
             //mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
         });

@@ -7,7 +7,7 @@
 // CreateTime:2022-06-17 下午 09:28:34
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.WebApi.Common.Response.Enum;
+namespace ZhaiFanhuaBlog.Models.Response.Enum;
 
 /// <summary>
 /// 返回状态

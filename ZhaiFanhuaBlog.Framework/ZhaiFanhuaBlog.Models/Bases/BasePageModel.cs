@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:PageModel
+// FileName:BasePageModel
 // Guid:6ff31d71-5883-463b-ae8a-4cfd218b925a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-02-20 下午 08:39:31
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.WebApi.Common.Response.Model;
+namespace ZhaiFanhuaBlog.Models.Bases;
 
 /// <summary>
 /// 分页数据类
 /// </summary>
-public class PageModel
+public class BasePageModel
 {
     /// <summary>
     /// 当前页标
