@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BaseTableModel
+// FileName:TableModel
 // Guid:9d512d36-cd5c-4102-bed2-6457e9093085
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-02-20 下午 08:44:39
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Bases;
+namespace ZhaiFanhuaBlog.Models.Bases.Response.Model;
 
 /// <summary>
 /// 表格数据(支持分页)
 /// </summary>
-public class BaseTableModel
+public class TableModel
 {
     /// <summary>
     /// 数据总数
