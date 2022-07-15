@@ -17,7 +17,7 @@ using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.Models.Response;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -64,7 +64,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPost("Authority")]
-    public async Task<BaseResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
+    public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserAuthority>(cDto);
         userAuthority.CreateId = Guid.Parse(User.FindFirst("NameIdentifier")!.Value);
@@ -79,7 +79,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Authority/{guid}")]
-    public async Task<BaseResultModel> DeleteUserAuthority([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserAuthority([FromRoute] Guid guid)
     {
         if (await _IUserAuthorityService.DeleteUserAuthorityAsync(guid))
             return ResultResponse.OK("删除用户权限成功");
@@ -94,7 +94,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Authority/{guid}")]
-    public async Task<BaseResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAuthorityDto cDto)
+    public async Task<ResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
         userAuthority.ParentId = cDto.ParentId;
@@ -114,7 +114,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Authority/{guid}")]
-    public async Task<BaseResultModel?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
         if (userAuthority != null)
@@ -128,7 +128,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Authorities")]
-    public async Task<BaseResultModel> QueryUserAuthorities([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserAuthorities([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserAuthorityService.QueryUserAuthoritiesAsync();
         if (userAuthorities.Count != 0)
@@ -147,7 +147,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPost("Role")]
-    public async Task<BaseResultModel> CreateUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
+    public async Task<ResultModel> CreateUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
     {
         var userRole = iMapper.Map<UserRole>(cDto);
         if (await _IUserRoleService.CreateUserRoleAsync(userRole))
@@ -161,7 +161,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Role/{guid}")]
-    public async Task<BaseResultModel> DeleteUserRole([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserRole([FromRoute] Guid guid)
     {
         if (await _IUserRoleService.DeleteUserRoleAsync(guid))
             return ResultResponse.OK("删除用户角色成功");
@@ -176,7 +176,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Role/{guid}")]
-    public async Task<BaseResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleDto cDto)
+    public async Task<ResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleDto cDto)
     {
         var userRole = await _IUserRoleService.FindUserRoleAsync(guid);
         userRole.ParentId = cDto.ParentId;
@@ -195,7 +195,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Role/{guid}")]
-    public async Task<BaseResultModel?> FindUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userRole = await _IUserRoleService.FindUserRoleAsync(guid);
         if (userRole != null)
@@ -209,7 +209,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Roles")]
-    public async Task<BaseResultModel> QueryUserRoles([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserRoles([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserRoleService.QueryUserRolesAsync();
         if (userAuthorities.Count != 0)
@@ -229,7 +229,7 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Account")]
-    public async Task<BaseResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
+    public async Task<ResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
     {
         // 密码加密
         cDto.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password);
@@ -246,7 +246,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Account/{guid}")]
-    public async Task<BaseResultModel> DeleteUserAccount([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserAccount([FromRoute] Guid guid)
     {
         if (await _IUserAccountService.DeleteUserAccountAsync(guid))
             return ResultResponse.OK("删除用户账户成功");
@@ -261,7 +261,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Account/{guid}")]
-    public async Task<BaseResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountDto cDto)
+    public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountDto cDto)
     {
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         userAccount.Name = cDto.Name;
@@ -278,7 +278,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Account/{guid}")]
-    public async Task<BaseResultModel?> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         if (userAccount != null)
@@ -293,7 +293,7 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpGet("Accounts")]
     [AllowAnonymous]
-    public async Task<BaseResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserAccountService.QueryUserAccountsAsync();
         if (userAuthorities.Count != 0)
@@ -312,7 +312,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPost("Role/Authority")]
-    public async Task<BaseResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
+    public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
         if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userAuthority))
@@ -326,7 +326,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Role/Authority/{guid}")]
-    public async Task<BaseResultModel> DeleteUserRoleAuthority([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserRoleAuthority([FromRoute] Guid guid)
     {
         if (await _IUserRoleAuthorityService.DeleteUserRoleAuthorityAsync(guid))
             return ResultResponse.OK("删除用户角色权限成功");
@@ -341,7 +341,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Role/Authority/{guid}")]
-    public async Task<BaseResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
+    public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
         if (await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userAuthority) != null)
@@ -356,7 +356,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Role/Authority/{guid}")]
-    public async Task<BaseResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
         if (userAuthority != null)
@@ -370,7 +370,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Role/Authorities")]
-    public async Task<BaseResultModel> QueryUserRoleAuthorities([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserRoleAuthorities([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
         if (userAuthorities.Count != 0)
@@ -389,7 +389,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPost("Account/Role")]
-    public async Task<BaseResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
+    public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
     {
         var userAuthority = iMapper.Map<UserAccountRole>(cDto);
         if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAuthority))
@@ -403,7 +403,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Account/Role/{guid}")]
-    public async Task<BaseResultModel> DeleteUserAccountRole([FromRoute] Guid guid)
+    public async Task<ResultModel> DeleteUserAccountRole([FromRoute] Guid guid)
     {
         if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid))
             return ResultResponse.OK("删除用户账户角色成功");
@@ -418,7 +418,7 @@ public class UserController : ControllerBase
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Account/Role/{guid}")]
-    public async Task<BaseResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountRoleDto cDto)
+    public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountRoleDto cDto)
     {
         var userAuthority = iMapper.Map<UserAccountRole>(cDto);
         if (await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAuthority) != null)
@@ -433,7 +433,7 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Account/Role/{guid}")]
-    public async Task<BaseResultModel?> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel?> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var userAuthority = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
         if (userAuthority != null)
@@ -447,7 +447,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Account/Roles")]
-    public async Task<BaseResultModel> QueryUserAccountRoles([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserAccountRoles([FromServices] IMapper iMapper)
     {
         var userAuthorities = await _IUserAccountRoleService.QueryUserAccountRolesAsync();
         if (userAuthorities.Count != 0)

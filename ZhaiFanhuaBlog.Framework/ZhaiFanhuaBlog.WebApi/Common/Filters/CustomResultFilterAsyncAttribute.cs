@@ -10,7 +10,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -45,7 +45,7 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         // 不为空就做处理
         if (context.Result != null)
         {
-            if (context.Result is BaseResultModel resultModel)
+            if (context.Result is ResultModel resultModel)
             {
                 // 如果是通用数据类返回结果，则转换为json结果
                 context.Result = new JsonResult(resultModel);
