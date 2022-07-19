@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Models.Response;
@@ -57,26 +58,23 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
                 // 系统级别异常，不直接明文显示
                 context.Result = new JsonResult(ResultResponse.InternalServerError());
             }
-            // 请求IP
-            string ip = context.HttpContext.Connection.RemoteIpAddress == null ? string.Empty : context.HttpContext.Connection.RemoteIpAddress.ToString();
-            // 请求域名
-            string host = context.HttpContext.Request.Host.Value;
-            // 请求路径
-            string path = context.HttpContext.Request.Path;
-            // 请求参数
-            string queryString = context.HttpContext.Request.QueryString.Value ?? string.Empty;
-            // 请求方法
-            string method = context.HttpContext.Request.Method;
-            // 请求头
-            string headers = JsonConvert.SerializeObject(context.HttpContext.Request.Headers);
-            // 请求Cookie
-            string cookies = JsonConvert.SerializeObject(context.HttpContext.Request.Cookies);
-            string error = $"------------------\n" +
-                    $"\t 【请求IP】：{ip}\n" +
-                    $"\t 【请求地址】：{host + path + queryString}\n" +
-                    $"\t 【请求方法】：{method}\n" +
-                    $"\t 【请求头】：{headers}\n" +
-                    $"\t 【请求Cookie】：{cookies}";
+            // 获取控制器、路由信息
+            var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+            // 获取请求的方法
+            var method = actionDescriptor!.MethodInfo;
+            // 获取 HttpContext 和 HttpRequest 对象
+            var httpContext = context.HttpContext;
+            var httpRequest = httpContext.Request;
+            // 获取客户端 Ipv4 地址
+            var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+            // 获取请求的 Url 地址(协议、域名、路径、参数)
+            var requestUrl = httpRequest.Protocol + httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+
+            // 写入日志
+            string error = $"\n" +
+                   $"\t 【请求IP】：{remoteIPv4}\n" +
+                   $"\t 【请求地址】：{requestUrl}\n" +
+                   $"\t 【请求方法】：{method}\n";
             _ILogger.LogError(context.Exception, error);
         }
         // 标记异常已经处理过了
