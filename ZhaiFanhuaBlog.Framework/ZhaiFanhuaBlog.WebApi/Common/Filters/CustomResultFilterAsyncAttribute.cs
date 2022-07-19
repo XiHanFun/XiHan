@@ -97,7 +97,7 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         }
         catch (Exception)
         {
-            throw new Exception("日志未获取到结果，返回的数据无法序列化;");
+            throw;
         }
         Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync After");
     }

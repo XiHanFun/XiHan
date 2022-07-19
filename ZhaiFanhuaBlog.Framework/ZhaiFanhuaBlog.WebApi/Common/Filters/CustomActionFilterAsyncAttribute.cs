@@ -76,7 +76,6 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                    $"\t 【请求地址】：{requestUrl}\n" +
                    $"\t 【请求方法】：{method}\n";
             _ILogger.LogInformation(info);
-            //============== 这里是执行方法之后获取数据 ====================
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
             try
@@ -93,7 +92,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             }
             catch (Exception)
             {
-                throw new Exception("日志未获取到结果，返回的数据无法序列化;");
+                throw;
             }
         }
         Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");

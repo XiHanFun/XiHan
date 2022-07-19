@@ -42,14 +42,14 @@ public class RootStateService : BaseService<RootState>, IRootStateService
         new RootState{
             TypeKey = "All",
             TypeName = "总状态",
-            StateKey = 3,
+            StateKey = -1,
             StateName = "异常",
         },
         new RootState{
             TypeKey = "All",
             TypeName = "总状态",
-            StateKey = 2,
-            StateName = "审核",
+            StateKey = 0,
+            StateName = "删除",
         },
         new RootState{
             TypeKey = "All",
@@ -60,8 +60,8 @@ public class RootStateService : BaseService<RootState>, IRootStateService
         new RootState{
             TypeKey = "All",
             TypeName = "总状态",
-            StateKey = 0,
-            StateName = "删除",
+            StateKey = 2,
+            StateName = "审核",
         }
     };
 }

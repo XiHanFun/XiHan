@@ -7,7 +7,6 @@
 // CreateTime:2022-06-29 下午 10:42:07
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
@@ -17,7 +16,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 /// <summary>
 /// 系统管理
 /// </summary>
-[Authorize]
 [Route("api/[controller]"), Produces("application/json")]
 [ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : ControllerBase
