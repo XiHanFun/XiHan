@@ -9,7 +9,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Models.Response;
 
@@ -18,7 +17,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 /// <summary>
 /// 异步异常处理过滤器属性（一般用于捕捉异常）
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
     private readonly ILogger<CustomExceptionFilterAsyncAttribute> _ILogger;

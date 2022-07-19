@@ -15,9 +15,9 @@ using Newtonsoft.Json;
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 /// <summary>
-/// 异步资源过滤器属性（一般用于缓存）
+/// 异步资源过滤器属性（一般用于缓存、阻止模型（值）绑定操作等）
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     private readonly IConfiguration _IConfiguration;
@@ -46,18 +46,19 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
         Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync Before");
-        // 请求域名
-        string host = context.HttpContext.Request.Host.Value;
-        // 请求路径
-        string path = context.HttpContext.Request.Path;
-        // 请求参数
-        string queryString = context.HttpContext.Request.QueryString.Value ?? string.Empty;
+        // 获取 HttpContext 和 HttpRequest 对象
+        var httpContext = context.HttpContext;
+        var httpRequest = httpContext.Request;
+        // 获取客户端 Ipv4 地址
+        var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+        // 获取请求的 Url 地址(协议、域名、路径、参数)
+        var requestUrl = httpRequest.Protocol + httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
         // 若存在此资源，直接返回缓存资源
-        if (_IMemoryCache.TryGetValue(host + path + queryString, out object value))
+        if (_IMemoryCache.TryGetValue(requestUrl, out object value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
-            _ILogger.LogInformation($"资源【{host + path + queryString}】已缓存结果【{context.Result}】");
+            _ILogger.LogInformation($"资源【{requestUrl}】已缓存结果【{context.Result}】");
         }
         else
         {
@@ -71,9 +72,9 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                 {
                     TimeSpan SyncTimeout = TimeSpan.FromMinutes(_IConfiguration.GetValue<int>("Cache:SyncTimeout"));
                     var result = resourceExecuted.Result as ActionResult;
-                    _IMemoryCache.Set(host + path + queryString, result, SyncTimeout);
-                    _ILogger.LogInformation($"资源【{host + path + queryString}】开始缓存【{result}】");
-                    _ILogger.LogInformation($"请求结果为【{result}】");
+                    _IMemoryCache.Set(requestUrl, result, SyncTimeout);
+                    _ILogger.LogInformation($"资源【{requestUrl}】开始缓存【{JsonConvert.SerializeObject(result)}】");
+                    _ILogger.LogInformation($"请求结果为【{JsonConvert.SerializeObject(result)}】");
                 }
             }
             catch (Exception)

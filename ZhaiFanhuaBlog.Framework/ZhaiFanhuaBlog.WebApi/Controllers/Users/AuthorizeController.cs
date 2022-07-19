@@ -37,7 +37,8 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <param name="iCconfiguration"></param>
     /// <param name="iUserAccountService"></param>
-    public AuthorizeController(IConfiguration iCconfiguration, IUserAccountService iUserAccountService)
+    public AuthorizeController(IConfiguration iCconfiguration,
+        IUserAccountService iUserAccountService)
     {
         _IConfiguration = iCconfiguration;
         _IUserAccountService = iUserAccountService;

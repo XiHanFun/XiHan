@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.OpenApi.Models;
-using ZhaiFanhuaBlog.Utils.Summary;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 

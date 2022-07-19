@@ -7,8 +7,9 @@
 // CreateTime:2022-05-09 上午 01:11:29
 // ----------------------------------------------------------------
 
-using System.Net.Sockets;
+using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Net.Sockets;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
 
@@ -18,7 +19,7 @@ public static class IpInfoHelper
     /// 获取本机IP地址
     /// </summary>
     /// <returns>本机IP地址</returns>
-    public static string GetLocalIP()
+    public static string GetLocalIp()
     {
         try
         {

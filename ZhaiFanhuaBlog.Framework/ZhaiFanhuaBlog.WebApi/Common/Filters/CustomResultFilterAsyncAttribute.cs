@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
@@ -16,9 +17,9 @@ using ZhaiFanhuaBlog.Models.Response;
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 /// <summary>
-/// 结果过滤器属性(一般用于返回统一模型数据)
+/// 异步结果过滤器属性(一般用于返回统一模型数据)
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     private readonly ILogger<CustomResultFilterAsyncAttribute> _ILogger;
@@ -41,7 +42,14 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
+        Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync Before");
+        // 获取控制器信息
+        ControllerActionDescriptor? actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+        // 获取路由表信息
+        var routeData = context.RouteData;
+        var controllerName = routeData.Values["controller"];
+        var actionName = routeData.Values["action"];
+        var areaName = routeData.DataTokens["area"];
         // 不为空就做处理
         if (context.Result != null)
         {
@@ -84,13 +92,13 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             if (resultExecuted.Result != null)
             {
                 var result = JsonConvert.SerializeObject(resultExecuted.Result);
-                _ILogger.LogInformation($"执行结果为【{result}】");
+                _ILogger.LogInformation($"执行结果为【{JsonConvert.SerializeObject(result)}】");
             }
         }
         catch (Exception)
         {
             throw new Exception("日志未获取到结果，返回的数据无法序列化;");
         }
-        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");
+        Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync After");
     }
 }

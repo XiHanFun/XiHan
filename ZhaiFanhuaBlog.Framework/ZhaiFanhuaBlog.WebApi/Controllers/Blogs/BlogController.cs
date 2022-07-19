@@ -21,4 +21,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 [ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Reception)]
 public class BlogController : ControllerBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public BlogController(CancellationToken cancellationToken)
+    {
+    }
 }

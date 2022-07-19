@@ -8,8 +8,6 @@
 // ----------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 

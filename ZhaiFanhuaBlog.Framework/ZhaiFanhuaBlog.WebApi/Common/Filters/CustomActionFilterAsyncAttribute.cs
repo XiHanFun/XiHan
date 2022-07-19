@@ -8,17 +8,19 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 /// <summary>
-/// 请求过滤器属性(一般用于模型验证、记录日志)
+/// 异步请求过滤器属性(一般用于模型验证、记录日志、篡改参数、篡改返回值、统一参数验证、实现数据库事务自动开启关闭等)
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
@@ -51,36 +53,42 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         }
         else
         {
-            // 请求IP
-            string ip = context.HttpContext.Connection.RemoteIpAddress == null ? string.Empty : context.HttpContext.Connection.RemoteIpAddress.ToString();
-            // 请求域名
-            string host = context.HttpContext.Request.Host.Value;
-            // 请求路径
-            string path = context.HttpContext.Request.Path;
-            // 请求参数
-            string queryString = context.HttpContext.Request.QueryString.Value ?? string.Empty;
-            // 请求方法
-            string method = context.HttpContext.Request.Method;
-            // 请求头
-            string headers = JsonConvert.SerializeObject(context.HttpContext.Request.Headers);
-            // 请求Cookie
-            string cookies = JsonConvert.SerializeObject(context.HttpContext.Request.Cookies);
-            string info = $"------------------\n" +
-                    $"\t 【请求IP】：{ip}\n" +
-                    $"\t 【请求地址】：{host + path + queryString}\n" +
-                    $"\t 【请求方法】：{method}\n" +
-                    $"\t 【请求头】：{headers}\n" +
-                    $"\t 【请求Cookie】：{cookies}";
+            // 获取控制器、路由信息
+            var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+            // 获取请求的方法
+            var method = actionDescriptor!.MethodInfo;
+            // 获取 HttpContext 和 HttpRequest 对象
+            var httpContext = context.HttpContext;
+            var httpRequest = httpContext.Request;
+            // 获取客户端 Ipv4 地址
+            var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+            // 获取请求的 Url 地址(协议、域名、路径、参数)
+            var requestUrl = httpRequest.Protocol + httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+            // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
+            var parameters = context.ActionArguments;
+            // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
+            var userId = httpContext.User?.FindFirstValue("userId");
+            // 请求时间
+            var requestedTime = DateTimeOffset.Now;
+            // 写入日志
+            string info = $"\n" +
+                   $"\t 【请求IP】：{remoteIPv4}\n" +
+                   $"\t 【请求地址】：{requestUrl}\n" +
+                   $"\t 【请求方法】：{method}\n";
             _ILogger.LogInformation(info);
+            //============== 这里是执行方法之后获取数据 ====================
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
-            // 执行结果
             try
             {
                 if (actionExecuted.Result != null)
                 {
-                    var result = actionExecuted.Result as ActionResult;
-                    _ILogger.LogInformation($"请求结果为【{result}】");
+                    // 获取返回的结果
+                    var returnResult = actionExecuted.Result as ActionResult;
+                    // 判断是否请求成功，没有异常就是请求成功
+                    var isRequestSucceed = actionExecuted.Exception == null;
+                    // 其他操作，如写入日志
+                    _ILogger.LogInformation($"请求结果为【{JsonConvert.SerializeObject(returnResult)}】");
                 }
             }
             catch (Exception)

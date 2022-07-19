@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
+using ZhaiFanhuaBlog.Models.Bases.Response.Model;
+using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
-using ZhaiFanhuaBlog.Models.Response;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -45,7 +45,12 @@ public class UserController : ControllerBase
     /// <param name="iUserRoleService"></param>
     /// <param name="iUserAccountRoleService"></param>
     /// <param name="iUserAccountService"></param>
-    public UserController(IHttpContextAccessor iHttpContextAccessor, IUserAuthorityService iUserAuthorityService, IUserRoleAuthorityService iUserRoleAuthorityService, IUserRoleService iUserRoleService, IUserAccountRoleService iUserAccountRoleService, IUserAccountService iUserAccountService)
+    public UserController(IHttpContextAccessor iHttpContextAccessor,
+        IUserAuthorityService iUserAuthorityService,
+        IUserRoleAuthorityService iUserRoleAuthorityService,
+        IUserRoleService iUserRoleService,
+        IUserAccountRoleService iUserAccountRoleService,
+        IUserAccountService iUserAccountService)
     {
         _IHttpContextAccessor = iHttpContextAccessor;
         _IUserAuthorityService = iUserAuthorityService;
