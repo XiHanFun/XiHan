@@ -31,6 +31,7 @@ public static class CustomControllerExtension
         services.AddControllers(options =>
         {
             // 全局注入过滤器
+            options.Filters.Add<CustomAuthorizatioFilterAsyncAttribute>();
             options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
             //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
             options.Filters.Add<CustomActionFilterAsyncAttribute>();

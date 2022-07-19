@@ -86,9 +86,9 @@ public class AuthorizeController : ControllerBase
         try
         {
             var AccountClaims = new Claim[]{
-                new Claim(ClaimTypes.NameIdentifier, userAccount.BaseId.ToString()),
-                new Claim(ClaimTypes.Name, userAccount.Name),
-                //new Claim(ClaimTypes.Role, userAccount.UserRoles!.FirstOrDefault()!.ToString()??""),
+                new Claim("UserId", userAccount.BaseId.ToString()),
+                new Claim("UserName", userAccount.Name),
+                //new Claim("UserRole", userAccount.UserRoles!.FirstOrDefault()!.Name!.ToString()??"")
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration["Auth:JWT:IssuerSigningKey"]));
             var token = new JwtSecurityToken(
@@ -96,11 +96,11 @@ public class AuthorizeController : ControllerBase
                 audience: _IConfiguration["Configuration:Domain"],
                 claims: AccountClaims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
+                expires: DateTime.Now.AddSeconds(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             );
             var result = new JwtSecurityTokenHandler().WriteToken(token);
-            return $"Bearer {result}";
+            return result;
         }
         catch (Exception)
         {

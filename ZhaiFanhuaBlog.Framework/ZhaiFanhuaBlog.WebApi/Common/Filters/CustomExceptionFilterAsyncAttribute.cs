@@ -66,9 +66,8 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
             var httpRequest = httpContext.Request;
             // 获取客户端 Ipv4 地址
             var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-            // 获取请求的 Url 地址(协议、域名、路径、参数)
-            var requestUrl = httpRequest.Protocol + httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
-
+            // 获取请求的 Url 地址(域名、路径、参数)
+            var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
             // 写入日志
             string error = $"\n" +
                    $"\t 【请求IP】：{remoteIPv4}\n" +

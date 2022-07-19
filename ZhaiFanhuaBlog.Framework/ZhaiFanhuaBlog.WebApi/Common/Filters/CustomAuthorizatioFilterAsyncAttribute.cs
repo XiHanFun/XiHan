@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ZhaiFanhuaBlog.Models.Response;
+using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -30,6 +32,9 @@ public class CustomAuthorizatioFilterAsyncAttribute : Attribute, IAsyncAuthoriza
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         Console.WriteLine("CustomAuthorizatioFilterAsyncAttribute.OnAuthorizationAsync Before");
+        // 获取 HttpContext 对象
+        var httpContext = context.HttpContext;
+        var httpResponse = httpContext.Response;
         // 获取控制器信息
         var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
         // 获取控制器类型
@@ -43,17 +48,12 @@ public class CustomAuthorizatioFilterAsyncAttribute : Attribute, IAsyncAuthoriza
         // 不是匿名才处理权限检查
         if (!allowAnonymouse)
         {
-            // ============逻辑检查代码=============
-            // 在 MVC 项目中，如果检查失败，则跳转到登录页
-            if (typeof(Controller).IsAssignableFrom(controllerType.AsType()))
-            {
-                context.Result = new RedirectResult("~/Login");
-            }
-            // WebAPI 或者其他类型
-            else
+            var Identities = httpContext.User.Identities;
+            // 验证权限
+            if (Identities == null)
             {
                 // 返回未授权
-                context.Result = new UnauthorizedResult();
+                context.Result = new JsonResult(ResultResponse.Unauthorized());
             }
         }
         // 否则直接跳过处理

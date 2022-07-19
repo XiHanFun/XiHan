@@ -158,6 +158,21 @@ public class ResultResponse
     }
 
     /// <summary>
+    /// 请求失败，访问未授权 401
+    /// </summary>
+    /// <returns></returns>
+    public static ResultModel Unauthorized(string messageData)
+    {
+        return new ResultModel
+        {
+            Success = false,
+            Code = ResultCode.Unauthorized,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResultCode.Unauthorized),
+            Data = messageData
+        };
+    }
+
+    /// <summary>
     /// 请求失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>

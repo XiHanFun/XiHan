@@ -35,19 +35,19 @@ public static class CustomJwtExtension
                              {
                                  //是否验证颁发者
                                  ValidateIssuer = true,
-                                 // 是否验证接收者
-                                 ValidateAudience = true,
-                                 // 是否调用对签名SecurityToken的SecurityKey进行验证
-                                 ValidateIssuerSigningKey = true,
-                                 // 是否验证失效时间
-                                 ValidateLifetime = true,
                                  // 颁发者
                                  ValidIssuer = config.GetValue<string>("Configuration:Domain"),
-                                 // 接收者
+                                 // 是否验证签收者
+                                 ValidateAudience = true,
+                                 // 签收者
                                  ValidAudience = config.GetValue<string>("Configuration:Domain"),
-                                 // 签名秘钥
+                                 // 是否验证签名
+                                 ValidateIssuerSigningKey = true,
+                                 // 签名
                                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
-                                 // 设置过期缓冲时间,若为0，过期时间一到立即失效
+                                 // 是否验证过期时间
+                                 ValidateLifetime = true,
+                                 // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
                                  ClockSkew = TimeSpan.FromSeconds(config.GetValue<int>("Auth:JWT:ClockSkew")),
                              };
                              options.Events = new JwtBearerEvents

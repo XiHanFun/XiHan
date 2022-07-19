@@ -72,7 +72,7 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserAuthority>(cDto);
-        userAuthority.CreateId = Guid.Parse(User.FindFirst("NameIdentifier")!.Value);
+        userAuthority.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
         if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
             return ResultResponse.OK("新增用户权限成功");
         return ResultResponse.BadRequest("新增用户权限失败");
@@ -106,6 +106,7 @@ public class UserController : ControllerBase
         userAuthority.Name = cDto.Name;
         userAuthority.Type = cDto.Type;
         userAuthority.Description = cDto.Description;
+        userAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userAuthority = await _IUserAuthorityService.ModifyUserAuthorityAsync(userAuthority);
         if (userAuthority != null)
             return ResultResponse.OK(iMapper.Map<RUserAuthorityDto>(userAuthority));
@@ -155,6 +156,7 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
     {
         var userRole = iMapper.Map<UserRole>(cDto);
+        userRole.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
         if (await _IUserRoleService.CreateUserRoleAsync(userRole))
             return ResultResponse.OK("新增用户角色成功");
         return ResultResponse.BadRequest("新增用户角色失败");
@@ -187,6 +189,7 @@ public class UserController : ControllerBase
         userRole.ParentId = cDto.ParentId;
         userRole.Name = cDto.Name;
         userRole.Description = cDto.Description;
+        userRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userRole = await _IUserRoleService.ModifyUserRoleAsync(userRole);
         if (userRole != null)
             return ResultResponse.OK(iMapper.Map<RUserRoleDto>(userRole));
@@ -216,9 +219,9 @@ public class UserController : ControllerBase
     [HttpGet("Roles")]
     public async Task<ResultModel> QueryUserRoles([FromServices] IMapper iMapper)
     {
-        var userAuthorities = await _IUserRoleService.QueryUserRolesAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserRoleDto>>(userAuthorities));
+        var userRoles = await _IUserRoleService.QueryUserRolesAsync();
+        if (userRoles.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserRoleDto>>(userRoles));
         return ResultResponse.BadRequest("未查询到用户角色");
     }
 
@@ -237,9 +240,9 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
     {
         // 密码加密
-        cDto.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password);
-        cDto.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.GetAddressBytes();
         var userAccount = iMapper.Map<UserAccount>(cDto);
+        userAccount.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password);
+        userAccount.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.GetAddressBytes();
         if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
             return ResultResponse.OK("新增用户账户成功");
         return ResultResponse.BadRequest("新增用户账户失败");
@@ -270,6 +273,7 @@ public class UserController : ControllerBase
     {
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         userAccount.Name = cDto.Name;
+        userAccount.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
         if (userAccount != null)
             return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
@@ -300,9 +304,9 @@ public class UserController : ControllerBase
     [AllowAnonymous]
     public async Task<ResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
     {
-        var userAuthorities = await _IUserAccountService.QueryUserAccountsAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserAccountDto>>(userAuthorities));
+        var userAccounts = await _IUserAccountService.QueryUserAccountsAsync();
+        if (userAccounts.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserAccountDto>>(userAccounts));
         return ResultResponse.BadRequest("未查询到用户账户");
     }
 
@@ -319,8 +323,9 @@ public class UserController : ControllerBase
     [HttpPost("Role/Authority")]
     public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
     {
-        var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
-        if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userAuthority))
+        var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cDto);
+        userRoleAuthority.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userRoleAuthority))
             return ResultResponse.OK("新增用户角色权限成功");
         return ResultResponse.BadRequest("新增用户角色权限失败");
     }
@@ -348,9 +353,10 @@ public class UserController : ControllerBase
     [HttpPut("Role/Authority/{guid}")]
     public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
     {
-        var userAuthority = iMapper.Map<UserRoleAuthority>(cDto);
-        if (await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userAuthority) != null)
-            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
+        var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cDto);
+        userRoleAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        if (await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userRoleAuthority) != null)
+            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userRoleAuthority));
         return ResultResponse.BadRequest("修改用户角色权限失败");
     }
 
@@ -363,9 +369,9 @@ public class UserController : ControllerBase
     [HttpGet("Role/Authority/{guid}")]
     public async Task<ResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var userAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
-        if (userAuthority != null)
-            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userAuthority));
+        var userRoleAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
+        if (userRoleAuthority != null)
+            return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userRoleAuthority));
         return ResultResponse.BadRequest("该用户角色权限不存在");
     }
 
@@ -377,9 +383,9 @@ public class UserController : ControllerBase
     [HttpGet("Role/Authorities")]
     public async Task<ResultModel> QueryUserRoleAuthorities([FromServices] IMapper iMapper)
     {
-        var userAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserRoleAuthorityDto>>(userAuthorities));
+        var userRoleAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
+        if (userRoleAuthorities.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserRoleAuthorityDto>>(userRoleAuthorities));
         return ResultResponse.BadRequest("未查询到用户角色权限");
     }
 
@@ -396,8 +402,9 @@ public class UserController : ControllerBase
     [HttpPost("Account/Role")]
     public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
     {
-        var userAuthority = iMapper.Map<UserAccountRole>(cDto);
-        if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAuthority))
+        var userAccountRole = iMapper.Map<UserAccountRole>(cDto);
+        userAccountRole.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
             return ResultResponse.OK("新增用户账户角色成功");
         return ResultResponse.BadRequest("新增用户账户角色失败");
     }
@@ -425,9 +432,10 @@ public class UserController : ControllerBase
     [HttpPut("Account/Role/{guid}")]
     public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountRoleDto cDto)
     {
-        var userAuthority = iMapper.Map<UserAccountRole>(cDto);
-        if (await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAuthority) != null)
-            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAuthority));
+        var userAccountRole = iMapper.Map<UserAccountRole>(cDto);
+        userAccountRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        if (await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole) != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
         return ResultResponse.BadRequest("修改用户账户角色失败");
     }
 
@@ -440,9 +448,9 @@ public class UserController : ControllerBase
     [HttpGet("Account/Role/{guid}")]
     public async Task<ResultModel?> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var userAuthority = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
-        if (userAuthority != null)
-            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAuthority));
+        var userAccountRole = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
+        if (userAccountRole != null)
+            return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
         return ResultResponse.BadRequest("该用户账户角色不存在");
     }
 
@@ -454,9 +462,9 @@ public class UserController : ControllerBase
     [HttpGet("Account/Roles")]
     public async Task<ResultModel> QueryUserAccountRoles([FromServices] IMapper iMapper)
     {
-        var userAuthorities = await _IUserAccountRoleService.QueryUserAccountRolesAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserAccountRoleDto>>(userAuthorities));
+        var userAccountRoles = await _IUserAccountRoleService.QueryUserAccountRolesAsync();
+        if (userAccountRoles.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RUserAccountRoleDto>>(userAccountRoles));
         return ResultResponse.OK("未查询到用户账户角色");
     }
 

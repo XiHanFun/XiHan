@@ -51,8 +51,8 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         var httpRequest = httpContext.Request;
         // 获取客户端 Ipv4 地址
         var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-        // 获取请求的 Url 地址(协议、域名、路径、参数)
-        var requestUrl = httpRequest.Protocol + httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+        // 获取请求的 Url 地址(域名、路径、参数)
+        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
         // 若存在此资源，直接返回缓存资源
         if (_IMemoryCache.TryGetValue(requestUrl, out object value))
         {

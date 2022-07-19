@@ -38,6 +38,8 @@ public class Program
         var services = builder.Services;
         // Cache
         services.AddCustomCache(config);
+        // JWT 必须在AddControllers()之前注册
+        services.AddCustomJWT(config);
         // Controllers
         services.AddCustomControllers(config);
         // Swagger
@@ -46,8 +48,6 @@ public class Program
         services.AddCustomSqlSugar(config);
         // IOC
         services.AddCustomIOC(config);
-        // JWT
-        services.AddCustomJWT(config);
         // AutoMapper
         services.AddCustomAutoMapper(config);
         // Route
