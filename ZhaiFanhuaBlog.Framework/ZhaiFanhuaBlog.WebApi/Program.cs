@@ -27,21 +27,23 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        ConsoleHelper.WriteInfoLine("Configuration Start……");
+        ConsoleHelper.WriteLineInfo("Configuration Start……");
         var config = builder.Configuration;
-        ConsoleHelper.WriteSuccessLine("Configuration Started Successfully！");
-        ConsoleHelper.WriteInfoLine("Log Start……");
+
+        ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
+        ConsoleHelper.WriteLineInfo("Log Start……");
+
         var log = builder.Logging;
         log.AddCustomLog(config);
-        ConsoleHelper.WriteSuccessLine("Log Started Successfully！");
-        ConsoleHelper.WriteInfoLine("Services Start……");
+
+        ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
+        ConsoleHelper.WriteLineInfo("Services Start……");
+
         var services = builder.Services;
         // Cache
         services.AddCustomCache(config);
-        // JWT 必须在AddControllers()之前注册
+        // JWT
         services.AddCustomJWT(config);
-        // Controllers
-        services.AddCustomControllers(config);
         // Swagger
         services.AddCustomSwagger(config);
         // SqlSugar
@@ -54,8 +56,11 @@ public class Program
         services.AddCustomRoute(config);
         // Cors
         services.AddCustomCors(config);
-        ConsoleHelper.WriteSuccessLine("Services Started Successfully！");
-        ConsoleHelper.WriteInfoLine("ZhaiFanhuaBlog Application Start……");
+        // Controllers
+        services.AddCustomControllers(config);
+
+        ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
+        ConsoleHelper.WriteLineInfo("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
         if (app.Environment.IsDevelopment())

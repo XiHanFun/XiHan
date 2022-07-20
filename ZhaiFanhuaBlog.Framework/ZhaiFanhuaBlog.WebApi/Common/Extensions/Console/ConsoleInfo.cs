@@ -23,32 +23,32 @@ public static class ConsoleInfo
     /// </summary>
     public static void ConsoleInfos()
     {
-        ConsoleHelper.WriteSuccessLine("ZhaiFanhuaBlog Application Started Successfully！");
-        ConsoleHelper.WriteInfoLine("===============系统信息===============");
-        ConsoleHelper.WriteInfoLine($@"操作系统：{SystemInfoHelper.OperatingSystem}");
-        ConsoleHelper.WriteInfoLine($@"系统描述：{SystemInfoHelper.OSDescription}");
-        ConsoleHelper.WriteInfoLine($@"系统版本：{SystemInfoHelper.OSVersion}");
-        ConsoleHelper.WriteInfoLine($@"系统平台：{SystemInfoHelper.Platform}");
-        ConsoleHelper.WriteInfoLine($@"系统架构：{SystemInfoHelper.OSArchitecture}");
-        ConsoleHelper.WriteInfoLine($@"CPU个数：{SystemInfoHelper.ProcessorCount}");
-        ConsoleHelper.WriteInfoLine($@"系统目录：{SystemInfoHelper.SystemDirectory}");
-        ConsoleHelper.WriteInfoLine($@"磁盘分区：{SystemInfoHelper.DiskPartition}");
-        ConsoleHelper.WriteInfoLine($@"运行时间：{SystemInfoHelper.RunningTime}");
-        ConsoleHelper.WriteInfoLine($@"交互模式：{SystemInfoHelper.InteractiveMode}");
-        ConsoleHelper.WriteInfoLine("===============环境信息===============");
-        ConsoleHelper.WriteInfoLine($@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}");
-        ConsoleHelper.WriteInfoLine($@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}");
-        ConsoleHelper.WriteInfoLine($@"环境架构：{EnvironmentInfoHelper.ProcessArchitecture}");
-        ConsoleHelper.WriteInfoLine($@"环境标识：{EnvironmentInfoHelper.RuntimeIdentifier}");
-        ConsoleHelper.WriteInfoLine($@"机器名称：{EnvironmentInfoHelper.MachineName}");
-        ConsoleHelper.WriteInfoLine($@"用户域名：{EnvironmentInfoHelper.UserDomainName}");
-        ConsoleHelper.WriteInfoLine($@"关联用户：{EnvironmentInfoHelper.UserName}");
-        ConsoleHelper.WriteInfoLine("===============应用信息===============");
-        ConsoleHelper.WriteInfoLine($@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}");
-        ConsoleHelper.WriteInfoLine($@"当前版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}");
-        ConsoleHelper.WriteInfoLine($@"所在路径：{ApplicationInfoHelper.CurrentDirectory}");
-        ConsoleHelper.WriteInfoLine($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
-        ConsoleHelper.WriteInfoLine($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
-        ConsoleHelper.WriteInfoLine($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
+        ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
+        ConsoleHelper.WriteLineInfo("===============系统信息===============");
+        ConsoleHelper.WriteLineInfo($@"操作系统：{SystemInfoHelper.OperatingSystem}");
+        ConsoleHelper.WriteLineInfo($@"系统描述：{SystemInfoHelper.OSDescription}");
+        ConsoleHelper.WriteLineInfo($@"系统版本：{SystemInfoHelper.OSVersion}");
+        ConsoleHelper.WriteLineInfo($@"系统平台：{SystemInfoHelper.Platform}");
+        ConsoleHelper.WriteLineInfo($@"系统架构：{SystemInfoHelper.OSArchitecture}");
+        ConsoleHelper.WriteLineInfo($@"CPU个数：{SystemInfoHelper.ProcessorCount}");
+        ConsoleHelper.WriteLineInfo($@"系统目录：{SystemInfoHelper.SystemDirectory}");
+        ConsoleHelper.WriteLineInfo($@"磁盘分区：{SystemInfoHelper.DiskPartition}");
+        ConsoleHelper.WriteLineInfo($@"运行时间：{SystemInfoHelper.RunningTime}");
+        ConsoleHelper.WriteLineInfo($@"交互模式：{SystemInfoHelper.InteractiveMode}");
+        ConsoleHelper.WriteLineInfo("===============环境信息===============");
+        ConsoleHelper.WriteLineInfo($@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}");
+        ConsoleHelper.WriteLineInfo($@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}");
+        ConsoleHelper.WriteLineInfo($@"环境架构：{EnvironmentInfoHelper.ProcessArchitecture}");
+        ConsoleHelper.WriteLineInfo($@"环境标识：{EnvironmentInfoHelper.RuntimeIdentifier}");
+        ConsoleHelper.WriteLineInfo($@"机器名称：{EnvironmentInfoHelper.MachineName}");
+        ConsoleHelper.WriteLineInfo($@"用户域名：{EnvironmentInfoHelper.UserDomainName}");
+        ConsoleHelper.WriteLineInfo($@"关联用户：{EnvironmentInfoHelper.UserName}");
+        ConsoleHelper.WriteLineInfo("===============应用信息===============");
+        ConsoleHelper.WriteLineInfo($@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}");
+        ConsoleHelper.WriteLineInfo($@"当前版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}");
+        ConsoleHelper.WriteLineInfo($@"所在路径：{ApplicationInfoHelper.CurrentDirectory}");
+        ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
+        ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
+        ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
     }
 }

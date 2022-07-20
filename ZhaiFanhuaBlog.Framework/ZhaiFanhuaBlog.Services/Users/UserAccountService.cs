@@ -7,6 +7,7 @@
 // CreateTime:2022-06-04 下午 06:03:32
 // ----------------------------------------------------------------
 
+using Microsoft.Extensions.Configuration;
 using ZhaiFanhuaBlog.IRepositories.Roots;
 using ZhaiFanhuaBlog.IRepositories.Users;
 using ZhaiFanhuaBlog.IServices.Users;
@@ -24,7 +25,10 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     private readonly IUserAccountRepository _IUserAccountRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
-    public UserAccountService(IRootStateRepository iRootStateRepository, IUserAccountRepository iUserAccountRepository, IUserAccountRoleRepository iIUserAccountRoleRepository)
+    public UserAccountService(IConfiguration iConfiguration,
+        IRootStateRepository iRootStateRepository,
+        IUserAccountRepository iUserAccountRepository,
+        IUserAccountRoleRepository iIUserAccountRoleRepository)
     {
         base._IBaseRepository = iUserAccountRepository;
         _IRootStateRepository = iRootStateRepository;

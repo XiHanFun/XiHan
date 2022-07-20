@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using SqlSugar.IOC;
+using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -63,6 +64,17 @@ public static class CustomSqlSugarExtension
                 ConnectionString = config.GetValue<string>("Database:ConnectionString:SqlServer"),
                 IsAutoCloseConnection = true
             }
+        });
+        services.ConfigurationSugar(db =>
+        {
+            // SQL语句输出方便排查问题
+            db.Aop.OnLogExecuting = (sql, p) =>
+            {
+                ConsoleHelper.WriteLineSql("===========================================================================");
+                ConsoleHelper.WriteLineSql($"{DateTime.Now}，SQL语句：");
+                ConsoleHelper.WriteLineSql(sql);
+                ConsoleHelper.WriteLineSql("===========================================================================");
+            };
         });
         return services;
     }

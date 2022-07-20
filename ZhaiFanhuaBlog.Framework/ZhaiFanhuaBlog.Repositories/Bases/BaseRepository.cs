@@ -26,7 +26,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 {
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
-        base.Context = DbScoped.Sugar;
+        base.Context = DbScoped.SugarScope;
         // 创建数据库
         base.Context.DbMaintenance.CreateDatabase();
         // 创建表
@@ -63,7 +63,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             typeof(BlogArticleTag),
             typeof(BlogComment),
             typeof(BlogCommentPoll),
-            typeof(BlogPoll));
+            typeof(BlogPoll)
+            );
     }
 
     /// <summary>

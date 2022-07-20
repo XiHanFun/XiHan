@@ -14,6 +14,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
+using ZhaiFanhuaBlog.Models.Bases.Response.Model;
+using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
@@ -49,7 +51,7 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountName")]
-    public async Task<string> GetTokenByAccountName(CUserAccountLoginByNameDto cDto)
+    public async Task<ResultModel> GetTokenByAccountName(CUserAccountLoginByNameDto cDto)
     {
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Name);
@@ -57,7 +59,7 @@ public class AuthorizeController : ControllerBase
             throw new Exception("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
             throw new Exception("密码错误，请重新登录");
-        return GetToken(userAccount);
+        return ResultResponse.OK(GetToken(userAccount));
     }
 
     /// <summary>
@@ -65,7 +67,7 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountEmail")]
-    public async Task<string> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cDto)
+    public async Task<ResultModel> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cDto)
     {
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Email);
@@ -73,7 +75,7 @@ public class AuthorizeController : ControllerBase
             throw new Exception("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
             throw new Exception("密码错误，请重新登录");
-        return GetToken(userAccount);
+        return ResultResponse.OK(GetToken(userAccount));
     }
 
     /// <summary>
@@ -96,7 +98,7 @@ public class AuthorizeController : ControllerBase
                 audience: _IConfiguration["Configuration:Domain"],
                 claims: AccountClaims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddSeconds(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
+                expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             );
             var result = new JwtSecurityTokenHandler().WriteToken(token);

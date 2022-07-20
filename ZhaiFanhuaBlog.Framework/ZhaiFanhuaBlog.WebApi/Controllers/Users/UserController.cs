@@ -95,17 +95,12 @@ public class UserController : ControllerBase
     /// 修改用户权限
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
-    [HttpPut("Authority/{guid}")]
-    public async Task<ResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAuthorityDto cDto)
+    [HttpPut("Authority")]
+    public async Task<ResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
-        var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
-        userAuthority.ParentId = cDto.ParentId;
-        userAuthority.Name = cDto.Name;
-        userAuthority.Type = cDto.Type;
-        userAuthority.Description = cDto.Description;
+        var userAuthority = iMapper.Map<UserAuthority>(cDto);
         userAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userAuthority = await _IUserAuthorityService.ModifyUserAuthorityAsync(userAuthority);
         if (userAuthority != null)
@@ -179,16 +174,12 @@ public class UserController : ControllerBase
     /// 修改用户角色
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
-    [HttpPut("Role/{guid}")]
-    public async Task<ResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleDto cDto)
+    [HttpPut("Role")]
+    public async Task<ResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
     {
-        var userRole = await _IUserRoleService.FindUserRoleAsync(guid);
-        userRole.ParentId = cDto.ParentId;
-        userRole.Name = cDto.Name;
-        userRole.Description = cDto.Description;
+        var userRole = iMapper.Map<UserRole>(cDto);
         userRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userRole = await _IUserRoleService.ModifyUserRoleAsync(userRole);
         if (userRole != null)
@@ -265,14 +256,12 @@ public class UserController : ControllerBase
     /// 修改用户账户
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
-    [HttpPut("Account/{guid}")]
-    public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountDto cDto)
+    [HttpPut("Account")]
+    public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
     {
-        var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
-        userAccount.Name = cDto.Name;
+        var userAccount = iMapper.Map<UserAccount>(cDto);
         userAccount.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
         userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
         if (userAccount != null)
@@ -347,11 +336,10 @@ public class UserController : ControllerBase
     /// 修改用户角色权限
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
-    [HttpPut("Role/Authority/{guid}")]
-    public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserRoleAuthorityDto cDto)
+    [HttpPut("Role/Authority")]
+    public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
     {
         var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cDto);
         userRoleAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
@@ -429,8 +417,8 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
-    [HttpPut("Account/Role/{guid}")]
-    public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid, [FromBody] CUserAccountRoleDto cDto)
+    [HttpPut("Account/Role")]
+    public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
     {
         var userAccountRole = iMapper.Map<UserAccountRole>(cDto);
         userAccountRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);

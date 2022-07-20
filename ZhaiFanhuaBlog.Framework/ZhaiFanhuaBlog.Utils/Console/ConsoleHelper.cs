@@ -37,26 +37,33 @@ public static class ConsoleHelper
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteErrorLine(this string inputStr, ConsoleColor frontColor = ConsoleColor.Red) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineError(this string inputStr, ConsoleColor frontColor = ConsoleColor.Red) => WriteColorLine(inputStr, frontColor);
 
     /// <summary>
     /// 警告信息
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteWarningLine(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineWarning(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow) => WriteColorLine(inputStr, frontColor);
 
     /// <summary>
     /// 正常信息
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteInfoLine(this string inputStr, ConsoleColor frontColor = ConsoleColor.White) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineInfo(this string inputStr, ConsoleColor frontColor = ConsoleColor.White) => WriteColorLine(inputStr, frontColor);
 
     /// <summary>
     /// 成功信息
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteSuccessLine(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineSuccess(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green) => WriteColorLine(inputStr, frontColor);
+
+    /// <summary>
+    /// 数据库信息
+    /// </summary>
+    /// <param name="inputStr">待打印的字符串</param>
+    /// <param name="frontColor">想要打印的颜色</param>
+    public static void WriteLineSql(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
 }
