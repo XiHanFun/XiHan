@@ -72,7 +72,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserAuthority>(cDto);
-        userAuthority.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userAuthority.CreateId = Guid.Parse(user.Value);
+        }
         if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
             return ResultResponse.OK("新增用户权限成功");
         return ResultResponse.BadRequest("新增用户权限失败");

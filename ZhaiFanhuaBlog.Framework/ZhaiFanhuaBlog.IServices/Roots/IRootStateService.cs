@@ -14,5 +14,5 @@ namespace ZhaiFanhuaBlog.IServices.Roots;
 
 public interface IRootStateService : IBaseService<RootState>
 {
-    Task<bool> InitRootStatesAsync();
+    Task<bool> InitRootStateAsync(List<RootState> rootStates);
 }

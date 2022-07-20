@@ -44,11 +44,21 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     }
 
     /// <summary>
+    /// 新增或更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateOrUpdateAsync(TEntity entity)
+    {
+        return await _IBaseRepository.CreateOrUpdateAsync(entity);
+    }
+
+    /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateAsync(TEntity[] entities)
+    public virtual async Task<bool> CreateBatchAsync(TEntity[] entities)
     {
         return await _IBaseRepository.CreateBatchAsync(entities);
     }
@@ -58,9 +68,19 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateAsync(List<TEntity> entities)
+    public virtual async Task<bool> CreateBatchAsync(List<TEntity> entities)
     {
         return await _IBaseRepository.CreateBatchAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量新增或更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities)
+    {
+        return await _IBaseRepository.CreateOrUpdateBatchAsync(entities);
     }
 
     /// <summary>
@@ -78,7 +98,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteAsync(Guid[] guids)
+    public virtual async Task<bool> DeleteBatchAsync(Guid[] guids)
     {
         return await _IBaseRepository.DeleteBatchAsync(guids);
     }
@@ -108,7 +128,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> UpdateAsync(TEntity[] entities)
+    public virtual async Task<bool> UpdateBatchAsync(TEntity[] entities)
     {
         return await _IBaseRepository.UpdateBatchAsync(entities);
     }
@@ -118,7 +138,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
+    public virtual async Task<bool> UpdateBatchAsync(List<TEntity> entities)
     {
         return await _IBaseRepository.UpdateBatchAsync(entities);
     }

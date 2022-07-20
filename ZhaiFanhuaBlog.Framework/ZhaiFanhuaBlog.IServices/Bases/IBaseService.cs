@@ -22,21 +22,25 @@ public interface IBaseService<TEntity> where TEntity : class
 
     Task<Guid> CreateReturnGuidAsync(TEntity entity);
 
-    Task<bool> CreateAsync(TEntity[] entities);
+    Task<bool> CreateOrUpdateAsync(TEntity entity);
 
-    Task<bool> CreateAsync(List<TEntity> entities);
+    Task<bool> CreateBatchAsync(TEntity[] entities);
+
+    Task<bool> CreateBatchAsync(List<TEntity> entities);
+
+    Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities);
 
     Task<bool> DeleteAsync(Guid guid);
 
-    Task<bool> DeleteAsync(Guid[] guids);
+    Task<bool> DeleteBatchAsync(Guid[] guids);
 
     Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
 
     Task<bool> UpdateAsync(TEntity entity);
 
-    Task<bool> UpdateAsync(TEntity[] entities);
+    Task<bool> UpdateBatchAsync(TEntity[] entities);
 
-    Task<bool> UpdateAsync(List<TEntity> entities);
+    Task<bool> UpdateBatchAsync(List<TEntity> entities);
 
     Task<TEntity> FindAsync(Guid? guid);
 

@@ -14,6 +14,8 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserAuthorityService : IBaseService<UserAuthority>
 {
+    Task<bool> InitUserAuthorityAsync(List<UserAuthority> userAuthorities);
+
     Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority);
 
     Task<bool> DeleteUserAuthorityAsync(Guid guid);

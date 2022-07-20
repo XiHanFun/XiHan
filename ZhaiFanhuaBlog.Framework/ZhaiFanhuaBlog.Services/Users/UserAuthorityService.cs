@@ -32,6 +32,17 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         _IUserRoleAuthorityRepository = iUserRoleAuthorityRepository;
     }
 
+    public async Task<bool> InitUserAuthorityAsync(List<UserAuthority> userAuthorities)
+    {
+        var state = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == 1);
+        userAuthorities.ForEach(userAuthority => {
+            userAuthority.SoftDeleteLock = false;
+            userAuthority.StateGuid = state.BaseId;
+        });
+        var result = await _IUserAuthorityRepository.CreateBatchAsync(userAuthorities);
+        return result;
+    }
+
     public async Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
         if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(userAuthority.ParentId) == null)

@@ -88,6 +88,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 新增或更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateOrUpdateAsync(TEntity entity)
+    {
+        return await base.InsertOrUpdateAsync(entity);
+    }
+
+    /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>
@@ -105,6 +115,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> CreateBatchAsync(List<TEntity> entities)
     {
         return await base.InsertRangeAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量新增或更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities)
+    {
+        return await base.InsertOrUpdateAsync(entities);
     }
 
     /// <summary>

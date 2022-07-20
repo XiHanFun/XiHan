@@ -22,9 +22,13 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
 
     Task<Guid> CreateReturnGuidAsync(TEntity entity);
 
+    Task<bool> CreateOrUpdateAsync(TEntity entity);
+
     Task<bool> CreateBatchAsync(TEntity[] entities);
 
     Task<bool> CreateBatchAsync(List<TEntity> entities);
+
+    Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities);
 
     Task<bool> DeleteAsync(Guid guid);
 

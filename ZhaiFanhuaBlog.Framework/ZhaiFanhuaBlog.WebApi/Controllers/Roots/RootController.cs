@@ -9,6 +9,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Roots;
+using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
@@ -36,8 +37,43 @@ public class RootController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost]
-    public async Task<bool> InitRootState()
+    public async Task<bool> Init()
     {
-        return await _IRootStateService.InitRootStatesAsync();
+        List<RootState> rootStates = new()
+        {
+            // All 总状态
+            new RootState
+            {
+                TypeKey = "All",
+                TypeName = "总状态",
+                StateKey = -1,
+                StateName = "异常",
+            },
+            new RootState
+            {
+                TypeKey = "All",
+                TypeName = "总状态",
+                StateKey = 0,
+                StateName = "删除",
+            },
+            new RootState
+            {
+                TypeKey = "All",
+                TypeName = "总状态",
+                StateKey = 1,
+                StateName = "正常",
+            },
+            new RootState
+            {
+                TypeKey = "All",
+                TypeName = "总状态",
+                StateKey = 2,
+                StateName = "审核",
+            }
+        };
+
+        //await _IRootStateService.InitUserAuthorityAsync();
+
+        return await _IRootStateService.InitRootStateAsync(rootStates);
     }
 }
