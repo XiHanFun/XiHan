@@ -24,7 +24,9 @@ public class UserRoleService : BaseService<UserRole>, IUserRoleService
     private readonly IUserRoleRepository _IUserRoleRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
-    public UserRoleService(IRootStateRepository iRootStateRepository, IUserRoleRepository iUserRoleRepository, IUserAccountRoleRepository iUserAccountRoleRepository)
+    public UserRoleService(IRootStateRepository iRootStateRepository,
+        IUserRoleRepository iUserRoleRepository,
+        IUserAccountRoleRepository iUserAccountRoleRepository)
     {
         base._IBaseRepository = iUserRoleRepository;
         _IRootStateRepository = iRootStateRepository;

@@ -7,6 +7,8 @@
 // CreateTime:2022-07-03 下午 06:52:43
 // ----------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
 /// <summary>
@@ -17,10 +19,14 @@ public class CUserAccountRoleDto
     /// <summary>
     /// 账户
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
+    [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 角色
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
+    [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid RoleId { get; set; }
 }

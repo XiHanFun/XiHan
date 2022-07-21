@@ -20,7 +20,7 @@ public class CUserAccountDto
     /// 用户名
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(6, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
+    [MinLength(5, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
@@ -70,9 +70,4 @@ public class CUserAccountDto
     /// 出生日期
     /// </summary>
     public DateTime? Birthday { get; set; }
-
-    /// <summary>
-    /// 注册Ip地址
-    /// </summary>
-    public virtual byte[]? RegisterIp { get; set; }
 }

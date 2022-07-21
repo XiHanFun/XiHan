@@ -1,26 +1,24 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BlogCategory
-// Guid:73eb779d-74f7-40ad-a7bd-79617d20c4f2
+// FileName:RBlogCategoryDto
+// Guid:f55b699d-1985-46f0-85d5-f06cbcd64d39
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 06:22:23
+// CreateTime:2022-07-22 上午 01:16:55
 // ----------------------------------------------------------------
 
-using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases;
 
-namespace ZhaiFanhuaBlog.Models.Blogs;
+namespace ZhaiFanhuaBlog.ViewModels.Blogs;
 
 /// <summary>
-/// 文章分类表
+/// RBlogCategoryDto
 /// </summary>
-public class BlogCategory : BaseEntity
+public class RBlogCategoryDto : RBaseDto
 {
     /// <summary>
     /// 父级分类
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public Guid? ParentId { get; set; }
 
     /// <summary>
@@ -31,13 +29,11 @@ public class BlogCategory : BaseEntity
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
     public string? Description { get; set; }
 
     /// <summary>

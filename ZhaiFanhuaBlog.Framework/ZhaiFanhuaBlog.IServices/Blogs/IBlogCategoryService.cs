@@ -14,4 +14,15 @@ namespace ZhaiFanhuaBlog.IServices.Blogs;
 
 public interface IBlogCategoryService : IBaseService<BlogCategory>
 {
+    Task<bool> InitBlogCategoryAsync(List<BlogCategory> blogCategories);
+
+    Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory);
+
+    Task<bool> DeleteBlogCategoryAsync(Guid guid);
+
+    Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory);
+
+    Task<BlogCategory> FindBlogCategoryAsync(Guid guid);
+
+    Task<List<BlogCategory>> QueryBlogCategoriesAsync();
 }

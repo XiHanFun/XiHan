@@ -24,7 +24,9 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
     private readonly IUserAuthorityRepository _IUserAuthorityRepository;
     private readonly IUserRoleAuthorityRepository _IUserRoleAuthorityRepository;
 
-    public UserAuthorityService(IUserAuthorityRepository iUserAuthorityRepository, IRootStateRepository iRootStateRepository, IUserRoleAuthorityRepository iUserRoleAuthorityRepository)
+    public UserAuthorityService(IUserAuthorityRepository iUserAuthorityRepository,
+        IRootStateRepository iRootStateRepository,
+        IUserRoleAuthorityRepository iUserRoleAuthorityRepository)
     {
         base._IBaseRepository = iUserAuthorityRepository;
         _IUserAuthorityRepository = iUserAuthorityRepository;
@@ -35,7 +37,8 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
     public async Task<bool> InitUserAuthorityAsync(List<UserAuthority> userAuthorities)
     {
         var state = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == 1);
-        userAuthorities.ForEach(userAuthority => {
+        userAuthorities.ForEach(userAuthority =>
+        {
             userAuthority.SoftDeleteLock = false;
             userAuthority.StateGuid = state.BaseId;
         });
@@ -62,7 +65,7 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
             throw new ApplicationException("权限不存在");
         if ((await _IUserAuthorityRepository.QueryAsync(e => e.ParentId == guid)).Count != 0)
             throw new ApplicationException("该权限下有子权限，不能删除");
-        if ((await _IUserRoleAuthorityRepository.QueryAsync(e => e.AuditId == userAuthority.BaseId)).Count != 0)
+        if ((await _IUserRoleAuthorityRepository.QueryAsync(e => e.AuthorityId == userAuthority.BaseId)).Count != 0)
             throw new ApplicationException("该权限已有角色使用，不能删除");
         if (userAuthority.SoftDeleteLock)
         {

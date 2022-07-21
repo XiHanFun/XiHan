@@ -56,9 +56,9 @@ public class AuthorizeController : ControllerBase
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Name);
         if (userAccount == null)
-            throw new Exception("该用户名账号不存在，请先注册账号");
+            throw new ApplicationException("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
-            throw new Exception("密码错误，请重新登录");
+            throw new ApplicationException("密码错误，请重新登录");
         return ResultResponse.OK(GetToken(userAccount));
     }
 
@@ -72,9 +72,9 @@ public class AuthorizeController : ControllerBase
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Email);
         if (userAccount == null)
-            throw new Exception("该邮箱账号不存在，请先注册账号");
+            throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
-            throw new Exception("密码错误，请重新登录");
+            throw new ApplicationException("密码错误，请重新登录");
         return ResultResponse.OK(GetToken(userAccount));
     }
 

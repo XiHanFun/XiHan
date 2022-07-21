@@ -32,7 +32,11 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
 
     Task<bool> DeleteAsync(Guid guid);
 
+    Task<bool> DeleteAsync(TEntity entity);
+
     Task<bool> DeleteBatchAsync(Guid[] guids);
+
+    Task<bool> DeleteBatchAsync(List<TEntity> entities);
 
     Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
 

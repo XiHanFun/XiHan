@@ -25,7 +25,10 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
     private readonly IUserRoleRepository _IUserRoleRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
-    public UserAccountRoleService(IRootStateRepository iRootStateRepository, IUserAccountRepository iUserAccountRepository, IUserRoleRepository iUserRoleRepository, IUserAccountRoleRepository iUserAccountRoleRepository)
+    public UserAccountRoleService(IRootStateRepository iRootStateRepository,
+        IUserAccountRepository iUserAccountRepository,
+        IUserRoleRepository iUserRoleRepository,
+        IUserAccountRoleRepository iUserAccountRoleRepository)
     {
         base._IBaseRepository = iUserAccountRoleRepository;
         _IRootStateRepository = iRootStateRepository;
@@ -96,20 +99,6 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
                                where rootstates.StateKey.Equals(1)
                                orderby useraccountroles.CreateTime descending
                                select useraccountroles;
-        //select new UserAccountRole
-        //{
-        //    BaseId = useraccountrole.BaseId,
-        //    AccountId = useraccountrole.AccountId,
-        //    RoleId = useraccountrole.RoleId,
-        //    StateGuid = useraccountrole.StateGuid,
-        //    CreateTime = useraccountrole.CreateTime,
-        //    ModifyTime = useraccountrole.ModifyTime,
-        //    DeleteTime = useraccountrole.DeleteTime,
-        //    SoftDeleteLock = useraccountrole.SoftDeleteLock,
-        //    RootState = rootstate,
-        //    UserAccounts = (IEnumerable<UserAccount>)useraccounts,
-        //    UserRoles = (IEnumerable<UserRole>)userroles
-        //};
         return userAccountRoles.ToList();
     }
 }

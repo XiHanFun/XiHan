@@ -105,7 +105,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> ModifyUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cDto)
     {
         var userAuthority = iMapper.Map<UserAuthority>(cDto);
-        userAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userAuthority.ModifyId = Guid.Parse(user.Value);
+        }
         userAuthority = await _IUserAuthorityService.ModifyUserAuthorityAsync(userAuthority);
         if (userAuthority != null)
             return ResultResponse.OK(iMapper.Map<RUserAuthorityDto>(userAuthority));
@@ -155,7 +159,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
     {
         var userRole = iMapper.Map<UserRole>(cDto);
-        userRole.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userRole.CreateId = Guid.Parse(user.Value);
+        }
         if (await _IUserRoleService.CreateUserRoleAsync(userRole))
             return ResultResponse.OK("新增用户角色成功");
         return ResultResponse.BadRequest("新增用户角色失败");
@@ -184,7 +192,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cDto)
     {
         var userRole = iMapper.Map<UserRole>(cDto);
-        userRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userRole.ModifyId = Guid.Parse(user.Value);
+        }
         userRole = await _IUserRoleService.ModifyUserRoleAsync(userRole);
         if (userRole != null)
             return ResultResponse.OK(iMapper.Map<RUserRoleDto>(userRole));
@@ -266,7 +278,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cDto)
     {
         var userAccount = iMapper.Map<UserAccount>(cDto);
-        userAccount.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userAccount.ModifyId = Guid.Parse(user.Value);
+        }
         userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
         if (userAccount != null)
             return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
@@ -317,7 +333,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
     {
         var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cDto);
-        userRoleAuthority.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userRoleAuthority.CreateId = Guid.Parse(user.Value);
+        }
         if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userRoleAuthority))
             return ResultResponse.OK("新增用户角色权限成功");
         return ResultResponse.BadRequest("新增用户角色权限失败");
@@ -346,7 +366,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cDto)
     {
         var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cDto);
-        userRoleAuthority.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userRoleAuthority.ModifyId = Guid.Parse(user.Value);
+        }
         if (await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userRoleAuthority) != null)
             return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userRoleAuthority));
         return ResultResponse.BadRequest("修改用户角色权限失败");
@@ -395,7 +419,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
     {
         var userAccountRole = iMapper.Map<UserAccountRole>(cDto);
-        userAccountRole.CreateId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userAccountRole.CreateId = Guid.Parse(user.Value);
+        }
         if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
             return ResultResponse.OK("新增用户账户角色成功");
         return ResultResponse.BadRequest("新增用户账户角色失败");
@@ -425,7 +453,11 @@ public class UserController : ControllerBase
     public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cDto)
     {
         var userAccountRole = iMapper.Map<UserAccountRole>(cDto);
-        userAccountRole.ModifyId = Guid.Parse(User.FindFirst("UserId")!.Value);
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            userAccountRole.ModifyId = Guid.Parse(user.Value);
+        }
         if (await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole) != null)
             return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
         return ResultResponse.BadRequest("修改用户账户角色失败");

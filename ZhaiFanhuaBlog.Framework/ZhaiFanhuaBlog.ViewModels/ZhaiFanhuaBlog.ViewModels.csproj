@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Blogs\" />
     <Folder Include="Roots\" />
     <Folder Include="Sites\" />
   </ItemGroup>

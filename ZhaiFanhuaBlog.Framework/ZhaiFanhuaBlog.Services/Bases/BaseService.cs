@@ -94,6 +94,16 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     }
 
     /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteAsync(TEntity entity)
+    {
+        return await _IBaseRepository.DeleteAsync(entity);
+    }
+
+    /// <summary>
     /// 批量删除
     /// </summary>
     /// <param name="guids"></param>
@@ -101,6 +111,16 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     public virtual async Task<bool> DeleteBatchAsync(Guid[] guids)
     {
         return await _IBaseRepository.DeleteBatchAsync(guids);
+    }
+
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteBatchAsync(List<TEntity> entities)
+    {
+        return await _IBaseRepository.DeleteBatchAsync(entities);
     }
 
     /// <summary>

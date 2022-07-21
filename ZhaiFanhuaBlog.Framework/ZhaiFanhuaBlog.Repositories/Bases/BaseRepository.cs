@@ -11,10 +11,12 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.IRepositories.Bases;
+using ZhaiFanhuaBlog.Models.Bases;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -138,6 +140,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual new async Task<bool> DeleteAsync(TEntity entity)
+    {
+        return await base.DeleteAsync(entity);
+    }
+
+    /// <summary>
     /// 批量删除
     /// </summary>
     /// <param name="guids"></param>
@@ -146,6 +158,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         object[] newguids = guids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newguids);
+    }
+
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> DeleteBatchAsync(List<TEntity> entities)
+    {
+        return await base.DeleteAsync(entities);
     }
 
     /// <summary>
