@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomRouteExtension
 {
     /// <summary>
-    /// Route扩展
+    /// Route服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config"></param>

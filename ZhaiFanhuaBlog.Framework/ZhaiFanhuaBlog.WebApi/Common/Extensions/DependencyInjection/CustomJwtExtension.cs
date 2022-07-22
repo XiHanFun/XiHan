@@ -20,7 +20,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomJwtExtension
 {
     /// <summary>
-    /// JWT扩展
+    /// JWT服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config"></param>

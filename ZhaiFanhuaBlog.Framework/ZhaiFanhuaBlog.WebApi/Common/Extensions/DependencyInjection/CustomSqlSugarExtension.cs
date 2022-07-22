@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomSqlSugarExtension
 {
     /// <summary>
-    /// SqlSugar扩展
+    /// SqlSugar服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config"></param>
@@ -70,10 +70,10 @@ public static class CustomSqlSugarExtension
             // SQL语句输出方便排查问题
             db.Aop.OnLogExecuting = (sql, p) =>
             {
-                ConsoleHelper.WriteLineSql("===========================================================================");
-                ConsoleHelper.WriteLineSql($"{DateTime.Now}，SQL语句：");
-                ConsoleHelper.WriteLineSql(sql);
-                ConsoleHelper.WriteLineSql("===========================================================================");
+                ConsoleHelper.WriteLineHandle("===========================================================================");
+                ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");
+                ConsoleHelper.WriteLineHandle(sql);
+                ConsoleHelper.WriteLineHandle("===========================================================================");
             };
         });
         return services;

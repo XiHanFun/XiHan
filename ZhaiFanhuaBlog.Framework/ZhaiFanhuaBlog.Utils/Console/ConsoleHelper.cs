@@ -65,5 +65,5 @@ public static class ConsoleHelper
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteLineSql(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
 }

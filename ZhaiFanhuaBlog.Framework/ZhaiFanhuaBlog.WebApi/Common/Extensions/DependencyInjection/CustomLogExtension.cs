@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomLogExtension
 {
     /// <summary>
-    /// 日志扩展
+    /// Log服务扩展
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>

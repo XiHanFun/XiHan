@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomCacheExtension
 {
     /// <summary>
-    /// Cache扩展
+    /// Cache服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config"></param>

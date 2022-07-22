@@ -23,7 +23,6 @@ public static class ConsoleInfo
     /// </summary>
     public static void ConsoleInfos()
     {
-        ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
         ConsoleHelper.WriteLineInfo("===============系统信息===============");
         ConsoleHelper.WriteLineInfo($@"操作系统：{SystemInfoHelper.OperatingSystem}");
         ConsoleHelper.WriteLineInfo($@"系统描述：{SystemInfoHelper.OSDescription}");
@@ -50,5 +49,14 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
         ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
         ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
+        ConsoleHelper.WriteLineInfo("===============启动成功===============");
+        ConsoleHelper.WriteLineSuccess(@"
+ ______  _   _       ___   _   _____       ___   __   _   _   _   _   _       ___   _____   _       _____   _____  
+|___  / | | | |     /   | | | |  ___|     /   | |  \ | | | | | | | | | |     /   | |  _  \ | |     /  _  \ /  ___| 
+   / /  | |_| |    / /| | | | | |__      / /| | |   \| | | |_| | | | | |    / /| | | |_| | | |     | | | | | |     
+  / /   |  _  |   / / | | | | |  __|    / / | | | |\   | |  _  | | | | |   / / | | |  _  { | |     | | | | | |  _  
+ / /__  | | | |  / /  | | | | | |      / /  | | | | \  | | | | | | |_| |  / /  | | | |_| | | |___  | |_| | | |_| | 
+/_____| |_| |_| /_/   |_| |_| |_|     /_/   |_| |_|  \_| |_| |_| \_____/ /_/   |_| |_____/ |_____| \_____/ \_____/ 
+        ");
     }
 }

@@ -32,7 +32,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 public static class CustomIocExtension
 {
     /// <summary>
-    /// Services扩展
+    /// IOC服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config"></param>

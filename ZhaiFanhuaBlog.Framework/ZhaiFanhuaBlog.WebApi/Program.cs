@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.HttpOverrides;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -29,14 +30,15 @@ public class Program
 
         ConsoleHelper.WriteLineInfo("Configuration Start……");
         var config = builder.Configuration;
+        ConfigHelper.Configuration = config;
 
-        ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
+        ConsoleHelper.WriteLineHandle("Configuration Started Successfully！");
         ConsoleHelper.WriteLineInfo("Log Start……");
 
         var log = builder.Logging;
         log.AddCustomLog(config);
 
-        ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
+        ConsoleHelper.WriteLineHandle("Log Started Successfully！");
         ConsoleHelper.WriteLineInfo("Services Start……");
 
         var services = builder.Services;
@@ -59,7 +61,7 @@ public class Program
         // Controllers
         services.AddCustomControllers(config);
 
-        ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
+        ConsoleHelper.WriteLineHandle("Services Started Successfully！");
         ConsoleHelper.WriteLineInfo("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
@@ -69,8 +71,6 @@ public class Program
         }
         else
         {
-            // 异常页面
-            app.UseExceptionHandler("/Home/Error");
             // HTTP 严格传输安全
             app.UseHsts();
         }
@@ -81,8 +81,6 @@ public class Program
         });
         // Swagger
         app.UseCustomSwagger(config);
-        // 跨域
-        app.UseCors();
         // 强制https跳转
         app.UseHttpsRedirection();
         // 使用静态文件
@@ -91,12 +89,16 @@ public class Program
         //app.UseSerilog();
         // 路由
         app.UseRouting();
+        // 跨域
+        app.UseCustomCors(config);
         // 鉴权
         app.UseAuthentication();
         // 授权
         app.UseAuthorization();
 
         app.MapControllers();
+        ConsoleHelper.WriteLineHandle("ZhaiFanhuaBlog Application Started Successfully！");
+
         // 打印信息
         ConsoleInfo.ConsoleInfos();
         app.Run();

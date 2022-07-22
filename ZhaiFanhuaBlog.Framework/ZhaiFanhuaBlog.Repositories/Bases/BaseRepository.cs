@@ -7,16 +7,17 @@
 // CreateTime:2022-05-08 下午 09:35:56
 // ----------------------------------------------------------------
 
+using Microsoft.Extensions.Configuration;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.IRepositories.Bases;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.Utils.Serialize;
+using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -29,44 +30,59 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-        // 创建数据库
-        base.Context.DbMaintenance.CreateDatabase();
-        // 创建表
-        base.Context.CodeFirst.InitTables(
-            //Sites
-            typeof(SiteConfiguration),
-            typeof(SiteLog),
-            typeof(SiteSkin),
+        IConfiguration _IConfiguration = ConfigHelper.Configuration;
+        // 数据库是否初始化
+        bool initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
+        if (!initDatabase)
+        {
+            ConsoleHelper.WriteLineWarning("数据库正在初始化……");
+            // 创建数据库
+            Console.WriteLine($"字符串{base.Context.Ado.Connection.ConnectionString}");
+            base.Context.DbMaintenance.CreateDatabase();
+            // 创建表
+            base.Context.CodeFirst.InitTables(
+                //Sites
+                typeof(SiteConfiguration),
+                typeof(SiteLog),
+                typeof(SiteSkin),
 
-            // Users
-            typeof(UserAuthority),
-            typeof(UserRole),
-            typeof(UserRoleAuthority),
-            typeof(UserAccount),
-            typeof(UserOauth),
-            typeof(UserLogin),
-            typeof(UserStatistic),
-            typeof(UserNotice),
-            typeof(UserFollow),
-            typeof(UserCollectCategory),
-            typeof(UserCollect),
+                // Users
+                typeof(UserAuthority),
+                typeof(UserRole),
+                typeof(UserRoleAuthority),
+                typeof(UserAccount),
+                typeof(UserOauth),
+                typeof(UserLogin),
+                typeof(UserStatistic),
+                typeof(UserNotice),
+                typeof(UserFollow),
+                typeof(UserCollectCategory),
+                typeof(UserCollect),
 
-            // Roots
-            typeof(RootState),
-            typeof(RootAnnouncement),
-            typeof(RootAuditCategory),
-            typeof(RootAudit),
-            typeof(RootFriendlyLink),
+                // Roots
+                typeof(RootState),
+                typeof(RootAnnouncement),
+                typeof(RootAuditCategory),
+                typeof(RootAudit),
+                typeof(RootFriendlyLink),
 
-            // Blogs
-            typeof(BlogCategory),
-            typeof(BlogArticle),
-            typeof(BlogTag),
-            typeof(BlogArticleTag),
-            typeof(BlogComment),
-            typeof(BlogCommentPoll),
-            typeof(BlogPoll)
-            );
+                // Blogs
+                typeof(BlogCategory),
+                typeof(BlogArticle),
+                typeof(BlogTag),
+                typeof(BlogArticleTag),
+                typeof(BlogComment),
+                typeof(BlogCommentPoll),
+                typeof(BlogPoll)
+                );
+            // 更新初始化状态
+            _IConfiguration["Database:Initialization"] = true.ToString();
+            initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
+            if (initDatabase)
+            {
+                ConsoleHelper.WriteLineWarning("数据库初始化已完成");
+            }
+        }
     }
 
     /// <summary>
