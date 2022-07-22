@@ -30,7 +30,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-        IConfiguration _IConfiguration = ConfigHelper.Configuration;
+        IConfiguration _IConfiguration = ConfigHelper.Configuration!;
         // 数据库是否初始化
         bool initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
         if (!initDatabase)

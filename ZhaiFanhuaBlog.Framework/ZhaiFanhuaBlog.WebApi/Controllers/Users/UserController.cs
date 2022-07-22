@@ -446,7 +446,6 @@ public class UserController : ControllerBase
     /// 修改用户账户角色
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="guid"></param>
     /// <param name="cDto"></param>
     /// <returns></returns>
     [HttpPut("Account/Role")]

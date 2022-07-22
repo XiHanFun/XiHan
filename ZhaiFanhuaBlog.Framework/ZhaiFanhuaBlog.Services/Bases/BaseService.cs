@@ -21,7 +21,7 @@ namespace ZhaiFanhuaBlog.Services.Bases;
 public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, new()
 {
     //通过在子类的构造函数中注入
-    protected IBaseRepository<TEntity> _IBaseRepository;
+    protected IBaseRepository<TEntity>? _IBaseRepository;
 
     /// <summary>
     /// 新增
@@ -30,7 +30,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> CreateAsync(TEntity entity)
     {
-        return await _IBaseRepository.CreateAsync(entity);
+        return await _IBaseRepository!.CreateAsync(entity);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<Guid> CreateReturnGuidAsync(TEntity entity)
     {
-        return await _IBaseRepository.CreateReturnGuidAsync(entity);
+        return await _IBaseRepository!.CreateReturnGuidAsync(entity);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> CreateOrUpdateAsync(TEntity entity)
     {
-        return await _IBaseRepository.CreateOrUpdateAsync(entity);
+        return await _IBaseRepository!.CreateOrUpdateAsync(entity);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> CreateBatchAsync(TEntity[] entities)
     {
-        return await _IBaseRepository.CreateBatchAsync(entities);
+        return await _IBaseRepository!.CreateBatchAsync(entities);
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> CreateBatchAsync(List<TEntity> entities)
     {
-        return await _IBaseRepository.CreateBatchAsync(entities);
+        return await _IBaseRepository!.CreateBatchAsync(entities);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities)
     {
-        return await _IBaseRepository.CreateOrUpdateBatchAsync(entities);
+        return await _IBaseRepository!.CreateOrUpdateBatchAsync(entities);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> DeleteAsync(Guid guid)
     {
-        return await _IBaseRepository.DeleteAsync(guid);
+        return await _IBaseRepository!.DeleteAsync(guid);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> DeleteAsync(TEntity entity)
     {
-        return await _IBaseRepository.DeleteAsync(entity);
+        return await _IBaseRepository!.DeleteAsync(entity);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> DeleteBatchAsync(Guid[] guids)
     {
-        return await _IBaseRepository.DeleteBatchAsync(guids);
+        return await _IBaseRepository!.DeleteBatchAsync(guids);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> DeleteBatchAsync(List<TEntity> entities)
     {
-        return await _IBaseRepository.DeleteBatchAsync(entities);
+        return await _IBaseRepository!.DeleteBatchAsync(entities);
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _IBaseRepository.DeleteAsync(func);
+        return await _IBaseRepository!.DeleteAsync(func);
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
-        return await _IBaseRepository.UpdateAsync(entity);
+        return await _IBaseRepository!.UpdateAsync(entity);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> UpdateBatchAsync(TEntity[] entities)
     {
-        return await _IBaseRepository.UpdateBatchAsync(entities);
+        return await _IBaseRepository!.UpdateBatchAsync(entities);
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<bool> UpdateBatchAsync(List<TEntity> entities)
     {
-        return await _IBaseRepository.UpdateBatchAsync(entities);
+        return await _IBaseRepository!.UpdateBatchAsync(entities);
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<TEntity> FindAsync(Guid? guid)
     {
-        return await _IBaseRepository.FindAsync(guid);
+        return await _IBaseRepository!.FindAsync(guid);
     }
 
     /// <summary>
@@ -180,7 +180,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _IBaseRepository.FindAsync(func);
+        return await _IBaseRepository!.FindAsync(func);
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync()
     {
-        return await _IBaseRepository.QueryAsync();
+        return await _IBaseRepository!.QueryAsync();
     }
 
     /// <summary>
@@ -199,7 +199,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _IBaseRepository.QueryAsync(func);
+        return await _IBaseRepository!.QueryAsync(func);
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _IBaseRepository.QueryAsync(pageIndex, pageSize, totalCount);
+        return await _IBaseRepository!.QueryAsync(pageIndex, pageSize, totalCount);
     }
 
     /// <summary>
@@ -224,6 +224,6 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _IBaseRepository.QueryAsync(func, pageIndex, pageSize, totalCount);
+        return await _IBaseRepository!.QueryAsync(func, pageIndex, pageSize, totalCount);
     }
 }
