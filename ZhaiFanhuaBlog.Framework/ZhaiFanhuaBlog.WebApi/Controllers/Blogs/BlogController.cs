@@ -24,8 +24,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 /// 博客管理
 /// </summary>
 [Authorize]
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Reception)]
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+//[ApiExplorerSettings(GroupName = SwaggerGroup.Reception)]
 public class BlogController : ControllerBase
 {
     private readonly IUserAccountService _IUserAccountService;

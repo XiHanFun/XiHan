@@ -17,8 +17,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 /// 测试接口
 /// </summary>
 [AllowAnonymous]
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+//[ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
 public class TestController : ControllerBase
 {
     /// <summary>

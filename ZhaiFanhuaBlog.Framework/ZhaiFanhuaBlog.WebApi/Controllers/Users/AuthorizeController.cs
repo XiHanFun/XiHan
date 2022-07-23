@@ -27,8 +27,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// 登录授权
 /// </summary>
 [AllowAnonymous]
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+//[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
 public class AuthorizeController : ControllerBase
 {
     private readonly IConfiguration _IConfiguration;

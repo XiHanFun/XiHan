@@ -10,6 +10,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Roots.Init;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
@@ -17,8 +18,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 /// <summary>
 /// 系统管理
 /// </summary>
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+//[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : ControllerBase
 {
     private readonly IRootStateService _IRootStateService;
@@ -39,41 +42,8 @@ public class RootController : ControllerBase
     [HttpPost]
     public async Task<bool> Init()
     {
-        List<RootState> rootStates = new()
-        {
-            // All 总状态
-            new RootState
-            {
-                TypeKey = "All",
-                TypeName = "总状态",
-                StateKey = -1,
-                StateName = "异常",
-            },
-            new RootState
-            {
-                TypeKey = "All",
-                TypeName = "总状态",
-                StateKey = 0,
-                StateName = "删除",
-            },
-            new RootState
-            {
-                TypeKey = "All",
-                TypeName = "总状态",
-                StateKey = 1,
-                StateName = "正常",
-            },
-            new RootState
-            {
-                TypeKey = "All",
-                TypeName = "总状态",
-                StateKey = 2,
-                StateName = "审核",
-            }
-        };
-
         //await _IRootStateService.InitUserAuthorityAsync();
 
-        return await _IRootStateService.InitRootStateAsync(rootStates);
+        return await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
     }
 }

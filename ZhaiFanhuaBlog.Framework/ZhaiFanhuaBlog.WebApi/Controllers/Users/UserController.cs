@@ -25,8 +25,10 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// 用户管理
 /// </summary>
 [Authorize]
-[Route("api/[controller]"), Produces("application/json")]
-[ApiController, ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+//[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class UserController : ControllerBase
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
