@@ -7,8 +7,8 @@
 // CreateTime:2022-05-09 上午 01:11:29
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
@@ -23,21 +23,18 @@ public static class IpInfoHelper
     {
         try
         {
-            // 得到主机名
-            string HostName = Dns.GetHostName();
-            IPHostEntry IpEntry = Dns.GetHostEntry(HostName);
-            for (int i = 0; i < IpEntry.AddressList.Length; i++)
+            // 获取可用网卡
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()?.Where(network => network.OperationalStatus == OperationalStatus.Up);
+            // 获取所有可用网卡IP信息
+            var unicastIPAddressInformations = networkInterfaces?.Select(x => x.GetIPProperties())?.SelectMany(x => x.UnicastAddresses);
+            if (unicastIPAddressInformations != null)
             {
-                // 从IP地址列表中筛选出IPv4类型的IP地址
-                // AddressFamily.InterNetwork表示此IP为IPv4,
-                // AddressFamily.InterNetworkV6表示此地址为IPv6类型
-                if (IpEntry.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                foreach (var ipInfo in unicastIPAddressInformations)
                 {
-                    return "IPv4:" + IpEntry.AddressList[i].ToString();
-                }
-                if (IpEntry.AddressList[i].AddressFamily == AddressFamily.InterNetworkV6)
-                {
-                    return "IPv6:" + IpEntry.AddressList[i].ToString();
+                    if (!IPAddress.IsLoopback(ipInfo.Address) && ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return ipInfo.Address.ToString();
+                    }
                 }
             }
             return "No IP address was obtained";

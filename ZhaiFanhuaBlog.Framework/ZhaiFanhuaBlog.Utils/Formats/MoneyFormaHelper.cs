@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.Utils.Formats;
 public static class MoneyFormaHelper
 {
     /// <summary>
-    /// 格式化金额(1234,5678.90)
+    /// 格式化金额(由千位转万位，如【12,345,678.90=>1234,5678.90】)
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>

@@ -8,7 +8,7 @@
 // ----------------------------------------------------------------
 
 using System.Net;
-using System.Text;
+using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.Test.Common;
 
@@ -17,9 +17,15 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestIpAddress
 {
-    public static void ParseIp() {
+    public static void ParseIp()
+    {
         byte[] address = new byte[4] { 127, 0, 0, 1 };
         IPAddress iPAddress = new(address);
         Console.WriteLine(iPAddress.ToString());
+    }
+
+    public static void LocalIp()
+    {
+        Console.WriteLine(IpInfoHelper.GetLocalIp());
     }
 }
