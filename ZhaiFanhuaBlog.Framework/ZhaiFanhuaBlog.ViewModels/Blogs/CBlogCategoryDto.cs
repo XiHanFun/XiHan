@@ -23,6 +23,12 @@ public class CBlogCategoryDto
     public Guid? ParentId { get; set; }
 
     /// <summary>
+    /// 分类用户
+    /// </summary>
+    [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
+    public Guid AccountId { get; set; }
+
+    /// <summary>
     /// 分类名称
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]

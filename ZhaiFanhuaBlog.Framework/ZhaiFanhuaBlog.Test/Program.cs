@@ -25,7 +25,7 @@ public class Program
         //TestDiskInformation.DiskInformation();
         //TestEncryption.Encryption();
         //TestResourceMigration.ResourceMigration();
-        //TestIpAddress.LocalIp();
+        TestIpAddress.LocalIp();
         Console.ReadKey();
         return Task.CompletedTask;
     }
