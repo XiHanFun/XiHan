@@ -2,6 +2,10 @@
 
 
 
+<div style="width: 850px;margin: 0 auto;">
+        <img style="height:150px" align="center" src="Logo.png" />
+</div>
+
 [更新沿程](UpdateTimeline.md)
 
 This is the back end of the ZhaiFanhuaBlog application, which is based on DotNet6.

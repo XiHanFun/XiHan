@@ -47,6 +47,13 @@ public static class ConsoleHelper
     public static void WriteLineWarning(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow) => WriteColorLine(inputStr, frontColor);
 
     /// <summary>
+    /// 处理信息
+    /// </summary>
+    /// <param name="inputStr">待打印的字符串</param>
+    /// <param name="frontColor">想要打印的颜色</param>
+    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
+
+    /// <summary>
     /// 正常信息
     /// </summary>
     /// <param name="inputStr">待打印的字符串</param>
@@ -59,11 +66,4 @@ public static class ConsoleHelper
     /// <param name="inputStr">待打印的字符串</param>
     /// <param name="frontColor">想要打印的颜色</param>
     public static void WriteLineSuccess(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green) => WriteColorLine(inputStr, frontColor);
-
-    /// <summary>
-    /// 数据库信息
-    /// </summary>
-    /// <param name="inputStr">待打印的字符串</param>
-    /// <param name="frontColor">想要打印的颜色</param>
-    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
 }

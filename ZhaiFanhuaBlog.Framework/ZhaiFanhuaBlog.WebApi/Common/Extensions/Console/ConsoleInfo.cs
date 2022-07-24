@@ -19,11 +19,24 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 public static class ConsoleInfo
 {
     /// <summary>
+    /// Logo
+    /// </summary>
+    public static string LogoCopyright =
+$@"
+███████╗██╗  ██╗ █████╗ ██╗███████╗ █████╗ ███╗   ██╗██╗  ██╗██╗   ██╗ █████╗ ██████╗ ██╗      ██████╗  ██████╗
+╚══███╔╝██║  ██║██╔══██╗██║██╔════╝██╔══██╗████╗  ██║██║  ██║██║   ██║██╔══██╗██╔══██╗██║     ██╔═══██╗██╔════╝
+  ███╔╝ ███████║███████║██║█████╗  ███████║██╔██╗ ██║███████║██║   ██║███████║██████╔╝██║     ██║   ██║██║  ███╗
+ ███╔╝  ██╔══██║██╔══██║██║██╔══╝  ██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══██║██╔══██╗██║     ██║   ██║██║   ██║
+███████╗██║  ██║██║  ██║██║██║     ██║  ██║██║ ╚████║██║  ██║╚██████╔╝██║  ██║██████╔╝███████╗╚██████╔╝╚██████╔╝
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝
+          --------------Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.--------------";
+
+    /// <summary>
     /// 打印系统信息
     /// </summary>
     public static void ConsoleInfos()
     {
-        ConsoleHelper.WriteLineInfo("===============系统信息===============");
+        ConsoleHelper.WriteLineInfo(" ===============系统信息===============");
         ConsoleHelper.WriteLineInfo($@"操作系统：{SystemInfoHelper.OperatingSystem}");
         ConsoleHelper.WriteLineInfo($@"系统描述：{SystemInfoHelper.OSDescription}");
         ConsoleHelper.WriteLineInfo($@"系统版本：{SystemInfoHelper.OSVersion}");
@@ -49,14 +62,7 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
         ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
         ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
-        ConsoleHelper.WriteLineInfo("===============启动成功===============");
-        ConsoleHelper.WriteLineSuccess(@"
- ______  _   _       ___   _   _____       ___   __   _   _   _   _   _       ___   _____   _       _____   _____  
-|___  / | | | |     /   | | | |  ___|     /   | |  \ | | | | | | | | | |     /   | |  _  \ | |     /  _  \ /  ___| 
-   / /  | |_| |    / /| | | | | |__      / /| | |   \| | | |_| | | | | |    / /| | | |_| | | |     | | | | | |     
-  / /   |  _  |   / / | | | | |  __|    / / | | | |\   | |  _  | | | | |   / / | | |  _  { | |     | | | | | |  _  
- / /__  | | | |  / /  | | | | | |      / /  | | | | \  | | | | | | |_| |  / /  | | | |_| | | |___  | |_| | | |_| | 
-/_____| |_| |_| /_/   |_| |_| |_|     /_/   |_| |_|  \_| |_| |_| \_____/ /_/   |_| |_____/ |_____| \_____/ \_____/ 
-        ");
+        ConsoleHelper.WriteLineInfo("===============启动信息===============");
+        ConsoleHelper.WriteLineHandle(LogoCopyright);
     }
 }

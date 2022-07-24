@@ -7,6 +7,7 @@
 // CreateTime:2022-05-26 下午 06:24:14
 // ----------------------------------------------------------------
 
+using Newtonsoft.Json;
 using SqlSugar.IOC;
 using ZhaiFanhuaBlog.Utils.Console;
 
@@ -65,17 +66,21 @@ public static class CustomSqlSugarExtension
                 IsAutoCloseConnection = true
             }
         });
-        services.ConfigurationSugar(db =>
+        bool databaseConsole = config.GetValue<bool>("Database:Console");
+        if (databaseConsole)
         {
-            // SQL语句输出方便排查问题
-            db.Aop.OnLogExecuting = (sql, p) =>
+            services.ConfigurationSugar(db =>
             {
-                ConsoleHelper.WriteLineHandle("===========================================================================");
-                ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");
-                ConsoleHelper.WriteLineHandle(sql);
-                ConsoleHelper.WriteLineHandle("===========================================================================");
-            };
-        });
+                // SQL语句输出方便排查问题
+                db.Aop.OnLogExecuting = (sql, p) =>
+                {
+                    ConsoleHelper.WriteLineHandle("===========================================================================");
+                    ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");
+                    ConsoleHelper.WriteLineHandle(sql);
+                    ConsoleHelper.WriteLineHandle("===========================================================================");
+                };
+            });
+        }
         return services;
     }
 }

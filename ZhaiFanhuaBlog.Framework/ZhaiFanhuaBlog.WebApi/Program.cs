@@ -28,18 +28,18 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        ConsoleHelper.WriteLineInfo("Configuration Start……");
+        ConsoleHelper.WriteLineWarning("Configuration Start……");
         var config = builder.Configuration;
         ConfigHelper.Configuration = config;
 
-        ConsoleHelper.WriteLineHandle("Configuration Started Successfully！");
-        ConsoleHelper.WriteLineInfo("Log Start……");
+        ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
+        ConsoleHelper.WriteLineWarning("Log Start……");
 
         var log = builder.Logging;
         log.AddCustomLog(config);
 
-        ConsoleHelper.WriteLineHandle("Log Started Successfully！");
-        ConsoleHelper.WriteLineInfo("Services Start……");
+        ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
+        ConsoleHelper.WriteLineWarning("Services Start……");
 
         var services = builder.Services;
         // Cache
@@ -61,8 +61,8 @@ public class Program
         // Controllers
         services.AddCustomControllers(config);
 
-        ConsoleHelper.WriteLineHandle("Services Started Successfully！");
-        ConsoleHelper.WriteLineInfo("ZhaiFanhuaBlog Application Start……");
+        ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
+        ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
         if (app.Environment.IsDevelopment())
@@ -97,7 +97,7 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        ConsoleHelper.WriteLineHandle("ZhaiFanhuaBlog Application Started Successfully！");
+        ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
         // 打印信息
         ConsoleInfo.ConsoleInfos();

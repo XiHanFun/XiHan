@@ -37,7 +37,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         {
             ConsoleHelper.WriteLineWarning("数据库正在初始化……");
             // 创建数据库
-            Console.WriteLine($"字符串{base.Context.Ado.Connection.ConnectionString}");
             base.Context.DbMaintenance.CreateDatabase();
             // 创建表
             base.Context.CodeFirst.InitTables(
@@ -80,7 +79,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
             if (initDatabase)
             {
-                ConsoleHelper.WriteLineWarning("数据库初始化已完成");
+                ConsoleHelper.WriteLineSuccess("数据库初始化已完成");
             }
         }
     }
