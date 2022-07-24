@@ -24,7 +24,7 @@ public class RUserRoleDto : RBaseDto
     /// <summary>
     /// 角色名称
     /// </summary>
-    public string? Name { get; set; } = null;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述

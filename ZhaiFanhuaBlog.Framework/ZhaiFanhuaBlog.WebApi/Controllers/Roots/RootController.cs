@@ -9,8 +9,10 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Roots;
+using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Roots.Init;
+using ZhaiFanhuaBlog.Models.Users.Init;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
@@ -21,18 +23,37 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-//[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : ControllerBase
 {
     private readonly IRootStateService _IRootStateService;
+    private readonly IUserAuthorityService _IUserAuthorityService;
+    private readonly IUserRoleService _IUserRoleService;
+    private readonly IUserRoleAuthorityService _IUserRoleAuthorityService;
+    private readonly IUserAccountService _IUserAccountService;
+    private readonly IUserAccountRoleService _IUserAccountRoleService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="iRootStateService"></param>
-    public RootController(IRootStateService iRootStateService)
+    /// <param name="iUserAuthorityService"></param>
+    /// <param name="iUserRoleService"></param>
+    /// <param name="iUserRoleAuthorityService"></param>
+    /// <param name="iUserAccountRoleService"></param>
+    /// <param name="iUserAccountService"></param>
+    public RootController(IRootStateService iRootStateService,
+        IUserAuthorityService iUserAuthorityService,
+        IUserRoleService iUserRoleService,
+        IUserRoleAuthorityService iUserRoleAuthorityService,
+        IUserAccountService iUserAccountService,
+        IUserAccountRoleService iUserAccountRoleService)
     {
         _IRootStateService = iRootStateService;
+        _IUserAuthorityService = iUserAuthorityService;
+        _IUserRoleService = iUserRoleService;
+        _IUserRoleAuthorityService = iUserRoleAuthorityService;
+        _IUserAccountService = iUserAccountService;
+        _IUserAccountRoleService = iUserAccountRoleService;
     }
 
     /// <summary>
@@ -42,8 +63,13 @@ public class RootController : ControllerBase
     [HttpPost]
     public async Task<bool> Init()
     {
-        //await _IRootStateService.InitUserAuthorityAsync();
-
-        return await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
+        bool result = false;
+        result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
+        result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
+        result = await _IUserAuthorityService.InitUserAuthorityAsync(UserInitData.UserAuthorityList);
+        result = await _IUserRoleService.InitUserRoleAsync(UserInitData.UserRoleList);
+        result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
+        if (!result) throw new ApplicationException("InitUserAuthorityAsync");
+        return true;
     }
 }

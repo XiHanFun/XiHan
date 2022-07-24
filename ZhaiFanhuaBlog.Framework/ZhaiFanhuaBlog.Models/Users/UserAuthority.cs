@@ -27,13 +27,13 @@ public class UserAuthority : BaseEntity
     /// 权限名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string? Name { get; set; } = null;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限类型
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string? Type { get; set; } = null;
+    public string Type { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限描述

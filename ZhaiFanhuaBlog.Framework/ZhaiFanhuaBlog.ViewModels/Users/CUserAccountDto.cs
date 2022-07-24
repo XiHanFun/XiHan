@@ -20,7 +20,7 @@ public class CUserAccountDto
     /// 用户名
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(5, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
