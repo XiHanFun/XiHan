@@ -24,7 +24,7 @@ public class BlogCategory : BaseEntity
     public Guid? ParentId { get; set; }
 
     /// <summary>
-    /// 创建者
+    /// 分类用户
     /// </summary>
     public Guid AccountId { get; set; }
 

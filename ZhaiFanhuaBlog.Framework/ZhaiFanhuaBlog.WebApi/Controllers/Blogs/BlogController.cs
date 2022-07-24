@@ -16,7 +16,6 @@ using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.ViewModels.Blogs;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 
@@ -27,7 +26,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-//[ApiExplorerSettings(GroupName = SwaggerGroup.Reception)]
 public class BlogController : ControllerBase
 {
     private readonly IUserAccountService _IUserAccountService;
@@ -67,19 +65,19 @@ public class BlogController : ControllerBase
     /// 新增文章分类
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="cDto"></param>
+    /// <param name="cBlogCategoryDto"></param>
     /// <returns></returns>
     [HttpPost("Category")]
-    public async Task<ResultModel> CreateBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cDto)
+    public async Task<ResultModel> CreateBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cBlogCategoryDto)
     {
-        var blogCategory = iMapper.Map<BlogCategory>(cDto);
         var user = User.FindFirst("UserId");
         if (user != null)
         {
+            var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
             blogCategory.CreateId = Guid.Parse(user.Value);
+            if (await _IBlogCategoryService.CreateBlogCategoryAsync(blogCategory))
+                return ResultResponse.OK("新增文章分类成功");
         }
-        if (await _IBlogCategoryService.CreateBlogCategoryAsync(blogCategory))
-            return ResultResponse.OK("新增文章分类成功");
         return ResultResponse.BadRequest("新增文章分类失败");
     }
 
@@ -91,8 +89,13 @@ public class BlogController : ControllerBase
     [HttpDelete("Category/{guid}")]
     public async Task<ResultModel> DeleteBlogCategory([FromRoute] Guid guid)
     {
-        if (await _IBlogCategoryService.DeleteBlogCategoryAsync(guid))
-            return ResultResponse.OK("删除文章分类成功");
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            Guid deleteId = Guid.Parse(user.Value);
+            if (await _IBlogCategoryService.DeleteBlogCategoryAsync(guid, deleteId))
+                return ResultResponse.OK("删除文章分类成功");
+        }
         return ResultResponse.BadRequest("删除文章分类失败");
     }
 
@@ -100,20 +103,20 @@ public class BlogController : ControllerBase
     /// 修改文章分类
     /// </summary>
     /// <param name="iMapper"></param>
-    /// <param name="cDto"></param>
+    /// <param name="cBlogCategoryDto"></param>
     /// <returns></returns>
     [HttpPut("Category")]
-    public async Task<ResultModel> ModifyBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cDto)
+    public async Task<ResultModel> ModifyBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cBlogCategoryDto)
     {
-        var blogCategory = iMapper.Map<BlogCategory>(cDto);
         var user = User.FindFirst("UserId");
         if (user != null)
         {
+            var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
             blogCategory.ModifyId = Guid.Parse(user.Value);
+            blogCategory = await _IBlogCategoryService.ModifyBlogCategoryAsync(blogCategory);
+            if (blogCategory != null)
+                return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
         }
-        blogCategory = await _IBlogCategoryService.ModifyBlogCategoryAsync(blogCategory);
-        if (blogCategory != null)
-            return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
         return ResultResponse.BadRequest("修改文章分类失败");
     }
 
@@ -124,11 +127,15 @@ public class BlogController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Category/{guid}")]
-    public async Task<ResultModel?> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<ResultModel> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var blogCategory = await _IBlogCategoryService.FindBlogCategoryAsync(guid);
-        if (blogCategory != null)
-            return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
+        var user = User.FindFirst("UserId");
+        if (user != null)
+        {
+            var blogCategory = await _IBlogCategoryService.FindBlogCategoryAsync(guid);
+            if (blogCategory != null)
+                return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
+        }
         return ResultResponse.BadRequest("该文章分类不存在");
     }
 
@@ -138,11 +145,11 @@ public class BlogController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Categories")]
-    public async Task<ResultModel> QueryBlogCategories([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryBlogCategory([FromServices] IMapper iMapper)
     {
-        var userAuthorities = await _IBlogCategoryService.QueryBlogCategoriesAsync();
-        if (userAuthorities.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RBlogCategoryDto>>(userAuthorities));
+        var blogCategories = await _IBlogCategoryService.QueryBlogCategoryAsync();
+        if (blogCategories.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RBlogCategoryDto>>(blogCategories));
         return ResultResponse.BadRequest("未查询到文章分类");
     }
 

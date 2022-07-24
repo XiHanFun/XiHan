@@ -31,5 +31,5 @@ public abstract class BaseDeleteEntity<Tkey> : BaseModifyEntity<Guid>
     /// 删除时间
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public virtual DateTime? DeleteTime { get; set; } = null;
+    public virtual DateTime? DeleteTime { get; set; }
 }

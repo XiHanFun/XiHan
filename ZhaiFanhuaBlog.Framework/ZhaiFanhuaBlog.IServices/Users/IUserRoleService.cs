@@ -14,13 +14,15 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserRoleService : IBaseService<UserRole>
 {
+    Task<bool> InitUserRoleAsync(List<UserRole> userRoles);
+
     Task<bool> CreateUserRoleAsync(UserRole userRole);
 
-    Task<bool> DeleteUserRoleAsync(Guid guid);
+    Task<bool> DeleteUserRoleAsync(Guid guid, Guid deleteId);
 
     Task<UserRole> ModifyUserRoleAsync(UserRole userRole);
 
     Task<UserRole> FindUserRoleAsync(Guid guid);
 
-    Task<List<UserRole>> QueryUserRolesAsync();
+    Task<List<UserRole>> QueryUserRoleAsync();
 }

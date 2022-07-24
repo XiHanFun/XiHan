@@ -18,11 +18,11 @@ public interface IBlogCategoryService : IBaseService<BlogCategory>
 
     Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory);
 
-    Task<bool> DeleteBlogCategoryAsync(Guid guid);
+    Task<bool> DeleteBlogCategoryAsync(Guid guid, Guid deleteId);
 
     Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory);
 
     Task<BlogCategory> FindBlogCategoryAsync(Guid guid);
 
-    Task<List<BlogCategory>> QueryBlogCategoriesAsync();
+    Task<List<BlogCategory>> QueryBlogCategoryAsync();
 }

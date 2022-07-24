@@ -20,7 +20,7 @@ public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
     /// <summary>
     /// 状态主键
     /// </summary>
-    public virtual Guid StateGuid { get; set; }
+    public virtual Guid? StateId { get; set; }
 
     /// <summary>
     /// 状态

@@ -19,7 +19,6 @@ using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -30,7 +29,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-//[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
 public class AuthorizeController : ControllerBase
 {
     private readonly IConfiguration _IConfiguration;
@@ -53,13 +51,13 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountName")]
-    public async Task<ResultModel> GetTokenByAccountName(CUserAccountLoginByNameDto cDto)
+    public async Task<ResultModel> GetTokenByAccountName(CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
         // 根据用户名获取用户
-        var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Name);
+        var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.Name);
         if (userAccount == null)
             throw new ApplicationException("该用户名账号不存在，请先注册账号");
-        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
+        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
         return ResultResponse.OK(GetToken(userAccount));
     }
@@ -69,13 +67,13 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountEmail")]
-    public async Task<ResultModel> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cDto)
+    public async Task<ResultModel> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
         // 根据邮箱获取用户
-        var userAccount = await _IUserAccountService.FindAsync(u => u.Name == cDto.Email);
+        var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.Email);
         if (userAccount == null)
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
-        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cDto.Password))
+        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
         return ResultResponse.OK(GetToken(userAccount));
     }

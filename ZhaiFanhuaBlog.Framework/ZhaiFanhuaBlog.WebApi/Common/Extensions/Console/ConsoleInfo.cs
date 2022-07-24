@@ -21,15 +21,18 @@ public static class ConsoleInfo
     /// <summary>
     /// Logo
     /// </summary>
-    public static string LogoCopyright =
-$@"
+    public static string Logo = $@"
 ███████╗██╗  ██╗ █████╗ ██╗███████╗ █████╗ ███╗   ██╗██╗  ██╗██╗   ██╗ █████╗ ██████╗ ██╗      ██████╗  ██████╗
 ╚══███╔╝██║  ██║██╔══██╗██║██╔════╝██╔══██╗████╗  ██║██║  ██║██║   ██║██╔══██╗██╔══██╗██║     ██╔═══██╗██╔════╝
   ███╔╝ ███████║███████║██║█████╗  ███████║██╔██╗ ██║███████║██║   ██║███████║██████╔╝██║     ██║   ██║██║  ███╗
  ███╔╝  ██╔══██║██╔══██║██║██╔══╝  ██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══██║██╔══██╗██║     ██║   ██║██║   ██║
 ███████╗██║  ██║██║  ██║██║██║     ██║  ██║██║ ╚████║██║  ██║╚██████╔╝██║  ██║██████╔╝███████╗╚██████╔╝╚██████╔╝
-╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝
-          --------------Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.--------------";
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝";
+
+    /// <summary>
+    /// Copyright
+    /// </summary>
+    public static string Copyright = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 
     /// <summary>
     /// 打印系统信息
@@ -40,13 +43,14 @@ $@"
         ConsoleHelper.WriteLineInfo($@"操作系统：{SystemInfoHelper.OperatingSystem}");
         ConsoleHelper.WriteLineInfo($@"系统描述：{SystemInfoHelper.OSDescription}");
         ConsoleHelper.WriteLineInfo($@"系统版本：{SystemInfoHelper.OSVersion}");
+        ConsoleHelper.WriteLineInfo($@"核心个数：{SystemInfoHelper.ProcessorCount}");
         ConsoleHelper.WriteLineInfo($@"系统平台：{SystemInfoHelper.Platform}");
         ConsoleHelper.WriteLineInfo($@"系统架构：{SystemInfoHelper.OSArchitecture}");
-        ConsoleHelper.WriteLineInfo($@"CPU个数：{SystemInfoHelper.ProcessorCount}");
         ConsoleHelper.WriteLineInfo($@"系统目录：{SystemInfoHelper.SystemDirectory}");
         ConsoleHelper.WriteLineInfo($@"磁盘分区：{SystemInfoHelper.DiskPartition}");
         ConsoleHelper.WriteLineInfo($@"运行时间：{SystemInfoHelper.RunningTime}");
         ConsoleHelper.WriteLineInfo($@"交互模式：{SystemInfoHelper.InteractiveMode}");
+        ConsoleHelper.WriteLineInfo($@"网络地址：{IpInfoHelper.GetLocalIp()}");
         ConsoleHelper.WriteLineInfo("===============环境信息===============");
         ConsoleHelper.WriteLineInfo($@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}");
         ConsoleHelper.WriteLineInfo($@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}");
@@ -63,6 +67,7 @@ $@"
         ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
         ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
         ConsoleHelper.WriteLineInfo("===============启动信息===============");
-        ConsoleHelper.WriteLineHandle(LogoCopyright);
+        ConsoleHelper.WriteLineHandle(Logo);
+        ConsoleHelper.WriteLineHandle(Copyright);
     }
 }

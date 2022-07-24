@@ -52,7 +52,7 @@ public class BlogComment : BaseEntity
     public int PollCount { get; set; } = 0;
 
     /// <summary>
-    /// 是否置顶 是(true)否(false)
+    /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项
     /// </summary>
     public bool IsTop { get; set; } = false;
 }

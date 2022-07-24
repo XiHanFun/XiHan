@@ -34,47 +34,52 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
         _IUserRoleAuthorityRepository = iUserRoleAuthorityRepository;
     }
 
+    public async Task<bool> InitUserRoleAuthorityAsync(List<UserRoleAuthority> userRoleAuthorities)
+    {
+        userRoleAuthorities.ForEach(userRoleAuthoritie =>
+        {
+            userRoleAuthoritie.SoftDeleteLock = false;
+        });
+        var result = await _IUserRoleAuthorityRepository.CreateBatchAsync(userRoleAuthorities);
+        return result;
+    }
+
     public async Task<bool> CreateUserRoleAuthorityAsync(UserRoleAuthority userRoleAuthority)
     {
         if (await _IUserAuthorityRepository.FindAsync(userRoleAuthority.AuthorityId) == null)
-            throw new ApplicationException("权限不存在");
+            throw new ApplicationException("用户权限不存在");
         if (await _IUserRoleRepository.FindAsync(userRoleAuthority.RoleId) == null)
-            throw new ApplicationException("角色不存在");
+            throw new ApplicationException("用户角色不存在");
         if (await _IUserRoleAuthorityRepository.FindAsync(ura => ura.AuthorityId == userRoleAuthority.AuthorityId && ura.RoleId == userRoleAuthority.RoleId) != null)
-            throw new ApplicationException("角色权限已存在");
+            throw new ApplicationException("用户角色权限已存在");
         userRoleAuthority.SoftDeleteLock = false;
-        userRoleAuthority.StateGuid = (await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == 1)).BaseId;
         var result = await _IUserRoleAuthorityRepository.CreateAsync(userRoleAuthority);
         return result;
     }
 
-    public async Task<bool> DeleteUserRoleAuthorityAsync(Guid guid)
+    public async Task<bool> DeleteUserRoleAuthorityAsync(Guid guid, Guid deleteId)
     {
-        var userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(guid);
+        var userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(ura => ura.BaseId == guid && ura.SoftDeleteLock == false);
         if (userRoleAuthority == null)
-            throw new ApplicationException("角色权限不存在");
-        if (userRoleAuthority.SoftDeleteLock)
-        {
-            userRoleAuthority.StateGuid = (await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == 0)).BaseId;
-            userRoleAuthority.DeleteTime = DateTime.Now;
-            return await _IUserRoleAuthorityRepository.UpdateAsync(userRoleAuthority);
-        }
-        else
-        {
-            return await _IUserRoleAuthorityRepository.DeleteAsync(guid);
-        }
+            throw new ApplicationException("用户角色权限不存在");
+        var rootState = await _IRootStateRepository.FindAsync(rs => rs.TypeKey == "All" && rs.StateKey == -1);
+        userRoleAuthority.SoftDeleteLock = true;
+        userRoleAuthority.DeleteId = deleteId;
+        userRoleAuthority.DeleteTime = DateTime.Now;
+        userRoleAuthority.StateId = rootState.BaseId;
+        return await _IUserRoleAuthorityRepository.DeleteAsync(guid);
     }
 
     public async Task<UserRoleAuthority> ModifyUserRoleAuthorityAsync(UserRoleAuthority userRoleAuthority)
     {
-        if (await _IUserRoleAuthorityRepository.FindAsync(userRoleAuthority.BaseId) == null)
-            throw new ApplicationException("角色权限不存在");
-        if (await _IUserAuthorityRepository.FindAsync(userRoleAuthority.AuthorityId) == null)
-            throw new ApplicationException("权限不存在");
-        if (await _IUserRoleRepository.FindAsync(userRoleAuthority.RoleId) == null)
-            throw new ApplicationException("角色不存在");
-        if (await _IUserRoleAuthorityRepository.FindAsync(ura => ura.AuthorityId == userRoleAuthority.AuthorityId && ura.RoleId == userRoleAuthority.RoleId) != null)
-            throw new ApplicationException("角色权限已存在");
+        if (await _IUserRoleAuthorityRepository.FindAsync(ura => ura.BaseId == userRoleAuthority.BaseId && ura.SoftDeleteLock == false) == null)
+            throw new ApplicationException("用户角色权限不存在");
+        if (await _IUserAuthorityRepository.FindAsync(ua => ua.BaseId == userRoleAuthority.AuthorityId && ua.SoftDeleteLock == false) == null)
+            throw new ApplicationException("用户权限不存在");
+        if (await _IUserRoleRepository.FindAsync(ur => ur.BaseId == userRoleAuthority.RoleId && ur.SoftDeleteLock == false) == null)
+            throw new ApplicationException("用户角色不存在");
+        if (await _IUserRoleAuthorityRepository.FindAsync(ura => ura.AuthorityId == userRoleAuthority.AuthorityId && ura.RoleId == userRoleAuthority.RoleId && ura.SoftDeleteLock == false) != null)
+            throw new ApplicationException("用户角色权限已存在");
         userRoleAuthority.ModifyTime = DateTime.Now;
         var result = await _IUserRoleAuthorityRepository.UpdateAsync(userRoleAuthority);
         if (result) userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(userRoleAuthority.BaseId);
@@ -83,33 +88,17 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
 
     public async Task<UserRoleAuthority> FindUserRoleAuthorityAsync(Guid guid)
     {
-        var userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(guid);
+        var userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(ura => ura.BaseId == guid && ura.SoftDeleteLock == false);
+        if (userRoleAuthority == null)
+            throw new ApplicationException("用户角色权限不存在");
         return userRoleAuthority;
     }
 
     public async Task<List<UserRoleAuthority>> QueryUserRoleAuthoritiesAsync()
     {
-        var userRoleAuthorities = from userroleauthorities in await _IUserRoleAuthorityRepository.QueryAsync()
-                                  join rootstates in await _IRootStateRepository.QueryAsync() on userroleauthorities.StateGuid equals rootstates.BaseId
-                                  join userroles in await _IUserRoleRepository.QueryAsync() on userroleauthorities.RoleId equals userroles.BaseId
-                                  join userauthorities in await _IUserAuthorityRepository.QueryAsync() on userroleauthorities.AuthorityId equals userauthorities.BaseId
-                                  where rootstates.StateKey.Equals(1)
-                                  orderby userroleauthorities.CreateTime descending
-                                  select userroleauthorities;
-        //select new UserRoleAuthority
-        //{
-        //    BaseId = userroleauthority.BaseId,
-        //    RoleId = userroleauthority.RoleId,
-        //    AuthorityId = userroleauthority.AuthorityId,
-        //    StateGuid = userroleauthority.StateGuid,
-        //    SoftDeleteLock = userroleauthority.SoftDeleteLock,
-        //    CreateTime = userroleauthority.CreateTime,
-        //    ModifyTime = userroleauthority.ModifyTime,
-        //    DeleteTime = userroleauthority.DeleteTime,
-        //    RootState = rootstate,
-        //    UserRoles = (IEnumerable<UserRole>)userroles,
-        //    UserAuthorities = (IEnumerable<UserAuthority>)userauthorities
-        //};
-        return userRoleAuthorities.ToList();
+        var userRoleAuthority = from userroleauthority in await _IUserRoleAuthorityRepository.QueryAsync(uar => uar.SoftDeleteLock == false)
+                                orderby userroleauthority.CreateTime descending
+                                select userroleauthority;
+        return userRoleAuthority.ToList();
     }
 }

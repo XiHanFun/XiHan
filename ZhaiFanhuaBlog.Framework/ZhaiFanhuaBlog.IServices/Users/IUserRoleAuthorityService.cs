@@ -14,9 +14,11 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserRoleAuthorityService : IBaseService<UserRoleAuthority>
 {
+    Task<bool> InitUserRoleAuthorityAsync(List<UserRoleAuthority> userRoleAuthorities);
+
     Task<bool> CreateUserRoleAuthorityAsync(UserRoleAuthority userRole);
 
-    Task<bool> DeleteUserRoleAuthorityAsync(Guid guid);
+    Task<bool> DeleteUserRoleAuthorityAsync(Guid guid, Guid deleteId);
 
     Task<UserRoleAuthority> ModifyUserRoleAuthorityAsync(UserRoleAuthority userRole);
 

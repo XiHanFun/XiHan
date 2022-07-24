@@ -18,11 +18,11 @@ public interface IUserAuthorityService : IBaseService<UserAuthority>
 
     Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority);
 
-    Task<bool> DeleteUserAuthorityAsync(Guid guid);
+    Task<bool> DeleteUserAuthorityAsync(Guid guid, Guid deleteId);
 
     Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority);
 
     Task<UserAuthority> FindUserAuthorityAsync(Guid guid);
 
-    Task<List<UserAuthority>> QueryUserAuthoritiesAsync();
+    Task<List<UserAuthority>> QueryUserAuthorityAsync();
 }

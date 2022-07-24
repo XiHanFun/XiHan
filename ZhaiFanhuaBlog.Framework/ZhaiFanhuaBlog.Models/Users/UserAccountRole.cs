@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户账户角色关联表
 /// </summary>
-public class UserAccountRole : BaseEntity
+public class UserAccountRole : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 账户

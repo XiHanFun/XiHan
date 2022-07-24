@@ -14,9 +14,11 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserAccountService : IBaseService<UserAccount>
 {
+    Task<bool> InitUserAccountAsync(List<UserAccount> userAccounts);
+
     Task<bool> CreateUserAccountAsync(UserAccount userAccount);
 
-    Task<bool> DeleteUserAccountAsync(Guid guid);
+    Task<bool> DeleteUserAccountAsync(Guid guid, Guid deleteId);
 
     Task<UserAccount> ModifyUserAccountAsync(UserAccount userAccount);
 
@@ -26,5 +28,5 @@ public interface IUserAccountService : IBaseService<UserAccount>
 
     Task<UserAccount> FindUserAccountByEmailAsync(string accountEmail);
 
-    Task<List<UserAccount>> QueryUserAccountsAsync();
+    Task<List<UserAccount>> QueryUserAccountAsync();
 }

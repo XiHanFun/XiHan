@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.Models.Response;
 public class ResultResponse
 {
     /// <summary>
-    /// 请求成功 200
+    /// 继续请求 100
     /// </summary>
     /// <returns></returns>
     public static ResultModel Continue()
