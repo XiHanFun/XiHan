@@ -21,9 +21,9 @@ namespace ZhaiFanhuaBlog.Models.Users;
 public class UserAccount : BaseEntity
 {
     /// <summary>
-    /// 用户名
+    /// 用户名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", ColumnDescription = "用户名")]
+    [SugarColumn(ColumnDataType = "nvarchar(20)", ColumnDescription = "用户名称")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>

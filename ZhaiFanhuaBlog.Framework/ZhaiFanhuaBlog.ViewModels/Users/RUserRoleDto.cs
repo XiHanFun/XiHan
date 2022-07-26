@@ -29,5 +29,5 @@ public class RUserRoleDto : RBaseDto
     /// <summary>
     /// 角色描述
     /// </summary>
-    public string? Description { get; set; } = null;
+    public string? Description { get; set; }
 }

@@ -17,7 +17,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class CUserAccountDto
 {
     /// <summary>
-    /// 用户名
+    /// 用户名称
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
@@ -41,19 +41,19 @@ public class CUserAccountDto
     /// 头像路径
     /// </summary>
     [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string AvatarPath { get; set; } = @"/Images/Users/Accounts/Avatar/defult.png";
+    public string AvatarPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户昵称
     /// </summary>
     [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? NickName { get; set; } = null;
+    public string? NickName { get; set; }
 
     /// <summary>
     /// 用户签名
     /// </summary>
     [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? Signature { get; set; } = null;
+    public string? Signature { get; set; }
 
     /// <summary>
     /// 用户性别 男(true)女(false)
@@ -64,7 +64,7 @@ public class CUserAccountDto
     /// 用户地址
     /// </summary>
     [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? Address { get; set; } = null;
+    public string? Address { get; set; }
 
     /// <summary>
     /// 出生日期

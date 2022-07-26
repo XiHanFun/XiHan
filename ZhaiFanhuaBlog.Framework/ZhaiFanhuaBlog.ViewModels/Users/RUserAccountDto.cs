@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class RUserAccountDto : RBaseDto
 {
     /// <summary>
-    /// 用户名
+    /// 用户名称
     /// </summary>
     public string? Name { get; set; }
 
@@ -67,8 +67,5 @@ public class RUserAccountDto : RBaseDto
     /// </summary>
     public virtual string? RegisterIp { get; set; }
 
-    /// <summary>
-    /// 用户角色
-    /// </summary>
     public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

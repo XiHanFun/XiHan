@@ -17,12 +17,12 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class RUserRoleAuthorityDto : RBaseDto
 {
     /// <summary>
-    /// 角色
+    /// 用户角色
     /// </summary>
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 权限
+    /// 用户权限
     /// </summary>
     public Guid AuthorityId { get; set; }
 
@@ -31,13 +31,7 @@ public class RUserRoleAuthorityDto : RBaseDto
     /// </summary>
     public int AuthorityType { get; set; }
 
-    /// <summary>
-    /// 用户角色
-    /// </summary>
     public virtual IEnumerable<RUserRoleDto>? UserRoles { get; set; }
 
-    /// <summary>
-    /// 用户权限
-    /// </summary>
     public virtual IEnumerable<RUserAuthorityDto>? UserAuthorities { get; set; }
 }

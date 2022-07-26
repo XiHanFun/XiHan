@@ -17,21 +17,21 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class CUserRoleAuthorityDto
 {
     /// <summary>
-    /// 角色
+    /// 用户角色
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 权限
+    /// 用户权限
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid AuthorityId { get; set; }
 
     /// <summary>
-    /// 权限类型（0:可访问，1:可授权）
+    /// 用户权限类型（0:可访问，1:可授权）
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [Range(0, 1, ErrorMessage = "{0}必须是0或1")]

@@ -17,22 +17,16 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class RUserAccountRoleDto : RBaseDto
 {
     /// <summary>
-    /// 账户
+    /// 用户账户
     /// </summary>
     public Guid AccountId { get; set; }
 
     /// <summary>
-    /// 角色
+    /// 用户角色
     /// </summary>
     public Guid RoleId { get; set; }
 
-    /// <summary>
-    /// 用户账户
-    /// </summary>
     public virtual IEnumerable<RUserAccountDto>? UserAccounts { get; set; }
 
-    /// <summary>
-    /// 用户角色
-    /// </summary>
     public virtual IEnumerable<RUserRoleDto>? UserRoles { get; set; }
 }

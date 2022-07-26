@@ -17,14 +17,14 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class CUserAccountRoleDto
 {
     /// <summary>
-    /// 账户
+    /// 用户账户
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid AccountId { get; set; }
 
     /// <summary>
-    /// 角色
+    /// 用户角色
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]

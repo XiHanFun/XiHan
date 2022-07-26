@@ -35,14 +35,16 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<UserAuthority, RUserAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserRole, CUserRoleDto>().ReverseMap();
             mapper.CreateMap<UserRole, RUserRoleDto>().ReverseMap();
-            mapper.CreateMap<UserRoleAuthority, CUserRoleAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
             mapper.CreateMap<UserAccount, RUserAccountDto>()
             .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.RegisterIp)))
             .ReverseMap();
-            //mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
-            //mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
+            mapper.CreateMap<UserAuthority, CUserAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserAuthority, RUserAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserRoleAuthority, CUserRoleAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
+            mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
+            mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
         });
         return services;
     }

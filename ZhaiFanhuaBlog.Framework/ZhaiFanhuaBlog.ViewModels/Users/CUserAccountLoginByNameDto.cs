@@ -17,7 +17,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 public class CUserAccountLoginByNameDto
 {
     /// <summary>
-    /// 用户名
+    /// 用户名称
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(6, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
