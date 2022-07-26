@@ -15,6 +15,6 @@ namespace ZhaiFanhuaBlog.IRepositories.Roots;
 /// <summary>
 /// IRootAuditCategoryRepository
 /// </summary>
-public interface IRootAuditCategoryRepository : IBaseRepository<RootAuditCategory>
+public interface IRootAuditCategoryRepository : IBaseRepository<RootAuditType>
 {
 }

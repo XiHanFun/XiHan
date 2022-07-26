@@ -19,12 +19,12 @@ public abstract class BaseCreateEntity<Tkey> : BaseIdEntity<Guid>
     /// <summary>
     /// 创建用户
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "创建用户")]
     public virtual Guid? CreateId { get; set; }
 
     /// <summary>
     /// 创建时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
     public virtual DateTime? CreateTime { get; set; } = DateTime.Now;
 }

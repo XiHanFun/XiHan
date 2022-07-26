@@ -21,7 +21,7 @@ public class FileSizeFormatHelper
     /// </summary>
     /// <param name="number"></param>
     /// <returns></returns>
-    public static string ParseFileSizeBytes(long bytes)
+    public static string FormatByteToString(long bytes)
     {
         double last = 1;
         for (int i = 0; i < suffixes.Length; i++)

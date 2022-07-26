@@ -50,7 +50,7 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"磁盘分区：{SystemInfoHelper.DiskPartition}");
         ConsoleHelper.WriteLineInfo($@"运行时间：{SystemInfoHelper.RunningTime}");
         ConsoleHelper.WriteLineInfo($@"交互模式：{SystemInfoHelper.InteractiveMode}");
-        ConsoleHelper.WriteLineInfo($@"网络地址：{IpInfoHelper.GetLocalIp()}");
+        ConsoleHelper.WriteLineInfo($@"网络地址：{IpInfoHelper.GetLocalIpV4()}");
         ConsoleHelper.WriteLineInfo("===============环境信息===============");
         ConsoleHelper.WriteLineInfo($@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}");
         ConsoleHelper.WriteLineInfo($@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}");

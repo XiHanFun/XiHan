@@ -19,12 +19,12 @@ public abstract class BaseAuditEntity<Tkey> : BaseDeleteEntity<Guid>
     /// <summary>
     /// 审核用户
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "审核用户")]
     public virtual Guid? AuditId { get; set; }
 
     /// <summary>
     /// 审核时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "审核时间")]
     public virtual DateTime? AuditTime { get; set; } = null;
 }

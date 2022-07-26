@@ -19,12 +19,12 @@ public abstract class BaseModifyEntity<Tkey> : BaseCreateEntity<Guid>
     /// <summary>
     /// 修改用户
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "修改用户")]
     public virtual Guid? ModifyId { get; set; }
 
     /// <summary>
     /// 修改时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
     public virtual DateTime? ModifyTime { get; set; } = null;
 }

@@ -15,17 +15,18 @@ namespace ZhaiFanhuaBlog.Models.Sites;
 /// <summary>
 /// 网站皮肤表
 /// </summary>
+[SugarTable("SiteSkin", "网站皮肤表")]
 public class SiteSkin : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 皮肤名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string? SkinName { get; set; } = null;
+    [SugarColumn(ColumnDataType = "nvarchar(20)", ColumnDescription = "皮肤名称")]
+    public string SkinName { get; set; } = string.Empty;
 
     /// <summary>
     /// 皮肤路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
-    public string? SkinPath { get; set; } = null;
+    [SugarColumn(ColumnDataType = "nvarchar(200)", ColumnDescription = "皮肤路径")]
+    public string SkinPath { get; set; } = string.Empty;
 }

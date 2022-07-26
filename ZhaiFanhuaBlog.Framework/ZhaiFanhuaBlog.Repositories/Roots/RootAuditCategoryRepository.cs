@@ -16,6 +16,6 @@ namespace ZhaiFanhuaBlog.Repositories.Roots;
 /// <summary>
 /// RootAuditCategoryRepository
 /// </summary>
-public class RootAuditCategoryRepository : BaseRepository<RootAuditCategory>, IRootAuditCategoryRepository
+public class RootAuditCategoryRepository : BaseRepository<RootAuditType>, IRootAuditCategoryRepository
 {
 }

@@ -20,6 +20,7 @@ public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
     /// <summary>
     /// 状态主键
     /// </summary>
+    [SugarColumn(IsIgnore = true, ColumnDescription = "状态主键")]
     public virtual Guid? StateId { get; set; }
 
     /// <summary>

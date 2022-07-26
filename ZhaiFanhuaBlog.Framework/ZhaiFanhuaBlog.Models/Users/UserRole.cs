@@ -15,23 +15,24 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户角色表
 /// </summary>
+[SugarTable("UserRole", "用户角色表")]
 public class UserRole : BaseEntity
 {
     /// <summary>
     /// 父级角色
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "父级角色")]
     public Guid? ParentId { get; set; }
 
     /// <summary>
     /// 角色名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", ColumnDescription = "角色名称")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; } = null;
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true, ColumnDescription = "角色描述")]
+    public string? Description { get; set; }
 }

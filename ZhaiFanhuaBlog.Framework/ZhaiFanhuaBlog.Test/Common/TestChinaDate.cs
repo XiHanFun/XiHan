@@ -22,7 +22,7 @@ public static class TestChinaDate
     {
         DateTime dateTime1 = DateTime.Now;
         DateTime dateTime2 = DateTime.Now.AddDays(1).AddHours(10).AddMinutes(15).AddSeconds(26);
-        Console.WriteLine(TimeFormatHelper.ParseTimeMilliseconds(dateTime1, dateTime2));
+        Console.WriteLine(TimeFormatHelper.FormatDateTimeToString(dateTime1, dateTime2));
         ChineseCalendar c = new ChineseCalendar(new DateTime(2022, 10, 1));
         StringBuilder dayInfo = new StringBuilder();
         dayInfo.Append("阳历：" + c.DateString + "\r\n");

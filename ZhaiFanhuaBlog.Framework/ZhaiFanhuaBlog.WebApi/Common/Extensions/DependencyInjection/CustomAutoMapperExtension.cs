@@ -9,6 +9,7 @@
 
 using System.Net;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Formats;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
             mapper.CreateMap<UserAccount, RUserAccountDto>()
-            .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : (new IPAddress(o.RegisterIp)).ToString()))
+            .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.RegisterIp)))
             .ReverseMap();
             //mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
             //mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();

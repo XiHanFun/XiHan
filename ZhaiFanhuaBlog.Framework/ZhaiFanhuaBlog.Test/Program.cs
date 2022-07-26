@@ -7,7 +7,6 @@
 // CreateTime:2022-04-10 下午 10:51:26
 // ----------------------------------------------------------------
 
-using System.Net.NetworkInformation;
 using ZhaiFanhuaBlog.Test.Common;
 
 namespace ZhaiFanhuaBlog.Test;

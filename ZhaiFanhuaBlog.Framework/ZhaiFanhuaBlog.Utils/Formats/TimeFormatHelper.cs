@@ -20,10 +20,10 @@ public static class TimeFormatHelper
     /// <param name="dateTimeBefore"></param>
     /// <param name="dateTimeAfter"></param>
     /// <returns></returns>
-    public static string ParseTimeMilliseconds(DateTime dateTimeBefore, DateTime dateTimeAfter)
+    public static string FormatDateTimeToString(DateTime dateTimeBefore, DateTime dateTimeAfter)
     {
         long ticks = (dateTimeAfter.Ticks - dateTimeBefore.Ticks) / 10000;
-        return ParseTimeTicks(ticks);
+        return FormatTimeTicksToString(ticks);
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public static class TimeFormatHelper
     /// </summary>
     /// <param name="ticks"></param>
     /// <returns></returns>
-    public static string ParseTimeTicks(long ticks)
+    public static string FormatTimeTicksToString(long ticks)
     {
         TimeSpan timeSpan = TimeSpan.FromMilliseconds(ticks);
         string result = string.Empty;

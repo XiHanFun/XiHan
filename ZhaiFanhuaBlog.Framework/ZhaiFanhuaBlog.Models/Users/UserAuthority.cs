@@ -15,29 +15,30 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户权限表
 /// </summary>
+[SugarTable("UserAuthority", "用户权限表")]
 public class UserAuthority : BaseEntity
 {
     /// <summary>
     /// 父级权限
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "父级权限")]
     public Guid? ParentId { get; set; }
 
     /// <summary>
     /// 权限名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", ColumnDescription = "权限名称")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限类型
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", ColumnDescription = "权限类型")]
     public string Type { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; } = null;
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true, ColumnDescription = "权限描述")]
+    public string? Description { get; set; }
 }

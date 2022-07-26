@@ -15,32 +15,30 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户角色权限关联表
 /// </summary>
+[SugarTable("UserRoleAuthority", "用户角色权限关联表")]
 public class UserRoleAuthority : BaseEntity
 {
     /// <summary>
-    /// 角色
+    /// 用户角色
     /// </summary>
+    [SugarColumn(ColumnDescription = "用户角色")]
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 权限
+    /// 用户权限
     /// </summary>
+    [SugarColumn(ColumnDescription = "用户权限")]
     public Guid AuthorityId { get; set; }
 
     /// <summary>
     /// 权限类型（0:可访问，1:可授权）
     /// </summary>
-    public int AuthorityType { get; set; }
+    [SugarColumn(ColumnDescription = "权限类型（0:可访问，1:可授权）")]
+    public int AuthorityType { get; set; } = 0;
 
-    /// <summary>
-    /// 用户角色
-    /// </summary>
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 
-    /// <summary>
-    /// 用户权限
-    /// </summary>
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserAuthority>? UserAuthorities { get; set; }
 }

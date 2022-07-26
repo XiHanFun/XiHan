@@ -15,27 +15,24 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户账户角色关联表
 /// </summary>
+[SugarTable("UserAccountRole", "用户账户角色关联表")]
 public class UserAccountRole : BaseDeleteEntity<Guid>
 {
     /// <summary>
-    /// 账户
-    /// </summary>
-    public Guid AccountId { get; set; }
-
-    /// <summary>
-    /// 角色
-    /// </summary>
-    public Guid RoleId { get; set; }
-
-    /// <summary>
     /// 用户账户
     /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<UserAccount>? UserAccounts { get; set; }
+    [SugarColumn(ColumnDescription = "用户账户")]
+    public Guid AccountId { get; set; }
 
     /// <summary>
     /// 用户角色
     /// </summary>
+    [SugarColumn(ColumnDescription = "用户角色")]
+    public Guid RoleId { get; set; }
+
+    [SugarColumn(IsIgnore = true)]
+    public virtual IEnumerable<UserAccount>? UserAccounts { get; set; }
+
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserRole>? UserRoles { get; set; }
 }

@@ -15,33 +15,36 @@ namespace ZhaiFanhuaBlog.Models.Blogs;
 /// <summary>
 /// 文章分类表
 /// </summary>
+[SugarTable("BlogCategory", "文章分类表")]
 public class BlogCategory : BaseEntity
 {
     /// <summary>
     /// 父级分类
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "父级分类")]
     public Guid? ParentId { get; set; }
 
     /// <summary>
     /// 分类用户
     /// </summary>
+    [SugarColumn(ColumnDescription = "分类用户")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", ColumnDescription = "分类名称")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true, ColumnDescription = "分类描述")]
     public string? Description { get; set; }
 
     /// <summary>
     /// 文章总数
     /// </summary>
+    [SugarColumn(ColumnDescription = "文章总数")]
     public int ArticleCount { get; set; } = 0;
 }

@@ -19,17 +19,18 @@ public abstract class BaseDeleteEntity<Tkey> : BaseModifyEntity<Guid>
     /// <summary>
     /// 软删除锁（是否支持软删除：是为1，表示软删除；否为0，表示物理删除）
     /// </summary>
+    [SugarColumn(ColumnDescription = "软删除锁（是否支持软删除：是为1，表示软删除；否为0，表示物理删除）")]
     public virtual bool SoftDeleteLock { get; set; } = true;
 
     /// <summary>
     /// 删除用户
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "删除用户")]
     public virtual Guid? DeleteId { get; set; }
 
     /// <summary>
     /// 删除时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(IsNullable = true, ColumnDescription = "删除时间")]
     public virtual DateTime? DeleteTime { get; set; }
 }

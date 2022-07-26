@@ -17,7 +17,7 @@ namespace ZhaiFanhuaBlog.Services.Roots;
 /// <summary>
 /// RootAuditCategoryService
 /// </summary>
-public class RootAuditCategoryService : BaseService<RootAuditCategory>, IRootAuditCategoryService
+public class RootAuditCategoryService : BaseService<RootAuditType>, IRootAuditCategoryService
 {
     private readonly IRootAuditCategoryRepository _IRootAuditCategoryRepository;
 

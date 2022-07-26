@@ -19,6 +19,6 @@ public abstract class BaseIdEntity<TKey> : IBaseEntity<Guid>
     /// <summary>
     /// 主键标识
     /// </summary>
-    [SugarColumn(IsPrimaryKey = true)]
+    [SugarColumn(IsPrimaryKey = true, ColumnDescription = "主键标识")]
     public virtual Guid BaseId { get; set; } = new Guid();
 }
