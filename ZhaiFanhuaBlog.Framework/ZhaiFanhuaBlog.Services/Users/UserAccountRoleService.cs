@@ -62,15 +62,13 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
 
     public async Task<bool> DeleteUserAccountRoleAsync(Guid guid, Guid deleteId)
     {
-        var userAccountRole = await _IUserAccountRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
+        var userAccountRole = await _IUserAccountRoleRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
         if (userAccountRole == null)
             throw new ApplicationException("用户账户角色不存在");
-        var rootState = await _IRootStateRepository.FindAsync(rs => rs.TypeKey == "All" && rs.StateKey == -1);
         userAccountRole.SoftDeleteLock = true;
         userAccountRole.DeleteId = deleteId;
         userAccountRole.DeleteTime = DateTime.Now;
-        userAccountRole.StateId = rootState.BaseId;
-        return await _IUserAccountRoleRepository.DeleteAsync(guid);
+        return await _IUserAccountRoleRepository.UpdateAsync(userAccountRole);
     }
 
     public async Task<UserAccountRole> ModifyUserAccountRoleAsync(UserAccountRole userAccountRole)

@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// 用户角色权限关联表
 /// </summary>
 [SugarTable("UserRoleAuthority", "用户角色权限关联表")]
-public class UserRoleAuthority : BaseEntity
+public class UserRoleAuthority : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 用户角色

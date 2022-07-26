@@ -69,7 +69,7 @@ public class UserRoleService : BaseService<UserRole>, IUserRoleService
         userRole.DeleteId = deleteId;
         userRole.DeleteTime = DateTime.Now;
         userRole.StateId = rootState.BaseId;
-        return await _IUserRoleRepository.DeleteAsync(guid);
+        return await _IUserRoleRepository.UpdateAsync(userRole);
     }
 
     public async Task<UserRole> ModifyUserRoleAsync(UserRole userRole)

@@ -65,7 +65,6 @@ public class RootController : ControllerBase
     {
         bool result = false;
         result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
-        result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
         result = await _IUserAuthorityService.InitUserAuthorityAsync(UserInitData.UserAuthorityList);
         result = await _IUserRoleService.InitUserRoleAsync(UserInitData.UserRoleList);
         result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);

@@ -65,7 +65,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         userAccount.DeleteId = deleteId;
         userAccount.DeleteTime = DateTime.Now;
         userAccount.StateId = rootState.BaseId;
-        return await _IUserAccountRepository.DeleteAsync(guid);
+        return await _IUserAccountRepository.UpdateAsync(userAccount);
     }
 
     public async Task<UserAccount> ModifyUserAccountAsync(UserAccount userAccount)

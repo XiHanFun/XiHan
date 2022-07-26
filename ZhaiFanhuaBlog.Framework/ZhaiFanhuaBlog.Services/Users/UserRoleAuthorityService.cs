@@ -62,12 +62,10 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
         var userRoleAuthority = await _IUserRoleAuthorityRepository.FindAsync(ura => ura.BaseId == guid && ura.SoftDeleteLock == false);
         if (userRoleAuthority == null)
             throw new ApplicationException("用户角色权限不存在");
-        var rootState = await _IRootStateRepository.FindAsync(rs => rs.TypeKey == "All" && rs.StateKey == -1);
         userRoleAuthority.SoftDeleteLock = true;
         userRoleAuthority.DeleteId = deleteId;
         userRoleAuthority.DeleteTime = DateTime.Now;
-        userRoleAuthority.StateId = rootState.BaseId;
-        return await _IUserRoleAuthorityRepository.DeleteAsync(guid);
+        return await _IUserRoleAuthorityRepository.UpdateAsync(userRoleAuthority);
     }
 
     public async Task<UserRoleAuthority> ModifyUserRoleAuthorityAsync(UserRoleAuthority userRoleAuthority)

@@ -69,7 +69,7 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         blogCategory.DeleteId = deleteId;
         blogCategory.DeleteTime = DateTime.Now;
         blogCategory.StateId = rootState.BaseId;
-        return await _IBlogCategoryRepository.DeleteAsync(guid);
+        return await _IBlogCategoryRepository.UpdateAsync(blogCategory);
     }
 
     public async Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory)

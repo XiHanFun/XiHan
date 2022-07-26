@@ -69,7 +69,7 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         userAuthority.DeleteId = deleteId;
         userAuthority.DeleteTime = DateTime.Now;
         userAuthority.StateId = rootState.BaseId;
-        return await _IUserAuthorityRepository.DeleteAsync(guid);
+        return await _IUserAuthorityRepository.UpdateAsync(userAuthority);
     }
 
     public async Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority)
