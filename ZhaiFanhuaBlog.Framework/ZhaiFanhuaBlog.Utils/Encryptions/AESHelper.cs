@@ -17,24 +17,22 @@ namespace ZhaiFanhuaBlog.Utils.Encryptions;
 /// </summary>
 public static class AESHelper
 {
-    // 默认密钥向量KEY
-    private const string _key = "ZhaiFanhuaBlogAESHelper";
-
-    // 默认密钥向量IV
-    private const string _iv = "ZhaiFanhuaBlogAESHelper";
+    // 默认密钥向量
+    private static readonly byte[] IV = { 0x41, 0x72, 0x65, 0x79, 0x6F, 0x75, 0x6D, 0x79, 0x53, 0x6E, 0x6F, 0x77, 0x6D, 0x61, 0x6E, 0x3F };
 
     /// <summary>
     /// AES加密
     /// </summary>
-    /// <param name="encode">编码</param>
-    /// <param name="inputString">待加密的字符串</param>
+    /// <param name="encode"></param>
+    /// <param name="aesKey"></param>
+    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string EncryptAES(Encoding encode, string inputString)
+    public static string EncryptAES(Encoding encode, string aesKey, string inputString)
     {
         try
         {
-            byte[] rgbKey = encode.GetBytes(_key[..16]);
-            byte[] rgbIV = encode.GetBytes(_iv[..16]);
+            byte[] rgbKey = encode.GetBytes(aesKey[..16]);
+            byte[] rgbIV = IV;
             byte[] inputByteArray = encode.GetBytes(inputString);
             using Aes aes = Aes.Create();
             using MemoryStream mStream = new();
@@ -52,15 +50,16 @@ public static class AESHelper
     /// <summary>
     /// AES解密
     /// </summary>
-    /// <param name="encode">编码</param>
-    /// <param name="inputString">待解密的字符串</param>
+    /// <param name="encode"></param>
+    /// <param name="aesKey"></param>
+    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string DecryptAES(Encoding encode, string inputString)
+    public static string DecryptAES(Encoding encode, string aesKey, string inputString)
     {
         try
         {
-            byte[] rgbKey = encode.GetBytes(_key[..16]);
-            byte[] rgbIV = encode.GetBytes(_iv[..16]);
+            byte[] rgbKey = encode.GetBytes(aesKey[..16]);
+            byte[] rgbIV = IV;
             byte[] inputByteArray = Convert.FromBase64String(inputString);
             using Aes aes = Aes.Create();
             using MemoryStream mStream = new(inputByteArray);

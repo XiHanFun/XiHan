@@ -17,24 +17,22 @@ namespace ZhaiFanhuaBlog.Utils.Encryptions;
 /// </summary>
 public static class DESHelper
 {
-    // 默认加密秘钥
-    private const string desKey = "ZhaiFanhuaBlogDESHelper";
-
     // 默认密钥向量
-    private static readonly byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+    private static readonly byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
     /// <summary>
     /// DES加密
     /// </summary>
-    /// <param name="encode">编码</param>
-    /// <param name="inputString">待加密的字符串</param>
+    /// <param name="encode"></param>
+    /// <param name="desKey"></param>
+    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string EncryptDES(Encoding encode, string inputString)
+    public static string EncryptDES(Encoding encode, string desKey, string inputString)
     {
         try
         {
             byte[] rgbKey = encode.GetBytes(desKey[..8]);
-            byte[] rgbIV = Keys;
+            byte[] rgbIV = IV;
             byte[] inputByteArray = encode.GetBytes(inputString);
             using DES des = DES.Create();
             MemoryStream mStream = new();
@@ -52,15 +50,16 @@ public static class DESHelper
     /// <summary>
     /// DES解密
     /// </summary>
-    /// <param name="encode">编码</param>
-    /// <param name="inputString">待解密的字符串</param>
+    /// <param name="encode"></param>
+    /// <param name="desKey"></param>
+    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string DecryptDES(Encoding encode, string inputString)
+    public static string DecryptDES(Encoding encode, string desKey, string inputString)
     {
         try
         {
             byte[] rgbKey = encode.GetBytes(desKey[..8]);
-            byte[] rgbIV = Keys;
+            byte[] rgbIV = IV;
             byte[] inputByteArray = Convert.FromBase64String(inputString);
             using DES des = DES.Create();
             MemoryStream mStream = new();

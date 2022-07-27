@@ -92,7 +92,7 @@ public class AuthorizeController : ControllerBase
                 new Claim("UserName", userAccount.Name),
                 //new Claim("UserRole", userAccount.UserRoles!.FirstOrDefault()!.Name!.ToString()??"")
             };
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration["Auth:JWT:IssuerSigningKey"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));
             var token = new JwtSecurityToken(
                 issuer: _IConfiguration["Configuration:Domain"],
                 audience: _IConfiguration["Configuration:Domain"],

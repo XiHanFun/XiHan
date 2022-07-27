@@ -10,6 +10,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ZhaiFanhuaBlog.IServices.Blogs;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
@@ -70,11 +71,11 @@ public class BlogController : ControllerBase
     [HttpPost("Category")]
     public async Task<ResultModel> CreateBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cBlogCategoryDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
-            blogCategory.CreateId = Guid.Parse(user.Value);
+            blogCategory.CreateId = Guid.Parse(user);
             if (await _IBlogCategoryService.CreateBlogCategoryAsync(blogCategory))
                 return ResultResponse.OK("新增文章分类成功");
         }
@@ -89,10 +90,10 @@ public class BlogController : ControllerBase
     [HttpDelete("Category/{guid}")]
     public async Task<ResultModel> DeleteBlogCategory([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = Guid.Parse(user.Value);
+            Guid deleteId = Guid.Parse(user);
             if (await _IBlogCategoryService.DeleteBlogCategoryAsync(guid, deleteId))
                 return ResultResponse.OK("删除文章分类成功");
         }
@@ -108,11 +109,11 @@ public class BlogController : ControllerBase
     [HttpPut("Category")]
     public async Task<ResultModel> ModifyBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cBlogCategoryDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
-            blogCategory.ModifyId = Guid.Parse(user.Value);
+            blogCategory.ModifyId = Guid.Parse(user);
             blogCategory = await _IBlogCategoryService.ModifyBlogCategoryAsync(blogCategory);
             if (blogCategory != null)
                 return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
@@ -129,7 +130,7 @@ public class BlogController : ControllerBase
     [HttpGet("Category/{guid}")]
     public async Task<ResultModel> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var blogCategory = await _IBlogCategoryService.FindBlogCategoryAsync(guid);

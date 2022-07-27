@@ -37,7 +37,6 @@ public class UserController : ControllerBase
     private readonly IUserRoleService _IUserRoleService;
     private readonly IUserAccountRoleService _IUserAccountRoleService;
     private readonly IUserAccountService _IUserAccountService;
-    private readonly UserAccount? _UserAccount;
 
     /// <summary>
     /// 构造方法
@@ -61,32 +60,7 @@ public class UserController : ControllerBase
         _IUserRoleService = iUserRoleService;
         _IUserAccountRoleService = iUserAccountRoleService;
         _IUserAccountService = iUserAccountService;
-        _IHttpContextAccessor.HttpContext.User.Identities.;
-        if (httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-        {
-            user = FindUser();
-        }
     }
-    public UserAccount GetAuthenticatedUserAccount()
-    {
-        string userId = _IHttpContextAccessor.HttpContext!.User.FindFirstValue("UserId");
-        string descKey = App.Configuration["JWTSettings:IssuerSigningKey"];
-        return int.Parse(DESCEncryption.Decrypt(userId, descKey));
-
-
-        if (User != null&&User.Identity.IsAuthenticated)
-        {
-            _UserId = Guid.Parse(User.FindFirstValue("UserId"));
-        }
-
-
-        var userAuthority = iMapper.Map<UserAuthority>(cUserAuthorityDto);
-        userAuthority.CreateId = _UserId;
-        if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
-            return ResultResponse.OK("新增用户权限成功");
-        return ResultResponse.BadRequest("新增用户权限失败");
-    }
-
 
     #region 用户权限
 
@@ -99,10 +73,14 @@ public class UserController : ControllerBase
     [HttpPost("Authority")]
     public async Task<ResultModel> CreateUserAuthority([FromServices] IMapper iMapper, [FromBody] CUserAuthorityDto cUserAuthorityDto)
     {
+        var user = User.FindFirstValue("UserId");
+        if (user != null)
+        {
             var userAuthority = iMapper.Map<UserAuthority>(cUserAuthorityDto);
-            userAuthority.CreateId = _UserId;
+            userAuthority.CreateId = Guid.Parse(user);
             if (await _IUserAuthorityService.CreateUserAuthorityAsync(userAuthority))
                 return ResultResponse.OK("新增用户权限成功");
+        }
         return ResultResponse.BadRequest("新增用户权限失败");
     }
 
@@ -114,10 +92,10 @@ public class UserController : ControllerBase
     [HttpDelete("Authority/{guid}")]
     public async Task<ResultModel> DeleteUserAuthority([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = _UserId;
+            Guid deleteId = Guid.Parse(user);
             if (await _IUserAuthorityService.DeleteUserAuthorityAsync(guid, deleteId))
                 return ResultResponse.OK("删除用户权限成功");
         }
@@ -137,7 +115,7 @@ public class UserController : ControllerBase
         if (user != null)
         {
             var userAuthority = iMapper.Map<UserAuthority>(cUserAuthorityDto);
-            userAuthority.ModifyId = _UserId;
+            userAuthority.ModifyId = Guid.Parse(user);
             userAuthority = await _IUserAuthorityService.ModifyUserAuthorityAsync(userAuthority);
             if (userAuthority != null)
                 return ResultResponse.OK(iMapper.Map<RUserAuthorityDto>(userAuthority));
@@ -154,7 +132,7 @@ public class UserController : ControllerBase
     [HttpGet("Authority/{guid}")]
     public async Task<ResultModel> FindUserAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAuthority = await _IUserAuthorityService.FindUserAuthorityAsync(guid);
@@ -191,11 +169,11 @@ public class UserController : ControllerBase
     [HttpPost("Role")]
     public async Task<ResultModel> CreateUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cUserRoleDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRole = iMapper.Map<UserRole>(cUserRoleDto);
-            userRole.CreateId = _UserId;
+            userRole.CreateId = Guid.Parse(user);
             if (await _IUserRoleService.CreateUserRoleAsync(userRole))
                 return ResultResponse.OK("新增用户角色成功");
         }
@@ -210,10 +188,10 @@ public class UserController : ControllerBase
     [HttpDelete("Role/{guid}")]
     public async Task<ResultModel> DeleteUserRole([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = _UserId;
+            Guid deleteId = Guid.Parse(user);
             if (await _IUserRoleService.DeleteUserRoleAsync(guid, deleteId))
                 return ResultResponse.OK("删除用户角色成功");
         }
@@ -229,11 +207,11 @@ public class UserController : ControllerBase
     [HttpPut("Role")]
     public async Task<ResultModel> ModifyUserRole([FromServices] IMapper iMapper, [FromBody] CUserRoleDto cUserRoleDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRole = iMapper.Map<UserRole>(cUserRoleDto);
-            userRole.ModifyId = _UserId;
+            userRole.ModifyId = Guid.Parse(user);
             userRole = await _IUserRoleService.ModifyUserRoleAsync(userRole);
             if (userRole != null)
                 return ResultResponse.OK(iMapper.Map<RUserRoleDto>(userRole));
@@ -250,7 +228,7 @@ public class UserController : ControllerBase
     [HttpGet("Role/{guid}")]
     public async Task<ResultModel> FindUserRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRole = await _IUserRoleService.FindUserRoleAsync(guid);
@@ -305,10 +283,10 @@ public class UserController : ControllerBase
     [HttpDelete("Account/{guid}")]
     public async Task<ResultModel> DeleteUserAccount([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = _UserId;
+            Guid deleteId = Guid.Parse(user);
             if (await _IUserAccountService.DeleteUserAccountAsync(guid, deleteId))
                 return ResultResponse.OK("删除用户账户成功");
         }
@@ -324,13 +302,13 @@ public class UserController : ControllerBase
     [HttpPut("Account")]
     public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cUserAccountDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccount = iMapper.Map<UserAccount>(cUserAccountDto);
             // 密码加密
             userAccount.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountDto.Password);
-            userAccount.ModifyId = _UserId;
+            userAccount.ModifyId = Guid.Parse(user);
             userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
             if (userAccount != null)
                 return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
@@ -347,7 +325,7 @@ public class UserController : ControllerBase
     [HttpGet("Account/{guid}")]
     public async Task<ResultModel> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
@@ -385,11 +363,11 @@ public class UserController : ControllerBase
     [HttpPost("Role/Authority")]
     public async Task<ResultModel> CreateUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cUserRoleAuthorityDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cUserRoleAuthorityDto);
-            userRoleAuthority.CreateId = _UserId;
+            userRoleAuthority.CreateId = Guid.Parse(user);
             if (await _IUserRoleAuthorityService.CreateUserRoleAuthorityAsync(userRoleAuthority))
                 return ResultResponse.OK("新增用户角色权限成功");
         }
@@ -404,10 +382,10 @@ public class UserController : ControllerBase
     [HttpDelete("Role/Authority/{guid}")]
     public async Task<ResultModel> DeleteUserRoleAuthority([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = _UserId;
+            Guid deleteId = Guid.Parse(user);
             if (await _IUserRoleAuthorityService.DeleteUserRoleAuthorityAsync(guid, deleteId))
                 return ResultResponse.OK("删除用户角色权限成功");
         }
@@ -423,11 +401,11 @@ public class UserController : ControllerBase
     [HttpPut("Role/Authority")]
     public async Task<ResultModel> ModifyUserRoleAuthority([FromServices] IMapper iMapper, [FromBody] CUserRoleAuthorityDto cUserRoleAuthorityDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRoleAuthority = iMapper.Map<UserRoleAuthority>(cUserRoleAuthorityDto);
-            userRoleAuthority.ModifyId = _UserId;
+            userRoleAuthority.ModifyId = Guid.Parse(user);
             userRoleAuthority = await _IUserRoleAuthorityService.ModifyUserRoleAuthorityAsync(userRoleAuthority);
             if (userRoleAuthority != null)
                 return ResultResponse.OK(iMapper.Map<RUserRoleAuthorityDto>(userRoleAuthority));
@@ -444,7 +422,7 @@ public class UserController : ControllerBase
     [HttpGet("Role/Authority/{guid}")]
     public async Task<ResultModel?> FindUserRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRoleAuthority = await _IUserRoleAuthorityService.FindUserRoleAuthorityAsync(guid);
@@ -481,11 +459,11 @@ public class UserController : ControllerBase
     [HttpPost("Account/Role")]
     public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
-            userAccountRole.CreateId = _UserId;
+            userAccountRole.CreateId = Guid.Parse(user);
             if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
                 return ResultResponse.OK("新增用户账户角色成功");
         }
@@ -500,10 +478,10 @@ public class UserController : ControllerBase
     [HttpDelete("Account/Role/{guid}")]
     public async Task<ResultModel> DeleteUserAccountRole([FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
-            Guid deleteId = _UserId;
+            Guid deleteId = Guid.Parse(user);
             if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid, deleteId))
                 return ResultResponse.OK("删除用户账户角色成功");
         }
@@ -519,11 +497,11 @@ public class UserController : ControllerBase
     [HttpPut("Account/Role")]
     public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
-            userAccountRole.ModifyId = _UserId;
+            userAccountRole.ModifyId = Guid.Parse(user);
             userAccountRole = await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole);
             if (userAccountRole != null)
                 return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
@@ -540,7 +518,7 @@ public class UserController : ControllerBase
     [HttpGet("Account/Role/{guid}")]
     public async Task<ResultModel> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
-        var user = User.FindFirst("UserId");
+        var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccountRole = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
