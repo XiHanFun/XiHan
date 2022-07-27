@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://127.0.0.1:9708;http://192.168.31.71:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "ZhaiFanhuaBlog.WebApi-Pro": {
@@ -26,7 +26,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "http://127.0.0.1:9708;http://192.168.31.71:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "IIS Express": {
