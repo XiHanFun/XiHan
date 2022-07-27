@@ -65,9 +65,9 @@ public static class CustomIocExtension
 
         // =========================User=========================
         // Repository
+        services.AddScoped<IUserAuthorityRepository, UserAuthorityRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IUserAccountRepository, UserAccountRepository>();
-        services.AddScoped<IUserAuthorityRepository, UserAuthorityRepository>();
         services.AddScoped<IUserRoleAuthorityRepository, UserRoleAuthorityRepository>();
         services.AddScoped<IUserAccountRoleRepository, UserAccountRoleRepository>();
         services.AddScoped<IUserCollectCategoryRepository, UserCollectCategoryRepository>();
@@ -78,9 +78,9 @@ public static class CustomIocExtension
         services.AddScoped<IUserOauthRepository, UserOauthRepository>();
         services.AddScoped<IUserStatisticRepository, UserStatisticRepository>();
         // Service
+        services.AddScoped<IUserAuthorityService, UserAuthorityService>();
         services.AddScoped<IUserRoleService, UserRoleService>();
         services.AddScoped<IUserAccountService, UserAccountService>();
-        services.AddScoped<IUserAuthorityService, UserAuthorityService>();
         services.AddScoped<IUserRoleAuthorityService, UserRoleAuthorityService>();
         services.AddScoped<IUserAccountRoleService, UserAccountRoleService>();
         services.AddScoped<IUserCollectCategoryService, UserCollectCategoryService>();
