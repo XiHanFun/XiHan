@@ -14,6 +14,8 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserAccountService : IBaseService<UserAccount>
 {
+    Task<UserAccount> IsExistenceAsync(Guid guid);
+
     Task<bool> InitUserAccountAsync(List<UserAccount> userAccounts);
 
     Task<bool> CreateUserAccountAsync(UserAccount userAccount);

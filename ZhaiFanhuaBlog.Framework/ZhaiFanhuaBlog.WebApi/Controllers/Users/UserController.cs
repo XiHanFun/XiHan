@@ -148,7 +148,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Authorities")]
-    public async Task<ResultModel> QueryUserAuthority([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserAuthorities([FromServices] IMapper iMapper)
     {
         var userAuthority = await _IUserAuthorityService.QueryUserAuthorityAsync();
         if (userAuthority.Count != 0)
@@ -244,7 +244,7 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Roles")]
-    public async Task<ResultModel> QueryUserRole([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserRoles([FromServices] IMapper iMapper)
     {
         var userRole = await _IUserRoleService.QueryUserRoleAsync();
         if (userRole.Count != 0)
@@ -342,7 +342,7 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpGet("Accounts")]
     [AllowAnonymous]
-    public async Task<ResultModel> QueryUserAccount([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
     {
         var userAccounts = await _IUserAccountService.QueryUserAccountAsync();
         if (userAccounts.Count != 0)
@@ -440,7 +440,7 @@ public class UserController : ControllerBase
     [HttpGet("Role/Authorities")]
     public async Task<ResultModel> QueryUserRoleAuthorities([FromServices] IMapper iMapper)
     {
-        var userRoleAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthoritiesAsync();
+        var userRoleAuthorities = await _IUserRoleAuthorityService.QueryUserRoleAuthorityAsync();
         if (userRoleAuthorities.Count != 0)
             return ResultResponse.OK(iMapper.Map<List<RUserRoleAuthorityDto>>(userRoleAuthorities));
         return ResultResponse.BadRequest("未查询到用户角色权限");

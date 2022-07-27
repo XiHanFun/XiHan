@@ -20,21 +20,31 @@ namespace ZhaiFanhuaBlog.Services.Users;
 /// </summary>
 public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccountRoleService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
-    private readonly IUserAccountRepository _IUserAccountRepository;
-    private readonly IUserRoleRepository _IUserRoleRepository;
+    private readonly IUserAccountService _IUserAccountService;
+    private readonly IUserRoleService _IUserRoleService;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
-    public UserAccountRoleService(IRootStateRepository iRootStateRepository,
-        IUserAccountRepository iUserAccountRepository,
-        IUserRoleRepository iUserRoleRepository,
+    public UserAccountRoleService(IUserAccountService iUserAccountService,
+        IUserRoleService iUserRoleService,
         IUserAccountRoleRepository iUserAccountRoleRepository)
     {
         base._IBaseRepository = iUserAccountRoleRepository;
-        _IRootStateRepository = iRootStateRepository;
-        _IUserAccountRepository = iUserAccountRepository;
-        _IUserRoleRepository = iUserRoleRepository;
+        _IUserAccountService = iUserAccountService;
+        _IUserRoleService = iUserRoleService;
         _IUserAccountRoleRepository = iUserAccountRoleRepository;
+    }
+
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public async Task<UserAccountRole> IsExistenceAsync(Guid guid)
+    {
+        var userAccountRole = await _IUserAccountRoleRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
+        if (userAccountRole == null)
+            throw new ApplicationException("用户账户角色不存在");
+        return userAccountRole;
     }
 
     public async Task<bool> InitUserAccountAsync(List<UserAccountRole> userAccountRoles)
@@ -49,11 +59,9 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
 
     public async Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole)
     {
-        if (await _IUserAccountRepository.FindAsync(ua => ua.BaseId == userAccountRole.AccountId && ua.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户账户不存在");
-        if (await _IUserRoleRepository.FindAsync(ur => ur.BaseId == userAccountRole.RoleId && ur.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户角色不存在");
-        if (await _IUserAccountRoleRepository.FindAsync(uar => uar.AccountId == userAccountRole.AccountId && uar.RoleId == userAccountRole.RoleId && uar.SoftDeleteLock == false) != null)
+        await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
+        await _IUserRoleService.IsExistenceAsync(userAccountRole.RoleId);
+        if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户角色已存在");
         userAccountRole.SoftDeleteLock = false;
         var result = await _IUserAccountRoleRepository.CreateAsync(userAccountRole);
@@ -62,9 +70,7 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
 
     public async Task<bool> DeleteUserAccountRoleAsync(Guid guid, Guid deleteId)
     {
-        var userAccountRole = await _IUserAccountRoleRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
-        if (userAccountRole == null)
-            throw new ApplicationException("用户账户角色不存在");
+        var userAccountRole = await IsExistenceAsync(guid);
         userAccountRole.SoftDeleteLock = true;
         userAccountRole.DeleteId = deleteId;
         userAccountRole.DeleteTime = DateTime.Now;
@@ -73,13 +79,10 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
 
     public async Task<UserAccountRole> ModifyUserAccountRoleAsync(UserAccountRole userAccountRole)
     {
-        if (await _IUserAccountRoleRepository.FindAsync(uar => uar.BaseId == userAccountRole.BaseId && uar.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户账户角色不存在");
-        if (await _IUserAccountRepository.FindAsync(ua => ua.BaseId == userAccountRole.AccountId && ua.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户账户不存在");
-        if (await _IUserRoleRepository.FindAsync(ur => ur.BaseId == userAccountRole.RoleId && ur.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户角色不存在");
-        if (await _IUserAccountRoleRepository.FindAsync(uar => uar.AccountId == userAccountRole.AccountId && uar.RoleId == userAccountRole.RoleId && uar.SoftDeleteLock == false) != null)
+        await IsExistenceAsync(userAccountRole.BaseId);
+        await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
+        await _IUserRoleService.IsExistenceAsync(userAccountRole.RoleId);
+        if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户角色已存在");
         userAccountRole.ModifyTime = DateTime.Now;
         var result = await _IUserAccountRoleRepository.UpdateAsync(userAccountRole);
@@ -89,15 +92,13 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
 
     public async Task<UserAccountRole> FindUserAccountRoleAsync(Guid guid)
     {
-        var userAccountRole = await _IUserAccountRoleRepository.FindAsync(uar => uar.BaseId == guid && uar.SoftDeleteLock == false);
-        if (userAccountRole == null)
-            throw new ApplicationException("用户账户角色不存在");
+        var userAccountRole = await IsExistenceAsync(guid);
         return userAccountRole;
     }
 
     public async Task<List<UserAccountRole>> QueryUserAccountRoleAsync()
     {
-        var userAccountRole = from useraccountrole in await _IUserAccountRoleRepository.QueryAsync(uar => uar.SoftDeleteLock == false)
+        var userAccountRole = from useraccountrole in await _IUserAccountRoleRepository.QueryAsync(e => !e.SoftDeleteLock)
                               orderby useraccountrole.CreateTime descending
                               select useraccountrole;
         return userAccountRole.ToList();

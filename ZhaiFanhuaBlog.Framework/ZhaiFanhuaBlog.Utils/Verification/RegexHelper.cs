@@ -275,7 +275,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsURL(string str)
     {
-        Regex regex = new(@"^http://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$");
+        Regex regex = new(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$");
         Match result = regex.Match(str);
         return result.Success;
     }

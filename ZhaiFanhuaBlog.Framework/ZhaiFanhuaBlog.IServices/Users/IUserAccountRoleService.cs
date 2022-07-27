@@ -12,11 +12,10 @@ using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
-/// <summary>
-/// IUserAccountRoleService
-/// </summary>
 public interface IUserAccountRoleService : IBaseService<UserAccountRole>
 {
+    Task<UserAccountRole> IsExistenceAsync(Guid guid);
+
     Task<bool> InitUserAccountAsync(List<UserAccountRole> userAccountRoles);
 
     Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole);

@@ -34,6 +34,19 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
         _IUserRoleAuthorityRepository = iUserRoleAuthorityRepository;
     }
 
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public async Task<UserAuthority> IsExistenceAsync(Guid guid)
+    {
+        var userAuthority = await _IUserAuthorityRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
+        if (userAuthority == null)
+            throw new ApplicationException("用户权限不存在");
+        return userAuthority;
+    }
+
     public async Task<bool> InitUserAuthorityAsync(List<UserAuthority> userAuthorities)
     {
         userAuthorities.ForEach(userAuthority =>
@@ -46,9 +59,9 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<bool> CreateUserAuthorityAsync(UserAuthority userAuthority)
     {
-        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(ua => ua.ParentId == userAuthority.ParentId && ua.SoftDeleteLock == false) == null)
+        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(e => e.ParentId == userAuthority.ParentId && e.SoftDeleteLock == false) == null)
             throw new ApplicationException("父级用户权限不存在");
-        if (await _IUserAuthorityRepository.FindAsync(ua => ua.Name == userAuthority.Name) != null)
+        if (await _IUserAuthorityRepository.FindAsync(e => e.Name == userAuthority.Name) != null)
             throw new ApplicationException("用户权限名称已存在");
         userAuthority.SoftDeleteLock = false;
         var result = await _IUserAuthorityRepository.CreateAsync(userAuthority);
@@ -57,14 +70,12 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<bool> DeleteUserAuthorityAsync(Guid guid, Guid deleteId)
     {
-        var userAuthority = await _IUserAuthorityRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
-        if (userAuthority == null)
-            throw new ApplicationException("用户权限不存在");
-        if ((await _IUserAuthorityRepository.QueryAsync(ua => ua.ParentId == userAuthority.ParentId && ua.SoftDeleteLock == false)).Count != 0)
+        var userAuthority = await IsExistenceAsync(guid);
+        if ((await _IUserAuthorityRepository.QueryAsync(e => e.ParentId == userAuthority.ParentId && e.SoftDeleteLock == false)).Count != 0)
             throw new ApplicationException("该用户权限下有子用户权限，不能删除");
-        if ((await _IUserRoleAuthorityRepository.QueryAsync(ur => ur.AuthorityId == userAuthority.BaseId)).Count != 0)
+        if ((await _IUserRoleAuthorityRepository.QueryAsync(e => e.AuthorityId == userAuthority.BaseId)).Count != 0)
             throw new ApplicationException("该用户权限已有用户角色使用，不能删除");
-        var rootState = await _IRootStateRepository.FindAsync(rs => rs.TypeKey == "All" && rs.StateKey == -1);
+        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userAuthority.SoftDeleteLock = true;
         userAuthority.DeleteId = deleteId;
         userAuthority.DeleteTime = DateTime.Now;
@@ -74,11 +85,10 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<UserAuthority> ModifyUserAuthorityAsync(UserAuthority userAuthority)
     {
-        if (await _IUserAuthorityRepository.FindAsync(ua => ua.BaseId == userAuthority.BaseId && ua.SoftDeleteLock == false) == null)
-            throw new ApplicationException("用户权限不存在");
-        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(ua => ua.ParentId == userAuthority.ParentId && ua.SoftDeleteLock == false) == null)
+        await IsExistenceAsync(userAuthority.BaseId);
+        if (userAuthority.ParentId != null && await _IUserAuthorityRepository.FindAsync(e => e.ParentId == userAuthority.ParentId && e.SoftDeleteLock == false) == null)
             throw new ApplicationException("父级用户权限不存在");
-        if (await _IUserAuthorityRepository.FindAsync(ua => ua.Name == userAuthority.Name) != null)
+        if (await _IUserAuthorityRepository.FindAsync(e => e.Name == userAuthority.Name) != null)
             throw new ApplicationException("用户权限名称已存在");
         userAuthority.ModifyTime = DateTime.Now;
         var result = await _IUserAuthorityRepository.UpdateAsync(userAuthority);
@@ -88,15 +98,13 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<UserAuthority> FindUserAuthorityAsync(Guid guid)
     {
-        var userAuthority = await _IUserAuthorityRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
-        if (userAuthority == null)
-            throw new ApplicationException("用户权限不存在");
+        var userAuthority = await IsExistenceAsync(guid);
         return userAuthority;
     }
 
     public async Task<List<UserAuthority>> QueryUserAuthorityAsync()
     {
-        var userAuthority = from userauthority in await _IUserAuthorityRepository.QueryAsync(ua => ua.SoftDeleteLock == false)
+        var userAuthority = from userauthority in await _IUserAuthorityRepository.QueryAsync(e => e.SoftDeleteLock == false)
                             orderby userauthority.CreateTime descending
                             orderby userauthority.Name descending
                             select userauthority;

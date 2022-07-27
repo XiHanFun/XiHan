@@ -60,10 +60,10 @@ public class BlogController : ControllerBase
         _BlogCommentPollService = blogCommentPollService;
     }
 
-    #region 文章分类
+    #region 博客文章分类
 
     /// <summary>
-    /// 新增文章分类
+    /// 新增博客文章分类
     /// </summary>
     /// <param name="iMapper"></param>
     /// <param name="cBlogCategoryDto"></param>
@@ -77,13 +77,13 @@ public class BlogController : ControllerBase
             var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
             blogCategory.CreateId = Guid.Parse(user);
             if (await _IBlogCategoryService.CreateBlogCategoryAsync(blogCategory))
-                return ResultResponse.OK("新增文章分类成功");
+                return ResultResponse.OK("新增博客文章分类成功");
         }
-        return ResultResponse.BadRequest("新增文章分类失败");
+        return ResultResponse.BadRequest("新增博客文章分类失败");
     }
 
     /// <summary>
-    /// 删除文章分类
+    /// 删除博客文章分类
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
@@ -95,13 +95,13 @@ public class BlogController : ControllerBase
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogCategoryService.DeleteBlogCategoryAsync(guid, deleteId))
-                return ResultResponse.OK("删除文章分类成功");
+                return ResultResponse.OK("删除博客文章分类成功");
         }
-        return ResultResponse.BadRequest("删除文章分类失败");
+        return ResultResponse.BadRequest("删除博客文章分类失败");
     }
 
     /// <summary>
-    /// 修改文章分类
+    /// 修改博客文章分类
     /// </summary>
     /// <param name="iMapper"></param>
     /// <param name="cBlogCategoryDto"></param>
@@ -118,11 +118,11 @@ public class BlogController : ControllerBase
             if (blogCategory != null)
                 return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
         }
-        return ResultResponse.BadRequest("修改文章分类失败");
+        return ResultResponse.BadRequest("修改博客文章分类失败");
     }
 
     /// <summary>
-    /// 查找文章分类
+    /// 查找博客文章分类
     /// </summary>
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
@@ -137,22 +137,118 @@ public class BlogController : ControllerBase
             if (blogCategory != null)
                 return ResultResponse.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
         }
-        return ResultResponse.BadRequest("该文章分类不存在");
+        return ResultResponse.BadRequest("该博客文章分类不存在");
     }
 
     /// <summary>
-    /// 查询文章分类
+    /// 查询博客文章分类
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Categories")]
-    public async Task<ResultModel> QueryBlogCategory([FromServices] IMapper iMapper)
+    public async Task<ResultModel> QueryBlogCategories([FromServices] IMapper iMapper)
     {
         var blogCategories = await _IBlogCategoryService.QueryBlogCategoryAsync();
         if (blogCategories.Count != 0)
             return ResultResponse.OK(iMapper.Map<List<RBlogCategoryDto>>(blogCategories));
-        return ResultResponse.BadRequest("未查询到文章分类");
+        return ResultResponse.BadRequest("未查询到博客文章分类");
     }
 
-    #endregion 文章分类
+    #endregion 博客文章分类
+
+    #region 博客文章
+
+    /// <summary>
+    /// 新增博客文章
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="cBlogArticleDto"></param>
+    /// <returns></returns>
+    [HttpPost("Article")]
+    public async Task<ResultModel> CreateBlogArticle([FromServices] IMapper iMapper, [FromBody] CBlogArticleDto cBlogArticleDto)
+    {
+        var user = User.FindFirstValue("UserId");
+        if (user != null)
+        {
+            var blogArticle = iMapper.Map<BlogArticle>(cBlogArticleDto);
+            blogArticle.CreateId = Guid.Parse(user);
+            if (await _IBlogArticleService.CreateBlogArticleAsync(blogArticle))
+                return ResultResponse.OK("新增博客文章成功");
+        }
+        return ResultResponse.BadRequest("新增博客文章失败");
+    }
+
+    /// <summary>
+    /// 删除博客文章
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpDelete("Article/{guid}")]
+    public async Task<ResultModel> DeleteBlogArticle([FromRoute] Guid guid)
+    {
+        var user = User.FindFirstValue("UserId");
+        if (user != null)
+        {
+            Guid deleteId = Guid.Parse(user);
+            if (await _IBlogArticleService.DeleteBlogArticleAsync(guid, deleteId))
+                return ResultResponse.OK("删除博客文章成功");
+        }
+        return ResultResponse.BadRequest("删除博客文章失败");
+    }
+
+    /// <summary>
+    /// 修改博客文章
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="cBlogArticleDto"></param>
+    /// <returns></returns>
+    [HttpPut("Article")]
+    public async Task<ResultModel> ModifyBlogArticle([FromServices] IMapper iMapper, [FromBody] CBlogArticleDto cBlogArticleDto)
+    {
+        var user = User.FindFirstValue("UserId");
+        if (user != null)
+        {
+            var blogArticle = iMapper.Map<BlogArticle>(cBlogArticleDto);
+            blogArticle.ModifyId = Guid.Parse(user);
+            blogArticle = await _IBlogArticleService.ModifyBlogArticleAsync(blogArticle);
+            if (blogArticle != null)
+                return ResultResponse.OK(iMapper.Map<RBlogArticleDto>(blogArticle));
+        }
+        return ResultResponse.BadRequest("修改博客文章失败");
+    }
+
+    /// <summary>
+    /// 查找博客文章
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    [HttpGet("Article/{guid}")]
+    public async Task<ResultModel> FindBlogArticle([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    {
+        var user = User.FindFirstValue("UserId");
+        if (user != null)
+        {
+            var blogArticle = await _IBlogArticleService.FindBlogArticleAsync(guid);
+            if (blogArticle != null)
+                return ResultResponse.OK(iMapper.Map<RBlogArticleDto>(blogArticle));
+        }
+        return ResultResponse.BadRequest("该博客文章不存在");
+    }
+
+    /// <summary>
+    /// 查询博客文章
+    /// </summary>
+    /// <param name="iMapper"></param>
+    /// <returns></returns>
+    [HttpGet("Articles")]
+    public async Task<ResultModel> QueryBlogArticles([FromServices] IMapper iMapper)
+    {
+        var blogArticles = await _IBlogArticleService.QueryBlogArticleAsync();
+        if (blogArticles.Count != 0)
+            return ResultResponse.OK(iMapper.Map<List<RBlogArticleDto>>(blogArticles));
+        return ResultResponse.BadRequest("未查询到博客文章");
+    }
+
+    #endregion 博客文章
 }

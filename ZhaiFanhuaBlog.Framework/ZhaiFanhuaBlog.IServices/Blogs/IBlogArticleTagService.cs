@@ -14,4 +14,17 @@ namespace ZhaiFanhuaBlog.IServices.Blogs;
 
 public interface IBlogArticleTagService : IBaseService<BlogArticleTag>
 {
+    Task<BlogArticleTag> IsExistenceAsync(Guid guid);
+
+    Task<bool> InitBlogArticleTagAsync(List<BlogArticleTag> blogArticleTags);
+
+    Task<bool> CreateBlogArticleTagAsync(BlogArticleTag blogArticleTag);
+
+    Task<bool> DeleteBlogArticleTagAsync(Guid guid, Guid deleteId);
+
+    Task<BlogArticleTag> ModifyBlogArticleTagAsync(BlogArticleTag blogArticleTag);
+
+    Task<BlogArticleTag> FindBlogArticleTagAsync(Guid guid);
+
+    Task<List<BlogArticleTag>> QueryBlogArticleTagAsync();
 }

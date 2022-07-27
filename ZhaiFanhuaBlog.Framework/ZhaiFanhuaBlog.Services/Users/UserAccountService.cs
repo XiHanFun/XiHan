@@ -36,6 +36,19 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         _IUserAccountRoleRepository = iIUserAccountRoleRepository;
     }
 
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public async Task<UserAccount> IsExistenceAsync(Guid guid)
+    {
+        var userAccount = await _IUserAccountRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
+        if (userAccount == null)
+            throw new ApplicationException("用户账户不存在");
+        return userAccount;
+    }
+
     public async Task<bool> InitUserAccountAsync(List<UserAccount> userAccounts)
     {
         userAccounts.ForEach(userAccount =>
@@ -48,7 +61,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<bool> CreateUserAccountAsync(UserAccount userAccount)
     {
-        if (await _IUserAccountRepository.FindAsync(ua => ua.Name == userAccount.Name || ua.Email == userAccount.Email && ua.SoftDeleteLock == false) != null)
+        if (await _IUserAccountRepository.FindAsync(e => e.Name == userAccount.Name || e.Email == userAccount.Email && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户名称或邮箱已注册");
         userAccount.SoftDeleteLock = false;
         var result = await _IUserAccountRepository.CreateAsync(userAccount);
@@ -57,10 +70,8 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<bool> DeleteUserAccountAsync(Guid guid, Guid deleteId)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(guid);
-        if (userAccount == null)
-            throw new ApplicationException("用户账户不存在");
-        var rootState = await _IRootStateRepository.FindAsync(rs => rs.TypeKey == "All" && rs.StateKey == -1);
+        var userAccount = await IsExistenceAsync(guid);
+        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userAccount.SoftDeleteLock = true;
         userAccount.DeleteId = deleteId;
         userAccount.DeleteTime = DateTime.Now;
@@ -70,8 +81,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<UserAccount> ModifyUserAccountAsync(UserAccount userAccount)
     {
-        if (await _IUserAccountRepository.FindAsync(userAccount.BaseId) == null)
-            throw new ApplicationException("用户账户不存在");
+        await IsExistenceAsync(userAccount.BaseId);
         userAccount.ModifyTime = DateTime.Now;
         var result = await _IUserAccountRepository.UpdateAsync(userAccount);
         if (result) userAccount = await _IUserAccountRepository.FindAsync(userAccount.BaseId);
@@ -80,15 +90,13 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<UserAccount> FindUserAccountByGuidAsync(Guid guid)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(ua => ua.BaseId == guid && ua.SoftDeleteLock == false);
-        if (userAccount == null)
-            throw new ApplicationException("用户账户不存在");
+        var userAccount = await IsExistenceAsync(guid);
         return userAccount;
     }
 
     public async Task<UserAccount> FindUserAccountByNameAsync(string accountName)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(ua => ua.Name == accountName && ua.SoftDeleteLock == false);
+        var userAccount = await _IUserAccountRepository.FindAsync(e => e.Name == accountName && !e.SoftDeleteLock);
         if (userAccount == null)
             throw new ApplicationException("用户账户不存在");
         return userAccount;
@@ -96,7 +104,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<UserAccount> FindUserAccountByEmailAsync(string accountEmail)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(ua => ua.Email == accountEmail && ua.SoftDeleteLock == false);
+        var userAccount = await _IUserAccountRepository.FindAsync(e => e.Email == accountEmail && !e.SoftDeleteLock);
         if (userAccount == null)
             throw new ApplicationException("用户账户不存在");
         return userAccount;
@@ -104,7 +112,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<List<UserAccount>> QueryUserAccountAsync()
     {
-        var userAccount = from userauthority in await _IUserAccountRepository.QueryAsync(ua => ua.SoftDeleteLock == false)
+        var userAccount = from userauthority in await _IUserAccountRepository.QueryAsync(e => !e.SoftDeleteLock)
                           orderby userauthority.CreateTime descending
                           orderby userauthority.Name descending
                           select userauthority;
