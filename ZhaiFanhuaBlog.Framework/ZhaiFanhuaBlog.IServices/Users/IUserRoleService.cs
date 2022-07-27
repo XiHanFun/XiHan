@@ -14,6 +14,8 @@ namespace ZhaiFanhuaBlog.IServices.Users;
 
 public interface IUserRoleService : IBaseService<UserRole>
 {
+    Task<UserRole> IsExistenceAsync(Guid guid);
+
     Task<bool> InitUserRoleAsync(List<UserRole> userRoles);
 
     Task<bool> CreateUserRoleAsync(UserRole userRole);

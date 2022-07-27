@@ -14,6 +14,8 @@ namespace ZhaiFanhuaBlog.IServices.Blogs;
 
 public interface IBlogCategoryService : IBaseService<BlogCategory>
 {
+    Task<BlogCategory> IsExistenceAsync(Guid guid);
+
     Task<bool> InitBlogCategoryAsync(List<BlogCategory> blogCategories);
 
     Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory);

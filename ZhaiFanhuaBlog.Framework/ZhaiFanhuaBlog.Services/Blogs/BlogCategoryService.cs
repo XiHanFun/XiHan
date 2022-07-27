@@ -34,6 +34,19 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         _IBlogArticleRepository = iBlogArticleRepository;
     }
 
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public async Task<BlogCategory> IsExistenceAsync(Guid guid)
+    {
+        var blogCategory = await _IBlogCategoryRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
+        if (blogCategory == null)
+            throw new ApplicationException("博客文章分类不存在");
+        return blogCategory;
+    }
+
     public async Task<bool> InitBlogCategoryAsync(List<BlogCategory> blogCategories)
     {
         blogCategories.ForEach(blogCategory =>
@@ -46,10 +59,10 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
 
     public async Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory)
     {
-        if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(c => c.ParentId == blogCategory.ParentId && c.SoftDeleteLock == false) == null)
-            throw new ApplicationException("父级文章分类不存在");
-        if (await _IBlogCategoryRepository.FindAsync(ua => ua.Name == blogCategory.Name) != null)
-            throw new ApplicationException("文章分类名称已存在");
+        if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
+            throw new ApplicationException("父级博客文章分类不存在");
+        if (await _IBlogCategoryRepository.FindAsync(e => e.Name == blogCategory.Name && !e.SoftDeleteLock) != null)
+            throw new ApplicationException("博客文章分类名称已存在");
         blogCategory.SoftDeleteLock = false;
         var result = await _IBlogCategoryRepository.CreateAsync(blogCategory);
         return result;
@@ -57,14 +70,12 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
 
     public async Task<bool> DeleteBlogCategoryAsync(Guid guid, Guid deleteId)
     {
-        var blogCategory = await _IBlogCategoryRepository.FindAsync(c => c.BaseId == guid && c.SoftDeleteLock == false);
-        if (blogCategory == null)
-            throw new ApplicationException("文章分类不存在");
-        if ((await _IBlogCategoryRepository.QueryAsync(c => c.ParentId == blogCategory.ParentId && c.SoftDeleteLock == false)).Count != 0)
-            throw new ApplicationException("该文章分类下有子文章分类，不能删除");
-        if ((await _IBlogArticleRepository.QueryAsync(e => e.CategoryId == blogCategory.BaseId)).Count != 0)
-            throw new ApplicationException("该文章分类已有文章使用，不能删除");
-        var rootState = await _IRootStateRepository.FindAsync(r => r.TypeKey == "All" && r.StateKey == -1);
+        var blogCategory = await IsExistenceAsync(guid);
+        if ((await _IBlogCategoryRepository.QueryAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock)).Count != 0)
+            throw new ApplicationException("该博客文章分类下有子博客文章分类，不能删除");
+        if ((await _IBlogArticleRepository.QueryAsync(e => e.CategoryId == blogCategory.BaseId && !e.SoftDeleteLock)).Count != 0)
+            throw new ApplicationException("该博客文章分类已有博客文章使用，不能删除");
+        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogCategory.SoftDeleteLock = true;
         blogCategory.DeleteId = deleteId;
         blogCategory.DeleteTime = DateTime.Now;
@@ -74,12 +85,11 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
 
     public async Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory)
     {
-        if (await _IBlogCategoryRepository.FindAsync(c => c.BaseId == blogCategory.BaseId && c.SoftDeleteLock == false) == null)
-            throw new ApplicationException("文章分类不存在");
-        if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(c => c.ParentId == blogCategory.ParentId && c.SoftDeleteLock == false) == null)
-            throw new ApplicationException("父级文章分类不存在");
-        if (await _IBlogCategoryRepository.FindAsync(ua => ua.Name == blogCategory.Name) != null)
-            throw new ApplicationException("文章分类名称已存在");
+        await IsExistenceAsync(blogCategory.BaseId);
+        if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
+            throw new ApplicationException("父级博客文章分类不存在");
+        if (await _IBlogCategoryRepository.FindAsync(e => e.Name == blogCategory.Name && !e.SoftDeleteLock) != null)
+            throw new ApplicationException("博客文章分类名称已存在");
         var result = await _IBlogCategoryRepository.UpdateAsync(blogCategory);
         if (result) blogCategory = await _IBlogCategoryRepository.FindAsync(blogCategory.BaseId);
         return blogCategory;
@@ -87,18 +97,16 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
 
     public async Task<BlogCategory> FindBlogCategoryAsync(Guid guid)
     {
-        var blogCategory = await _IBlogCategoryRepository.FindAsync(c => c.BaseId == guid && c.SoftDeleteLock == false);
-        if (blogCategory == null)
-            throw new ApplicationException("文章分类不存在");
+        var blogCategory = await IsExistenceAsync(guid);
         return blogCategory;
     }
 
     public async Task<List<BlogCategory>> QueryBlogCategoryAsync()
     {
-        var blogCategory = from userauthority in await _IBlogCategoryRepository.QueryAsync(c => c.SoftDeleteLock == false)
-                           orderby userauthority.CreateTime descending
-                           orderby userauthority.Name descending
-                           select userauthority;
+        var blogCategory = from blogcategory in await _IBlogCategoryRepository.QueryAsync(e => !e.SoftDeleteLock)
+                           orderby blogcategory.CreateTime descending
+                           orderby blogcategory.Name descending
+                           select blogcategory;
         return blogCategory.ToList();
     }
 }
