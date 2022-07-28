@@ -14,4 +14,17 @@ namespace ZhaiFanhuaBlog.IServices.Blogs;
 
 public interface IBlogPollService : IBaseService<BlogPoll>
 {
+    Task<BlogPoll> IsExistenceAsync(Guid guid);
+
+    Task<bool> InitBlogPollAsync(List<BlogPoll> blogPolls);
+
+    Task<bool> CreateBlogPollAsync(BlogPoll blogPoll);
+
+    Task<bool> DeleteBlogPollAsync(Guid guid, Guid deleteId);
+
+    Task<BlogPoll> ModifyBlogPollAsync(BlogPoll blogPoll);
+
+    Task<BlogPoll> FindBlogPollAsync(Guid guid);
+
+    Task<List<BlogPoll>> QueryBlogPollAsync();
 }

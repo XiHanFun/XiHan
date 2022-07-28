@@ -7,8 +7,10 @@
 // CreateTime:2022-05-30 上午 02:57:37
 // ----------------------------------------------------------------
 
+using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Formats;
+using ZhaiFanhuaBlog.ViewModels.Blogs;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -44,6 +46,24 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
+
+            // Blog
+            mapper.CreateMap<BlogCategory, CBlogCategoryDto>().ReverseMap();
+            mapper.CreateMap<BlogCategory, RBlogCategoryDto>().ReverseMap();
+            mapper.CreateMap<BlogArticle, CBlogArticleDto>().ReverseMap();
+            mapper.CreateMap<BlogArticle, RBlogArticleDto>().ReverseMap();
+            mapper.CreateMap<BlogTag, CBlogTagDto>().ReverseMap();
+            mapper.CreateMap<BlogTag, RBlogTagDto>().ReverseMap();
+            mapper.CreateMap<BlogArticleTag, CBlogArticleTagDto>().ReverseMap();
+            mapper.CreateMap<BlogArticleTag, RBlogArticleTagDto>().ReverseMap();
+            mapper.CreateMap<BlogPoll, CBlogPollDto>().ReverseMap();
+            mapper.CreateMap<BlogPoll, RBlogPollDto>().ReverseMap();
+            mapper.CreateMap<BlogComment, CBlogCommentDto>().ReverseMap();
+            mapper.CreateMap<BlogComment, RBlogCommentDto>()
+            .ForMember(u => u.CommentIp, d => d.MapFrom(o => o.CommentIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.CommentIp)))
+            .ReverseMap();
+            mapper.CreateMap<BlogCommentPoll, CBlogCommentPollDto>().ReverseMap();
+            mapper.CreateMap<BlogCommentPoll, RBlogCommentPollDto>().ReverseMap();
         });
         return services;
     }

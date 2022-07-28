@@ -19,12 +19,14 @@ public class CBlogArticleDto
     /// <summary>
     /// 文章作者
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 文章分类
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid CategoryId { get; set; }
 
