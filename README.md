@@ -3,8 +3,9 @@
 
 
 <div style="width: 400px;margin: 0 auto;">
-        <img style="height:50px" align="center" src="LOGO.png" />
+        <img style="height:60px" align="center" src="LOGO.png" />
 </div>
+
 
 
 
@@ -12,7 +13,7 @@
 
 [更新沿程](UPDATETIMELINE.md)
 
-This is the back end of the ZhaiFanhuaBlog application, which is based on DotNet6.
+这是基于DotNet6的博客项目的后端，项目名称为`摘繁华博客`;
 
 
 
