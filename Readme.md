@@ -2,12 +2,15 @@
 
 
 
-<div style="width: 500px;margin: 0 auto;">
-        <img style="height:100px" align="center" src="Logo.png" />
+<div style="width: 400px;margin: 0 auto;">
+        <img style="height:50px" align="center" src="LOGO.png" />
 </div>
 
 
-[更新沿程](UpdateTimeline.md)
+
+[贡献代码](CONTRIBUTING.md)
+
+[更新沿程](UPDATETIMELINE.md)
 
 This is the back end of the ZhaiFanhuaBlog application, which is based on DotNet6.
 
