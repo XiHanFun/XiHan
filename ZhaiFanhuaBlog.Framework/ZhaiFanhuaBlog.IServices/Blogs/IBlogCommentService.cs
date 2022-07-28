@@ -14,4 +14,17 @@ namespace ZhaiFanhuaBlog.IServices.Blogs;
 
 public interface IBlogCommentService : IBaseService<BlogComment>
 {
+    Task<BlogComment> IsExistenceAsync(Guid guid);
+
+    Task<bool> InitBlogCommentAsync(List<BlogComment> blogComments);
+
+    Task<bool> CreateBlogCommentAsync(BlogComment blogComment);
+
+    Task<bool> DeleteBlogCommentAsync(Guid guid, Guid deleteId);
+
+    Task<BlogComment> ModifyBlogCommentAsync(BlogComment blogComment);
+
+    Task<BlogComment> FindBlogCommentAsync(Guid guid);
+
+    Task<List<BlogComment>> QueryBlogCommentAsync();
 }

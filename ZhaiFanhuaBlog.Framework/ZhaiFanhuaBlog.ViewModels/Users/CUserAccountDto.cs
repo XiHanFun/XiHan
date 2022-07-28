@@ -41,7 +41,7 @@ public class CUserAccountDto
     /// 头像路径
     /// </summary>
     [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string AvatarPath { get; set; } = string.Empty;
+    public string? AvatarPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户昵称

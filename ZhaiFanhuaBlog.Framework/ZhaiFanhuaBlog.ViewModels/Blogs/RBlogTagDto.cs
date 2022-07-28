@@ -1,38 +1,33 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BlogTag
-// Guid:fa23fa92-d511-41b1-ac8d-1574fa01a3af
+// FileName:RBlogTagDto
+// Guid:4eb11673-c96e-4bc2-a8f4-e5154e6ad16f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 06:31:06
+// CreateTime:2022-07-28 下午 12:17:57
 // ----------------------------------------------------------------
 
-using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases;
 
-namespace ZhaiFanhuaBlog.Models.Blogs;
+namespace ZhaiFanhuaBlog.ViewModels.Blogs;
 
 /// <summary>
-/// 文章标签表
+/// RBlogTagDto
 /// </summary>
-[SugarTable("BlogTag", "文章标签表")]
-public class BlogTag : BaseEntity
+public class RBlogTagDto : RBaseDto
 {
     /// <summary>
     /// 创建用户
     /// </summary>
-    [SugarColumn(ColumnDescription = "创建用户")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 标签名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", ColumnDescription = "标签名称")]
     public string TagName { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章总数
     /// </summary>
-    [SugarColumn(ColumnDescription = "文章总数")]
     public int BlogCount { get; set; } = 0;
 }
