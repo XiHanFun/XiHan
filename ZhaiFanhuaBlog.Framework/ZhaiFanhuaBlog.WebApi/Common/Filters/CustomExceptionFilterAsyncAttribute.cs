@@ -77,14 +77,13 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
                 // 请求时间
                 var requestedTime = DateTimeOffset.Now;
                 // 写入日志
-                string info = $"\n" +
-                       $"\t 【请求IP】：{remoteIp}\n" +
-                       $"\t 【请求地址】：{requestUrl}\n" +
-                       $"\t 【请求方法】：{method}\n" +
-                       $"\t 【请求时间】：{requestedTime}\n" +
-                       $"\t 【操作人】：{userId}\n";
+                string info = $"\t 【请求IP】：{remoteIp}\n" +
+                                $"\t 【请求地址】：{requestUrl}\n" +
+                                $"\t 【请求方法】：{method}\n" +
+                                $"\t 【请求时间】：{requestedTime}\n" +
+                                $"\t 【操作人】：{userId}\n";
                 if (ExceptionSwitch)
-                    _ILogger.LogError("请求异常" + context.Exception, info);
+                    _ILogger.LogError($"================系统异常================\n{info}{context.Exception}");
             }
         }
         // 标记异常已经处理过了

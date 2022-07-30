@@ -77,13 +77,12 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
                 // 返回未授权
                 context.Result = new JsonResult(ResultResponse.Unauthorized());
                 // 写入日志
-                string info = $"\n" +
-                       $"\t 【请求IP】：{remoteIp}\n" +
-                       $"\t 【请求地址】：{requestUrl}\n" +
-                       $"\t 【请求方法】：{method}\n" +
-                       $"\t 【请求时间】：{requestedTime}\n";
+                string info = $"\t 【请求IP】：{remoteIp}\n" +
+                                $"\t 【请求地址】：{requestUrl}\n" +
+                                $"\t 【请求方法】：{method}\n" +
+                                $"\t 【请求时间】：{requestedTime}\n";
                 if (AuthorizationSwitch)
-                    _ILogger.LogInformation("请求未授权", info);
+                    _ILogger.LogInformation($"================请求未授权================\n{info}");
             }
         }
         // 否则直接跳过处理

@@ -75,14 +75,13 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             // 请求时间
             var requestedTime = DateTimeOffset.Now;
             // 写入日志
-            string info = $"\n" +
-                   $"\t 【请求IP】：{remoteIp}\n" +
-                   $"\t 【请求地址】：{requestUrl}\n" +
-                   $"\t 【请求方法】：{method}\n" +
-                   $"\t 【请求时间】：{requestedTime}\n" +
-                   $"\t 【操作人】：{userId}\n";
+            string info = $"\t 【请求IP】：{remoteIp}\n" +
+                           $"\t 【请求地址】：{requestUrl}\n" +
+                           $"\t 【请求方法】：{method}\n" +
+                           $"\t 【请求时间】：{requestedTime}\n" +
+                           $"\t 【操作人】：{userId}\n";
             if (ActionSwitch)
-                _ILogger.LogInformation("发起请求", info);
+                _ILogger.LogInformation($"================发起请求================\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
             try
@@ -95,7 +94,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                     var isRequestSucceed = actionExecuted.Exception == null;
                     // 请求成功就写入日志
                     if (isRequestSucceed && ActionSwitch)
-                        _ILogger.LogInformation($"请求结果", JsonConvert.SerializeObject(returnResult));
+                        _ILogger.LogInformation($"================请求数据================\n{info}{JsonConvert.SerializeObject(returnResult)}");
                 }
             }
             catch (Exception)
