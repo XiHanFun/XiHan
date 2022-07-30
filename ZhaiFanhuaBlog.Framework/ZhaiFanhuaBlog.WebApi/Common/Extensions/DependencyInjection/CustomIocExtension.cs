@@ -35,9 +35,8 @@ public static class CustomIocExtension
     /// IOC服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomIOC(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomIOC(this IServiceCollection services)
     {
         // =========================Site=========================
         // Repository

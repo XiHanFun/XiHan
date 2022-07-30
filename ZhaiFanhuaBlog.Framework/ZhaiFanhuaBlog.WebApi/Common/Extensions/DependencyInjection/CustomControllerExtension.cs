@@ -22,16 +22,15 @@ public static class CustomControllerExtension
     /// Controllers服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomControllers(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomControllers(this IServiceCollection services)
     {
         // 注入HttpContextAccessor实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddControllers(options =>
         {
             // 全局注入过滤器
-            options.Filters.Add<CustomAuthorizatioFilterAsyncAttribute>();
+            options.Filters.Add<CustomAuthorizationFilterAsyncAttribute>();
             options.Filters.Add<CustomExceptionFilterAsyncAttribute>();
             //options.Filters.Add<CustomResourceFilterAsyncAttribute>();
             options.Filters.Add<CustomActionFilterAsyncAttribute>();

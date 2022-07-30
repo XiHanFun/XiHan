@@ -36,30 +36,30 @@ public class Program
         ConsoleHelper.WriteLineWarning("Log Start……");
 
         var log = builder.Logging;
-        log.AddCustomLog(config);
+        log.AddCustomLog();
 
         ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
         ConsoleHelper.WriteLineWarning("Services Start……");
 
         var services = builder.Services;
         // Cache
-        services.AddCustomCache(config);
+        services.AddCustomCache();
         // JWT
-        services.AddCustomJWT(config);
+        services.AddCustomJWT();
         // Swagger
-        services.AddCustomSwagger(config);
+        services.AddCustomSwagger();
         // SqlSugar
-        services.AddCustomSqlSugar(config);
+        services.AddCustomSqlSugar();
         // IOC
-        services.AddCustomIOC(config);
+        services.AddCustomIOC();
         // AutoMapper
-        services.AddCustomAutoMapper(config);
+        services.AddCustomAutoMapper();
         // Route
-        services.AddCustomRoute(config);
+        services.AddCustomRoute();
         // Cors
-        services.AddCustomCors(config);
+        services.AddCustomCors();
         // Controllers
-        services.AddCustomControllers(config);
+        services.AddCustomControllers();
 
         ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
         ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
@@ -73,6 +73,8 @@ public class Program
         {
             // HTTP 严格传输安全
             app.UseHsts();
+            // 强制https跳转
+            app.UseHttpsRedirection();
         }
         // Nginx 反向代理获取真实IP
         app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -80,9 +82,7 @@ public class Program
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
         // Swagger
-        app.UseCustomSwagger(config);
-        // 强制https跳转
-        app.UseHttpsRedirection();
+        app.UseCustomSwagger();
         // 使用静态文件
         app.UseStaticFiles();
         // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
@@ -90,7 +90,7 @@ public class Program
         // 路由
         app.UseRouting();
         // 跨域
-        app.UseCustomCors(config);
+        app.UseCustomCors();
         // 鉴权
         app.UseAuthentication();
         // 授权

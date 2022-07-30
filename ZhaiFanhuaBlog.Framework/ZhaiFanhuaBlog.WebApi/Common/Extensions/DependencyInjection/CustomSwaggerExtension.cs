@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -25,9 +26,8 @@ public static class CustomSwaggerExtension
     /// Swagger服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomSwagger(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
     {
         // 用于最小API
         services.AddEndpointsApiExplorer();
@@ -45,8 +45,8 @@ public static class CustomSwaggerExtension
                     Description = swaggerinfo.OpenApiInfo!.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
-                        Name = config.GetValue<string>("Configuration:Admin:Name"),
-                        Email = config.GetValue<string>("Configuration:Admin:Email")
+                        Name = ConfigHelper.Configuration.GetValue<string>("Configuration:Admin:Name"),
+                        Email = ConfigHelper.Configuration.GetValue<string>("Configuration:Admin:Email")
                     },
                     License = new OpenApiLicense
                     {
@@ -93,9 +93,9 @@ public static class CustomSwaggerExtension
     /// Swagger应用扩展
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="config"></param>
+    /// <param name="ConfigHelper.Configuration"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app, IConfiguration config)
+    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
         app.UseSwagger();
         app.UseSwaggerUI(options =>
@@ -110,7 +110,7 @@ public static class CustomSwaggerExtension
             // API前缀设置为空
             options.RoutePrefix = string.Empty;
             // API页面标题
-            options.DocumentTitle = $"{config.GetValue<string>("Configuration:Name")}接口文档";
+            options.DocumentTitle = $"{ConfigHelper.Configuration.GetValue<string>("Configuration:Name")}接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
             options.DocExpansion(DocExpansion.None);
         });

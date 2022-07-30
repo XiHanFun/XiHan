@@ -9,6 +9,7 @@
 
 using Newtonsoft.Json;
 using SqlSugar.IOC;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -22,57 +23,56 @@ public static class CustomSqlSugarExtension
     /// SqlSugar服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomSqlSugar(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomSqlSugar(this IServiceCollection services)
     {
-        string databaseType = config.GetValue<string>("Database:Type");
+        string databaseType = ConfigHelper.Configuration.GetValue<string>("Database:Type");
         services.AddSqlSugar(databaseType switch
         {
             "MySql" => new IocConfig()
             {
                 DbType = IocDbType.MySql,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:MySql"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:MySql"),
                 IsAutoCloseConnection = true
             },
             "SqlServer" => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:SqlServer"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:SqlServer"),
                 IsAutoCloseConnection = true
             },
             "Sqlite" => new IocConfig()
             {
                 DbType = IocDbType.Sqlite,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:Sqlite"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:Sqlite"),
                 IsAutoCloseConnection = true
             },
             "Oracle" => new IocConfig()
             {
                 DbType = IocDbType.Oracle,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:Oracle"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:Oracle"),
                 IsAutoCloseConnection = true
             },
             "PostgreSQL" => new IocConfig()
             {
                 DbType = IocDbType.PostgreSQL,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:PostgreSQL"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:PostgreSQL"),
                 IsAutoCloseConnection = true
             },
             _ => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = config.GetValue<string>("Database:ConnectionString:SqlServer"),
+                ConnectionString = ConfigHelper.Configuration.GetValue<string>("Database:ConnectionString:SqlServer"),
                 IsAutoCloseConnection = true
             }
         });
-        bool databaseConsole = config.GetValue<bool>("Database:Console");
+        bool databaseConsole = ConfigHelper.Configuration.GetValue<bool>("Database:Console");
         if (databaseConsole)
         {
             services.ConfigurationSugar(db =>
             {
                 // SQL语句输出方便排查问题
-                db.Aop.OnLogExecuting = (sql, p) =>
+                db.Aop.OnLogExecuting = (sql, pars) =>
                 {
                     ConsoleHelper.WriteLineHandle("===========================================================================");
                     ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");

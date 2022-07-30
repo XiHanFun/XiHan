@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ZhaiFanhuaBlog.Models.Response;
+using ZhaiFanhuaBlog.Utils.Config;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -23,9 +24,8 @@ public static class CustomJwtExtension
     /// JWT服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomJWT(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomJWT(this IServiceCollection services)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -36,19 +36,19 @@ public static class CustomJwtExtension
                                  //是否验证颁发者
                                  ValidateIssuer = true,
                                  // 颁发者
-                                 ValidIssuer = config.GetValue<string>("Configuration:Domain"),
+                                 ValidIssuer = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
                                  // 是否验证签收者
                                  ValidateAudience = true,
                                  // 签收者
-                                 ValidAudience = config.GetValue<string>("Configuration:Domain"),
+                                 ValidAudience = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
                                  // 是否验证签名
                                  ValidateIssuerSigningKey = true,
                                  // 签名
-                                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
+                                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigHelper.Configuration.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
                                  // 是否验证过期时间
                                  ValidateLifetime = true,
                                  // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
-                                 ClockSkew = TimeSpan.FromSeconds(config.GetValue<int>("Auth:JWT:ClockSkew")),
+                                 ClockSkew = TimeSpan.FromSeconds(ConfigHelper.Configuration.GetValue<int>("Auth:JWT:ClockSkew")),
                              };
                              options.Events = new JwtBearerEvents
                              {

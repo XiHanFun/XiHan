@@ -18,14 +18,15 @@ public static class CustomRouteExtension
     /// Route服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomRoute(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomRoute(this IServiceCollection services)
     {
         services.AddRouting(route =>
         {
             route.LowercaseUrls = true;
             route.LowercaseQueryStrings = true;
+            // 路由前加后加斜杠 /
+            route.AppendTrailingSlash = false;
         });
         return services;
     }

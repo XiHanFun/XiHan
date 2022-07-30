@@ -24,9 +24,8 @@ public static class CustomAutoMapperExtension
     /// AutoMapper服务扩展
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services)
     {
         // 创建具体的映射对象
         services.AddAutoMapper(mapper =>

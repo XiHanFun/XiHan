@@ -9,6 +9,7 @@
 
 using NLog.Extensions.Logging;
 using Serilog;
+using ZhaiFanhuaBlog.Utils.Config;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -21,12 +22,11 @@ public static class CustomLogExtension
     /// Log服务扩展
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public static ILoggingBuilder AddCustomLog(this ILoggingBuilder builder, IConfiguration config)
+    public static ILoggingBuilder AddCustomLog(this ILoggingBuilder builder)
     {
-        string logType = config.GetValue<string>("Logging:Type");
+        string logType = ConfigHelper.Configuration.GetValue<string>("Logging:Type");
         builder = logType switch
         {
             "Log4Net" => builder.AddLog4Net(@"Common/Config/Log4Net.config"),
@@ -34,7 +34,11 @@ public static class CustomLogExtension
             "NLog" => builder.AddNLog(@"Common/Config/NLog.config"),
             _ => throw new NotImplementedException(),
         };
-        builder.AddSimpleConsole();
+        builder.AddSimpleConsole(options =>
+        {
+            options.IncludeScopes = true;
+            options.TimestampFormat = "yyyy-MM-dd HH:mm:ss ";
+        });
         return builder;
     }
 }

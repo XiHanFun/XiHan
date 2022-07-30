@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
+using ZhaiFanhuaBlog.Utils.Config;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -22,6 +23,9 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
+    // 日志开关
+    private readonly bool ResultSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Result");
+
     private readonly ILogger<CustomResultFilterAsyncAttribute> _ILogger;
 
     /// <summary>
@@ -43,13 +47,6 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync Before");
-        // 获取控制器信息
-        ControllerActionDescriptor? actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-        // 获取路由表信息
-        var routeData = context.RouteData;
-        var controllerName = routeData.Values["controller"];
-        var actionName = routeData.Values["action"];
-        var areaName = routeData.DataTokens["area"];
         // 不为空就做处理
         if (context.Result != null)
         {
@@ -92,7 +89,8 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             if (resultExecuted.Result != null)
             {
                 var result = JsonConvert.SerializeObject(resultExecuted.Result);
-                _ILogger.LogInformation($"执行结果为【{JsonConvert.SerializeObject(result)}】");
+                if (ResultSwitch)
+                    _ILogger.LogInformation($"请求结果", result);
             }
         }
         catch (Exception)

@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
+using ZhaiFanhuaBlog.Utils.Config;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -23,6 +24,9 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
+    // 日志开关
+    private readonly bool ActionSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action");
+
     private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
 
     /// <summary>
@@ -60,22 +64,25 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             // 获取 HttpContext 和 HttpRequest 对象
             var httpContext = context.HttpContext;
             var httpRequest = httpContext.Request;
-            // 获取客户端 Ipv4 地址
-            var remoteIPv4 = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+            // 获取客户端 Ip 地址
+            var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
             // 获取请求的 Url 地址(域名、路径、参数)
             var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
             // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
             var parameters = context.ActionArguments;
             // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-            var userId = httpContext.User?.FindFirstValue("userId");
+            var userId = httpContext.User?.FindFirstValue("UserId");
             // 请求时间
             var requestedTime = DateTimeOffset.Now;
             // 写入日志
             string info = $"\n" +
-                   $"\t 【请求IP】：{remoteIPv4}\n" +
+                   $"\t 【请求IP】：{remoteIp}\n" +
                    $"\t 【请求地址】：{requestUrl}\n" +
-                   $"\t 【请求方法】：{method}\n";
-            _ILogger.LogInformation(info);
+                   $"\t 【请求方法】：{method}\n" +
+                   $"\t 【请求时间】：{requestedTime}\n" +
+                   $"\t 【操作人】：{userId}\n";
+            if (ActionSwitch)
+                _ILogger.LogInformation("发起请求", info);
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
             try
@@ -86,8 +93,9 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                     var returnResult = actionExecuted.Result as ActionResult;
                     // 判断是否请求成功，没有异常就是请求成功
                     var isRequestSucceed = actionExecuted.Exception == null;
-                    // 其他操作，如写入日志
-                    _ILogger.LogInformation($"请求结果为【{JsonConvert.SerializeObject(returnResult)}】");
+                    // 请求成功就写入日志
+                    if (isRequestSucceed && ActionSwitch)
+                        _ILogger.LogInformation($"请求结果", JsonConvert.SerializeObject(returnResult));
                 }
             }
             catch (Exception)

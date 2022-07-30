@@ -17,6 +17,7 @@ using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
@@ -37,12 +38,10 @@ public class AuthorizeController : ControllerBase
     /// <summary>
     /// 构造函数注入
     /// </summary>
-    /// <param name="iCconfiguration"></param>
     /// <param name="iUserAccountService"></param>
-    public AuthorizeController(IConfiguration iCconfiguration,
-        IUserAccountService iUserAccountService)
+    public AuthorizeController(IUserAccountService iUserAccountService)
     {
-        _IConfiguration = iCconfiguration;
+        _IConfiguration = ConfigHelper.Configuration!;
         _IUserAccountService = iUserAccountService;
     }
 
