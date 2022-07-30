@@ -65,19 +65,18 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         // 请求时间
         var requestedTime = DateTimeOffset.Now;
         // 写入日志
-        string info = $"\n" +
-                $"\t 【请求IP】：{remoteIp}\n" +
-                $"\t 【请求地址】：{requestUrl}\n" +
-                $"\t 【请求方法】：{method}\n" +
-                $"\t 【请求时间】：{requestedTime}\n" +
-                $"\t 【操作人】：{userId}\n";
+        string info = $"\t 【请求IP】：{remoteIp}\n" +
+                        $"\t 【请求地址】：{requestUrl}\n" +
+                        $"\t 【请求方法】：{method}\n" +
+                        $"\t 【请求时间】：{requestedTime}\n" +
+                        $"\t 【操作人】：{userId}\n";
         // 若存在此资源，直接返回缓存资源
         if (_IMemoryCache.TryGetValue(requestUrl, out object value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
             if (ResourceSwitch)
-                _ILogger.LogInformation($"取出缓存" + info, context.Result);
+                _ILogger.LogInformation($"================缓存数据================\n{info}{context.Result}");
         }
         else
         {
@@ -93,7 +92,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl, result, SyncTimeout);
                     if (ResourceSwitch)
-                        _ILogger.LogInformation($"开始缓存", JsonConvert.SerializeObject(result));
+                        _ILogger.LogInformation($"================请求缓存================\n{info}{JsonConvert.SerializeObject(result)}");
                 }
             }
             catch (Exception)

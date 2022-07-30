@@ -88,9 +88,27 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         {
             if (resultExecuted.Result != null)
             {
+                // 获取控制器、路由信息
+                var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+                // 获取请求的方法
+                var method = actionDescriptor!.MethodInfo;
+                // 获取 HttpContext 和 HttpRequest 对象
+                var httpContext = context.HttpContext;
+                var httpRequest = httpContext.Request;
+                // 获取客户端 Ip 地址
+                var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+                // 获取请求的 Url 地址(域名、路径、参数)
+                var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+                // 请求时间
+                var requestedTime = DateTimeOffset.Now;
+                // 写入日志
+                string info = $"\t 【请求IP】：{remoteIp}\n" +
+                               $"\t 【请求地址】：{requestUrl}\n" +
+                               $"\t 【请求方法】：{method}\n" +
+                               $"\t 【请求时间】：{requestedTime}\n";
                 var result = JsonConvert.SerializeObject(resultExecuted.Result);
                 if (ResultSwitch)
-                    _ILogger.LogInformation($"请求结果", result);
+                    _ILogger.LogInformation($"================返回数据================\n{info}{result}");
             }
         }
         catch (Exception)
