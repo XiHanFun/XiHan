@@ -59,6 +59,30 @@
 
   <ItemGroup>
     <Folder Include="Common\Middlewares\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\PublishProfiles\DevelopmentLinux.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles\DevelopmentWindows.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles\ProductionLinux.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles\ProductionWindows.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles\StagingLinux.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\PublishProfiles\StagingWindows.pubxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

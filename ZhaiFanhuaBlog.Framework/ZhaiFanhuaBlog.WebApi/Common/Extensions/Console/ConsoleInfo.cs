@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using System.Reflection;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Info;
 
@@ -61,6 +62,7 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"关联用户：{EnvironmentInfoHelper.UserName}");
         ConsoleHelper.WriteLineInfo("===============应用信息===============");
         ConsoleHelper.WriteLineInfo($@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}");
+        ConsoleHelper.WriteLineInfo($@"当前环境：{ConfigHelper.Configuration.GetValue<string>("Environment")}");
         ConsoleHelper.WriteLineInfo($@"当前版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}");
         ConsoleHelper.WriteLineInfo($@"所在路径：{ApplicationInfoHelper.CurrentDirectory}");
         ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
