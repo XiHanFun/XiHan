@@ -10,6 +10,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -24,7 +25,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 日志开关
-    private readonly bool ResourceSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Resource");
+    private readonly bool ResourceLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Resource");
 
     private readonly IMemoryCache _IMemoryCache;
     private readonly ILogger<CustomResourceFilterAsyncAttribute> _ILogger;
@@ -32,12 +33,12 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="memoryCache"></param>
-    public CustomResourceFilterAsyncAttribute(IMemoryCache memoryCache, ILogger<CustomResourceFilterAsyncAttribute> logger)
+    /// <param name="iMemoryCache"></param>
+    /// <param name="iLogger"></param>
+    public CustomResourceFilterAsyncAttribute(IMemoryCache iMemoryCache, ILogger<CustomResourceFilterAsyncAttribute> iLogger)
     {
-        _IMemoryCache = memoryCache;
-        _ILogger = logger;
+        _IMemoryCache = iMemoryCache;
+        _ILogger = iLogger;
     }
 
     /// <summary>
@@ -62,21 +63,18 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
         // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
         var userId = httpContext.User?.FindFirstValue("UserId");
-        // 请求时间
-        var requestedTime = DateTimeOffset.Now;
         // 写入日志
-        string info = $"\t 【请求IP】：{remoteIp}\n" +
-                        $"\t 【请求地址】：{requestUrl}\n" +
-                        $"\t 【请求方法】：{method}\n" +
-                        $"\t 【请求时间】：{requestedTime}\n" +
-                        $"\t 【操作人】：{userId}\n";
+        string info = $"\t 请求Ip：{remoteIp}\n" +
+                         $"\t 请求地址：{requestUrl}\n" +
+                         $"\t 请求方法：{method}\n" +
+                         $"\t 操作用户：{userId}\n";
         // 若存在此资源，直接返回缓存资源
         if (_IMemoryCache.TryGetValue(requestUrl, out object value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
-            if (ResourceSwitch)
-                _ILogger.LogInformation($"================缓存数据================\n{info}{context.Result}");
+            if (ResourceLogSwitch)
+                _ILogger.LogInformation($"缓存数据\n{info}{context.Result}");
         }
         else
         {
@@ -91,8 +89,8 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                     TimeSpan SyncTimeout = TimeSpan.FromMinutes(ConfigHelper.Configuration.GetValue<int>("Cache:SyncTimeout"));
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl, result, SyncTimeout);
-                    if (ResourceSwitch)
-                        _ILogger.LogInformation($"================请求缓存================\n{info}{JsonConvert.SerializeObject(result)}");
+                    if (ResourceLogSwitch)
+                        _ILogger.LogInformation($"请求缓存\n{info}{JsonConvert.SerializeObject(result)}");
                 }
             }
             catch (Exception)

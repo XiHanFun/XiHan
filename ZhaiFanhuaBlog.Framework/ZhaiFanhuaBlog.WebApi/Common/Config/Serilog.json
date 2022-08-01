@@ -1,7 +1,9 @@
 {
   "Serilog": {
     "MinimumLevel": {
-      "Default": "Debug", //最小记录日志级别
+      //最小记录日志级别
+      "Default": "Debug",
+      // 对其他日志进行重写,除此之外,目前框架只有微软自带的日志组件
       "Override": {
         "Default": "Warning",
         "System": "Warning",
@@ -13,25 +15,29 @@
       {
         "Name": "Console",
         "Args": {
-          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} {SourceContext} {ThreadId} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+          "outputTemplate": "================{NewLine}记录时间：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}日志级别：{Level}{NewLine}请求类名：{SourceContext}{NewLine}消息描述：{Message}{NewLine}错误详情：{Exception}{NewLine}================{NewLine}"
         }
       },
       {
         "Name": "Debug",
         "Args": {
-          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} {SourceContext} {ThreadId} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+          "outputTemplate": "================{NewLine}记录时间：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}日志级别：{Level}{NewLine}请求类名：{SourceContext}{NewLine}消息描述：{Message}{NewLine}错误详情：{Exception}{NewLine}================{NewLine}"
         }
       },
       {
+        // 写入日志
         "Name": "File",
         "Args": {
-          "path": "Logs/Serilog/Log.txt",
+          "path": "Logs/Serilog/Log-.txt",
           "formatter": "Serilog.Formatting.Compact.CompactJsonFormatter",
           "rollingInterval": "Day",
-          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} {SourceContext} {ThreadId} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+          "outputTemplate": "================{NewLine}记录时间：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}日志级别：{Level}{NewLine}请求类名：{SourceContext}{NewLine}消息描述：{Message}{NewLine}错误详情：{Exception}{NewLine}================{NewLine}",
           "shared": true,
+          // 超过文件大小时自动创建新文件
           "rollOnFileSizeLimit": true,
-          "fileSizeLimitBytes": 102400000,
+          // 单位字节不配置时默认1GB
+          "fileSizeLimitBytes": 1024,
+          // 保留最近多少个文件
           "retainedFileCountLimit": 365
         }
       }

@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationFilter
 {
     // 日志开关
-    private readonly bool AuthorizationSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Authorization");
+    private readonly bool AuthorizationLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Authorization");
 
     private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
 
@@ -61,8 +61,6 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
         var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
         var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
-        // 请求时间
-        var requestedTime = DateTimeOffset.Now;
         // 是否匿名访问
         var allowAnonymouse = context.Filters.Any(filter => filter is IAllowAnonymousFilter)
                             || controllerType.IsDefined(typeof(AllowAnonymousAttribute), true)
@@ -77,12 +75,11 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
                 // 返回未授权
                 context.Result = new JsonResult(ResultResponse.Unauthorized());
                 // 写入日志
-                string info = $"\t 【请求IP】：{remoteIp}\n" +
-                                $"\t 【请求地址】：{requestUrl}\n" +
-                                $"\t 【请求方法】：{method}\n" +
-                                $"\t 【请求时间】：{requestedTime}\n";
-                if (AuthorizationSwitch)
-                    _ILogger.LogInformation($"================请求未授权================\n{info}");
+                string info = $"\t 请求Ip：{remoteIp}\n" +
+                       $"\t 请求地址：{requestUrl}\n" +
+                       $"\t 请求方法：{method}\n";
+                if (AuthorizationLogSwitch)
+                    _ILogger.LogInformation($"请求未授权\n{info}");
             }
         }
         // 否则直接跳过处理

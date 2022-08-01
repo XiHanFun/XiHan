@@ -28,20 +28,18 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        ConsoleHelper.WriteLineWarning("Configuration Start……");
         var config = builder.Configuration;
+        ConsoleHelper.WriteLineWarning("Configuration Start……");
         ConfigHelper.Configuration = config;
-
         ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
-        ConsoleHelper.WriteLineWarning("Log Start……");
 
         var log = builder.Logging;
+        ConsoleHelper.WriteLineWarning("Log Start……");
         log.AddCustomLog();
-
         ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
-        ConsoleHelper.WriteLineWarning("Services Start……");
 
         var services = builder.Services;
+        ConsoleHelper.WriteLineWarning("Services Start……");
         // Cache
         services.AddCustomCache();
         // JWT
@@ -60,11 +58,10 @@ public class Program
         services.AddCustomCors();
         // Controllers
         services.AddCustomControllers();
-
         ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
-        ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
 
         var app = builder.Build();
+        ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -95,11 +92,11 @@ public class Program
         app.UseAuthentication();
         // 授权
         app.UseAuthorization();
-
+        // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
         app.MapControllers();
         ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
-        // 打印信息
+        // 启动信息打印
         ConsoleInfo.ConsoleInfos();
         app.Run();
     }

@@ -25,17 +25,17 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action");
+    private readonly bool ActionLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action");
 
     private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    public CustomActionFilterAsyncAttribute(ILogger<CustomActionFilterAsyncAttribute> logger)
+    /// <param name="iLogger"></param>
+    public CustomActionFilterAsyncAttribute(ILogger<CustomActionFilterAsyncAttribute> iLogger)
     {
-        _ILogger = logger;
+        _ILogger = iLogger;
     }
 
     /// <summary>
@@ -72,16 +72,13 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             var parameters = context.ActionArguments;
             // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
             var userId = httpContext.User?.FindFirstValue("UserId");
-            // 请求时间
-            var requestedTime = DateTimeOffset.Now;
             // 写入日志
-            string info = $"\t 【请求IP】：{remoteIp}\n" +
-                           $"\t 【请求地址】：{requestUrl}\n" +
-                           $"\t 【请求方法】：{method}\n" +
-                           $"\t 【请求时间】：{requestedTime}\n" +
-                           $"\t 【操作人】：{userId}\n";
-            if (ActionSwitch)
-                _ILogger.LogInformation($"================发起请求================\n{info}");
+            string info = $"\t 请求Ip：{remoteIp}\n" +
+                        $"\t 请求地址：{requestUrl}\n" +
+                        $"\t 请求方法：{method}\n" +
+                        $"\t 操作用户：{userId}\n";
+            if (ActionLogSwitch)
+                _ILogger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
             try
@@ -93,8 +90,8 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                     // 判断是否请求成功，没有异常就是请求成功
                     var isRequestSucceed = actionExecuted.Exception == null;
                     // 请求成功就写入日志
-                    if (isRequestSucceed && ActionSwitch)
-                        _ILogger.LogInformation($"================请求数据================\n{info}{JsonConvert.SerializeObject(returnResult)}");
+                    if (isRequestSucceed && ActionLogSwitch)
+                        _ILogger.LogInformation($"请求数据\n{info}{JsonConvert.SerializeObject(returnResult)}");
                 }
             }
             catch (Exception)

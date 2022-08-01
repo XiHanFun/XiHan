@@ -84,6 +84,7 @@ public static class CustomSwaggerExtension
             options.OperationFilter<SecurityRequirementsOperationFilter>();
             // 生成注释文件
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
         });
         return services;

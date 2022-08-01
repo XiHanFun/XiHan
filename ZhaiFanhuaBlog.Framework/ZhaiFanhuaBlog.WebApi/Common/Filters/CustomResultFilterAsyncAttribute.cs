@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     // 日志开关
-    private readonly bool ResultSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Result");
+    private readonly bool ResultLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Result");
 
     private readonly ILogger<CustomResultFilterAsyncAttribute> _ILogger;
 
@@ -102,13 +102,12 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
                 // 请求时间
                 var requestedTime = DateTimeOffset.Now;
                 // 写入日志
-                string info = $"\t 【请求IP】：{remoteIp}\n" +
-                               $"\t 【请求地址】：{requestUrl}\n" +
-                               $"\t 【请求方法】：{method}\n" +
-                               $"\t 【请求时间】：{requestedTime}\n";
+                string info = $"\t 请求Ip：{remoteIp}\n" +
+                         $"\t 请求地址：{requestUrl}\n" +
+                         $"\t 请求方法：{method}\n";
                 var result = JsonConvert.SerializeObject(resultExecuted.Result);
-                if (ResultSwitch)
-                    _ILogger.LogInformation($"================返回数据================\n{info}{result}");
+                if (ResultLogSwitch)
+                    _ILogger.LogInformation($"返回数据\n{info}{result}");
             }
         }
         catch (Exception)
