@@ -7,9 +7,9 @@
 // CreateTime:2022-06-13 上午 04:05:22
 // ----------------------------------------------------------------
 
-using NLog.Extensions.Logging;
 using Serilog;
-using ZhaiFanhuaBlog.Utils.Config;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -26,19 +26,21 @@ public static class CustomLogExtension
     /// <exception cref="NotImplementedException"></exception>
     public static ILoggingBuilder AddCustomLog(this ILoggingBuilder builder)
     {
-        string logType = ConfigHelper.Configuration.GetValue<string>("Logging:Type");
-        builder = logType switch
-        {
-            "Log4Net" => builder.AddLog4Net(@"Common/Config/Log4Net.config"),
-            "Serilog" => builder.AddSerilog(),
-            "NLog" => builder.AddNLog(@"Common/Config/NLog.config"),
-            _ => throw new NotImplementedException(),
-        };
-        builder.AddSimpleConsole(options =>
-        {
-            options.IncludeScopes = true;
-            options.TimestampFormat = "yyyy-MM-dd HH:mm:ss ";
-        });
+        IConfiguration SerilogConfig = new ConfigurationBuilder()
+                        .AddJsonFile(@"Common/Config/Serilog.json")
+                        .Build();
+
+        Serilog.Log.Logger = new LoggerConfiguration()
+                // 最小的记录等级
+                .MinimumLevel.Information()
+                // 对其他日志进行重写,除此之外,目前框架只有微软自带的日志组件
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                // 输出到控制台
+                .WriteTo.Console(theme: SystemConsoleTheme.Colored)
+                // 读取配置文件
+                .ReadFrom.Configuration(SerilogConfig)
+                .CreateLogger();
+        builder.AddSerilog();
         return builder;
     }
 }

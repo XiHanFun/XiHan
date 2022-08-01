@@ -93,7 +93,6 @@ public static class CustomSwaggerExtension
     /// Swagger应用扩展
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="ConfigHelper.Configuration"></param>
     /// <returns></returns>
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {

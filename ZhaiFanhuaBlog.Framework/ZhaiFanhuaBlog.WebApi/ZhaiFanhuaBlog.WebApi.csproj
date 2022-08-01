@@ -46,7 +46,7 @@
     <Content Update="appsettings.Production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Common\Config\Log4Net.config">
+    <Content Update="Common\Config\Log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Common\Config\NLog.config">
