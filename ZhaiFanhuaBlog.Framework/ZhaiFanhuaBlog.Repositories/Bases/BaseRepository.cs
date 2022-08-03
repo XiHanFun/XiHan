@@ -39,7 +39,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             // 创建数据库
             base.Context.DbMaintenance.CreateDatabase();
             // 创建表
-            base.Context.CodeFirst.InitTables(
+            base.Context.CodeFirst.SetStringDefaultLength(200).InitTables(
                 //Sites
                 typeof(SiteConfiguration),
                 typeof(SiteLog),

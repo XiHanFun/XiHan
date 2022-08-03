@@ -46,7 +46,6 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync Before");
         // 不为空就做处理
         if (context.Result != null)
         {
@@ -104,16 +103,15 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
                 // 写入日志
                 string info = $"\t 请求Ip：{remoteIp}\n" +
                          $"\t 请求地址：{requestUrl}\n" +
-                         $"\t 请求方法：{method}\n";
+                         $"\t 请求方法：{method}";
                 var result = JsonConvert.SerializeObject(resultExecuted.Result);
                 if (ResultLogSwitch)
-                    _ILogger.LogInformation($"返回数据\n{info}{result}");
+                    _ILogger.LogInformation($"返回数据\n{info}\n{result}");
             }
         }
         catch (Exception)
         {
             throw;
         }
-        Console.WriteLine("CustomResultFilterAsyncAttribute.OnResultExecutionAsync After");
     }
 }

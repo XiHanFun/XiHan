@@ -44,7 +44,6 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-        Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync Before");
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
@@ -80,15 +79,14 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
                 string info = $"\t 请求Ip：{remoteIp}\n" +
                          $"\t 请求地址：{requestUrl}\n" +
                          $"\t 请求方法：{method}\n" +
-                         $"\t 操作用户：{userId}\n";
+                         $"\t 操作用户：{userId}";
                 if (ExceptionLogSwitch)
-                    _ILogger.LogError($"系统异常\n{info}{context.Exception}");
+                    _ILogger.LogError($"系统异常\n{info}\n{context.Exception}");
             }
         }
         // 标记异常已经处理过了
         context.ExceptionHandled = true;
         await Task.CompletedTask;
-        Console.WriteLine("CustomExceptionFilterAsyncAttribute.OnExceptionAsync After");
     }
 
     /// <summary>

@@ -46,7 +46,6 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     /// <returns></returns>
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync Before");
         // 模型验证
         if (!context.ModelState.IsValid)
         {
@@ -76,7 +75,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             string info = $"\t 请求Ip：{remoteIp}\n" +
                         $"\t 请求地址：{requestUrl}\n" +
                         $"\t 请求方法：{method}\n" +
-                        $"\t 操作用户：{userId}\n";
+                        $"\t 操作用户：{userId}";
             if (ActionLogSwitch)
                 _ILogger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
@@ -91,7 +90,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                     var isRequestSucceed = actionExecuted.Exception == null;
                     // 请求成功就写入日志
                     if (isRequestSucceed && ActionLogSwitch)
-                        _ILogger.LogInformation($"请求数据\n{info}{JsonConvert.SerializeObject(returnResult)}");
+                        _ILogger.LogInformation($"请求数据\n{info}\n {JsonConvert.SerializeObject(returnResult)}");
                 }
             }
             catch (Exception)
@@ -99,6 +98,5 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 throw;
             }
         }
-        Console.WriteLine("CustomActionFilterAsyncAttribute.OnActionExecutionAsync After");
     }
 }

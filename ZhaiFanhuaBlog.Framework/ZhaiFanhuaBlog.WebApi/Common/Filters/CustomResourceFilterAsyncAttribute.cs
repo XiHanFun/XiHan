@@ -49,7 +49,6 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync Before");
         // 获取控制器、路由信息
         var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
         // 获取请求的方法
@@ -67,14 +66,14 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
         string info = $"\t 请求Ip：{remoteIp}\n" +
                          $"\t 请求地址：{requestUrl}\n" +
                          $"\t 请求方法：{method}\n" +
-                         $"\t 操作用户：{userId}\n";
+                         $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
         if (_IMemoryCache.TryGetValue(requestUrl, out object value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
             if (ResourceLogSwitch)
-                _ILogger.LogInformation($"缓存数据\n{info}{context.Result}");
+                _ILogger.LogInformation($"缓存数据\n{info}\n{context.Result}");
         }
         else
         {
@@ -90,7 +89,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl, result, SyncTimeout);
                     if (ResourceLogSwitch)
-                        _ILogger.LogInformation($"请求缓存\n{info}{JsonConvert.SerializeObject(result)}");
+                        _ILogger.LogInformation($"请求缓存\n{info}\n{JsonConvert.SerializeObject(result)}");
                 }
             }
             catch (Exception)
@@ -98,6 +97,5 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                 throw;
             }
         }
-        Console.WriteLine("CustomResourceFilterAsyncAttribute.OnResourceExecutionAsync After");
     }
 }

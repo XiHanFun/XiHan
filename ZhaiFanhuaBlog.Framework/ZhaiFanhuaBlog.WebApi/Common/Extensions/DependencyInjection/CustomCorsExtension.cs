@@ -30,19 +30,19 @@ public static class CustomCorsExtension
             {
                 // 策略名称
                 string policyName = ConfigHelper.Configuration.GetValue<string>("Cors:PolicyName");
+                // 支持多个域名端口，端口号后不可带/符号
+                string[] origins = ConfigHelper.Configuration!.GetSection("Cors:Origins").Get<string[]>();
                 // 添加指定策略
                 options.AddPolicy(name: policyName, policy =>
                 {
-                    // 支持多个域名端口，端口号后不可带/符号
-                    string[] origins = ConfigHelper.Configuration!.GetSection("Cors:Origins").Get<string[]>();
                     // 配置允许访问的域名
                     policy.WithOrigins(origins)
                     // 是否允许源时匹配配置的通配符域
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
-                    // 允许任何方法
-                    .AllowAnyMethod()
                     // 允许任何请求头
                     .AllowAnyHeader()
+                    // 允许任何方法
+                    .AllowAnyMethod()
                     // 允许凭据
                     .AllowCredentials();
                 });

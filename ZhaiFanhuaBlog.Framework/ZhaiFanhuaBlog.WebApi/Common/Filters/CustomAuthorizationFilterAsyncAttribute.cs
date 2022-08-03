@@ -45,7 +45,6 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        Console.WriteLine("CustomAuthorizatioFilterAsyncAttribute.OnAuthorizationAsync Before");
         // 获取控制器、路由信息
         var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
         // 获取请求的方法
@@ -77,13 +76,12 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
                 // 写入日志
                 string info = $"\t 请求Ip：{remoteIp}\n" +
                        $"\t 请求地址：{requestUrl}\n" +
-                       $"\t 请求方法：{method}\n";
+                       $"\t 请求方法：{method}";
                 if (AuthorizationLogSwitch)
                     _ILogger.LogInformation($"请求未授权\n{info}");
             }
         }
         // 否则直接跳过处理
         else await Task.CompletedTask;
-        Console.WriteLine("CustomAuthorizatioFilterAsyncAttribute.OnAuthorizationAsync After");
     }
 }

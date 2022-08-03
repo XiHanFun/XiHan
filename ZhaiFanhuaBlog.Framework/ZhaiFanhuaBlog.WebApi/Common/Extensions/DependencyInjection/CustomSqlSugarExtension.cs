@@ -76,7 +76,7 @@ public static class CustomSqlSugarExtension
                 {
                     ConsoleHelper.WriteLineHandle("===========================================================================");
                     ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");
-                    ConsoleHelper.WriteLineHandle(sql);
+                    ConsoleHelper.WriteLineHandle(sql + Environment.NewLine + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
                     ConsoleHelper.WriteLineHandle("===========================================================================");
                 };
             });

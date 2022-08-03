@@ -26,7 +26,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// <summary>
 /// 登录授权
 /// </summary>
-[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -89,16 +88,20 @@ public class AuthorizeController : ControllerBase
             var AccountClaims = new Claim[]{
                 new Claim("UserId", userAccount.BaseId.ToString()),
                 new Claim("UserName", userAccount.Name),
+                new Claim("NickName", userAccount.NickName ?? userAccount.Name),
                 //new Claim("UserRole", userAccount.UserRoles!.FirstOrDefault()!.Name!.ToString()??"")
             };
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));
-            var token = new JwtSecurityToken(
+            // Nuget引入：Microsoft.IdentityModel.Tokens
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));
+            SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
+            // Nuget引入：System.IdentityModel.Tokens.Jwt
+            JwtSecurityToken token = new(
                 issuer: _IConfiguration["Configuration:Domain"],
                 audience: _IConfiguration["Configuration:Domain"],
                 claims: AccountClaims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
-                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
+                signingCredentials: credentials
             );
             var result = new JwtSecurityTokenHandler().WriteToken(token);
             return result;
