@@ -23,7 +23,48 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
 
     public SiteConfigurationService(ISiteConfigurationRepository iSiteConfigurationRepository)
     {
-        _ISiteConfigurationRepository = iSiteConfigurationRepository;
         base._IBaseRepository = iSiteConfigurationRepository;
+        _ISiteConfigurationRepository = iSiteConfigurationRepository;
+    }
+
+    public async Task<bool> CreateSiteConfigurationAsync(SiteConfiguration configuration)
+    {
+        var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(c => c.Name == configuration.Name);
+        if (siteConfigurationCreated != null)
+            throw new ApplicationException("添加失败，该网站名称已存在");
+        var result = await _ISiteConfigurationRepository.CreateAsync(configuration);
+        return result;
+    }
+
+    public async Task<bool> DeleteSiteConfigurationAsync(Guid guid)
+    {
+        var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(guid);
+        if (siteConfigurationCreated == null)
+            throw new ApplicationException("删除失败，该网站配置不存在");
+        var siteConfiguration = await _ISiteConfigurationRepository.DeleteAsync(guid);
+        if (!siteConfiguration)
+            throw new ApplicationException("删除失败，网站配置删除发生错误");
+        return siteConfiguration;
+    }
+
+    public async Task<SiteConfiguration> ModifySiteConfigurationAsync(SiteConfiguration configuration)
+    {
+        var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(configuration.BaseId);
+        if (siteConfigurationCreated == null)
+            throw new ApplicationException("修改失败，该网站配置不存在");
+        if (siteConfigurationCreated.Name == configuration.Name)
+            throw new ApplicationException("修改失败，该网站名称不能与未修改前相同");
+        configuration.ModifyTime = DateTime.Now;
+        if (!await _ISiteConfigurationRepository.UpdateAsync(configuration))
+            throw new ApplicationException("修改失败，网站配置修改发生错误");
+        return configuration;
+    }
+
+    public async Task<SiteConfiguration> FindSiteConfigurationAsync(Guid guid)
+    {
+        var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(guid);
+        if (siteConfigurationCreated == null)
+            throw new ApplicationException("未查询到任何网站配置");
+        return siteConfigurationCreated;
     }
 }

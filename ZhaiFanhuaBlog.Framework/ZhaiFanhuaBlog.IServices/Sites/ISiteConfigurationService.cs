@@ -14,4 +14,11 @@ namespace ZhaiFanhuaBlog.IServices.Sites;
 
 public interface ISiteConfigurationService : IBaseService<SiteConfiguration>
 {
+    Task<bool> CreateSiteConfigurationAsync(SiteConfiguration configuration);
+
+    Task<bool> DeleteSiteConfigurationAsync(Guid guid);
+
+    Task<SiteConfiguration> ModifySiteConfigurationAsync(SiteConfiguration configuration);
+
+    Task<SiteConfiguration> FindSiteConfigurationAsync(Guid guid);
 }
