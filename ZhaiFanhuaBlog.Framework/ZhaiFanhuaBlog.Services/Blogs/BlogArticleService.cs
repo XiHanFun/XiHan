@@ -89,7 +89,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
 
     public async Task<List<BlogArticle>> QueryBlogArticleAsync()
     {
-        var blogArticle = from blogarticle in await _IBlogArticleRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var blogArticle = from blogarticle in await _IBlogArticleRepository.QueryListAsync(e => !e.SoftDeleteLock)
                           orderby blogarticle.CreateTime descending
                           orderby blogarticle.Title descending
                           select blogarticle;

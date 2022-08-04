@@ -94,7 +94,7 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
 
     public async Task<List<BlogComment>> QueryBlogCommentAsync()
     {
-        var blogComment = from blogcategory in await _IBlogCommentRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var blogComment = from blogcategory in await _IBlogCommentRepository.QueryListAsync(e => !e.SoftDeleteLock)
                           orderby blogcategory.CreateTime descending
                           select blogcategory;
         return blogComment.ToList();

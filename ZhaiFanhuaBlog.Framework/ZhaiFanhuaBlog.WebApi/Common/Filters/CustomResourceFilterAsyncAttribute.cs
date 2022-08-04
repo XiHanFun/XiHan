@@ -68,7 +68,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                          $"\t 请求方法：{method}\n" +
                          $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
-        if (_IMemoryCache.TryGetValue(requestUrl, out object value))
+        if (_IMemoryCache.TryGetValue(requestUrl + method, out object value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
@@ -87,7 +87,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                 {
                     TimeSpan SyncTimeout = TimeSpan.FromMinutes(ConfigHelper.Configuration.GetValue<int>("Cache:SyncTimeout"));
                     var result = resourceExecuted.Result as ActionResult;
-                    _IMemoryCache.Set(requestUrl, result, SyncTimeout);
+                    _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)
                         _ILogger.LogInformation($"请求缓存\n{info}\n{JsonConvert.SerializeObject(result)}");
                 }

@@ -98,7 +98,7 @@ public class BlogArticleTagService : BaseService<BlogArticleTag>, IBlogArticleTa
 
     public async Task<List<BlogArticleTag>> QueryBlogArticleTagAsync()
     {
-        var blogArticleTag = from blogarticletag in await _IBlogArticleTagRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var blogArticleTag = from blogarticletag in await _IBlogArticleTagRepository.QueryListAsync(e => !e.SoftDeleteLock)
                              orderby blogarticletag.CreateTime descending
                              select blogarticletag;
         return blogArticleTag.ToList();

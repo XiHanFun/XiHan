@@ -71,9 +71,9 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
     public async Task<bool> DeleteUserAuthorityAsync(Guid guid, Guid deleteId)
     {
         var userAuthority = await IsExistenceAsync(guid);
-        if ((await _IUserAuthorityRepository.QueryAsync(e => e.ParentId == userAuthority.ParentId && e.SoftDeleteLock == false)).Count != 0)
+        if ((await _IUserAuthorityRepository.QueryListAsync(e => e.ParentId == userAuthority.ParentId && e.SoftDeleteLock == false)).Count != 0)
             throw new ApplicationException("该用户权限下有子用户权限，不能删除");
-        if ((await _IUserRoleAuthorityRepository.QueryAsync(e => e.AuthorityId == userAuthority.BaseId)).Count != 0)
+        if ((await _IUserRoleAuthorityRepository.QueryListAsync(e => e.AuthorityId == userAuthority.BaseId)).Count != 0)
             throw new ApplicationException("该用户权限已有用户角色使用，不能删除");
         var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userAuthority.SoftDeleteLock = true;
@@ -104,7 +104,7 @@ public class UserAuthorityService : BaseService<UserAuthority>, IUserAuthoritySe
 
     public async Task<List<UserAuthority>> QueryUserAuthorityAsync()
     {
-        var userAuthority = from userauthority in await _IUserAuthorityRepository.QueryAsync(e => e.SoftDeleteLock == false)
+        var userAuthority = from userauthority in await _IUserAuthorityRepository.QueryListAsync(e => e.SoftDeleteLock == false)
                             orderby userauthority.CreateTime descending
                             orderby userauthority.Name descending
                             select userauthority;

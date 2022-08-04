@@ -249,7 +249,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync()
+    public virtual async Task<List<TEntity>> QueryListAsync()
     {
         return await base.GetListAsync();
     }
@@ -259,7 +259,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="func">自定义条件</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+    public virtual async Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func)
     {
         return await base.GetListAsync(func);
     }
@@ -271,7 +271,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await base.Context.Queryable<TEntity>().ToPageListAsync(pageIndex, pageSize, totalCount);
     }
@@ -284,7 +284,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await base.Context.Queryable<TEntity>().Where(func).ToPageListAsync(pageIndex, pageSize, totalCount);
     }

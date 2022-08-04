@@ -50,11 +50,11 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
 
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
 
-    Task<List<TEntity>> QueryAsync();
+    Task<List<TEntity>> QueryListAsync();
 
-    Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func);
+    Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func);
 
-    Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount);
 
-    Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount);
 }

@@ -78,7 +78,7 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"是否启用：{ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled")}");
         if (ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled"))
         {
-            ConsoleHelper.WriteLineInfo($@"内存中缓存是否启用：{ConfigHelper.Configuration.GetValue<string>("Cache:MemoryCache:IsEnabled")}");
+            ConsoleHelper.WriteLineInfo($@"内存中缓存是否启用：默认启用");
             ConsoleHelper.WriteLineInfo($@"分布式缓存是否启用：{ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
             ConsoleHelper.WriteLineInfo($@"响应缓存是否启用：{ConfigHelper.Configuration.GetValue<string>("Cache:ResponseCache:IsEnabled")}");
         }

@@ -67,4 +67,10 @@ public class BlogComment : BaseEntity
     }
 
     private IPAddress? _CommentIp;
+
+    /// <summary>
+    /// 代理信息
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true, ColumnDescription = "代理信息")]
+    public string? Agent { get; set; }
 }

@@ -29,15 +29,11 @@ public static class CustomCacheExtension
     {
         if (ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled"))
         {
-            // 内存中缓存
-            if (ConfigHelper.Configuration.GetValue<bool>("Cache:MemoryCache:IsEnabled"))
+            services.AddMemoryCache(options => new MemoryCacheOptions
             {
-                services.AddMemoryCache(options => new MemoryCacheOptions
-                {
-                    // 最大缓存个数限制
-                    SizeLimit = 60
-                });
-            }
+                // 最大缓存个数限制
+                SizeLimit = 60
+            });
             // 分布式缓存
             if (ConfigHelper.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
             {

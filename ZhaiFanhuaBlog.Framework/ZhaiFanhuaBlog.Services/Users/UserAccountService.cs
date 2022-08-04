@@ -112,7 +112,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 
     public async Task<List<UserAccount>> QueryUserAccountAsync()
     {
-        var userAccount = from userauthority in await _IUserAccountRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var userAccount = from userauthority in await _IUserAccountRepository.QueryListAsync(e => !e.SoftDeleteLock)
                           orderby userauthority.CreateTime descending
                           orderby userauthority.Name descending
                           select userauthority;

@@ -187,9 +187,9 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync()
+    public virtual async Task<List<TEntity>> QueryListAsync()
     {
-        return await _IBaseRepository!.QueryAsync();
+        return await _IBaseRepository!.QueryListAsync();
     }
 
     /// <summary>
@@ -197,9 +197,9 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="func">自定义条件</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+    public virtual async Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await _IBaseRepository!.QueryAsync(func);
+        return await _IBaseRepository!.QueryListAsync(func);
     }
 
     /// <summary>
@@ -209,9 +209,9 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _IBaseRepository!.QueryAsync(pageIndex, pageSize, totalCount);
+        return await _IBaseRepository!.QueryPageListAsync(pageIndex, pageSize, totalCount);
     }
 
     /// <summary>
@@ -222,8 +222,8 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await _IBaseRepository!.QueryAsync(func, pageIndex, pageSize, totalCount);
+        return await _IBaseRepository!.QueryPageListAsync(func, pageIndex, pageSize, totalCount);
     }
 }

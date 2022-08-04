@@ -98,7 +98,7 @@ public class UserRoleAuthorityService : BaseService<UserRoleAuthority>, IUserRol
 
     public async Task<List<UserRoleAuthority>> QueryUserRoleAuthorityAsync()
     {
-        var userRoleAuthority = from userroleauthority in await _IUserRoleAuthorityRepository.QueryAsync(e => e.SoftDeleteLock == false)
+        var userRoleAuthority = from userroleauthority in await _IUserRoleAuthorityRepository.QueryListAsync(e => e.SoftDeleteLock == false)
                                 orderby userroleauthority.CreateTime descending
                                 select userroleauthority;
         return userRoleAuthority.ToList();

@@ -71,9 +71,9 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     public async Task<bool> DeleteBlogCategoryAsync(Guid guid, Guid deleteId)
     {
         var blogCategory = await IsExistenceAsync(guid);
-        if ((await _IBlogCategoryRepository.QueryAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock)).Count != 0)
+        if ((await _IBlogCategoryRepository.QueryListAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock)).Count != 0)
             throw new ApplicationException("该博客文章分类下有子博客文章分类，不能删除");
-        if ((await _IBlogArticleRepository.QueryAsync(e => e.CategoryId == blogCategory.BaseId && !e.SoftDeleteLock)).Count != 0)
+        if ((await _IBlogArticleRepository.QueryListAsync(e => e.CategoryId == blogCategory.BaseId && !e.SoftDeleteLock)).Count != 0)
             throw new ApplicationException("该博客文章分类已有博客文章使用，不能删除");
         var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogCategory.SoftDeleteLock = true;
@@ -103,7 +103,7 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
 
     public async Task<List<BlogCategory>> QueryBlogCategoryAsync()
     {
-        var blogCategory = from blogcategory in await _IBlogCategoryRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var blogCategory = from blogcategory in await _IBlogCategoryRepository.QueryListAsync(e => !e.SoftDeleteLock)
                            orderby blogcategory.CreateTime descending
                            orderby blogcategory.Name descending
                            select blogcategory;

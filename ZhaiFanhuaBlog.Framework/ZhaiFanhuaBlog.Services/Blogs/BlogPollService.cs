@@ -93,7 +93,7 @@ public class BlogPollService : BaseService<BlogPoll>, IBlogPollService
 
     public async Task<List<BlogPoll>> QueryBlogPollAsync()
     {
-        var blogCommentPoll = from blogtag in await _IBlogPollRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var blogCommentPoll = from blogtag in await _IBlogPollRepository.QueryListAsync(e => !e.SoftDeleteLock)
                               orderby blogtag.CreateTime descending
                               select blogtag;
         return blogCommentPoll.ToList();

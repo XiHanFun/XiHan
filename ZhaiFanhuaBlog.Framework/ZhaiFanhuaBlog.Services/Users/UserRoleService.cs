@@ -71,9 +71,9 @@ public class UserRoleService : BaseService<UserRole>, IUserRoleService
     public async Task<bool> DeleteUserRoleAsync(Guid guid, Guid deleteId)
     {
         var userRole = await IsExistenceAsync(guid);
-        if ((await _IUserRoleRepository.QueryAsync(e => e.ParentId == userRole.ParentId && !e.SoftDeleteLock)).Count != 0)
+        if ((await _IUserRoleRepository.QueryListAsync(e => e.ParentId == userRole.ParentId && !e.SoftDeleteLock)).Count != 0)
             throw new ApplicationException("该用户角色下有子用户角色，不能删除");
-        if ((await _IUserAccountRoleRepository.QueryAsync(e => e.RoleId == userRole.BaseId)).Count != 0)
+        if ((await _IUserAccountRoleRepository.QueryListAsync(e => e.RoleId == userRole.BaseId)).Count != 0)
             throw new ApplicationException("该用户角色已有用户账户使用，不能删除");
         var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userRole.SoftDeleteLock = true;
@@ -103,7 +103,7 @@ public class UserRoleService : BaseService<UserRole>, IUserRoleService
 
     public async Task<List<UserRole>> QueryUserRoleAsync()
     {
-        var userRole = from userrole in await _IUserRoleRepository.QueryAsync(e => !e.SoftDeleteLock)
+        var userRole = from userrole in await _IUserRoleRepository.QueryListAsync(e => !e.SoftDeleteLock)
                        orderby userrole.CreateTime descending
                        orderby userrole.Name descending
                        select userrole;
