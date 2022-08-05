@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// 审核类型表
 /// </summary>
 [SugarTable("RootAuditCategory", "审核分类表")]
-public class RootAuditType : BaseEntity
+public class RootAuditCategory : BaseEntity
 {
     /// <summary>
     /// 父级审核分类

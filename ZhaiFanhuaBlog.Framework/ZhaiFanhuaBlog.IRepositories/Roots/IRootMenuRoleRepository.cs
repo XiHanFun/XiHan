@@ -1,10 +1,10 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IRootAuditCategoryRepository
-// Guid:a656775b-dec0-4321-a2ab-c5b042fe1265
-// Author:zhaifanhua
+// FileName:IRootMenuRoleRepository
+// Guid:ab67d4b7-d7aa-44e1-83ac-19c2764c73fe
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 09:18:59
+// CreateTime:2022-08-05 下午 05:14:01
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.IRepositories.Bases;
@@ -13,8 +13,8 @@ using ZhaiFanhuaBlog.Models.Roots;
 namespace ZhaiFanhuaBlog.IRepositories.Roots;
 
 /// <summary>
-/// IRootAuditCategoryRepository
+/// IRootMenuRileRepository
 /// </summary>
-public interface IRootAuditCategoryRepository : IBaseRepository<RootAuditCategory>
+public interface IRootMenuRoleRepository : IBaseRepository<RootMenuRole>
 {
 }

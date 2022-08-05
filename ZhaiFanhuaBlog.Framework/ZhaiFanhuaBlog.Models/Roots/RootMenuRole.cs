@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using SqlSugar;
+using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Roots;
 
@@ -15,7 +16,7 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// 系统角色菜单表
 /// </summary>
 [SugarTable("RootMenu", "系统角色菜单表")]
-public class RootMenuRole
+public class RootMenuRole : BaseEntity
 {
     /// <summary>
     /// 系统菜单
