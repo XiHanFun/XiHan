@@ -7,6 +7,7 @@
 // CreateTime:2022-07-23 上午 10:49:27
 // ----------------------------------------------------------------
 
+using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 
 namespace ZhaiFanhuaBlog.Models.Users.Init;
@@ -16,42 +17,42 @@ namespace ZhaiFanhuaBlog.Models.Users.Init;
 /// </summary>
 public class UserInitData
 {
-    public static List<UserAuthority> UserAuthorityList = new()
+    public static List<RootAuthority> RootAuthorityList = new()
     {
         // 数据管理权限
-        new UserAuthority{
+        new RootAuthority{
             Name="读写",
             Type="数据管理权限",
             Description="这是用于用户浏览和编辑的权限",
         },
-        new UserAuthority{
+        new RootAuthority{
             Name="只读",
             Type="数据管理权限",
             Description="这是用于访客仅供浏览的权限",
         },
         // 功能操作权限
-        new UserAuthority{
+        new RootAuthority{
             Name="用户管理",
             Type="功能操作权限",
             Description="这是用于用户管理的功能权限",
         },
     };
 
-    public static List<UserRole> UserRoleList = new()
+    public static List<RootRole> RootRoleList = new()
     {
-        new UserRole{
+        new RootRole{
             Name="超级管理员",
             Description="超级管理员角色",
         },
-        new UserRole{
+        new RootRole{
             Name="管理员",
             Description="管理员角色",
         },
-        new UserRole{
+        new RootRole{
             Name="普通用户",
-            Description="普通用户角色",
+            Description="普通系统角色",
         },
-        new UserRole{
+        new RootRole{
             Name="未分配",
             Description="未分配角色",
         },

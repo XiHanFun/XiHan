@@ -7,7 +7,6 @@
 // CreateTime:2021-12-28 下午 11:47:21
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -89,7 +88,7 @@ public class AuthorizeController : ControllerBase
                 new Claim("UserId", userAccount.BaseId.ToString()),
                 new Claim("UserName", userAccount.Name),
                 new Claim("NickName", userAccount.NickName ?? userAccount.Name),
-                //new Claim("UserRole", userAccount.UserRoles!.FirstOrDefault()!.Name!.ToString()??"")
+                //new Claim("RootRole", userAccount.RootRoles!.FirstOrDefault()!.Name!.ToString()??"")
             };
             // Nuget引入：Microsoft.IdentityModel.Tokens
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));

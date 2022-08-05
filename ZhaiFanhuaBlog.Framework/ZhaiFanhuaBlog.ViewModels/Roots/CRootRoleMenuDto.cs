@@ -1,39 +1,32 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CUserRoleAuthorityDto
-// Guid:b80feac5-81d8-4053-a4a7-9d61edd87fe1
+// FileName:CRootRoleMenuDto
+// Guid:90b96c06-28b3-4ca1-b578-f05ba42efd66
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-07-01 上午 02:29:41
+// CreateTime:2022-08-06 上午 02:22:27
 // ----------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ZhaiFanhuaBlog.ViewModels.Users;
+namespace ZhaiFanhuaBlog.ViewModels.Roots;
 
 /// <summary>
-/// CUserRoleAuthorityDto
+/// CRootRoleMenuDto
 /// </summary>
-public class CUserRoleAuthorityDto
+public class CRootRoleMenuDto
 {
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 用户权限
+    /// 系统菜单
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [RegularExpression(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", ErrorMessage = "{0}Guid错误")]
-    public Guid AuthorityId { get; set; }
-
-    /// <summary>
-    /// 用户权限类型（0:可访问，1:可授权）
-    /// </summary>
-    [Required(ErrorMessage = "{0}不能为空")]
-    [Range(0, 1, ErrorMessage = "{0}必须是0或1")]
-    public int AuthorityType { get; set; }
+    public Guid MenuId { get; set; }
 }

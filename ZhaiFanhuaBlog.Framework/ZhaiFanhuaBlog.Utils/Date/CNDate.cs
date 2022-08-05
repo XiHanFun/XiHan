@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:Class1
+// FileName:CNDate
 // Guid:734f48a1-1f8f-4257-8986-2f5272f577db
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

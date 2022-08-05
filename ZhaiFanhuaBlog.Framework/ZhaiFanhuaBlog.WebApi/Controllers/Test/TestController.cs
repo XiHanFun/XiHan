@@ -13,7 +13,6 @@ using System.Text;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Encryptions;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
@@ -27,36 +26,38 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 [Produces("application/json")]
 public class TestController : ControllerBase
 {
+    private readonly IHttpContextAccessor _IHttpContextAccessor;
     private readonly IConfiguration _IConfiguration;
 
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="iHttpContextAccessor"></param>
     /// <param name="iConfiguration"></param>
-    public TestController(IConfiguration iConfiguration)
+    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration)
     {
+        _IHttpContextAccessor = iHttpContextAccessor;
         _IConfiguration = iConfiguration;
     }
 
     /// <summary>
-    /// 测试1
+    /// 获取客户端Ip
     /// </summary>
-    /// <param name="str"></param>
     /// <returns></returns>
-    [HttpPost("Test1")]
-    public string Test1(string? str)
+    [HttpGet("ClientIp")]
+    public string? ClientIp()
     {
-        return "测试字符串：" + str;
+        return _IHttpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
     }
 
     /// <summary>
-    /// 测试2  过时接口
+    /// 测试接口【过时】
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    [HttpPost("Test2")]
+    [HttpPost("Test")]
     [Obsolete]
-    public string Test2(string? str)
+    public string Test(string? str)
     {
         return "测试字符串：" + str;
     }

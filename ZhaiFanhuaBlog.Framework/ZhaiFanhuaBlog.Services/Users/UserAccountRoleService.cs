@@ -7,8 +7,8 @@
 // CreateTime:2022-06-04 下午 06:03:54
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.IRepositories.Roots;
 using ZhaiFanhuaBlog.IRepositories.Users;
+using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Bases;
@@ -21,16 +21,16 @@ namespace ZhaiFanhuaBlog.Services.Users;
 public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccountRoleService
 {
     private readonly IUserAccountService _IUserAccountService;
-    private readonly IUserRoleService _IUserRoleService;
+    private readonly IRootRoleService _IRootRoleService;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
     public UserAccountRoleService(IUserAccountService iUserAccountService,
-        IUserRoleService iUserRoleService,
+        IRootRoleService iRootRoleService,
         IUserAccountRoleRepository iUserAccountRoleRepository)
     {
-        base._IBaseRepository = iUserAccountRoleRepository;
+        _IBaseRepository = iUserAccountRoleRepository;
         _IUserAccountService = iUserAccountService;
-        _IUserRoleService = iUserRoleService;
+        _IRootRoleService = iRootRoleService;
         _IUserAccountRoleRepository = iUserAccountRoleRepository;
     }
 
@@ -47,7 +47,7 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return userAccountRole;
     }
 
-    public async Task<bool> InitUserAccountAsync(List<UserAccountRole> userAccountRoles)
+    public async Task<bool> InitUserAccountRoleAsync(List<UserAccountRole> userAccountRoles)
     {
         userAccountRoles.ForEach(userAccountRole =>
         {
@@ -60,7 +60,7 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
     public async Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole)
     {
         await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
-        await _IUserRoleService.IsExistenceAsync(userAccountRole.RoleId);
+        await _IRootRoleService.IsExistenceAsync(userAccountRole.RoleId);
         if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户角色已存在");
         userAccountRole.SoftDeleteLock = false;
@@ -81,7 +81,7 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
     {
         await IsExistenceAsync(userAccountRole.BaseId);
         await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
-        await _IUserRoleService.IsExistenceAsync(userAccountRole.RoleId);
+        await _IRootRoleService.IsExistenceAsync(userAccountRole.RoleId);
         if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户角色已存在");
         userAccountRole.ModifyTime = DateTime.Now;

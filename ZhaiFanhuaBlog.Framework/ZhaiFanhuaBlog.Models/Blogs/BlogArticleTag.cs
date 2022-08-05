@@ -21,7 +21,7 @@ public class BlogArticleTag : BaseEntity
     /// <summary>
     /// 创建者
     /// </summary>
-    [SugarColumn(ColumnDescription = "创建者")]
+    [SugarColumn(ColumnDescription = "创建用户")]
     public Guid AccountId { get; set; }
 
     /// <summary>

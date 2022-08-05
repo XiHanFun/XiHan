@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RUserRoleAuthorityDto
+// FileName:RRootRoleAuthorityDto
 // Guid:6a7a2b89-3373-4fc3-8836-c40cf08db2d6
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -9,20 +9,20 @@
 
 using ZhaiFanhuaBlog.ViewModels.Bases;
 
-namespace ZhaiFanhuaBlog.ViewModels.Users;
+namespace ZhaiFanhuaBlog.ViewModels.Roots;
 
 /// <summary>
-/// RUserRoleAuthorityDto
+/// RRootRoleAuthorityDto
 /// </summary>
-public class RUserRoleAuthorityDto : RBaseDto
+public class RRootRoleAuthorityDto : RBaseDto
 {
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 用户权限
+    /// 系统权限
     /// </summary>
     public Guid AuthorityId { get; set; }
 
@@ -31,7 +31,7 @@ public class RUserRoleAuthorityDto : RBaseDto
     /// </summary>
     public int AuthorityType { get; set; }
 
-    public virtual IEnumerable<RUserRoleDto>? UserRoles { get; set; }
+    public virtual IEnumerable<RRootRoleDto>? RootRoles { get; set; }
 
-    public virtual IEnumerable<RUserAuthorityDto>? UserAuthorities { get; set; }
+    public virtual IEnumerable<RRootAuthorityDto>? RootAuthorities { get; set; }
 }

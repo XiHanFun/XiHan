@@ -1,38 +1,33 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RUserAuthorityDto
-// Guid:4c8f44cb-945c-43cb-89a3-7f3bdf13a63a
+// FileName:RRootRoleDto
+// Guid:41ceac31-a441-4415-94c4-b56605d7de75
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-20 上午 12:32:39
+// CreateTime:2022-06-30 下午 11:47:14
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.ViewModels.Bases;
 
-namespace ZhaiFanhuaBlog.ViewModels.Users;
+namespace ZhaiFanhuaBlog.ViewModels.Roots;
 
 /// <summary>
-/// 返回用户权限
+/// RRootRoleDto
 /// </summary>
-public class RUserAuthorityDto : RBaseDto
+public class RRootRoleDto : RBaseDto
 {
     /// <summary>
-    /// 父级权限
+    /// 父级角色
     /// </summary>
     public Guid? ParentId { get; set; }
 
     /// <summary>
-    /// 权限名称
+    /// 角色名称
     /// </summary>
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// 权限类型
-    /// </summary>
-    public string? Type { get; set; }
-
-    /// <summary>
-    /// 权限描述
+    /// 角色描述
     /// </summary>
     public string? Description { get; set; }
 }

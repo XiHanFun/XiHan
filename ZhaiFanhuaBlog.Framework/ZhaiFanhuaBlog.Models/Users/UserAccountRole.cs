@@ -9,6 +9,7 @@
 
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -25,14 +26,14 @@ public class UserAccountRole : BaseDeleteEntity<Guid>
     public Guid AccountId { get; set; }
 
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
-    [SugarColumn(ColumnDescription = "用户角色")]
+    [SugarColumn(ColumnDescription = "系统角色")]
     public Guid RoleId { get; set; }
 
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<UserAccount>? UserAccounts { get; set; }
 
     [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
+    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 }

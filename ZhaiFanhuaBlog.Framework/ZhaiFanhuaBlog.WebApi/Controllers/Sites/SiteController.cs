@@ -57,7 +57,7 @@ public class SiteController : ControllerBase
         };
         var result = await _ISiteConfigurationService.CreateSiteConfigurationAsync(configuration);
         if (result)
-            return ResultResponse.OK("新增用户权限成功");
+            return ResultResponse.OK("新增系统权限成功");
         return ResultResponse.BadRequest("添加网站配置失败");
     }
 }

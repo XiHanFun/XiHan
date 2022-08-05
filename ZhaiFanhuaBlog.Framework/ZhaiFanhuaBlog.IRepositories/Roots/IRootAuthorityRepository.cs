@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IUserAuthorityRepository
+// FileName:IRootAuthorityRepository
 // Guid:498edbce-445c-4609-83b3-613527673216
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,13 +8,13 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.IRepositories.Bases;
-using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Models.Roots;
 
-namespace ZhaiFanhuaBlog.IRepositories.Users;
+namespace ZhaiFanhuaBlog.IRepositories.Roots;
 
 /// <summary>
-/// IUserAuthorityRepository
+/// IRootAuthorityRepository
 /// </summary>
-public interface IUserAuthorityRepository : IBaseRepository<UserAuthority>
+public interface IRootAuthorityRepository : IBaseRepository<RootAuthority>
 {
 }

@@ -12,11 +12,11 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.IRepositories.Bases;
-using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
@@ -46,9 +46,9 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(SiteSkin),
 
                 // Users
-                typeof(UserAuthority),
-                typeof(UserRole),
-                typeof(UserRoleAuthority),
+                typeof(RootAuthority),
+                typeof(RootRole),
+                typeof(RootRoleAuthority),
                 typeof(UserAccount),
                 typeof(UserOauth),
                 typeof(UserLogin),
@@ -64,7 +64,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(RootAuditCategory),
                 typeof(RootAudit),
                 typeof(RootMenu),
-                typeof(RootMenuRole),
+                typeof(RootRoleMenu),
                 typeof(RootFriendlyLink),
 
                 // Blogs

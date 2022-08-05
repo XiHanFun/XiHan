@@ -1,33 +1,38 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RUserRoleDto
-// Guid:41ceac31-a441-4415-94c4-b56605d7de75
+// FileName:RootRole
+// Guid:26b82e42-87a7-477b-af80-59456336a22b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-30 下午 11:47:14
+// CreateTime:2022-05-08 下午 04:42:51
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Bases;
+using SqlSugar;
+using ZhaiFanhuaBlog.Models.Bases;
 
-namespace ZhaiFanhuaBlog.ViewModels.Users;
+namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// RUserRoleDto
+/// 系统角色表
 /// </summary>
-public class RUserRoleDto : RBaseDto
+[SugarTable("RootRole", "系统角色表")]
+public class RootRole : BaseEntity
 {
     /// <summary>
     /// 父级角色
     /// </summary>
+    [SugarColumn(IsNullable = true, ColumnDescription = "父级角色")]
     public Guid? ParentId { get; set; }
 
     /// <summary>
     /// 角色名称
     /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(10)", ColumnDescription = "角色名称")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述
     /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true, ColumnDescription = "角色描述")]
     public string? Description { get; set; }
 }

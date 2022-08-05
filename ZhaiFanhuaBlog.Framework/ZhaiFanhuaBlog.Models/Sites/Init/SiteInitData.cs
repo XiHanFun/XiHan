@@ -14,5 +14,4 @@ namespace ZhaiFanhuaBlog.Models.Sites.Init;
 /// </summary>
 public class SiteInitData
 {
-
 }

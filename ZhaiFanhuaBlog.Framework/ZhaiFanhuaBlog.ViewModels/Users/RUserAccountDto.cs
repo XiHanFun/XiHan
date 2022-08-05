@@ -7,7 +7,7 @@
 // CreateTime:2022-07-03 上午 03:37:16
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.ViewModels.Bases;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
@@ -67,5 +67,5 @@ public class RUserAccountDto : RBaseDto
     /// </summary>
     public virtual string? RegisterIp { get; set; }
 
-    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
+    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserRoleAuthority
+// FileName:RootRoleAuthority
 // Guid:73293770-9bdc-4646-a03f-fba5cd908868
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -10,24 +10,24 @@
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
 
-namespace ZhaiFanhuaBlog.Models.Users;
+namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// 用户角色权限关联表
+/// 系统角色权限关联表
 /// </summary>
-[SugarTable("UserRoleAuthority", "用户角色权限关联表")]
-public class UserRoleAuthority : BaseDeleteEntity<Guid>
+[SugarTable("RootRoleAuthority", "系统角色权限关联表")]
+public class RootRoleAuthority : BaseDeleteEntity<Guid>
 {
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
-    [SugarColumn(ColumnDescription = "用户角色")]
+    [SugarColumn(ColumnDescription = "系统角色")]
     public Guid RoleId { get; set; }
 
     /// <summary>
-    /// 用户权限
+    /// 系统权限
     /// </summary>
-    [SugarColumn(ColumnDescription = "用户权限")]
+    [SugarColumn(ColumnDescription = "系统权限")]
     public Guid AuthorityId { get; set; }
 
     /// <summary>
@@ -37,8 +37,8 @@ public class UserRoleAuthority : BaseDeleteEntity<Guid>
     public int AuthorityType { get; set; } = 0;
 
     [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
+    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 
     [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<UserAuthority>? UserAuthorities { get; set; }
+    public virtual IEnumerable<RootAuthority>? RootAuthorities { get; set; }
 }

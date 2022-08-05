@@ -16,7 +16,7 @@ public interface IUserAccountRoleService : IBaseService<UserAccountRole>
 {
     Task<UserAccountRole> IsExistenceAsync(Guid guid);
 
-    Task<bool> InitUserAccountAsync(List<UserAccountRole> userAccountRoles);
+    Task<bool> InitUserAccountRoleAsync(List<UserAccountRole> userAccountRoles);
 
     Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole);
 

@@ -8,9 +8,11 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Models.Blogs;
+using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Formats;
 using ZhaiFanhuaBlog.ViewModels.Blogs;
+using ZhaiFanhuaBlog.ViewModels.Roots;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -30,19 +32,21 @@ public static class CustomAutoMapperExtension
         // 创建具体的映射对象
         services.AddAutoMapper(mapper =>
         {
+            // Root
+            mapper.CreateMap<RootRole, CRootRoleDto>().ReverseMap();
+            mapper.CreateMap<RootRole, RRootRoleDto>().ReverseMap();
+            mapper.CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
+            mapper.CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
+            mapper.CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
+            mapper.CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
+            mapper.CreateMap<RootRoleAuthority, CRootRoleAuthorityDto>().ReverseMap();
+            mapper.CreateMap<RootRoleAuthority, RRootRoleAuthorityDto>().ReverseMap();
+
             // User
-            mapper.CreateMap<UserAuthority, CUserAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserAuthority, RUserAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserRole, CUserRoleDto>().ReverseMap();
-            mapper.CreateMap<UserRole, RUserRoleDto>().ReverseMap();
             mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
             mapper.CreateMap<UserAccount, RUserAccountDto>()
             .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.RegisterIp)))
             .ReverseMap();
-            mapper.CreateMap<UserAuthority, CUserAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserAuthority, RUserAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserRoleAuthority, CUserRoleAuthorityDto>().ReverseMap();
-            mapper.CreateMap<UserRoleAuthority, RUserRoleAuthorityDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
 

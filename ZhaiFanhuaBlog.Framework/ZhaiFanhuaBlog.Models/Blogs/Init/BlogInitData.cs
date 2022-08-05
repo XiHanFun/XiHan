@@ -14,5 +14,4 @@ namespace ZhaiFanhuaBlog.Models.Blogs.Init;
 /// </summary>
 public class BlogInitData
 {
-
 }

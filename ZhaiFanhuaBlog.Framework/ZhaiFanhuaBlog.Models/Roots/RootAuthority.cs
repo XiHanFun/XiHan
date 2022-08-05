@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserAuthority
+// FileName:RootAuthority
 // Guid:8b190341-c474-4974-961f-895c2c6a831d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -10,13 +10,13 @@
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
 
-namespace ZhaiFanhuaBlog.Models.Users;
+namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// 用户权限表
+/// 系统权限表
 /// </summary>
-[SugarTable("UserAuthority", "用户权限表")]
-public class UserAuthority : BaseEntity
+[SugarTable("RootAuthority", "系统权限表")]
+public class RootAuthority : BaseEntity
 {
     /// <summary>
     /// 父级权限

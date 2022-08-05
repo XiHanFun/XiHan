@@ -13,9 +13,9 @@ using ZhaiFanhuaBlog.Models.Bases;
 namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// 审核类型表
+/// 系统审核类型表
 /// </summary>
-[SugarTable("RootAuditCategory", "审核分类表")]
+[SugarTable("RootAuditCategory", "系统审核类型表")]
 public class RootAuditCategory : BaseEntity
 {
     /// <summary>

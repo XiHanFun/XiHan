@@ -13,9 +13,9 @@ using ZhaiFanhuaBlog.Models.Bases;
 namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// 友情链接表
+/// 系统友情链接表
 /// </summary>
-[SugarTable("RootFriendlyLink", "友情链接表")]
+[SugarTable("RootFriendlyLink", "系统友情链接表")]
 public class RootFriendlyLink : BaseEntity
 {
     /// <summary>

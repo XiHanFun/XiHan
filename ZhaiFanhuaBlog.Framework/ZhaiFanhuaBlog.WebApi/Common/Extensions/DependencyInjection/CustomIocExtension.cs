@@ -50,12 +50,18 @@ public static class CustomIocExtension
 
         // =========================Root=========================
         // Repository
+        services.AddScoped<IRootAuthorityRepository, RootAuthorityRepository>();
+        services.AddScoped<IRootRoleRepository, RootRoleRepository>();
+        services.AddScoped<IRootRoleAuthorityRepository, RootRoleAuthorityRepository>();
         services.AddScoped<IRootAnnouncementRepository, RootAnnouncementRepository>();
         services.AddScoped<IRootAuditRepository, RootAuditRepository>();
         services.AddScoped<IRootAuditCategoryRepository, RootAuditCategoryRepository>();
         services.AddScoped<IRootFriendlyLinkRepository, RootFriendlyLinkRepository>();
         services.AddScoped<IRootStateRepository, RootStateRepository>();
         // Service
+        services.AddScoped<IRootAuthorityService, RootAuthorityService>();
+        services.AddScoped<IRootRoleService, RootRoleService>();
+        services.AddScoped<IRootRoleAuthorityService, RootRoleAuthorityService>();
         services.AddScoped<IRootAnnouncementService, RootAnnouncementService>();
         services.AddScoped<IRootAuditService, RootAuditService>();
         services.AddScoped<IRootAuditCategoryService, RootAuditCategoryService>();
@@ -64,10 +70,7 @@ public static class CustomIocExtension
 
         // =========================User=========================
         // Repository
-        services.AddScoped<IUserAuthorityRepository, UserAuthorityRepository>();
-        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IUserAccountRepository, UserAccountRepository>();
-        services.AddScoped<IUserRoleAuthorityRepository, UserRoleAuthorityRepository>();
         services.AddScoped<IUserAccountRoleRepository, UserAccountRoleRepository>();
         services.AddScoped<IUserCollectCategoryRepository, UserCollectCategoryRepository>();
         services.AddScoped<IUserCollectRepository, UserCollectRepository>();
@@ -77,10 +80,7 @@ public static class CustomIocExtension
         services.AddScoped<IUserOauthRepository, UserOauthRepository>();
         services.AddScoped<IUserStatisticRepository, UserStatisticRepository>();
         // Service
-        services.AddScoped<IUserAuthorityService, UserAuthorityService>();
-        services.AddScoped<IUserRoleService, UserRoleService>();
         services.AddScoped<IUserAccountService, UserAccountService>();
-        services.AddScoped<IUserRoleAuthorityService, UserRoleAuthorityService>();
         services.AddScoped<IUserAccountRoleService, UserAccountRoleService>();
         services.AddScoped<IUserCollectCategoryService, UserCollectCategoryService>();
         services.AddScoped<IUserCollectService, UserCollectService>();

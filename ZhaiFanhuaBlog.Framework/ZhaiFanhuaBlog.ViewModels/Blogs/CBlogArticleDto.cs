@@ -40,6 +40,7 @@ public class CBlogArticleDto
     /// <summary>
     /// 文章概要
     /// </summary>
+    [MaxLength(500, ErrorMessage = "{0}不能多于{1}个字")]
     public string? Summary { get; set; }
 
     /// <summary>

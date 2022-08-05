@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.ViewModels.Bases;
+using ZhaiFanhuaBlog.ViewModels.Roots;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
@@ -22,11 +23,11 @@ public class RUserAccountRoleDto : RBaseDto
     public Guid AccountId { get; set; }
 
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
     public Guid RoleId { get; set; }
 
     public virtual IEnumerable<RUserAccountDto>? UserAccounts { get; set; }
 
-    public virtual IEnumerable<RUserRoleDto>? UserRoles { get; set; }
+    public virtual IEnumerable<RRootRoleDto>? RootRoles { get; set; }
 }

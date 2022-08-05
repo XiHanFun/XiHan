@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CUserAuthorityDto
+// FileName:CRootAuthorityDto
 // Guid:e063ddee-794e-4927-9617-5f0cc77815b9
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -9,12 +9,12 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ZhaiFanhuaBlog.ViewModels.Users;
+namespace ZhaiFanhuaBlog.ViewModels.Roots;
 
 /// <summary>
-/// 创建用户权限
+/// CRootAuthorityDto
 /// </summary>
-public class CUserAuthorityDto
+public class CRootAuthorityDto
 {
     /// <summary>
     /// 父级权限

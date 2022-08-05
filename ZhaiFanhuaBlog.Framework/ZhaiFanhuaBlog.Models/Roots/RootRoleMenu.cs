@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootMenuRole
+// FileName:RootRoleMenu
 // Guid:47b72b2e-41ff-4c0a-be2f-35c1c48641cf
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -13,10 +13,10 @@ using ZhaiFanhuaBlog.Models.Bases;
 namespace ZhaiFanhuaBlog.Models.Roots;
 
 /// <summary>
-/// 系统角色菜单表
+/// 系统角色菜单关联表
 /// </summary>
-[SugarTable("RootMenu", "系统角色菜单表")]
-public class RootMenuRole : BaseEntity
+[SugarTable("RootRoleMenu", "系统角色菜单关联表")]
+public class RootRoleMenu : BaseEntity
 {
     /// <summary>
     /// 系统菜单
@@ -25,8 +25,8 @@ public class RootMenuRole : BaseEntity
     public Guid MenuId { get; set; }
 
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
-    [SugarColumn(ColumnDescription = "用户角色")]
+    [SugarColumn(ColumnDescription = "系统角色")]
     public Guid RoleId { get; set; }
 }

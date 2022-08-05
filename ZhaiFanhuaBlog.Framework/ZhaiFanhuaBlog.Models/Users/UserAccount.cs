@@ -10,6 +10,7 @@
 using SqlSugar;
 using System.Net;
 using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Utils.Formats;
 
 namespace ZhaiFanhuaBlog.Models.Users;
@@ -93,8 +94,8 @@ public class UserAccount : BaseEntity
     private IPAddress? _RegisterIp;
 
     /// <summary>
-    /// 用户角色
+    /// 系统角色
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<UserRole>? UserRoles { get; set; }
+    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 }
