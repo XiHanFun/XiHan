@@ -17,6 +17,7 @@ using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.ViewModels.Blogs;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 
@@ -27,6 +28,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class BlogController : ControllerBase
 {
     private readonly IUserAccountService _IUserAccountService;

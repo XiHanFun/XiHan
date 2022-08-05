@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -28,6 +29,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class UserController : ControllerBase
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;

@@ -19,6 +19,7 @@ using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Users;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -28,6 +29,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
 public class AuthorizeController : ControllerBase
 {
     private readonly IConfiguration _IConfiguration;

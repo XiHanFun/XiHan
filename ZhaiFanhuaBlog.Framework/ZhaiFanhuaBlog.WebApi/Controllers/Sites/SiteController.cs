@@ -12,6 +12,7 @@ using ZhaiFanhuaBlog.IServices.Sites;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Sites;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers;
@@ -22,7 +23,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-[ApiExplorerSettings(GroupName = "Site")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class SiteController : ControllerBase
 {
     private IConfiguration _IConfiguration;

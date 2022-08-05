@@ -13,6 +13,7 @@ using System.Text;
 using ZhaiFanhuaBlog.Models.Bases.Response.Model;
 using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
@@ -24,6 +25,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
 public class TestController : ControllerBase
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;

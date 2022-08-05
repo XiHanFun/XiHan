@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Roots.Init;
 using ZhaiFanhuaBlog.Models.Users.Init;
 using ZhaiFanhuaBlog.ViewModels.Roots;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 
@@ -27,6 +28,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : ControllerBase
 {
     private readonly IRootStateService _IRootStateService;
@@ -72,14 +74,14 @@ public class RootController : ControllerBase
     /// 初始化状态
     /// </summary>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("Init")]
     public async Task<bool> Init()
     {
         bool result = false;
         result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
-        result = await _IRootAuthorityService.InitRootAuthorityAsync(UserInitData.RootAuthorityList);
-        result = await _IRootRoleService.InitRootRoleAsync(UserInitData.RootRoleList);
-        result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
+        //result = await _IRootAuthorityService.InitRootAuthorityAsync(UserInitData.RootAuthorityList);
+        //result = await _IRootRoleService.InitRootRoleAsync(UserInitData.RootRoleList);
+        //result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
         if (!result) throw new ApplicationException("InitRootAuthorityAsync");
         return true;
     }
