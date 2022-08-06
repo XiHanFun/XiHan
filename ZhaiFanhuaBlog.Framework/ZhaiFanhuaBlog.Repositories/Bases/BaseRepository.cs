@@ -46,8 +46,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(SiteSkin),
 
                 // Users
-                typeof(RootAuthority),
-                typeof(RootRole),
                 typeof(RootRoleAuthority),
                 typeof(UserAccount),
                 typeof(UserOauth),
@@ -59,12 +57,14 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(UserCollect),
 
                 // Roots
-                typeof(RootState),
-                typeof(RootAnnouncement),
+                typeof(RootAuthority),
+                typeof(RootRole),
                 typeof(RootAuditCategory),
-                typeof(RootAudit),
                 typeof(RootMenu),
                 typeof(RootRoleMenu),
+                typeof(RootState),
+                typeof(RootAnnouncement),
+                typeof(RootAudit),
                 typeof(RootFriendlyLink),
 
                 // Blogs

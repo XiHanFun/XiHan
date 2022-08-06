@@ -2,7 +2,7 @@
 
 SET dbhost=127.0.0.1
 SET dbuser=sa
-SET dbpasswd=123456
+SET dbpasswd=msung
 set dbName=master
 SET sqlpath=%~dp0
 set sqlfile=DeleteDatabase_SqlServer.sql

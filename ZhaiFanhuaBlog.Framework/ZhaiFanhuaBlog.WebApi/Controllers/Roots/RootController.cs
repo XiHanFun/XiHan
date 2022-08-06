@@ -78,10 +78,10 @@ public class RootController : ControllerBase
     public async Task<bool> Init()
     {
         bool result = false;
-        result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
-        //result = await _IRootAuthorityService.InitRootAuthorityAsync(UserInitData.RootAuthorityList);
-        //result = await _IRootRoleService.InitRootRoleAsync(UserInitData.RootRoleList);
-        //result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
+        //result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
+        //result = await _IRootAuthorityService.InitRootAuthorityAsync(RootInitData.RootAuthorityList);
+        //result = await _IRootRoleService.InitRootRoleAsync(RootInitData.RootRoleList);
+        result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
         if (!result) throw new ApplicationException("InitRootAuthorityAsync");
         return true;
     }

@@ -53,6 +53,8 @@ public static class CustomIocExtension
         services.AddScoped<IRootAuthorityRepository, RootAuthorityRepository>();
         services.AddScoped<IRootRoleRepository, RootRoleRepository>();
         services.AddScoped<IRootRoleAuthorityRepository, RootRoleAuthorityRepository>();
+        services.AddScoped<IRootMenuRepository, RootMenuRepository>();
+        services.AddScoped<IRootRoleMenuRepository, RootRoleMenuRepository>();
         services.AddScoped<IRootAnnouncementRepository, RootAnnouncementRepository>();
         services.AddScoped<IRootAuditRepository, RootAuditRepository>();
         services.AddScoped<IRootAuditCategoryRepository, RootAuditCategoryRepository>();
@@ -62,6 +64,8 @@ public static class CustomIocExtension
         services.AddScoped<IRootAuthorityService, RootAuthorityService>();
         services.AddScoped<IRootRoleService, RootRoleService>();
         services.AddScoped<IRootRoleAuthorityService, RootRoleAuthorityService>();
+        services.AddScoped<IRootMenuService, RootMenuService>();
+        services.AddScoped<IRootRoleMenuService, RootRoleMenuService>();
         services.AddScoped<IRootAnnouncementService, RootAnnouncementService>();
         services.AddScoped<IRootAuditService, RootAuditService>();
         services.AddScoped<IRootAuditCategoryService, RootAuditCategoryService>();
