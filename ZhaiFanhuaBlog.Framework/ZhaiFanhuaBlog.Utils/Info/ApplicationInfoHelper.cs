@@ -30,12 +30,12 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 所在路径
     /// </summary>
-    public static string CurrentDirectory => Environment.CurrentDirectory.ToString();
+    public static string CurrentDirectory => AppContext.BaseDirectory.ToString();
 
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Environment.ProcessPath!.ToString();
+    public static string ProcessPath => Environment.ProcessPath == null ? string.Empty.ToString() : Environment.ProcessPath!.ToString();
 
     /// <summary>
     /// 当前进程

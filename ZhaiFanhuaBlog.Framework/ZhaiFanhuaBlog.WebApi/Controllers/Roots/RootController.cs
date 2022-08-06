@@ -77,13 +77,18 @@ public class RootController : ControllerBase
     [HttpPost("Init")]
     public async Task<bool> Init()
     {
-        bool result = false;
-        //result = await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
-        //result = await _IRootAuthorityService.InitRootAuthorityAsync(RootInitData.RootAuthorityList);
-        //result = await _IRootRoleService.InitRootRoleAsync(RootInitData.RootRoleList);
-        result = await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
-        if (!result) throw new ApplicationException("InitRootAuthorityAsync");
-        return true;
+        try
+        {
+            await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
+            await _IRootAuthorityService.InitRootAuthorityAsync(RootInitData.RootAuthorityList);
+            await _IRootRoleService.InitRootRoleAsync(RootInitData.RootRoleList);
+            await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("初始化状态异常" + ex.Message);
+        }
     }
 
     #region 系统权限

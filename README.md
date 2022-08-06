@@ -31,3 +31,9 @@ Log4Net
 
 Swagger
 
+
+
+```
+dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Production --urls=http://*:9708 --ip=127.0.0.1
+```
+

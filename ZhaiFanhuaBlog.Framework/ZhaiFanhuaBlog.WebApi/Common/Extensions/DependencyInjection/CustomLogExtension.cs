@@ -27,22 +27,22 @@ public static class CustomLogExtension
     {
         string infoTemplate = @"================{NewLine}记录时间：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}日志级别：{Level}{NewLine}请求类名：{SourceContext}{NewLine}消息描述：{Message}{NewLine}================{NewLine}{NewLine}";
         string otherTemplate = @"================{NewLine}记录时间：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}日志级别：{Level}{NewLine}请求类名：{SourceContext}{NewLine}消息描述：{Message}{NewLine}错误详情：{Exception}{NewLine}================{NewLine}{NewLine}";
-        string infoPath = Directory.GetCurrentDirectory() + @"\Logs\Info\.log";
-        string waringPath = Directory.GetCurrentDirectory() + @"\Logs\Waring\.log";
-        string errorPath = Directory.GetCurrentDirectory() + @"\Logs\Error\.log";
-        string fatalPath = Directory.GetCurrentDirectory() + @"\Logs\Fatal\.log";
+        string infoPath = AppContext.BaseDirectory + @"Logs/Info/.log";
+        string waringPath = AppContext.BaseDirectory + @"Logs/Waring/.log";
+        string errorPath = AppContext.BaseDirectory + @"Logs/Error/.log";
+        string fatalPath = AppContext.BaseDirectory + @"Logs/Fatal/.log";
         Serilog.Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Information
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 // 输出到控制台
-                .WriteTo.Console()
+                //.WriteTo.Console()
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Information)
                 // 异步输出到文件
                 .WriteTo.Async(congfig => congfig.File(
                     // 配置日志输出到文件，文件输出到当前项目的 Logs 目录下
-                    infoPath,
+                    infoPath.ToLower(),
                     // 日记的生成周期为每天
                     rollingInterval: RollingInterval.Day,
                     // 单位字节不配置时，默认1GB
@@ -56,7 +56,7 @@ public static class CustomLogExtension
                 ))
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Warning)
                 .WriteTo.Async(congfig => congfig.File(
-                    waringPath,
+                    waringPath.ToLower(),
                     rollingInterval: RollingInterval.Day,
                     fileSizeLimitBytes: 1024 * 1024 * 10,
                     retainedFileCountLimit: 10,
@@ -66,7 +66,7 @@ public static class CustomLogExtension
                 ))
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Error)
                 .WriteTo.Async(congfig => congfig.File(
-                    errorPath,
+                    errorPath.ToLower(),
                     rollingInterval: RollingInterval.Day,
                     fileSizeLimitBytes: 1024 * 1024 * 10,
                     retainedFileCountLimit: 10,
@@ -76,7 +76,7 @@ public static class CustomLogExtension
                 ))
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Fatal)
                 .WriteTo.Async(congfig => congfig.File(
-                    fatalPath,
+                    fatalPath.ToLower(),
                     rollingInterval: RollingInterval.Day,
                     fileSizeLimitBytes: 1024 * 1024 * 10,
                     retainedFileCountLimit: 10,
