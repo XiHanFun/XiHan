@@ -27,7 +27,13 @@ public class RUserAccountRoleDto : RBaseDto
     /// </summary>
     public Guid RoleId { get; set; }
 
+    /// <summary>
+    /// 用户账户
+    /// </summary>
     public virtual IEnumerable<RUserAccountDto>? UserAccounts { get; set; }
 
+    /// <summary>
+    /// 系统角色
+    /// </summary>
     public virtual IEnumerable<RRootRoleDto>? RootRoles { get; set; }
 }

@@ -31,7 +31,13 @@ public class RRootRoleAuthorityDto : RBaseDto
     /// </summary>
     public int AuthorityType { get; set; }
 
+    /// <summary>
+    /// 系统角色
+    /// </summary>
     public virtual IEnumerable<RRootRoleDto>? RootRoles { get; set; }
 
+    /// <summary>
+    /// 系统权限
+    /// </summary>
     public virtual IEnumerable<RRootAuthorityDto>? RootAuthorities { get; set; }
 }

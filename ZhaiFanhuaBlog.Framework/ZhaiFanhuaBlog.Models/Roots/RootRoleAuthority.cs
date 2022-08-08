@@ -15,30 +15,32 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// <summary>
 /// 系统角色权限关联表
 /// </summary>
-[SugarTable("RootRoleAuthority", "系统角色权限关联表")]
 public class RootRoleAuthority : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 系统角色
     /// </summary>
-    [SugarColumn(ColumnDescription = "系统角色")]
     public Guid RoleId { get; set; }
 
     /// <summary>
     /// 系统权限
     /// </summary>
-    [SugarColumn(ColumnDescription = "系统权限")]
     public Guid AuthorityId { get; set; }
 
     /// <summary>
     /// 权限类型（0:可访问，1:可授权）
     /// </summary>
-    [SugarColumn(ColumnDescription = "权限类型（0:可访问，1:可授权）")]
     public int AuthorityType { get; set; } = 0;
 
+    /// <summary>
+    /// 系统角色
+    /// </summary>
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 
+    /// <summary>
+    /// 系统权限
+    /// </summary>
     [SugarColumn(IsIgnore = true)]
     public virtual IEnumerable<RootAuthority>? RootAuthorities { get; set; }
 }

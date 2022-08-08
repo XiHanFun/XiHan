@@ -15,36 +15,33 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// <summary>
 /// 系统公告表
 /// </summary>
-[SugarTable("RootAnnouncement", "系统公告表")]
 public class RootAnnouncement : BaseEntity
 {
     /// <summary>
     /// 公告人
     /// </summary>
-    [SugarColumn(ColumnDescription = "公告人")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 公告标题
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", ColumnDescription = "公告标题")]
+    [SugarColumn(ColumnDataType = "nvarchar(100)")]
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(4000)", ColumnDescription = "公告内容")]
+    [SugarColumn(ColumnDataType = "nvarchar(4000)")]
     public string TheContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告链接
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "公告链接")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? Url { get; set; }
 
     /// <summary>
     /// 公告结束时间
     /// </summary>
-    [SugarColumn(ColumnDescription = "公告结束时间")]
     public DateTime? ShowEndTime { get; set; }
 }

@@ -15,36 +15,33 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户收藏分类表
 /// </summary>
-[SugarTable("UserCollectCategory", "用户收藏分类表")]
 public class UserCollectCategory : BaseEntity
 {
     /// <summary>
     /// 父级收藏分类
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "父级收藏分类")]
+    [SugarColumn(IsNullable = true)]
     public Guid? ParentId { get; set; }
 
     /// <summary>
     /// 所属用户
     /// </summary>
-    [SugarColumn(ColumnDescription = "所属用户")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 收藏分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true, ColumnDescription = "收藏分类名称")]
+    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
     public string CategoryName { get; set; } = string.Empty;
 
     /// <summary>
     /// 收藏分类描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true, ColumnDescription = "收藏分类描述")]
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
     public string? CategoryDescription { get; set; }
 
     /// <summary>
     /// 收藏总数
     /// </summary>
-    [SugarColumn(ColumnDescription = "升级时间")]
     public int CollectCount { get; set; } = 0;
 }

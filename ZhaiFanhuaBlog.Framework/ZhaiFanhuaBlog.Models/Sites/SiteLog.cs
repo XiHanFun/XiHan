@@ -17,61 +17,60 @@ namespace ZhaiFanhuaBlog.Models.Sites;
 /// <summary>
 /// 网站日志表
 /// </summary>
-[SugarTable("SiteLog", "网站日志表")]
 public class SiteLog : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 日志级别
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true, ColumnDescription = "日志级别")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true)]
     public string? LogLevel { get; set; }
 
     /// <summary>
     /// 触发线程
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "触发线程")]
+    [SugarColumn(IsNullable = true)]
     public int? LogThread { get; set; }
 
     /// <summary>
     /// 出错文件
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "出错文件")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? LogFile { get; set; }
 
     /// <summary>
     /// 出错行号
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "出错行号")]
+    [SugarColumn(IsNullable = true)]
     public int LogLine { get; set; }
 
     /// <summary>
     /// 请求类名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "请求类名")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? LogType { get; set; }
 
     /// <summary>
     /// 事件对象
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "事件对象")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? Logger { get; set; }
 
     /// <summary>
     /// 消息描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true, ColumnDescription = "消息描述")]
+    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
     public string? Message { get; set; }
 
     /// <summary>
     /// 错误详情
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true, ColumnDescription = "错误详情")]
+    [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true)]
     public string? Exception { get; set; }
 
     /// <summary>
     /// 来源Ip
     /// </summary>
-    [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true, ColumnDescription = "来源Ip")]
+    [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
     public virtual byte[]? SourceIp
     {
         get => IpFormatHelper.FormatIPAddressToByte(_SourceIp);
@@ -83,18 +82,18 @@ public class SiteLog : BaseDeleteEntity<Guid>
     /// <summary>
     /// 请求类型 GET、POST等
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true, ColumnDescription = "请求类型 GET、POST等")]
+    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true)]
     public string? RequestType { get; set; }
 
     /// <summary>
     /// 来源页面
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true, ColumnDescription = "来源页面")]
+    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
     public string? Referrer { get; set; }
 
     /// <summary>
     /// 代理信息
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true, ColumnDescription = "代理信息")]
+    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
     public string? Agent { get; set; }
 }

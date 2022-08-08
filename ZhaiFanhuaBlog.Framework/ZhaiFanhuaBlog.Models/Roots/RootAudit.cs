@@ -15,36 +15,32 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// <summary>
 /// 系统审核表
 /// </summary>
-[SugarTable("RootAudit", "系统审核表")]
 public class RootAudit : BaseEntity
 {
     /// <summary>
     /// 申请人
     /// </summary>
-    [SugarColumn(ColumnDescription = "申请人")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 审核人
     /// </summary>
-    [SugarColumn(ColumnDescription = "审核人")]
     public Guid AuditAccountId { get; set; }
 
     /// <summary>
     /// 审核分类
     /// </summary>
-    [SugarColumn(ColumnDescription = "审核分类")]
     public Guid CategoryId { get; set; }
 
     /// <summary>
     /// 审核内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(2000)", ColumnDescription = "审核内容")]
+    [SugarColumn(ColumnDataType = "nvarchar(2000)")]
     public string TheContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核结果
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true, ColumnDescription = "审核结果")]
+    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
     public string? Result { get; set; }
 }

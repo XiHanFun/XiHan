@@ -67,5 +67,8 @@ public class RUserAccountDto : RBaseDto
     /// </summary>
     public virtual string? RegisterIp { get; set; }
 
+    /// <summary>
+    /// 系统角色
+    /// </summary>
     public virtual IEnumerable<RootRole>? RootRoles { get; set; }
 }

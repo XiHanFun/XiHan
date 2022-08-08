@@ -17,6 +17,9 @@ namespace ZhaiFanhuaBlog.Models.Users.Init;
 /// </summary>
 public class UserInitData
 {
+    /// <summary>
+    /// 用户账户种子数据
+    /// </summary>
     public static List<UserAccount> UserAccountList = new()
     {
         new UserAccount{

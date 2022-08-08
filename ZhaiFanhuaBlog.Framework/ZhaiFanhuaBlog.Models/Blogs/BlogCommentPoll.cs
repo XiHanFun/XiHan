@@ -7,7 +7,6 @@
 // CreateTime:2022-05-08 下午 06:28:01
 // ----------------------------------------------------------------
 
-using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Blogs;
@@ -15,24 +14,20 @@ namespace ZhaiFanhuaBlog.Models.Blogs;
 /// <summary>
 /// 文章评论点赞表
 /// </summary>
-[SugarTable("BlogCommentPoll", "文章评论点赞表")]
 public class BlogCommentPoll : BaseEntity
 {
     /// <summary>
     /// 点赞者
     /// </summary>
-    [SugarColumn(ColumnDescription = "点赞者")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 所属评论
     /// </summary>
-    [SugarColumn(ColumnDescription = "所属评论")]
     public Guid CommentId { get; set; }
 
     /// <summary>
     /// 赞(true)或踩(false)
     /// </summary>
-    [SugarColumn(ColumnDescription = "赞(true)或踩(false)")]
     public bool IsPositive { get; set; } = true;
 }

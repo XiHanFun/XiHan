@@ -14,6 +14,9 @@ namespace ZhaiFanhuaBlog.Models.Roots.Init;
 /// </summary>
 public class RootInitData
 {
+    /// <summary>
+    /// 系统状态种子数据
+    /// </summary>
     public static List<RootState> RootStateList = new()
     {
         // All 总状态
@@ -47,6 +50,9 @@ public class RootInitData
         }
     };
 
+    /// <summary>
+    /// 系统权限种子数据
+    /// </summary>
     public static List<RootAuthority> RootAuthorityList = new()
     {
         // 数据管理权限
@@ -68,6 +74,9 @@ public class RootInitData
         },
     };
 
+    /// <summary>
+    /// 系统角色种子数据
+    /// </summary>
     public static List<RootRole> RootRoleList = new()
     {
         new RootRole{

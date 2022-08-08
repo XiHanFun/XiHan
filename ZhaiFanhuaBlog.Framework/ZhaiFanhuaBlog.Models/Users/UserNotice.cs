@@ -15,24 +15,22 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户通知表
 /// </summary>
-[SugarTable("UserNotice", "用户通知表")]
 public class UserNotice : BaseEntity
 {
     /// <summary>
     /// 所属用户
     /// </summary>
-    [SugarColumn(ColumnDescription = "所属用户")]
     public Guid AccountId { get; set; }
 
     /// <summary>
     /// 通知标题
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", ColumnDescription = "通知标题")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)")]
     public string NoticeTitle { get; set; } = string.Empty;
 
     /// <summary>
     /// 通知内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "text", ColumnDescription = "通知内容")]
+    [SugarColumn(ColumnDataType = "text")]
     public string NoticeContent { get; set; } = string.Empty;
 }

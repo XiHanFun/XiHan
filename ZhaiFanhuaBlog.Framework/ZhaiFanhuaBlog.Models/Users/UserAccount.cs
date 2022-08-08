@@ -18,73 +18,72 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// <summary>
 /// 用户账户表
 /// </summary>
-[SugarTable("UserAccount", "用户账户表")]
 public class UserAccount : BaseEntity
 {
     /// <summary>
     /// 用户名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", ColumnDescription = "用户名称")]
+    [SugarColumn(ColumnDataType = "nvarchar(20)")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 电子邮件
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", ColumnDescription = "电子邮件")]
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(64)", ColumnDescription = "用户密码（MD5加密）")]
+    [SugarColumn(ColumnDataType = "nvarchar(64)")]
     public string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", ColumnDescription = "头像路径")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)")]
     public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/defult.png";
 
     /// <summary>
     /// 用户昵称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true, ColumnDescription = "用户昵称")]
+    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
     public string? NickName { get; set; }
 
     /// <summary>
     /// 用户签名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "用户签名")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? Signature { get; set; }
 
     /// <summary>
     /// 用户性别 男(true)女(false)
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "用户性别 男(true)女(false)")]
+    [SugarColumn(IsNullable = true)]
     public bool? Gender { get; set; }
 
     /// <summary>
     /// 用户地址
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true, ColumnDescription = "用户地址")]
+    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
     public string? Address { get; set; }
 
     /// <summary>
     /// 出生日期
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "出生日期")]
+    [SugarColumn(IsNullable = true)]
     public DateTime? Birthday { get; set; }
 
     /// <summary>
     /// 上次登录日期
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "上次登录日期")]
+    [SugarColumn(IsNullable = true)]
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
     /// 注册Ip地址
     /// </summary>
-    [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true, ColumnDescription = "注册Ip地址")]
+    [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
     public virtual byte[]? RegisterIp
     {
         get => IpFormatHelper.FormatIPAddressToByte(_RegisterIp);
