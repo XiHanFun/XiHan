@@ -5,15 +5,11 @@
 <div style="width: 400px;margin: 0 auto;">
         <img style="height:60px" align="center" src="LOGO.png" />
 </div>
-
-
-
+This is a backend repository for DotNet6 based blog projects.
 
 [贡献代码](CONTRIBUTING.md)
 
 [更新沿程](UPDATETIMELINE.md)
-
-这是基于DotNet6的博客项目的后端，项目名称为`摘繁华博客`;
 
 
 
@@ -32,6 +28,8 @@ Log4Net
 Swagger
 
 
+
+启动：
 
 ```
 dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Production --urls=http://*:9708 --ip=127.0.0.1
