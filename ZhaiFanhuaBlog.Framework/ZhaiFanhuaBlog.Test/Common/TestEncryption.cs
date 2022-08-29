@@ -17,6 +17,9 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestEncryption
 {
+    /// <summary>
+    /// 加密
+    /// </summary>
     public static void Encryption()
     {
         string str = @"123456";

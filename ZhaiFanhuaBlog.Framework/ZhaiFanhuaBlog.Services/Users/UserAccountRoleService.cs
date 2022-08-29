@@ -24,6 +24,12 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
     private readonly IRootRoleService _IRootRoleService;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserAccountService"></param>
+    /// <param name="iRootRoleService"></param>
+    /// <param name="iUserAccountRoleRepository"></param>
     public UserAccountRoleService(IUserAccountService iUserAccountService,
         IRootRoleService iRootRoleService,
         IUserAccountRoleRepository iUserAccountRoleRepository)
@@ -47,6 +53,11 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return userAccountRole;
     }
 
+    /// <summary>
+    /// 初始化用户账户角色关联
+    /// </summary>
+    /// <param name="userAccountRoles"></param>
+    /// <returns></returns>
     public async Task<bool> InitUserAccountRoleAsync(List<UserAccountRole> userAccountRoles)
     {
         userAccountRoles.ForEach(userAccountRole =>
@@ -57,6 +68,12 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return result;
     }
 
+    /// <summary>
+    /// 新增用户账户角色关联
+    /// </summary>
+    /// <param name="userAccountRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateUserAccountRoleAsync(UserAccountRole userAccountRole)
     {
         await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
@@ -68,6 +85,12 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return result;
     }
 
+    /// <summary>
+    /// 删除用户账户角色关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteUserAccountRoleAsync(Guid guid, Guid deleteId)
     {
         var userAccountRole = await IsExistenceAsync(guid);
@@ -77,6 +100,12 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return await _IUserAccountRoleRepository.UpdateAsync(userAccountRole);
     }
 
+    /// <summary>
+    /// 修改用户账户角色关联
+    /// </summary>
+    /// <param name="userAccountRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<UserAccountRole> ModifyUserAccountRoleAsync(UserAccountRole userAccountRole)
     {
         await IsExistenceAsync(userAccountRole.BaseId);
@@ -90,12 +119,21 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         return userAccountRole;
     }
 
+    /// <summary>
+    /// 查找用户账户角色关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<UserAccountRole> FindUserAccountRoleAsync(Guid guid)
     {
         var userAccountRole = await IsExistenceAsync(guid);
         return userAccountRole;
     }
 
+    /// <summary>
+    /// 查询用户账户角色关联
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<UserAccountRole>> QueryUserAccountRoleAsync()
     {
         var userAccountRole = from useraccountrole in await _IUserAccountRoleRepository.QueryListAsync(e => !e.SoftDeleteLock)

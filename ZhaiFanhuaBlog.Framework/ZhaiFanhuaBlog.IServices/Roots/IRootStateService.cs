@@ -12,7 +12,15 @@ using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.IServices.Roots;
 
+/// <summary>
+/// IRootStateService
+/// </summary>
 public interface IRootStateService : IBaseService<RootState>
 {
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="rootStates"></param>
+    /// <returns></returns>
     Task<bool> InitRootStateAsync(List<RootState> rootStates);
 }

@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Sites;
 
 namespace ZhaiFanhuaBlog.IServices.Sites;
 
+/// <summary>
+/// ISiteSkinService
+/// </summary>
 public interface ISiteSkinService : IBaseService<SiteSkin>
 {
 }

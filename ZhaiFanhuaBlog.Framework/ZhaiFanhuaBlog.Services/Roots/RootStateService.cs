@@ -21,12 +21,21 @@ public class RootStateService : BaseService<RootState>, IRootStateService
 {
     private readonly IRootStateRepository _IRootStateRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
     public RootStateService(IRootStateRepository iRootStateRepository)
     {
         _IRootStateRepository = iRootStateRepository;
         base._IBaseRepository = iRootStateRepository;
     }
 
+    /// <summary>
+    /// 初始化系统状态
+    /// </summary>
+    /// <param name="rootStates"></param>
+    /// <returns></returns>
     public async Task<bool> InitRootStateAsync(List<RootState> rootStates)
     {
         return await _IRootStateRepository.CreateBatchAsync(rootStates);

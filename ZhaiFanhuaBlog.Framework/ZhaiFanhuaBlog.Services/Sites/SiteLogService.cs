@@ -21,6 +21,10 @@ public class SiteLogService : BaseService<SiteLog>, ISiteLogService
 {
     private readonly ISiteLogRepository _ISiteLogRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iSiteLogRepository"></param>
     public SiteLogService(ISiteLogRepository iSiteLogRepository)
     {
         _ISiteLogRepository = iSiteLogRepository;

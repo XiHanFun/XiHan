@@ -21,12 +21,22 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
 {
     private readonly ISiteConfigurationRepository _ISiteConfigurationRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iSiteConfigurationRepository"></param>
     public SiteConfigurationService(ISiteConfigurationRepository iSiteConfigurationRepository)
     {
         base._IBaseRepository = iSiteConfigurationRepository;
         _ISiteConfigurationRepository = iSiteConfigurationRepository;
     }
 
+    /// <summary>
+    /// 新增网站配置
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateSiteConfigurationAsync(SiteConfiguration configuration)
     {
         var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(c => c.Name == configuration.Name);
@@ -36,6 +46,12 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
         return result;
     }
 
+    /// <summary>
+    /// 删除网站配置
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> DeleteSiteConfigurationAsync(Guid guid)
     {
         var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(guid);
@@ -47,6 +63,12 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
         return siteConfiguration;
     }
 
+    /// <summary>
+    /// 修改网站配置
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<SiteConfiguration> ModifySiteConfigurationAsync(SiteConfiguration configuration)
     {
         var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(configuration.BaseId);
@@ -60,6 +82,12 @@ public class SiteConfigurationService : BaseService<SiteConfiguration>, ISiteCon
         return configuration;
     }
 
+    /// <summary>
+    /// 查找网站配置
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<SiteConfiguration> FindSiteConfigurationAsync(Guid guid)
     {
         var siteConfigurationCreated = await _ISiteConfigurationRepository.FindAsync(guid);

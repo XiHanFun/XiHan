@@ -21,6 +21,10 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
 {
     private readonly IRootMenuRepository _IRootMenuRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootMenuRepository"></param>
     public RootMenuService(IRootMenuRepository iRootMenuRepository)
     {
         base._IBaseRepository = iRootMenuRepository;
@@ -40,6 +44,11 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         return rootMenu;
     }
 
+    /// <summary>
+    /// 初始化系统菜单
+    /// </summary>
+    /// <param name="rootMenus"></param>
+    /// <returns></returns>
     public async Task<bool> InitRootMenuAsync(List<RootMenu> rootMenus)
     {
         rootMenus.ForEach(rootMenu =>
@@ -50,6 +59,12 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         return result;
     }
 
+    /// <summary>
+    /// 新增系统菜单
+    /// </summary>
+    /// <param name="rootMenu"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateRootMenuAsync(RootMenu rootMenu)
     {
         if (rootMenu.ParentId != null && await _IRootMenuRepository.FindAsync(e => e.ParentId == rootMenu.ParentId && !e.SoftDeleteLock) == null)
@@ -65,6 +80,12 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         return result;
     }
 
+    /// <summary>
+    /// 删除系统菜单
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteRootMenuAsync(Guid guid, Guid deleteId)
     {
         var rootMenu = await IsExistenceAsync(guid);
@@ -74,6 +95,12 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         return await _IRootMenuRepository.UpdateAsync(rootMenu);
     }
 
+    /// <summary>
+    /// 修改系统菜单
+    /// </summary>
+    /// <param name="rootMenu"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<RootMenu> ModifyRootMenuAsync(RootMenu rootMenu)
     {
         await IsExistenceAsync(rootMenu.BaseId);
@@ -91,12 +118,21 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         return rootMenu;
     }
 
+    /// <summary>
+    /// 查找系统菜单
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<RootMenu> FindRootMenuAsync(Guid guid)
     {
         var RootMenu = await IsExistenceAsync(guid);
         return RootMenu;
     }
 
+    /// <summary>
+    /// 查询系统菜单
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<RootMenu>> QueryRootMenuAsync()
     {
         var RootMenu = from rootmenu in await _IRootMenuRepository.QueryListAsync(e => !e.SoftDeleteLock)

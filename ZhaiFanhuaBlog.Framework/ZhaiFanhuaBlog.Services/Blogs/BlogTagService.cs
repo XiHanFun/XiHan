@@ -23,6 +23,11 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
     private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogTagRepository _IBlogTagRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iBlogTagRepository"></param>
     public BlogTagService(IRootStateRepository iRootStateRepository, IBlogTagRepository iBlogTagRepository)
     {
         base._IBaseRepository = iBlogTagRepository;
@@ -43,6 +48,11 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
         return blogTag;
     }
 
+    /// <summary>
+    /// 初始化博客标签
+    /// </summary>
+    /// <param name="blogTags"></param>
+    /// <returns></returns>
     public async Task<bool> InitBlogTagAsync(List<BlogTag> blogTags)
     {
         blogTags.ForEach(blogTag =>
@@ -53,6 +63,12 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
         return result;
     }
 
+    /// <summary>
+    /// 新增博客标签
+    /// </summary>
+    /// <param name="blogTag"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateBlogTagAsync(BlogTag blogTag)
     {
         if (await _IBlogTagRepository.FindAsync(e => e.TagName == blogTag.TagName && !e.SoftDeleteLock) != null)
@@ -62,6 +78,12 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
         return result;
     }
 
+    /// <summary>
+    /// 删除博客标签
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteBlogTagAsync(Guid guid, Guid deleteId)
     {
         var blogTag = await IsExistenceAsync(guid);
@@ -73,6 +95,11 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
         return await _IBlogTagRepository.UpdateAsync(blogTag);
     }
 
+    /// <summary>
+    /// 修改博客标签
+    /// </summary>
+    /// <param name="blogTag"></param>
+    /// <returns></returns>
     public async Task<BlogTag> ModifyBlogTagAsync(BlogTag blogTag)
     {
         await IsExistenceAsync(blogTag.BaseId);
@@ -81,12 +108,21 @@ public class BlogTagService : BaseService<BlogTag>, IBlogTagService
         return blogTag;
     }
 
+    /// <summary>
+    /// 查找博客标签
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<BlogTag> FindBlogTagAsync(Guid guid)
     {
         var blogTag = await IsExistenceAsync(guid);
         return blogTag;
     }
 
+    /// <summary>
+    /// 查询博客标签
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<BlogTag>> QueryBlogTagAsync()
     {
         var blogTag = from blogtag in await _IBlogTagRepository.QueryListAsync(e => !e.SoftDeleteLock)

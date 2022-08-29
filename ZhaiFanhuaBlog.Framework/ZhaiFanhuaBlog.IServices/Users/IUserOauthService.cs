@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
+/// <summary>
+/// IUserOauthService
+/// </summary>
 public interface IUserOauthService : IBaseService<UserOauth>
 {
 }

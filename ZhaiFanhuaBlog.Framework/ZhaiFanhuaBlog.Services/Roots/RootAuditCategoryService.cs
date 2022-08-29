@@ -21,6 +21,10 @@ public class RootAuditCategoryService : BaseService<RootAuditCategory>, IRootAud
 {
     private readonly IRootAuditCategoryRepository _IRootAuditCategoryRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootAuditCategoryRepository"></param>
     public RootAuditCategoryService(IRootAuditCategoryRepository iRootAuditCategoryRepository)
     {
         _IRootAuditCategoryRepository = iRootAuditCategoryRepository;

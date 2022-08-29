@@ -17,6 +17,9 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestIpAddress
 {
+    /// <summary>
+    /// 转换
+    /// </summary>
     public static void ParseIp()
     {
         byte[] address = new byte[4] { 127, 0, 0, 1 };
@@ -24,6 +27,9 @@ public static class TestIpAddress
         Console.WriteLine(iPAddress.ToString());
     }
 
+    /// <summary>
+    /// 本地ip
+    /// </summary>
     public static void LocalIp()
     {
         Console.WriteLine("【IpV4】" + IpInfoHelper.GetLocalIpV4());

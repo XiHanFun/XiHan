@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.IServices.Roots;
 
+/// <summary>
+/// IRootFriendlyLinkService
+/// </summary>
 public interface IRootFriendlyLinkService : IBaseService<RootFriendlyLink>
 {
 }

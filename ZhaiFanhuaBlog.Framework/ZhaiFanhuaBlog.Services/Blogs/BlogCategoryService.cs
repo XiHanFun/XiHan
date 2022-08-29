@@ -24,6 +24,12 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     private readonly IBlogCategoryRepository _IBlogCategoryRepository;
     private readonly IBlogArticleRepository _IBlogArticleRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iBlogCategoryRepository"></param>
+    /// <param name="iBlogArticleRepository"></param>
     public BlogCategoryService(IRootStateRepository iRootStateRepository,
         IBlogCategoryRepository iBlogCategoryRepository,
         IBlogArticleRepository iBlogArticleRepository)
@@ -47,6 +53,11 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         return blogCategory;
     }
 
+    /// <summary>
+    /// 初始化博客分类数据
+    /// </summary>
+    /// <param name="blogCategories"></param>
+    /// <returns></returns>
     public async Task<bool> InitBlogCategoryAsync(List<BlogCategory> blogCategories)
     {
         blogCategories.ForEach(blogCategory =>
@@ -57,6 +68,12 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         return result;
     }
 
+    /// <summary>
+    /// 新增博客分类
+    /// </summary>
+    /// <param name="blogCategory"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory)
     {
         if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
@@ -68,6 +85,13 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         return result;
     }
 
+    /// <summary>
+    /// 删除博客分类
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> DeleteBlogCategoryAsync(Guid guid, Guid deleteId)
     {
         var blogCategory = await IsExistenceAsync(guid);
@@ -83,6 +107,12 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         return await _IBlogCategoryRepository.UpdateAsync(blogCategory);
     }
 
+    /// <summary>
+    /// 修改博客分类
+    /// </summary>
+    /// <param name="blogCategory"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory)
     {
         await IsExistenceAsync(blogCategory.BaseId);
@@ -95,12 +125,21 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         return blogCategory;
     }
 
+    /// <summary>
+    /// 查找博客分类
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<BlogCategory> FindBlogCategoryAsync(Guid guid)
     {
         var blogCategory = await IsExistenceAsync(guid);
         return blogCategory;
     }
 
+    /// <summary>
+    /// 查询博客分类
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<BlogCategory>> QueryBlogCategoryAsync()
     {
         var blogCategory = from blogcategory in await _IBlogCategoryRepository.QueryListAsync(e => !e.SoftDeleteLock)

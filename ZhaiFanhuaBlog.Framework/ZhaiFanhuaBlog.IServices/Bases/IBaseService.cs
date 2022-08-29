@@ -18,43 +18,147 @@ namespace ZhaiFanhuaBlog.IServices.Bases;
 /// <typeparam name="TEntity"></typeparam>
 public interface IBaseService<TEntity> where TEntity : class
 {
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task<bool> CreateAsync(TEntity entity);
 
+    /// <summary>
+    /// 新增返回Guid
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task<Guid> CreateReturnGuidAsync(TEntity entity);
 
+    /// <summary>
+    /// 新增或更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task<bool> CreateOrUpdateAsync(TEntity entity);
 
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> CreateBatchAsync(TEntity[] entities);
 
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> CreateBatchAsync(List<TEntity> entities);
 
+    /// <summary>
+    /// 批量新增或更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<bool> DeleteAsync(Guid guid);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task<bool> DeleteAsync(TEntity entity);
 
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="guids"></param>
+    /// <returns></returns>
     Task<bool> DeleteBatchAsync(Guid[] guids);
 
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> DeleteBatchAsync(List<TEntity> entities);
 
+    /// <summary>
+    /// 条件删除
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
     Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
 
+    /// <summary>
+    /// 更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task<bool> UpdateAsync(TEntity entity);
 
+    /// <summary>
+    /// 批量更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> UpdateBatchAsync(TEntity[] entities);
 
+    /// <summary>
+    /// 批量更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> UpdateBatchAsync(List<TEntity> entities);
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<TEntity> FindAsync(Guid? guid);
 
+    /// <summary>
+    /// 条件查找
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     Task<List<TEntity>> QueryListAsync();
 
+    /// <summary>
+    /// 条件查询
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
     Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func);
 
+    /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="totalCount"></param>
+    /// <returns></returns>
     Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount);
 
+    /// <summary>
+    /// 分页条件查询
+    /// </summary>
+    /// <param name="func"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="totalCount"></param>
+    /// <returns></returns>
     Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount);
 }

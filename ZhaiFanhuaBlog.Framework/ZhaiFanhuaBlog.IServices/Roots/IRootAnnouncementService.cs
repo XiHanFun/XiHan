@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.IServices.Roots;
 
+/// <summary>
+/// IRootAnnouncementService
+/// </summary>
 public interface IRootAnnouncementService : IBaseService<RootAnnouncement>
 {
 }

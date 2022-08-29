@@ -17,6 +17,9 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestDiskInformation
 {
+    /// <summary>
+    /// 磁盘信息测
+    /// </summary>
     public static void DiskInformation()
     {
         Console.WriteLine($@"【C盘】磁盘大小：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetHardDiskSpace(@"C:\"))}；");

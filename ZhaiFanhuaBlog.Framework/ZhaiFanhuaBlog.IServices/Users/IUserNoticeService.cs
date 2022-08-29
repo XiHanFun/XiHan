@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
+/// <summary>
+/// IUserNoticeService
+/// </summary>
 public interface IUserNoticeService : IBaseService<UserNotice>
 {
 }

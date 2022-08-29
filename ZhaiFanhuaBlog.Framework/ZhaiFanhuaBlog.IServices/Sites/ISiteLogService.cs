@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Sites;
 
 namespace ZhaiFanhuaBlog.IServices.Sites;
 
+/// <summary>
+/// ISiteLogService
+/// </summary>
 public interface ISiteLogService : IBaseService<SiteLog>
 {
 }

@@ -20,7 +20,9 @@ namespace ZhaiFanhuaBlog.Services.Bases;
 /// <typeparam name="TEntity"></typeparam>
 public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, new()
 {
-    //通过在子类的构造函数中注入
+    /// <summary>
+    /// 通过在子类的构造函数中注入
+    /// </summary>
     protected IBaseRepository<TEntity>? _IBaseRepository;
 
     /// <summary>

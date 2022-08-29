@@ -57,7 +57,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 初始化
+    /// 初始化用户账户
     /// </summary>
     /// <param name="userAccounts"></param>
     /// <returns></returns>
@@ -72,7 +72,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 创建
+    /// 创建用户账户
     /// </summary>
     /// <param name="userAccount"></param>
     /// <returns></returns>
@@ -87,7 +87,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 删除
+    /// 删除用户账户
     /// </summary>
     /// <param name="guid"></param>
     /// <param name="deleteId"></param>
@@ -104,7 +104,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 修改
+    /// 修改用户账户
     /// </summary>
     /// <param name="userAccount"></param>
     /// <returns></returns>
@@ -118,7 +118,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// Guid查找
+    /// Guid查找用户账户
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
@@ -129,7 +129,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 用户名查找
+    /// 用户名查找用户账户
     /// </summary>
     /// <param name="accountName"></param>
     /// <returns></returns>
@@ -143,7 +143,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 邮箱查找
+    /// 邮箱查找用户账户
     /// </summary>
     /// <param name="accountEmail"></param>
     /// <returns></returns>
@@ -157,7 +157,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     }
 
     /// <summary>
-    /// 查询
+    /// 查询用户账户
     /// </summary>
     /// <returns></returns>
     public async Task<List<UserAccount>> QueryUserAccountAsync()

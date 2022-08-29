@@ -17,17 +17,52 @@ namespace ZhaiFanhuaBlog.IServices.Roots;
 /// </summary>
 public interface IRootMenuService : IBaseService<RootMenu>
 {
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<RootMenu> IsExistenceAsync(Guid guid);
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="RootMenus"></param>
+    /// <returns></returns>
     Task<bool> InitRootMenuAsync(List<RootMenu> RootMenus);
 
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="RootMenu"></param>
+    /// <returns></returns>
     Task<bool> CreateRootMenuAsync(RootMenu RootMenu);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     Task<bool> DeleteRootMenuAsync(Guid guid, Guid deleteId);
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="RootMenu"></param>
+    /// <returns></returns>
     Task<RootMenu> ModifyRootMenuAsync(RootMenu RootMenu);
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<RootMenu> FindRootMenuAsync(Guid guid);
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     Task<List<RootMenu>> QueryRootMenuAsync();
 }

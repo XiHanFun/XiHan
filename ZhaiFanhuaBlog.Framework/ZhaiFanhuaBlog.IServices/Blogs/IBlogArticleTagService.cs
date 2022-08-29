@@ -12,19 +12,57 @@ using ZhaiFanhuaBlog.Models.Blogs;
 
 namespace ZhaiFanhuaBlog.IServices.Blogs;
 
+/// <summary>
+/// IBlogArticleTagService
+/// </summary>
 public interface IBlogArticleTagService : IBaseService<BlogArticleTag>
 {
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<BlogArticleTag> IsExistenceAsync(Guid guid);
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="blogArticleTags"></param>
+    /// <returns></returns>
     Task<bool> InitBlogArticleTagAsync(List<BlogArticleTag> blogArticleTags);
 
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="blogArticleTag"></param>
+    /// <returns></returns>
     Task<bool> CreateBlogArticleTagAsync(BlogArticleTag blogArticleTag);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     Task<bool> DeleteBlogArticleTagAsync(Guid guid, Guid deleteId);
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="blogArticleTag"></param>
+    /// <returns></returns>
     Task<BlogArticleTag> ModifyBlogArticleTagAsync(BlogArticleTag blogArticleTag);
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<BlogArticleTag> FindBlogArticleTagAsync(Guid guid);
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     Task<List<BlogArticleTag>> QueryBlogArticleTagAsync();
 }

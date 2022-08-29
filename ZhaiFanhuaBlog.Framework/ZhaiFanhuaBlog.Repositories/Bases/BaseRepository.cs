@@ -27,6 +27,10 @@ namespace ZhaiFanhuaBlog.Repositories.Bases;
 /// <typeparam name="TEntity"></typeparam>
 public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="context"></param>
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;

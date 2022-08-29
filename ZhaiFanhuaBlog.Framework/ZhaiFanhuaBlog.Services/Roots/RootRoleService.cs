@@ -24,6 +24,12 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
     private readonly IRootRoleRepository _IRootRoleRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iRootRoleRepository"></param>
+    /// <param name="iUserAccountRoleRepository"></param>
     public RootRoleService(IRootStateRepository iRootStateRepository,
         IRootRoleRepository iRootRoleRepository,
         IUserAccountRoleRepository iUserAccountRoleRepository)
@@ -47,6 +53,11 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         return userRole;
     }
 
+    /// <summary>
+    /// 初始化系统角色
+    /// </summary>
+    /// <param name="userRoles"></param>
+    /// <returns></returns>
     public async Task<bool> InitRootRoleAsync(List<RootRole> userRoles)
     {
         userRoles.ForEach(userRole =>
@@ -57,6 +68,12 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         return result;
     }
 
+    /// <summary>
+    /// 新增系统角色
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateRootRoleAsync(RootRole userRole)
     {
         if (userRole.ParentId != null && await _IRootRoleRepository.FindAsync(e => e.ParentId == userRole.ParentId && !e.SoftDeleteLock) == null)
@@ -68,6 +85,13 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         return result;
     }
 
+    /// <summary>
+    /// 删除系统角色
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> DeleteRootRoleAsync(Guid guid, Guid deleteId)
     {
         var userRole = await IsExistenceAsync(guid);
@@ -83,6 +107,12 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         return await _IRootRoleRepository.UpdateAsync(userRole);
     }
 
+    /// <summary>
+    /// 修改系统角色
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<RootRole> ModifyRootRoleAsync(RootRole userRole)
     {
         await IsExistenceAsync(userRole.BaseId);
@@ -95,12 +125,21 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         return userRole;
     }
 
+    /// <summary>
+    /// 查找系统角色
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<RootRole> FindRootRoleAsync(Guid guid)
     {
         var userRole = await IsExistenceAsync(guid);
         return userRole;
     }
 
+    /// <summary>
+    /// 查询系统角色
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<RootRole>> QueryRootRoleAsync()
     {
         var userRole = from userrole in await _IRootRoleRepository.QueryListAsync(e => !e.SoftDeleteLock)

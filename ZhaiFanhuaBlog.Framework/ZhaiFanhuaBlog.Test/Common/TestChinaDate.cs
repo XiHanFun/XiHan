@@ -18,6 +18,9 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestChinaDate
 {
+    /// <summary>
+    /// 农历
+    /// </summary>
     public static void ChinaDate()
     {
         DateTime dateTime1 = DateTime.Now;

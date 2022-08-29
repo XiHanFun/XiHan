@@ -24,6 +24,12 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
     private readonly IBlogCommentPollRepository _IBlogCommentPollRepository;
     private readonly IBlogCommentService _IBlogCommentService;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iBlogCommentPollRepository"></param>
+    /// <param name="iBlogCommentService"></param>
     public BlogCommentPollService(IRootStateRepository iRootStateRepository,
         IBlogCommentPollRepository iBlogCommentPollRepository,
         IBlogCommentService iBlogCommentService)
@@ -47,6 +53,11 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         return blogCommentPoll;
     }
 
+    /// <summary>
+    /// 初始化博客评论点赞
+    /// </summary>
+    /// <param name="blogCommentPolls"></param>
+    /// <returns></returns>
     public async Task<bool> InitBlogCommentPollAsync(List<BlogCommentPoll> blogCommentPolls)
     {
         blogCommentPolls.ForEach(blogCommentPoll =>
@@ -57,6 +68,11 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         return result;
     }
 
+    /// <summary>
+    /// 新增博客评论点赞
+    /// </summary>
+    /// <param name="blogCommentPoll"></param>
+    /// <returns></returns>
     public async Task<bool> CreateBlogCommentPollAsync(BlogCommentPoll blogCommentPoll)
     {
         await _IBlogCommentService.IsExistenceAsync(blogCommentPoll.CommentId);
@@ -65,6 +81,12 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         return result;
     }
 
+    /// <summary>
+    /// 删除博客评论点赞
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteBlogCommentPollAsync(Guid guid, Guid deleteId)
     {
         var blogCommentPoll = await IsExistenceAsync(guid);
@@ -76,6 +98,11 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         return await _IBlogCommentPollRepository.UpdateAsync(blogCommentPoll);
     }
 
+    /// <summary>
+    /// 修改博客评论点赞
+    /// </summary>
+    /// <param name="blogCommentPoll"></param>
+    /// <returns></returns>
     public async Task<BlogCommentPoll> ModifyBlogCommentPollAsync(BlogCommentPoll blogCommentPoll)
     {
         await IsExistenceAsync(blogCommentPoll.BaseId);
@@ -85,12 +112,21 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         return blogCommentPoll;
     }
 
+    /// <summary>
+    /// 查找博客评论点赞
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<BlogCommentPoll> FindBlogCommentPollAsync(Guid guid)
     {
         var blogCommentPoll = await IsExistenceAsync(guid);
         return blogCommentPoll;
     }
 
+    /// <summary>
+    /// 查询博客评论点赞
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<BlogCommentPoll>> QueryBlogCommentPollAsync()
     {
         var blogCommentPoll = from blogtag in await _IBlogCommentPollRepository.QueryListAsync(e => !e.SoftDeleteLock)

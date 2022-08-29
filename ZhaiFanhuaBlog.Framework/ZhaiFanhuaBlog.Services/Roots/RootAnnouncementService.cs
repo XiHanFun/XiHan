@@ -21,6 +21,10 @@ public class RootAnnouncementService : BaseService<RootAnnouncement>, IRootAnnou
 {
     private readonly IRootAnnouncementRepository _IRootAnnouncementRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootAnnouncementRepository"></param>
     public RootAnnouncementService(IRootAnnouncementRepository iRootAnnouncementRepository)
     {
         _IRootAnnouncementRepository = iRootAnnouncementRepository;

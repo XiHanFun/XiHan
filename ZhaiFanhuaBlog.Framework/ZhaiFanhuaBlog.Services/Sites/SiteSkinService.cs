@@ -21,6 +21,10 @@ public class SiteSkinService : BaseService<SiteSkin>, ISiteSkinService
 {
     private readonly ISiteSkinRepository _ISiteSkinRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iSiteSkinRepository"></param>
     public SiteSkinService(ISiteSkinRepository iSiteSkinRepository)
     {
         _ISiteSkinRepository = iSiteSkinRepository;

@@ -21,6 +21,10 @@ public class UserStatisticService : BaseService<UserStatistic>, IUserStatisticSe
 {
     private readonly IUserStatisticRepository _IUserStatisticRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserStatisticRepository"></param>
     public UserStatisticService(IUserStatisticRepository iUserStatisticRepository)
     {
         _IUserStatisticRepository = iUserStatisticRepository;

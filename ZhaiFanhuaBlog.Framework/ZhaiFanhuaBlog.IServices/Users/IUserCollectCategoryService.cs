@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
+/// <summary>
+/// IUserCollectCategoryService
+/// </summary>
 public interface IUserCollectCategoryService : IBaseService<UserCollectCategory>
 {
 }

@@ -12,19 +12,57 @@ using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.IServices.Roots;
 
+/// <summary>
+/// IRootRoleAuthorityService
+/// </summary>
 public interface IRootRoleAuthorityService : IBaseService<RootRoleAuthority>
 {
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<RootRoleAuthority> IsExistenceAsync(Guid guid);
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="rootRoleAuthorities"></param>
+    /// <returns></returns>
     Task<bool> InitRootRoleAuthorityAsync(List<RootRoleAuthority> rootRoleAuthorities);
 
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
     Task<bool> CreateRootRoleAuthorityAsync(RootRoleAuthority userRole);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     Task<bool> DeleteRootRoleAuthorityAsync(Guid guid, Guid deleteId);
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="userRole"></param>
+    /// <returns></returns>
     Task<RootRoleAuthority> ModifyRootRoleAuthorityAsync(RootRoleAuthority userRole);
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<RootRoleAuthority> FindRootRoleAuthorityAsync(Guid guid);
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     Task<List<RootRoleAuthority>> QueryRootRoleAuthorityAsync();
 }

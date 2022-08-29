@@ -21,6 +21,10 @@ public class RootAuditService : BaseService<RootAudit>, IRootAuditService
 {
     private readonly IRootAuditRepository _IRootAuditRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootAuditRepository"></param>
     public RootAuditService(IRootAuditRepository iRootAuditRepository)
     {
         _IRootAuditRepository = iRootAuditRepository;

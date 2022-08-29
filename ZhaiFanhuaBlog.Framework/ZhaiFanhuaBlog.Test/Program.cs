@@ -14,6 +14,11 @@ namespace ZhaiFanhuaBlog.Test;
 /// </summary>
 public class Program
 {
+    /// <summary>
+    /// 主函数
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static Task Main(string[] args)
     {
         Console.WriteLine("Hello ZhaiFanhuaBlog.Test!");

@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.IServices.Roots;
 
+/// <summary>
+/// IRootAuditCategoryService
+/// </summary>
 public interface IRootAuditCategoryService : IBaseService<RootAuditCategory>
 {
 }

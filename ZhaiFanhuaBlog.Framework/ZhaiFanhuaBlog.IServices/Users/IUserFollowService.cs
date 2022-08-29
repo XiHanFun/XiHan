@@ -12,6 +12,9 @@ using ZhaiFanhuaBlog.Models.Users;
 
 namespace ZhaiFanhuaBlog.IServices.Users;
 
+/// <summary>
+/// IUserFollowService
+/// </summary>
 public interface IUserFollowService : IBaseService<UserFollow>
 {
 }

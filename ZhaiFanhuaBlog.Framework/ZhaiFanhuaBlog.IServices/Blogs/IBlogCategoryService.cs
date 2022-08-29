@@ -12,19 +12,57 @@ using ZhaiFanhuaBlog.Models.Blogs;
 
 namespace ZhaiFanhuaBlog.IServices.Blogs;
 
+/// <summary>
+/// IBlogCategoryService
+/// </summary>
 public interface IBlogCategoryService : IBaseService<BlogCategory>
 {
+    /// <summary>
+    /// 检验是否存在
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<BlogCategory> IsExistenceAsync(Guid guid);
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="blogCategories"></param>
+    /// <returns></returns>
     Task<bool> InitBlogCategoryAsync(List<BlogCategory> blogCategories);
 
+    /// <summary>
+    /// 新增
+    /// </summary>
+    /// <param name="blogCategory"></param>
+    /// <returns></returns>
     Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory);
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     Task<bool> DeleteBlogCategoryAsync(Guid guid, Guid deleteId);
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="blogCategory"></param>
+    /// <returns></returns>
     Task<BlogCategory> ModifyBlogCategoryAsync(BlogCategory blogCategory);
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     Task<BlogCategory> FindBlogCategoryAsync(Guid guid);
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     Task<List<BlogCategory>> QueryBlogCategoryAsync();
 }

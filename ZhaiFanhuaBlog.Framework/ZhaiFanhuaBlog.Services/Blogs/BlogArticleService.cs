@@ -23,6 +23,11 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogArticleRepository _IBlogArticleRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iBlogArticleRepository"></param>
     public BlogArticleService(IRootStateRepository iRootStateRepository, IBlogArticleRepository iBlogArticleRepository)
     {
         base._IBaseRepository = iBlogArticleRepository;
@@ -43,6 +48,11 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
         return blogArticle;
     }
 
+    /// <summary>
+    /// 初始化种子数据
+    /// </summary>
+    /// <param name="blogArticles"></param>
+    /// <returns></returns>
     public async Task<bool> InitBlogArticleAsync(List<BlogArticle> blogArticles)
     {
         blogArticles.ForEach(blogArticle =>
@@ -53,6 +63,12 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
         return result;
     }
 
+    /// <summary>
+    /// 新增博客文章
+    /// </summary>
+    /// <param name="blogArticle"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateBlogArticleAsync(BlogArticle blogArticle)
     {
         if (await _IBlogArticleRepository.FindAsync(e => e.Title == blogArticle.Title && !e.SoftDeleteLock) != null)
@@ -62,6 +78,12 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
         return result;
     }
 
+    /// <summary>
+    /// 删除博客文章
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteBlogArticleAsync(Guid guid, Guid deleteId)
     {
         var blogArticle = await IsExistenceAsync(guid);
@@ -73,6 +95,11 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
         return await _IBlogArticleRepository.UpdateAsync(blogArticle);
     }
 
+    /// <summary>
+    /// 修改博客文章
+    /// </summary>
+    /// <param name="blogArticle"></param>
+    /// <returns></returns>
     public async Task<BlogArticle> ModifyBlogArticleAsync(BlogArticle blogArticle)
     {
         await IsExistenceAsync(blogArticle.BaseId);
@@ -81,12 +108,21 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
         return blogArticle;
     }
 
+    /// <summary>
+    /// 查找博客文章
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<BlogArticle> FindBlogArticleAsync(Guid guid)
     {
         var blogArticle = await IsExistenceAsync(guid);
         return blogArticle;
     }
 
+    /// <summary>
+    /// 查询博客文章
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<BlogArticle>> QueryBlogArticleAsync()
     {
         var blogArticle = from blogarticle in await _IBlogArticleRepository.QueryListAsync(e => !e.SoftDeleteLock)

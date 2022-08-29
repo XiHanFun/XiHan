@@ -23,6 +23,12 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
     private readonly IRootRoleService _IRootRoleService;
     private readonly IRootRoleAuthorityRepository _IRootRoleAuthorityRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootAuthorityService"></param>
+    /// <param name="iRootRoleService"></param>
+    /// <param name="iRootRoleAuthorityRepository"></param>
     public RootRoleAuthorityService(IRootAuthorityService iRootAuthorityService,
         IRootRoleService iRootRoleService,
         IRootRoleAuthorityRepository iRootRoleAuthorityRepository)
@@ -46,6 +52,11 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         return rootRoleAuthority;
     }
 
+    /// <summary>
+    /// 初始化系统角色权限关联
+    /// </summary>
+    /// <param name="rootRoleAuthorities"></param>
+    /// <returns></returns>
     public async Task<bool> InitRootRoleAuthorityAsync(List<RootRoleAuthority> rootRoleAuthorities)
     {
         rootRoleAuthorities.ForEach(userRoleAuthority =>
@@ -56,6 +67,12 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         return result;
     }
 
+    /// <summary>
+    /// 新增系统角色权限关联
+    /// </summary>
+    /// <param name="rootRoleAuthority"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateRootRoleAuthorityAsync(RootRoleAuthority rootRoleAuthority)
     {
         await _IRootAuthorityService.IsExistenceAsync(rootRoleAuthority.AuthorityId);
@@ -67,6 +84,12 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         return result;
     }
 
+    /// <summary>
+    /// 删除系统角色权限关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteRootRoleAuthorityAsync(Guid guid, Guid deleteId)
     {
         var rootRoleAuthority = await IsExistenceAsync(guid);
@@ -76,6 +99,12 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         return await _IRootRoleAuthorityRepository.UpdateAsync(rootRoleAuthority);
     }
 
+    /// <summary>
+    /// 修改系统角色权限关联
+    /// </summary>
+    /// <param name="rootRoleAuthority"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<RootRoleAuthority> ModifyRootRoleAuthorityAsync(RootRoleAuthority rootRoleAuthority)
     {
         await IsExistenceAsync(rootRoleAuthority.BaseId);
@@ -89,12 +118,21 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         return rootRoleAuthority;
     }
 
+    /// <summary>
+    /// 查找系统角色权限关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<RootRoleAuthority> FindRootRoleAuthorityAsync(Guid guid)
     {
         var rootRoleAuthority = await IsExistenceAsync(guid);
         return rootRoleAuthority;
     }
 
+    /// <summary>
+    /// 查询系统角色权限关联
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<RootRoleAuthority>> QueryRootRoleAuthorityAsync()
     {
         var rootRoleAuthority = from userroleauthority in await _IRootRoleAuthorityRepository.QueryListAsync(e => e.SoftDeleteLock == false)

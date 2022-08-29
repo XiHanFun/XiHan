@@ -23,6 +23,12 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
     private readonly IRootMenuService _IRootMenuService;
     private readonly IRootRoleService _IRootRoleService;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootRoleMenuRepository"></param>
+    /// <param name="iRootMenuService"></param>
+    /// <param name="iRootRoleService"></param>
     public RootRoleMenuService(IRootRoleMenuRepository iRootRoleMenuRepository,
         IRootMenuService iRootMenuService,
         IRootRoleService iRootRoleService
@@ -47,6 +53,11 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
         return rootMenuRole;
     }
 
+    /// <summary>
+    /// 初始化系统角色菜单关联
+    /// </summary>
+    /// <param name="rootMenuRoles"></param>
+    /// <returns></returns>
     public async Task<bool> InitRootRoleMenuAsync(List<RootRoleMenu> rootMenuRoles)
     {
         rootMenuRoles.ForEach(rootMenuRole =>
@@ -57,6 +68,12 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
         return result;
     }
 
+    /// <summary>
+    /// 新增系统角色菜单关联
+    /// </summary>
+    /// <param name="rootMenuRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateRootRoleMenuAsync(RootRoleMenu rootMenuRole)
     {
         await _IRootMenuService.IsExistenceAsync(rootMenuRole.MenuId);
@@ -68,6 +85,12 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
         return result;
     }
 
+    /// <summary>
+    /// 删除系统角色菜单关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteRootRoleMenuAsync(Guid guid, Guid deleteId)
     {
         var rootMenuRole = await IsExistenceAsync(guid);
@@ -77,6 +100,12 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
         return await _IRootRoleMenuRepository.UpdateAsync(rootMenuRole);
     }
 
+    /// <summary>
+    /// 修改系统角色菜单关联
+    /// </summary>
+    /// <param name="rootMenuRole"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<RootRoleMenu> ModifyRootRoleMenuAsync(RootRoleMenu rootMenuRole)
     {
         await IsExistenceAsync(rootMenuRole.BaseId);
@@ -90,12 +119,21 @@ public class RootRoleMenuService : BaseService<RootRoleMenu>, IRootRoleMenuServi
         return rootMenuRole;
     }
 
+    /// <summary>
+    /// 查找系统角色菜单关联
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<RootRoleMenu> FindRootRoleMenuAsync(Guid guid)
     {
         var rootMenuRole = await IsExistenceAsync(guid);
         return rootMenuRole;
     }
 
+    /// <summary>
+    /// 查询系统角色菜单关联
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<RootRoleMenu>> QueryRootRoleMenuAsync()
     {
         var rootMenuRole = from rootmenurole in await _IRootRoleMenuRepository.QueryListAsync(e => !e.SoftDeleteLock)

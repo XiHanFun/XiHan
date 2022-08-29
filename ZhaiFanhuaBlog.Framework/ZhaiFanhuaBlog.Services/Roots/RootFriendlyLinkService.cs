@@ -21,6 +21,10 @@ public class RootFriendlyLinkService : BaseService<RootFriendlyLink>, IRootFrien
 {
     private readonly IRootFriendlyLinkRepository _IRootFriendlyLinkRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootFriendlyLinkRepository"></param>
     public RootFriendlyLinkService(IRootFriendlyLinkRepository iRootFriendlyLinkRepository)
     {
         _IRootFriendlyLinkRepository = iRootFriendlyLinkRepository;
