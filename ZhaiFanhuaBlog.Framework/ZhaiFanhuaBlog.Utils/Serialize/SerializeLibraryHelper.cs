@@ -40,7 +40,7 @@ public static class SerializeLibraryHelper
     /// <param name="tentity"></param>
     /// <param name="propertyname"></param>
     /// <returns></returns>
-    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname)
+    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname) where TEntity : class
     {
         Type type = typeof(TEntity);
         PropertyInfo? property = type.GetProperty(propertyname);
@@ -78,9 +78,23 @@ public static class SerializeLibraryHelper
     }
 }
 
+/// <summary>
+/// 属性信息
+/// </summary>
 public class CustomPropertyInfo
 {
+    /// <summary>
+    /// 属性名称
+    /// </summary>
     public string? PropertyName;
+
+    /// <summary>
+    /// 类型
+    /// </summary>
     public Type? PropertyType;
+
+    /// <summary>
+    /// 属性值
+    /// </summary>
     public string? PropertyValue;
 }

@@ -28,9 +28,13 @@ public static class EnumDescriptionHelper
         {
             string enumname = enumObj.ToString();
             Type type = enumObj.GetType();
-            FieldInfo field = type.GetField(enumname)!;
-            DescriptionAttribute[] description = (DescriptionAttribute[])field!.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return description[0].Description;
+            FieldInfo? field = type.GetField(enumname);
+            if (field != null)
+            {
+                if (field.GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] description)
+                    return description[0].Description;
+            }
+            return string.Empty;
         }
         catch (Exception)
         {

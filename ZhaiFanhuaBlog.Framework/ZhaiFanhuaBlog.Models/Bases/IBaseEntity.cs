@@ -14,5 +14,8 @@ namespace ZhaiFanhuaBlog.Models.Bases;
 /// </summary>
 public interface IBaseEntity<TKey>
 {
+    /// <summary>
+    /// 主键
+    /// </summary>
     TKey BaseId { get; set; }
 }

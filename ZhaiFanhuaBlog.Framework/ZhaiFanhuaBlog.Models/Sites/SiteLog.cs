@@ -68,15 +68,18 @@ public class SiteLog : BaseDeleteEntity<Guid>
     public string? Exception { get; set; }
 
     /// <summary>
-    /// 来源Ip
+    /// 来源Ip(显示地区)
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
     public virtual byte[]? SourceIp
     {
-        get => IpFormatHelper.FormatIPAddressToByte(_SourceIp);
-        set => _SourceIp = IpFormatHelper.FormatByteToIPAddress(value);
+        get => _SourceIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_SourceIp);
+        set => _SourceIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
     }
 
+    /// <summary>
+    /// 来源Ip
+    /// </summary>
     private IPAddress? _SourceIp;
 
     /// <summary>

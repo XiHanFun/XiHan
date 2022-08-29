@@ -26,9 +26,9 @@ public class StringFormatHelper
     public static string ReplaceStr(string content, string oldStr, string newStr)
     {
         // 没有替换字符串直接返回源字符串
-        if (content.IndexOf(oldStr) == -1) return content;
+        if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
         // 有替换字符串开始替换
-        StringBuilder strBuffer = new StringBuilder();
+        StringBuilder strBuffer = new();
         int start = 0;
         int end = 0;
         // 查找替换内容，把它之前和上一个替换内容之后的字符串拼接起来

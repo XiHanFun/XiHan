@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserCollectService
+/// 用户收藏表
 /// </summary>
 public class UserCollectService : BaseService<UserCollect>, IUserCollectService
 {
     private readonly IUserCollectRepository _IUserCollectRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserCollectRepository"></param>
     public UserCollectService(IUserCollectRepository iUserCollectRepository)
     {
         _IUserCollectRepository = iUserCollectRepository;

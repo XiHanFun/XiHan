@@ -52,15 +52,18 @@ public class BlogComment : BaseEntity
     public bool IsTop { get; set; } = false;
 
     /// <summary>
-    /// 评论者IP(显示地区)
+    /// 评论者Ip(显示地区)
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
     public virtual byte[]? CommentIp
     {
-        get => IpFormatHelper.FormatIPAddressToByte(_CommentIp);
-        set => _CommentIp = IpFormatHelper.FormatByteToIPAddress(value);
+        get => _CommentIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_CommentIp);
+        set => _CommentIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
     }
 
+    /// <summary>
+    /// 评论者Ip
+    /// </summary>
     private IPAddress? _CommentIp;
 
     /// <summary>

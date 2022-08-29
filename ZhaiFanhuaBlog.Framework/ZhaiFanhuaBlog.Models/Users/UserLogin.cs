@@ -25,15 +25,18 @@ public class UserLogin : BaseEntity
     public Guid AccountId { get; set; }
 
     /// <summary>
-    /// 登录Ip地址
+    /// 登录Ip
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)")]
     public virtual byte[]? LoginIp
     {
-        get => IpFormatHelper.FormatIPAddressToByte(_LoginIp);
-        set => _LoginIp = IpFormatHelper.FormatByteToIPAddress(value);
+        get => _LoginIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_LoginIp);
+        set => _LoginIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
     }
 
+    /// <summary>
+    /// 登录Ip
+    /// </summary>
     private IPAddress? _LoginIp;
 
     /// <summary>

@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.Utils.Formats;
 public static class TimeFormatHelper
 {
     /// <summary>
-    /// 时间转换
+    /// 时间转换字符串
     /// </summary>
     /// <param name="dateTimeBefore"></param>
     /// <param name="dateTimeAfter"></param>

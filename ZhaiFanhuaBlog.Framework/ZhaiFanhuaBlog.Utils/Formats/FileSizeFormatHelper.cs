@@ -19,7 +19,7 @@ public class FileSizeFormatHelper
     /// <summary>
     /// 格式化文件大小显示为字符串
     /// </summary>
-    /// <param name="number"></param>
+    /// <param name="bytes"></param>
     /// <returns></returns>
     public static string FormatByteToString(long bytes)
     {

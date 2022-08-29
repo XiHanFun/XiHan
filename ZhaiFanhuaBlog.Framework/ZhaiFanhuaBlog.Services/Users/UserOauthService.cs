@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserOauthService
+/// 用户第三方授权
 /// </summary>
 public class UserOauthService : BaseService<UserOauth>, IUserOauthService
 {
     private readonly IUserOauthRepository _IUserOauthRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserOauthRepository"></param>
     public UserOauthService(IUserOauthRepository iUserOauthRepository)
     {
         _IUserOauthRepository = iUserOauthRepository;

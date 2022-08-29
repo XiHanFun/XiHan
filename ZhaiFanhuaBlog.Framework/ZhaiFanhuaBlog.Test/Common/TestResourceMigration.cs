@@ -17,6 +17,9 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// </summary>
 public static class TestResourceMigration
 {
+    /// <summary>
+    /// 资源迁移
+    /// </summary>
     public static void ResourceMigration()
     {
         ResourceInfo resourceInfo = new ResourceInfo();
@@ -24,7 +27,7 @@ public static class TestResourceMigration
         resourceInfo.OldPrefix = @"https://img.zhaifanhua.com/blogimg";
         resourceInfo.NewPrefix = @"https://cdn.zhaifanhua.com/blog/img";
         ConsoleHelper.WriteLineInfo($@"============资源迁移开始============");
-        List<MigrationInfo> migrationInfos = CDNResourcesHelper.Migration(resourceInfo);
+        List<MigrationInfo> migrationInfos = ResourcesHelper.Migration(resourceInfo);
         foreach (MigrationInfo migrationInfo in migrationInfos)
         {
             if (migrationInfo.IsSucess)

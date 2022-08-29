@@ -16,7 +16,7 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Blogs;
 
 /// <summary>
-/// BlogCommentService
+/// 博客评论
 /// </summary>
 public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
 {
@@ -24,6 +24,12 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
     private readonly IBlogArticleService _IBlogArticleService;
     private readonly IBlogCommentRepository _IBlogCommentRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iBlogArticleService"></param>
+    /// <param name="iBlogCommentRepository"></param>
     public BlogCommentService(IRootStateRepository iRootStateRepository,
         IBlogArticleService iBlogArticleService,
         IBlogCommentRepository iBlogCommentRepository)
@@ -47,6 +53,11 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
         return blogComment;
     }
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="blogComments"></param>
+    /// <returns></returns>
     public async Task<bool> InitBlogCommentAsync(List<BlogComment> blogComments)
     {
         blogComments.ForEach(blogComment =>
@@ -57,6 +68,11 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
         return result;
     }
 
+    /// <summary>
+    /// 创建
+    /// </summary>
+    /// <param name="blogComment"></param>
+    /// <returns></returns>
     public async Task<bool> CreateBlogCommentAsync(BlogComment blogComment)
     {
         await _IBlogArticleService.IsExistenceAsync(blogComment.AccountId);
@@ -65,6 +81,12 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
         return result;
     }
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteBlogCommentAsync(Guid guid, Guid deleteId)
     {
         var blogComment = await IsExistenceAsync(guid);
@@ -76,6 +98,12 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
         return await _IBlogCommentRepository.UpdateAsync(blogComment);
     }
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="blogComment"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<BlogComment> ModifyBlogCommentAsync(BlogComment blogComment)
     {
         await IsExistenceAsync(blogComment.BaseId);
@@ -86,12 +114,21 @@ public class BlogCommentService : BaseService<BlogComment>, IBlogCommentService
         return blogComment;
     }
 
+    /// <summary>
+    /// 查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<BlogComment> FindBlogCommentAsync(Guid guid)
     {
         var blogComment = await IsExistenceAsync(guid);
         return blogComment;
     }
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<BlogComment>> QueryBlogCommentAsync()
     {
         var blogComment = from blogcategory in await _IBlogCommentRepository.QueryListAsync(e => !e.SoftDeleteLock)

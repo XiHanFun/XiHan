@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.Utils.Formats;
 public static class MoneyFormaHelper
 {
     /// <summary>
-    /// 格式化金额(由千位转万位，如【12,345,678.90=>1234,5678.90】)
+    /// 格式化金额(由千位转万位，如 12,345,678.90=>1234,5678.90 )
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
@@ -31,37 +31,34 @@ public static class MoneyFormaHelper
             {
                 moneyInt = moneyStr.Split('.')[0].ToString();
                 moneyDecimal = "." + moneyStr.Split('.')[1].ToString();
-                moneyRes = FormatMoneyToInt(moneyInt);
+                moneyRes = FormatStringComma(moneyInt);
             }
             else
             {
-                moneyRes = FormatMoneyToInt(moneyStr);
+                moneyRes = FormatStringComma(moneyStr);
             }
-            string FormatMoneyToInt(string moneyint)
-            {
-                if (moneyint.ToString().Length > 4)
-                {
-                    string moneyNotFormat = moneyint.Substring(0, moneyint.Length - 4);
-                    string moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
-                    if (moneyNotFormat.Length > 4)
-                    {
-                        return FormatMoneyToInt(moneyNotFormat) + "," + moneyFormat;
-                    }
-                    else
-                    {
-                        return moneyNotFormat + "," + moneyFormat;
-                    }
-                }
-                else
-                {
-                    return moneyint;
-                }
-            }
+
             return moneyRes + moneyDecimal;
         }
         catch (Exception)
         {
             throw;
         }
+    }
+
+    /// <summary>
+    /// 金额字符串加逗号格式化
+    /// </summary>
+    /// <param name="moneyint"></param>
+    /// <returns></returns>
+    public static string FormatStringComma(string moneyint)
+    {
+        if (moneyint.ToString().Length <= 4) return moneyint;
+        string moneyNoFormat = moneyint[..^4];
+        string moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
+        if (moneyNoFormat.Length > 4)
+            return FormatStringComma(moneyNoFormat) + "," + moneyFormat;
+        else
+            return moneyNoFormat + "," + moneyFormat;
     }
 }

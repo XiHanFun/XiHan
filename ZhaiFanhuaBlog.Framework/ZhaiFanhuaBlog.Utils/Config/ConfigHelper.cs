@@ -16,5 +16,8 @@ namespace ZhaiFanhuaBlog.Utils.Config;
 /// </summary>
 public static class ConfigHelper
 {
+    /// <summary>
+    /// 公用配置
+    /// </summary>
     public static IConfiguration? Configuration { get; set; }
 }

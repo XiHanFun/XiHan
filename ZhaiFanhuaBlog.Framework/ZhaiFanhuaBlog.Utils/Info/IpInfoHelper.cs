@@ -13,6 +13,9 @@ using System.Net.Sockets;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
 
+/// <summary>
+/// Ip信息帮助类
+/// </summary>
 public static class IpInfoHelper
 {
     /// <summary>

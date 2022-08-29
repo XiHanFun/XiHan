@@ -12,7 +12,7 @@ using System.Net;
 namespace ZhaiFanhuaBlog.Utils.Formats;
 
 /// <summary>
-/// IPFormatHelper
+/// Ip地址格式化帮助类
 /// </summary>
 public class IpFormatHelper
 {
@@ -21,11 +21,9 @@ public class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static byte[]? FormatIPAddressToByte(IPAddress? address)
+    public static byte[] FormatIPAddressToByte(IPAddress address)
     {
-        if (address != null)
-            return address.GetAddressBytes();
-        return null;
+        return address.GetAddressBytes();
     }
 
     /// <summary>
@@ -33,18 +31,19 @@ public class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static string? FormatIPAddressToString(IPAddress? address)
+    public static string FormatIPAddressToString(IPAddress address)
     {
-        if (address != null)
-            return address.ToString();
-        return null;
+        return address.ToString();
     }
 
-    public static string? FormatByteToString(byte[]? bytes)
+    /// <summary>
+    /// byte[]转String
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static string FormatByteToString(byte[] bytes)
     {
-        if (bytes != null)
-            return new IPAddress(bytes).ToString();
-        return null;
+        return new IPAddress(bytes).ToString();
     }
 
     /// <summary>
@@ -52,22 +51,18 @@ public class IpFormatHelper
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static IPAddress? FormatByteToIPAddress(byte[]? bytes)
+    public static IPAddress FormatByteToIPAddress(byte[] bytes)
     {
-        if (bytes != null)
-            return new IPAddress(bytes);
-        return null;
+        return new IPAddress(bytes);
     }
 
     /// <summary>
     /// String转IPAddress
     /// </summary>
-    /// <param name="ip"></param>
+    /// <param name="str"></param>
     /// <returns></returns>
-    public static IPAddress? FormatStringToIPAddress(string? ip)
+    public static IPAddress FormatStringToIPAddress(string str)
     {
-        if (ip != null)
-            return IPAddress.Parse(ip);
-        return null;
+        return IPAddress.Parse(str);
     }
 }

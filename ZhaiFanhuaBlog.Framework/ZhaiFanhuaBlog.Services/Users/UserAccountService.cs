@@ -17,7 +17,7 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserAccountService
+/// 用户账户
 /// </summary>
 public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 {
@@ -25,6 +25,13 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     private readonly IUserAccountRepository _IUserAccountRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iConfiguration"></param>
+    /// <param name="iRootStateRepository"></param>
+    /// <param name="iUserAccountRepository"></param>
+    /// <param name="iIUserAccountRoleRepository"></param>
     public UserAccountService(IConfiguration iConfiguration,
         IRootStateRepository iRootStateRepository,
         IUserAccountRepository iUserAccountRepository,
@@ -49,6 +56,11 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return userAccount;
     }
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="userAccounts"></param>
+    /// <returns></returns>
     public async Task<bool> InitUserAccountAsync(List<UserAccount> userAccounts)
     {
         userAccounts.ForEach(userAccount =>
@@ -59,6 +71,12 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return result;
     }
 
+    /// <summary>
+    /// 创建
+    /// </summary>
+    /// <param name="userAccount"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateUserAccountAsync(UserAccount userAccount)
     {
         if (await _IUserAccountRepository.FindAsync(e => e.Name == userAccount.Name || e.Email == userAccount.Email && !e.SoftDeleteLock) != null)
@@ -68,6 +86,12 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return result;
     }
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <param name="deleteId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteUserAccountAsync(Guid guid, Guid deleteId)
     {
         var userAccount = await IsExistenceAsync(guid);
@@ -79,6 +103,11 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return await _IUserAccountRepository.UpdateAsync(userAccount);
     }
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="userAccount"></param>
+    /// <returns></returns>
     public async Task<UserAccount> ModifyUserAccountAsync(UserAccount userAccount)
     {
         await IsExistenceAsync(userAccount.BaseId);
@@ -88,12 +117,23 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return userAccount;
     }
 
+    /// <summary>
+    /// Guid查找
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public async Task<UserAccount> FindUserAccountByGuidAsync(Guid guid)
     {
         var userAccount = await IsExistenceAsync(guid);
         return userAccount;
     }
 
+    /// <summary>
+    /// 用户名查找
+    /// </summary>
+    /// <param name="accountName"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<UserAccount> FindUserAccountByNameAsync(string accountName)
     {
         var userAccount = await _IUserAccountRepository.FindAsync(e => e.Name == accountName && !e.SoftDeleteLock);
@@ -102,6 +142,12 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return userAccount;
     }
 
+    /// <summary>
+    /// 邮箱查找
+    /// </summary>
+    /// <param name="accountEmail"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"></exception>
     public async Task<UserAccount> FindUserAccountByEmailAsync(string accountEmail)
     {
         var userAccount = await _IUserAccountRepository.FindAsync(e => e.Email == accountEmail && !e.SoftDeleteLock);
@@ -110,6 +156,10 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         return userAccount;
     }
 
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<UserAccount>> QueryUserAccountAsync()
     {
         var userAccount = from userauthority in await _IUserAccountRepository.QueryListAsync(e => !e.SoftDeleteLock)

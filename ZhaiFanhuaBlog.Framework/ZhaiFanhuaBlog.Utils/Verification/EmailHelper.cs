@@ -17,39 +17,62 @@ namespace ZhaiFanhuaBlog.Utils.Verification;
 /// </summary>
 public static class EmailHelper
 {
-    //发件人地址
+    /// <summary>
+    /// 发件人地址
+    /// </summary>
     public static string? MailFrom { get; set; } = null;
 
-    //发件人密码(授权码)
+    /// <summary>
+    /// 发件人密码(授权码)
+    /// </summary>
     public static string? MailPwd { get; set; } = null;
 
-    //收件人地址
+    /// <summary>
+    /// 收件人地址
+    /// </summary>
     public static string[]? MailToArray { get; set; }
 
-    //抄送人地址
+    /// <summary>
+    /// 抄送人地址
+    /// </summary>
     public static string[]? MailCcArray { get; set; }
 
-    //邮件标题
+    /// <summary>
+    /// 邮件标题
+    /// </summary>
     public static string? MailSubject { get; set; } = null;
 
-    //邮件正文
+    /// <summary>
+    /// 邮件正文
+    /// </summary>
     public static string? MailBody { get; set; } = null;
 
-    //SMTP邮件服务器
+    /// <summary>
+    /// SMTP邮件服务器
+    /// </summary>
     public static string? SMTPHost { get; set; } = null;
 
-    //正文是否是html格式
+    /// <summary>
+    /// 正文是否是html格式
+    /// </summary>
     public static bool IsbodyHtml { get; set; }
 
-    //附件
+    /// <summary>
+    /// 附件
+    /// </summary>
     public static string[]? AttachmentsPath { get; set; }
 
+    /// <summary>
+    /// 发送
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static bool Send()
     {
         // 使用指定的邮件地址初始化MailAddress实例
-        MailAddress mailAddress = new MailAddress(MailFrom!);
+        MailAddress mailAddress = new(MailFrom!);
         // 初始化MailMessage实例
-        using MailMessage mailMessage = new MailMessage();
+        using MailMessage mailMessage = new();
         // 向收件人地址集合添加邮件地址
         if (MailToArray != null)
         {
@@ -91,11 +114,11 @@ public static class EmailHelper
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new Exception("在添加附件时有错误:" + e);
+            throw new Exception("在添加附件时有错误:" + ex);
         }
-        using SmtpClient smtpClient = new SmtpClient
+        using SmtpClient smtpClient = new()
         {
             EnableSsl = true,
             // 指定发件人的邮件地址和密码以验证发件人身份

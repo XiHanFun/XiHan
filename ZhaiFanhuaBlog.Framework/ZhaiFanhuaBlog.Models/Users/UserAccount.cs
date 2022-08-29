@@ -81,15 +81,18 @@ public class UserAccount : BaseEntity
     public DateTime? LastLoginTime { get; set; }
 
     /// <summary>
-    /// 注册Ip地址
+    /// 注册Ip
     /// </summary>
     [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
     public virtual byte[]? RegisterIp
     {
-        get => IpFormatHelper.FormatIPAddressToByte(_RegisterIp);
-        set => _RegisterIp = IpFormatHelper.FormatByteToIPAddress(value);
+        get => _RegisterIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_RegisterIp);
+        set => _RegisterIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
     }
 
+    /// <summary>
+    /// 注册Ip
+    /// </summary>
     private IPAddress? _RegisterIp;
 
     /// <summary>

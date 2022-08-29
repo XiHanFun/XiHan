@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserNoticeService
+/// 用户通知
 /// </summary>
 public class UserNoticeService : BaseService<UserNotice>, IUserNoticeService
 {
     private readonly IUserNoticeRepository _IUserNoticeRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserNoticeRepository"></param>
     public UserNoticeService(IUserNoticeRepository iUserNoticeRepository)
     {
         _IUserNoticeRepository = iUserNoticeRepository;

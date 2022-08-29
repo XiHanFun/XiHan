@@ -53,7 +53,7 @@ public class TestController : ControllerBase
         var httpContext = _IHttpContextAccessor.HttpContext;
         // 获取客户端 Ip 地址
         var ip = httpContext?.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-        var userAgent = httpContext?.Request.Headers.UserAgent.ToString();
+        string userAgent = httpContext?.Request.Headers == null ? string.Empty : httpContext.Request.Headers.UserAgent.ToString();
 
         string osVersion = "未知";
 

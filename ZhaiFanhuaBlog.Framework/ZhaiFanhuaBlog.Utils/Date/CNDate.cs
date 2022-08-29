@@ -988,7 +988,7 @@ public class ChineseCalendar
     /// <param name="cy">农历年</param>
     /// <param name="cm">农历月</param>
     /// <param name="cd">农历日</param>
-    /// <param name="LeapFlag">闰月标志</param>
+    /// <param name="leapMonthFlag">闰月标志</param>
     public ChineseCalendar(int cy, int cm, int cd, bool leapMonthFlag)
     {
         int i, leap, Temp, offset;
@@ -1828,7 +1828,9 @@ public class ChineseCalendar
         }
     }
 
-    //当前日期前一个最近节气
+    /// <summary>
+    /// 当前日期前一个最近节气
+    /// </summary>
     public string ChineseTwentyFourPrevDay
     {
         get
@@ -1858,7 +1860,9 @@ public class ChineseCalendar
         }
     }
 
-    //当前日期后一个最近节气
+    /// <summary>
+    /// 当前日期后一个最近节气
+    /// </summary>
     public string ChineseTwentyFourNextDay
     {
         get

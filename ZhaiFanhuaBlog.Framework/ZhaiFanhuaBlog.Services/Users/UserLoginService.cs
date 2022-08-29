@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserLoginService
+/// 用户登录
 /// </summary>
 public class UserLoginService : BaseService<UserLogin>, IUserLoginService
 {
     private readonly IUserLoginRepository _IUserLoginRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserLoginRepository"></param>
     public UserLoginService(IUserLoginRepository iUserLoginRepository)
     {
         _IUserLoginRepository = iUserLoginRepository;

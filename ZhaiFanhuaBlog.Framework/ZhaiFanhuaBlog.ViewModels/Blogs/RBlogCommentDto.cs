@@ -53,9 +53,12 @@ public class RBlogCommentDto : RBaseDto
     /// </summary>
     public virtual byte[]? CommentIp
     {
-        get => IpFormatHelper.FormatIPAddressToByte(_CommentIp);
-        set => _CommentIp = IpFormatHelper.FormatByteToIPAddress(value);
+        get => _CommentIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_CommentIp);
+        set => _CommentIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
     }
 
+    /// <summary>
+    /// 评论者IP
+    /// </summary>
     private IPAddress? _CommentIp;
 }

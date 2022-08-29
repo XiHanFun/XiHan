@@ -15,7 +15,6 @@ namespace ZhaiFanhuaBlog.Utils.Encryptions;
 /// <summary>
 /// SHAHelper加密帮助类
 /// </summary>
-
 public static class SHAHelper
 {
     /// <summary>

@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserCollectCategoryService
+/// 用户收藏分类表
 /// </summary>
 public class UserCollectCategoryService : BaseService<UserCollectCategory>, IUserCollectCategoryService
 {
     private readonly IUserCollectCategoryRepository _IUserCollectCategoryRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserCollectCategoryRepository"></param>
     public UserCollectCategoryService(IUserCollectCategoryRepository iUserCollectCategoryRepository)
     {
         _IUserCollectCategoryRepository = iUserCollectCategoryRepository;

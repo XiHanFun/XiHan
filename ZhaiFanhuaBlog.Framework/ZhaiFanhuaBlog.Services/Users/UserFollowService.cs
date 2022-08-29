@@ -15,12 +15,16 @@ using ZhaiFanhuaBlog.Services.Bases;
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
-/// UserFollowService
+/// 用户关注
 /// </summary>
 public class UserFollowService : BaseService<UserFollow>, IUserFollowService
 {
     private readonly IUserFollowRepository _IUserFollowRepository;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="iUserFollowRepository"></param>
     public UserFollowService(IUserFollowRepository iUserFollowRepository)
     {
         _IUserFollowRepository = iUserFollowRepository;
