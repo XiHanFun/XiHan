@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Sites\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ZhaiFanhuaBlog.Models\ZhaiFanhuaBlog.Models.csproj" />
   </ItemGroup>
 

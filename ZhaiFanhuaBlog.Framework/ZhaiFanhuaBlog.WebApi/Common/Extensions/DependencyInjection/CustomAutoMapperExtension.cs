@@ -9,10 +9,12 @@
 
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Formats;
 using ZhaiFanhuaBlog.ViewModels.Blogs;
 using ZhaiFanhuaBlog.ViewModels.Roots;
+using ZhaiFanhuaBlog.ViewModels.Sites;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -67,6 +69,9 @@ public static class CustomAutoMapperExtension
             .ReverseMap();
             mapper.CreateMap<BlogCommentPoll, CBlogCommentPollDto>().ReverseMap();
             mapper.CreateMap<BlogCommentPoll, RBlogCommentPollDto>().ReverseMap();
+
+            // Site
+            mapper.CreateMap<SiteConfiguration, CSiteConfigurationDto>().ReverseMap();
         });
         return services;
     }
