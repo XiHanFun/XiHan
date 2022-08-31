@@ -71,7 +71,7 @@ public class RootController : ControllerBase
     }
 
     /// <summary>
-    /// 初始化状态
+    /// 初始化系统
     /// </summary>
     /// <returns></returns>
     [HttpPost("Init")]

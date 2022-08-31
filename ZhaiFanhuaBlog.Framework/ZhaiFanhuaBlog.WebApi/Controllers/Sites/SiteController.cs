@@ -46,9 +46,9 @@ public class SiteController : ControllerBase
     /// 站点初始化配置
     /// </summary>
     /// <returns></returns>
-    [HttpPost("Configuration")]
+    [HttpPost("Configuration/Init")]
     [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
-    public async Task<ResultModel> CreateSiteConfiguration([FromServices] IMapper iMapper)
+    public async Task<ResultModel> Init([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()
         {
