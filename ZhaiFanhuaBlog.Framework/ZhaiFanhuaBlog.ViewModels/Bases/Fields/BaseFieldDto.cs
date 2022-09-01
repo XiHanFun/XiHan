@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RBaseDto
+// FileName:BaseFieldDto
 // Guid:8129e62a-4ccc-409f-9332-d60794fbb9b5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-20 上午 12:49:29
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.ViewModels.Bases;
+namespace ZhaiFanhuaBlog.ViewModels.Bases.Fields;
 
 /// <summary>
-/// RBaseDto
+/// 通用返回字段实体
 /// </summary>
-public class RBaseDto
+public class BaseFieldDto
 {
     /// <summary>
     /// 主键标识

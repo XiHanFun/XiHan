@@ -10,9 +10,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -47,7 +47,7 @@ public class TestController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public ActionResult<ResultModel> ClientInfo()
+    public ActionResult<BaseResultDto> ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext;
@@ -157,7 +157,7 @@ public class TestController : ControllerBase
         else if (userAgent.Contains("msie"))
             browser = "IE";
 
-        return ResultResponse.OK($"ip:{ip},os:{osVersion},browser:{browser},userAgent:{userAgent}"); ;
+        return BaseResponseDto.OK($"ip:{ip},os:{osVersion},browser:{browser},userAgent:{userAgent}"); ;
     }
 
     /// <summary>
@@ -179,9 +179,9 @@ public class TestController : ControllerBase
     /// <returns></returns>
     [HttpGet("Log")]
     [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
-    public ActionResult<ResultModel> TestLog(string iLog)
+    public ActionResult<BaseResultDto> TestLog(string iLog)
     {
-        return ResultResponse.OK($"测试日志写入:{iLog}");
+        return BaseResponseDto.OK($"测试日志写入:{iLog}");
     }
 
     /// <summary>
@@ -191,9 +191,9 @@ public class TestController : ControllerBase
     /// <param name="iStr">待加密字符串</param>
     /// <returns></returns>
     [HttpGet("Encrypt")]
-    public ActionResult<ResultModel> Encrypt(string encryptType, string iStr)
+    public ActionResult<BaseResultDto> Encrypt(string encryptType, string iStr)
     {
-        if (string.IsNullOrEmpty(iStr)) return ResultResponse.BadRequest("请输入待加密字符串");
+        if (string.IsNullOrEmpty(iStr)) return BaseResponseDto.BadRequest("请输入待加密字符串");
         string resultString = encryptType switch
         {
             "SHA1" => SHAHelper.EncryptSHA1(Encoding.UTF8, iStr),
@@ -202,7 +202,7 @@ public class TestController : ControllerBase
             "SHA512" => SHAHelper.EncryptSHA512(Encoding.UTF8, iStr),
             _ => SHAHelper.EncryptSHA1(Encoding.UTF8, iStr),
         };
-        return ResultResponse.OK(encryptType + "加密后结果为【" + resultString + "】");
+        return BaseResponseDto.OK(encryptType + "加密后结果为【" + resultString + "】");
     }
 
     /// <summary>
@@ -213,9 +213,9 @@ public class TestController : ControllerBase
     /// <param name="iStr">待加密解密字符串</param>
     /// <returns></returns>
     [HttpGet("EncryptOrDecrypt")]
-    public ActionResult<ResultModel> EncryptOrDecrypt(string iEncryptOrDecrypt, string iType, string iStr)
+    public ActionResult<BaseResultDto> EncryptOrDecrypt(string iEncryptOrDecrypt, string iType, string iStr)
     {
-        if (string.IsNullOrEmpty(iStr)) return ResultResponse.BadRequest("请输入待加密或解密字符串");
+        if (string.IsNullOrEmpty(iStr)) return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
         string aesKey = _IConfiguration.GetValue<string>("Encryptions:AesKey");
         string desKey = _IConfiguration.GetValue<string>("Encryptions:DesKey");
         string resultString = iEncryptOrDecrypt switch
@@ -242,7 +242,7 @@ public class TestController : ControllerBase
                 _ => DESHelper.DecryptDES(Encoding.UTF8, desKey, iStr),
             };
         }
-        return ResultResponse.OK("你选择了" + iEncryptOrDecrypt + "," + resultString);
+        return BaseResponseDto.OK("你选择了" + iEncryptOrDecrypt + "," + resultString);
     }
 
     /// <summary>
@@ -251,9 +251,9 @@ public class TestController : ControllerBase
     /// <returns></returns>
     [HttpGet("ResourceFilterAttribute")]
     [TypeFilter(typeof(CustomResourceFilterAsyncAttribute))]
-    public ActionResult<ResultModel> ResourceFilterAttribute()
+    public ActionResult<BaseResultDto> ResourceFilterAttribute()
     {
-        return ResultResponse.OK(DateTime.Now);
+        return BaseResponseDto.OK(DateTime.Now);
     }
 
     /// <summary>
@@ -262,8 +262,8 @@ public class TestController : ControllerBase
     /// <returns></returns>
     [HttpGet("ResourceFilterAsyncAttribute")]
     [TypeFilter(typeof(CustomResourceFilterAsyncAttribute))]
-    public ActionResult<ResultModel> ResourceFilterAsyncAttribute()
+    public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
-        return ResultResponse.OK(DateTime.Now);
+        return BaseResponseDto.OK(DateTime.Now);
     }
 }

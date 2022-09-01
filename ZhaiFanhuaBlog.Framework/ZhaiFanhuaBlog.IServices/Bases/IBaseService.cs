@@ -146,19 +146,19 @@ public interface IBaseService<TEntity> where TEntity : class
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="pageIndex"></param>
+    /// <param name="currentIndex"></param>
     /// <param name="pageSize"></param>
     /// <param name="totalCount"></param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryPageListAsync(int currentIndex, int pageSize, RefAsync<int> totalCount);
 
     /// <summary>
     /// 分页条件查询
     /// </summary>
     /// <param name="func"></param>
-    /// <param name="pageIndex"></param>
+    /// <param name="currentIndex"></param>
     /// <param name="pageSize"></param>
     /// <param name="totalCount"></param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount);
 }

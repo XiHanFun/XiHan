@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.IServices.Users;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Roots.Init;
 using ZhaiFanhuaBlog.Models.Users.Init;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Roots;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -100,7 +100,7 @@ public class RootController : ControllerBase
     /// <param name="cRootAuthorityDto"></param>
     /// <returns></returns>
     [HttpPost("Authority")]
-    public async Task<ResultModel> CreateRootAuthority([FromServices] IMapper iMapper, [FromBody] CRootAuthorityDto cRootAuthorityDto)
+    public async Task<BaseResultDto> CreateRootAuthority([FromServices] IMapper iMapper, [FromBody] CRootAuthorityDto cRootAuthorityDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -108,9 +108,9 @@ public class RootController : ControllerBase
             var rootAuthority = iMapper.Map<RootAuthority>(cRootAuthorityDto);
             rootAuthority.CreateId = Guid.Parse(user);
             if (await _IRootAuthorityService.CreateRootAuthorityAsync(rootAuthority))
-                return ResultResponse.OK("新增系统权限成功");
+                return BaseResponseDto.OK("新增系统权限成功");
         }
-        return ResultResponse.BadRequest("新增系统权限失败");
+        return BaseResponseDto.BadRequest("新增系统权限失败");
     }
 
     /// <summary>
@@ -119,16 +119,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Authority/{guid}")]
-    public async Task<ResultModel> DeleteRootAuthority([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteRootAuthority([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootAuthorityService.DeleteRootAuthorityAsync(guid, deleteId))
-                return ResultResponse.OK("删除系统权限成功");
+                return BaseResponseDto.OK("删除系统权限成功");
         }
-        return ResultResponse.BadRequest("删除系统权限失败");
+        return BaseResponseDto.BadRequest("删除系统权限失败");
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public class RootController : ControllerBase
     /// <param name="cRootAuthorityDto"></param>
     /// <returns></returns>
     [HttpPut("Authority")]
-    public async Task<ResultModel> ModifyRootAuthority([FromServices] IMapper iMapper, [FromBody] CRootAuthorityDto cRootAuthorityDto)
+    public async Task<BaseResultDto> ModifyRootAuthority([FromServices] IMapper iMapper, [FromBody] CRootAuthorityDto cRootAuthorityDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -147,9 +147,9 @@ public class RootController : ControllerBase
             rootAuthority.ModifyId = Guid.Parse(user);
             rootAuthority = await _IRootAuthorityService.ModifyRootAuthorityAsync(rootAuthority);
             if (rootAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
         }
-        return ResultResponse.BadRequest("修改系统权限失败");
+        return BaseResponseDto.BadRequest("修改系统权限失败");
     }
 
     /// <summary>
@@ -159,16 +159,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Authority/{guid}")]
-    public async Task<ResultModel> FindRootAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto> FindRootAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var rootAuthority = await _IRootAuthorityService.FindRootAuthorityAsync(guid);
             if (rootAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
         }
-        return ResultResponse.BadRequest("该系统权限不存在");
+        return BaseResponseDto.BadRequest("该系统权限不存在");
     }
 
     /// <summary>
@@ -177,12 +177,12 @@ public class RootController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Authorities")]
-    public async Task<ResultModel> QueryRootAuthorities([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryRootAuthorities([FromServices] IMapper iMapper)
     {
         var rootAuthority = await _IRootAuthorityService.QueryRootAuthorityAsync();
         if (rootAuthority.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RRootAuthorityDto>>(rootAuthority));
-        return ResultResponse.BadRequest("未查询到系统权限");
+            return BaseResponseDto.OK(iMapper.Map<List<RRootAuthorityDto>>(rootAuthority));
+        return BaseResponseDto.BadRequest("未查询到系统权限");
     }
 
     #endregion 系统权限
@@ -196,7 +196,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleDto"></param>
     /// <returns></returns>
     [HttpPost("Role")]
-    public async Task<ResultModel> CreateRootRole([FromServices] IMapper iMapper, [FromBody] CRootRoleDto cRootRoleDto)
+    public async Task<BaseResultDto> CreateRootRole([FromServices] IMapper iMapper, [FromBody] CRootRoleDto cRootRoleDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -204,9 +204,9 @@ public class RootController : ControllerBase
             var userRole = iMapper.Map<RootRole>(cRootRoleDto);
             userRole.CreateId = Guid.Parse(user);
             if (await _IRootRoleService.CreateRootRoleAsync(userRole))
-                return ResultResponse.OK("新增系统角色成功");
+                return BaseResponseDto.OK("新增系统角色成功");
         }
-        return ResultResponse.BadRequest("新增系统角色失败");
+        return BaseResponseDto.BadRequest("新增系统角色失败");
     }
 
     /// <summary>
@@ -215,16 +215,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Role/{guid}")]
-    public async Task<ResultModel> DeleteRootRole([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteRootRole([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleService.DeleteRootRoleAsync(guid, deleteId))
-                return ResultResponse.OK("删除系统角色成功");
+                return BaseResponseDto.OK("删除系统角色成功");
         }
-        return ResultResponse.BadRequest("删除系统角色失败");
+        return BaseResponseDto.BadRequest("删除系统角色失败");
     }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleDto"></param>
     /// <returns></returns>
     [HttpPut("Role")]
-    public async Task<ResultModel> ModifyRootRole([FromServices] IMapper iMapper, [FromBody] CRootRoleDto cRootRoleDto)
+    public async Task<BaseResultDto> ModifyRootRole([FromServices] IMapper iMapper, [FromBody] CRootRoleDto cRootRoleDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -243,9 +243,9 @@ public class RootController : ControllerBase
             userRole.ModifyId = Guid.Parse(user);
             userRole = await _IRootRoleService.ModifyRootRoleAsync(userRole);
             if (userRole != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleDto>(userRole));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleDto>(userRole));
         }
-        return ResultResponse.BadRequest("修改系统角色失败");
+        return BaseResponseDto.BadRequest("修改系统角色失败");
     }
 
     /// <summary>
@@ -255,16 +255,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Role/{guid}")]
-    public async Task<ResultModel> FindRootRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto> FindRootRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userRole = await _IRootRoleService.FindRootRoleAsync(guid);
             if (userRole != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleDto>(userRole));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleDto>(userRole));
         }
-        return ResultResponse.BadRequest("该系统角色不存在");
+        return BaseResponseDto.BadRequest("该系统角色不存在");
     }
 
     /// <summary>
@@ -273,12 +273,12 @@ public class RootController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Roles")]
-    public async Task<ResultModel> QueryRootRoles([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryRootRoles([FromServices] IMapper iMapper)
     {
         var userRole = await _IRootRoleService.QueryRootRoleAsync();
         if (userRole.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RRootRoleDto>>(userRole));
-        return ResultResponse.BadRequest("未查询到系统角色");
+            return BaseResponseDto.OK(iMapper.Map<List<RRootRoleDto>>(userRole));
+        return BaseResponseDto.BadRequest("未查询到系统角色");
     }
 
     #endregion 系统角色
@@ -292,7 +292,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleAuthorityDto"></param>
     /// <returns></returns>
     [HttpPost("Role/Authority")]
-    public async Task<ResultModel> CreateRootRoleAuthority([FromServices] IMapper iMapper, [FromBody] CRootRoleAuthorityDto cRootRoleAuthorityDto)
+    public async Task<BaseResultDto> CreateRootRoleAuthority([FromServices] IMapper iMapper, [FromBody] CRootRoleAuthorityDto cRootRoleAuthorityDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -300,9 +300,9 @@ public class RootController : ControllerBase
             var rootRoleAuthority = iMapper.Map<RootRoleAuthority>(cRootRoleAuthorityDto);
             rootRoleAuthority.CreateId = Guid.Parse(user);
             if (await _IRootRoleAuthorityService.CreateRootRoleAuthorityAsync(rootRoleAuthority))
-                return ResultResponse.OK("新增系统角色权限成功");
+                return BaseResponseDto.OK("新增系统角色权限成功");
         }
-        return ResultResponse.BadRequest("新增系统角色权限失败");
+        return BaseResponseDto.BadRequest("新增系统角色权限失败");
     }
 
     /// <summary>
@@ -311,16 +311,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Role/Authority/{guid}")]
-    public async Task<ResultModel> DeleteRootRoleAuthority([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteRootRoleAuthority([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleAuthorityService.DeleteRootRoleAuthorityAsync(guid, deleteId))
-                return ResultResponse.OK("删除系统角色权限成功");
+                return BaseResponseDto.OK("删除系统角色权限成功");
         }
-        return ResultResponse.BadRequest("删除系统角色权限失败");
+        return BaseResponseDto.BadRequest("删除系统角色权限失败");
     }
 
     /// <summary>
@@ -330,7 +330,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleAuthorityDto"></param>
     /// <returns></returns>
     [HttpPut("Role/Authority")]
-    public async Task<ResultModel> ModifyRootRoleAuthority([FromServices] IMapper iMapper, [FromBody] CRootRoleAuthorityDto cRootRoleAuthorityDto)
+    public async Task<BaseResultDto> ModifyRootRoleAuthority([FromServices] IMapper iMapper, [FromBody] CRootRoleAuthorityDto cRootRoleAuthorityDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -339,9 +339,9 @@ public class RootController : ControllerBase
             rootRoleAuthority.ModifyId = Guid.Parse(user);
             rootRoleAuthority = await _IRootRoleAuthorityService.ModifyRootRoleAuthorityAsync(rootRoleAuthority);
             if (rootRoleAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
         }
-        return ResultResponse.BadRequest("修改系统角色权限失败");
+        return BaseResponseDto.BadRequest("修改系统角色权限失败");
     }
 
     /// <summary>
@@ -351,16 +351,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Role/Authority/{guid}")]
-    public async Task<ResultModel?> FindRootRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto?> FindRootRoleAuthority([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var rootRoleAuthority = await _IRootRoleAuthorityService.FindRootRoleAuthorityAsync(guid);
             if (rootRoleAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
         }
-        return ResultResponse.BadRequest("该系统角色权限不存在");
+        return BaseResponseDto.BadRequest("该系统角色权限不存在");
     }
 
     /// <summary>
@@ -369,12 +369,12 @@ public class RootController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Role/Authorities")]
-    public async Task<ResultModel> QueryRootRoleAuthorities([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryRootRoleAuthorities([FromServices] IMapper iMapper)
     {
         var rootRoleAuthority = await _IRootRoleAuthorityService.QueryRootRoleAuthorityAsync();
         if (rootRoleAuthority.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RRootRoleAuthorityDto>>(rootRoleAuthority));
-        return ResultResponse.BadRequest("未查询到系统角色权限");
+            return BaseResponseDto.OK(iMapper.Map<List<RRootRoleAuthorityDto>>(rootRoleAuthority));
+        return BaseResponseDto.BadRequest("未查询到系统角色权限");
     }
 
     #endregion 为系统角色分配权限
@@ -388,7 +388,7 @@ public class RootController : ControllerBase
     /// <param name="cRootMenuDto"></param>
     /// <returns></returns>
     [HttpPost("Menu")]
-    public async Task<ResultModel> CreateRootMenu([FromServices] IMapper iMapper, [FromBody] CRootMenuDto cRootMenuDto)
+    public async Task<BaseResultDto> CreateRootMenu([FromServices] IMapper iMapper, [FromBody] CRootMenuDto cRootMenuDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -396,9 +396,9 @@ public class RootController : ControllerBase
             var rootMenu = iMapper.Map<RootMenu>(cRootMenuDto);
             rootMenu.CreateId = Guid.Parse(user);
             if (await _IRootMenuService.CreateRootMenuAsync(rootMenu))
-                return ResultResponse.OK("新增系统菜单成功");
+                return BaseResponseDto.OK("新增系统菜单成功");
         }
-        return ResultResponse.BadRequest("新增系统菜单失败");
+        return BaseResponseDto.BadRequest("新增系统菜单失败");
     }
 
     /// <summary>
@@ -407,16 +407,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Menu/{guid}")]
-    public async Task<ResultModel> DeleteRootMenu([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteRootMenu([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootMenuService.DeleteRootMenuAsync(guid, deleteId))
-                return ResultResponse.OK("删除系统菜单成功");
+                return BaseResponseDto.OK("删除系统菜单成功");
         }
-        return ResultResponse.BadRequest("删除系统菜单失败");
+        return BaseResponseDto.BadRequest("删除系统菜单失败");
     }
 
     /// <summary>
@@ -426,7 +426,7 @@ public class RootController : ControllerBase
     /// <param name="cRootMenuDto"></param>
     /// <returns></returns>
     [HttpPut("Menu")]
-    public async Task<ResultModel> ModifyRootMenu([FromServices] IMapper iMapper, [FromBody] CRootMenuDto cRootMenuDto)
+    public async Task<BaseResultDto> ModifyRootMenu([FromServices] IMapper iMapper, [FromBody] CRootMenuDto cRootMenuDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -435,9 +435,9 @@ public class RootController : ControllerBase
             rootMenu.ModifyId = Guid.Parse(user);
             rootMenu = await _IRootMenuService.ModifyRootMenuAsync(rootMenu);
             if (rootMenu != null)
-                return ResultResponse.OK(iMapper.Map<RRootMenuDto>(rootMenu));
+                return BaseResponseDto.OK(iMapper.Map<RRootMenuDto>(rootMenu));
         }
-        return ResultResponse.BadRequest("修改系统菜单失败");
+        return BaseResponseDto.BadRequest("修改系统菜单失败");
     }
 
     /// <summary>
@@ -447,16 +447,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Menu/{guid}")]
-    public async Task<ResultModel> FindRootMenu([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto> FindRootMenu([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var rootMenu = await _IRootMenuService.FindRootMenuAsync(guid);
             if (rootMenu != null)
-                return ResultResponse.OK(iMapper.Map<RRootMenuDto>(rootMenu));
+                return BaseResponseDto.OK(iMapper.Map<RRootMenuDto>(rootMenu));
         }
-        return ResultResponse.BadRequest("该系统菜单不存在");
+        return BaseResponseDto.BadRequest("该系统菜单不存在");
     }
 
     /// <summary>
@@ -465,12 +465,12 @@ public class RootController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Menus")]
-    public async Task<ResultModel> QueryRootMenus([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryRootMenus([FromServices] IMapper iMapper)
     {
         var rootMenu = await _IRootMenuService.QueryRootMenuAsync();
         if (rootMenu.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RRootMenuDto>>(rootMenu));
-        return ResultResponse.BadRequest("未查询到系统菜单");
+            return BaseResponseDto.OK(iMapper.Map<List<RRootMenuDto>>(rootMenu));
+        return BaseResponseDto.BadRequest("未查询到系统菜单");
     }
 
     #endregion 系统菜单
@@ -484,7 +484,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleMenuDto"></param>
     /// <returns></returns>
     [HttpPost("Role/Menu")]
-    public async Task<ResultModel> CreateRootRoleMenu([FromServices] IMapper iMapper, [FromBody] CRootRoleMenuDto cRootRoleMenuDto)
+    public async Task<BaseResultDto> CreateRootRoleMenu([FromServices] IMapper iMapper, [FromBody] CRootRoleMenuDto cRootRoleMenuDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -492,9 +492,9 @@ public class RootController : ControllerBase
             var rootRoleAuthority = iMapper.Map<RootRoleMenu>(cRootRoleMenuDto);
             rootRoleAuthority.CreateId = Guid.Parse(user);
             if (await _IRootRoleMenuService.CreateRootRoleMenuAsync(rootRoleAuthority))
-                return ResultResponse.OK("新增系统角色菜单成功");
+                return BaseResponseDto.OK("新增系统角色菜单成功");
         }
-        return ResultResponse.BadRequest("新增系统角色菜单失败");
+        return BaseResponseDto.BadRequest("新增系统角色菜单失败");
     }
 
     /// <summary>
@@ -503,16 +503,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Role/Menu/{guid}")]
-    public async Task<ResultModel> DeleteRootRoleMenu([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteRootRoleMenu([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleMenuService.DeleteRootRoleMenuAsync(guid, deleteId))
-                return ResultResponse.OK("删除系统角色菜单成功");
+                return BaseResponseDto.OK("删除系统角色菜单成功");
         }
-        return ResultResponse.BadRequest("删除系统角色菜单失败");
+        return BaseResponseDto.BadRequest("删除系统角色菜单失败");
     }
 
     /// <summary>
@@ -522,7 +522,7 @@ public class RootController : ControllerBase
     /// <param name="cRootRoleMenuDto"></param>
     /// <returns></returns>
     [HttpPut("Role/Menu")]
-    public async Task<ResultModel> ModifyRootRoleMenu([FromServices] IMapper iMapper, [FromBody] CRootRoleMenuDto cRootRoleMenuDto)
+    public async Task<BaseResultDto> ModifyRootRoleMenu([FromServices] IMapper iMapper, [FromBody] CRootRoleMenuDto cRootRoleMenuDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -531,9 +531,9 @@ public class RootController : ControllerBase
             rootRoleAuthority.ModifyId = Guid.Parse(user);
             rootRoleAuthority = await _IRootRoleMenuService.ModifyRootRoleMenuAsync(rootRoleAuthority);
             if (rootRoleAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
         }
-        return ResultResponse.BadRequest("修改系统角色菜单失败");
+        return BaseResponseDto.BadRequest("修改系统角色菜单失败");
     }
 
     /// <summary>
@@ -543,16 +543,16 @@ public class RootController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Role/Menu/{guid}")]
-    public async Task<ResultModel?> FindRootRoleMenu([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto?> FindRootRoleMenu([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var rootRoleAuthority = await _IRootRoleMenuService.FindRootRoleMenuAsync(guid);
             if (rootRoleAuthority != null)
-                return ResultResponse.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
+                return BaseResponseDto.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
         }
-        return ResultResponse.BadRequest("该系统角色菜单不存在");
+        return BaseResponseDto.BadRequest("该系统角色菜单不存在");
     }
 
     /// <summary>
@@ -561,12 +561,12 @@ public class RootController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Role/Menus")]
-    public async Task<ResultModel> QueryRootRoleMenus([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryRootRoleMenus([FromServices] IMapper iMapper)
     {
         var rootRoleAuthority = await _IRootRoleMenuService.QueryRootRoleMenuAsync();
         if (rootRoleAuthority.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RRootRoleMenuDto>>(rootRoleAuthority));
-        return ResultResponse.BadRequest("未查询到系统角色菜单");
+            return BaseResponseDto.OK(iMapper.Map<List<RRootRoleMenuDto>>(rootRoleAuthority));
+        return BaseResponseDto.BadRequest("未查询到系统角色菜单");
     }
 
     #endregion 为系统角色分配系统菜单

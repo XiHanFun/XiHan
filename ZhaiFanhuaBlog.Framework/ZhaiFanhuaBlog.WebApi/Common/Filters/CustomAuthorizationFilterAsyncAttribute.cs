@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -72,7 +72,7 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
             if (Identities == null)
             {
                 // 返回未授权
-                context.Result = new JsonResult(ResultResponse.Unauthorized());
+                context.Result = new JsonResult(BaseResponseDto.Unauthorized());
                 // 写入日志
                 string info = $"\t 请求Ip：{remoteIp}\n" +
                        $"\t 请求地址：{requestUrl}\n" +

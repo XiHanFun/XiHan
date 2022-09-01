@@ -109,7 +109,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     }
 
     /// <summary>
-    /// 查找博客文章
+    /// 获取博客文章详细信息
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
@@ -120,7 +120,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     }
 
     /// <summary>
-    /// 查询博客文章
+    /// 分页查询博客文章
     /// </summary>
     /// <returns></returns>
     public async Task<List<BlogArticle>> QueryBlogArticleAsync()

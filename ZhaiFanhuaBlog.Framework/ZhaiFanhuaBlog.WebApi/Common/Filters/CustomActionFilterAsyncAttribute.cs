@@ -12,9 +12,8 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System.Security.Claims;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -49,11 +48,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         // 模型验证
         if (!context.ModelState.IsValid)
         {
-            var validResult = context.ModelState.Keys
-                .SelectMany(key => context!.ModelState[key]!.Errors
-                .Select(x => new ValidationError(key, x.ErrorMessage)))
-                .ToList<dynamic>();
-            context.Result = new JsonResult(ResultResponse.UnprocessableEntity(validResult.Count, validResult));
+            context.Result = new JsonResult(BaseResponseDto.UnprocessableEntity(context));
         }
         else
         {

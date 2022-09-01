@@ -10,9 +10,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Sites;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Sites;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Sites;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -48,7 +48,7 @@ public class SiteController : ControllerBase
     /// <returns></returns>
     [HttpPost("Configuration/Init")]
     [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
-    public async Task<ResultModel> Init([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> Init([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()
         {
@@ -60,7 +60,7 @@ public class SiteController : ControllerBase
         };
         var siteConfiguration = iMapper.Map<SiteConfiguration>(configuration);
         if (await _ISiteConfigurationService.CreateSiteConfigurationAsync(siteConfiguration))
-            return ResultResponse.OK("站点初始化配置成功");
-        return ResultResponse.BadRequest("站点初始化配置失败");
+            return BaseResponseDto.OK("站点初始化配置成功");
+        return BaseResponseDto.BadRequest("站点初始化配置失败");
     }
 }

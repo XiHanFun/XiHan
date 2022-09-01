@@ -13,11 +13,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -50,7 +50,7 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountName")]
-    public async Task<ResultModel> GetTokenByAccountName(CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
+    public async Task<BaseResultDto> GetTokenByAccountName(CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.Name);
@@ -58,7 +58,7 @@ public class AuthorizeController : ControllerBase
             throw new ApplicationException("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        return ResultResponse.OK(GetToken(userAccount));
+        return BaseResponseDto.OK(GetToken(userAccount));
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class AuthorizeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("Token/AccountEmail")]
-    public async Task<ResultModel> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
+    public async Task<BaseResultDto> GetTokenByAccountEmail(CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.Email);
@@ -74,7 +74,7 @@ public class AuthorizeController : ControllerBase
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        return ResultResponse.OK(GetToken(userAccount));
+        return BaseResponseDto.OK(GetToken(userAccount));
     }
 
     /// <summary>

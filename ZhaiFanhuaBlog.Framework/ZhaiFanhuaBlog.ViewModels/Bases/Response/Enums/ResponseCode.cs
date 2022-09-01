@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ResultCode
+// FileName:ResponseCode
 // Guid:ddb456f8-1a70-45ba-b968-397a0691dae4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -9,12 +9,12 @@
 
 using System.ComponentModel;
 
-namespace ZhaiFanhuaBlog.Models.Response.Enum;
+namespace ZhaiFanhuaBlog.ViewModels.Response.Enum;
 
 /// <summary>
-/// 结果状态码
+/// 通用结果标识
 /// </summary>
-public enum ResultCode
+public enum ResponseCode
 {
     /// <summary>
     /// 继续请求

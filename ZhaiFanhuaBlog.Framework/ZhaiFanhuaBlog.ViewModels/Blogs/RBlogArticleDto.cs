@@ -7,14 +7,14 @@
 // CreateTime:2022-07-28 上午 02:38:26
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases.Fields;
 
 namespace ZhaiFanhuaBlog.ViewModels.Blogs;
 
 /// <summary>
 /// RBlogArticleDto
 /// </summary>
-public class RBlogArticleDto : RBaseDto
+public class RBlogArticleDto : BaseFieldDto
 {
     /// <summary>
     /// 文章作者

@@ -10,8 +10,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -66,7 +66,7 @@ public static class CustomJwtExtension
                     {
                         // 跳过默认的处理逻辑，返回下面的模型数据
                         context.HandleResponse();
-                        return Task.FromResult(ResultResponse.Unauthorized());
+                        return Task.FromResult(BaseResponseDto.Unauthorized());
                     }
                 };
             });

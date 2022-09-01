@@ -12,4 +12,8 @@
     <ProjectReference Include="..\ZhaiFanhuaBlog.Models\ZhaiFanhuaBlog.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Bases\Query\" />
+  </ItemGroup>
+
 </Project>

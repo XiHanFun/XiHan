@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ReturnStatus
+// FileName:ResponseStatus
 // Guid:61eebc1f-97fa-4966-8d17-d69dabf079f2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-17 下午 09:28:34
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Response.Enum;
+namespace ZhaiFanhuaBlog.ViewModels.Response.Enum;
 
 /// <summary>
-/// 返回状态
+/// 通用结果状态
 /// </summary>
-public enum ReturnStatus
+public enum ResponseStatus
 {
     /// <summary>
     /// 失败

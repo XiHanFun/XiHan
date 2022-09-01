@@ -273,25 +273,25 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="pageIndex">页面索引</param>
+    /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryPageListAsync(int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await base.Context.Queryable<TEntity>().ToPageListAsync(pageIndex, pageSize, totalCount);
+        return await base.Context.Queryable<TEntity>().ToPageListAsync(currentIndex, pageSize, totalCount);
     }
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
     /// <param name="func">自定义条件</param>
-    /// <param name="pageIndex">页面索引</param>
+    /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int pageIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await base.Context.Queryable<TEntity>().Where(func).ToPageListAsync(pageIndex, pageSize, totalCount);
+        return await base.Context.Queryable<TEntity>().Where(func).ToPageListAsync(currentIndex, pageSize, totalCount);
     }
 }

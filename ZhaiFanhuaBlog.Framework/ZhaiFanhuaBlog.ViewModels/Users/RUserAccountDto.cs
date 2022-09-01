@@ -8,14 +8,14 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.ViewModels.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases.Fields;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
 
 /// <summary>
 /// RUserAccountDto
 /// </summary>
-public class RUserAccountDto : RBaseDto
+public class RUserAccountDto : BaseFieldDto
 {
     /// <summary>
     /// 用户名称

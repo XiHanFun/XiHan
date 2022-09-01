@@ -1,26 +1,26 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:TableModel
+// FileName:BaseTableDto
 // Guid:9d512d36-cd5c-4102-bed2-6457e9093085
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-02-20 下午 08:44:39
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Bases.Response.Model;
+namespace ZhaiFanhuaBlog.ViewModels.Bases.Tables;
 
 /// <summary>
-/// 表格数据(支持分页)
+/// 通用表格实体(支持分页)
 /// </summary>
-public class TableModel
+public class BaseTableDto<Entity> where Entity : class
 {
     /// <summary>
     /// 数据总数
     /// </summary>
-    public int DataCount { get; set; }
+    public int TotalCount { get; set; }
 
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<dynamic>? Data { get; set; }
+    public List<Entity>? Data { get; set; }
 }

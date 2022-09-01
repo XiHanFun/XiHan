@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -53,13 +53,13 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
                 // 判断是否Ajax请求，是就返回Json
                 //if (this.IsAjaxRequest(context.HttpContext.Request))
                 //{
-                context.Result = new JsonResult(ResultResponse.BadRequest(context.Exception.Message));
+                context.Result = new JsonResult(BaseResponseDto.BadRequest(context.Exception.Message));
                 //}
             }
             else
             {
                 // 系统级别异常，不直接明文显示
-                context.Result = new JsonResult(ResultResponse.InternalServerError());
+                context.Result = new JsonResult(BaseResponseDto.InternalServerError());
                 // 获取控制器、路由信息
                 var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
                 // 获取请求的方法

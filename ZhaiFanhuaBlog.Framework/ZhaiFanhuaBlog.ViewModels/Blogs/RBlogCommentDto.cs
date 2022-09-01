@@ -9,14 +9,14 @@
 
 using System.Net;
 using ZhaiFanhuaBlog.Utils.Formats;
-using ZhaiFanhuaBlog.ViewModels.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases.Fields;
 
 namespace ZhaiFanhuaBlog.ViewModels.Blogs;
 
 /// <summary>
 /// RBlogCommentDto
 /// </summary>
-public class RBlogCommentDto : RBaseDto
+public class RBlogCommentDto : BaseFieldDto
 {
     /// <summary>
     /// 评论者

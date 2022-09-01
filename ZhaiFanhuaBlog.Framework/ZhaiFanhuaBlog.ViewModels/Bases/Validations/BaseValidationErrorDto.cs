@@ -1,41 +1,25 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DtoModel
-// Guid:f5a8be81-8e6c-4c3d-92a4-1fedd51f1ecc
+// FileName:BaseValidationErrorDto
+// Guid:ac177ec3-7b1b-4ce2-9c27-b528784fb176
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-17 上午 03:17:37
+// CreateTime:2022-09-01 下午 11:42:36
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Bases.Response.Model;
+namespace ZhaiFanhuaBlog.ViewModels.Bases.Validation;
 
 /// <summary>
-/// 验证数据类
+/// 验证出错字段实体基类
 /// </summary>
-public class DtoModel
-{
-    /// <summary>
-    /// 数据总数
-    /// </summary>
-    public int DataCount { get; set; }
-
-    /// <summary>
-    /// 数据集合
-    /// </summary>
-    public List<dynamic>? Data { get; set; }
-}
-
-/// <summary>
-/// 验证字段
-/// </summary>
-public class ValidationError
+public class BaseValidationErrorDto
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="field"></param>
     /// <param name="message"></param>
-    public ValidationError(string? field, string? message)
+    public BaseValidationErrorDto(string? field, string? message)
     {
         Field = field != string.Empty ? field : null;
         Message = message;

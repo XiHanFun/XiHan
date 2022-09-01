@@ -10,13 +10,15 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SqlSugar;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
-using ZhaiFanhuaBlog.Models.Bases.Response.Model;
-using ZhaiFanhuaBlog.Models.Response;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -61,15 +63,15 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Account")]
-    public async Task<ResultModel> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cUserAccountDto)
+    public async Task<BaseResultDto> CreateUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cUserAccountDto)
     {
         var userAccount = iMapper.Map<UserAccount>(cUserAccountDto);
         // 密码加密
         userAccount.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountDto.Password);
         userAccount.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.GetAddressBytes();
         if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
-            return ResultResponse.OK("新增用户账户成功");
-        return ResultResponse.BadRequest("新增用户账户失败");
+            return BaseResponseDto.OK("新增用户账户成功");
+        return BaseResponseDto.BadRequest("新增用户账户失败");
     }
 
     /// <summary>
@@ -78,16 +80,16 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Account/{guid}")]
-    public async Task<ResultModel> DeleteUserAccount([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteUserAccount([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IUserAccountService.DeleteUserAccountAsync(guid, deleteId))
-                return ResultResponse.OK("删除用户账户成功");
+                return BaseResponseDto.OK("删除用户账户成功");
         }
-        return ResultResponse.BadRequest("删除用户账户失败");
+        return BaseResponseDto.BadRequest("删除用户账户失败");
     }
 
     /// <summary>
@@ -97,7 +99,7 @@ public class UserController : ControllerBase
     /// <param name="cUserAccountDto"></param>
     /// <returns></returns>
     [HttpPut("Account")]
-    public async Task<ResultModel> ModifyUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cUserAccountDto)
+    public async Task<BaseResultDto> ModifyUserAccount([FromServices] IMapper iMapper, [FromBody] CUserAccountDto cUserAccountDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -108,9 +110,9 @@ public class UserController : ControllerBase
             userAccount.ModifyId = Guid.Parse(user);
             userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
             if (userAccount != null)
-                return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
+                return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
         }
-        return ResultResponse.BadRequest("修改用户账户失败");
+        return BaseResponseDto.BadRequest("修改用户账户失败");
     }
 
     /// <summary>
@@ -120,31 +122,36 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Account/{guid}")]
-    public async Task<ResultModel> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
             if (userAccount != null)
-                return ResultResponse.OK(iMapper.Map<RUserAccountDto>(userAccount));
+                return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
         }
-        return ResultResponse.BadRequest("该用户账户不存在");
+        return BaseResponseDto.BadRequest("该用户账户不存在");
     }
 
     /// <summary>
     /// 查询用户账户
     /// </summary>
     /// <param name="iMapper"></param>
+    /// <param name="pageDto"></param>
     /// <returns></returns>
-    [HttpGet("Accounts")]
+    [HttpPost("Accounts")]
     [AllowAnonymous]
-    public async Task<ResultModel> QueryUserAccounts([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryUserAccounts([FromServices] IMapper iMapper, [FromBody] BasePageDto pageDto)
     {
-        var userAccount = await _IUserAccountService.QueryUserAccountAsync();
+        RefAsync<int> totalCount = 0;
+        var userAccount = await _IUserAccountService.QueryPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
         if (userAccount.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserAccountDto>>(userAccount));
-        return ResultResponse.BadRequest("未查询到用户账户");
+        {
+            var result = iMapper.Map<List<RUserAccountDto>>(userAccount);
+            return BaseResponseDto.OK(result.ToPageDataDto(pageDto, totalCount));
+        }
+        return BaseResponseDto.BadRequest("未查询到用户账户");
     }
 
     #endregion 用户账户
@@ -158,7 +165,7 @@ public class UserController : ControllerBase
     /// <param name="cUserAccountRoleDto"></param>
     /// <returns></returns>
     [HttpPost("Account/Role")]
-    public async Task<ResultModel> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
+    public async Task<BaseResultDto> CreateUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -166,9 +173,9 @@ public class UserController : ControllerBase
             var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
             userAccountRole.CreateId = Guid.Parse(user);
             if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
-                return ResultResponse.OK("新增用户账户角色成功");
+                return BaseResponseDto.OK("新增用户账户角色成功");
         }
-        return ResultResponse.BadRequest("新增用户账户角色失败");
+        return BaseResponseDto.BadRequest("新增用户账户角色失败");
     }
 
     /// <summary>
@@ -177,16 +184,16 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpDelete("Account/Role/{guid}")]
-    public async Task<ResultModel> DeleteUserAccountRole([FromRoute] Guid guid)
+    public async Task<BaseResultDto> DeleteUserAccountRole([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid, deleteId))
-                return ResultResponse.OK("删除用户账户角色成功");
+                return BaseResponseDto.OK("删除用户账户角色成功");
         }
-        return ResultResponse.BadRequest("删除用户账户角色失败");
+        return BaseResponseDto.BadRequest("删除用户账户角色失败");
     }
 
     /// <summary>
@@ -196,7 +203,7 @@ public class UserController : ControllerBase
     /// <param name="cUserAccountRoleDto"></param>
     /// <returns></returns>
     [HttpPut("Account/Role")]
-    public async Task<ResultModel> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
+    public async Task<BaseResultDto> ModifyUserAccountRole([FromServices] IMapper iMapper, [FromBody] CUserAccountRoleDto cUserAccountRoleDto)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
@@ -205,9 +212,9 @@ public class UserController : ControllerBase
             userAccountRole.ModifyId = Guid.Parse(user);
             userAccountRole = await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole);
             if (userAccountRole != null)
-                return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
+                return BaseResponseDto.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
         }
-        return ResultResponse.BadRequest("修改用户账户角色失败");
+        return BaseResponseDto.BadRequest("修改用户账户角色失败");
     }
 
     /// <summary>
@@ -217,16 +224,16 @@ public class UserController : ControllerBase
     /// <param name="guid"></param>
     /// <returns></returns>
     [HttpGet("Account/Role/{guid}")]
-    public async Task<ResultModel> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
+    public async Task<BaseResultDto> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
         if (user != null)
         {
             var userAccountRole = await _IUserAccountRoleService.FindUserAccountRoleAsync(guid);
             if (userAccountRole != null)
-                return ResultResponse.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
+                return BaseResponseDto.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
         }
-        return ResultResponse.BadRequest("该用户账户角色不存在");
+        return BaseResponseDto.BadRequest("该用户账户角色不存在");
     }
 
     /// <summary>
@@ -235,12 +242,12 @@ public class UserController : ControllerBase
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [HttpGet("Account/Roles")]
-    public async Task<ResultModel> QueryUserAccountRoles([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> QueryUserAccountRoles([FromServices] IMapper iMapper)
     {
         var userAccountRole = await _IUserAccountRoleService.QueryUserAccountRoleAsync();
         if (userAccountRole.Count != 0)
-            return ResultResponse.OK(iMapper.Map<List<RUserAccountRoleDto>>(userAccountRole));
-        return ResultResponse.OK("未查询到用户账户角色");
+            return BaseResponseDto.OK(iMapper.Map<List<RUserAccountRoleDto>>(userAccountRole));
+        return BaseResponseDto.OK("未查询到用户账户角色");
     }
 
     #endregion 为用户账户分配角色

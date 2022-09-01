@@ -130,7 +130,24 @@ public class BlogArticleTagService : BaseService<BlogArticleTag>, IBlogArticleTa
     }
 
     /// <summary>
-    /// 查询博客文章标签
+    /// 根据文章Id查寻所有标签
+    /// </summary>
+    /// <param name="articleGuid"></param>
+    /// <returns></returns>
+    public async Task<List<BlogTag>> QueryBlogArticleTagAsync(Guid articleGuid)
+    {
+        var blogArticleTag = from blogarticletag in await _IBlogArticleTagRepository.QueryListAsync(e => !e.SoftDeleteLock && e.ArticleId == articleGuid)
+                             join blogtag in await _IBlogTagService.QueryListAsync(e => !e.SoftDeleteLock) on blogarticletag.TagId equals blogtag.BaseId
+                             orderby blogarticletag.CreateTime descending
+                             select new BlogTag
+                             {
+                                 TagName = blogtag.TagName,
+                             };
+        return blogArticleTag.ToList();
+    }
+
+    /// <summary>
+    /// 查询所有博客文章标签
     /// </summary>
     /// <returns></returns>
     public async Task<List<BlogArticleTag>> QueryBlogArticleTagAsync()
