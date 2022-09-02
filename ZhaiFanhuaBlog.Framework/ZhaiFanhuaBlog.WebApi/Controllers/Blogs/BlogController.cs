@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Blogs;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 
@@ -25,11 +26,8 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 /// 博客管理
 /// </summary>
 [Authorize]
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-public class BlogController : ControllerBase
+public class BlogController : BaseApiController
 {
     private readonly IUserAccountService _IUserAccountService;
     private readonly IBlogCategoryService _IBlogCategoryService;

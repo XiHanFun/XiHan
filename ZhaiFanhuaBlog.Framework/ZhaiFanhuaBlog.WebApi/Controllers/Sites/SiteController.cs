@@ -16,17 +16,15 @@ using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Sites;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
+using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers;
 
 /// <summary>
 /// 网站配置
 /// </summary>
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-public class SiteController : ControllerBase
+public class SiteController : BaseApiController
 {
     private IConfiguration _IConfiguration;
     private readonly ISiteConfigurationService _ISiteConfigurationService;

@@ -284,6 +284,27 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize)
+    {
+        return await base.Context.Queryable<TEntity>().ToPageDataDto(currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="pageDto">分页传入实体</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto)
+    {
+        return await base.Context.Queryable<TEntity>().ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
+    }
+
+    /// <summary>
     /// 自定义条件分页查询
     /// </summary>
     /// <param name="func">自定义条件</param>
@@ -302,10 +323,20 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="func">自定义条件</param>
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
-    /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize)
     {
         return await base.Context.Queryable<TEntity>().Where(func).ToPageDataDto(currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <param name="pageDto">分页传入实体</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto)
+    {
+        return await base.Context.Queryable<TEntity>().Where(func).ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
     }
 }

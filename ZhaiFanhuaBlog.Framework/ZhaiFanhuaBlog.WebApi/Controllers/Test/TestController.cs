@@ -15,6 +15,7 @@ using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Common.Filters;
+using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 
@@ -22,11 +23,8 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 /// 测试接口
 /// </summary>
 [AllowAnonymous]
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
-public class TestController : ControllerBase
+public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
     private readonly IConfiguration _IConfiguration;

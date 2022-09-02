@@ -20,17 +20,15 @@ using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
 /// <summary>
 /// 登录授权
 /// </summary>
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
-public class AuthorizeController : ControllerBase
+public class AuthorizeController : BaseApiController
 {
     private readonly IConfiguration _IConfiguration;
     private readonly IUserAccountService _IUserAccountService;

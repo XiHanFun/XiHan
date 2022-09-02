@@ -31,15 +31,6 @@ public class BasePageDto
 public class PageDto : BasePageDto
 {
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    public PageDto()
-    {
-        int divisible = TotalCount % base.PageSize == 0 ? 1 : 2;
-        PageCount = TotalCount / base.PageSize + divisible;
-    }
-
-    /// <summary>
     /// 数据总数
     /// </summary>
     public int TotalCount { get; set; }

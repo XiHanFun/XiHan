@@ -27,31 +27,28 @@ public static class CustomCacheExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomCache(this IServiceCollection services)
     {
-        if (ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled"))
+        services.AddMemoryCache(options => new MemoryCacheOptions
         {
-            services.AddMemoryCache(options => new MemoryCacheOptions
-            {
-                // 最大缓存个数限制
-                SizeLimit = 60
-            });
-            // 分布式缓存
-            if (ConfigHelper.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
-            {
-                // CSRedis
-                var connectionString = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
-                var instanceName = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
-                var redisStr = $"{connectionString}, prefix = {instanceName}";
-                // 用法一：基于Redis初始化IDistributedCache
-                services.AddSingleton(new CSRedisClient(redisStr));
-                services.AddSingleton<IDistributedCache>(new CSRedisCache(new CSRedisClient(redisStr)));
-                // 用法二：帮助类直接调用
-                RedisHelper.Initialization(new CSRedisClient(redisStr));
-            }
-            // 响应缓存
-            if (ConfigHelper.Configuration.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
-            {
-                services.AddResponseCaching();
-            }
+            // 最大缓存个数限制
+            SizeLimit = 60
+        });
+        // 分布式缓存
+        if (ConfigHelper.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
+        {
+            // CSRedis
+            var connectionString = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
+            var instanceName = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
+            var redisStr = $"{connectionString}, prefix = {instanceName}";
+            // 用法一：基于Redis初始化IDistributedCache
+            services.AddSingleton(new CSRedisClient(redisStr));
+            services.AddSingleton<IDistributedCache>(new CSRedisCache(new CSRedisClient(redisStr)));
+            // 用法二：帮助类直接调用
+            RedisHelper.Initialization(new CSRedisClient(redisStr));
+        }
+        // 响应缓存
+        if (ConfigHelper.Configuration.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
+        {
+            services.AddResponseCaching();
         }
         return services;
     }

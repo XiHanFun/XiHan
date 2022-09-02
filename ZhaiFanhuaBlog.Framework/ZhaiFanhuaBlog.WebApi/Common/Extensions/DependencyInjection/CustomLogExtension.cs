@@ -32,12 +32,13 @@ public static class CustomLogExtension
         string errorPath = AppContext.BaseDirectory + @"Logs/Error/.log";
         string fatalPath = AppContext.BaseDirectory + @"Logs/Fatal/.log";
         Serilog.Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
+                .MinimumLevel.Debug()
                 // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Information
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 // 输出到控制台
                 //.WriteTo.Console()
+                .Enrich.FromLogContext()
+                // -----------------------------------------Information------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Information)
                 // 异步输出到文件
                 .WriteTo.Async(congfig => congfig.File(
@@ -54,6 +55,7 @@ public static class CustomLogExtension
                     shared: true,
                     outputTemplate: infoTemplate)
                 ))
+                // -----------------------------------------Warning------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Warning)
                 .WriteTo.Async(congfig => congfig.File(
                     waringPath.ToLower(),
@@ -64,6 +66,7 @@ public static class CustomLogExtension
                     shared: true,
                     outputTemplate: otherTemplate)
                 ))
+                // -----------------------------------------Error------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Error)
                 .WriteTo.Async(congfig => congfig.File(
                     errorPath.ToLower(),
@@ -74,6 +77,7 @@ public static class CustomLogExtension
                     shared: true,
                     outputTemplate: otherTemplate)
                 ))
+                // -----------------------------------------Fatal------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Fatal)
                 .WriteTo.Async(congfig => congfig.File(
                     fatalPath.ToLower(),

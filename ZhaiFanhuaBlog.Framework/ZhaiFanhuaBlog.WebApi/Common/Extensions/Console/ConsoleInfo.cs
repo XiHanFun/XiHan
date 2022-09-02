@@ -75,21 +75,17 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"连接类型：{ConfigHelper.Configuration.GetValue<string>("Database:Type")}");
         ConsoleHelper.WriteLineInfo($@"是否初始化：{ConfigHelper.Configuration.GetValue<string>("Database:Initialization")}");
         ConsoleHelper.WriteLineInfo("===============缓存===============");
-        ConsoleHelper.WriteLineInfo($@"是否启用：{ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled")}");
-        if (ConfigHelper.Configuration.GetValue<bool>("Cache:IsEnabled"))
-        {
-            ConsoleHelper.WriteLineInfo($@"内存中缓存是否启用：默认启用");
-            ConsoleHelper.WriteLineInfo($@"分布式缓存是否启用：{ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
-            ConsoleHelper.WriteLineInfo($@"响应缓存是否启用：{ConfigHelper.Configuration.GetValue<string>("Cache:ResponseCache:IsEnabled")}");
-        }
+        ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用");
+        ConsoleHelper.WriteLineInfo($@"分布式缓存：{ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
+        ConsoleHelper.WriteLineInfo($@"响应式缓存：{ConfigHelper.Configuration.GetValue<string>("Cache:ResponseCache:IsEnabled")}");
         ConsoleHelper.WriteLineInfo("===============跨域===============");
         ConsoleHelper.WriteLineInfo($@"是否启用：{ConfigHelper.Configuration.GetValue<bool>("Cors:IsEnabled")}");
         ConsoleHelper.WriteLineInfo("===============日志===============");
-        ConsoleHelper.WriteLineInfo($@"授权日志是否启用：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Authorization")}");
-        ConsoleHelper.WriteLineInfo($@"资源日志是否启用：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Resource")}");
-        ConsoleHelper.WriteLineInfo($@"请求日志是否启用：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action")}");
-        ConsoleHelper.WriteLineInfo($@"结果日志是否启用：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Result")}");
-        ConsoleHelper.WriteLineInfo($@"异常日志是否启用：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Exception")}");
+        ConsoleHelper.WriteLineInfo($@"授权日志：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Authorization")}");
+        ConsoleHelper.WriteLineInfo($@"资源日志：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Resource")}");
+        ConsoleHelper.WriteLineInfo($@"请求日志：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action")}");
+        ConsoleHelper.WriteLineInfo($@"结果日志：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Result")}");
+        ConsoleHelper.WriteLineInfo($@"异常日志：{ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Exception")}");
         ConsoleHelper.WriteLineInfo("==============================启动信息==============================");
     }
 }

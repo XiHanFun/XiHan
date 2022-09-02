@@ -10,7 +10,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
 using SqlSugar;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
@@ -21,6 +23,7 @@ using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
+using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
@@ -28,11 +31,8 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 /// 用户管理
 /// </summary>
 [Authorize]
-[ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
     private readonly IUserAccountRoleService _IUserAccountRoleService;
@@ -144,14 +144,14 @@ public class UserController : ControllerBase
     [AllowAnonymous]
     public async Task<BaseResultDto> QueryUserAccounts([FromServices] IMapper iMapper, [FromBody] BasePageDto pageDto)
     {
-        RefAsync<int> totalCount = 0;
-        var userAccount = await _IUserAccountService.QueryPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
-        if (userAccount.Count != 0)
-        {
-            var result = iMapper.Map<List<RUserAccountDto>>(userAccount);
-            return BaseResponseDto.OK(result.ToPageDataDto(pageDto, totalCount));
-        }
-        return BaseResponseDto.BadRequest("未查询到用户账户");
+        var userAccount = await _IUserAccountService.QueryPageDataDtoAsync(pageDto);
+        return BaseResponseDto.OK(userAccount);
+        //if (userAccount.Datas != null)
+        //{
+        //    var result = iMapper.Map<List<RUserAccountDto>>(userAccount.Datas);
+        //    return BaseResponseDto.OK(result);
+        //}
+        //return BaseResponseDto.BadRequest("未查询到用户账户");
     }
 
     #endregion 用户账户

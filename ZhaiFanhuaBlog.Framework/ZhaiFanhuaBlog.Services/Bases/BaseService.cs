@@ -11,6 +11,7 @@ using SqlSugar;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.IRepositories.Bases;
 using ZhaiFanhuaBlog.IServices.Bases;
+using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
 namespace ZhaiFanhuaBlog.Services.Bases;
 
@@ -217,6 +218,27 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     }
 
     /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize)
+    {
+        return await _IBaseRepository!.QueryPageDataDtoAsync(currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 分页查询
+    /// </summary>
+    /// <param name="pageDto">分页传入实体</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto)
+    {
+        return await _IBaseRepository!.QueryPageDataDtoAsync(pageDto);
+    }
+
+    /// <summary>
     /// 自定义条件分页查询
     /// </summary>
     /// <param name="func">自定义条件</param>
@@ -227,5 +249,28 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await _IBaseRepository!.QueryPageListAsync(func, currentIndex, pageSize, totalCount);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize)
+    {
+        return await _IBaseRepository!.QueryPageDataDtoAsync(func, currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <param name="pageDto">分页传入实体</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto)
+    {
+        return await _IBaseRepository!.QueryPageDataDtoAsync(func, pageDto);
     }
 }
