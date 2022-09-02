@@ -3,8 +3,9 @@
 
 
 <div style="width: 400px;margin: 0 auto;">
-        <img style="height:60px" align="center" src="LOGO.png" />
+        <img style="height:200px" align="center" src="LOGO.png" />
 </div>
+
 This is a backend repository for DotNet6 based blog projects.
 
 [贡献代码](CONTRIBUTING.md)
