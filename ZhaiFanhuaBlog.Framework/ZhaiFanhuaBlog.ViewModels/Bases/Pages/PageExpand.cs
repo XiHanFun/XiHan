@@ -171,10 +171,9 @@ public static class PageExpand
     /// <param name="entities">数据源</param>
     /// <param name="currentIndex">当前页标</param>
     /// <param name="pageSize">每页大小</param>
-    /// <param name="totalCount">数据总数</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
-    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int totalCount, int defaultFirstInex = 1) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
@@ -182,7 +181,7 @@ public static class PageExpand
             {
                 CurrentIndex = currentIndex,
                 PageSize = pageSize,
-                TotalCount = totalCount
+                TotalCount = entities.Count()
             },
             Datas = entities.ToPageList(currentIndex, pageSize, defaultFirstInex)
         };
@@ -251,4 +250,33 @@ public static class PageExpand
         pageDataDto.Page.PageSize = pageDataDto.Page.TotalCount;
         return pageDataDto;
     }
+
+    #region SqlSugar拓展
+
+    /// <summary>
+    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
+    /// 推荐针对部分列的增改
+    /// </summary>
+    /// <typeparam name="TEntity">数据类型</typeparam>
+    /// <param name="entities">数据源</param>
+    /// <param name="currentIndex">当前页标</param>
+    /// <param name="pageSize">每页大小</param>
+    /// <param name="defaultFirstInex">默认起始下标</param>
+    /// <returns>分页后的List数据</returns>
+    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
+    {
+        PageDataDto<TEntity> pageDataDto = new()
+        {
+            Page = new PageDto()
+            {
+                CurrentIndex = currentIndex,
+                PageSize = pageSize,
+                TotalCount = entities.Count()
+            },
+            Datas = await entities.ToPageListAsync(currentIndex, pageSize)
+        };
+        return pageDataDto;
+    }
+
+    #endregion SqlSugar拓展
 }

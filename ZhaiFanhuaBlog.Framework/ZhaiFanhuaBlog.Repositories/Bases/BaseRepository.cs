@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
+using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -293,5 +294,18 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await base.Context.Queryable<TEntity>().Where(func).ToPageListAsync(currentIndex, pageSize, totalCount);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="func">自定义条件</param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount)
+    {
+        return await base.Context.Queryable<TEntity>().Where(func).ToPageDataDto(currentIndex, pageSize);
     }
 }
