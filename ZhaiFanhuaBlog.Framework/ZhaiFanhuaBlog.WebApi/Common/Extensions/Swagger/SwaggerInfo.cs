@@ -58,7 +58,7 @@ internal class SwaggerInfo
                     Description = "这是用于管理的博客后台接口"
                 }
             },
-             new SwaggerInfo
+            new SwaggerInfo
             {
                 UrlPrefix = SwaggerGroup.Authorize,
                 GroupName = SwaggerGroup.Authorize,
@@ -69,7 +69,7 @@ internal class SwaggerInfo
                     Description = "这是用于登录的博客授权接口"
                 }
             },
-              new SwaggerInfo
+            new SwaggerInfo
             {
                 UrlPrefix = SwaggerGroup.Test,
                 GroupName = SwaggerGroup.Test,
@@ -80,5 +80,5 @@ internal class SwaggerInfo
                     Description = "这是用于测试的博客测试接口"
                 }
             }
-        };
+    };
 }

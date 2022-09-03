@@ -25,7 +25,7 @@ public class UserInitData
         new UserAccount{
             Name="administrator",
             Email="administrator@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"administrator"),
+            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="超级管理员",
             Signature="我是超级管理员",
@@ -34,7 +34,7 @@ public class UserInitData
         new UserAccount{
             Name="admin",
             Email="admin@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"admin"),
+            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="管理员",
             Signature="我是管理员",
@@ -43,7 +43,7 @@ public class UserInitData
         new UserAccount{
             Name="user",
             Email="user@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"user"),
+            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="用户",
             Signature="我是用户",
@@ -52,7 +52,7 @@ public class UserInitData
         new UserAccount{
             Name="test",
             Email="test@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"test"),
+            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="测试员",
             Signature="我是测试员",

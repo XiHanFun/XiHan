@@ -29,9 +29,9 @@ public static class CustomSwaggerExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
     {
-        // 用于最小API
+        // 用于最小API Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
-        // 配置Swagger
+        // 配置Swagger,从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>
         {
             //生成多个文档显示
@@ -55,16 +55,36 @@ public static class CustomSwaggerExtension
                     }
                 });
             });
-            // 文档中显示小绿锁
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            // 定义认证方式一（文档中显示安全小绿锁）
+            options.AddSecurityDefinition("认证方式一", new OpenApiSecurityScheme
             {
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Description = "在下框中请求头中输入【Token】进行身份验证",
+                Description = "在下框中直接输入{token}进行身份验证（不需要在开头添加Bearer和空格）",
                 Name = "Authorization",
                 BearerFormat = "JWT",
-                Scheme = "Bearer"
+                Scheme = "Bearer",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
             });
+            // 定义认证方式二（文档中显示安全小绿锁）
+            options.AddSecurityDefinition("认证方式二", new OpenApiSecurityScheme
+            {
+                Description = "在下框中输入Bearer {token}进行身份验证（注意两者之间是一个空格）",
+                Name = "Authorization",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+            });
+            //// 定义认证方式三（文档中显示安全小绿锁）
+            //options.AddSecurityDefinition("认证方式三", new OpenApiSecurityScheme
+            //{
+            //    Description = "在下框中输入Bearer {token}进行身份验证（注意两者之间是一个空格）",
+            //    Name = "Authorization",
+            //    BearerFormat = "JWT",
+            //    Scheme = "Bearer",
+            //    In = ParameterLocation.Header,
+            //    Type = SecuritySchemeType.OAuth2,
+            //});
+            //注册全局认证（所有的接口都可以使用认证）
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -73,7 +93,7 @@ public static class CustomSwaggerExtension
                             Reference=new OpenApiReference
                             {
                                 Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
+                                Id="认证方式二"
                             }
                         },
                         Array.Empty<string>()
