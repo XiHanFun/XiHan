@@ -61,10 +61,17 @@ public class SwaggerDocumentFilter : IDocumentFilter
             },
         };
 
-        // 实现添加自定义描述时过滤不属于同一个分组的API
+        #region 实现添加自定义描述时过滤不属于同一个分组的API
+
+        // 当前分组名称
         var groupName = context.ApiDescriptions.FirstOrDefault()?.GroupName;
+        // 当前所有的API对象
         var apis = context.ApiDescriptions.GetType().GetField("_source", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(context.ApiDescriptions) as IEnumerable<ApiDescription>;
+        // 不属于当前分组的所有Controller
         var controllers = apis!.Where(x => x.GroupName != groupName).Select(x => ((ControllerActionDescriptor)x.ActionDescriptor).ControllerName).Distinct();
+
+        #endregion 实现添加自定义描述时过滤不属于同一个分组的API
+
         // 按照Name升序排序
         swaggerDoc.Tags = tags.Where(x => !controllers!.Contains(x.Name)).OrderBy(x => x.Name).ToList();
     }
