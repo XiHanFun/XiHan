@@ -10,6 +10,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Authentication;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -47,18 +48,24 @@ public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFil
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            if (context.Exception is ApplicationException)
+            // 未实现异常
+            if (context.Exception is NotImplementedException)
             {
-                // 应用程序业务级异常
-                // 判断是否Ajax请求，是就返回Json
-                //if (this.IsAjaxRequest(context.HttpContext.Request))
-                //{
+                context.Result = new JsonResult(BaseResponseDto.NotImplemented());
+            }
+            // 认证授权异常
+            else if (context.Exception is AuthenticationException)
+            {
+                context.Result = new JsonResult(BaseResponseDto.Unauthorized(context.Exception.Message));
+            }
+            // 应用级异常
+            else if (context.Exception is ApplicationException)
+            {
                 context.Result = new JsonResult(BaseResponseDto.BadRequest(context.Exception.Message));
-                //}
             }
             else
             {
-                // 系统级别异常，不直接明文显示
+                // 其他异常，返回服务器错误，不直接明文显示
                 context.Result = new JsonResult(BaseResponseDto.InternalServerError());
                 // 获取控制器、路由信息
                 var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;

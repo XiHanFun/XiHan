@@ -37,7 +37,7 @@ public static class CustomCorsExtension
                 {
                     // 配置允许访问的域名
                     policy.WithOrigins(origins)
-                    // 是否允许源时匹配配置的通配符域
+                    // 是否允许同源时匹配配置的通配符域
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
                     // 允许任何请求头
                     .AllowAnyHeader()

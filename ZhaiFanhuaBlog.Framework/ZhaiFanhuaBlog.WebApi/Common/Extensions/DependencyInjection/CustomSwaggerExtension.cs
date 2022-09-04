@@ -7,7 +7,10 @@
 // CreateTime:2022-05-25 下午 03:53:33
 // ----------------------------------------------------------------
 
+using crypto;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using NetTaste;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
@@ -40,9 +43,9 @@ public static class CustomSwaggerExtension
                 //添加文档介绍
                 options.SwaggerDoc(swaggerinfo.UrlPrefix, new OpenApiInfo
                 {
-                    Version = $"The Current Version: Full-{swaggerinfo.OpenApiInfo!.Version}",
-                    Title = swaggerinfo.OpenApiInfo!.Title,
-                    Description = swaggerinfo.OpenApiInfo!.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                    Version = $"The Current Version: Full-{swaggerinfo.OpenApiInfo?.Version}",
+                    Title = swaggerinfo.OpenApiInfo?.Title,
+                    Description = swaggerinfo.OpenApiInfo?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
                         Name = ConfigHelper.Configuration.GetValue<string>("Configuration:Admin:Name"),
@@ -55,58 +58,58 @@ public static class CustomSwaggerExtension
                     }
                 });
             });
-            // 定义认证方式一（文档中显示安全小绿锁）
-            options.AddSecurityDefinition("认证方式一", new OpenApiSecurityScheme
-            {
-                Description = "在下框中直接输入{token}进行身份验证（不需要在开头添加Bearer和空格）",
-                Name = "Authorization",
-                BearerFormat = "JWT",
-                Scheme = "Bearer",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http,
-            });
-            // 定义认证方式二（文档中显示安全小绿锁）
-            options.AddSecurityDefinition("认证方式二", new OpenApiSecurityScheme
+            // 定义认证方式一
+            options.AddSecurityDefinition("DefultBearer", new OpenApiSecurityScheme
             {
                 Description = "在下框中输入Bearer {token}进行身份验证（注意两者之间是一个空格）",
                 Name = "Authorization",
-                BearerFormat = "JWT",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
             });
-            //// 定义认证方式三（文档中显示安全小绿锁）
-            //options.AddSecurityDefinition("认证方式三", new OpenApiSecurityScheme
-            //{
-            //    Description = "在下框中输入Bearer {token}进行身份验证（注意两者之间是一个空格）",
-            //    Name = "Authorization",
-            //    BearerFormat = "JWT",
-            //    Scheme = "Bearer",
-            //    In = ParameterLocation.Header,
-            //    Type = SecuritySchemeType.OAuth2,
-            //});
-            //注册全局认证（所有的接口都可以使用认证）
+            // 定义认证方式二
+            options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme
+            {
+                Description = "在下框中直接输入{token}进行身份验证",
+                // 携带认证信息的参数名，比如Jwt默认是Authorization
+                Name = "Authorization",
+                // Bearer认证的数据格式，默认为Bearer Token（中间有一个空格）
+                BearerFormat = "JWT",
+                // 认证主题，只对Type=Http生效，只能是basic和bearer
+                Scheme = "Bearer",
+                // 表示认证信息发在Http请求的哪个位置
+                In = ParameterLocation.Header,
+                // 表示认证方式，有ApiKey，Http，OAuth2，OpenIdConnect四种，其中ApiKey是用的最多的
+                Type = SecuritySchemeType.Http,
+            });
+            // 注册全局认证（所有的接口都可以使用认证）
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
+                    // 声明一个Scheme，注意下面的Id要和上面AddSecurityDefinition中的参数name一致
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference=new OpenApiReference
                         {
-                            Reference=new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="认证方式二"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
+                            Type=ReferenceType.SecurityScheme,
+                            Id="JwtBearer",
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+            // 应用Controller的API文档描述信息
+            options.DocumentFilter<SwaggerDocumentFilter>();
+            // 文档中显示安全小绿锁
             options.OperationFilter<AddResponseHeadersFilter>();
             options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // 添加请求头的Header中的token,传递到后台
             options.OperationFilter<SecurityRequirementsOperationFilter>();
             // 生成注释文件
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
         });
+
         return services;
     }
 
@@ -123,7 +126,7 @@ public static class CustomSwaggerExtension
             SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
             {
                 //切换版本操作,参数一是使用的哪个json文件,参数二是个名字
-                options.SwaggerEndpoint($"/swagger/{swaggerinfo.UrlPrefix}/swagger.json", swaggerinfo.OpenApiInfo!.Title);
+                options.SwaggerEndpoint($"/swagger/{swaggerinfo.UrlPrefix}/swagger.json", swaggerinfo.OpenApiInfo?.Title);
             });
             // 模型的默认扩展深度，设置为 -1 完全隐藏模型
             options.DefaultModelsExpandDepth(-1);

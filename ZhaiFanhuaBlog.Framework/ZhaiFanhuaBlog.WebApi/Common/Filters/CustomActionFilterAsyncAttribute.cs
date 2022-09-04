@@ -55,7 +55,7 @@ public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             // 获取控制器、路由信息
             var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
             // 获取请求的方法
-            var method = actionDescriptor!.MethodInfo;
+            var method = actionDescriptor?.MethodInfo;
             // 获取 HttpContext 和 HttpRequest 对象
             var httpContext = context.HttpContext;
             var httpRequest = httpContext.Request;

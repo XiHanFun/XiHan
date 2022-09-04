@@ -27,49 +27,58 @@ public static class CustomJwtExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomJWT(this IServiceCollection services)
     {
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            // 配置鉴权逻辑
-            .AddJwtBearer(options =>
+        // 身份验证
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        // 配置鉴权逻辑
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+                //是否验证颁发者
+                ValidateIssuer = true,
+                // 颁发者
+                ValidIssuer = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
+                // 是否验证签收者
+                ValidateAudience = true,
+                // 签收者
+                ValidAudience = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
+                // 是否验证签名
+                ValidateIssuerSigningKey = true,
+                // 签名
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigHelper.Configuration.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
+                // 是否验证失效时间
+                ValidateLifetime = true,
+                // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
+                ClockSkew = TimeSpan.FromSeconds(ConfigHelper.Configuration.GetValue<int>("Auth:JWT:ClockSkew")),
+            };
+            options.Events = new JwtBearerEvents
+            {
+                // 认证失败时
+                OnAuthenticationFailed = context =>
                 {
-                    //是否验证颁发者
-                    ValidateIssuer = true,
-                    // 颁发者
-                    ValidIssuer = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
-                    // 是否验证签收者
-                    ValidateAudience = true,
-                    // 签收者
-                    ValidAudience = ConfigHelper.Configuration.GetValue<string>("Configuration:Domain"),
-                    // 是否验证签名
-                    ValidateIssuerSigningKey = true,
-                    // 签名
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigHelper.Configuration.GetValue<string>("Auth:JWT:IssuerSigningKey"))),
-                    // 是否验证失效时间
-                    ValidateLifetime = true,
-                    // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
-                    ClockSkew = TimeSpan.FromSeconds(ConfigHelper.Configuration.GetValue<int>("Auth:JWT:ClockSkew")),
-                };
-                options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
+                    // 如果过期，则把是否过期添加到返回头信息中
+                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                     {
-                        // 如果过期，则把是否过期添加到返回头信息中
-                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                        {
-                            context.Response.Headers.Add("Token-Expired", "true");
-                        }
-                        return Task.CompletedTask;
-                    },
-                    OnChallenge = context =>
-                    {
-                        // 跳过默认的处理逻辑，返回下面的模型数据
-                        context.HandleResponse();
-                        return Task.FromResult(BaseResponseDto.Unauthorized());
+                        context.Response.Headers.Add("Token-Expired", "true");
                     }
-                };
-            });
+                    return Task.CompletedTask;
+                },
+                // 未授权时
+                OnChallenge = context =>
+                {
+                    // 跳过默认的处理逻辑，返回自定义的未授权模型数据
+                    context.HandleResponse();
+                    return Task.FromResult(BaseResponseDto.Unauthorized());
+                }
+            };
+        });
+        // 认证授权
+        services.AddAuthorization();
         return services;
     }
 }

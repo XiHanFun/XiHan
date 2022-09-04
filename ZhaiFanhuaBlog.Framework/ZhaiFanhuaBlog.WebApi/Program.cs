@@ -44,6 +44,8 @@ public class Program
         services.AddCustomCache();
         // JWT
         services.AddCustomJWT();
+        // Http请求
+        services.AddHttpClient();
         // Swagger
         services.AddCustomSwagger();
         // SqlSugar
@@ -62,13 +64,15 @@ public class Program
 
         var app = builder.Build();
         ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
+        // 环境变量，开发环境
         if (app.Environment.IsDevelopment())
         {
+            // 生成异常页面
             app.UseDeveloperExceptionPage();
         }
         else
         {
-            // HTTP 严格传输安全
+            // 使用HSTS的中间件，该中间件添加了严格传输安全头
             app.UseHsts();
             // 强制https跳转
             app.UseHttpsRedirection();
@@ -88,12 +92,17 @@ public class Program
         app.UseRouting();
         // 跨域
         app.UseCustomCors();
-        // 鉴权
+        // 身份验证
         app.UseAuthentication();
-        // 授权
+        // 认证授权
         app.UseAuthorization();
-        // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
-        app.MapControllers();
+
+        // 路由映射
+        app.UseEndpoints(options =>
+        {
+            // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
+            options.MapControllers();
+        });
         ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
         // 启动信息打印

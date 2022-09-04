@@ -59,15 +59,15 @@ public enum ResponseCode
     BadRequest = 400,
 
     /// <summary>
-    /// 需要身份认证验证
+    /// 需要身份认证验证或认证参数有误或认证已过期
     /// </summary>
-    [Description("需要身份认证验证")]
+    [Description("需要身份认证验证或认证参数有误或认证已过期")]
     Unauthorized = 401,
 
     /// <summary>
-    /// 禁止访问
+    /// 内容禁止访问
     /// </summary>
-    [Description("禁止访问")]
+    [Description("禁止访问的内容")]
     Forbidden = 403,
 
     /// <summary>
@@ -95,8 +95,8 @@ public enum ResponseCode
     InternalServerError = 500,
 
     /// <summary>
-    /// 服务器不支持的请求方法
+    /// 服务器不支持的请求或未实现的异常接口
     /// </summary>
-    [Description("服务器不支持的请求方法")]
+    [Description("服务器不支持的请求或未实现的异常接口")]
     NotImplemented = 501,
 }

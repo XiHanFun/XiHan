@@ -8,12 +8,10 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Authentication;
 using ZhaiFanhuaBlog.Utils.Config;
-using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -60,28 +58,31 @@ public class CustomAuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthoriz
         var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
         var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
-        // 是否匿名访问
-        var allowAnonymouse = context.Filters.Any(filter => filter is IAllowAnonymousFilter)
-                            || controllerType.IsDefined(typeof(AllowAnonymousAttribute), true)
-                            || methodType.IsDefined(typeof(AllowAnonymousAttribute), true);
-        // 不是匿名才处理权限检查
-        if (!allowAnonymouse)
+        // 是否授权访问
+        var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
+                            || controllerType.IsDefined(typeof(AuthorizeAttribute), true)
+                            || methodType.IsDefined(typeof(AuthorizeAttribute), true);
+        // 写入日志
+        string info = $"\t 请求Ip：{remoteIp}\n" +
+               $"\t 请求地址：{requestUrl}\n" +
+               $"\t 请求方法：{method}";
+        // 授权访问就进行权限检查
+        if (isAuthorize)
         {
             var Identities = httpContext.User.Identities;
             // 验证权限
             if (Identities == null)
             {
-                // 返回未授权
-                context.Result = new JsonResult(BaseResponseDto.Unauthorized());
-                // 写入日志
-                string info = $"\t 请求Ip：{remoteIp}\n" +
-                       $"\t 请求地址：{requestUrl}\n" +
-                       $"\t 请求方法：{method}";
                 if (AuthorizationLogSwitch)
-                    _ILogger.LogInformation($"请求未授权\n{info}");
+                    _ILogger.LogInformation($"认证参数异常\n{info}");
+                // 认证参数异常
+                throw new AuthenticationException();
+            }
+            else
+            {
             }
         }
-        // 否则直接跳过处理
+        // 匿名访问直接跳过处理
         else await Task.CompletedTask;
     }
 }

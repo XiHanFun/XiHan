@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
-using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -57,22 +56,17 @@ public class CustomResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             else if (context.Result is ObjectResult objectResult)
             {
                 // 如果是对象结果，则转换为json结果
-                context.Result = new JsonResult(objectResult!.Value!);
+                context.Result = new JsonResult(objectResult.Value);
             }
             else if (context.Result is ContentResult contentResult)
             {
                 // 如果是内容结果，则转换为json结果
-                context.Result = new JsonResult(contentResult!.Content!);
+                context.Result = new JsonResult(contentResult.Content);
             }
             else if (context.Result is JsonResult jsonResult)
             {
                 // 如果是json结果，则转换为json结果
                 context.Result = new JsonResult(jsonResult.Value);
-            }
-            else if (context.Result is EmptyResult)
-            {
-                // 如果是空结果，则转换为json结果
-                context.Result = new JsonResult(BaseResponseDto.Continue());
             }
             else
             {

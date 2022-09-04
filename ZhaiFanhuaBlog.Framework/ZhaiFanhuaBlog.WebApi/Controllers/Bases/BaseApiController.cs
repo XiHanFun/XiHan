@@ -7,6 +7,7 @@
 // CreateTime:2022-09-03 上午 12:20:06
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Bases;

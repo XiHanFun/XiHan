@@ -20,9 +20,8 @@ using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 
 /// <summary>
-/// 测试接口
+/// 系统测试
 /// </summary>
-[AllowAnonymous]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
 public class TestController : BaseApiController
 {
@@ -168,6 +167,18 @@ public class TestController : BaseApiController
     public string Test(string? str)
     {
         return "测试字符串：" + str;
+    }
+
+    /// <summary>
+    /// 未实现的异常接口
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    [HttpGet]
+    [Route("Exception")]
+    public string Exception()
+    {
+        throw new NotImplementedException("这是一个未实现的异常接口");
     }
 
     /// <summary>

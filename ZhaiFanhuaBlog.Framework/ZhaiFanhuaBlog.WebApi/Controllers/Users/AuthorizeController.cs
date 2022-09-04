@@ -7,6 +7,7 @@
 // CreateTime:2021-12-28 下午 11:47:21
 // ----------------------------------------------------------------
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -84,11 +85,11 @@ public class AuthorizeController : BaseApiController
     {
         try
         {
-            var AccountClaims = new Claim[]{
+            var accountClaims = new Claim[]{
                 new Claim("UserId", userAccount.BaseId.ToString()),
                 new Claim("UserName", userAccount.Name),
                 new Claim("NickName", userAccount.NickName ?? userAccount.Name),
-                //new Claim("RootRole", userAccount.RootRoles!.FirstOrDefault()!.Name!.ToString()??"")
+                //new Claim("RootRole", userAccount.RootRoles?.FirstOrDefault()?.Name?.ToString()??"")
             };
             // Nuget引入：Microsoft.IdentityModel.Tokens
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));
@@ -97,7 +98,7 @@ public class AuthorizeController : BaseApiController
             JwtSecurityToken token = new(
                 issuer: _IConfiguration["Configuration:Domain"],
                 audience: _IConfiguration["Configuration:Domain"],
-                claims: AccountClaims,
+                claims: accountClaims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
                 signingCredentials: credentials
