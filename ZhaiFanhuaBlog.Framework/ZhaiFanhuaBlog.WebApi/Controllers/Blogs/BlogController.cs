@@ -25,6 +25,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 /// <summary>
 /// 博客管理
 /// </summary>
+[Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class BlogController : BaseApiController
 {
@@ -126,6 +127,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Category/{guid}")]
     public async Task<BaseResultDto> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -144,6 +146,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Categories")]
     public async Task<BaseResultDto> QueryBlogCategories([FromServices] IMapper iMapper)
     {
@@ -222,6 +225,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Article/{guid}")]
     public async Task<BaseResultDto> FindBlogArticle([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -240,6 +244,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Articles")]
     public async Task<BaseResultDto> QueryBlogArticles([FromServices] IMapper iMapper)
     {
@@ -318,6 +323,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Tag/{guid}")]
     public async Task<BaseResultDto> FindBlogTag([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -336,6 +342,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Tags")]
     public async Task<BaseResultDto> QueryBlogTags([FromServices] IMapper iMapper)
     {
@@ -414,6 +421,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Article/Tag/{guid}")]
     public async Task<BaseResultDto> FindBlogArticleTag([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -432,6 +440,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Article/Tags")]
     public async Task<BaseResultDto> QueryBlogArticleTags([FromServices] IMapper iMapper)
     {
@@ -510,6 +519,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Poll/{guid}")]
     public async Task<BaseResultDto> FindBlogPoll([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -528,6 +538,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Polls")]
     public async Task<BaseResultDto> QueryBlogPolls([FromServices] IMapper iMapper)
     {
@@ -606,6 +617,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Comment/{guid}")]
     public async Task<BaseResultDto> FindBlogComment([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -624,6 +636,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Comments")]
     public async Task<BaseResultDto> QueryBlogComments([FromServices] IMapper iMapper)
     {
@@ -702,6 +715,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Comment/Poll/{guid}")]
     public async Task<BaseResultDto> FindBlogCommentPoll([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -720,6 +734,7 @@ public class BlogController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet("Comment/Polls")]
     public async Task<BaseResultDto> QueryBlogCommentPolls([FromServices] IMapper iMapper)
     {

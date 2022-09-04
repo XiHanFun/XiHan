@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.IServices.Sites;
 using ZhaiFanhuaBlog.Models.Sites;
@@ -23,6 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers;
 /// <summary>
 /// 网站配置
 /// </summary>
+[Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class SiteController : BaseApiController
 {

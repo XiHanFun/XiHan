@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.IServices.Roots;
@@ -26,6 +27,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 /// <summary>
 /// 系统管理
 /// </summary>
+[Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : BaseApiController
 {

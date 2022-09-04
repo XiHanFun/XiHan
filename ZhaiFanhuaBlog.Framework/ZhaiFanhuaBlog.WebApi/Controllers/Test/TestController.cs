@@ -22,6 +22,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
 /// <summary>
 /// 系统测试
 /// </summary>
+[AllowAnonymous]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
 public class TestController : BaseApiController
 {

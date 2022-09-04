@@ -81,7 +81,7 @@ public static class CustomSwaggerExtension
                 // 表示认证方式，有ApiKey，Http，OAuth2，OpenIdConnect四种，其中ApiKey是用的最多的
                 Type = SecuritySchemeType.Http,
             });
-            // 注册全局认证（所有的接口都可以使用认证）
+            //// 注册全局认证（所有的接口都可以使用认证）
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
