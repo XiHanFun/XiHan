@@ -7,10 +7,7 @@
 // CreateTime:2022-05-25 下午 03:53:33
 // ----------------------------------------------------------------
 
-using crypto;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using NetTaste;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
@@ -57,19 +54,28 @@ public static class CustomSwaggerExtension
                         Url = new Uri("https://opensource.org/licenses/MIT")
                     }
                 });
+                // 根据相对路径排序
+                options.OrderActionsBy(o => o.RelativePath);
             });
-            // 定义认证方式一
-            options.AddSecurityDefinition("DefultBearer", new OpenApiSecurityScheme
+            // 枚举添加摘要
+            options.UseInlineDefinitionsForEnums();
+            // 应用Controller的API文档描述信息
+            options.DocumentFilter<SwaggerDocumentFilter>();
+            // 生成注释文件
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
+
+            // 文档中显示安全小绿锁
+            options.OperationFilter<AddResponseHeadersFilter>();
+            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // 添加请求头的Header中的token,传递到后台
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
+
+            // 定义JwtBearer认证，必须是 oauth2
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
-                Description = "在下框中输入Bearer {token}进行身份验证（注意两者之间是一个空格）",
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-            });
-            // 定义认证方式二
-            options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme
-            {
-                Description = "在下框中直接输入{token}进行身份验证",
+                Description = "在下框中输入{token}进行身份验证",
                 // 携带认证信息的参数名，比如Jwt默认是Authorization
                 Name = "Authorization",
                 // Bearer认证的数据格式，默认为Bearer Token（中间有一个空格）
@@ -81,7 +87,8 @@ public static class CustomSwaggerExtension
                 // 表示认证方式，有ApiKey，Http，OAuth2，OpenIdConnect四种，其中ApiKey是用的最多的
                 Type = SecuritySchemeType.Http,
             });
-            //// 注册全局认证（所有的接口都可以使用认证）
+
+            // 注册全局认证（所有的接口都可以使用认证）
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
@@ -91,24 +98,15 @@ public static class CustomSwaggerExtension
                         Reference=new OpenApiReference
                         {
                             Type=ReferenceType.SecurityScheme,
-                            Id="JwtBearer",
+                            Id="oauth2",
                         }
                     },
                     Array.Empty<string>()
                 }
             });
-            // 应用Controller的API文档描述信息
-            options.DocumentFilter<SwaggerDocumentFilter>();
-            // 文档中显示安全小绿锁
-            options.OperationFilter<AddResponseHeadersFilter>();
-            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            // 添加请求头的Header中的token,传递到后台
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
-            // 生成注释文件
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
         });
+        // 指定Swagger接口文档中参数序列化组件为Newtonsoft.Json
+        services.AddSwaggerGenNewtonsoftSupport();
 
         return services;
     }

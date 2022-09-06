@@ -111,7 +111,6 @@ public class UserController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
-    [AllowAnonymous]
     [HttpGet("Account/{guid}")]
     public async Task<BaseResultDto> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
