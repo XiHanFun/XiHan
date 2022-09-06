@@ -31,14 +31,31 @@ public class BasePageDto
 public class PageDto : BasePageDto
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public PageDto()
+    { }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public PageDto(int currentIndex, int pageSize, int totalCount)
+    {
+        CurrentIndex = currentIndex;
+        PageSize = pageSize;
+        TotalCount = totalCount;
+        PageCount = (int)Math.Ceiling((decimal)totalCount / pageSize);
+    }
+
+    /// <summary>
     /// 数据总数
     /// </summary>
-    public int TotalCount { get; set; }
+    public int TotalCount { get; set; } = 0;
 
     /// <summary>
     /// 总页数
     /// </summary>
-    public int PageCount { get; set; }
+    public int PageCount { get; set; } = 1;
 }
 
 /// <summary>

@@ -81,12 +81,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = currentIndex,
-                PageSize = pageSize,
-                TotalCount = entities.Count(),
-            },
+            Page = new PageDto(currentIndex, pageSize, entities.Count()),
         };
         return pageDataDto;
     }
@@ -102,12 +97,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = pageDto.CurrentIndex,
-                PageSize = pageDto.PageSize,
-                TotalCount = entities.Count(),
-            },
+            Page = new PageDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
         };
         return pageDataDto;
     }
@@ -125,12 +115,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = currentIndex,
-                PageSize = pageSize,
-                TotalCount = entities.Count,
-            },
+            Page = new PageDto(currentIndex, pageSize, entities.Count),
             Datas = entities.ToPageList(currentIndex, pageSize, defaultFirstInex)
         };
         return pageDataDto;
@@ -148,12 +133,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = pageDto.CurrentIndex,
-                PageSize = pageDto.PageSize,
-                TotalCount = entities.Count,
-            },
+            Page = new PageDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count),
             Datas = entities.ToPageList(pageDto, defaultFirstInex)
         };
         return pageDataDto;
@@ -173,12 +153,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = currentIndex,
-                PageSize = pageSize,
-                TotalCount = entities.Count()
-            },
+            Page = new PageDto(currentIndex, pageSize, entities.Count()),
             Datas = entities.ToPageList(currentIndex, pageSize, defaultFirstInex)
         };
         return pageDataDto;
@@ -197,12 +172,7 @@ public static class PageExpand
     {
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = pageDto.CurrentIndex,
-                PageSize = pageDto.PageSize,
-                TotalCount = entities.Count(),
-            },
+            Page = new PageDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
             Datas = entities.ToPageList(pageDto, defaultFirstInex)
         };
         return pageDataDto;
@@ -224,6 +194,7 @@ public static class PageExpand
         pageDataDto.Page.CurrentIndex = 1;
         pageDataDto.Page.TotalCount = pageDataDto.Datas.Count;
         pageDataDto.Page.PageSize = pageDataDto.Page.TotalCount;
+        pageDataDto.Page.PageCount = 1;
         return pageDataDto;
     }
 
@@ -243,6 +214,7 @@ public static class PageExpand
         pageDataDto.Page.CurrentIndex = 1;
         pageDataDto.Page.TotalCount = pageDataDto.Datas.Count;
         pageDataDto.Page.PageSize = pageDataDto.Page.TotalCount;
+        pageDataDto.Page.PageCount = 1;
         return pageDataDto;
     }
 
@@ -263,12 +235,7 @@ public static class PageExpand
         var datas = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = currentIndex,
-                PageSize = pageSize,
-                TotalCount = totalCount
-            },
+            Page = new PageDto(currentIndex, pageSize, totalCount),
             Datas = datas,
         };
         return pageDataDto;
@@ -288,12 +255,7 @@ public static class PageExpand
         var datas = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
         PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new PageDto()
-            {
-                CurrentIndex = pageDto.CurrentIndex,
-                PageSize = pageDto.PageSize,
-                TotalCount = totalCount,
-            },
+            Page = new PageDto(pageDto.CurrentIndex, pageDto.PageSize, totalCount),
             Datas = datas,
         };
         return pageDataDto;

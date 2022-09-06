@@ -134,6 +134,7 @@ public static class CustomSwaggerExtension
             options.DocumentTitle = $"{ConfigHelper.Configuration.GetValue<string>("Configuration:Name")}接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
             options.DocExpansion(DocExpansion.None);
+            // options.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
         });
         return app;
     }

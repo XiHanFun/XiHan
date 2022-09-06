@@ -26,7 +26,7 @@ public static class IpInfoHelper
     {
         try
         {
-            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = GetLocalIp();
+            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = IPAddressInfo();
             if (unicastIPAddressInformations != null)
             {
                 foreach (var ipInfo in unicastIPAddressInformations)
@@ -53,7 +53,7 @@ public static class IpInfoHelper
     {
         try
         {
-            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = GetLocalIp();
+            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = IPAddressInfo();
             if (unicastIPAddressInformations != null)
             {
                 foreach (var ipInfo in unicastIPAddressInformations)
@@ -76,7 +76,7 @@ public static class IpInfoHelper
     /// 获取本机所有可用网卡IP信息
     /// </summary>
     /// <returns></returns>
-    private static IEnumerable<UnicastIPAddressInformation>? GetLocalIp()
+    private static IEnumerable<UnicastIPAddressInformation>? IPAddressInfo()
     {
         // 获取可用网卡
         var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()?.Where(network => network.OperationalStatus == OperationalStatus.Up);

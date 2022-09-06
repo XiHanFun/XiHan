@@ -67,7 +67,7 @@ public enum ResponseCode
     /// <summary>
     /// 内容禁止访问
     /// </summary>
-    [Description("禁止访问的内容")]
+    [Description("访问权限等级不够或禁止访问的内容")]
     Forbidden = 403,
 
     /// <summary>

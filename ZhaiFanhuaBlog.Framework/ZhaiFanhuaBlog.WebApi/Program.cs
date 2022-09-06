@@ -8,10 +8,12 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.HttpOverrides;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
+using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi;
 
@@ -46,6 +48,8 @@ public class Program
         services.AddCustomJWT();
         // Http请求
         services.AddHttpClient();
+        // 性能分析
+        services.AddCustomMiniProfiler();
         // Swagger
         services.AddCustomSwagger();
         // SqlSugar
@@ -82,6 +86,8 @@ public class Program
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
+        // MiniProfiler
+        app.UseMiniProfiler();
         // Swagger
         app.UseCustomSwagger();
         // 使用静态文件
