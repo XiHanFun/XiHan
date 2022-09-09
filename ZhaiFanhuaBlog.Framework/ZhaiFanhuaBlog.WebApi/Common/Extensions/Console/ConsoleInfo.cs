@@ -74,6 +74,8 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo("==============数据库==============");
         ConsoleHelper.WriteLineInfo($@"连接类型：{ConfigHelper.Configuration.GetValue<string>("Database:Type")}");
         ConsoleHelper.WriteLineInfo($@"是否初始化：{ConfigHelper.Configuration.GetValue<string>("Database:Initialization")}");
+        ConsoleHelper.WriteLineInfo("===============分析===============");
+        ConsoleHelper.WriteLineInfo($@"是否启用：{ConfigHelper.Configuration.GetValue<bool>("MiniProfiler:IsEnabled")}");
         ConsoleHelper.WriteLineInfo("===============缓存===============");
         ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用");
         ConsoleHelper.WriteLineInfo($@"分布式缓存：{ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
