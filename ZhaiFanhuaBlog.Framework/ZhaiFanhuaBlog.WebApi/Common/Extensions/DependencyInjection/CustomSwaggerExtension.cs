@@ -55,22 +55,12 @@ public static class CustomSwaggerExtension
                     }
                 });
                 // 根据相对路径排序
-                options.OrderActionsBy(o => o.RelativePath);
+                //options.OrderActionsBy(o => o.RelativePath);
             });
-            // 枚举添加摘要
-            options.UseInlineDefinitionsForEnums();
-            // 应用Controller的API文档描述信息
-            options.DocumentFilter<SwaggerDocumentFilter>();
             // 生成注释文件
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), true);
-
-            // 文档中显示安全小绿锁
-            options.OperationFilter<AddResponseHeadersFilter>();
-            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            // 添加请求头的Header中的token,传递到后台
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
 
             // 定义JwtBearer认证，必须是 oauth2
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -104,6 +94,16 @@ public static class CustomSwaggerExtension
                     Array.Empty<string>()
                 }
             });
+
+            // 枚举添加摘要
+            options.UseInlineDefinitionsForEnums();
+            // 应用Controller的API文档描述信息
+            options.DocumentFilter<SwaggerDocumentFilter>();
+            // 文档中显示安全小绿锁
+            options.OperationFilter<AddResponseHeadersFilter>();
+            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // 添加请求头的Header中的token,传递到后台
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
         // 指定Swagger接口文档中参数序列化组件为Newtonsoft.Json
         services.AddSwaggerGenNewtonsoftSupport();
@@ -121,6 +121,7 @@ public static class CustomSwaggerExtension
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
+            options.IndexStream = () => typeof(CustomSwaggerExtension).GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
             SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
             {
                 //切换版本操作,参数一是使用的哪个json文件,参数二是个名字
@@ -134,7 +135,6 @@ public static class CustomSwaggerExtension
             options.DocumentTitle = $"{ConfigHelper.Configuration.GetValue<string>("Configuration:Name")}接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
             options.DocExpansion(DocExpansion.None);
-            // options.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
         });
         return app;
     }

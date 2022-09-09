@@ -48,10 +48,10 @@ public class Program
         services.AddCustomJWT();
         // Http请求
         services.AddHttpClient();
-        // 性能分析
-        services.AddCustomMiniProfiler();
         // Swagger
         services.AddCustomSwagger();
+        // 性能分析
+        services.AddCustomMiniProfiler();
         // SqlSugar
         services.AddCustomSqlSugar();
         // IOC

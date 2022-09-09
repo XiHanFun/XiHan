@@ -25,7 +25,7 @@ public static class CustomMiniProfilerExtension
     {
         if (ConfigHelper.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
         {
-            services.AddMiniProfiler(options => options.RouteBasePath = "/profiler");
+            services.AddMiniProfiler(options => options.RouteBasePath = @"/profiler");
         }
         return services;
     }
