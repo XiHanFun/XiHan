@@ -27,6 +27,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
 /// <summary>
 /// 登录授权
+/// <code>包含：登录授权</code>
 /// </summary>
 [AllowAnonymous]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]

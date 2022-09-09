@@ -97,8 +97,6 @@ public static class CustomSwaggerExtension
 
             // 枚举添加摘要
             options.UseInlineDefinitionsForEnums();
-            // 应用Controller的API文档描述信息
-            options.DocumentFilter<SwaggerDocumentFilter>();
             // 文档中显示安全小绿锁
             options.OperationFilter<AddResponseHeadersFilter>();
             options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
@@ -121,7 +119,11 @@ public static class CustomSwaggerExtension
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.IndexStream = () => typeof(CustomSwaggerExtension).GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
+            // 性能分析
+            if (ConfigHelper.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+            {
+                options.IndexStream = () => typeof(CustomSwaggerExtension).GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
+            }
             SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
             {
                 //切换版本操作,参数一是使用的哪个json文件,参数二是个名字

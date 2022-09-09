@@ -26,6 +26,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
 
 /// <summary>
 /// 系统管理
+/// <code>包含：初始化系统/菜单/角色/权限/公告/状态</code>
 /// </summary>
 [Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
