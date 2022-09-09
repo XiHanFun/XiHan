@@ -4,7 +4,38 @@
 
 
 
+## 2022-09-09
 
+1. 新增：汉语拼音转换；
+2. 新增：常用工具类；
+3. [新增：性能分析工具；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/913d7f8e66a93cce7742f2e5f3d75bc28e33778f)
+4. [优化：SqlSugar拓展分页；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/db3b4c8ba56f5cb6dbea497ab2a3ff8721d2209a)
+5. [优化：统一返回状态模型提示；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/d57b71d619969280a153944109f32fbf586f85a9)
+6. 优化：数据验证封装；
+7. 优化：分页返回数据封装；
+8. [修复：用户注册邮箱长度验证；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/33daa87c8b4dbaa7040a51fb134d77643f2e5de1)
+9. 修复：分页总页数错误的bug；
+10. [修复：Swagger的Jwt Bearer 需要认证的接口发请求不带token；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/c45115a23cb1840f2ef50ee3e3a9fe349e01577b)
+
+## 2022-08-30
+
+1. [优化：所有代码添加注释，对代码警告零容忍；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/2834cabee69f1fbf2e80c4a16831236c876eac6e)
+2. [优化：站点初始化；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/650d67a5666fc6f5bcac6e466a365f83d98ee76b)
+
+## 2022-08-06
+
+1. [新增：网站配置；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/96d7294ccdb3580b97975f19ffe2101c2197a3e5)
+2. [新增：系统菜单；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/28809cf2191bfcc5cd69700f45051d62c801723d) 
+3. [优化：移除多余的包，减小体积；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/883d1b749dbc819b11f4fa1b573ec51db5d61c18)
+4. [优化：默认开启内存缓存；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/4981865e7f9590d6e2bb8bc8695c68d02fbcce08)
+5. [修复：系统菜单、系统角色服务注入异常；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/548126e46811d861927cbf7ddba874f76c59f326)
+
+## 2022-07-31
+
+1. 新增：发布设置文件；
+2. 新增：预览环境；
+3. [新增：日志启用开关；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/017ba6cb4363b0efdd0c18ce6021156653ae9056)
+4. [优化：日志格式优化；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/7ea3ae3a6aeca8c1f7714d15e354e1f5c4a50252)
 
 ## 2022-07-29
 
@@ -108,7 +139,7 @@
 
 ## 2022-06-05
 
-1. `重要`：前后端项目分离、更名仓库；由`ZhaiFanhuaBlog`变更为`ZhaiFanhuaBlog.Framework`和`ZhaiFanhuaBlog.UI`两个仓库；本仓库为`ZhaiFanhuaBlog.Framework`；
+1. `重要变更`：前后端项目分离、更名仓库；由`ZhaiFanhuaBlog`变更为`ZhaiFanhuaBlog.Framework`和前端仓库；本仓库为`ZhaiFanhuaBlog.Framework`；
 2. 新增：其他博客平台资源迁移功能（目前有hexo迁移）；
 3. 优化：移除配置文件铭感数据，如数据库密码、第三方登录配置、CDN配置；
 4. 优化：对象相互映射；

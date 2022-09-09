@@ -10,7 +10,7 @@ This is a backend repository for DotNet6 based blog projects.
 
 [贡献代码](CONTRIBUTING.md)
 
-[更新沿程](UPDATETIMELINE.md)
+[更新沿程](CHANGELOG.md)
 
 
 
@@ -24,9 +24,15 @@ SqlSugar
 
 JWT
 
-Log4Net
+Serilog
 
 Swagger
+
+Redis
+
+RabbitMQ
+
+MiniProfiler
 
 
 
