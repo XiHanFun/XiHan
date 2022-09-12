@@ -68,7 +68,8 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
         ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
         ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
-        ConsoleHelper.WriteLineInfo($@"本地网络地址：{IpInfoHelper.GetLocalIpV4()}");
+        ConsoleHelper.WriteLineInfo($@"本地IPv4地址：{IpInfoHelper.GetLocalIpV4()}");
+        ConsoleHelper.WriteLineInfo($@"本地IPv6地址：{IpInfoHelper.GetLocalIpV6()}");
         ConsoleHelper.WriteLineInfo($@"应用启动环境：{ConfigHelper.Configuration.GetValue<string>("Environment")}");
         ConsoleHelper.WriteLineInfo("==============================配置信息==============================");
         ConsoleHelper.WriteLineInfo("==============数据库==============");

@@ -65,4 +65,24 @@ public class IpFormatHelper
     {
         return IPAddress.Parse(str);
     }
+
+    /// <summary>
+    /// ipV4转ipV6
+    /// </summary>
+    /// <param name="ipV4str"></param>
+    /// <returns></returns>
+    public static string FormatV4ToV6(string ipV4str)
+    {
+        return IPAddress.Parse(ipV4str).MapToIPv6().ToString();
+    }
+
+    /// <summary>
+    /// ipV4转ipV6
+    /// </summary>
+    /// <param name="ipV6str"></param>
+    /// <returns></returns>
+    public static string FormatV6ToV4(string ipV6str)
+    {
+        return IPAddress.Parse(ipV6str).MapToIPv4().ToString();
+    }
 }

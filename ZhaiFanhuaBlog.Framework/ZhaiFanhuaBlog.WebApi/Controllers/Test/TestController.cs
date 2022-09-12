@@ -9,8 +9,10 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.Utils.Formats;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
@@ -156,7 +158,7 @@ public class TestController : BaseApiController
         else if (userAgent.Contains("msie"))
             browser = "IE";
 
-        return BaseResponseDto.OK($"ip:{ip},os:{osVersion},browser:{browser},userAgent:{userAgent}"); ;
+        return BaseResponseDto.OK($"ipV4:{ip},ipV6:{IpFormatHelper.FormatV4ToV6(ip)},os:{osVersion},browser:{browser},userAgent:{userAgent}"); ;
     }
 
     /// <summary>
