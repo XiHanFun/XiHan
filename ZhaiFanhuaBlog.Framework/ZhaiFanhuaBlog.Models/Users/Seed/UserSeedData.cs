@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserInitData
+// FileName:UserSeedData
 // Guid:af2431dd-8146-41b7-800b-1e174ec65d22
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -10,12 +10,12 @@
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 
-namespace ZhaiFanhuaBlog.Models.Users.Init;
+namespace ZhaiFanhuaBlog.Models.Users.Seed;
 
 /// <summary>
-/// UserInitData
+/// UserSeedData
 /// </summary>
-public class UserInitData
+public class UserSeedData
 {
     /// <summary>
     /// 用户账户种子数据

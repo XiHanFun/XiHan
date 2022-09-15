@@ -8,14 +8,13 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.Models.Roots.Init;
-using ZhaiFanhuaBlog.Models.Users.Init;
+using ZhaiFanhuaBlog.Models.Roots.Seed;
+using ZhaiFanhuaBlog.Models.Users.Seed;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Roots;
@@ -74,15 +73,15 @@ public class RootController : BaseApiController
     /// 初始化系统
     /// </summary>
     /// <returns></returns>
-    [HttpPost("Init")]
-    public async Task<bool> Init()
+    [HttpPost("InitData")]
+    public async Task<bool> InitData()
     {
         try
         {
-            await _IRootStateService.InitRootStateAsync(RootInitData.RootStateList);
-            await _IRootAuthorityService.InitRootAuthorityAsync(RootInitData.RootAuthorityList);
-            await _IRootRoleService.InitRootRoleAsync(RootInitData.RootRoleList);
-            await _IUserAccountService.InitUserAccountAsync(UserInitData.UserAccountList);
+            await _IRootStateService.InitRootStateAsync(RootSeedData.RootStateList);
+            await _IRootAuthorityService.InitRootAuthorityAsync(RootSeedData.RootAuthorityList);
+            await _IRootRoleService.InitRootRoleAsync(RootSeedData.RootRoleList);
+            await _IUserAccountService.InitUserAccountAsync(UserSeedData.UserAccountList);
             return true;
         }
         catch (Exception ex)

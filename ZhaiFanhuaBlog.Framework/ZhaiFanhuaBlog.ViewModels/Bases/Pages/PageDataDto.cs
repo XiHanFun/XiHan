@@ -1,26 +1,26 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BasePageDto
-// Guid:1e6dfc38-1188-40e6-a6f0-5dee44d6209b
+// FileName:PageDataDto
+// Guid:729e1048-3950-4091-bd0d-ec69af98c4f4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-09-02 上午 01:03:21
+// CreateTime:2022-09-16 上午 01:38:41
 // ----------------------------------------------------------------
 
 namespace ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
 /// <summary>
-/// 通用分页实体基类
+/// 通用分页数据实体
 /// </summary>
-public class BasePageDto
+public class PageDataDto<Entity> where Entity : class
 {
     /// <summary>
-    /// 当前页标
+    /// 分页数据
     /// </summary>
-    public int CurrentIndex { get; set; } = 1;
+    public PageDto? Page { get; set; }
 
     /// <summary>
-    /// 每页大小
+    /// 数据集合
     /// </summary>
-    public int PageSize { set; get; } = 20;
+    public List<Entity>? Datas { get; set; }
 }

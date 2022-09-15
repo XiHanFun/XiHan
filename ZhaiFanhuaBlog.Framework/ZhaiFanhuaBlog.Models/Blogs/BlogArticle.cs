@@ -80,4 +80,15 @@ public class BlogArticle : BaseEntity
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public string? ForwardUrl { get; set; }
+
+    /// <summary>
+    /// 是否加密文章 是(true)否(false)
+    /// </summary>
+    public bool IsEncryption { get; set; } = false;
+
+    /// <summary>
+    /// 加密文章密码（MD5加密）
+    /// </summary>
+    [SugarColumn(IsNullable = true, ColumnDataType = "nvarchar(64)")]
+    public string? Password { get; set; }
 }

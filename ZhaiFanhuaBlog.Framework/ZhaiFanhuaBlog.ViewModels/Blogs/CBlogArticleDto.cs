@@ -72,4 +72,16 @@ public class CBlogArticleDto
     /// </summary>
     [RegularExpression(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$", ErrorMessage = "{0}URL错误")]
     public string? ForwardUrl { get; set; }
+
+    /// <summary>
+    /// 是否加密文章 是(true)否(false)
+    /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
+    public bool IsEncryption { get; set; } = false;
+
+    /// <summary>
+    /// 用户密码（MD5加密）
+    /// </summary>
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}", ErrorMessage = "密码至少为8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符")]
+    public string? Password { get; set; }
 }

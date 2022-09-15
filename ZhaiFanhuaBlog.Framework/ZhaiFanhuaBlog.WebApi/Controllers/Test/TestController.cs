@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
-using ZhaiFanhuaBlog.Utils.Formats;
+using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
@@ -50,114 +50,9 @@ public class TestController : BaseApiController
     public ActionResult<BaseResultDto> ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
-        var httpContext = _IHttpContextAccessor.HttpContext;
-        // 获取客户端 Ip 地址
-        var ip = httpContext?.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-        string userAgent = httpContext?.Request.Headers == null ? string.Empty : httpContext.Request.Headers.UserAgent.ToString();
-
-        string osVersion = "未知";
-
-        if (userAgent.Contains("NT 10.0"))
-        {
-            osVersion = "Windows 10";
-        }
-        else if (userAgent.Contains("NT 6.3"))
-        {
-            osVersion = "Windows 8.1";
-        }
-        else if (userAgent.Contains("NT 6.2"))
-        {
-            osVersion = "Windows 8";
-        }
-        else if (userAgent.Contains("NT 6.1"))
-        {
-            osVersion = "Windows 7";
-        }
-        else if (userAgent.Contains("NT 6.1"))
-        {
-            osVersion = "Windows 7";
-        }
-        else if (userAgent.Contains("NT 6.0"))
-        {
-            osVersion = "Windows Vista/Server 2008";
-        }
-        else if (userAgent.Contains("NT 5.2"))
-        {
-            if (userAgent.Contains("64"))
-                osVersion = "Windows XP";
-            else
-                osVersion = "Windows Server 2003";
-        }
-        else if (userAgent.Contains("NT 5.1"))
-        {
-            osVersion = "Windows XP";
-        }
-        else if (userAgent.Contains("NT 5"))
-        {
-            osVersion = "Windows 2000";
-        }
-        else if (userAgent.Contains("NT 4"))
-        {
-            osVersion = "Windows NT4";
-        }
-        else if (userAgent.Contains("Me"))
-        {
-            osVersion = "Windows Me";
-        }
-        else if (userAgent.Contains("98"))
-        {
-            osVersion = "Windows 98";
-        }
-        else if (userAgent.Contains("95"))
-        {
-            osVersion = "Windows 95";
-        }
-        else if (userAgent.Contains("Mac"))
-        {
-            osVersion = "Mac";
-        }
-        else if (userAgent.Contains("Unix"))
-        {
-            osVersion = "UNIX";
-        }
-        else if (userAgent.Contains("Linux"))
-        {
-            osVersion = "Linux";
-        }
-        else if (userAgent.Contains("SunOS"))
-        {
-            osVersion = "SunOS";
-        }
-        userAgent = userAgent.ToLower();
-        string browser = "未知";
-        if (userAgent.Contains("opera/ucweb"))
-            browser = "UC Opera";
-        else if (userAgent.Contains("openwave/ ucweb"))
-            browser = "UCOpenwave";
-        else if (userAgent.Contains("ucweb"))
-            browser = "UC";
-        else if (userAgent.Contains("360se"))
-            browser = "360";
-        else if (userAgent.Contains("metasr"))
-            browser = "搜狗";
-        else if (userAgent.Contains("maxthon"))
-            browser = "遨游";
-        else if (userAgent.Contains("the world"))
-            browser = "世界之窗";
-        else if (userAgent.Contains("tencenttraveler") || userAgent.Contains("qqbrowser"))
-            browser = "腾讯";
-        else if (userAgent.Contains("chrome"))
-            browser = "Chrome";
-        else if (userAgent.Contains("safari"))
-            browser = "safari";
-        else if (userAgent.Contains("firefox"))
-            browser = "Firefox";
-        else if (userAgent.Contains("opera"))
-            browser = "Opera";
-        else if (userAgent.Contains("msie"))
-            browser = "IE";
-
-        return BaseResponseDto.OK($"ipV4:{ip},ipV6:{IpFormatHelper.FormatV4ToV6(ip)},os:{osVersion},browser:{browser},userAgent:{userAgent}"); ;
+        var httpContext = _IHttpContextAccessor.HttpContext!;
+        ClientInfoHelper clientInfoHelper = new(httpContext);
+        return BaseResponseDto.OK(clientInfoHelper);
     }
 
     /// <summary>

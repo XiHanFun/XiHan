@@ -46,9 +46,9 @@ public class SiteController : BaseApiController
     /// 站点初始化配置
     /// </summary>
     /// <returns></returns>
-    [HttpPost("Configuration/Init")]
+    [HttpPost("InitData")]
     [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
-    public async Task<BaseResultDto> Init([FromServices] IMapper iMapper)
+    public async Task<BaseResultDto> InitData([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()
         {

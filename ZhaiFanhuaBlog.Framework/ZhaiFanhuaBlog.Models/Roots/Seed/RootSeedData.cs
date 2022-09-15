@@ -1,18 +1,18 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootInitData
+// FileName:RootSeedData
 // Guid:93d1dcc9-a012-4025-92ee-217fb8713fa0
 // Author:Administrator
 // Email:me@zhaifanhua.com
 // CreateTime:2022-07-23 上午 10:49:27
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Models.Roots.Init;
+namespace ZhaiFanhuaBlog.Models.Roots.Seed;
 
 /// <summary>
-/// RootInitData
+/// RootSeedData
 /// </summary>
-public class RootInitData
+public class RootSeedData
 {
     /// <summary>
     /// 系统状态种子数据
