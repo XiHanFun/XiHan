@@ -1,20 +1,16 @@
 ---
-name: Feature request
+name: 功能建议
 about: Suggest an idea for this project
-title: ''
-labels: ''
+title: 'feat: '
+labels: 'Feature Request'
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+为了帮助我们更好的解决您的问题，请填写以下选项（不填写完整可能会被直接关闭 issue）：
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+- 是否已搜索其他 issue，没有人提过这个功能？：
+- 是否已尝试使用最新版本，且仍然没有此功能？：
+- 功能概述：
+- 功能动机：
+- 详细解释（可选）：

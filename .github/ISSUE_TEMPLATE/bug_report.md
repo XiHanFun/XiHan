@@ -1,38 +1,24 @@
 ---
-name: Bug report
+name: BUG反馈
 about: Create a report to help us improve
-title: ''
+title: 'bug: '
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+为了帮助我们更好的解决您的问题，请填写以下选项（不填写完整可能会被直接关闭 issue）：
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+- 是否已搜索其他 issue，没有人提过这个问题？：
+- 当前 ZhaiFanhuaBlog 版本：
+- 是否尝试最新版是否已解决此问题：
+- 是否尝试重启 ZhaiFanhuaBlog ，且问题依旧存在？：
+- 是否已尝试清空浏览器缓存，且问题依旧存在？：
+- 操作系统（如 Windows、Mac、iOS、安卓）：
+- 浏览器（如 Chrome、Firefox、Safari，X 浏览器）：
+- 做什么操作提示的错误？：
+- 期望行为（应该是什么样的结果）：
+- 当前行为（当前是什么样的结果）：
+- 错误日志（可选）：
+- 复现步骤（可选）：
+- 您的额外信息（可选）：
