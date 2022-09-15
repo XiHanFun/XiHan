@@ -14,7 +14,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System.Security.Claims;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 
@@ -25,7 +25,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 日志开关
-    private readonly bool ResourceLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Resource");
+    private readonly bool ResourceLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Resource");
 
     private readonly IMemoryCache _IMemoryCache;
     private readonly ILogger<CustomResourceFilterAsyncAttribute> _ILogger;
@@ -85,7 +85,7 @@ public class CustomResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilte
                 // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
                 if (resourceExecuted.Result != null)
                 {
-                    TimeSpan SyncTimeout = TimeSpan.FromMinutes(ConfigHelper.Configuration.GetValue<int>("Cache:SyncTimeout"));
+                    TimeSpan SyncTimeout = TimeSpan.FromMinutes(AppConfig.Configuration.GetValue<int>("Cache:SyncTimeout"));
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)

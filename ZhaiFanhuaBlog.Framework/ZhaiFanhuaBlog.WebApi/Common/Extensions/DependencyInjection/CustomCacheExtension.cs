@@ -11,7 +11,7 @@ using CSRedis;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -33,11 +33,11 @@ public static class CustomCacheExtension
             SizeLimit = 60
         });
         // 分布式缓存
-        if (ConfigHelper.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
+        if (AppConfig.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
         {
             // CSRedis
-            var connectionString = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
-            var instanceName = ConfigHelper.Configuration.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
+            var connectionString = AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
+            var instanceName = AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
             var redisStr = $"{connectionString}, prefix = {instanceName}";
             // 用法一：基于Redis初始化IDistributedCache
             services.AddSingleton(new CSRedisClient(redisStr));
@@ -46,7 +46,7 @@ public static class CustomCacheExtension
             RedisHelper.Initialization(new CSRedisClient(redisStr));
         }
         // 响应缓存
-        if (ConfigHelper.Configuration.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
+        if (AppConfig.Configuration.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
         {
             services.AddResponseCaching();
         }

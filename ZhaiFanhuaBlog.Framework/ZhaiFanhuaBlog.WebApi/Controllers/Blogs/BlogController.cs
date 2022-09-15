@@ -26,7 +26,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Blogs;
 /// 博客管理
 /// <code>包含：分类/文章/标签/评论/点赞/评论点赞</code>
 /// </summary>
-[Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class BlogController : BaseApiController
 {

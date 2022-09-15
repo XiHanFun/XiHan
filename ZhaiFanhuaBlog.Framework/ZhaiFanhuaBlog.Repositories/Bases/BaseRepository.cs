@@ -11,12 +11,12 @@ using Microsoft.Extensions.Configuration;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.IRepositories.Bases;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.Utils.Config;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
@@ -35,7 +35,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-        IConfiguration _IConfiguration = ConfigHelper.Configuration!;
+        IConfiguration _IConfiguration = AppConfig.Configuration!;
         // 数据库是否初始化
         bool initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
         if (!initDatabase)

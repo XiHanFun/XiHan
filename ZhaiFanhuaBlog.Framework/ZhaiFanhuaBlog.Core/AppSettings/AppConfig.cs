@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ConfigHelper
+// FileName:AppConfig
 // Guid:075a4b94-d8d4-4b4e-8e13-83ae6b03e16c
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -9,12 +9,12 @@
 
 using Microsoft.Extensions.Configuration;
 
-namespace ZhaiFanhuaBlog.Utils.Config;
+namespace ZhaiFanhuaBlog.Core.AppSettings;
 
 /// <summary>
-/// ConfigHelper
+/// AppConfig
 /// </summary>
-public static class ConfigHelper
+public static class AppConfig
 {
     /// <summary>
     /// 公用配置

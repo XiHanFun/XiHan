@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System.Security.Claims;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Action");
+    private readonly bool ActionLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Action");
 
     private readonly ILogger<CustomActionFilterAsyncAttribute> _ILogger;
 

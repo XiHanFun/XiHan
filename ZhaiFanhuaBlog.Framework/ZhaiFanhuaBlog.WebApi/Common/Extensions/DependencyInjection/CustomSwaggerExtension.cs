@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
@@ -45,8 +45,8 @@ public static class CustomSwaggerExtension
                     Description = swaggerinfo.OpenApiInfo?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
-                        Name = ConfigHelper.Configuration.GetValue<string>("Configuration:Admin:Name"),
-                        Email = ConfigHelper.Configuration.GetValue<string>("Configuration:Admin:Email")
+                        Name = AppConfig.Configuration.GetValue<string>("Configuration:Admin:Name"),
+                        Email = AppConfig.Configuration.GetValue<string>("Configuration:Admin:Email")
                     },
                     License = new OpenApiLicense
                     {
@@ -120,7 +120,7 @@ public static class CustomSwaggerExtension
         app.UseSwaggerUI(options =>
         {
             // 性能分析
-            if (ConfigHelper.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+            if (AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
             {
                 options.IndexStream = () => typeof(CustomSwaggerExtension).GetTypeInfo().Assembly.GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html");
             }
@@ -134,7 +134,7 @@ public static class CustomSwaggerExtension
             // API前缀设置为空
             options.RoutePrefix = string.Empty;
             // API页面标题
-            options.DocumentTitle = $"{ConfigHelper.Configuration.GetValue<string>("Configuration:Name")}接口文档";
+            options.DocumentTitle = $"{AppConfig.Configuration.GetValue<string>("Configuration:Name")}接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
             options.DocExpansion(DocExpansion.None);
         });

@@ -9,7 +9,7 @@
 
 using Microsoft.AspNetCore.HttpOverrides;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
@@ -32,7 +32,7 @@ public class Program
 
         var config = builder.Configuration;
         ConsoleHelper.WriteLineWarning("Configuration Start……");
-        ConfigHelper.Configuration = config;
+        AppConfig.Configuration = config;
         ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
         var log = builder.Logging;

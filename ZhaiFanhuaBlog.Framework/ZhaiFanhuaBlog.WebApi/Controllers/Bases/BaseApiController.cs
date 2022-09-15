@@ -15,6 +15,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 /// <summary>
 /// BaseApiController
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]

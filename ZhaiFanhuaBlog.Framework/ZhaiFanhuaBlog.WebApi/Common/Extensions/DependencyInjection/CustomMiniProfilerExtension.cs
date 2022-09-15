@@ -7,7 +7,7 @@
 // CreateTime:2022-09-07 上午 01:58:14
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -23,7 +23,7 @@ public static class CustomMiniProfilerExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomMiniProfiler(this IServiceCollection services)
     {
-        if (ConfigHelper.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+        if (AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
         {
             services.AddMiniProfiler(options => options.RouteBasePath = @"/profiler");
         }

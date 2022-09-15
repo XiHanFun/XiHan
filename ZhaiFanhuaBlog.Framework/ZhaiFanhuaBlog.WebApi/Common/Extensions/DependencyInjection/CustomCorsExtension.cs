@@ -7,7 +7,7 @@
 // CreateTime:2022-06-03 下午 03:13:42
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
 
@@ -23,15 +23,15 @@ public static class CustomCorsExtension
     /// <returns></returns>
     public static IServiceCollection AddCustomCors(this IServiceCollection services)
     {
-        bool isEnabledCors = ConfigHelper.Configuration.GetValue<bool>("Cors:IsEnabled");
+        bool isEnabledCors = AppConfig.Configuration.GetValue<bool>("Cors:IsEnabled");
         if (isEnabledCors)
         {
             services.AddCors(options =>
             {
                 // 策略名称
-                string policyName = ConfigHelper.Configuration.GetValue<string>("Cors:PolicyName");
+                string policyName = AppConfig.Configuration.GetValue<string>("Cors:PolicyName");
                 // 支持多个域名端口，端口号后不可带/符号
-                string[] origins = ConfigHelper.Configuration!.GetSection("Cors:Origins").Get<string[]>();
+                string[] origins = AppConfig.Configuration!.GetSection("Cors:Origins").Get<string[]>();
                 // 添加指定策略
                 options.AddPolicy(name: policyName, policy =>
                 {
@@ -58,11 +58,11 @@ public static class CustomCorsExtension
     /// <returns></returns>
     public static IApplicationBuilder UseCustomCors(this IApplicationBuilder app)
     {
-        bool isEnabledCors = ConfigHelper.Configuration.GetValue<bool>("Cors:IsEnabled");
+        bool isEnabledCors = AppConfig.Configuration.GetValue<bool>("Cors:IsEnabled");
         if (isEnabledCors)
         {
             // 策略名称
-            string policyName = ConfigHelper.Configuration.GetValue<string>("Cors:PolicyName");
+            string policyName = AppConfig.Configuration.GetValue<string>("Cors:PolicyName");
             // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
             app.UseCors(policyName);
         }

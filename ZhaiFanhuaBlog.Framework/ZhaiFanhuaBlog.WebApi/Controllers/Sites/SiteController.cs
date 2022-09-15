@@ -25,7 +25,6 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers;
 /// 网站配置
 /// <code>包含：初始化网站/配置/皮肤/日志</code>
 /// </summary>
-[Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class SiteController : BaseApiController
 {

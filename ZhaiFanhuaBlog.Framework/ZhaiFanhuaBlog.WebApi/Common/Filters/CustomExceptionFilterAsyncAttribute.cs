@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Authentication;
 using System.Security.Claims;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.ViewModels.Response;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.WebApi.Common.Filters;
 public class CustomExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
     // 日志开关
-    private readonly bool ExceptionLogSwitch = ConfigHelper.Configuration.GetValue<bool>("Logging:Switch:Exception");
+    private readonly bool ExceptionLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Exception");
 
     private readonly ILogger<CustomExceptionFilterAsyncAttribute> _ILogger;
 

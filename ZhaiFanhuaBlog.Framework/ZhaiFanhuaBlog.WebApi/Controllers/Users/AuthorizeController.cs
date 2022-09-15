@@ -15,7 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.Utils.Config;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -42,7 +42,7 @@ public class AuthorizeController : BaseApiController
     /// <param name="iUserAccountService"></param>
     public AuthorizeController(IUserAccountService iUserAccountService)
     {
-        _IConfiguration = ConfigHelper.Configuration!;
+        _IConfiguration = AppConfig.Configuration!;
         _IUserAccountService = iUserAccountService;
     }
 
