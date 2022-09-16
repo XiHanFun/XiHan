@@ -15,11 +15,13 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// <summary>
 /// TestIpAddress
 /// </summary>
+[TestClass]
 public static class TestIpAddress
 {
     /// <summary>
     /// 转换
     /// </summary>
+    [TestMethod]
     public static void ParseIp()
     {
         byte[] address = new byte[4] { 127, 0, 0, 1 };
@@ -30,6 +32,7 @@ public static class TestIpAddress
     /// <summary>
     /// 本地ip
     /// </summary>
+    [TestMethod]
     public static void LocalIp()
     {
         Console.WriteLine("【IpV4】" + IpInfoHelper.GetLocalIpV4());

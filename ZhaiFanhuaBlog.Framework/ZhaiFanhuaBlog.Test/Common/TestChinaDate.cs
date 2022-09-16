@@ -16,11 +16,13 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// <summary>
 /// 测试农历
 /// </summary>
+[TestClass]
 public static class TestChinaDate
 {
     /// <summary>
     /// 农历
     /// </summary>
+    [TestMethod]
     public static void ChinaDate()
     {
         //DateTime dateTime1 = DateTime.Now.AddDays(-1000).AddHours(-5).AddMilliseconds(-15);
