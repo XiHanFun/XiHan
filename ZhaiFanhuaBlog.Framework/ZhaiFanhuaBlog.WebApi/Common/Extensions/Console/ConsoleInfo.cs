@@ -62,7 +62,7 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo("===============分析===============");
         ConsoleHelper.WriteLineInfo($@"是否启用：{AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled")}");
         ConsoleHelper.WriteLineInfo("===============缓存===============");
-        ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用");
+        ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用；缓存时常：{AppConfig.Configuration.GetValue<string>("Cache:SyncTimeout")}分钟");
         ConsoleHelper.WriteLineInfo($@"分布式缓存：{AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
         ConsoleHelper.WriteLineInfo($@"响应式缓存：{AppConfig.Configuration.GetValue<string>("Cache:ResponseCache:IsEnabled")}");
         ConsoleHelper.WriteLineInfo("===============跨域===============");

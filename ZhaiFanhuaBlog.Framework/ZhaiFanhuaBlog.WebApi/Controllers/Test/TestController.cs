@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -52,6 +53,10 @@ public class TestController : BaseApiController
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
         ClientInfoHelper clientInfoHelper = new(httpContext);
+        //string ip = "60.163.239.151";
+        //string datatype = "jsonp";
+        //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";
+        //var result = HttpHelper.GetAsync($@"http://api.ip138.com/ip/?ip={ip}&datatype={datatype}&token={token}");
         return BaseResponseDto.OK(clientInfoHelper);
     }
 

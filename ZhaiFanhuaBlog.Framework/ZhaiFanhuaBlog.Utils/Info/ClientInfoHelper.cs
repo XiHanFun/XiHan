@@ -87,7 +87,7 @@ public class ClientInfoHelper
         if (ua.Contains("nt 5.0"))
             sn = "Windows 2000";
         else if (ua.Contains("nt 5.1"))
-            ua = "Windows XP";
+            sn = "Windows XP";
         else if (ua.Contains("nt 5.2"))
             sn = "Windows 2003";
         else if (ua.Contains("nt 6.0"))
@@ -118,7 +118,12 @@ public class ClientInfoHelper
     /// <returns></returns>
     private static string GetSystemType(string ua)
     {
-        return ua.Contains("x64") ? "64位" : "32位";
+        string st = "Unknown";
+        if (ua.Contains("x64"))
+            st = "64位";
+        else
+            st = "32位";
+        return st;
     }
 
     /// <summary>
