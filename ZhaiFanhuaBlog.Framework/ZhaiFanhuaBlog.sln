@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B89596A0-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Core", "ZhaiFanhuaBlog.Core\ZhaiFanhuaBlog.Core.csproj", "{3D1DC1BE-350C-4136-B0E7-A17D58704CD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Test", "ZhaiFanhuaBlog.Test\ZhaiFanhuaBlog.Test.csproj", "{58CD50B7-512D-4DF0-B76E-20D579F775C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.UnitTest", "ZhaiFanhuaBlog.Test\ZhaiFanhuaBlog.UnitTest.csproj", "{58CD50B7-512D-4DF0-B76E-20D579F775C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -35,7 +35,7 @@ public static class TestIpAddress
     [TestMethod]
     public static void LocalIp()
     {
-        Console.WriteLine("【IpV4】" + IpInfoHelper.GetLocalIpV4());
-        Console.WriteLine("【IpV6】" + IpInfoHelper.GetLocalIpV6());
+        Console.WriteLine("【IpV4】" + LocalIpInfoHelper.GetLocalIpV4());
+        Console.WriteLine("【IpV6】" + LocalIpInfoHelper.GetLocalIpV6());
     }
 }

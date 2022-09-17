@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IpInfoHelper
+// FileName:LocalIpInfoHelper
 // Guid:dc0502e1-f675-41d3-8a67-dbd590e76260
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,9 +14,9 @@ using System.Net.Sockets;
 namespace ZhaiFanhuaBlog.Utils.Info;
 
 /// <summary>
-/// Ip信息帮助类
+/// 本地Ip信息帮助类
 /// </summary>
-public static class IpInfoHelper
+public static class LocalIpInfoHelper
 {
     /// <summary>
     /// 获取本机IpV4地址

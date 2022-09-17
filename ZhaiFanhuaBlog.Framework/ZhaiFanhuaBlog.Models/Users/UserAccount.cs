@@ -83,17 +83,8 @@ public class UserAccount : BaseEntity
     /// <summary>
     /// 注册Ip
     /// </summary>
-    [SugarColumn(ColumnDataType = "varbinary(16)", IsNullable = true)]
-    public virtual byte[]? RegisterIp
-    {
-        get => _RegisterIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_RegisterIp);
-        set => _RegisterIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
-    }
-
-    /// <summary>
-    /// 注册Ip
-    /// </summary>
-    private IPAddress? _RegisterIp;
+    [SugarColumn(IsNullable = true)]
+    public string? RegisterIp { get; set; }
 
     /// <summary>
     /// 系统角色

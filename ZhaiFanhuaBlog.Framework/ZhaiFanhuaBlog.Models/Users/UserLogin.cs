@@ -27,17 +27,7 @@ public class UserLogin : BaseEntity
     /// <summary>
     /// 登录Ip
     /// </summary>
-    [SugarColumn(ColumnDataType = "varbinary(16)")]
-    public virtual byte[]? LoginIp
-    {
-        get => _LoginIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_LoginIp);
-        set => _LoginIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
-    }
-
-    /// <summary>
-    /// 登录Ip
-    /// </summary>
-    private IPAddress? _LoginIp;
+    public string? _LoginIp;
 
     /// <summary>
     /// 代理信息

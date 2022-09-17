@@ -49,16 +49,7 @@ public class RBlogCommentDto : BaseFieldDto
     public bool IsTop { get; set; } = false;
 
     /// <summary>
-    /// 评论者IP(显示地区)
-    /// </summary>
-    public virtual byte[]? CommentIp
-    {
-        get => _CommentIp == null ? null : IpFormatHelper.FormatIPAddressToByte(_CommentIp);
-        set => _CommentIp = value == null ? null : IpFormatHelper.FormatByteToIPAddress(value);
-    }
-
-    /// <summary>
     /// 评论者IP
     /// </summary>
-    private IPAddress? _CommentIp;
+    public string? CommentIp;
 }

@@ -46,9 +46,7 @@ public static class CustomAutoMapperExtension
 
             // User
             mapper.CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
-            mapper.CreateMap<UserAccount, RUserAccountDto>()
-            .ForMember(u => u.RegisterIp, d => d.MapFrom(o => o.RegisterIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.RegisterIp)))
-            .ReverseMap();
+            mapper.CreateMap<UserAccount, RUserAccountDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
             mapper.CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
 
@@ -64,9 +62,7 @@ public static class CustomAutoMapperExtension
             mapper.CreateMap<BlogPoll, CBlogPollDto>().ReverseMap();
             mapper.CreateMap<BlogPoll, RBlogPollDto>().ReverseMap();
             mapper.CreateMap<BlogComment, CBlogCommentDto>().ReverseMap();
-            mapper.CreateMap<BlogComment, RBlogCommentDto>()
-            .ForMember(u => u.CommentIp, d => d.MapFrom(o => o.CommentIp == null ? string.Empty : IpFormatHelper.FormatByteToString(o.CommentIp)))
-            .ReverseMap();
+            mapper.CreateMap<BlogComment, RBlogCommentDto>().ReverseMap();
             mapper.CreateMap<BlogCommentPoll, CBlogCommentPollDto>().ReverseMap();
             mapper.CreateMap<BlogCommentPoll, RBlogCommentPollDto>().ReverseMap();
 

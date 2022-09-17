@@ -65,7 +65,7 @@ public class UserController : BaseApiController
         var userAccount = iMapper.Map<UserAccount>(cUserAccountDto);
         // 密码加密
         userAccount.Password = MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountDto.Password);
-        userAccount.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.GetAddressBytes();
+        userAccount.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
             return BaseResponseDto.OK("新增用户账户成功");
         return BaseResponseDto.BadRequest("新增用户账户失败");

@@ -10,6 +10,8 @@
 using System.Reflection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Console;
+using ZhaiFanhuaBlog.Utils.DirFile;
+using ZhaiFanhuaBlog.Utils.Formats;
 using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
@@ -52,8 +54,9 @@ public static class ConsoleInfo
         ConsoleHelper.WriteLineInfo($@"运行路径：{ApplicationInfoHelper.ProcessPath}");
         ConsoleHelper.WriteLineInfo($@"当前进程：{ApplicationInfoHelper.CurrentProcessId}");
         ConsoleHelper.WriteLineInfo($@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}");
-        ConsoleHelper.WriteLineInfo($@"本地IPv4地址：{IpInfoHelper.GetLocalIpV4()}");
-        ConsoleHelper.WriteLineInfo($@"本地IPv6地址：{IpInfoHelper.GetLocalIpV6()}");
+        ConsoleHelper.WriteLineInfo($@"占用磁盘空间：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}");
+        ConsoleHelper.WriteLineInfo($@"本地IPv4地址：{LocalIpInfoHelper.GetLocalIpV4()}");
+        ConsoleHelper.WriteLineInfo($@"本地IPv6地址：{LocalIpInfoHelper.GetLocalIpV6()}");
         ConsoleHelper.WriteLineInfo($@"应用启动环境：{AppConfig.Configuration.GetValue<string>("Environment")}");
         ConsoleHelper.WriteLineInfo("==============================配置信息==============================");
         ConsoleHelper.WriteLineInfo("==============数据库==============");

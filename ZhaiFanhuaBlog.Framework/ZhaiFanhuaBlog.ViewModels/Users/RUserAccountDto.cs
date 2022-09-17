@@ -65,7 +65,7 @@ public class RUserAccountDto : BaseFieldDto
     /// <summary>
     /// 注册Ip地址
     /// </summary>
-    public virtual string? RegisterIp { get; set; }
+    public string? RegisterIp { get; set; }
 
     /// <summary>
     /// 系统角色
