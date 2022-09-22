@@ -8,12 +8,10 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.HttpOverrides;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
 using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi;
 
