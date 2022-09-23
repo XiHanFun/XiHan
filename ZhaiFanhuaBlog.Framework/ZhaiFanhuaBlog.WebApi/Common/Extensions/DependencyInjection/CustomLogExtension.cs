@@ -31,7 +31,7 @@ public static class CustomLogExtension
         string waringPath = AppContext.BaseDirectory + @"Logs/Waring/.log";
         string errorPath = AppContext.BaseDirectory + @"Logs/Error/.log";
         string fatalPath = AppContext.BaseDirectory + @"Logs/Fatal/.log";
-        Serilog.Log.Logger = new LoggerConfiguration()
+        Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Information
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)

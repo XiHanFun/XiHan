@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -56,6 +57,7 @@ public class TestController : BaseApiController
         //string datatype = "jsonp";
         //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";
         //var result = HttpHelper.GetAsync($@"http://api.ip138.com/ip/?ip={ip}&datatype={datatype}&token={token}");
+        //var result = HttpHelper.PostAsync();
         return BaseResponseDto.OK(clientInfoHelper);
     }
 
