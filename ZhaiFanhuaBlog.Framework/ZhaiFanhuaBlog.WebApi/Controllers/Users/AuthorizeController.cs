@@ -9,18 +9,15 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
-using ZhaiFanhuaBlog.IServices.Users;
-using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
+using ZhaiFanhuaBlog.Extensions.Common.Swagger;
+using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
@@ -59,7 +56,7 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        return BaseResponseDto.OK(GetToken(userAccount));
+        return BaseResponseDto.OK(JwtToken.IssueJwt(userAccount));
     }
 
     /// <summary>
@@ -75,42 +72,6 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        return BaseResponseDto.OK(GetToken(userAccount));
-    }
-
-    /// <summary>
-    /// 获取Token
-    /// </summary>
-    /// <param name="userAccount"></param>
-    /// <returns></returns>
-    private string GetToken(UserAccount userAccount)
-    {
-        try
-        {
-            var accountClaims = new Claim[]{
-                new Claim("UserId", userAccount.BaseId.ToString()),
-                new Claim("UserName", userAccount.Name),
-                new Claim("NickName", userAccount.NickName ?? userAccount.Name),
-                //new Claim("RootRole", userAccount.RootRoles?.FirstOrDefault()?.Name?.ToString()??"")
-            };
-            // Nuget引入：Microsoft.IdentityModel.Tokens
-            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_IConfiguration.GetValue<string>("Auth:JWT:IssuerSigningKey")));
-            SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
-            // Nuget引入：System.IdentityModel.Tokens.Jwt
-            JwtSecurityToken token = new(
-                issuer: _IConfiguration["Configuration:Domain"],
-                audience: _IConfiguration["Configuration:Domain"],
-                claims: accountClaims,
-                notBefore: DateTime.Now,
-                expires: DateTime.Now.AddMinutes(_IConfiguration.GetValue<int>("Auth:JWT:Expires")),
-                signingCredentials: credentials
-            );
-            var result = new JwtSecurityTokenHandler().WriteToken(token);
-            return result;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        return BaseResponseDto.OK(JwtToken.IssueJwt(userAccount));
     }
 }

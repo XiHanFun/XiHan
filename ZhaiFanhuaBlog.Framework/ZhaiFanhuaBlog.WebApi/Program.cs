@@ -8,12 +8,12 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.HttpOverrides;
-using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Reflection;
 using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Extensions.Middlewares;
+using ZhaiFanhuaBlog.Setups;
+using ZhaiFanhuaBlog.Setups.Common.Console;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Console;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
 
 namespace ZhaiFanhuaBlog.WebApi;
 
@@ -37,33 +37,33 @@ public class Program
 
         var log = builder.Logging;
         ConsoleHelper.WriteLineWarning("Log Start……");
-        log.AddCustomLog();
+        log.AddLogSetup();
         ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
 
         var services = builder.Services;
         ConsoleHelper.WriteLineWarning("Services Start……");
         // Cache
-        services.AddCustomCache();
+        services.AddCacheSetup();
         // JWT
-        services.AddCustomJWT();
+        services.AddAuthenticationJwtSetup();
         // Http请求
         services.AddHttpClient();
         // Swagger
-        services.AddCustomSwagger();
+        services.AddSwaggerSetup();
         // 性能分析
-        services.AddCustomMiniProfiler();
+        services.AddMiniProfilerSetup();
         // SqlSugar
-        services.AddCustomSqlSugar();
+        services.AddSqlSugarSetup();
         // IOC
-        services.AddCustomIOC();
+        services.AddIocSetup();
         // AutoMapper
-        services.AddCustomAutoMapper();
+        services.AddAutoMapperSetup();
         // Route
-        services.AddCustomRoute();
+        services.AddRouteSetup();
         // Cors
-        services.AddCustomCors();
+        services.AddCorsSetup();
         // Controllers
-        services.AddCustomControllers();
+        services.AddControllersSetup();
         ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
 
         var app = builder.Build();
@@ -87,9 +87,9 @@ public class Program
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
         // MiniProfiler
-        app.UseMiniProfiler();
+        app.UseMiniProfilerMiddleware();
         // Swagger
-        app.UseCustomSwagger();
+        app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html"));
         // 使用静态文件
         app.UseStaticFiles();
         // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
@@ -97,7 +97,7 @@ public class Program
         // 路由
         app.UseRouting();
         // 跨域
-        app.UseCustomCors();
+        app.UseCorsMiddleware();
         // 身份验证
         app.UseAuthentication();
         // 认证授权
@@ -112,7 +112,7 @@ public class Program
         ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
         // 启动信息打印
-        ConsoleInfo.ConsoleInfos();
+        CustomConsole.ConsoleInfos();
         app.Run();
     }
 }

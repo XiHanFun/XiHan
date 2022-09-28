@@ -8,15 +8,14 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZhaiFanhuaBlog.Extensions.Common.Swagger;
+using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.IServices.Sites;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Sites;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
-using ZhaiFanhuaBlog.WebApi.Common.Filters;
 using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers;
@@ -47,7 +46,7 @@ public class SiteController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("InitData")]
-    [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
+    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
     public async Task<BaseResultDto> InitData([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()

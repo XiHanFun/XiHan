@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj" />
     <ProjectReference Include="..\ZhaiFanhuaBlog.Services\ZhaiFanhuaBlog.Services.csproj" />
   </ItemGroup>
 
@@ -57,7 +58,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Middlewares\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

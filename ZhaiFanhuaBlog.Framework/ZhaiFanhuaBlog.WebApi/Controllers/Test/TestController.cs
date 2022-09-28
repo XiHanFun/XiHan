@@ -10,13 +10,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using ZhaiFanhuaBlog.Extensions.Common.Swagger;
+using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Utils.Encryptions;
-using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
-using ZhaiFanhuaBlog.WebApi.Common.Extensions.Swagger;
-using ZhaiFanhuaBlog.WebApi.Common.Filters;
 using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
 namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
@@ -90,7 +89,7 @@ public class TestController : BaseApiController
     /// <param name="iLog"></param>
     /// <returns></returns>
     [HttpGet("Log")]
-    [TypeFilter(typeof(CustomActionFilterAsyncAttribute))]
+    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> TestLog(string iLog)
     {
         return BaseResponseDto.OK($"测试日志写入:{iLog}");
@@ -162,7 +161,7 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ResourceFilterAttribute")]
-    [TypeFilter(typeof(CustomResourceFilterAsyncAttribute))]
+    [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAttribute()
     {
         return BaseResponseDto.OK(DateTime.Now);
@@ -173,7 +172,7 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ResourceFilterAsyncAttribute")]
-    [TypeFilter(typeof(CustomResourceFilterAsyncAttribute))]
+    [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
         return BaseResponseDto.OK(DateTime.Now);

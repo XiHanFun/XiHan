@@ -1,0 +1,121 @@
+﻿// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:AuthenticationJwtSetup
+// Guid:fcc7eece-77f0-4f6c-bc50-fbb21dc9d96f
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-05-30 上午 02:25:36
+// ----------------------------------------------------------------
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Utils.Object;
+using ZhaiFanhuaBlog.ViewModels.Response;
+
+namespace ZhaiFanhuaBlog.Setups;
+
+/// <summary>
+/// AuthenticationJwtSetup
+/// </summary>
+public static class AuthenticationJwtSetup
+{
+    /// <summary>
+    /// AuthenticationJwt服务扩展
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddAuthenticationJwtSetup(this IServiceCollection services)
+    {
+        if (services == null) throw new ArgumentNullException(nameof(services));
+
+        // 读取配置
+        var symmetricKey = AppConfig.Configuration.GetValue<string>("Auth:JWT:SymmetricKey");
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
+        var issuer = AppConfig.Configuration.GetValue<string>("Auth:JWT:Issuer");
+        var audience = AppConfig.Configuration.GetValue<string>("Auth:JWT:Audience");
+        var clockSkew = TimeSpan.FromSeconds(AppConfig.Configuration.GetValue<int>("Auth:JWT:ClockSkew"));
+        // 令牌验证参数
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            // 是否验证签名
+            ValidateIssuerSigningKey = true,
+            // 签名
+            IssuerSigningKey = signingKey,
+            //是否验证颁发者
+            ValidateIssuer = true,
+            // 颁发者
+            ValidIssuer = issuer,
+            // 是否验证签收者
+            ValidateAudience = true,
+            // 签收者
+            ValidAudience = audience,
+            // 是否验证失效时间
+            ValidateLifetime = true,
+            // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
+            ClockSkew = clockSkew,
+            // 需要过期时间
+            RequireExpirationTime = true,
+        };
+
+        // 身份验证（Bearer）
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        // 配置鉴权逻辑，添加JwtBearer服务
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.TokenValidationParameters = tokenValidationParameters;
+            options.Events = new JwtBearerEvents
+            {
+                // 认证失败时
+                OnAuthenticationFailed = context =>
+                {
+                    var jwtHandler = new JwtSecurityTokenHandler();
+                    var token = context.Request.Headers["Authorization"].ObjToString().Replace("Bearer ", "");
+
+                    // 若Token为空、伪造无法读取
+                    if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
+                    {
+                        var jwtToken = jwtHandler.ReadJwtToken(token);
+
+                        if (jwtToken.Issuer != issuer)
+                        {
+                            context.Response.Headers.Add("Token-Error-Iss", "issuer is wrong!");
+                        }
+
+                        if (jwtToken.Audiences.FirstOrDefault() != audience)
+                        {
+                            context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
+                        }
+                    }
+
+                    // 如果过期，则把是否过期添加到返回头信息中
+                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                    {
+                        context.Response.Headers.Add("Token-Expired", "true");
+                    }
+                    return Task.CompletedTask;
+                },
+                // 未授权时
+                OnChallenge = context =>
+                {
+                    // 将Token错误添加到返回头信息中
+                    context.Response.Headers.Add("Token-Error", context.ErrorDescription);
+                    // 返回自定义的未授权模型数据
+                    return Task.FromResult(BaseResponseDto.Unauthorized());
+                }
+            };
+        });
+        // 认证授权
+        services.AddAuthorization();
+        return services;
+    }
+}
