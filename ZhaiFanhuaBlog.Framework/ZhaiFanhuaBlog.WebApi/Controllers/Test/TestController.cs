@@ -56,6 +56,7 @@ public class TestController : BaseApiController
         //string datatype = "jsonp";
         //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";
         //var result = HttpHelper.GetAsync($@"http://api.ip138.com/ip/?ip={ip}&datatype={datatype}&token={token}");
+        //var result = HttpHelper.PostAsync();
         return BaseResponseDto.OK(clientInfoHelper);
     }
 

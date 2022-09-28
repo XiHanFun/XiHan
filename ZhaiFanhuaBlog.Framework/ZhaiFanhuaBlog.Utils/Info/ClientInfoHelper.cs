@@ -17,6 +17,27 @@ namespace ZhaiFanhuaBlog.Utils.Info;
 public class ClientInfoHelper
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="httpContext"></param>
+    public ClientInfoHelper(HttpContext httpContext)
+    {
+        var header = httpContext.Request.HttpContext.Request.Headers;
+        IPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+        Language = header["Accept-Language"].ToString().Split(';')[0];
+        Referer = header["Referer"].ToString();
+        //取代理IP
+        if (header.ContainsKey("X-Forwarded-For"))
+        {
+            IPv4 = header["X-Forwarded-For"].ToString();
+        }
+        var ua = header["User-Agent"].ToString().ToLower();
+        SystemName = GetSystemName(ua);
+        SystemType = GetSystemType(ua);
+        BrowserName = GetBrowserName(ua);
+    }
+
+    /// <summary>
     /// IPv4
     /// </summary>
     public string? IPv4 { get; set; }
@@ -55,27 +76,6 @@ public class ClientInfoHelper
     /// 引荐
     /// </summary>
     public string? Referer { get; set; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="httpContext"></param>
-    public ClientInfoHelper(HttpContext httpContext)
-    {
-        var header = httpContext.Request.HttpContext.Request.Headers;
-        IPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
-        Language = header["Accept-Language"].ToString().Split(';')[0];
-        Referer = header["Referer"].ToString();
-        //取代理IP
-        if (header.ContainsKey("X-Forwarded-For"))
-        {
-            IPv4 = header["X-Forwarded-For"].ToString();
-        }
-        var ua = header["User-Agent"].ToString().ToLower();
-        SystemName = GetSystemName(ua);
-        SystemType = GetSystemType(ua);
-        BrowserName = GetBrowserName(ua);
-    }
 
     /// <summary>
     /// 获取系统名称

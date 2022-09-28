@@ -14,25 +14,17 @@ This is a backend repository for DotNet6 based blog projects.
 
 
 
-用到的技术、框架或工具：
+### 相关技术
 
-.NET6
-
-AutoMapper
-
-SqlSugar
-
-JWT
-
-Serilog
-
-Swagger
-
-Redis
-
-RabbitMQ
-
-MiniProfiler
+- .NET6 + WebAPI + RESTful
+- 简化对象映射：[AutoMapper](https://automapper.org/)
+- SqlSugar
+- JWT
+- Serilog
+- Swagger
+- Redis
+- RabbitMQ
+- MiniProfiler
 
 
 

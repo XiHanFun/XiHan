@@ -76,7 +76,7 @@ public static class SwaggerSetup
             // 定义JwtBearer认证
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "在下框中输入{token}进行身份验证",
+                Description = "在下框中输入<code>{token}</code>进行身份验证",
                 // 携带认证信息的参数名，比如Jwt默认是Authorization
                 Name = "Authorization",
                 // Bearer认证的数据格式，默认为Bearer Token（中间有一个空格）
