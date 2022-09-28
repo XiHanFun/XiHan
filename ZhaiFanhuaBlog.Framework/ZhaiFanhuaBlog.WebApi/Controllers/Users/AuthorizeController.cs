@@ -11,14 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Core.AppSettings;
-<<<<<<< HEAD
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.IServices.Users;
-=======
-using ZhaiFanhuaBlog.IServices.Users;
-using ZhaiFanhuaBlog.Models.Users;
->>>>>>> 0229dac7ac7f0243d2d4652b70c2b2d88a5cf6bc
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
