@@ -10,7 +10,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -26,7 +25,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Action");
+    private readonly bool ActionLogSwitch = AppSettings.Logging.Action;
 
     private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
 

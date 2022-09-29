@@ -7,7 +7,6 @@
 // CreateTime:2022-09-07 上午 01:58:14
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 
@@ -27,7 +26,7 @@ public static class MiniProfilerSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        if (AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+        if (AppSettings.Miniprofiler.IsEnabled)
         {
             services.AddMiniProfiler(options => options.RouteBasePath = @"/profiler");
         }

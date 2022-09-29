@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ClientInfoHelper
+// FileName:HttpContextHelper
 // Guid:07ebcfda-13ac-4019-a8ba-b03f21d6a8c2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,40 +12,62 @@ using Microsoft.AspNetCore.Http;
 namespace ZhaiFanhuaBlog.Utils.Info;
 
 /// <summary>
-/// ClientInfoHelper
+/// HttpContextHelper
 /// </summary>
-public class ClientInfoHelper
+public class HttpContextHelper
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpContext"></param>
-    public ClientInfoHelper(HttpContext httpContext)
+    public HttpContextHelper(HttpContext httpContext)
     {
         var header = httpContext.Request.HttpContext.Request.Headers;
-        IPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
-        Language = header["Accept-Language"].ToString().Split(';')[0];
-        Referer = header["Referer"].ToString();
-        //取代理IP
-        if (header.ContainsKey("X-Forwarded-For"))
-        {
-            IPv4 = header["X-Forwarded-For"].ToString();
-        }
+        LocalIPv4 = httpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv4()?.ToString();
+        LocalIPv6 = httpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv6()?.ToString();
+        RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4()?.ToString();
+        RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6()?.ToString();
+
         var ua = header["User-Agent"].ToString().ToLower();
         SystemName = GetSystemName(ua);
         SystemType = GetSystemType(ua);
         BrowserName = GetBrowserName(ua);
+
+        //取代理IP
+        if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
+        {
+            RemoteIPv4 = header["X-Real-IP"].FirstOrDefault() ??
+                         header["X-Forwarded-For"].FirstOrDefault();
+        }
+        if (header.ContainsKey("Accept-Language"))
+        {
+            Language = header["Accept-Language"].ToString().Split(';')[0];
+        }
+        if (header.ContainsKey("Referer"))
+        {
+            Referer = header["Referer"].ToString();
+        }
     }
 
     /// <summary>
-    /// IPv4
+    /// 本地IPv4
     /// </summary>
-    public string? IPv4 { get; set; }
+    public string? LocalIPv4 { get; set; }
 
     /// <summary>
-    /// IPv6
+    /// 本地IPv6
     /// </summary>
-    public string? IPv6 { get; set; }
+    public string? LocalIPv6 { get; set; }
+
+    /// <summary>
+    /// 远程IPv4
+    /// </summary>
+    public string? RemoteIPv4 { get; set; }
+
+    /// <summary>
+    /// 远程IPv6
+    /// </summary>
+    public string? RemoteIPv6 { get; set; }
 
     /// <summary>
     /// 浏览器名称
@@ -121,7 +143,7 @@ public class ClientInfoHelper
         string st = "Unknown";
         if (ua.Contains("x64"))
             st = "64位";
-        else
+        else if (ua.Contains("x86"))
             st = "32位";
         return st;
     }

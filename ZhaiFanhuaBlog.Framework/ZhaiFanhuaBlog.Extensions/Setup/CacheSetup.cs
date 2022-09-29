@@ -11,7 +11,6 @@ using CSRedis;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 
@@ -31,17 +30,22 @@ public static class CacheSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        services.AddMemoryCache(options => new MemoryCacheOptions
+        // 内存缓存
+        if (AppSettings.Cache.MemoryCache.IsEnabled)
         {
-            // 最大缓存个数限制
-            SizeLimit = 60
-        });
+            services.AddMemoryCache(options => new MemoryCacheOptions
+            {
+                // 最大缓存个数限制
+                SizeLimit = 60
+            });
+        }
+
         // 分布式缓存
-        if (AppConfig.Configuration.GetValue<bool>("Cache:DistributedCache:IsEnabled"))
+        if (AppSettings.Cache.Distributedcache.IsEnabled)
         {
             // CSRedis
-            var connectionString = AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:Redis:ConnectionString");
-            var instanceName = AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:Redis:InstanceName");
+            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString;
+            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName;
             var redisStr = $"{connectionString}, prefix = {instanceName}";
             // 用法一：基于Redis初始化IDistributedCache
             services.AddSingleton(new CSRedisClient(redisStr));
@@ -49,8 +53,9 @@ public static class CacheSetup
             // 用法二：帮助类直接调用
             RedisHelper.Initialization(new CSRedisClient(redisStr));
         }
+
         // 响应缓存
-        if (AppConfig.Configuration.GetValue<bool>("Cache:ResponseCache:IsEnabled"))
+        if (AppSettings.Cache.Responsecache.IsEnabled)
         {
             services.AddResponseCaching();
         }

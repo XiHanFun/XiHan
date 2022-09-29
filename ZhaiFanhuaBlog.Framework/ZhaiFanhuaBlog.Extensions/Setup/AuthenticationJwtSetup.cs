@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,13 +31,14 @@ public static class AuthenticationJwtSetup
     public static IServiceCollection AddAuthenticationJwtSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
+        // 读取配置
+        var issuer = AppSettings.Auth.JWT.Issuer;
+        var audience = AppSettings.Auth.JWT.Audience;
+        var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
+        var clockSkew = AppSettings.Auth.JWT.ClockSkew;
 
         // 读取配置
-        var symmetricKey = AppConfig.Configuration.GetValue<string>("Auth:JWT:SymmetricKey");
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
-        var issuer = AppConfig.Configuration.GetValue<string>("Auth:JWT:Issuer");
-        var audience = AppConfig.Configuration.GetValue<string>("Auth:JWT:Audience");
-        var clockSkew = TimeSpan.FromSeconds(AppConfig.Configuration.GetValue<int>("Auth:JWT:ClockSkew"));
         // 令牌验证参数
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -57,7 +57,7 @@ public static class AuthenticationJwtSetup
             // 是否验证失效时间
             ValidateLifetime = true,
             // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
-            ClockSkew = clockSkew,
+            ClockSkew = TimeSpan.FromSeconds(clockSkew),
             // 需要过期时间
             RequireExpirationTime = true,
         };
@@ -88,19 +88,23 @@ public static class AuthenticationJwtSetup
 
                         if (jwtToken.Issuer != issuer)
                         {
-                            context.Response.Headers.Add("Token-Error-Iss", "issuer is wrong!");
+                            context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
                         }
 
                         if (jwtToken.Audiences.FirstOrDefault() != audience)
                         {
                             context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                         }
+                        // 返回自定义的未授权模型数据
+                        return Task.FromResult(BaseResponseDto.Unauthorized("授权为空或因伪造无法读取"));
                     }
 
                     // 如果过期，则把是否过期添加到返回头信息中
                     if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                     {
                         context.Response.Headers.Add("Token-Expired", "true");
+                        // 返回自定义的未授权模型数据
+                        return Task.FromResult(BaseResponseDto.Unauthorized("授权已过期"));
                     }
                     return Task.CompletedTask;
                 },
@@ -110,7 +114,7 @@ public static class AuthenticationJwtSetup
                     // 将Token错误添加到返回头信息中
                     context.Response.Headers.Add("Token-Error", context.ErrorDescription);
                     // 返回自定义的未授权模型数据
-                    return Task.FromResult(BaseResponseDto.Unauthorized());
+                    return Task.FromResult(BaseResponseDto.Unauthorized("未授权"));
                 }
             };
         });

@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.Extensions.Middlewares;
@@ -22,7 +21,7 @@ public static class MiniProfilerMiddleware
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 
-        if (AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+        if (AppSettings.Miniprofiler.IsEnabled)
         {
             // 性能分析
             app.UseMiniProfiler();

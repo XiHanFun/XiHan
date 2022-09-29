@@ -7,7 +7,6 @@
 // CreateTime:2022-05-08 下午 09:35:56
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
@@ -35,9 +34,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-        IConfiguration _IConfiguration = AppConfig.Configuration!;
         // 数据库是否初始化
-        bool initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
+        bool initDatabase = AppSettings.Database.Initialization;
         if (!initDatabase)
         {
             ConsoleHelper.WriteLineWarning("数据库正在初始化……");
@@ -81,13 +79,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(BlogCommentPoll),
                 typeof(BlogPoll)
                 );
-            // 更新初始化状态
-            _IConfiguration["Database:Initialization"] = true.ToString();
-            initDatabase = _IConfiguration.GetValue<bool>("Database:Initialization");
-            if (initDatabase)
-            {
-                ConsoleHelper.WriteLineSuccess("数据库初始化已完成");
-            }
+            ConsoleHelper.WriteLineSuccess("数据库初始化已完成");
         }
     }
 

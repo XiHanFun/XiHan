@@ -7,7 +7,6 @@
 // CreateTime:2022-05-25 下午 03:53:33
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -47,8 +46,8 @@ public static class SwaggerSetup
                     Description = swaggerinfo.OpenApiInfo?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
-                        Name = AppConfig.Configuration.GetValue<string>("Configuration:Admin:Name"),
-                        Email = AppConfig.Configuration.GetValue<string>("Configuration:Admin:Email")
+                        Name = AppSettings.Site.Admin.Name,
+                        Email = AppSettings.Site.Admin.Email
                     },
                     License = new OpenApiLicense
                     {
@@ -60,27 +59,31 @@ public static class SwaggerSetup
                 //options.OrderActionsBy(o => o.RelativePath);
             });
 
-            // WebApi 注释文件
-            var xmlWebApiPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.WebApi.xml");
-            // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-            options.IncludeXmlComments(xmlWebApiPath, true);
+            //// WebApi 注释文件
+            //var xmlWebApiPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.WebApi.xml");
+            //// 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+            //options.IncludeXmlComments(xmlWebApiPath, true);
 
-            // Models 注释文件
-            var xmlModelsPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.Models.xml");
-            options.IncludeXmlComments(xmlModelsPath);
+            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
+            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
+            {
+                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+                options.IncludeXmlComments(xmlPath, true);
+            });
 
-            // ViewModels 注释文件
-            var xmlViewModelsPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.ViewModels.xml");
-            options.IncludeXmlComments(xmlViewModelsPath);
+            // 枚举添加摘要
+            options.UseInlineDefinitionsForEnums();
+            // 文档中显示安全小绿锁
+            options.OperationFilter<AddResponseHeadersFilter>();
+            // 安全小绿锁旁标记 Auth 标签
+            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // 添加请求头的Header中的token,传递到后台
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
 
-            // 定义JwtBearer认证
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            // 定义认证方式一 OAuth 方案名称必须是oauth2
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
                 Description = "在下框中输入<code>{token}</code>进行身份验证",
-                // 携带认证信息的参数名，比如Jwt默认是Authorization
-                Name = "Authorization",
-                // Bearer认证的数据格式，默认为Bearer Token（中间有一个空格）
-                BearerFormat = "JWT",
                 // 认证主题，只对Type=Http生效，只能是basic和bearer
                 Scheme = "Bearer",
                 // 表示认证信息发在Http请求的哪个位置
@@ -99,21 +102,14 @@ public static class SwaggerSetup
                         Reference=new OpenApiReference
                         {
                             Type=ReferenceType.SecurityScheme,
-                            Id="Bearer",
+                            Id="oauth2",
                         }
                     },
                     Array.Empty<string>()
                 }
             });
-
-            // 枚举添加摘要
-            options.UseInlineDefinitionsForEnums();
-            // 文档中显示安全小绿锁
-            options.OperationFilter<AddResponseHeadersFilter>();
-            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            // 添加请求头的Header中的token,传递到后台
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
+
         // 指定Swagger接口文档中参数序列化组件为Newtonsoft.Json
         services.AddSwaggerGenNewtonsoftSupport();
 

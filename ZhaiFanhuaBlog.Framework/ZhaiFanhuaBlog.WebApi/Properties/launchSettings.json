@@ -31,15 +31,6 @@
       "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
-    "Staging": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Staging"
-      },
-      "hotReloadEnabled": true,
-      "applicationUrl": "http://127.0.0.1:9708",
-      "dotnetRunMessages": true
-    },
     "Production": {
       "commandName": "Project",
       "environmentVariables": {

@@ -7,20 +7,22 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ZhaiFanhuaBlog.WebApi/ZhaiFanhuaBlog.WebApi.csproj", "ZhaiFanhuaBlog.WebApi/"]
+COPY ["ZhaiFanhuaBlog.Extensions/ZhaiFanhuaBlog.Extensions.csproj", "ZhaiFanhuaBlog.Extensions/"]
 COPY ["ZhaiFanhuaBlog.Services/ZhaiFanhuaBlog.Services.csproj", "ZhaiFanhuaBlog.Services/"]
 COPY ["ZhaiFanhuaBlog.IServices/ZhaiFanhuaBlog.IServices.csproj", "ZhaiFanhuaBlog.IServices/"]
-COPY ["ZhaiFanhuaBlog.ViewModels/ZhaiFanhuaBlog.ViewModels.csproj", "ZhaiFanhuaBlog.ViewModels/"]
-COPY ["ZhaiFanhuaBlog.Models/ZhaiFanhuaBlog.Models.csproj", "ZhaiFanhuaBlog.Models/"]
-COPY ["ZhaiFanhuaBlog.Utils/ZhaiFanhuaBlog.Utils.csproj", "ZhaiFanhuaBlog.Utils/"]
 COPY ["ZhaiFanhuaBlog.Repositories/ZhaiFanhuaBlog.Repositories.csproj", "ZhaiFanhuaBlog.Repositories/"]
 COPY ["ZhaiFanhuaBlog.IRepositories/ZhaiFanhuaBlog.IRepositories.csproj", "ZhaiFanhuaBlog.IRepositories/"]
+COPY ["ZhaiFanhuaBlog.ViewModels/ZhaiFanhuaBlog.ViewModels.csproj", "ZhaiFanhuaBlog.ViewModels/"]
+COPY ["ZhaiFanhuaBlog.Models/ZhaiFanhuaBlog.Models.csproj", "ZhaiFanhuaBlog.Models/"]
+COPY ["ZhaiFanhuaBlog.Core/ZhaiFanhuaBlog.Core.csproj", "ZhaiFanhuaBlog.Core/"]
+COPY ["ZhaiFanhuaBlog.Utils/ZhaiFanhuaBlog.Utils.csproj", "ZhaiFanhuaBlog.Utils/"]
 RUN dotnet restore "ZhaiFanhuaBlog.WebApi/ZhaiFanhuaBlog.WebApi.csproj"
 COPY . .
 WORKDIR "/src/ZhaiFanhuaBlog.WebApi"
 RUN dotnet build "ZhaiFanhuaBlog.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ZhaiFanhuaBlog.WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "ZhaiFanhuaBlog.WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

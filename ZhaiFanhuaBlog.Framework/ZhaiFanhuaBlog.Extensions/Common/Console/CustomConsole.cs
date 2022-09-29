@@ -7,7 +7,6 @@
 // CreateTime:2022-05-30 上午 03:11:28
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Console;
@@ -58,25 +57,25 @@ public static class CustomConsole
         ConsoleHelper.WriteLineInfo($@"占用磁盘空间：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}");
         ConsoleHelper.WriteLineInfo($@"本地IPv4地址：{LocalIpInfoHelper.GetLocalIpV4()}");
         ConsoleHelper.WriteLineInfo($@"本地IPv6地址：{LocalIpInfoHelper.GetLocalIpV6()}");
-        ConsoleHelper.WriteLineInfo($@"应用启动环境：{AppConfig.Configuration.GetValue<string>("Environment")}");
+        ConsoleHelper.WriteLineInfo($@"应用启动环境：{AppSettings.EnvironmentName}");
         ConsoleHelper.WriteLineInfo("==============================配置信息==============================");
         ConsoleHelper.WriteLineInfo("==============数据库==============");
-        ConsoleHelper.WriteLineInfo($@"连接类型：{AppConfig.Configuration.GetValue<string>("Database:Type")}");
-        ConsoleHelper.WriteLineInfo($@"是否初始化：{AppConfig.Configuration.GetValue<string>("Database:Initialization")}");
+        ConsoleHelper.WriteLineInfo($@"连接类型：{AppSettings.Database.Type}");
+        ConsoleHelper.WriteLineInfo($@"是否初始化：{AppSettings.Database.Initialization}");
         ConsoleHelper.WriteLineInfo("===============分析===============");
-        ConsoleHelper.WriteLineInfo($@"是否启用：{AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled")}");
+        ConsoleHelper.WriteLineInfo($@"是否启用：{AppSettings.Miniprofiler.IsEnabled}");
         ConsoleHelper.WriteLineInfo("===============缓存===============");
-        ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用；缓存时常：{AppConfig.Configuration.GetValue<string>("Cache:SyncTimeout")}分钟");
-        ConsoleHelper.WriteLineInfo($@"分布式缓存：{AppConfig.Configuration.GetValue<string>("Cache:DistributedCache:IsEnabled")}");
-        ConsoleHelper.WriteLineInfo($@"响应式缓存：{AppConfig.Configuration.GetValue<string>("Cache:ResponseCache:IsEnabled")}");
+        ConsoleHelper.WriteLineInfo($@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout}分钟");
+        ConsoleHelper.WriteLineInfo($@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled}");
+        ConsoleHelper.WriteLineInfo($@"响应式缓存：{AppSettings.Cache.Responsecache.IsEnabled}");
         ConsoleHelper.WriteLineInfo("===============跨域===============");
-        ConsoleHelper.WriteLineInfo($@"是否启用：{AppConfig.Configuration.GetValue<bool>("Cors:IsEnabled")}");
+        ConsoleHelper.WriteLineInfo($@"是否启用：{AppSettings.Cors.IsEnabled}");
         ConsoleHelper.WriteLineInfo("===============日志===============");
-        ConsoleHelper.WriteLineInfo($@"授权日志：{AppConfig.Configuration.GetValue<bool>("Logging:Switch:Authorization")}");
-        ConsoleHelper.WriteLineInfo($@"资源日志：{AppConfig.Configuration.GetValue<bool>("Logging:Switch:Resource")}");
-        ConsoleHelper.WriteLineInfo($@"请求日志：{AppConfig.Configuration.GetValue<bool>("Logging:Switch:Action")}");
-        ConsoleHelper.WriteLineInfo($@"结果日志：{AppConfig.Configuration.GetValue<bool>("Logging:Switch:Result")}");
-        ConsoleHelper.WriteLineInfo($@"异常日志：{AppConfig.Configuration.GetValue<bool>("Logging:Switch:Exception")}");
+        ConsoleHelper.WriteLineInfo($@"授权日志：{AppSettings.Logging.Authorization}");
+        ConsoleHelper.WriteLineInfo($@"资源日志：{AppSettings.Logging.Resource}");
+        ConsoleHelper.WriteLineInfo($@"请求日志：{AppSettings.Logging.Action}");
+        ConsoleHelper.WriteLineInfo($@"结果日志：{AppSettings.Logging.Result}");
+        ConsoleHelper.WriteLineInfo($@"异常日志：{AppSettings.Logging.Exception}");
         ConsoleHelper.WriteLineInfo("==============================启动信息==============================");
     }
 }

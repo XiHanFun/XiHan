@@ -32,7 +32,7 @@ public class Program
 
         var config = builder.Configuration;
         ConsoleHelper.WriteLineWarning("Configuration Start……");
-        AppConfig.Configuration = config;
+        AppSettings appSettings = new(config);
         ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
         var log = builder.Logging;
@@ -89,7 +89,7 @@ public class Program
         // MiniProfiler
         app.UseMiniProfilerMiddleware();
         // Swagger
-        app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html"));
+        app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html")!);
         // 使用静态文件
         app.UseStaticFiles();
         // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间

@@ -7,7 +7,6 @@
 // CreateTime:2022-05-26 下午 06:24:14
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar.IOC;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -29,47 +28,47 @@ public static class SqlSugarSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        string databaseType = AppConfig.Configuration.GetValue<string>("Database:Type");
+        string databaseType = AppSettings.Database.Type;
         services.AddSqlSugar(databaseType switch
         {
             "MySql" => new IocConfig()
             {
                 DbType = IocDbType.MySql,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:MySql"),
+                ConnectionString = AppSettings.Database.Connectionstring.MySql,
                 IsAutoCloseConnection = true
             },
             "SqlServer" => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:SqlServer"),
+                ConnectionString = AppSettings.Database.Connectionstring.SqlServer,
                 IsAutoCloseConnection = true
             },
             "Sqlite" => new IocConfig()
             {
                 DbType = IocDbType.Sqlite,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:Sqlite"),
+                ConnectionString = AppSettings.Database.Connectionstring.Sqlite,
                 IsAutoCloseConnection = true
             },
             "Oracle" => new IocConfig()
             {
                 DbType = IocDbType.Oracle,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:Oracle"),
+                ConnectionString = AppSettings.Database.Connectionstring.Oracle,
                 IsAutoCloseConnection = true
             },
             "PostgreSQL" => new IocConfig()
             {
                 DbType = IocDbType.PostgreSQL,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:PostgreSQL"),
+                ConnectionString = AppSettings.Database.Connectionstring.PostgreSQL,
                 IsAutoCloseConnection = true
             },
             _ => new IocConfig()
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = AppConfig.Configuration.GetValue<string>("Database:ConnectionString:SqlServer"),
+                ConnectionString = AppSettings.Database.Connectionstring.SqlServer,
                 IsAutoCloseConnection = true
             }
         });
-        bool databaseConsole = AppConfig.Configuration.GetValue<bool>("Database:Console");
+        bool databaseConsole = AppSettings.Database.Console;
         if (databaseConsole)
         {
             services.ConfigurationSugar(db =>

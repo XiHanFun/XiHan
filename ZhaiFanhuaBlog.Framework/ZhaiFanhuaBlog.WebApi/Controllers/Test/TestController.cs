@@ -51,7 +51,7 @@ public class TestController : BaseApiController
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
-        ClientInfoHelper clientInfoHelper = new(httpContext);
+        HttpContextHelper clientInfoHelper = new(httpContext);
         //string ip = "60.163.239.151";
         //string datatype = "jsonp";
         //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";

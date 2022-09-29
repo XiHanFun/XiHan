@@ -10,7 +10,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -25,7 +24,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     // 日志开关
-    private readonly bool ResultLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Result");
+    private readonly bool ResultLogSwitch = AppSettings.Logging.Result;
 
     private readonly ILogger<ResultFilterAsyncAttribute> _ILogger;
 

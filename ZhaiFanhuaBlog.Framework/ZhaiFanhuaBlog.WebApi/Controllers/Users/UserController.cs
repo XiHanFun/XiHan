@@ -26,7 +26,7 @@ namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
 
 /// <summary>
 /// 用户管理
-/// <code>包含：账户/收藏/关注/通知/第三方登录/统计</code>
+/// <code>包含：账户/收藏/关注/通知/统计</code>
 /// </summary>
 [Authorize]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]

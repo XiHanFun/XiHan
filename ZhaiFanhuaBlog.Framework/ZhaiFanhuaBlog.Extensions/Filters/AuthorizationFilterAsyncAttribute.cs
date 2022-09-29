@@ -10,7 +10,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -24,7 +23,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationFilter
 {
     // 日志开关
-    private readonly bool AuthorizationLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Authorization");
+    private readonly bool AuthorizationLogSwitch = AppSettings.Logging.Authorization;
 
     private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
 

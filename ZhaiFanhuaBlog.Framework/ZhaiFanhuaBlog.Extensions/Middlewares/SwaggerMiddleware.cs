@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -40,7 +39,7 @@ public static class SwaggerMiddleware
                 options.SwaggerEndpoint($"/swagger/{swaggerinfo.UrlPrefix}/swagger.json", swaggerinfo.OpenApiInfo?.Title);
             });
             // 性能分析
-            if (AppConfig.Configuration.GetValue<bool>("MiniProfiler:IsEnabled"))
+            if (AppSettings.Miniprofiler.IsEnabled)
             {
                 if (streamHtml.Invoke() == null)
                 {
@@ -52,8 +51,10 @@ public static class SwaggerMiddleware
                 options.IndexStream = streamHtml;
             }
 
+            // 站点名称
+            string siteName = AppSettings.Site.Name;
             // API页面标题
-            options.DocumentTitle = $"{AppConfig.Configuration.GetValue<string>("Configuration:Name")}接口文档";
+            options.DocumentTitle = $"{siteName}接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
             options.DocExpansion(DocExpansion.None);
             // 模型的默认扩展深度，设置为 -1 完全隐藏模型

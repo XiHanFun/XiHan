@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using ZhaiFanhuaBlog.Core.AppSettings;
 
 namespace ZhaiFanhuaBlog.Extensions.Middlewares;
@@ -25,11 +24,11 @@ public static class CorsMiddleware
     /// <returns></returns>
     public static IApplicationBuilder UseCorsMiddleware(this IApplicationBuilder app)
     {
-        bool isEnabledCors = AppConfig.Configuration.GetValue<bool>("Cors:IsEnabled");
+        bool isEnabledCors = AppSettings.Cors.IsEnabled;
         if (isEnabledCors)
         {
             // 策略名称
-            string policyName = AppConfig.Configuration.GetValue<string>("Cors:PolicyName");
+            string policyName = AppSettings.Cors.PolicyName;
             // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
             app.UseCors(policyName);
         }

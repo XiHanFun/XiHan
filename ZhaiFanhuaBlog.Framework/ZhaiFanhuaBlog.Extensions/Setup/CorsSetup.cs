@@ -7,7 +7,6 @@
 // CreateTime:2022-06-03 下午 03:13:42
 // ----------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 
@@ -27,15 +26,15 @@ public static class CorsSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        bool isEnabledCors = AppConfig.Configuration.GetValue<bool>("Cors:IsEnabled");
+        bool isEnabledCors = AppSettings.Cors.IsEnabled;
         if (isEnabledCors)
         {
             services.AddCors(options =>
             {
                 // 策略名称
-                string policyName = AppConfig.Configuration.GetValue<string>("Cors:PolicyName");
+                string policyName = AppSettings.Cors.PolicyName;
                 // 支持多个域名端口，端口号后不可带/符号
-                string[] origins = AppConfig.Configuration!.GetSection("Cors:Origins").Get<string[]>();
+                string[] origins = AppSettings.Cors.Origins;
                 // 添加指定策略
                 options.AddPolicy(name: policyName, policy =>
                 {

@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using System.Security.Claims;
@@ -27,7 +26,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
     // 日志开关
-    private readonly bool ExceptionLogSwitch = AppConfig.Configuration.GetValue<bool>("Logging:Switch:Exception");
+    private readonly bool ExceptionLogSwitch = AppSettings.Logging.Exception;
 
     private readonly ILogger<ExceptionFilterAsyncAttribute> _ILogger;
 
