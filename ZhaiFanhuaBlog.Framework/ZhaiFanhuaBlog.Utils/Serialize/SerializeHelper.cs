@@ -13,7 +13,7 @@ using System.Text;
 namespace ZhaiFanhuaBlog.Utils.Serialize;
 
 /// <summary>
-/// SerializeHelper
+/// 序列化帮助类
 /// </summary>
 public class SerializeHelper
 {

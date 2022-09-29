@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Utils.Summary;
 public static class EnumDescriptionHelper
 {
     /// <summary>
-    /// 获取枚举的中文描述
+    /// 获取枚举描述信息
     /// </summary>
     /// <param name="enumObj"></param>
     /// <returns></returns>
