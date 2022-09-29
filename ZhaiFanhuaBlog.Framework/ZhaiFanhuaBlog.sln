@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Services", "3.Services", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.WebApi", "3.WebApi", "{FDE1B755-56F1-4542-81E5-1262E43AD586}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{56DA146A-F853-46F3-BFB6-10CE85799527}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Utils", "2.Utils", "{56DA146A-F853-46F3-BFB6-10CE85799527}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Models", "ZhaiFanhuaBlog.Models\ZhaiFanhuaBlog.Models.csproj", "{CC2709E8-E23B-43FA-834D-80B1018BEF93}"
 EndProject
@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.IServices", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Services", "ZhaiFanhuaBlog.Services\ZhaiFanhuaBlog.Services.csproj", "{232E1BC9-01ED-4068-830D-8DF462957C3C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B89596A0-4693-43FC-B46D-4AEA7CF4EC12}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{B89596A0-4693-43FC-B46D-4AEA7CF4EC12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Core", "ZhaiFanhuaBlog.Core\ZhaiFanhuaBlog.Core.csproj", "{3D1DC1BE-350C-4136-B0E7-A17D58704CD6}"
 EndProject
@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.UnitTest", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Extensions", "4.Extensions", "{268C5786-7332-450A-A0C1-2EAB580D4FEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZhaiFanhuaBlog.Extensions", "ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj", "{540A7EE9-E484-4049-98F3-BFD55EDFA722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZhaiFanhuaBlog.Extensions", "ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj", "{540A7EE9-E484-4049-98F3-BFD55EDFA722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
