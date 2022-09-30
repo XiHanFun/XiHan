@@ -45,30 +45,30 @@ public class SiteLog : BaseDeleteEntity<Guid>
     /// 请求类名
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
-    public string? LogType { get; set; }
+    public string? LogClass { get; set; }
 
     /// <summary>
     /// 事件对象
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
-    public string? Logger { get; set; }
+    public string? LogEvent { get; set; }
 
     /// <summary>
     /// 消息描述
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
-    public string? Message { get; set; }
+    public string? LogMessage { get; set; }
 
     /// <summary>
     /// 错误详情
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true)]
-    public string? Exception { get; set; }
+    public string? LogException { get; set; }
 
     /// <summary>
     /// 来源Ip
     /// </summary>
-    public string? _SourceIp;
+    public string? SourceIp;
 
     /// <summary>
     /// 请求类型 GET、POST等

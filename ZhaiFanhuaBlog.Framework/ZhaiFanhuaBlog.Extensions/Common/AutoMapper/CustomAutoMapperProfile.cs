@@ -22,12 +22,12 @@ namespace ZhaiFanhuaBlog.Extensions.Common.AutoMapper;
 /// <summary>
 /// CustomProfile
 /// </summary>
-public class CustomProfile : Profile
+public class CustomAutoMapperProfile : Profile
 {
     /// <summary>
     /// 配置构造函数，用来创建关系映射
     /// </summary>
-    public CustomProfile()
+    public CustomAutoMapperProfile()
     {
         // Root
         CreateMap<RootRole, CRootRoleDto>().ReverseMap();

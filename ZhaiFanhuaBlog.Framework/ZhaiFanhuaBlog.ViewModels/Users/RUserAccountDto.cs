@@ -58,17 +58,17 @@ public class RUserAccountDto : BaseFieldDto
     public DateTime? Birthday { get; set; }
 
     /// <summary>
-    /// 上次登录日期
-    /// </summary>
-    public DateTime? LastLoginTime { get; set; }
-
-    /// <summary>
     /// 注册Ip地址
     /// </summary>
     public string? RegisterIp { get; set; }
 
     /// <summary>
+    /// 上次登录日期
+    /// </summary>
+    public DateTime? LastLoginTime { get; set; }
+
+    /// <summary>
     /// 系统角色
     /// </summary>
-    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
+    public virtual List<RootRole>? RootRoles { get; set; }
 }

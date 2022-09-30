@@ -21,11 +21,11 @@ public class SiteSkin : BaseDeleteEntity<Guid>
     /// 皮肤名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string SkinName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 皮肤路径
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)")]
-    public string SkinPath { get; set; } = string.Empty;
+    public string Path { get; set; } = string.Empty;
 }

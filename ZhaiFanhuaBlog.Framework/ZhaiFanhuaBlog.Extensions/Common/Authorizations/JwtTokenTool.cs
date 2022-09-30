@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:JwtToken
+// FileName:JwtTokenTool
 // Guid:df38addc-198d-4f69-aca1-5f3cc1c1c01b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,20 +16,21 @@ using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Object;
+using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 
 /// <summary>
 /// JwtToken
 /// </summary>
-public static class JwtToken
+public static class JwtTokenTool
 {
     /// <summary>
     /// 颁发JWT字符串
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
-    public static string IssueJwt(UserAccount userAccount)
+    public static string IssueJwt(RUserAccountDto userAccount)
     {
         try
         {
@@ -43,11 +44,14 @@ public static class JwtToken
             var claims = new List<Claim>
             {
                 new Claim("UserId", userAccount.BaseId.ToString()),
-                new Claim("UserName", userAccount.Name),
-                new Claim("NickName", userAccount.NickName ?? userAccount.Name),
+                new Claim("UserName", userAccount.Name??string.Empty),
+                new Claim("NickName", userAccount.NickName ?? string.Empty),
             };
-            // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-            //claims.AddRange(userAccount.RootRoles!.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+            if (userAccount.RootRoles != null)
+            {
+                // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
+                claims.AddRange(userAccount.RootRoles.Select(role => new Claim("RootRole", role.Name)));
+            }
 
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
@@ -93,7 +97,7 @@ public static class JwtToken
         {
             JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
             List<Claim> claims = jwtToken.Claims.ToList();
-            string userid = claims.Where(claim => claim.Type == "UserId").Select(claim => claim.Value).FirstOrDefault()!;
+            Guid userId = new(claims.Where(claim => claim.Type == "UserId").Select(claim => claim.Value).FirstOrDefault()!);
             List<string> roleName = claims.Where(claim => claim.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
 
             userAccount = new UserAccount

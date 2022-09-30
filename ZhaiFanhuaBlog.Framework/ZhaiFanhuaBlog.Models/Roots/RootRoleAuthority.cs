@@ -31,16 +31,4 @@ public class RootRoleAuthority : BaseDeleteEntity<Guid>
     /// 权限类型（0:可访问，1:可授权）
     /// </summary>
     public int AuthorityType { get; set; } = 0;
-
-    /// <summary>
-    /// 系统角色
-    /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<RootRole>? RootRoles { get; set; }
-
-    /// <summary>
-    /// 系统权限
-    /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public virtual IEnumerable<RootAuthority>? RootAuthorities { get; set; }
 }

@@ -56,10 +56,4 @@ public class RootMenu : BaseEntity
     /// 是否启用（0=未启用，1=启用）
     /// </summary>
     public bool IsEnable { get; set; } = true;
-
-    /// <summary>
-    /// 子级菜单
-    /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public List<RootMenu>? ChildrenMenu { get; set; }
 }

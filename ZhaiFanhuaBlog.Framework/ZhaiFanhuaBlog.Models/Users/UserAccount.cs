@@ -9,7 +9,6 @@
 
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;
-using ZhaiFanhuaBlog.Models.Roots;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -73,20 +72,14 @@ public class UserAccount : BaseEntity
     public DateTime? Birthday { get; set; }
 
     /// <summary>
-    /// 上次登录日期
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public DateTime? LastLoginTime { get; set; }
-
-    /// <summary>
     /// 注册Ip
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public string? RegisterIp { get; set; }
 
     /// <summary>
-    /// 系统角色
+    /// 上次登录日期
     /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public virtual List<RootRole>? RootRoles { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public DateTime? LastLoginTime { get; set; }
 }

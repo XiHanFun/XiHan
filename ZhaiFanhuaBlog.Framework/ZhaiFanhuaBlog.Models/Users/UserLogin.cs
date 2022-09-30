@@ -25,7 +25,7 @@ public class UserLogin : BaseEntity
     /// <summary>
     /// 登录Ip
     /// </summary>
-    public string? _LoginIp;
+    public string? LoginIp;
 
     /// <summary>
     /// 代理信息

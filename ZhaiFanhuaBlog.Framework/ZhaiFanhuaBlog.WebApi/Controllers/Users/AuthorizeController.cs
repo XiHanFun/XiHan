@@ -56,7 +56,7 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        var token = JwtToken.IssueJwt(userAccount);
+        var token = JwtTokenTool.IssueJwt(userAccount);
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
@@ -76,7 +76,7 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        var token = JwtToken.IssueJwt(userAccount);
+        var token = JwtTokenTool.IssueJwt(userAccount);
         userAccount.LastLoginTime = DateTime.Now;
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
