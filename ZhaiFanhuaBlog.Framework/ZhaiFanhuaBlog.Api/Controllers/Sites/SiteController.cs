@@ -16,9 +16,9 @@ using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Sites;
-using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
+using ZhaiFanhuaBlog.Api.Controllers.Bases;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers;
+namespace ZhaiFanhuaBlog.Api.Controllers;
 
 /// <summary>
 /// 网站配置

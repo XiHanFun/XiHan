@@ -19,9 +19,9 @@ using ZhaiFanhuaBlog.Models.Users.Seed;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Roots;
-using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
+using ZhaiFanhuaBlog.Api.Controllers.Bases;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Roots;
+namespace ZhaiFanhuaBlog.Api.Controllers.Roots;
 
 /// <summary>
 /// 系统管理

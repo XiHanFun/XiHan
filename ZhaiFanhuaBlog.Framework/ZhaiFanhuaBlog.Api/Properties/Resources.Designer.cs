@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.WebApi.Properties {
+namespace ZhaiFanhuaBlog.Api.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ZhaiFanhuaBlog.WebApi.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZhaiFanhuaBlog.WebApi.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZhaiFanhuaBlog.Api.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

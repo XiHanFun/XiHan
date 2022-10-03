@@ -15,7 +15,7 @@ using ZhaiFanhuaBlog.Setups;
 using ZhaiFanhuaBlog.Setups.Common.Console;
 using ZhaiFanhuaBlog.Utils.Console;
 
-namespace ZhaiFanhuaBlog.WebApi;
+namespace ZhaiFanhuaBlog.Api;
 
 /// <summary>
 /// Program
@@ -89,7 +89,7 @@ public class Program
         // MiniProfiler
         app.UseMiniProfilerMiddleware();
         // Swagger
-        app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.WebApi.index.html")!);
+        app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.Api.index.html")!);
         // 使用静态文件
         app.UseStaticFiles();
         // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间

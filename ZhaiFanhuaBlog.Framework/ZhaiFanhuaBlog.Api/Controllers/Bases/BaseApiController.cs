@@ -10,7 +10,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Bases;
+namespace ZhaiFanhuaBlog.Api.Controllers.Bases;
 
 /// <summary>
 /// BaseApiController

@@ -7,9 +7,11 @@
 // CreateTime:2021-12-28 下午 11:47:21
 // ----------------------------------------------------------------
 
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.IServices.Users;
@@ -17,9 +19,8 @@ using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
-using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
+namespace ZhaiFanhuaBlog.Api.Controllers.Users;
 
 /// <summary>
 /// 登录授权
@@ -48,7 +49,7 @@ public class AuthorizeController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Login/AccountName")]
-    public async Task<BaseResultDto> LoginByAccountName(CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
+    public async Task<BaseResultDto> LoginByAccountName([FromServices] IMapper iMapper, CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.Name);
@@ -56,7 +57,8 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该用户名账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        var token = JwtTokenTool.IssueJwt(userAccount);
+        var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
+        var token = JwtTokenTool.IssueJwt(userAccountDto);
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
@@ -68,7 +70,7 @@ public class AuthorizeController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Login/AccountEmail")]
-    public async Task<BaseResultDto> LoginByAccountEmail(CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
+    public async Task<BaseResultDto> LoginByAccountEmail([FromServices] IMapper iMapper, CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.Email);
@@ -76,7 +78,8 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
-        var token = JwtTokenTool.IssueJwt(userAccount);
+        var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
+        var token = JwtTokenTool.IssueJwt(userAccountDto);
         userAccount.LastLoginTime = DateTime.Now;
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);

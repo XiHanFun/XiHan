@@ -16,9 +16,9 @@ using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
-using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
+using ZhaiFanhuaBlog.Api.Controllers.Bases;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Test;
+namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 
 /// <summary>
 /// 系统测试

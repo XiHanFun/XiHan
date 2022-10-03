@@ -9,19 +9,19 @@
 
 using Microsoft.IdentityModel.Tokens;
 using SqlSugar;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Object;
 using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 
 /// <summary>
-/// JwtToken
+/// JwtTokenTool
 /// </summary>
 public static class JwtTokenTool
 {
@@ -47,11 +47,12 @@ public static class JwtTokenTool
                 new Claim("UserName", userAccount.Name??string.Empty),
                 new Claim("NickName", userAccount.NickName ?? string.Empty),
             };
-            if (userAccount.RootRoles != null)
-            {
-                // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-                claims.AddRange(userAccount.RootRoles.Select(role => new Claim("RootRole", role.Name)));
-            }
+
+            //if (userAccount.RootRoles != null)
+            //{
+            //    // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
+            //    claims.AddRange(userAccount.RootRoles.Select(role => new Claim("RootRole", role.Name)));
+            //}
 
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
@@ -87,22 +88,33 @@ public static class JwtTokenTool
     /// </summary>
     /// <param name="jwtStr"></param>
     /// <returns></returns>
-    public static UserAccount SerializeJwt(string jwtStr)
+    public static RUserAccountDto SerializeJwt(string jwtStr)
     {
         var jwtHandler = new JwtSecurityTokenHandler();
-        UserAccount userAccount = new();
+        RUserAccountDto userAccount = new();
 
         // 开始Token校验
         if (jwtStr.IsNotEmptyOrNull() && jwtHandler.CanReadToken(jwtStr))
         {
             JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
             List<Claim> claims = jwtToken.Claims.ToList();
-            Guid userId = new(claims.Where(claim => claim.Type == "UserId").Select(claim => claim.Value).FirstOrDefault()!);
-            List<string> roleName = claims.Where(claim => claim.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
 
-            userAccount = new UserAccount
+            // 分离参数
+            Claim UserIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
+            Claim UserNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
+            Claim NickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
+            List<Claim> RootRoleClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
+
+            var userId = new Guid(UserIdClaim.Value);
+            var userName = UserNameClaim.Value;
+            var nickName = NickNameClaim.Value;
+            List<string> roleName = RootRoleClaim.Select(c => c.Value).ToList();
+
+            userAccount = new RUserAccountDto
             {
-                BaseId = new Guid(userid),
+                BaseId = userId,
+                Name = userName,
+                NickName = nickName,
                 RootRoles = new List<RootRole>(),
             };
         }

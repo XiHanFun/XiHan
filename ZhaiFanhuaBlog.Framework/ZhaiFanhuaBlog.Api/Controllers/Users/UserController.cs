@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text;
+using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
@@ -20,9 +21,9 @@ using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 using ZhaiFanhuaBlog.ViewModels.Users;
-using ZhaiFanhuaBlog.WebApi.Controllers.Bases;
+using ZhaiFanhuaBlog.Api.Controllers.Bases;
 
-namespace ZhaiFanhuaBlog.WebApi.Controllers.Users;
+namespace ZhaiFanhuaBlog.Api.Controllers.Users;
 
 /// <summary>
 /// 用户管理
@@ -116,6 +117,9 @@ public class UserController : BaseApiController
     public async Task<BaseResultDto> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
+
+        var auser = JwtTokenTool.SerializeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI4MjVkMzY3OS1kYmIxLTQ3MzEtYWZiZi1hZDRiMGM1MmYyMmEiLCJVc2VyTmFtZSI6ImFkbWluaXN0cmF0b3IiLCJOaWNrTmFtZSI6Iui2hee6p-euoeeQhuWRmCIsIlJvb3RSb2xlIjpbIkFkbWluIiwiU3lzdGVtIl0sIm5iZiI6MTY2NDU0MjAwOSwiZXhwIjoxNjY0NTQyMzA5LCJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjk3MDgiLCJhdWQiOiJodHRwOi8vMTI3LjAuMC4xOjk3MDgifQ.H9l4SN3fI29pwib3FqLWaEqBT_ol-KDnc82Mr26NKxA");
+
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         if (userAccount != null)
             return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
