@@ -3,6 +3,6 @@ using ZhaiFanhuaBlog.Test.Common;
 
 Console.WriteLine("Hello, World!");
 
-TestChinaDate.ChinaDate();
+// TestChinaDate.ChinaDate();
 
 Console.ReadKey();
