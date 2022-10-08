@@ -8,8 +8,11 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
@@ -44,12 +47,12 @@ public class AuthorizeController : BaseApiController
     }
 
     /// <summary>
-    /// 用户名称登录
+    /// 用户名称登录获取Token
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpPost("Login/AccountName")]
-    public async Task<BaseResultDto> LoginByAccountName([FromServices] IMapper iMapper, CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
+    [HttpPost("Login/Token/Name")]
+    public async Task<BaseResultDto> GetTokenByName([FromServices] IMapper iMapper, CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.Name);
@@ -58,19 +61,20 @@ public class AuthorizeController : BaseApiController
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
-        var token = JwtTokenTool.IssueJwt(userAccountDto);
+        var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
+        var token = JwtTokenTool.IssueJwt(tokenModel);
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
     }
 
     /// <summary>
-    /// 用户邮箱登录
+    /// 用户邮箱登录获取Token
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpPost("Login/AccountEmail")]
-    public async Task<BaseResultDto> LoginByAccountEmail([FromServices] IMapper iMapper, CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
+    [HttpPost("Login/Token/Email")]
+    public async Task<BaseResultDto> GetTokenByEmail([FromServices] IMapper iMapper, CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.Email);
@@ -79,10 +83,38 @@ public class AuthorizeController : BaseApiController
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
-        var token = JwtTokenTool.IssueJwt(userAccountDto);
+        var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
+        var token = JwtTokenTool.IssueJwt(tokenModel);
         userAccount.LastLoginTime = DateTime.Now;
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
+        return BaseResponseDto.OK(token);
+    }
+
+    /// <summary>
+    /// 刷新Token
+    /// </summary>
+    /// <returns></returns>
+    [AllowAnonymous]
+    [HttpPost("Login/Token/Refresh")]
+    public async Task<BaseResultDto> GetTokenByRefresh([FromServices] IMapper iMapper, string token)
+    {
+        if (JwtTokenTool.SafeVerifyJwt(token))
+        {
+            // 获取原用户信息
+            var tokenModel = JwtTokenTool.SerializeJwt(token);
+            if (tokenModel != null)
+            {
+                var userAccountRefresh = await _IUserAccountService.FindUserAccountByGuidAsync(tokenModel.UserId);
+                var userAccountDtoRefresh = iMapper.Map<RUserAccountDto>(userAccountRefresh);
+                var tokenModelRefresh = iMapper.Map<TokenModel>(userAccountDtoRefresh);
+                var tokenRefresh = JwtTokenTool.IssueJwt(tokenModelRefresh);
+                // Swagger 登录
+                _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
+                return BaseResponseDto.OK(token);
+            }
+        }
+
         return BaseResponseDto.OK(token);
     }
 

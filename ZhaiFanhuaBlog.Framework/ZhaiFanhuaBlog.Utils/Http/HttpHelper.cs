@@ -41,7 +41,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -80,7 +80,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -121,7 +121,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -163,7 +163,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -205,7 +205,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -245,7 +245,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -287,7 +287,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -329,7 +329,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)
@@ -370,7 +370,7 @@ public class HttpHelper : IHttpHelper
     {
         try
         {
-            var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
             if (headers != null)
             {
                 foreach (var header in headers)

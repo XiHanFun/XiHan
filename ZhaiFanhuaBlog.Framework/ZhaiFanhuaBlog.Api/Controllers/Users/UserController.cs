@@ -118,7 +118,7 @@ public class UserController : BaseApiController
     {
         var user = User.FindFirstValue("UserId");
 
-        var auser = JwtTokenTool.SerializeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI4MjVkMzY3OS1kYmIxLTQ3MzEtYWZiZi1hZDRiMGM1MmYyMmEiLCJVc2VyTmFtZSI6ImFkbWluaXN0cmF0b3IiLCJOaWNrTmFtZSI6Iui2hee6p-euoeeQhuWRmCIsIlJvb3RSb2xlIjpbIkFkbWluIiwiU3lzdGVtIl0sIm5iZiI6MTY2NDU0MjAwOSwiZXhwIjoxNjY0NTQyMzA5LCJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjk3MDgiLCJhdWQiOiJodHRwOi8vMTI3LjAuMC4xOjk3MDgifQ.H9l4SN3fI29pwib3FqLWaEqBT_ol-KDnc82Mr26NKxA");
+        //var auser = JwtTokenTool.SerializeJwt(_IHttpContextAccessor.HttpContext!.Request.Headers["Authorization"].ToString()["Bearer ".Length..].Trim());
 
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         if (userAccount != null)
