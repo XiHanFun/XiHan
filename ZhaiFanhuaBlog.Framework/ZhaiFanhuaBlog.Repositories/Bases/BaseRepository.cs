@@ -34,13 +34,16 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
+        ConsoleHelper.WriteLineWarning("数据库正在初始化……");
         // 数据库是否初始化
         bool initDatabase = AppSettings.Database.Initialization;
         if (!initDatabase)
         {
-            ConsoleHelper.WriteLineWarning("数据库正在初始化……");
+            ConsoleHelper.WriteLineWarning("创建数据库……");
             // 创建数据库
             base.Context.DbMaintenance.CreateDatabase();
+            ConsoleHelper.WriteLineSuccess("数据库创建成功！");
+            ConsoleHelper.WriteLineWarning("创建数据表……");
             // 创建表
             base.Context.CodeFirst.SetStringDefaultLength(200).InitTables(
                 //Sites
@@ -79,7 +82,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(BlogCommentPoll),
                 typeof(BlogPoll)
                 );
-            ConsoleHelper.WriteLineSuccess("数据库初始化已完成");
+            ConsoleHelper.WriteLineSuccess("数据表创建成功！");
+            ConsoleHelper.WriteLineSuccess("数据库初始化已完成！");
         }
     }
 

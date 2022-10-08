@@ -30,7 +30,7 @@ public static class JwtTokenTool
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
-    public static string IssueJwt(RUserAccountDto userAccount)
+    public static string IssueJwt(TokenModel tokenModel)
     {
         try
         {
@@ -43,16 +43,13 @@ public static class JwtTokenTool
             // Nuget引入：Microsoft.IdentityModel.Tokens
             var claims = new List<Claim>
             {
-                new Claim("UserId", userAccount.BaseId.ToString()),
-                new Claim("UserName", userAccount.Name??string.Empty),
-                new Claim("NickName", userAccount.NickName ?? string.Empty),
+                new Claim("UserId", tokenModel.UserId.ToString()),
+                new Claim("UserName", tokenModel.UserName??string.Empty),
+                new Claim("NickName", tokenModel.NickName ?? string.Empty),
             };
-
-            //if (userAccount.RootRoles != null)
-            //{
-            //    // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-            //    claims.AddRange(userAccount.RootRoles.Select(role => new Claim("RootRole", role.Name)));
-            //}
+            // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
+            List<string> RootRolesClaim = new(tokenModel.RootRoles.Split(','));
+            claims.AddRange(RootRolesClaim.Select(role => new Claim("RootRole", role)));
 
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
@@ -88,10 +85,10 @@ public static class JwtTokenTool
     /// </summary>
     /// <param name="jwtStr"></param>
     /// <returns></returns>
-    public static RUserAccountDto SerializeJwt(string jwtStr)
+    public static TokenModel SerializeJwt(string jwtStr)
     {
         var jwtHandler = new JwtSecurityTokenHandler();
-        RUserAccountDto userAccount = new();
+        TokenModel tokenModel = new();
 
         // 开始Token校验
         if (jwtStr.IsNotEmptyOrNull() && jwtHandler.CanReadToken(jwtStr))
@@ -103,21 +100,47 @@ public static class JwtTokenTool
             Claim UserIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
             Claim UserNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
             Claim NickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
-            List<Claim> RootRoleClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
+            List<Claim> RootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
 
             var userId = new Guid(UserIdClaim.Value);
             var userName = UserNameClaim.Value;
             var nickName = NickNameClaim.Value;
-            List<string> roleName = RootRoleClaim.Select(c => c.Value).ToList();
+            List<string> rootRoles = RootRolesClaim.Select(c => c.Value).ToList();
 
-            userAccount = new RUserAccountDto
+            tokenModel = new TokenModel
             {
-                BaseId = userId,
-                Name = userName,
+                UserId = userId,
+                UserName = userName,
                 NickName = nickName,
-                RootRoles = new List<RootRole>(),
+                RootRoles = string.Join(',', rootRoles),
             };
         }
-        return userAccount;
+        return tokenModel;
+    }
+
+    /// <summary>
+    /// 令牌
+    /// </summary>
+    public class TokenModel
+    {
+        /// <summary>
+        /// 用户主键
+        /// </summary>
+        public Guid UserId { get; set; }
+
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string UserName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 用户昵称
+        /// </summary>
+        public string NickName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        public string RootRoles { get; set; } = string.Empty;
     }
 }
