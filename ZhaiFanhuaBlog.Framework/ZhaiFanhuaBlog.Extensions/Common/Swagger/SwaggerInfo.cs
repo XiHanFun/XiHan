@@ -14,7 +14,7 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Swagger;
 /// <summary>
 /// SwaggerInfo
 /// </summary>
-internal class SwaggerInfo
+public class SwaggerInfo
 {
     /// <summary>
     /// URL前缀
@@ -34,7 +34,7 @@ internal class SwaggerInfo
     /// <summary>
     /// Swagger分组信息，将进行遍历使用
     /// </summary>
-    internal static readonly List<SwaggerInfo> SwaggerInfos = new()
+    public static readonly List<SwaggerInfo> SwaggerInfos = new()
     {
         new SwaggerInfo
         {
@@ -42,7 +42,6 @@ internal class SwaggerInfo
             GroupName = SwaggerGroup.Reception,
             OpenApiInfo = new OpenApiInfo
             {
-                Version= SwaggerVersion.v1,
                 Title = "前台接口",
                 Description = "这是用于普通用户浏览的博客前台接口",
             }
@@ -53,7 +52,6 @@ internal class SwaggerInfo
             GroupName = SwaggerGroup.Backstage,
             OpenApiInfo = new OpenApiInfo
             {
-                Version= SwaggerVersion.v1,
                 Title = "后台接口",
                 Description = "这是用于管理的博客后台接口"
             }
@@ -64,7 +62,6 @@ internal class SwaggerInfo
             GroupName = SwaggerGroup.Authorize,
             OpenApiInfo = new OpenApiInfo
             {
-                Version= SwaggerVersion.v1,
                 Title = "授权接口",
                 Description = "这是用于登录的博客授权接口"
             }
@@ -75,7 +72,6 @@ internal class SwaggerInfo
             GroupName = SwaggerGroup.Test,
             OpenApiInfo = new OpenApiInfo
             {
-                Version= SwaggerVersion.v1,
                 Title = "测试接口",
                 Description = "这是用于测试的博客测试接口"
             }

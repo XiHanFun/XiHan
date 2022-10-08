@@ -153,6 +153,7 @@ public class AppSettings
     public static class Swagger
     {
         public static string Version => _IConfiguration.GetValue<string>("Swagger:Version");
+        public static string RoutePrefix => _IConfiguration.GetValue<string>("Swagger:RoutePrefix");
     }
 
     /// <summary>

@@ -35,19 +35,21 @@ public static class SwaggerSetup
         // 配置Swagger,从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>
         {
+            string version = AppSettings.Swagger.Version;
             //生成多个文档显示
             SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
             {
                 //添加文档介绍
                 options.SwaggerDoc(swaggerinfo.UrlPrefix, new OpenApiInfo
                 {
-                    Version = $"The Current Version: Full-{swaggerinfo.OpenApiInfo?.Version}",
+                    Version = version,
                     Title = swaggerinfo.OpenApiInfo?.Title,
                     Description = swaggerinfo.OpenApiInfo?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
                         Name = AppSettings.Site.Admin.Name,
-                        Email = AppSettings.Site.Admin.Email
+                        Email = AppSettings.Site.Admin.Email,
+                        Url = new Uri("https://www.zhaifanhua.com/")
                     },
                     License = new OpenApiLicense
                     {
@@ -80,7 +82,7 @@ public static class SwaggerSetup
             // 添加请求头的Header中的token,传递到后台
             options.OperationFilter<SecurityRequirementsOperationFilter>();
 
-            // 定义认证方式一 OAuth 方案名称必须是oauth2
+            // 定义认证方式 OAuth 方案名称必须是oauth2
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
                 Description = "在下框中输入<code>{token}</code>进行身份验证",
