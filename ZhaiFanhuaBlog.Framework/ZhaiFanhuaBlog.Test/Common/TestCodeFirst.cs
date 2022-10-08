@@ -7,7 +7,6 @@
 //// CreateTime:2022-06-30 上午 01:39:10
 //// ----------------------------------------------------------------
 
-//using OfficeOpenXml;
 //using System.Text;
 //using ZhaiFanhuaBlog.Models.Roots;
 //using ZhaiFanhuaBlog.Utils.DirFile;
@@ -17,10 +16,8 @@
 ///// <summary>
 ///// 测试代码生成
 ///// </summary>
-//[TestClass]
 //public static class TestCodeFirst
 //{
-//    [TestMethod]
 //    public static async Task<bool> CodeFirst()
 //    {
 //        string filein = @"D:\Project\ZhaiFanhuaBlog_\架构设计\数据库设计.xlsx";

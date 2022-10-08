@@ -60,7 +60,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 运行时间
     /// </summary>
-    public static string RunningTime => TimeFormatHelper.FormatTimeTicksToString(Math.Abs(Environment.TickCount)).ToString();
+    public static string RunningTime => TimeFormatHelper.MillisecondsToString(Environment.TickCount).ToString();
 
     /// <summary>
     /// 交互模式

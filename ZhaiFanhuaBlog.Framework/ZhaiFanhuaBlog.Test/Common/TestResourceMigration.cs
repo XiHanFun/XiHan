@@ -15,13 +15,11 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// <summary>
 /// 测试资源迁移
 /// </summary>
-[TestClass]
 public static class TestResourceMigration
 {
     /// <summary>
     /// 资源迁移
     /// </summary>
-    [TestMethod]
     public static void ResourceMigration()
     {
         ResourceInfo resourceInfo = new ResourceInfo();

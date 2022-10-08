@@ -15,13 +15,11 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// <summary>
 /// 测试加密
 /// </summary>
-[TestClass]
 public static class TestEncryption
 {
     /// <summary>
     /// 加密
     /// </summary>
-    [TestMethod]
     public static void Encryption()
     {
         string str = @"123456";

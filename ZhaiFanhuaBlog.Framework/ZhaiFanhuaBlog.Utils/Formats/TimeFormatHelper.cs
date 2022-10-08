@@ -7,6 +7,9 @@
 // CreateTime:2022-05-08 下午 03:36:28
 // ----------------------------------------------------------------
 
+using System;
+using ZhaiFanhuaBlog.Utils.Console;
+
 namespace ZhaiFanhuaBlog.Utils.Formats;
 
 /// <summary>
@@ -20,30 +23,55 @@ public static class TimeFormatHelper
     /// <param name="dateTimeBefore"></param>
     /// <param name="dateTimeAfter"></param>
     /// <returns></returns>
-    public static string FormatDateTimeToString(DateTime dateTimeBefore, DateTime dateTimeAfter)
+    public static string DateTimeToString(DateTime dateTimeBefore, DateTime dateTimeAfter)
     {
-        long ticks = (dateTimeAfter.Ticks - dateTimeBefore.Ticks) / 10000;
-        return FormatTimeTicksToString(ticks);
+        if (dateTimeBefore < dateTimeAfter)
+        {
+            TimeSpan timeSpan = dateTimeAfter - dateTimeBefore;
+            return TimeSpanToString(timeSpan);
+        }
+        else throw new Exception("开始日期必须小于结束日期");
     }
 
     /// <summary>
-    /// 时刻转换
+    /// 毫秒转换字符串
+    /// </summary>
+    /// <param name="milliseconds"></param>
+    /// <returns></returns>
+    public static string MillisecondsToString(long milliseconds)
+    {
+        TimeSpan timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+        return TimeSpanToString(timeSpan);
+    }
+
+    /// <summary>
+    /// 时刻转换字符串
     /// </summary>
     /// <param name="ticks"></param>
     /// <returns></returns>
-    public static string FormatTimeTicksToString(long ticks)
+    public static string TimeTicksToString(long ticks)
     {
-        TimeSpan timeSpan = TimeSpan.FromMilliseconds(ticks);
+        TimeSpan timeSpan = TimeSpan.FromTicks(ticks);
+        return TimeSpanToString(timeSpan);
+    }
+
+    /// <summary>
+    /// 间跨度转换字符串
+    /// </summary>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
+    public static string TimeSpanToString(TimeSpan timeSpan)
+    {
         string result = string.Empty;
-        if (timeSpan.Days > 0)
+        if (timeSpan.Days >= 1)
             result = timeSpan.Days + "天";
-        if (timeSpan.Hours > 0)
+        if (timeSpan.Hours >= 1)
             result += timeSpan.Hours + "时";
-        if (timeSpan.Minutes > 0)
+        if (timeSpan.Minutes >= 1)
             result += timeSpan.Minutes + "分";
-        if (timeSpan.Seconds > 0)
+        if (timeSpan.Seconds >= 1)
             result += timeSpan.Seconds + "秒";
-        if (timeSpan.Milliseconds > 0)
+        if (timeSpan.Milliseconds >= 1)
             result += timeSpan.Milliseconds + "毫秒";
         return result;
     }

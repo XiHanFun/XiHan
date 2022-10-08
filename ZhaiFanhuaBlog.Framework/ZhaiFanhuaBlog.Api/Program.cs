@@ -12,7 +12,6 @@ using System.Reflection;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Setups;
-using ZhaiFanhuaBlog.Setups.Common.Console;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Api;
@@ -112,7 +111,7 @@ public class Program
         ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
         // 启动信息打印
-        CustomConsole.ConsoleInfos();
+        ConsoleInfo.Print();
         app.Run();
     }
 }

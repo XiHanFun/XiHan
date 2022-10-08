@@ -15,13 +15,11 @@ namespace ZhaiFanhuaBlog.Test.Common;
 /// <summary>
 /// 测试磁盘信息
 /// </summary>
-[TestClass]
 public static class TestDiskInformation
 {
     /// <summary>
     /// 磁盘信息测
     /// </summary>
-    [TestMethod]
     public static void DiskInformation()
     {
         Console.WriteLine($@"【C盘】磁盘大小：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetHardDiskSpace(@"C:\"))}；");

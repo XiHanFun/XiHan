@@ -23,8 +23,6 @@ public class HttpContextHelper
     public HttpContextHelper(HttpContext httpContext)
     {
         var header = httpContext.Request.HttpContext.Request.Headers;
-        LocalIPv4 = httpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv4()?.ToString();
-        LocalIPv6 = httpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv6()?.ToString();
         RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4()?.ToString();
         RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6()?.ToString();
 
@@ -48,16 +46,6 @@ public class HttpContextHelper
             Referer = header["Referer"].ToString();
         }
     }
-
-    /// <summary>
-    /// 本地IPv4
-    /// </summary>
-    public string? LocalIPv4 { get; set; }
-
-    /// <summary>
-    /// 本地IPv6
-    /// </summary>
-    public string? LocalIPv6 { get; set; }
 
     /// <summary>
     /// 远程IPv4
