@@ -8,13 +8,9 @@
 // ----------------------------------------------------------------
 
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
-using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.IServices.Users;
@@ -29,8 +25,11 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Users;
 /// 登录授权
 /// <code>包含：JWT登录授权/第三方登录</code>
 /// </summary>
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
-public class AuthorizeController : BaseApiController
+public class AuthorizeController : ControllerBase
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
     private readonly IUserAccountService _IUserAccountService;

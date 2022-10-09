@@ -1,7 +1,7 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:Program
-// Guid:fccfeb28-624c-41cb-9c5c-0b0652648a6b
+// Guid:aff8ee16-2e94-41c5-bf52-ae09fbae16ad
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-17 下午 04:01:21
@@ -9,7 +9,6 @@
 
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Reflection;
-using ZhaiFanhuaBlog.Api;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Setups;
@@ -31,8 +30,6 @@ var services = builder.Services;
 ConsoleHelper.WriteLineWarning("Services Start……");
 // Cache
 services.AddCacheSetup();
-// JWT
-services.AddJwtSetup();
 // Http请求
 services.AddHttpClient();
 // Swagger
@@ -76,7 +73,7 @@ app.UseHttpsRedirection();
 // MiniProfiler
 app.UseMiniProfilerMiddleware();
 // Swagger
-app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.Api.index.html")!);
+app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.Auth.index.html")!);
 // 使用静态文件
 app.UseStaticFiles();
 // Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
@@ -98,6 +95,4 @@ app.UseEndpoints(options =>
 });
 ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
-// 启动信息打印
-ConsoleInfo.Print();
 app.Run();

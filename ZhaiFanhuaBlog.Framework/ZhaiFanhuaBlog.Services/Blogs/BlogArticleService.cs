@@ -120,7 +120,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     }
 
     /// <summary>
-    /// 分页查询博客文章
+    /// 获取博客文章列表
     /// </summary>
     /// <returns></returns>
     public async Task<List<BlogArticle>> QueryBlogArticleAsync()
