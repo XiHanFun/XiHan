@@ -23,14 +23,14 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 /// <summary>
 /// JwtTokenTool
 /// </summary>
-public static class JwtTokenTool
+public static class JwtTokenUtil
 {
     /// <summary>
     /// 颁发JWT字符串
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
-    public static string IssueJwt(TokenModel tokenModel)
+    public static string IssueJwtAccess(TokenModel tokenModel)
     {
         try
         {

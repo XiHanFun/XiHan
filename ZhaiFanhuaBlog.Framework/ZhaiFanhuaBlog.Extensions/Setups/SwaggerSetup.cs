@@ -59,6 +59,9 @@ public static class SwaggerSetup
                 });
                 // 根据相对路径排序
                 //options.OrderActionsBy(o => o.RelativePath);
+                // 添加其他的地址域名
+                //options.AddServer(new OpenApiServer() { Url = "http://localhost:9708", Description = "地址1" });
+                //options.AddServer(new OpenApiServer() { Url = "http://127.0.0.1:9708", Description = "地址2" });
             });
 
             //// WebApi 注释文件
@@ -86,6 +89,10 @@ public static class SwaggerSetup
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
                 Description = "在下框中输入<code>{token}</code>进行身份验证",
+                // JWT默认的参数名称
+                Name = "Authorization",
+                // Bearer认证的数据格式
+                BearerFormat = "JWT",
                 // 认证主题，只对Type=Http生效，只能是basic和bearer
                 Scheme = "Bearer",
                 // 表示认证信息发在Http请求的哪个位置

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AuthenticationJwtSetup
+// FileName:JwtSetup
 // Guid:fcc7eece-77f0-4f6c-bc50-fbb21dc9d96f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,16 +19,16 @@ using ZhaiFanhuaBlog.ViewModels.Response;
 namespace ZhaiFanhuaBlog.Setups;
 
 /// <summary>
-/// AuthenticationJwtSetup
+/// JwtSetup
 /// </summary>
-public static class AuthenticationJwtSetup
+public static class JwtSetup
 {
     /// <summary>
     /// AuthenticationJwt服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddAuthenticationJwtSetup(this IServiceCollection services)
+    public static IServiceCollection AddJwtSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
         // 读取配置
@@ -65,6 +65,7 @@ public static class AuthenticationJwtSetup
         // 身份验证（Bearer）
         services.AddAuthentication(options =>
         {
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })

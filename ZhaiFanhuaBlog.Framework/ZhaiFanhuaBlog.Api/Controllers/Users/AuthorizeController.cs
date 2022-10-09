@@ -62,7 +62,7 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
-        var token = JwtTokenTool.IssueJwt(tokenModel);
+        var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
@@ -84,7 +84,7 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
-        var token = JwtTokenTool.IssueJwt(tokenModel);
+        var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
         userAccount.LastLoginTime = DateTime.Now;
         // Swagger 登录
         _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
@@ -99,16 +99,16 @@ public class AuthorizeController : BaseApiController
     [HttpPost("Login/Token/Refresh")]
     public async Task<BaseResultDto> GetTokenByRefresh([FromServices] IMapper iMapper, string token)
     {
-        if (JwtTokenTool.SafeVerifyJwt(token))
+        if (JwtTokenUtil.SafeVerifyJwt(token))
         {
             // 获取原用户信息
-            var tokenModel = JwtTokenTool.SerializeJwt(token);
+            var tokenModel = JwtTokenUtil.SerializeJwt(token);
             if (tokenModel != null)
             {
                 var userAccountRefresh = await _IUserAccountService.FindUserAccountByGuidAsync(tokenModel.UserId);
                 var userAccountDtoRefresh = iMapper.Map<RUserAccountDto>(userAccountRefresh);
                 var tokenModelRefresh = iMapper.Map<TokenModel>(userAccountDtoRefresh);
-                var tokenRefresh = JwtTokenTool.IssueJwt(tokenModelRefresh);
+                var tokenRefresh = JwtTokenUtil.IssueJwtRefresh(tokenModelRefresh);
                 // Swagger 登录
                 _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
                 return BaseResponseDto.OK(token);
