@@ -171,7 +171,7 @@ public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class,
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindAsync(Guid? guid)
+    public virtual async Task<TEntity> FindAsync(Guid guid)
     {
         return await _IBaseRepository!.FindAsync(guid);
     }

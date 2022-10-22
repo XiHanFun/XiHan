@@ -52,7 +52,7 @@ public static class ObjectHelper
         var list = DetailedCompare<T>(oldVal, newVal);
         var newList = list.Select(s => new
         {
-            Property = s.Property,
+            s.Property,
             OldValue = s.ValueA,
             NewValue = s.ValueB
         }).Where(s => !specialList.Contains(s.Property)).ToList();

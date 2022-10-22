@@ -29,8 +29,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static int ObjToInt(this object thisValue, int errorValue)
     {
-        int reval = 0;
-        if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out int reval))
         {
             return reval;
         }
@@ -44,8 +43,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static double ObjToMoney(this object thisValue)
     {
-        double reval = 0;
-        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out double reval))
         {
             return reval;
         }
@@ -60,8 +58,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static double ObjToMoney(this object thisValue, double errorValue)
     {
-        double reval = 0;
-        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out double reval))
         {
             return reval;
         }
@@ -110,8 +107,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static decimal ObjToDecimal(this object thisValue)
     {
-        decimal reval = 0;
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out decimal reval))
         {
             return reval;
         }
@@ -126,8 +122,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static decimal ObjToDecimal(this object thisValue, decimal errorValue)
     {
-        decimal reval = 0;
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out decimal reval))
         {
             return reval;
         }
@@ -157,8 +152,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static DateTime ObjToDate(this object thisValue, DateTime errorValue)
     {
-        DateTime reval = DateTime.MinValue;
-        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reval))
+        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out DateTime reval))
         {
             return reval;
         }

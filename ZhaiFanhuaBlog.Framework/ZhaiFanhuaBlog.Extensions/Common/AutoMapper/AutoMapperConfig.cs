@@ -24,7 +24,7 @@ public class AutoMapperConfig
     {
         return new MapperConfiguration(config =>
         {
-            config.AddProfile(new CustomAutoMapperProfile());
+            config.AddProfile(new AutoMapperProfile());
         });
     }
 }

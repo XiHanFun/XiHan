@@ -53,7 +53,7 @@ public static class VerificationCodeHelper
     /// <param name="length">生成长度</param>
     /// <param name="source">自定义随机的字符源</param>
     /// <returns></returns>
-    private static string RandomTo(int length, string source)
+    public static string RandomTo(int length, string source)
     {
         try
         {

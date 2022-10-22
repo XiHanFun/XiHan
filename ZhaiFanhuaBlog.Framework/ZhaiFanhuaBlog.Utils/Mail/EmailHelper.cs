@@ -27,14 +27,14 @@ public static class EmailHelper
         try
         {
             // 初始化连接实例
-            using var client = new SmtpClient(model.Host, model.Port)
+            using SmtpClient client = new(model.Host, model.Port)
             {
                 Credentials = new NetworkCredential(model.FromMail, model.FromPassword),
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 EnableSsl = true
             };
             // 初始化邮件实例
-            using var message = new MailMessage
+            using MailMessage message = new()
             {
                 From = new MailAddress(model.FromMail, model.FromName, model.Coding)
             };

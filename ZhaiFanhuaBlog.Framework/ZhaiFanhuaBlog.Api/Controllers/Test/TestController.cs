@@ -91,7 +91,7 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("Log")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> TestLog(string iLog)
+    public ActionResult<BaseResultDto> Log(string iLog)
     {
         return BaseResponseDto.OK($"测试日志写入:{iLog}");
     }

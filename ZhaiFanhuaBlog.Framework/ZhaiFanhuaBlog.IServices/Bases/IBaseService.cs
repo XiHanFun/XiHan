@@ -122,7 +122,7 @@ public interface IBaseService<TEntity> where TEntity : class
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    Task<TEntity> FindAsync(Guid? guid);
+    Task<TEntity> FindAsync(Guid guid);
 
     /// <summary>
     /// 条件查找

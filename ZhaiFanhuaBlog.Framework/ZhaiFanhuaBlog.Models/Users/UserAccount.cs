@@ -21,13 +21,13 @@ public class UserAccount : BaseEntity
     /// 用户名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string Name { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 电子邮件
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string Email { get; set; } = string.Empty;
+    public string UserEmail { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）

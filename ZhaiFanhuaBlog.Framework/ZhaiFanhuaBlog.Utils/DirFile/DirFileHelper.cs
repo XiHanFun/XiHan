@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using System.Text;
+using System;
 
 namespace ZhaiFanhuaBlog.Utils.DirFile;
 
@@ -117,7 +118,7 @@ public class DirFileHelper
         {
             dir = dir.Replace(@"/", @"\");
             if (dir.IndexOf(@"\") > -1) CreateDirectory(dir.Substring(0, dir.LastIndexOf(@"\")));
-            StreamWriter sw = new StreamWriter(dir, false, encoding);
+            StreamWriter sw = new(dir, false, encoding);
             sw.Write(pagestr);
             sw.Close();
         }
@@ -165,7 +166,7 @@ public class DirFileHelper
         {
             foreach (string d in directories)
             {
-                DeleteFolderFiles(d, varToDirectory + d.Substring(d.LastIndexOf(@"\")));
+                DeleteFolderFiles(d, string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\"))));
             }
         }
         string[] files = Directory.GetFiles(varFromDirectory);
@@ -173,7 +174,7 @@ public class DirFileHelper
         {
             foreach (string s in files)
             {
-                File.Delete(varToDirectory + s.Substring(s.LastIndexOf(@"\")));
+                File.Delete(string.Concat(varToDirectory, s.AsSpan(s.LastIndexOf(@"\"))));
             }
         }
     }
@@ -292,7 +293,7 @@ public class DirFileHelper
     public static string GetFileExtension(string filePath)
     {
         // 获取文件的名称
-        FileInfo fi = new FileInfo(filePath);
+        FileInfo fi = new(filePath);
         return fi.Extension;
     }
 
@@ -303,7 +304,7 @@ public class DirFileHelper
     public static string GetFileNameNoExtension(string filePath)
     {
         // 获取文件的名称
-        FileInfo fi = new FileInfo(filePath);
+        FileInfo fi = new(filePath);
         return fi.Name.Split('.')[0];
     }
 
@@ -314,7 +315,7 @@ public class DirFileHelper
     public static string GetFileNameWithExtension(string filePath)
     {
         // 获取文件的名称
-        FileInfo fi = new FileInfo(filePath);
+        FileInfo fi = new(filePath);
         return fi.Name;
     }
 
@@ -371,7 +372,7 @@ public class DirFileHelper
             if (File.Exists(filePath))
             {
                 // 定义一个FileInfo对象,使之与filePath所指向的文件向关联,以获取其大小
-                FileInfo fileInfo = new FileInfo(filePath);
+                FileInfo fileInfo = new(filePath);
                 return fileInfo.Length;
             }
             else

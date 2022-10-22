@@ -54,9 +54,9 @@ public class AuthorizeController : ControllerBase
     public async Task<BaseResultDto> GetTokenByName([FromServices] IMapper iMapper, CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
         // 根据用户名获取用户
-        var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.Name);
+        var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.UserName);
         if (userAccount == null)
-            throw new ApplicationException("该用户名账号不存在，请先注册账号");
+            throw new ApplicationException("该用户名称账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
@@ -76,7 +76,7 @@ public class AuthorizeController : ControllerBase
     public async Task<BaseResultDto> GetTokenByEmail([FromServices] IMapper iMapper, CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
         // 根据邮箱获取用户
-        var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.Email);
+        var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.UserEmail);
         if (userAccount == null)
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
         if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
@@ -109,12 +109,11 @@ public class AuthorizeController : ControllerBase
                 var tokenModelRefresh = iMapper.Map<TokenModel>(userAccountDtoRefresh);
                 var tokenRefresh = JwtTokenUtil.IssueJwtRefresh(tokenModelRefresh);
                 // Swagger 登录
-                _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
-                return BaseResponseDto.OK(token);
+                _IHttpContextAccessor.HttpContext!.SigninToSwagger(tokenRefresh);
+                return BaseResponseDto.OK(tokenRefresh);
             }
         }
-
-        return BaseResponseDto.OK(token);
+        return BaseResponseDto.UnprocessableEntity("Token不合法");
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CustomProfile
+// FileName:AutoMapperProfile
 // Guid:406c1b6d-00cb-4d8a-b7ee-3abd0a6c0c76
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,14 +21,14 @@ using ZhaiFanhuaBlog.ViewModels.Users;
 namespace ZhaiFanhuaBlog.Extensions.Common.AutoMapper;
 
 /// <summary>
-/// CustomProfile
+/// AutoMapperProfile
 /// </summary>
-public class CustomAutoMapperProfile : Profile
+public class AutoMapperProfile : Profile
 {
     /// <summary>
     /// 配置构造函数，用来创建关系映射
     /// </summary>
-    public CustomAutoMapperProfile()
+    public AutoMapperProfile()
     {
         // Root
         CreateMap<RootRole, CRootRoleDto>().ReverseMap();
@@ -68,7 +68,7 @@ public class CustomAutoMapperProfile : Profile
         // Jwt
         CreateMap<RUserAccountDto, TokenModel>()
             .ForMember(dest => dest.UserId, sourse => sourse.MapFrom(src => src.BaseId))
-            .ForMember(dest => dest.UserName, sourse => sourse.MapFrom(src => src.Name))
+            .ForMember(dest => dest.UserName, sourse => sourse.MapFrom(src => src.UserName))
             .ForMember(dest => dest.NickName, sourse => sourse.MapFrom(src => src.NickName))
             .ForMember(dest => dest.RootRoles, sourse => sourse.MapFrom(src => string.Join(',', src.RootRoles == null ? string.Empty : src.RootRoles.Select(r => r.Name).ToList())))
             .ReverseMap();

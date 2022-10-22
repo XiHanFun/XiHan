@@ -66,13 +66,13 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
             // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
             var parameters = context.ActionArguments;
-            // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
+            // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
             var userId = httpContext.User?.FindFirstValue("UserId");
             // 写入日志
             string info = $"\t 请求Ip：{remoteIp}\n" +
-                        $"\t 请求地址：{requestUrl}\n" +
-                        $"\t 请求方法：{method}\n" +
-                        $"\t 操作用户：{userId}";
+                          $"\t 请求地址：{requestUrl}\n" +
+                          $"\t 请求方法：{method}\n" +
+                          $"\t 操作用户：{userId}";
             if (ActionLogSwitch)
                 _ILogger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器

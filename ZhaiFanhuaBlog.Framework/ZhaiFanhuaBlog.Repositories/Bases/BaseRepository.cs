@@ -233,7 +233,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindAsync(Guid? guid)
+    public virtual async Task<TEntity> FindAsync(Guid guid)
     {
         return await base.GetByIdAsync(guid);
     }

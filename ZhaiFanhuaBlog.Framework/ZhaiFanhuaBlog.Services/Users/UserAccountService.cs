@@ -79,7 +79,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateUserAccountAsync(UserAccount userAccount)
     {
-        if (await _IUserAccountRepository.FindAsync(e => e.Name == userAccount.Name || e.Email == userAccount.Email && !e.SoftDeleteLock) != null)
+        if (await _IUserAccountRepository.FindAsync(e => e.UserName == userAccount.UserName || e.UserEmail == userAccount.UserEmail && !e.SoftDeleteLock) != null)
             throw new ApplicationException("用户账户名称或邮箱已注册");
         userAccount.SoftDeleteLock = false;
         var result = await _IUserAccountRepository.CreateAsync(userAccount);
@@ -136,7 +136,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     /// <exception cref="ApplicationException"></exception>
     public async Task<UserAccount> FindUserAccountByNameAsync(string accountName)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(e => e.Name == accountName && !e.SoftDeleteLock);
+        var userAccount = await _IUserAccountRepository.FindAsync(e => e.UserName == accountName && !e.SoftDeleteLock);
         if (userAccount == null)
             throw new ApplicationException("用户账户不存在");
         return userAccount;
@@ -150,7 +150,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     /// <exception cref="ApplicationException"></exception>
     public async Task<UserAccount> FindUserAccountByEmailAsync(string accountEmail)
     {
-        var userAccount = await _IUserAccountRepository.FindAsync(e => e.Email == accountEmail && !e.SoftDeleteLock);
+        var userAccount = await _IUserAccountRepository.FindAsync(e => e.UserEmail == accountEmail && !e.SoftDeleteLock);
         if (userAccount == null)
             throw new ApplicationException("用户账户不存在");
         return userAccount;
@@ -164,7 +164,7 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     {
         var userAccount = from userauthority in await _IUserAccountRepository.QueryListAsync(e => !e.SoftDeleteLock)
                           orderby userauthority.CreateTime descending
-                          orderby userauthority.Name descending
+                          orderby userauthority.UserName descending
                           select userauthority;
         return userAccount.ToList();
     }

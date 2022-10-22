@@ -21,7 +21,7 @@ public class CUserAccountDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Name { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 电子邮件
@@ -29,7 +29,7 @@ public class CUserAccountDto
     [Required(ErrorMessage = "{0}不能为空")]
     [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
     [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", ErrorMessage = "请输入正确的邮箱地址")]
-    public string Email { get; set; } = string.Empty;
+    public string UserEmail { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）

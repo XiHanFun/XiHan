@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Http;
+using System.Management;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
 
@@ -27,6 +28,7 @@ public class HttpContextHelper
         RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6()?.ToString();
 
         var ua = header["User-Agent"].ToString().ToLower();
+        Agent = ua;
         SystemName = GetSystemName(ua);
         SystemType = GetSystemType(ua);
         BrowserName = GetBrowserName(ua);
@@ -46,6 +48,11 @@ public class HttpContextHelper
             Referer = header["Referer"].ToString();
         }
     }
+
+    /// <summary>
+    /// 代理信息
+    /// </summary>
+    public string? Agent { get; set; }
 
     /// <summary>
     /// 远程IPv4
@@ -94,6 +101,7 @@ public class HttpContextHelper
     private static string GetSystemName(string ua)
     {
         string sn = "Unknown";
+
         if (ua.Contains("nt 5.0"))
             sn = "Windows 2000";
         else if (ua.Contains("nt 5.1"))
@@ -110,6 +118,12 @@ public class HttpContextHelper
             sn = "Windows 8.1";
         else if (ua.Contains("nt 6.4") || ua.Contains("nt 10.0"))
             sn = "Windows 10";
+        else if (ua.Contains("android"))
+            sn = "Android";
+        else if (ua.Contains("mac os x"))
+            sn = "IOS";
+        else if (ua.Contains("windows phone"))
+            sn = "Windows Phone";
         else if (ua.Contains("unix"))
             sn = "Unix";
         else if (ua.Contains("linux"))
@@ -158,7 +172,7 @@ public class HttpContextHelper
         else if (ua.Contains("the world"))
             bn = "世界之窗";
         else if (ua.Contains("tencenttraveler") || ua.Contains("qqbn"))
-            bn = "QQ";
+            bn = "腾讯";
         else if (ua.Contains("msie"))
             bn = "IE";
         else if (ua.Contains("edg"))

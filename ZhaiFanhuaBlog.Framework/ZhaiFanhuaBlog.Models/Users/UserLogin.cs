@@ -28,6 +28,36 @@ public class UserLogin : BaseEntity
     public string? LoginIp;
 
     /// <summary>
+    /// 浏览器名称
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
+    public string? BrowserName { get; set; }
+
+    /// <summary>
+    /// 浏览器版本
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
+    public string? BrowserVersion { get; set; }
+
+    /// <summary>
+    /// 系统名称
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
+    public string? SystemName { get; set; }
+
+    /// <summary>
+    /// 系统类型
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
+    public string? SystemType { get; set; }
+
+    /// <summary>
+    /// 语言
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
+    public string? Language { get; set; }
+
+    /// <summary>
     /// 代理信息
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]

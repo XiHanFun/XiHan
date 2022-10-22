@@ -23,8 +23,8 @@ public class UserSeedData
     public static List<UserAccount> UserAccountList = new()
     {
         new UserAccount{
-            Name="administrator",
-            Email="administrator@example.com",
+            UserName="administrator",
+            UserEmail="administrator@example.com",
             Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="超级管理员",
@@ -32,8 +32,8 @@ public class UserSeedData
             Gender=true
         },
         new UserAccount{
-            Name="admin",
-            Email="admin@example.com",
+            UserName="admin",
+            UserEmail="admin@example.com",
             Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="管理员",
@@ -41,8 +41,8 @@ public class UserSeedData
             Gender=true
         },
         new UserAccount{
-            Name="user",
-            Email="user@example.com",
+            UserName="user",
+            UserEmail="user@example.com",
             Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="用户",
@@ -50,8 +50,8 @@ public class UserSeedData
             Gender=true
         },
         new UserAccount{
-            Name="test",
-            Email="test@example.com",
+            UserName="test",
+            UserEmail="test@example.com",
             Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="测试员",

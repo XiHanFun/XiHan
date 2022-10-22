@@ -122,7 +122,7 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    Task<TEntity> FindAsync(Guid? guid);
+    Task<TEntity> FindAsync(Guid guid);
 
     /// <summary>
     /// 条件查找

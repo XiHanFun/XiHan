@@ -20,12 +20,12 @@ public class RUserAccountDto : BaseFieldDto
     /// <summary>
     /// 用户名称
     /// </summary>
-    public string? Name { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary>
     /// 电子邮件
     /// </summary>
-    public string? Email { get; set; }
+    public string? UserEmail { get; set; }
 
     /// <summary>
     /// 头像路径

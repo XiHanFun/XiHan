@@ -175,6 +175,21 @@ public class BaseResponseDto
     /// 响应失败，参数不合法 422
     /// </summary>
     /// <returns></returns>
+    public static BaseResultDto UnprocessableEntity(string messageData)
+    {
+        return new BaseResultDto
+        {
+            Success = false,
+            Code = ResponseCode.UnprocessableEntity,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.UnprocessableEntity),
+            Data = messageData
+        };
+    }
+
+    /// <summary>
+    /// 响应失败，参数不合法 422
+    /// </summary>
+    /// <returns></returns>
     public static BaseResultDto UnprocessableEntity(ActionExecutingContext context)
     {
         return new BaseResultDto

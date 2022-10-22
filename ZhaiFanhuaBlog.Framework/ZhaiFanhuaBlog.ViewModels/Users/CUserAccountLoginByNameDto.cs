@@ -21,7 +21,7 @@ public class CUserAccountLoginByNameDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(6, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Name { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）

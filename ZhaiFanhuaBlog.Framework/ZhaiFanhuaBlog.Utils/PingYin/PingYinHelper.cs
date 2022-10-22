@@ -31,7 +31,7 @@ public static class PingYinHelper
             //是否是有效的汉字
             if (ChineseChar.IsValidChar(chs[i]))
             {
-                ChineseChar cc = new ChineseChar(chs[i]);
+                ChineseChar cc = new(chs[i]);
                 pinyinList = cc.Pinyins.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
             }
             else
@@ -96,7 +96,7 @@ public static class PingYinHelper
             var items = pys.Value;
             if (result.Count <= 0)
             {
-                result = items.ConvertAll(p => p.Substring(0, 1)).Distinct().ToList();
+                result = items.ConvertAll(p => p[..1]).Distinct().ToList();
             }
             else
             {

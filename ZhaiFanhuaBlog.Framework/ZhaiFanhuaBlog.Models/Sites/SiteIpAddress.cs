@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserIPAddress
+// FileName:SiteIpAddress
 // Guid:da2af06f-0fe9-428c-a8b6-03e166eb41a7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -9,12 +9,12 @@
 
 using SqlSugar;
 
-namespace ZhaiFanhuaBlog.Models.Users;
+namespace ZhaiFanhuaBlog.Models.Sites;
 
 /// <summary>
-/// 账户IP地区信息
+/// 系统Ip地区信息
 /// </summary>
-public class UserIPAddress
+public class SiteIpAddress
 {
     /// <summary>
     /// Ip地址
