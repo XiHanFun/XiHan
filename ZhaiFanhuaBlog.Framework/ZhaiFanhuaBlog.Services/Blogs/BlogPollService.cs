@@ -20,22 +20,18 @@ namespace ZhaiFanhuaBlog.Services.Blogs;
 /// </summary>
 public class BlogPollService : BaseService<BlogPoll>, IBlogPollService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogPollRepository _IBlogPollRepository;
     private readonly IBlogArticleService _IBlogArticleService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iBlogPollRepository"></param>
     /// <param name="iBlogArticleService"></param>
-    public BlogPollService(IRootStateRepository iRootStateRepository,
-        IBlogPollRepository iBlogPollRepository,
+    public BlogPollService(IBlogPollRepository iBlogPollRepository,
         IBlogArticleService iBlogArticleService)
     {
         base._IBaseRepository = iBlogPollRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IBlogPollRepository = iBlogPollRepository;
         _IBlogArticleService = iBlogArticleService;
     }
@@ -90,11 +86,9 @@ public class BlogPollService : BaseService<BlogPoll>, IBlogPollService
     public async Task<bool> DeleteBlogPollAsync(Guid guid, Guid deleteId)
     {
         var blogCommentPoll = await IsExistenceAsync(guid);
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogCommentPoll.SoftDeleteLock = true;
         blogCommentPoll.DeleteId = deleteId;
         blogCommentPoll.DeleteTime = DateTime.Now;
-        blogCommentPoll.StateId = rootState.BaseId;
         return await _IBlogPollRepository.UpdateAsync(blogCommentPoll);
     }
 

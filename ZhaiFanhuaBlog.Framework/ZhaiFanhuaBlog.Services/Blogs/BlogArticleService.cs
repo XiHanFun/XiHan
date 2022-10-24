@@ -20,19 +20,16 @@ namespace ZhaiFanhuaBlog.Services.Blogs;
 /// </summary>
 public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogArticleRepository _IBlogArticleRepository;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iBlogArticleRepository"></param>
-    public BlogArticleService(IRootStateRepository iRootStateRepository, IBlogArticleRepository iBlogArticleRepository)
+    public BlogArticleService(IBlogArticleRepository iBlogArticleRepository)
     {
         base._IBaseRepository = iBlogArticleRepository;
         _IBlogArticleRepository = iBlogArticleRepository;
-        _IRootStateRepository = iRootStateRepository;
     }
 
     /// <summary>
@@ -87,11 +84,9 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     public async Task<bool> DeleteBlogArticleAsync(Guid guid, Guid deleteId)
     {
         var blogArticle = await IsExistenceAsync(guid);
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogArticle.SoftDeleteLock = true;
         blogArticle.DeleteId = deleteId;
         blogArticle.DeleteTime = DateTime.Now;
-        blogArticle.StateId = rootState.BaseId;
         return await _IBlogArticleRepository.UpdateAsync(blogArticle);
     }
 

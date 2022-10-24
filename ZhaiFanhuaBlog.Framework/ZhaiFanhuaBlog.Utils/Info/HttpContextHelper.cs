@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.AspNetCore.Http;
-using System.Management;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
 

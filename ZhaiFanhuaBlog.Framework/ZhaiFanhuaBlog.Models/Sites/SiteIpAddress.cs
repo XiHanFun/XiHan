@@ -1,20 +1,21 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SiteIpAddress
-// Guid:da2af06f-0fe9-428c-a8b6-03e166eb41a7
+// Guid:171a7673-fe61-4257-844e-84fdff2d5e0a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-09-18 上午 04:48:00
+// CreateTime:2022-10-24 上午 10:40:37
 // ----------------------------------------------------------------
 
 using SqlSugar;
+using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Sites;
 
 /// <summary>
 /// 系统Ip地区信息
 /// </summary>
-public class SiteIpAddress
+public class SiteIpAddress : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// Ip地址

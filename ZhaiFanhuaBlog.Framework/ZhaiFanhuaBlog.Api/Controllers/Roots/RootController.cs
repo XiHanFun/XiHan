@@ -30,7 +30,6 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Roots;
 [ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
 public class RootController : BaseApiController
 {
-    private readonly IRootStateService _IRootStateService;
     private readonly IRootAuthorityService _IRootAuthorityService;
     private readonly IRootRoleService _IRootRoleService;
     private readonly IRootRoleAuthorityService _IRootRoleAuthorityService;
@@ -42,7 +41,6 @@ public class RootController : BaseApiController
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateService"></param>
     /// <param name="iRootAuthorityService"></param>
     /// <param name="iRootRoleService"></param>
     /// <param name="iRootRoleAuthorityService"></param>
@@ -50,8 +48,7 @@ public class RootController : BaseApiController
     /// <param name="iRootRoleMenuService"></param>
     /// <param name="iUserAccountService"></param>
     /// <param name="iUserAccountRoleService"></param>
-    public RootController(IRootStateService iRootStateService,
-        IRootAuthorityService iRootAuthorityService,
+    public RootController(IRootAuthorityService iRootAuthorityService,
         IRootRoleService iRootRoleService,
         IRootRoleAuthorityService iRootRoleAuthorityService,
         IRootMenuService iRootMenuService,
@@ -59,7 +56,6 @@ public class RootController : BaseApiController
         IUserAccountService iUserAccountService,
         IUserAccountRoleService iUserAccountRoleService)
     {
-        _IRootStateService = iRootStateService;
         _IRootAuthorityService = iRootAuthorityService;
         _IRootRoleService = iRootRoleService;
         _IRootRoleAuthorityService = iRootRoleAuthorityService;
@@ -78,7 +74,6 @@ public class RootController : BaseApiController
     {
         try
         {
-            await _IRootStateService.InitRootStateAsync(RootSeedData.RootStateList);
             await _IRootAuthorityService.InitRootAuthorityAsync(RootSeedData.RootAuthorityList);
             await _IRootRoleService.InitRootRoleAsync(RootSeedData.RootRoleList);
             await _IUserAccountService.InitUserAccountAsync(UserSeedData.UserAccountList);

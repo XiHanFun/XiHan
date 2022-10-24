@@ -21,22 +21,22 @@
 //    public static async Task<bool> CodeFirst()
 //    {
 //        string filein = @"D:\Project\ZhaiFanhuaBlog_\架构设计\数据库设计.xlsx";
-//        string fileout = @"D:\CodeFirstOfRootState.txt";
+//        string fileout = @"D:\CodeFirstOfSiteDictionary.txt";
 //        //需要注明非商业用途
 //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 //        var file = new FileInfo(filein);
-//        var rootStateList = await LoadExcelFile(file);
+//        var SiteDictionaryList = await LoadExcelFile(file);
 //        Console.WriteLine($@"导入完成【{filein}】");
-//        rootStateList = rootStateList.OrderByDescending(e => e.TypeKey).OrderByDescending(e => e.StateKey).ToList();
+//        SiteDictionaryList = SiteDictionaryList.OrderByDescending(e => e.TypeKey).OrderByDescending(e => e.StateKey).ToList();
 //        StringBuilder sb = new StringBuilder();
-//        foreach (var rootState in rootStateList)
+//        foreach (var SiteDictionary in SiteDictionaryList)
 //        {
-//            string s = @"new RootState{" + Environment.NewLine
-//                        + "\t" + @"TypeKey = """ + rootState.TypeKey + @"""," + Environment.NewLine
-//                        + "\t" + @"TypeName = """ + rootState.TypeName + @"""," + Environment.NewLine
-//                        + "\t" + @"StateKey = " + rootState.StateKey + @"," + Environment.NewLine
-//                        + "\t" + @"StateName = """ + rootState.StateName + @"""," + Environment.NewLine
+//            string s = @"new SiteDictionary{" + Environment.NewLine
+//                        + "\t" + @"TypeKey = """ + SiteDictionary.TypeKey + @"""," + Environment.NewLine
+//                        + "\t" + @"TypeName = """ + SiteDictionary.TypeName + @"""," + Environment.NewLine
+//                        + "\t" + @"StateKey = " + SiteDictionary.StateKey + @"," + Environment.NewLine
+//                        + "\t" + @"StateName = """ + SiteDictionary.StateName + @"""," + Environment.NewLine
 //                        + @"}," + Environment.NewLine;
 //            sb.Append(s);
 //            DirFileHelper.CreateFile(fileout, sb.ToString(), Encoding.UTF8);
@@ -46,9 +46,9 @@
 //    }
 
 //    //从Excel读取数据
-//    private static async Task<List<RootState>> LoadExcelFile(FileInfo file)
+//    private static async Task<List<SiteDictionary>> LoadExcelFile(FileInfo file)
 //    {
-//        var rootStateList = new List<RootState>();
+//        var SiteDictionaryList = new List<SiteDictionary>();
 
 //        using (var package = new ExcelPackage(file))
 //        {
@@ -58,18 +58,18 @@
 //            int col = 1;
 //            while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
 //            {
-//                var rootState = new RootState
+//                var SiteDictionary = new SiteDictionary
 //                {
 //                    //TypeKey = ws.Cells[row, col].Value.ToString(),
 //                    //TypeName = ws.Cells[row, col + 1].Value.ToString(),
 //                    //StateKey = int.Parse(ws.Cells[row, col + 2].Value.ToString()),
 //                    //StateName = ws.Cells[row, col + 3].Value.ToString()
 //                };
-//                rootStateList.Add(rootState);
+//                SiteDictionaryList.Add(SiteDictionary);
 //                row += 1;
-//                Console.WriteLine(rootState.TypeKey + " " + rootState.TypeName + " " + rootState.StateKey + " " + rootState.StateName);
+//                Console.WriteLine(SiteDictionary.TypeKey + " " + SiteDictionary.TypeName + " " + SiteDictionary.StateKey + " " + SiteDictionary.StateName);
 //            }
 //        }
-//        return rootStateList;
+//        return SiteDictionaryList;
 //    }
 //}

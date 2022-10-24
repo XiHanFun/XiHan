@@ -20,22 +20,18 @@ namespace ZhaiFanhuaBlog.Services.Roots;
 /// </summary>
 public class RootRoleService : BaseService<RootRole>, IRootRoleService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IRootRoleRepository _IRootRoleRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iRootRoleRepository"></param>
     /// <param name="iUserAccountRoleRepository"></param>
-    public RootRoleService(IRootStateRepository iRootStateRepository,
-        IRootRoleRepository iRootRoleRepository,
+    public RootRoleService(IRootRoleRepository iRootRoleRepository,
         IUserAccountRoleRepository iUserAccountRoleRepository)
     {
         _IBaseRepository = iRootRoleRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IRootRoleRepository = iRootRoleRepository;
         _IUserAccountRoleRepository = iUserAccountRoleRepository;
     }
@@ -99,11 +95,9 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
             throw new ApplicationException("该系统角色下有子系统角色，不能删除");
         if ((await _IUserAccountRoleRepository.QueryListAsync(e => e.RoleId == userRole.BaseId)).Count != 0)
             throw new ApplicationException("该系统角色已有用户账户使用，不能删除");
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userRole.SoftDeleteLock = true;
         userRole.DeleteId = deleteId;
         userRole.DeleteTime = DateTime.Now;
-        userRole.StateId = rootState.BaseId;
         return await _IRootRoleRepository.UpdateAsync(userRole);
     }
 

@@ -8,8 +8,11 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.IRepositories.Roots;
+using ZhaiFanhuaBlog.IRepositories.Sites;
 using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Repositories.Roots;
+using ZhaiFanhuaBlog.Repositories.Sites;
 using ZhaiFanhuaBlog.Services.Bases;
 
 namespace ZhaiFanhuaBlog.Services.Roots;
@@ -19,7 +22,6 @@ namespace ZhaiFanhuaBlog.Services.Roots;
 /// </summary>
 public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthorityService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IRootAuthorityRepository _IRootAuthorityRepository;
     private readonly IRootRoleAuthorityRepository _IRootRoleAuthorityRepository;
 
@@ -27,15 +29,12 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     /// 构造函数
     /// </summary>
     /// <param name="iRootAuthorityRepository"></param>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iRootRoleAuthorityRepository"></param>
     public RootAuthorityService(IRootAuthorityRepository iRootAuthorityRepository,
-        IRootStateRepository iRootStateRepository,
         IRootRoleAuthorityRepository iRootRoleAuthorityRepository)
     {
         _IBaseRepository = iRootAuthorityRepository;
         _IRootAuthorityRepository = iRootAuthorityRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IRootRoleAuthorityRepository = iRootRoleAuthorityRepository;
     }
 
@@ -98,11 +97,9 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
             throw new ApplicationException("该系统权限下有子系统权限，不能删除");
         if ((await _IRootRoleAuthorityRepository.QueryListAsync(e => e.AuthorityId == rootAuthority.BaseId)).Count != 0)
             throw new ApplicationException("该系统权限已有系统角色使用，不能删除");
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         rootAuthority.SoftDeleteLock = true;
         rootAuthority.DeleteId = deleteId;
         rootAuthority.DeleteTime = DateTime.Now;
-        rootAuthority.StateId = rootState.BaseId;
         return await _IRootAuthorityRepository.UpdateAsync(rootAuthority);
     }
 

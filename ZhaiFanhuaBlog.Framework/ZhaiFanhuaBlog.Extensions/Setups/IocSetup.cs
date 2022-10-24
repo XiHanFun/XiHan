@@ -62,7 +62,7 @@ public static class IocSetup
         services.AddScoped<IRootAuditRepository, RootAuditRepository>();
         services.AddScoped<IRootAuditCategoryRepository, RootAuditCategoryRepository>();
         services.AddScoped<IRootFriendlyLinkRepository, RootFriendlyLinkRepository>();
-        services.AddScoped<IRootStateRepository, RootStateRepository>();
+        services.AddScoped<ISiteDictionaryRepository, SiteDictionaryRepository>();
         // Service
         services.AddScoped<IRootAuthorityService, RootAuthorityService>();
         services.AddScoped<IRootRoleService, RootRoleService>();
@@ -73,7 +73,7 @@ public static class IocSetup
         services.AddScoped<IRootAuditService, RootAuditService>();
         services.AddScoped<IRootAuditCategoryService, RootAuditCategoryService>();
         services.AddScoped<IRootFriendlyLinkService, RootFriendlyLinkService>();
-        services.AddScoped<IRootStateService, RootStateService>();
+        services.AddScoped<ISiteDictionaryService, SiteDictionaryService>();
 
         // =========================User=========================
         // Repository

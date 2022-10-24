@@ -20,7 +20,6 @@ namespace ZhaiFanhuaBlog.Services.Blogs;
 /// </summary>
 public class BlogArticleTagService : BaseService<BlogArticleTag>, IBlogArticleTagService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogArticleTagRepository _IBlogArticleTagRepository;
     private readonly IBlogArticleService _IBlogArticleService;
     private readonly IBlogTagService _IBlogTagService;
@@ -28,17 +27,14 @@ public class BlogArticleTagService : BaseService<BlogArticleTag>, IBlogArticleTa
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iBlogArticleTagRepository"></param>
     /// <param name="iBlogArticleService"></param>
     /// <param name="iIBlogTagService"></param>
-    public BlogArticleTagService(IRootStateRepository iRootStateRepository,
-        IBlogArticleTagRepository iBlogArticleTagRepository,
+    public BlogArticleTagService(IBlogArticleTagRepository iBlogArticleTagRepository,
         IBlogArticleService iBlogArticleService,
         IBlogTagService iIBlogTagService)
     {
         base._IBaseRepository = iBlogArticleTagRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IBlogArticleTagRepository = iBlogArticleTagRepository;
         _IBlogArticleService = iBlogArticleService;
         _IBlogTagService = iIBlogTagService;
@@ -95,11 +91,9 @@ public class BlogArticleTagService : BaseService<BlogArticleTag>, IBlogArticleTa
     public async Task<bool> DeleteBlogArticleTagAsync(Guid guid, Guid deleteId)
     {
         var blogArticleTag = await IsExistenceAsync(guid);
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogArticleTag.SoftDeleteLock = true;
         blogArticleTag.DeleteId = deleteId;
         blogArticleTag.DeleteTime = DateTime.Now;
-        blogArticleTag.StateId = rootState.BaseId;
         return await _IBlogArticleTagRepository.UpdateAsync(blogArticleTag);
     }
 

@@ -20,22 +20,18 @@ namespace ZhaiFanhuaBlog.Services.Blogs;
 /// </summary>
 public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogCategoryRepository _IBlogCategoryRepository;
     private readonly IBlogArticleRepository _IBlogArticleRepository;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iBlogCategoryRepository"></param>
     /// <param name="iBlogArticleRepository"></param>
-    public BlogCategoryService(IRootStateRepository iRootStateRepository,
-        IBlogCategoryRepository iBlogCategoryRepository,
+    public BlogCategoryService(IBlogCategoryRepository iBlogCategoryRepository,
         IBlogArticleRepository iBlogArticleRepository)
     {
         base._IBaseRepository = iBlogCategoryRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IBlogCategoryRepository = iBlogCategoryRepository;
         _IBlogArticleRepository = iBlogArticleRepository;
     }
@@ -99,11 +95,9 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
             throw new ApplicationException("该博客文章分类下有子博客文章分类，不能删除");
         if ((await _IBlogArticleRepository.QueryListAsync(e => e.CategoryId == blogCategory.BaseId && !e.SoftDeleteLock)).Count != 0)
             throw new ApplicationException("该博客文章分类已有博客文章使用，不能删除");
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogCategory.SoftDeleteLock = true;
         blogCategory.DeleteId = deleteId;
         blogCategory.DeleteTime = DateTime.Now;
-        blogCategory.StateId = rootState.BaseId;
         return await _IBlogCategoryRepository.UpdateAsync(blogCategory);
     }
 

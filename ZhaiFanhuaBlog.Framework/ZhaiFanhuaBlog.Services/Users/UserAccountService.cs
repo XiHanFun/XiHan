@@ -21,7 +21,6 @@ namespace ZhaiFanhuaBlog.Services.Users;
 /// </summary>
 public class UserAccountService : BaseService<UserAccount>, IUserAccountService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IUserAccountRepository _IUserAccountRepository;
     private readonly IUserAccountRoleRepository _IUserAccountRoleRepository;
 
@@ -29,16 +28,13 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     /// 构造函数
     /// </summary>
     /// <param name="iConfiguration"></param>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iUserAccountRepository"></param>
     /// <param name="iIUserAccountRoleRepository"></param>
     public UserAccountService(IConfiguration iConfiguration,
-        IRootStateRepository iRootStateRepository,
         IUserAccountRepository iUserAccountRepository,
         IUserAccountRoleRepository iIUserAccountRoleRepository)
     {
         base._IBaseRepository = iUserAccountRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IUserAccountRepository = iUserAccountRepository;
         _IUserAccountRoleRepository = iIUserAccountRoleRepository;
     }
@@ -95,11 +91,9 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     public async Task<bool> DeleteUserAccountAsync(Guid guid, Guid deleteId)
     {
         var userAccount = await IsExistenceAsync(guid);
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         userAccount.SoftDeleteLock = true;
         userAccount.DeleteId = deleteId;
         userAccount.DeleteTime = DateTime.Now;
-        userAccount.StateId = rootState.BaseId;
         return await _IUserAccountRepository.UpdateAsync(userAccount);
     }
 

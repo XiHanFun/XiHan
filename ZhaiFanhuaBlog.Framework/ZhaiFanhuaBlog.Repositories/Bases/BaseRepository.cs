@@ -68,7 +68,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(RootAuditCategory),
                 typeof(RootMenu),
                 typeof(RootRoleMenu),
-                typeof(RootState),
+                typeof(SiteDictionary),
                 typeof(RootAnnouncement),
                 typeof(RootAudit),
                 typeof(RootFriendlyLink),

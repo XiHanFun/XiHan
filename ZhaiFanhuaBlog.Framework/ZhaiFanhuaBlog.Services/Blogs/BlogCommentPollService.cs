@@ -20,22 +20,18 @@ namespace ZhaiFanhuaBlog.Services.Blogs;
 /// </summary>
 public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogCommentPollService
 {
-    private readonly IRootStateRepository _IRootStateRepository;
     private readonly IBlogCommentPollRepository _IBlogCommentPollRepository;
     private readonly IBlogCommentService _IBlogCommentService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iRootStateRepository"></param>
     /// <param name="iBlogCommentPollRepository"></param>
     /// <param name="iBlogCommentService"></param>
-    public BlogCommentPollService(IRootStateRepository iRootStateRepository,
-        IBlogCommentPollRepository iBlogCommentPollRepository,
+    public BlogCommentPollService(IBlogCommentPollRepository iBlogCommentPollRepository,
         IBlogCommentService iBlogCommentService)
     {
         base._IBaseRepository = iBlogCommentPollRepository;
-        _IRootStateRepository = iRootStateRepository;
         _IBlogCommentPollRepository = iBlogCommentPollRepository;
         _IBlogCommentService = iBlogCommentService;
     }
@@ -90,11 +86,9 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
     public async Task<bool> DeleteBlogCommentPollAsync(Guid guid, Guid deleteId)
     {
         var blogCommentPoll = await IsExistenceAsync(guid);
-        var rootState = await _IRootStateRepository.FindAsync(e => e.TypeKey == "All" && e.StateKey == -1);
         blogCommentPoll.SoftDeleteLock = true;
         blogCommentPoll.DeleteId = deleteId;
         blogCommentPoll.DeleteTime = DateTime.Now;
-        blogCommentPoll.StateId = rootState.BaseId;
         return await _IBlogCommentPollRepository.UpdateAsync(blogCommentPoll);
     }
 

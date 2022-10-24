@@ -9,6 +9,7 @@
 
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Sites;
 
 namespace ZhaiFanhuaBlog.Models.Bases;
 
@@ -27,5 +28,5 @@ public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
     /// 状态
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public RootState? RootState { get; set; }
+    public SiteDictionaryItem? SiteDictionary { get; set; }
 }

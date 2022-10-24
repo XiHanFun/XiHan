@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IRootStateRepository
+// FileName:ISiteDictionaryItemRepository
 // Guid:a21a1940-6a27-4732-b0a5-37841f6de408
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,13 +8,13 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.IRepositories.Bases;
-using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Sites;
 
-namespace ZhaiFanhuaBlog.IRepositories.Roots;
+namespace ZhaiFanhuaBlog.IRepositories.Sites;
 
 /// <summary>
-/// IRootStateRepository
+/// ISiteDictionaryItemRepository
 /// </summary>
-public interface IRootStateRepository : IBaseRepository<RootState>
+public interface ISiteDictionaryItemRepository : IBaseRepository<SiteDictionaryItem>
 {
 }

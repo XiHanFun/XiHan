@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IRootStateService
+// FileName:ISiteDictionaryService
 // Guid:8b2a6d03-4267-4457-a19c-1fddedf0356c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,19 +8,19 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.IServices.Bases;
-using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Sites;
 
-namespace ZhaiFanhuaBlog.IServices.Roots;
+namespace ZhaiFanhuaBlog.IServices.Sites;
 
 /// <summary>
-/// IRootStateService
+/// ISiteDictionaryService
 /// </summary>
-public interface IRootStateService : IBaseService<RootState>
+public interface ISiteDictionaryService : IBaseService<SiteDictionary>
 {
     /// <summary>
     /// 初始化
     /// </summary>
-    /// <param name="rootStates"></param>
+    /// <param name="SiteDictionarys"></param>
     /// <returns></returns>
-    Task<bool> InitRootStateAsync(List<RootState> rootStates);
+    Task<bool> InitSiteDictionaryAsync(List<SiteDictionary> SiteDictionarys);
 }

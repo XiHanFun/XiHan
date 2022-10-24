@@ -30,6 +30,12 @@ public class UserAccount : BaseEntity
     public string UserEmail { get; set; } = string.Empty;
 
     /// <summary>
+    /// 用户来源
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    public string UserFrom { get; set; } = string.Empty;
+
+    /// <summary>
     /// 用户密码（MD5加密）
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(64)")]
