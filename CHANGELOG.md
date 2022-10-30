@@ -4,6 +4,56 @@
 
 
 
+## 2022-10-30
+
+1. [新增：系统字典管理；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/62f568aa626a306e7f7f5832695db23547dfcc4b) 
+2. 优化：系统状态管理转移为字典统一管理；
+3. [优化：授权项目分离；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/20806bbaadd69e23f8cab734689fdcb14e17ff62)
+4. [优化：用户名、邮箱字段优化；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/3e3679acf05fe803946aa306ef0edd7d9131d1aa) 
+5. 优化：ip地址信息库有用户库优化为系统库；
+6. 优化：更新文档；
+
+## 2022-10-09
+
+1. [新增：顶级语句；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/f209088428aebfb4d940059b3c18abd4e134552d)
+2. [新增：无感刷新Token；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/2207898a0452fbde0dcdfb122b9c873f1f36eb59)
+3. [新增：解析JWT字符串；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/4495bc3a68dede8549c536063237d7e366684639) 
+4. [新增：控制台测试项目；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/38135894a808a6b9360e589502be06b8674a04f0) 
+5. 优化：http请求帮助类；
+6. 优化：部分文件位置调整；
+7. [优化：完善文档；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/9dbc6212d54cb791b1c875c6c2557726bd76ece7)
+
+## 2022-09-30
+
+1. 新增：汉语拼音转换；
+2. 新增：对象帮助类；
+3. [新增：扩展项目，用于汇总组件；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/0a60e57450bc82f82423f5d3b1eedc4d9b4ae9cb) 
+4. [优化：移除无用包；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/5fb38248b349da0ef10e444afb6d8f44345d3404)
+5. [优化：部分文件夹和命名空间规范；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/7b39d8c6ad3f0f8a28067190d7e925e66d8bd0e4)
+6. [优化：系统配置重写；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/9e3ae481d066b271ac76379cd6f8c7888b94434d) 
+7. 优化：Docker文件重新生成；
+8. [优化：目录；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/d6ba0fef3bd7f3d028af78d881cc2bf0b61e68e1)
+9. 优化：重写过滤器；
+10. 优化：重写中间件；
+11. 优化：重写启动服务；
+12. 优化：重写JWT组件；
+13. [优化：代码清理优化；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/66952798590ba69bfe034eed04fd537bc5269dbc)
+
+## 2022-09-18
+
+1. [新增：Ip地址信息；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/f28930dda27ed4148c1d4ee69528514356f1404d) 
+2. 优化：Ip信息直接使用字符串；
+3. 优化：邮件发送工具类；
+4. 优化：单元测试；
+
+## 2022-09-17
+
+1. [新增：根据IP获取地区信息；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/bc20ebe46828a39d7567d90773bab42a82e0dda9)
+2. [优化：单元测试项目；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/f0ef493b5f8f5fb60371a99c5e97a38a6f6972fb)
+3. [优化：完善工具类；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/d37b90603f55387f084a3f0c43473c38d18feb92)
+4. [ 优化：更新 github issue 模板；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/200d00581a926d736d6c53834e75109fe6d50d4c)
+5. [优化：部分包引用变化；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/8983d472beec968599c25ca5afdf11221d871516)
+
 ## 2022-09-09
 
 1. 新增：汉语拼音转换；
@@ -14,7 +64,7 @@
 6. 优化：数据验证封装；
 7. 优化：分页返回数据封装；
 8. [修复：用户注册邮箱长度验证；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/33daa87c8b4dbaa7040a51fb134d77643f2e5de1)
-9. 修复：分页总页数错误的bug；
+9. 修复：分页总页数错误的Bug；
 10. [修复：Swagger的Jwt Bearer 需要认证的接口发请求不带token；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/c45115a23cb1840f2ef50ee3e3a9fe349e01577b)
 
 ## 2022-08-30
@@ -66,15 +116,15 @@
 2. 新增：用户权限、用户角色、用户账户种子数据；
 3. 优化：系统初始化功能；
 4. 优化：命名规范；
-5. 修复：本地多网卡Ip错误的bug；
-6. 修复：用户权限、用户角色、用户账户非登录操作的严重bug；
-7. 修复：修改用户密码存储非加密密码的严重bug；
+5. 修复：本地多网卡Ip错误的Bug；
+6. 修复：用户权限、用户角色、用户账户非登录操作的严重Bug；
+7. 修复：修改用户密码存储非加密密码的严重Bug；
 8. 修复：全局软删除功能；
 9. 修复：全局状态功能；
 
 ## 2022-07-24
 
-1. 新增：项目Logo；
+1. 新增：项目LOGO；
 2. 新增：博客文章分类功能；
 3. 优化：本地Ip获取方法改写；
 4. 优化：跨域问题；
@@ -139,9 +189,9 @@
 
 ## 2022-06-05
 
-1. `重要变更`：前后端项目分离、更名仓库；由`ZhaiFanhuaBlog`变更为`ZhaiFanhuaBlog.Framework`和前端仓库；本仓库为`ZhaiFanhuaBlog.Framework`；
+1. `重要变更`：前后端项目分离、更名仓库；由`ZhaiFanhuaBlog`变更为`ZhaiFanhuaBlog.Framework`和前端仓库`ZhaiFanhuaBlog.Manage`、`ZhaiFanhuaBlog.Display`；本仓库为`ZhaiFanhuaBlog.Framework`；
 2. 新增：其他博客平台资源迁移功能（目前有hexo迁移）；
-3. 优化：移除配置文件铭感数据，如数据库密码、第三方登录配置、CDN配置；
+3. 优化：移除配置文件敏感数据，如数据库密码、第三方登录配置、CDN配置；
 4. 优化：对象相互映射；
 
 ## 2022-05-09
@@ -178,7 +228,7 @@
 8. 优化：工具类调整，Repository层调整，Server层调整；
 9. 优化：命名规范，文件规范；
 10. 优化：Id全部采用Guid；
-11. 修复：AutoMapper映射错误的bug；
+11. 修复：AutoMapper映射错误的Bug；
 12. 修复：注入Bug；
 
 ## 2022-01-17
