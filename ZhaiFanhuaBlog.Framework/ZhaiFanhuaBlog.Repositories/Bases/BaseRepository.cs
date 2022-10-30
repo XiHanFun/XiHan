@@ -11,7 +11,6 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.Core.AppSettings;
-using ZhaiFanhuaBlog.IRepositories.Bases;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;

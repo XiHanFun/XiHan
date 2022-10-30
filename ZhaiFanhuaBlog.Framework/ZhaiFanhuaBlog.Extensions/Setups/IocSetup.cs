@@ -8,14 +8,6 @@
 // ----------------------------------------------------------------
 
 using Microsoft.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.IRepositories.Blogs;
-using ZhaiFanhuaBlog.IRepositories.Roots;
-using ZhaiFanhuaBlog.IRepositories.Sites;
-using ZhaiFanhuaBlog.IRepositories.Users;
-using ZhaiFanhuaBlog.IServices.Blogs;
-using ZhaiFanhuaBlog.IServices.Roots;
-using ZhaiFanhuaBlog.IServices.Sites;
-using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Repositories.Blogs;
 using ZhaiFanhuaBlog.Repositories.Roots;
 using ZhaiFanhuaBlog.Repositories.Sites;

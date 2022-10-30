@@ -9,8 +9,7 @@
 
 using SqlSugar;
 using System.Linq.Expressions;
-using ZhaiFanhuaBlog.IRepositories.Bases;
-using ZhaiFanhuaBlog.IServices.Bases;
+using ZhaiFanhuaBlog.Repositories.Bases;
 using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
 namespace ZhaiFanhuaBlog.Services.Bases;

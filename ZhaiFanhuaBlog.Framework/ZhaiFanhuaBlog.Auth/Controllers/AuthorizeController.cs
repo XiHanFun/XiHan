@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.IServices.Users;
+using ZhaiFanhuaBlog.Services.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;

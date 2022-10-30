@@ -25,12 +25,12 @@ public class BaseResultDto
     /// <summary>
     /// 状态码
     /// </summary>
-    public ResponseCode Code { get; set; } = ResponseCode.OK;
+    public ResponseEnum Code { get; set; } = ResponseEnum.OK;
 
     /// <summary>
     /// 返回信息
     /// </summary>
-    public string? Message { get; set; } = EnumDescriptionHelper.GetEnumDescription(ResponseCode.OK);
+    public string? Message { get; set; } = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK);
 
     /// <summary>
     /// 数据集合

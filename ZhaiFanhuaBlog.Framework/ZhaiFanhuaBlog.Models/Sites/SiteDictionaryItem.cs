@@ -48,5 +48,5 @@ public class SiteDictionaryItem : BaseDeleteEntity<Guid>
     /// <summary>
     /// 字典项状态 1启用 0禁用
     /// </summary>
-    public bool Status { get; set; }
+    public bool Enable { get; set; }
 }

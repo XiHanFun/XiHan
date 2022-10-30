@@ -7,12 +7,8 @@
 // CreateTime:2022-05-08 下午 10:50:02
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.IRepositories.Roots;
-using ZhaiFanhuaBlog.IRepositories.Sites;
-using ZhaiFanhuaBlog.IServices.Roots;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Repositories.Roots;
-using ZhaiFanhuaBlog.Repositories.Sites;
 using ZhaiFanhuaBlog.Services.Bases;
 
 namespace ZhaiFanhuaBlog.Services.Roots;

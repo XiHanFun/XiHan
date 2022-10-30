@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ZhaiFanhuaBlog.IServices\ZhaiFanhuaBlog.IServices.csproj" />
+    <ProjectReference Include="..\ZhaiFanhuaBlog.Repositories\ZhaiFanhuaBlog.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
 // CreateTime:2022-07-03 下午 07:10:03
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Bases.Fields;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Roots;
 
 namespace ZhaiFanhuaBlog.ViewModels.Users;
@@ -15,7 +15,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Users;
 /// <summary>
 /// RUserAccountRoleDto
 /// </summary>
-public class RUserAccountRoleDto : BaseFieldDto
+public class RUserAccountRoleDto : BaseResultFieldDto
 {
     /// <summary>
     /// 用户账户

@@ -8,10 +8,8 @@
 // ----------------------------------------------------------------
 
 using Microsoft.Extensions.Configuration;
-using ZhaiFanhuaBlog.IRepositories.Roots;
-using ZhaiFanhuaBlog.IRepositories.Users;
-using ZhaiFanhuaBlog.IServices.Users;
 using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Repositories.Users;
 using ZhaiFanhuaBlog.Services.Bases;
 
 namespace ZhaiFanhuaBlog.Services.Users;

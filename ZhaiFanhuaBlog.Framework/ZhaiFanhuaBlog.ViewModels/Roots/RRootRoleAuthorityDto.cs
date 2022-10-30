@@ -7,14 +7,14 @@
 // CreateTime:2022-07-01 上午 03:31:07
 // ----------------------------------------------------------------
 
-using ZhaiFanhuaBlog.ViewModels.Bases.Fields;
+using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 
 namespace ZhaiFanhuaBlog.ViewModels.Roots;
 
 /// <summary>
 /// RRootRoleAuthorityDto
 /// </summary>
-public class RRootRoleAuthorityDto : BaseFieldDto
+public class RRootRoleAuthorityDto : BaseResultFieldDto
 {
     /// <summary>
     /// 系统角色

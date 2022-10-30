@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ZhaiFanhuaBlog.IRepositories\ZhaiFanhuaBlog.IRepositories.csproj" />
+    <ProjectReference Include="..\ZhaiFanhuaBlog.ViewModels\ZhaiFanhuaBlog.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

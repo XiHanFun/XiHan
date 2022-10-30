@@ -29,8 +29,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseCode.Continue,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.Continue),
+            Code = ResponseEnum.Continue,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Continue),
             Data = null
         };
     }
@@ -44,8 +44,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseCode.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.OK),
+            Code = ResponseEnum.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
             Data = null
         };
     }
@@ -59,8 +59,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseCode.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.OK),
+            Code = ResponseEnum.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
             Data = messageData
         };
     }
@@ -75,8 +75,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseCode.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.OK),
+            Code = ResponseEnum.OK,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
             Data = data
         };
     }
@@ -90,8 +90,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.BadRequest,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.BadRequest),
+            Code = ResponseEnum.BadRequest,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.BadRequest),
             Data = messageData
         };
     }
@@ -105,8 +105,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.Unauthorized,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.Unauthorized),
+            Code = ResponseEnum.Unauthorized,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Unauthorized),
             Data = null
         };
     }
@@ -120,8 +120,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.Unauthorized,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.Unauthorized),
+            Code = ResponseEnum.Unauthorized,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Unauthorized),
             Data = messageData
         };
     }
@@ -135,8 +135,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.Forbidden,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.Forbidden),
+            Code = ResponseEnum.Forbidden,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Forbidden),
             Data = null
         };
     }
@@ -150,8 +150,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.NotFound,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.NotFound),
+            Code = ResponseEnum.NotFound,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotFound),
             Data = null
         };
     }
@@ -165,8 +165,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.NotFound,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.NotFound),
+            Code = ResponseEnum.NotFound,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotFound),
             Data = messageData
         };
     }
@@ -180,8 +180,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.UnprocessableEntity,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.UnprocessableEntity),
+            Code = ResponseEnum.UnprocessableEntity,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.UnprocessableEntity),
             Data = messageData
         };
     }
@@ -195,8 +195,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.UnprocessableEntity,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.UnprocessableEntity),
+            Code = ResponseEnum.UnprocessableEntity,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.UnprocessableEntity),
             Data = new BaseValidationDto(context)
         };
     }
@@ -210,8 +210,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.InternalServerError,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.InternalServerError),
+            Code = ResponseEnum.InternalServerError,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.InternalServerError),
             Data = null
         };
     }
@@ -225,8 +225,8 @@ public class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseCode.NotImplemented,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseCode.NotImplemented),
+            Code = ResponseEnum.NotImplemented,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotImplemented),
             Data = null
         };
     }
