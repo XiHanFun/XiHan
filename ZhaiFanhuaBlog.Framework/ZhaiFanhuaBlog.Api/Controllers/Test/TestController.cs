@@ -9,11 +9,16 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
+using ZhaiFanhuaBlog.Utils.DingTalk;
+using ZhaiFanhuaBlog.Utils.DingTalk.Input;
 using ZhaiFanhuaBlog.Utils.Encryptions;
+using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -29,16 +34,19 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
+    private readonly IHttpHelper _IHttpHelper;
     private readonly IConfiguration _IConfiguration;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="iHttpContextAccessor"></param>
+    /// <param name="iHttpHelper"></param>
     /// <param name="iConfiguration"></param>
-    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration)
+    public TestController(IHttpContextAccessor iHttpContextAccessor, IHttpHelper iHttpHelper, IConfiguration iConfiguration)
     {
         _IHttpContextAccessor = iHttpContextAccessor;
+        _IHttpHelper = iHttpHelper;
         _IConfiguration = iConfiguration;
     }
 
@@ -177,5 +185,24 @@ public class TestController : BaseApiController
     public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
         return BaseResponseDto.OK(DateTime.Now);
+    }
+
+    /// <summary>
+    /// 测试工具类钉钉消息推送
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("DingTalkRobot")]
+    public async Task<ActionResult<BaseResultDto>> DingTalkRobot(string msg)
+    {
+        string webHookUrl = AppSettings.DingTalk.WebHookUrl;
+        string keyWord = AppSettings.DingTalk.KeyWord;
+        DingTalkRobot dingTalkRobot = new(_IHttpHelper, webHookUrl, keyWord);
+        TextModel textModel = new(
+            new Text()
+            {
+                Content = msg
+            });
+        string result = await dingTalkRobot.TextMessage(textModel);
+        return BaseResponseDto.OK(result);
     }
 }

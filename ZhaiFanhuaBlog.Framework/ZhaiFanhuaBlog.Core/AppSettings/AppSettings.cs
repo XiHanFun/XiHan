@@ -250,4 +250,13 @@ public class AppSettings
             public static string Address => _IConfiguration.GetValue<string>("Email:From:Address");
         }
     }
+
+    /// <summary>
+    /// 邮件
+    /// </summary>
+    public static class DingTalk
+    {
+        public static string WebHookUrl => _IConfiguration.GetValue<string>("DingTalk:WebHookUrl");
+        public static string KeyWord => _IConfiguration.GetValue<string>("DingTalk:KeyWord");
+    }
 }

@@ -16,6 +16,7 @@ using ZhaiFanhuaBlog.Services.Blogs;
 using ZhaiFanhuaBlog.Services.Roots;
 using ZhaiFanhuaBlog.Services.Sites;
 using ZhaiFanhuaBlog.Services.Users;
+using ZhaiFanhuaBlog.Utils.Http;
 
 namespace ZhaiFanhuaBlog.Setups;
 
@@ -106,6 +107,8 @@ public static class IocSetup
         services.AddScoped<IBlogPollService, BlogPollService>();
         services.AddScoped<IBlogCommentService, BlogCommentService>();
         services.AddScoped<IBlogCommentPollService, BlogCommentPollService>();
+
+        services.AddScoped<IHttpHelper, HttpHelper>();
 
         return services;
     }
