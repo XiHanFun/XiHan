@@ -9,13 +9,14 @@
 
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Roots;
 
 /// <summary>
 /// IRootRoleService
 /// </summary>
-public interface IRootRoleService : IBaseService<RootRole>
+public interface IRootRoleService : IBaseService<RootRole>, IScopeDependency
 {
     /// <summary>
     /// 检验是否存在

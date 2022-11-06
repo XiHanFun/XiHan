@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Roots;
 
 /// <summary>
 /// IRootFriendlyLinkService
 /// </summary>
-public interface IRootFriendlyLinkService : IBaseService<RootFriendlyLink>
+public interface IRootFriendlyLinkService : IBaseService<RootFriendlyLink>, IScopeDependency
 {
 }

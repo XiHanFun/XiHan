@@ -124,4 +124,44 @@ public static class SHAHelper
             throw;
         }
     }
+
+    /// <summary>
+    /// SHA1字符串加密扩展方法
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public static string ToSHA1(this string inputString)
+    {
+        return EncryptSHA1(Encoding.UTF8, inputString);
+    }
+
+    /// <summary>
+    /// SHA256字符串加密扩展方法
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public static string ToSHA256(this string inputString)
+    {
+        return EncryptSHA256(Encoding.UTF8, inputString);
+    }
+
+    /// <summary>
+    /// SHA384字符串加密扩展方法
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public static string ToSHA384(this string inputString)
+    {
+        return EncryptSHA384(Encoding.UTF8, inputString);
+    }
+
+    /// <summary>
+    /// SHA512字符串加密扩展方法
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public static string ToSHA512(this string inputString)
+    {
+        return EncryptSHA512(Encoding.UTF8, inputString);
+    }
 }

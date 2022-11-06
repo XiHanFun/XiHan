@@ -9,13 +9,14 @@
 
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Sites;
 
 /// <summary>
 /// ISiteConfigurationService
 /// </summary>
-public interface ISiteConfigurationService : IBaseService<SiteConfiguration>
+public interface ISiteConfigurationService : IBaseService<SiteConfiguration>, IScopeDependency
 {
     /// <summary>
     /// 新增

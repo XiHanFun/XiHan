@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Users;
 
 /// <summary>
 /// IUserNoticeRepository
 /// </summary>
-public interface IUserNoticeRepository : IBaseRepository<UserNotice>
+public interface IUserNoticeRepository : IBaseRepository<UserNotice>, IScopeDependency
 {
 }

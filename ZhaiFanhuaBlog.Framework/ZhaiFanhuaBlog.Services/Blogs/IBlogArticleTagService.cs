@@ -9,13 +9,14 @@
 
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Blogs;
 
 /// <summary>
 /// IBlogArticleTagService
 /// </summary>
-public interface IBlogArticleTagService : IBaseService<BlogArticleTag>
+public interface IBlogArticleTagService : IBaseService<BlogArticleTag>, IScopeDependency
 {
     /// <summary>
     /// 检验是否存在

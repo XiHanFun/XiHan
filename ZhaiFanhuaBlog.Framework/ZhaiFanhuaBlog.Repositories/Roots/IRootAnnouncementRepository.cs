@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Roots;
 
 /// <summary>
 /// IRootAnnouncementRepository
 /// </summary>
-public interface IRootAnnouncementRepository : IBaseRepository<RootAnnouncement>
+public interface IRootAnnouncementRepository : IBaseRepository<RootAnnouncement>, IScopeDependency
 {
 }

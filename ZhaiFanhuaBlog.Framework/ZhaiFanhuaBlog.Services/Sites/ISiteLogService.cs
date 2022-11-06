@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Sites;
 
 /// <summary>
 /// ISiteLogService
 /// </summary>
-public interface ISiteLogService : IBaseService<SiteLog>
+public interface ISiteLogService : IBaseService<SiteLog>, IScopeDependency
 {
 }

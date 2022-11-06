@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Sites;
 
 /// <summary>
 /// ISiteLogRepository
 /// </summary>
-public interface ISiteLogRepository : IBaseRepository<SiteLog>
+public interface ISiteLogRepository : IBaseRepository<SiteLog>, IScopeDependency
 {
 }

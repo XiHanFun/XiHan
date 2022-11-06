@@ -8,6 +8,8 @@
 // ----------------------------------------------------------------
 
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using ZhaiFanhuaBlog.Repositories.Blogs;
 using ZhaiFanhuaBlog.Repositories.Roots;
 using ZhaiFanhuaBlog.Repositories.Sites;
@@ -16,7 +18,9 @@ using ZhaiFanhuaBlog.Services.Blogs;
 using ZhaiFanhuaBlog.Services.Roots;
 using ZhaiFanhuaBlog.Services.Sites;
 using ZhaiFanhuaBlog.Services.Users;
+using ZhaiFanhuaBlog.Services.Utils;
 using ZhaiFanhuaBlog.Utils.Http;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Setups;
 
@@ -107,6 +111,10 @@ public static class IocSetup
         services.AddScoped<IBlogPollService, BlogPollService>();
         services.AddScoped<IBlogCommentService, BlogCommentService>();
         services.AddScoped<IBlogCommentPollService, BlogCommentPollService>();
+
+        // =========================Util=========================
+        // Service
+        services.AddScoped<IMessagePush, MessagePush>();
 
         services.AddScoped<IHttpHelper, HttpHelper>();
 

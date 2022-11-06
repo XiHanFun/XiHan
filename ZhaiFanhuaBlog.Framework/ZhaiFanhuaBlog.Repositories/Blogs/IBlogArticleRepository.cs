@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Blogs;
 
 /// <summary>
 /// IBlogArticleRepository
 /// </summary>
-public interface IBlogArticleRepository : IBaseRepository<BlogArticle>
+public interface IBlogArticleRepository : IBaseRepository<BlogArticle>, IScopeDependency
 {
 }

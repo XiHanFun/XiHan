@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Roots;
 
 /// <summary>
 /// IRootAuditCategoryService
 /// </summary>
-public interface IRootAuditCategoryService : IBaseService<RootAuditCategory>
+public interface IRootAuditCategoryService : IBaseService<RootAuditCategory>, IScopeDependency
 {
 }

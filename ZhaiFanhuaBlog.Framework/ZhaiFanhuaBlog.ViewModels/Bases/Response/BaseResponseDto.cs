@@ -97,6 +97,21 @@ public class BaseResponseDto
     }
 
     /// <summary>
+    /// 响应失败，访问出错 400
+    /// </summary>
+    /// <returns></returns>
+    public static BaseResultDto BadRequest(dynamic data)
+    {
+        return new BaseResultDto
+        {
+            Success = false,
+            Code = ResponseEnum.BadRequest,
+            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.BadRequest),
+            Data = data
+        };
+    }
+
+    /// <summary>
     /// 响应失败，访问未授权 401
     /// </summary>
     /// <returns></returns>

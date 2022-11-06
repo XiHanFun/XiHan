@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Users;
 
 /// <summary>
 /// IUserAccountRoleRepository
 /// </summary>
-public interface IUserAccountRoleRepository : IBaseRepository<UserAccountRole>
+public interface IUserAccountRoleRepository : IBaseRepository<UserAccountRole>, IScopeDependency
 {
 }

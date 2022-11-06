@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
 /// IUserCollectCategoryService
 /// </summary>
-public interface IUserCollectCategoryService : IBaseService<UserCollectCategory>
+public interface IUserCollectCategoryService : IBaseService<UserCollectCategory>, IScopeDependency
 {
 }

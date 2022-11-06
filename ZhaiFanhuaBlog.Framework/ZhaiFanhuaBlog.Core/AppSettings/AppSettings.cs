@@ -252,11 +252,12 @@ public class AppSettings
     }
 
     /// <summary>
-    /// 邮件
+    /// 钉钉
     /// </summary>
     public static class DingTalk
     {
         public static string WebHookUrl => _IConfiguration.GetValue<string>("DingTalk:WebHookUrl");
         public static string KeyWord => _IConfiguration.GetValue<string>("DingTalk:KeyWord");
+        public static string Secret => _IConfiguration.GetValue<string>("DingTalk:Secret");
     }
 }

@@ -57,7 +57,7 @@ public class AuthorizeController : ControllerBase
         var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.UserName);
         if (userAccount == null)
             throw new ApplicationException("该用户名称账号不存在，请先注册账号");
-        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByNameDto.Password))
+        if (userAccount.Password != cUserAccountLoginByNameDto.Password.ToMD5())
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
@@ -79,7 +79,7 @@ public class AuthorizeController : ControllerBase
         var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.UserEmail);
         if (userAccount == null)
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
-        if (userAccount.Password != MD5Helper.EncryptMD5(Encoding.UTF8, cUserAccountLoginByEmailDto.Password))
+        if (userAccount.Password != cUserAccountLoginByEmailDto.Password.ToMD5())
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);

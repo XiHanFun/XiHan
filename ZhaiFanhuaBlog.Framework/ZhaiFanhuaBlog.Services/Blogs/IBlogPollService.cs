@@ -9,13 +9,14 @@
 
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Blogs;
 
 /// <summary>
 /// IBlogPollService
 /// </summary>
-public interface IBlogPollService : IBaseService<BlogPoll>
+public interface IBlogPollService : IBaseService<BlogPoll>, IScopeDependency
 {
     /// <summary>
     /// 检验是否存在

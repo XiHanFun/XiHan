@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Roots;
 
 /// <summary>
 /// IRootRoleRepository
 /// </summary>
-public interface IRootRoleRepository : IBaseRepository<RootRole>
+public interface IRootRoleRepository : IBaseRepository<RootRole>, IScopeDependency
 {
 }

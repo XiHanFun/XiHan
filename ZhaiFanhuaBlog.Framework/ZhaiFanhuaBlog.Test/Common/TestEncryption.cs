@@ -23,7 +23,7 @@ public static class TestEncryption
     public static void Encryption()
     {
         string str = @"123456";
-        Console.WriteLine($@"字符串【{str}】MD5加密后：{MD5Helper.EncryptMD5(Encoding.UTF8, str)}；");
+        Console.WriteLine($@"字符串【{str}】MD5加密后：{str.ToMD5()}；");
 
         string file = @"D:\Blog\餐饮企业订单信息源数据.zip";
         Console.WriteLine($@"文件【{file}】MD5加密后：{MD5Helper.EncryptMD5(file)}；");

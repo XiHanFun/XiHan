@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Sites;
 
 /// <summary>
 /// ISiteSkinRepository
 /// </summary>
-public interface ISiteSkinRepository : IBaseRepository<SiteSkin>
+public interface ISiteSkinRepository : IBaseRepository<SiteSkin>, IScopeDependency
 {
 }

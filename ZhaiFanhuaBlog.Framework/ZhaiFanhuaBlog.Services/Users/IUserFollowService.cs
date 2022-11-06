@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
 /// IUserFollowService
 /// </summary>
-public interface IUserFollowService : IBaseService<UserFollow>
+public interface IUserFollowService : IBaseService<UserFollow>, IScopeDependency
 {
 }

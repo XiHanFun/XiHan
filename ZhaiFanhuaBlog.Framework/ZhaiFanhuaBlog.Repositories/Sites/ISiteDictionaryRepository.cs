@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Sites;
 
 /// <summary>
 /// ISiteDictionaryRepository
 /// </summary>
-public interface ISiteDictionaryRepository : IBaseRepository<SiteDictionary>
+public interface ISiteDictionaryRepository : IBaseRepository<SiteDictionary>, IScopeDependency
 {
 }

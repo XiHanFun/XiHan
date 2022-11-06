@@ -25,7 +25,7 @@ public class UserSeedData
         new UserAccount{
             UserName="administrator",
             UserEmail="administrator@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
+            Password="@Password12345678@".ToMD5(),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="超级管理员",
             Signature="我是超级管理员",
@@ -34,7 +34,7 @@ public class UserSeedData
         new UserAccount{
             UserName="admin",
             UserEmail="admin@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
+           Password="@Password12345678@".ToMD5(),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="管理员",
             Signature="我是管理员",
@@ -43,7 +43,7 @@ public class UserSeedData
         new UserAccount{
             UserName="user",
             UserEmail="user@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
+            Password="@Password12345678@".ToMD5(),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="用户",
             Signature="我是用户",
@@ -52,7 +52,7 @@ public class UserSeedData
         new UserAccount{
             UserName="test",
             UserEmail="test@example.com",
-            Password=MD5Helper.EncryptMD5(Encoding.UTF8,"@Password12345678@"),
+            Password="@Password12345678@".ToMD5(),
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="测试员",
             Signature="我是测试员",

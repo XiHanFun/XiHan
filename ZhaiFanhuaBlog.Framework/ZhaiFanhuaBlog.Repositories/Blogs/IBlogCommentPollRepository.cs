@@ -9,12 +9,13 @@
 
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Repositories.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Blogs;
 
 /// <summary>
 /// IBlogCommentPollRepository
 /// </summary>
-public interface IBlogCommentPollRepository : IBaseRepository<BlogCommentPoll>
+public interface IBlogCommentPollRepository : IBaseRepository<BlogCommentPoll>, IScopeDependency
 {
 }

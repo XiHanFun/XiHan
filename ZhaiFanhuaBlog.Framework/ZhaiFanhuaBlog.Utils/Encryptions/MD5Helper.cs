@@ -54,6 +54,7 @@ public static class MD5Helper
         try
         {
             using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
             using MD5 md5 = MD5.Create();
             //开始加密
             byte[] buffer = md5.ComputeHash(stream);
@@ -68,5 +69,15 @@ public static class MD5Helper
         {
             throw;
         }
+    }
+
+    /// <summary>
+    /// MD5字符串加密扩展方法
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public static string ToMD5(this string inputString)
+    {
+        return EncryptMD5(Encoding.UTF8, inputString);
     }
 }

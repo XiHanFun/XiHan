@@ -9,13 +9,14 @@
 
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Bases;
+using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Services.Users;
 
 /// <summary>
 /// IUserAccountService
 /// </summary>
-public interface IUserAccountService : IBaseService<UserAccount>
+public interface IUserAccountService : IBaseService<UserAccount>, IScopeDependency
 {
     /// <summary>
     /// 检验是否存在

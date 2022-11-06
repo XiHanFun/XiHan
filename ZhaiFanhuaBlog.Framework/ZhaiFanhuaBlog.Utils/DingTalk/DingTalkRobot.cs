@@ -1,13 +1,9 @@
-﻿using System.Buffers.Text;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.DingTalk.Input;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
+using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Utils.DingTalk;
 
@@ -24,12 +20,17 @@ public class DingTalkRobot
     /// <summary>
     /// Webhook 地址
     /// </summary>
-    public readonly string _WebHookUrl = string.Empty;
+    private readonly string _WebHookUrl = string.Empty;
 
     /// <summary>
     /// 关键字
     /// </summary>
-    public readonly string _KeyWord = string.Empty;
+    private readonly string? _KeyWord = string.Empty;
+
+    /// <summary>
+    /// 机密
+    /// </summary>
+    private readonly string? _Secret = string.Empty;
 
     /// <summary>
     /// 构造函数
@@ -37,115 +38,132 @@ public class DingTalkRobot
     /// <param name="iHttpHelper"></param>
     /// <param name="webHookUrl"></param>
     /// <param name="keyWord"></param>
-    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string keyWord)
+    /// <param name="secret"></param>
+    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string? keyWord, string? secret)
     {
         _IHttpHelper = iHttpHelper;
         _WebHookUrl = webHookUrl;
         _KeyWord = keyWord;
+        _Secret = secret;
     }
 
     /// <summary>
-    /// 发送消息
+    /// 发送文本消息
     /// </summary>
-    /// <param name="model">消息内容</param>
-    /// <param name="appSecret">机器人机密</param>
-    public async Task<string> Send<IBaseModel>(IBaseModel model, string? appSecret = "")
+    /// <param name="content">内容</param>
+    /// <param name="atMobiles">被@的人群</param>
+    /// <param name="isAtAll">是否@全员</param>
+    /// <returns></returns>
+    public async Task<ResultInfo?> TextMessage(string content, List<string>? atMobiles = null, bool isAtAll = false)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.text.ToString();
+        // 文本内容
+        var text = new Text
+        {
+            Content = _KeyWord + ":\n" + content
+        };
+        // 指定目标人群
+        var at = new At()
+        {
+            AtMobiles = atMobiles,
+            IsAtAll = isAtAll
+        };
+        // 发送
+        var result = await Send(new { msgtype, text, at });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送链接消息
+    /// </summary>
+    /// <param name="link"></param>
+    public async Task<ResultInfo?> LinkMessage(Link link)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.text.ToString();
+        // 发送
+        var result = await Send(new { msgtype, link });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送文档消息
+    /// </summary>
+    /// <param name="markDown">MarkDown内容</param>
+    /// <param name="atMobiles">被@的人群</param>
+    /// <param name="isAtAll">是否@全员</param>
+    public async Task<ResultInfo?> MarkdownMessage(MarkDown markDown, List<string>? atMobiles = null, bool isAtAll = false)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.markdown.ToString();
+        // 指定目标人群
+        var at = new At()
+        {
+            AtMobiles = atMobiles,
+            IsAtAll = isAtAll
+        };
+        // 发送
+        var result = await Send(new { msgtype, markDown, at });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送任务卡片消息
+    /// </summary>
+    /// <param name="actionCard">ActionCard内容</param>
+    public async Task<ResultInfo?> ActionCardMessage(ActionCard actionCard)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.actionCard.ToString();
+        // 发送
+        var result = await Send(new { msgtype, actionCard });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送卡片菜单消息
+    /// </summary>
+    /// <param name="feedCard">FeedCard内容</param>
+    public async Task<ResultInfo?> FeedCardMessage(FeedCard feedCard)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.feedCard.ToString();
+        // 发送
+        var result = await Send(new { msgtype, feedCard });
+        return result;
+    }
+
+    /// <summary>
+    /// 钉钉执行发送消息
+    /// </summary>
+    /// <param name="objSend"></param>
+    /// <returns></returns>
+    private async Task<ResultInfo?> Send(object objSend)
     {
         var url = _WebHookUrl;
-        var timeSpan = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() * 1000;
-        if (!string.IsNullOrEmpty(appSecret))
+        var sendMessage = objSend.SerializeToJson();
+        var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+        // 安全设置加签，需要使用UTF-8字符集
+        if (!string.IsNullOrEmpty(_Secret))
         {
-            // 当前时间戳加签名
-            var sign = Encoding.UTF8.GetBytes(SHAHelper.EncryptSHA256(Encoding.UTF8, timeSpan + "\n" + appSecret)).ToString();
-            url += $"&timestamp={timeSpan}&sign={sign}";
+            // 把timestamp + "\n" + 密钥当做签名字符串
+            var sign = timeStamp + "\n" + _Secret;
+            var encoding = new UTF8Encoding();
+            byte[] keyByte = encoding.GetBytes(_Secret);
+            byte[] messageBytes = encoding.GetBytes(sign);
+            // 使用HmacSHA256算法计算签名
+            using (var hmacsha256 = new HMACSHA256(keyByte))
+            {
+                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+                // 然后进行Base64 encode，最后再把签名参数再进行urlEncode
+                sign = Convert.ToBase64String(hashmessage).ToUrlEncode();
+            }
+            // 得到最终的签名
+            url += $"&timestamp={timeStamp}&sign={sign}";
         }
-        string result = await _IHttpHelper.PostAsync(HttpEnum.LocalHost, url, model, null);
+        // 发起请求
+        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
         return result;
     }
-
-    /// <summary>
-    /// 发送 Text 消息
-    /// </summary>
-    /// <param name="textModel"></param>
-    /// <param name="atUserList">@用户的手机号组</param>
-    /// <param name="atAll">@所有人</param>
-    /// <returns></returns>
-    public async Task<string> TextMessage(TextModel textModel, List<string>? atUserList = null, bool? atAll = false)
-    {
-        if (atUserList != null)
-        {
-            var listToString = string.Join(",", atUserList);
-        }
-        textModel.Text.Content = _KeyWord + textModel.Text.Content;
-        string result = await Send<TextModel>(textModel);
-        ConsoleHelper.WriteLineWarning(result);
-        return result;
-    }
-
-    ///// <summary>
-    ///// 发送链接消息
-    ///// </summary>
-    ///// <param name="request"></param>
-    ///// <param name="MessageUrl">消息链接</param>
-    ///// <param name="PicUrl">图片链接</param>
-    ///// <param name="Title">标题</param>
-    ///// <param name="Text">说明</param>
-    //public static void LinkMessage(OapiRobotSendRequest request, IBaseMessage msg)
-    //{
-    //    request.Msgtype = "link";
-    //    request.Link_ = msg.Adapt<OapiRobotSendRequest.LinkDomain>();
-    //}
-
-    ///// <summary>
-    ///// 发送Markdown消息
-    ///// </summary>
-    ///// <param name="request"></param>
-    ///// <param name="Title"></param>
-    ///// <param name="Text"></param>
-    //public static void MarkdownMessage(OapiRobotSendRequest request, IBaseMessage msg)
-    //{
-    //    request.Msgtype = "markdown";
-    //    request.Markdown_ = msg.Adapt<OapiRobotSendRequest.MarkdownDomain>();
-    //}
-
-    ///// <summary>
-    ///// 发送任务卡片消息
-    ///// </summary>
-    ///// <param name="request"></param>
-    ///// <param name="Title"></param>
-    ///// <param name="Text"></param>
-    ///// <param name="SingleTitle"></param>
-    ///// <param name="SingleURL"></param>
-    //public static void ActionCardMessage(OapiRobotSendRequest request, IBaseMessage msg)
-    //{
-    //    request.Msgtype = "actionCard";
-    //    request.ActionCard_ = msg.Adapt<OapiRobotSendRequest.ActioncardDomain>();
-    //}
-
-    ///// <summary>
-    ///// 发送卡片菜单消息
-    ///// </summary>
-    ///// <param name="request"></param>
-    ///// <param name="msglist"></param>
-    //public static void FeedCardMessage(OapiRobotSendRequest request, IBaseMessage msg)
-    //{
-    //    request.Msgtype = "feedCard";
-    //    request.FeedCard_ = msg.Adapt<OapiRobotSendRequest.FeedcardDomain>();
-    //}
-
-    ///// <summary>
-    ///// 用户
-    ///// </summary>
-    ///// <param name="request"></param>
-    ///// <param name="atuserlist"></param>
-    //public static void AtUser(this OapiRobotSendRequest request, List<string> atuserlist, bool IsAtAll = false)
-    //{
-    //    OapiRobotSendRequest.AtDomain at = new OapiRobotSendRequest.AtDomain();
-    //    if (!IsAtAll)
-    //    {
-    //        at.AtMobiles = atuserlist;
-    //    }
-    //    at.IsAtAll = IsAtAll;
-    //    request.At_ = at;
-    //}
 }
