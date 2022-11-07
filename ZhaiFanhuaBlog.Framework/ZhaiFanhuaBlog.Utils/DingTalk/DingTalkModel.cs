@@ -54,9 +54,9 @@ public class Link
 }
 
 /// <summary>
-/// MarkDown类型
+/// Markdown类型
 /// </summary>
-public class MarkDown
+public class Markdown
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -65,7 +65,7 @@ public class MarkDown
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
-    /// markdown格式的消息
+    /// Markdown格式的消息
     /// </summary>
     [JsonProperty(PropertyName = "text")]
     public string Text { set; get; } = string.Empty;
@@ -83,34 +83,34 @@ public class ActionCard
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
-    /// markdown格式的消息
+    /// Markdown格式的消息
     /// </summary>
     [JsonProperty(PropertyName = "text")]
     public string Text { set; get; } = string.Empty;
 
     /// <summary>
-    /// 单个按钮的方案。(设置此项和singleURL后btns无效)
+    /// 单个按钮方案(设置此项后btns无效)
     /// </summary>
     [JsonProperty(PropertyName = "singleTitle")]
     public string SingleTitle { set; get; } = string.Empty;
 
     /// <summary>
-    /// 点击singleTitle按钮触发的URL
+    /// 单个按钮方案触发的URL(设置此项后btns无效)
     /// </summary>
     [JsonProperty(PropertyName = "singleURL")]
     public string SingleURL { set; get; } = string.Empty;
 
     /// <summary>
-    /// 首屏会话透出的展示内容
+    /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
     /// </summary>
     [JsonProperty(PropertyName = "btnOrientation")]
-    public string BtnOrientation { set; get; } = string.Empty;
+    public string? BtnOrientation { set; get; } = string.Empty;
 
     /// <summary>
-    /// 0-正常发消息者头像，1-隐藏发消息者头像
+    /// 0-正常发消息者头像，0-显示发消息者头像，1-隐藏发消息者头像
     /// </summary>
     [JsonProperty(PropertyName = "hideAvatar")]
-    public string HideAvatar { set; get; } = string.Empty;
+    public string? HideAvatar { set; get; } = string.Empty;
 
     /// <summary>
     /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
@@ -132,18 +132,18 @@ public class FeedCard
 }
 
 /// <summary>
-/// @指定人
+/// @指定人(被@人的手机号和被@人的用户 userid 如非群内成员则会被自动过滤)
 /// </summary>
 public class At
 {
     /// <summary>
-    /// 被@的联系人
+    /// 被@的手机号
     /// </summary>
     [JsonProperty(PropertyName = "atMobiles")]
     public List<string>? AtMobiles { set; get; }
 
     /// <summary>
-    /// 是否@所有人
+    /// 是否@所有人(如要 @所有人为 true，反之用 false)
     /// </summary>
     [JsonProperty(PropertyName = "isAtAll")]
     public bool IsAtAll { set; get; }

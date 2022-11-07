@@ -29,22 +29,79 @@ public class MessagePush : IMessagePush
     public MessagePush(IHttpHelper iHttpHelper)
     {
         string webHookUrl = AppSettings.DingTalk.WebHookUrl;
-        string keyWord = AppSettings.DingTalk.KeyWord;
         string secret = AppSettings.DingTalk.Secret;
         _IHttpHelper = iHttpHelper;
-        _DingTalkRobot = new DingTalkRobot(_IHttpHelper, webHookUrl, keyWord, secret);
+        _DingTalkRobot = new DingTalkRobot(_IHttpHelper, webHookUrl, secret);
     }
+
+    #region DingTalk
 
     /// <summary>
     /// 钉钉推送文本消息
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="atUsers"></param>
+    /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToText(string text, List<string> atUsers, bool isAtAll = false)
+    public async Task<BaseResultDto> DingTalkToText(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        ResultInfo? result = await _DingTalkRobot.TextMessage(text, atUsers, isAtAll);
+        ResultInfo? result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
+        return DingTalkReturn(result);
+    }
+
+    /// <summary>
+    /// 钉钉推送链接消息
+    /// </summary>
+    /// <param name="link"></param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> DingTalkToLink(Link link)
+    {
+        ResultInfo? result = await _DingTalkRobot.LinkMessage(link);
+        return DingTalkReturn(result);
+    }
+
+    /// <summary>
+    /// 钉钉推送文档消息
+    /// </summary>
+    /// <param name="markdown"></param>
+    /// <param name="atMobiles"></param>
+    /// <param name="isAtAll"></param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> DingTalkToMarkdown(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    {
+        ResultInfo? result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
+        return DingTalkReturn(result);
+    }
+
+    /// <summary>
+    /// 钉钉推送任务卡片消息
+    /// </summary>
+    /// <param name="actionCard"></param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> DingTalkToActionCard(ActionCard actionCard)
+    {
+        ResultInfo? result = await _DingTalkRobot.ActionCardMessage(actionCard);
+        return DingTalkReturn(result);
+    }
+
+    /// <summary>
+    /// 钉钉推送卡片菜单消息
+    /// </summary>
+    /// <param name="feedCard"></param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> DingTalkToFeedCard(FeedCard feedCard)
+    {
+        ResultInfo? result = await _DingTalkRobot.FeedCardMessage(feedCard);
+        return DingTalkReturn(result);
+    }
+
+    /// <summary>
+    /// 统一格式返回
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    private static BaseResultDto DingTalkReturn(ResultInfo? result)
+    {
         if (result != null)
         {
             if (result.ErrCode == "0" || result?.ErrMsg == "ok")
@@ -54,4 +111,6 @@ public class MessagePush : IMessagePush
         }
         return BaseResponseDto.InternalServerError();
     }
+
+    #endregion DingTalk
 }

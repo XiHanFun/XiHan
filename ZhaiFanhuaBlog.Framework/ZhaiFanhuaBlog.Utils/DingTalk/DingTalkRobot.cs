@@ -22,11 +22,6 @@ public class DingTalkRobot
     private readonly string _WebHookUrl = string.Empty;
 
     /// <summary>
-    /// 关键字
-    /// </summary>
-    private readonly string? _KeyWord = string.Empty;
-
-    /// <summary>
     /// 机密
     /// </summary>
     private readonly string? _Secret = string.Empty;
@@ -36,32 +31,25 @@ public class DingTalkRobot
     /// </summary>
     /// <param name="iHttpHelper"></param>
     /// <param name="webHookUrl"></param>
-    /// <param name="keyWord"></param>
     /// <param name="secret"></param>
-    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string? keyWord, string? secret)
+    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string? secret)
     {
         _IHttpHelper = iHttpHelper;
         _WebHookUrl = webHookUrl;
-        _KeyWord = keyWord;
         _Secret = secret;
     }
 
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="content">内容</param>
+    /// <param name="text">内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> TextMessage(string content, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ResultInfo?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.text.ToString();
-        // 文本内容
-        var text = new Text
-        {
-            Content = _KeyWord + ":\n" + content
-        };
         // 指定目标人群
         var at = new At()
         {
@@ -80,7 +68,7 @@ public class DingTalkRobot
     public async Task<ResultInfo?> LinkMessage(Link link)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.text.ToString();
+        var msgtype = MsgTypeEnum.link.ToString();
         // 发送
         var result = await Send(new { msgtype, link });
         return result;
@@ -89,10 +77,10 @@ public class DingTalkRobot
     /// <summary>
     /// 发送文档消息
     /// </summary>
-    /// <param name="markDown">MarkDown内容</param>
+    /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<ResultInfo?> MarkdownMessage(MarkDown markDown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ResultInfo?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.markdown.ToString();
@@ -103,7 +91,7 @@ public class DingTalkRobot
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msgtype, markDown, at });
+        var result = await Send(new { msgtype, markdown, at });
         return result;
     }
 

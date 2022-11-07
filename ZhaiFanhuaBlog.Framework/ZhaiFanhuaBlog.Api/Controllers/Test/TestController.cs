@@ -182,17 +182,4 @@ public class TestController : BaseApiController
     {
         return BaseResponseDto.OK(DateTime.Now);
     }
-
-    /// <summary>
-    /// 测试工具类钉钉消息推送
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="atUsers"></param>
-    /// <param name="isAtAll"></param>
-    /// <returns></returns>
-    [HttpPost("MessagePush/DingTalkRobot/Text")]
-    public async Task<BaseResultDto> MessagePushByDingTalkRobot(string text, List<string> atUsers, bool isAtAll)
-    {
-        return await _IMessagePush.DingTalkToText(text, atUsers, isAtAll);
-    }
 }
