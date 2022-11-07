@@ -11,13 +11,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
-using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Services.Utils;
-using ZhaiFanhuaBlog.Utils.DingTalk;
 using ZhaiFanhuaBlog.Utils.Encryptions;
-using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Info;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -33,7 +30,6 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
-    private readonly IHttpHelper _IHttpHelper;
     private readonly IConfiguration _IConfiguration;
     private readonly IMessagePush _IMessagePush;
 
@@ -41,12 +37,11 @@ public class TestController : BaseApiController
     /// 构造函数
     /// </summary>
     /// <param name="iHttpContextAccessor"></param>
-    /// <param name="iHttpHelper"></param>
     /// <param name="iConfiguration"></param>
-    public TestController(IHttpContextAccessor iHttpContextAccessor, IHttpHelper iHttpHelper, IConfiguration iConfiguration, IMessagePush iMessagePush)
+    /// <param name="iMessagePush"></param>
+    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration, IMessagePush iMessagePush)
     {
         _IHttpContextAccessor = iHttpContextAccessor;
-        _IHttpHelper = iHttpHelper;
         _IConfiguration = iConfiguration;
         _IMessagePush = iMessagePush;
     }
@@ -191,15 +186,13 @@ public class TestController : BaseApiController
     /// <summary>
     /// 测试工具类钉钉消息推送
     /// </summary>
+    /// <param name="text"></param>
+    /// <param name="atUsers"></param>
+    /// <param name="isAtAll"></param>
     /// <returns></returns>
     [HttpPost("MessagePush/DingTalkRobot/Text")]
-    public async Task<BaseResultDto> MessagePushByDingTalkRobot(string msg)
+    public async Task<BaseResultDto> MessagePushByDingTalkRobot(string text, List<string> atUsers, bool isAtAll)
     {
-        List<string> atUsers = new()
-        {
-            "130********"
-        };
-        bool isAtAll = true;
-        return await _IMessagePush.DingTalkToText(msg, atUsers, isAtAll);
+        return await _IMessagePush.DingTalkToText(text, atUsers, isAtAll);
     }
 }

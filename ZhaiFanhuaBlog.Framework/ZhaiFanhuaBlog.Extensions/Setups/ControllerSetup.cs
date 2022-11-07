@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ZhaiFanhuaBlog.Extensions.Filters;
+using ZhaiFanhuaBlog.Utils.Http;
 
 namespace ZhaiFanhuaBlog.Setups;
 
@@ -29,8 +30,9 @@ public static class ControllerSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // 注入HttpContextAccessor实例
+        // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IHttpHelper, HttpHelper>();
         services.AddControllers(options =>
         {
             // 全局注入过滤器

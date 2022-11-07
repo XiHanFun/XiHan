@@ -7,9 +7,9 @@
 // CreateTime:2022-05-08 下午 09:30:28
 // ----------------------------------------------------------------
 
+using ZhaiFanhuaBlog.Core.Services;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Repositories.Bases;
-using ZhaiFanhuaBlog.Utils.Services;
 
 namespace ZhaiFanhuaBlog.Repositories.Users;
 

@@ -17,6 +17,8 @@ using ZhaiFanhuaBlog.Utils.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var webHost = builder.WebHost;
+
 var log = builder.Logging;
 ConsoleHelper.WriteLineWarning("Log Start……");
 log.AddLogSetup();

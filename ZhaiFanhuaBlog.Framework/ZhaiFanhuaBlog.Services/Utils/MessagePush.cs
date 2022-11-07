@@ -7,7 +7,6 @@
 // CreateTime:2022-11-06 下午 07:40:36
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.DingTalk;
 using ZhaiFanhuaBlog.Utils.Http;

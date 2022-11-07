@@ -1,16 +1,16 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IDependency
+// FileName:IServiceDependency
 // Guid:baab14fc-bb5c-4782-9381-5f6e30707702
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-06 上午 12:15:20
 // ----------------------------------------------------------------
 
-namespace ZhaiFanhuaBlog.Utils.Services;
+namespace ZhaiFanhuaBlog.Core.Services;
 
 /// <summary>
-/// 依赖注入接口
+/// 全局依赖注入接口
 /// </summary>
 public interface IDependency
 {

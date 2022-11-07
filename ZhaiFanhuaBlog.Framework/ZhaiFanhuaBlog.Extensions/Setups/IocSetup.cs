@@ -9,18 +9,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using ZhaiFanhuaBlog.Repositories.Blogs;
-using ZhaiFanhuaBlog.Repositories.Roots;
-using ZhaiFanhuaBlog.Repositories.Sites;
-using ZhaiFanhuaBlog.Repositories.Users;
-using ZhaiFanhuaBlog.Services.Blogs;
-using ZhaiFanhuaBlog.Services.Roots;
-using ZhaiFanhuaBlog.Services.Sites;
-using ZhaiFanhuaBlog.Services.Users;
-using ZhaiFanhuaBlog.Services.Utils;
-using ZhaiFanhuaBlog.Utils.Http;
-using ZhaiFanhuaBlog.Utils.Services;
+using ZhaiFanhuaBlog.Core.Services;
 
 namespace ZhaiFanhuaBlog.Setups;
 
@@ -38,86 +27,29 @@ public static class IocSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // =========================Site=========================
-        // Repository
-        services.AddScoped<ISiteConfigurationRepository, SiteConfigurationRepository>();
-        services.AddScoped<ISiteLogRepository, SiteLogRepository>();
-        services.AddScoped<ISiteSkinRepository, SiteSkinRepository>();
-        // Service
-        services.AddScoped<ISiteConfigurationService, SiteConfigurationService>();
-        services.AddScoped<ISiteLogService, SiteLogService>();
-        services.AddScoped<ISiteSkinService, SiteSkinService>();
-
-        // =========================Root=========================
-        // Repository
-        services.AddScoped<IRootAuthorityRepository, RootAuthorityRepository>();
-        services.AddScoped<IRootRoleRepository, RootRoleRepository>();
-        services.AddScoped<IRootRoleAuthorityRepository, RootRoleAuthorityRepository>();
-        services.AddScoped<IRootMenuRepository, RootMenuRepository>();
-        services.AddScoped<IRootRoleMenuRepository, RootRoleMenuRepository>();
-        services.AddScoped<IRootAnnouncementRepository, RootAnnouncementRepository>();
-        services.AddScoped<IRootAuditRepository, RootAuditRepository>();
-        services.AddScoped<IRootAuditCategoryRepository, RootAuditCategoryRepository>();
-        services.AddScoped<IRootFriendlyLinkRepository, RootFriendlyLinkRepository>();
-        services.AddScoped<ISiteDictionaryRepository, SiteDictionaryRepository>();
-        // Service
-        services.AddScoped<IRootAuthorityService, RootAuthorityService>();
-        services.AddScoped<IRootRoleService, RootRoleService>();
-        services.AddScoped<IRootRoleAuthorityService, RootRoleAuthorityService>();
-        services.AddScoped<IRootMenuService, RootMenuService>();
-        services.AddScoped<IRootRoleMenuService, RootRoleMenuService>();
-        services.AddScoped<IRootAnnouncementService, RootAnnouncementService>();
-        services.AddScoped<IRootAuditService, RootAuditService>();
-        services.AddScoped<IRootAuditCategoryService, RootAuditCategoryService>();
-        services.AddScoped<IRootFriendlyLinkService, RootFriendlyLinkService>();
-        services.AddScoped<ISiteDictionaryService, SiteDictionaryService>();
-
-        // =========================User=========================
-        // Repository
-        services.AddScoped<IUserAccountRepository, UserAccountRepository>();
-        services.AddScoped<IUserAccountRoleRepository, UserAccountRoleRepository>();
-        services.AddScoped<IUserCollectCategoryRepository, UserCollectCategoryRepository>();
-        services.AddScoped<IUserCollectRepository, UserCollectRepository>();
-        services.AddScoped<IUserFollowRepository, UserFollowRepository>();
-        services.AddScoped<IUserLoginRepository, UserLoginRepository>();
-        services.AddScoped<IUserNoticeRepository, UserNoticeRepository>();
-        services.AddScoped<IUserOauthRepository, UserOauthRepository>();
-        services.AddScoped<IUserStatisticRepository, UserStatisticRepository>();
-        // Service
-        services.AddScoped<IUserAccountService, UserAccountService>();
-        services.AddScoped<IUserAccountRoleService, UserAccountRoleService>();
-        services.AddScoped<IUserCollectCategoryService, UserCollectCategoryService>();
-        services.AddScoped<IUserCollectService, UserCollectService>();
-        services.AddScoped<IUserFollowService, UserFollowService>();
-        services.AddScoped<IUserLoginService, UserLoginService>();
-        services.AddScoped<IUserNoticeService, UserNoticeService>();
-        services.AddScoped<IUserOauthService, UserOauthService>();
-        services.AddScoped<IUserStatisticService, UserStatisticService>();
-
-        // =========================Blog=========================
-        // Repository
-        services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
-        services.AddScoped<IBlogArticleRepository, BlogArticleRepository>();
-        services.AddScoped<IBlogTagRepository, BlogTagRepository>();
-        services.AddScoped<IBlogArticleTagRepository, BlogArticleTagRepository>();
-        services.AddScoped<IBlogPollRepository, BlogPollRepository>();
-        services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
-        services.AddScoped<IBlogCommentPollRepository, BlogCommentPollRepository>();
-        // Service
-        services.AddScoped<IBlogCategoryService, BlogCategoryService>();
-        services.AddScoped<IBlogArticleService, BlogArticleService>();
-        services.AddScoped<IBlogTagService, BlogTagService>();
-        services.AddScoped<IBlogArticleTagService, BlogArticleTagService>();
-        services.AddScoped<IBlogPollService, BlogPollService>();
-        services.AddScoped<IBlogCommentService, BlogCommentService>();
-        services.AddScoped<IBlogCommentPollService, BlogCommentPollService>();
-
-        // =========================Util=========================
-        // Service
-        services.AddScoped<IMessagePush, MessagePush>();
-
-        services.AddScoped<IHttpHelper, HttpHelper>();
-
+        // 全局依赖注入接口
+        var baseType = typeof(IDependency);
+        // 程序路径
+        var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+        // 根据程序路径反射出所有引用的程序集
+        var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+        // 找出所有不是全局依赖注入接口的，但直接或间接派生自、直接或间接实现自它的接口和类
+        var types = referencedAssemblies
+            .SelectMany(a => a.DefinedTypes)
+            .Select(type => type.AsType())
+            .Where(x => x != baseType && baseType.IsAssignableFrom(x)).ToArray();
+        // 所有接口
+        var interfaces = types.Where(x => x.IsInterface).ToArray();
+        // 所有类
+        var implements = types.Where(x => x.IsClass).ToArray();
+        // 批量注入
+        foreach (var item in interfaces)
+        {
+            // 判断是否实现了该接口,实现了就直接注入
+            var type = implements.FirstOrDefault(x => item.IsAssignableFrom(x));
+            if (type != null)
+                services.AddScoped(item, type);
+        }
         return services;
     }
 }

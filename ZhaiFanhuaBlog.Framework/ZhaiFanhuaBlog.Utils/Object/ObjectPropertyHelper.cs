@@ -85,10 +85,10 @@ public static class ObjectPropertyHelper
     /// <param name="val1">对象实例1</param>
     /// <param name="val2">对象实例2</param>
     /// <returns></returns>
-    public static List<PropertyVariance> DetailedCompare<T>(this T val1, T val2)
+    public static List<CustomPropertyVariance> DetailedCompare<T>(this T val1, T val2)
     {
         var propertyInfo = typeof(T).GetType().GetProperties();
-        return propertyInfo.Select(variance => new PropertyVariance
+        return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
             //确保不为null
@@ -154,7 +154,7 @@ public class CustomPropertyInfo
 /// <summary>
 /// 属性变化
 /// </summary>
-public class PropertyVariance
+public class CustomPropertyVariance
 {
     /// <summary>
     /// 属性

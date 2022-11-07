@@ -7,6 +7,7 @@
 // CreateTime:2022-11-06 下午 07:40:59
 // ----------------------------------------------------------------
 
+using ZhaiFanhuaBlog.Core.Services;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 
 namespace ZhaiFanhuaBlog.Services.Utils;
@@ -14,7 +15,7 @@ namespace ZhaiFanhuaBlog.Services.Utils;
 /// <summary>
 /// IMessagePush
 /// </summary>
-public interface IMessagePush
+public interface IMessagePush : IScopeDependency
 {
     /// <summary>
     /// 钉钉推送文本消息
