@@ -31,19 +31,16 @@ public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
     private readonly IConfiguration _IConfiguration;
-    private readonly IMessagePush _IMessagePush;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="iHttpContextAccessor"></param>
     /// <param name="iConfiguration"></param>
-    /// <param name="iMessagePush"></param>
-    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration, IMessagePush iMessagePush)
+    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration)
     {
         _IHttpContextAccessor = iHttpContextAccessor;
         _IConfiguration = iConfiguration;
-        _IMessagePush = iMessagePush;
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:MessagePush
+// FileName:DingTalkMessagePush
 // Guid:ac92fd5d-aa9d-4afd-9355-519e52eb5b09
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,17 +8,17 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Core.AppSettings;
-using ZhaiFanhuaBlog.Utils.DingTalk;
+using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
 
-namespace ZhaiFanhuaBlog.Services.Utils;
+namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 
 /// <summary>
-/// MessagePush
+/// DingTalkMessagePush
 /// </summary>
-public class MessagePush : IMessagePush
+public class DingTalkMessagePush : IDingTalkMessagePush
 {
     private readonly IHttpHelper _IHttpHelper;
     private readonly DingTalkRobot _DingTalkRobot;
@@ -26,7 +26,7 @@ public class MessagePush : IMessagePush
     /// <summary>
     /// 构造函数
     /// </summary>
-    public MessagePush(IHttpHelper iHttpHelper)
+    public DingTalkMessagePush(IHttpHelper iHttpHelper)
     {
         string webHookUrl = AppSettings.DingTalk.WebHookUrl;
         string secret = AppSettings.DingTalk.Secret;

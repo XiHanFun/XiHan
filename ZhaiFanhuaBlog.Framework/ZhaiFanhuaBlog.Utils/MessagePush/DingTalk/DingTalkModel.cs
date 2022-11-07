@@ -9,10 +9,12 @@
 
 using Newtonsoft.Json;
 
-namespace ZhaiFanhuaBlog.Utils.DingTalk;
+namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+
+#region 基本类型
 
 /// <summary>
-/// Text类型
+/// 文本类型
 /// </summary>
 public class Text
 {
@@ -24,7 +26,7 @@ public class Text
 }
 
 /// <summary>
-/// Link类型
+/// 链接类型
 /// </summary>
 public class Link
 {
@@ -54,7 +56,7 @@ public class Link
 }
 
 /// <summary>
-/// Markdown类型
+/// 文档类型
 /// </summary>
 public class Markdown
 {
@@ -72,7 +74,7 @@ public class Markdown
 }
 
 /// <summary>
-/// ActionCard类型
+/// 任务卡片类型
 /// </summary>
 public class ActionCard
 {
@@ -114,7 +116,7 @@ public class ActionCard
 }
 
 /// <summary>
-/// FeedCard类型
+/// 菜单卡片类型
 /// </summary>
 public class FeedCard
 {
@@ -125,8 +127,12 @@ public class FeedCard
     public List<FeedCardLink>? Links { get; set; }
 }
 
+#endregion 基本类型
+
+#region 辅助类
+
 /// <summary>
-/// Link类型
+/// 菜单卡片类型链接
 /// </summary>
 public class FeedCardLink
 {
@@ -209,33 +215,35 @@ public class ResultInfo
     public string ErrMsg { get; set; } = string.Empty;
 }
 
+#endregion 辅助类
+
 /// <summary>
 /// 消息类型枚举
 /// </summary>
 public enum MsgTypeEnum
 {
     /// <summary>
-    /// 文本消息
+    /// 文本类型
     /// </summary>
     text,
 
     /// <summary>
-    /// 链接消息
+    /// 链接类型
     /// </summary>
     link,
 
     /// <summary>
-    /// 文档消息
+    /// 文档类型
     /// </summary>
     markdown,
 
     /// <summary>
-    /// 任务卡片消息
+    /// 任务卡片类型
     /// </summary>
     actionCard,
 
     /// <summary>
-    /// 卡片菜单消息
+    /// 菜单卡片类型
     /// </summary>
     feedCard
 }

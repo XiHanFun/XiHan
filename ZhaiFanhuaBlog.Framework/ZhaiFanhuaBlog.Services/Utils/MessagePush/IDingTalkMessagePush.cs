@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IMessagePush
+// FileName:IDingTalkMessagePush
 // Guid:c9b248ce-f261-4abd-88ac-f4dfc35ada28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -8,15 +8,15 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Core.Services;
-using ZhaiFanhuaBlog.Utils.DingTalk;
+using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 
-namespace ZhaiFanhuaBlog.Services.Utils;
+namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 
 /// <summary>
-/// IMessagePush
+/// IDingTalkMessagePush
 /// </summary>
-public interface IMessagePush : IScopeDependency
+public interface IDingTalkMessagePush : IScopeDependency
 {
     /// <summary>
     /// 钉钉推送文本消息

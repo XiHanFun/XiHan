@@ -1,10 +1,19 @@
-﻿using System.Security.Cryptography;
+﻿// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:DingTalkRobot
+// Guid:b9ebb234-1ebf-4b97-b308-0c525d2cd190
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-11-08 上午 12:48:23
+// ----------------------------------------------------------------
+
+using System.Security.Cryptography;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
-namespace ZhaiFanhuaBlog.Utils.DingTalk;
+namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 
 /// <summary>
 /// 钉钉机器人消息推送
