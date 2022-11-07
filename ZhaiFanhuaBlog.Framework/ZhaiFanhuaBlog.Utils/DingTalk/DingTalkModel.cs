@@ -98,19 +98,13 @@ public class ActionCard
     /// 单个按钮方案触发的URL(设置此项后btns无效)
     /// </summary>
     [JsonProperty(PropertyName = "singleURL")]
-    public string SingleURL { set; get; } = string.Empty;
+    public string SingleUrl { set; get; } = string.Empty;
 
     /// <summary>
     /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
     /// </summary>
     [JsonProperty(PropertyName = "btnOrientation")]
     public string? BtnOrientation { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 0-正常发消息者头像，0-显示发消息者头像，1-隐藏发消息者头像
-    /// </summary>
-    [JsonProperty(PropertyName = "hideAvatar")]
-    public string? HideAvatar { set; get; } = string.Empty;
 
     /// <summary>
     /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
@@ -128,7 +122,31 @@ public class FeedCard
     /// 链接列表
     /// </summary>
     [JsonProperty(PropertyName = "links")]
-    public List<Link>? Links { get; set; }
+    public List<FeedCardLink>? Links { get; set; }
+}
+
+/// <summary>
+/// Link类型
+/// </summary>
+public class FeedCardLink
+{
+    /// <summary>
+    /// 消息标题
+    /// </summary>
+    [JsonProperty(PropertyName = "title")]
+    public string Title { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 图片URL
+    /// </summary>
+    [JsonProperty(PropertyName = "picURL")]
+    public string PicUrl { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 点击消息跳转的URL
+    /// </summary>
+    [JsonProperty(PropertyName = "messageURL")]
+    public string MessageUrl { set; get; } = string.Empty;
 }
 
 /// <summary>
@@ -141,6 +159,12 @@ public class At
     /// </summary>
     [JsonProperty(PropertyName = "atMobiles")]
     public List<string>? AtMobiles { set; get; }
+
+    /// <summary>
+    /// 被@的用户ID
+    /// </summary>
+    [JsonProperty(PropertyName = "atUserIds")]
+    public List<string>? AtUserIds { set; get; }
 
     /// <summary>
     /// 是否@所有人(如要 @所有人为 true，反之用 false)
@@ -163,7 +187,7 @@ public class BtnInfo
     /// <summary>
     /// 动作触发的URL
     /// </summary>
-    [JsonProperty(PropertyName = "actionUrl")]
+    [JsonProperty(PropertyName = "actionURL")]
     public string ActionUrl { get; set; } = string.Empty;
 }
 
