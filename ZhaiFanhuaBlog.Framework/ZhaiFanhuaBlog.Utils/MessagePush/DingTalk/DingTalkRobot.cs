@@ -11,7 +11,6 @@ using System.Security.Cryptography;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
-using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
@@ -27,9 +26,19 @@ public class DingTalkRobot
     private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
-    /// Webhook 地址
+    /// 网络挂钩地址
     /// </summary>
     private readonly string _WebHookUrl = string.Empty;
+
+    /// <summary>
+    /// 访问令牌
+    /// </summary>
+    private readonly string _AccessToken = string.Empty;
+
+    /// <summary>
+    /// 正式访问地址
+    /// </summary>
+    private readonly string _Url = string.Empty;
 
     /// <summary>
     /// 机密
@@ -41,11 +50,14 @@ public class DingTalkRobot
     /// </summary>
     /// <param name="iHttpHelper"></param>
     /// <param name="webHookUrl"></param>
+    /// <param name="accessToken"></param>
     /// <param name="secret"></param>
-    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string? secret)
+    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string accessToken, string? secret)
     {
         _IHttpHelper = iHttpHelper;
         _WebHookUrl = webHookUrl;
+        _AccessToken = accessToken;
+        _Url = _WebHookUrl + "?access_token=" + _AccessToken;
         _Secret = secret;
     }
 
@@ -138,7 +150,7 @@ public class DingTalkRobot
     /// <returns></returns>
     private async Task<ResultInfo?> Send(object objSend)
     {
-        var url = _WebHookUrl;
+        var url = _Url;
         var sendMessage = objSend.SerializeToJson();
         var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
         // 安全设置加签，需要使用UTF-8字符集

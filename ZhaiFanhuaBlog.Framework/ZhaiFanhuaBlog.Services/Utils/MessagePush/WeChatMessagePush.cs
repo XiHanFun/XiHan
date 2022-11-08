@@ -7,9 +7,9 @@
 // CreateTime:2022-11-08 上午 02:44:27
 // ----------------------------------------------------------------
 
+using Ubiety.Dns.Core.Records;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Http;
-using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
@@ -22,7 +22,29 @@ namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 /// </summary>
 public class WeChatMessagePush : IWeChatMessagePush
 {
+    /// <summary>
+    /// 请求接口
+    /// </summary>
     private readonly IHttpHelper _IHttpHelper;
+
+    /// <summary>
+    /// 网络挂钩地址
+    /// </summary>
+    private readonly string _WebHookUrl = string.Empty;
+
+    /// <summary>
+    /// 文件上传地址
+    /// </summary>
+    private readonly string _UploadkUrl = string.Empty;
+
+    /// <summary>
+    /// 访问令牌
+    /// </summary>
+    private readonly string _Key = string.Empty;
+
+    /// <summary>
+    /// 机器人实例
+    /// </summary>
     private readonly WeChatRobot _WeChatRobot;
 
     /// <summary>
@@ -30,12 +52,12 @@ public class WeChatMessagePush : IWeChatMessagePush
     /// </summary>
     public WeChatMessagePush(IHttpHelper iHttpHelper)
     {
-        string webHookUrl = AppSettings.WeChart.WebHookUrl;
         _IHttpHelper = iHttpHelper;
-        _WeChatRobot = new WeChatRobot(_IHttpHelper, webHookUrl);
+        _WebHookUrl = AppSettings.WeChart.WebHookUrl;
+        _UploadkUrl = AppSettings.WeChart.UploadkUrl;
+        _Key = AppSettings.WeChart.Key;
+        _WeChatRobot = new WeChatRobot(_IHttpHelper, _WebHookUrl, _UploadkUrl, _Key);
     }
-
-    #region WeChat
 
     /// <summary>
     /// 微信推送文本消息
@@ -45,7 +67,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     public async Task<BaseResultDto> WeChatToText(Text text)
     {
         ResultInfo? result = await _WeChatRobot.TextMessage(text);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -56,7 +78,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     public async Task<BaseResultDto> WeChatToMarkdown(Markdown markdown)
     {
         ResultInfo? result = await _WeChatRobot.MarkdownMessage(markdown);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -67,7 +89,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     public async Task<BaseResultDto> WeChatToImage(Image image)
     {
         ResultInfo? result = await _WeChatRobot.ImageMessage(image);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -78,7 +100,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     public async Task<BaseResultDto> WeChatToNews(News news)
     {
         ResultInfo? result = await _WeChatRobot.NewsMessage(news);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -89,7 +111,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     public async Task<BaseResultDto> WeChatToFile(File file)
     {
         ResultInfo? result = await _WeChatRobot.FileMessage(file);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -101,7 +123,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     {
         templateCard.CardType = TemplateCardType.text_notice.ToString();
         ResultInfo? result = await _WeChatRobot.TextNoticeMessage(templateCard);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
@@ -113,15 +135,26 @@ public class WeChatMessagePush : IWeChatMessagePush
     {
         templateCard.CardType = TemplateCardType.news_notice.ToString();
         ResultInfo? result = await _WeChatRobot.NewsNoticeMessage(templateCard);
-        return WeChatReturn(result);
+        return WeChatMessageReturn(result);
     }
 
     /// <summary>
-    /// 统一格式返回
+    /// 微信上传文件
+    /// </summary>
+    /// <param name="fileStream">文件</param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> WeChatToUploadkFile(FileStream fileStream)
+    {
+        ResultInfo? result = await _WeChatRobot.UploadkFile(fileStream);
+        return WeChatUploadReturn(result);
+    }
+
+    /// <summary>
+    /// 消息统一格式返回
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    private static BaseResultDto WeChatReturn(ResultInfo? result)
+    private static BaseResultDto WeChatMessageReturn(ResultInfo? result)
     {
         if (result != null)
         {
@@ -133,5 +166,23 @@ public class WeChatMessagePush : IWeChatMessagePush
         return BaseResponseDto.InternalServerError();
     }
 
-    #endregion WeChat
+    /// <summary>
+    /// 上传文件统一格式返回
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    private static BaseResultDto WeChatUploadReturn(ResultInfo? result)
+    {
+        if (result != null)
+        {
+            if (result.ErrCode == "0" || result?.ErrMsg == "ok")
+            {
+                WeChatUploadResult uploadResult = new("上传成功", result.MediaId);
+                return BaseResponseDto.OK(uploadResult);
+            }
+            else
+                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "上传失败");
+        }
+        return BaseResponseDto.InternalServerError();
+    }
 }

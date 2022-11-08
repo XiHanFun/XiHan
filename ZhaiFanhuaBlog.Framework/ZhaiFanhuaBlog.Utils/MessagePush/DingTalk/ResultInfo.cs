@@ -9,7 +9,7 @@
 
 using Newtonsoft.Json;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
+namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 
 /// <summary>
 /// 结果信息

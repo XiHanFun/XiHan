@@ -8,7 +8,9 @@
 // ----------------------------------------------------------------
 
 using Newtonsoft.Json;
+using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace ZhaiFanhuaBlog.Utils.Http;
@@ -134,6 +136,50 @@ public class HttpHelper : IHttpHelper
             }
             var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, stringContent);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(result);
+            }
+            else
+            {
+                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Post请求上传文件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="httpEnum"></param>
+    /// <param name="url"></param>
+    /// <param name="fileStream"></param>
+    /// <param name="headers"></param>
+    /// <returns></returns>
+    public async Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
+    {
+        try
+        {
+            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+            using var formDataContent = new MultipartFormDataContent();
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    if (!formDataContent.Headers.Contains(header.Key))
+                    {
+                        formDataContent.Headers.Add(header.Key, header.Value);
+                    }
+                }
+            }
+            formDataContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+            formDataContent.Add(new StreamContent(fileStream, (int)fileStream.Length), "file", fileStream.Name);
+            var response = await client.PostAsync(url, formDataContent);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();

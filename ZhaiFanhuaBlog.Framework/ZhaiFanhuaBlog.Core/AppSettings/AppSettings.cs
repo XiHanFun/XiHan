@@ -257,6 +257,7 @@ public class AppSettings
     public static class DingTalk
     {
         public static string WebHookUrl => _IConfiguration.GetValue<string>("DingTalk:WebHookUrl");
+        public static string AccessToken => _IConfiguration.GetValue<string>("DingTalk:AccessToken");
         public static string KeyWord => _IConfiguration.GetValue<string>("DingTalk:KeyWord");
         public static string Secret => _IConfiguration.GetValue<string>("DingTalk:Secret");
     }
@@ -267,5 +268,7 @@ public class AppSettings
     public static class WeChart
     {
         public static string WebHookUrl => _IConfiguration.GetValue<string>("WeChart:WebHookUrl");
+        public static string UploadkUrl => _IConfiguration.GetValue<string>("WeChart:UploadkUrl");
+        public static string Key => _IConfiguration.GetValue<string>("WeChart:Key");
     }
 }

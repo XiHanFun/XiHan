@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Services.Utils.MessagePush;
@@ -27,6 +28,8 @@ public class WeChatController : BaseApiController
     {
         _IWeChatMessagePush = iWeChatMessagePush;
     }
+
+    #region 发送消息
 
     /// <summary>
     /// 文本内容
@@ -121,7 +124,7 @@ public class WeChatController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("TextNotice")]
-    public async Task<BaseResultDto> WeChatToTextNotice()
+    public async Task<BaseResultDto> WeChatToTextNotice(string mediaId)
     {
         // 来源
         Source source = new()
@@ -164,6 +167,12 @@ public class WeChatController : BaseApiController
                 Value="点击访问",
                 Type=1,
                 Url="https://work.weixin.qq.com/?from=openApi"
+            },
+            new HorizontalContent(){
+                KeyName="文件下载",
+                Value="3.png",
+                Type=2,
+                MediaId=mediaId
             }
         };
         // 跳转指引
@@ -283,9 +292,9 @@ public class WeChatController : BaseApiController
             Source = source,
             MainTitle = mainTitle,
             CardImage = cardImage,
-            ImageTextArea = imageTextArea,
-            QuoteArea = quoteArea,
-            VerticalContents = verticalContents,
+            //ImageTextArea = imageTextArea,
+            //QuoteArea = quoteArea,
+            //VerticalContents = verticalContents,
             HorizontalContents = horizontalContents,
             Jumps = jumps,
             CardAction = cardAction
@@ -293,4 +302,33 @@ public class WeChatController : BaseApiController
 
         return await _IWeChatMessagePush.WeChatToNewsNotice(templateCard);
     }
+
+    #endregion 发送消息
+
+    #region 上传文件
+
+    /// <summary>
+    /// 上传文件
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("UploadFile")]
+    public async Task<BaseResultDto> UploadFile(IFormFile formFile)
+    {
+        Stream stream = formFile.OpenReadStream();
+        // 把 Stream 转换成 byte[]
+        byte[] bytes = new byte[stream.Length];
+        stream.Read(bytes, 0, bytes.Length);
+        // 设置当前流的位置为流的开始
+        stream.Seek(0, SeekOrigin.Begin);
+        // 把 byte[] 写入文件
+        FileStream fileStream = new(@"Upload/" + formFile.FileName, FileMode.OpenOrCreate);
+        BinaryWriter binaryWriter = new(fileStream);
+        binaryWriter.Write(bytes);
+        fileStream.Close();
+        binaryWriter.Close();
+        FileStream fileStream1 = new(@"Upload/" + formFile.FileName, FileMode.Open);
+        return await _IWeChatMessagePush.WeChatToUploadkFile(fileStream1);
+    }
+
+    #endregion 上传文件
 }

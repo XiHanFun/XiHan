@@ -46,6 +46,17 @@ public interface IHttpHelper
     Task<T?> PostAsync<T, R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null);
 
     /// <summary>
+    /// Post请求上传文件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="httpEnum"></param>
+    /// <param name="url"></param>
+    /// <param name="fileStream"></param>
+    /// <param name="headers"></param>
+    /// <returns></returns>
+    Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null);
+
+    /// <summary>
     /// Post请求
     /// </summary>
     /// <typeparam name="T"></typeparam>

@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Core.Services;
-using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using File = ZhaiFanhuaBlog.Utils.MessagePush.WeChat.File;
@@ -68,4 +67,11 @@ public interface IWeChatMessagePush : IScopeDependency
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
     Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard);
+
+    /// <summary>
+    /// 微信上传文件
+    /// </summary>
+    /// <param name="fileStream">文件</param>
+    /// <returns></returns>
+    Task<BaseResultDto> WeChatToUploadkFile(FileStream fileStream);
 }
