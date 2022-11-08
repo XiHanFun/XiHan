@@ -8,6 +8,7 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Utils.Http;
+using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
@@ -77,6 +78,62 @@ public class WeChatRobot
         var msgtype = MsgTypeEnum.image.ToString();
         // 发送
         var result = await Send(new { msgtype, image });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送图文消息
+    /// </summary>
+    /// <param name="news">图文</param>
+    /// <returns></returns>
+    public async Task<ResultInfo?> NewsMessage(News news)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.news.ToString();
+        // 发送
+        var result = await Send(new { msgtype, news });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送文件消息
+    /// </summary>
+    /// <param name="file">文件</param>
+    /// <returns></returns>
+    public async Task<ResultInfo?> FileMessage(File file)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.file.ToString();
+        // 发送
+        var result = await Send(new { msgtype, file });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送文本通知模版卡片消息
+    /// </summary>
+    /// <param name="template_card">模版卡片</param>
+    /// <returns></returns>
+    public async Task<ResultInfo?> TextNoticeMessage(TemplateCardTextNotice template_card)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.template_card.ToString();
+        // 发送
+        var result = await Send(new { msgtype, template_card });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送图文展示模版卡片消息
+    /// </summary>
+    /// <param name="template_card">模版卡片</param>
+    /// <returns></returns>
+    public async Task<ResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice template_card)
+    {
+        // 消息类型
+        var msgtype = MsgTypeEnum.template_card.ToString();
+        // 发送
+        var result = await Send(new { msgtype, template_card });
         return result;
     }
 

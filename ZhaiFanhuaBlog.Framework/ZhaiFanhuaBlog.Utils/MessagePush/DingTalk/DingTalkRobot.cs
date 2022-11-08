@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
+using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;

@@ -9,9 +9,11 @@
 
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Http;
+using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 using ZhaiFanhuaBlog.ViewModels.Response;
+using File = ZhaiFanhuaBlog.Utils.MessagePush.WeChat.File;
 
 namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 
@@ -68,16 +70,51 @@ public class WeChatMessagePush : IWeChatMessagePush
         return WeChatReturn(result);
     }
 
-    ///// <summary>
-    ///// 微信推送卡片菜单消息
-    ///// </summary>
-    ///// <param name="feedCard"></param>
-    ///// <returns></returns>
-    //public async Task<BaseResultDto> WeChatToFeedCard(FeedCard feedCard)
-    //{
-    //    ResultInfo? result = await _WeChatRobot.FeedCardMessage(feedCard);
-    //    return WeChatReturn(result);
-    //}
+    /// <summary>
+    /// 微信推送图文消息
+    /// </summary>
+    /// <param name="news">图文</param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> WeChatToNews(News news)
+    {
+        ResultInfo? result = await _WeChatRobot.NewsMessage(news);
+        return WeChatReturn(result);
+    }
+
+    /// <summary>
+    /// 微信推送文件消息
+    /// </summary>
+    /// <param name="file">文件</param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> WeChatToFile(File file)
+    {
+        ResultInfo? result = await _WeChatRobot.FileMessage(file);
+        return WeChatReturn(result);
+    }
+
+    /// <summary>
+    /// 微信推送文本通知消息
+    /// </summary>
+    /// <param name="templateCard">文本通知-模版卡片</param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> WeChatToTextNotice(TemplateCardTextNotice templateCard)
+    {
+        templateCard.CardType = TemplateCardType.text_notice.ToString();
+        ResultInfo? result = await _WeChatRobot.TextNoticeMessage(templateCard);
+        return WeChatReturn(result);
+    }
+
+    /// <summary>
+    /// 微信推送图文展示消息
+    /// </summary>
+    /// <param name="templateCard">图文展示-模版卡片</param>
+    /// <returns></returns>
+    public async Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard)
+    {
+        templateCard.CardType = TemplateCardType.news_notice.ToString();
+        ResultInfo? result = await _WeChatRobot.NewsNoticeMessage(templateCard);
+        return WeChatReturn(result);
+    }
 
     /// <summary>
     /// 统一格式返回

@@ -30,6 +30,11 @@ public static class SwaggerGroup
     public const string Authorize = "Authorize";
 
     /// <summary>
+    /// 公共接口
+    /// </summary>
+    public const string Common = "Common";
+
+    /// <summary>
     /// 测试接口
     /// </summary>
     public const string Test = "Test";

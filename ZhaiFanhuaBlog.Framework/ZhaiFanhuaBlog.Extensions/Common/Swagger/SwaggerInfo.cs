@@ -68,6 +68,16 @@ public class SwaggerInfo
         },
         new SwaggerInfo
         {
+            UrlPrefix = SwaggerGroup.Common,
+            GroupName = SwaggerGroup.Common,
+            OpenApiInfo = new OpenApiInfo
+            {
+                Title = "公共接口",
+                Description = "这是用于常用功能的公共接口"
+            }
+        },
+        new SwaggerInfo
+        {
             UrlPrefix = SwaggerGroup.Test,
             GroupName = SwaggerGroup.Test,
             OpenApiInfo = new OpenApiInfo

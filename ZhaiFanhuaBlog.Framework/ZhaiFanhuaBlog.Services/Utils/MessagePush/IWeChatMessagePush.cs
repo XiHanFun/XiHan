@@ -8,8 +8,10 @@
 // ----------------------------------------------------------------
 
 using ZhaiFanhuaBlog.Core.Services;
+using ZhaiFanhuaBlog.Utils.MessagePush.Dtos;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using File = ZhaiFanhuaBlog.Utils.MessagePush.WeChat.File;
 
 namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 
@@ -39,10 +41,31 @@ public interface IWeChatMessagePush : IScopeDependency
     /// <returns></returns>
     Task<BaseResultDto> WeChatToImage(Image image);
 
-    ///// <summary>
-    ///// 微信推送卡片菜单消息
-    ///// </summary>
-    ///// <param name="feedCard"></param>
-    ///// <returns></returns>
-    //Task<BaseResultDto> WeChatToFeedCard(FeedCard feedCard);
+    /// <summary>
+    /// 微信推送图文消息
+    /// </summary>
+    /// <param name="news">图文</param>
+    /// <returns></returns>
+    Task<BaseResultDto> WeChatToNews(News news);
+
+    /// <summary>
+    /// 微信推送文件消息
+    /// </summary>
+    /// <param name="file">文件</param>
+    /// <returns></returns>
+    Task<BaseResultDto> WeChatToFile(File file);
+
+    /// <summary>
+    /// 微信推送文本通知消息
+    /// </summary>
+    /// <param name="templateCard">文本通知-模版卡片</param>
+    /// <returns></returns>
+    Task<BaseResultDto> WeChatToTextNotice(TemplateCardTextNotice templateCard);
+
+    /// <summary>
+    /// 微信推送图文展示消息
+    /// </summary>
+    /// <param name="templateCard">图文展示-模版卡片</param>
+    /// <returns></returns>
+    Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard);
 }

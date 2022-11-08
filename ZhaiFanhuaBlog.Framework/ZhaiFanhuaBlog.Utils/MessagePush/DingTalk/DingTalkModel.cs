@@ -106,7 +106,7 @@ public class ActionCard
     /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
     /// </summary>
     [JsonProperty(PropertyName = "btnOrientation")]
-    public string? BtnOrientation { set; get; } = string.Empty;
+    public string? BtnOrientation { set; get; } = "0";
 
     /// <summary>
     /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
@@ -176,7 +176,7 @@ public class At
     /// 是否@所有人(如要 @所有人为 true，反之用 false)
     /// </summary>
     [JsonProperty(PropertyName = "isAtAll")]
-    public bool IsAtAll { set; get; }
+    public bool IsAtAll { set; get; } = false;
 }
 
 /// <summary>
@@ -195,24 +195,6 @@ public class BtnInfo
     /// </summary>
     [JsonProperty(PropertyName = "actionURL")]
     public string ActionUrl { get; set; } = string.Empty;
-}
-
-/// <summary>
-/// 结果信息
-/// </summary>
-public class ResultInfo
-{
-    /// <summary>
-    /// 结果代码 成功 0
-    /// </summary>
-    [JsonProperty(PropertyName = "errcode")]
-    public string ErrCode { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 结果消息 成功 ok
-    /// </summary>
-    [JsonProperty(PropertyName = "errmsg")]
-    public string ErrMsg { get; set; } = string.Empty;
 }
 
 #endregion 辅助类

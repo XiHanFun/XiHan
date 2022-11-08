@@ -64,7 +64,7 @@ public class News
     /// 图文消息，一个图文消息支持1到8条图文
     /// </summary>
     [JsonProperty(PropertyName = "articles")]
-    public List<Articles>? Articles { get; set; }
+    public List<Article>? Articles { get; set; }
 }
 
 /// <summary>
@@ -80,9 +80,9 @@ public class File
 }
 
 /// <summary>
-/// 模版卡片类型
+/// 文本通知模版卡片内容
 /// </summary>
-public class TemplateCard
+public class TemplateCardTextNotice
 {
     /// <summary>
     /// 模版卡片的模版类型，文本通知模版卡片的类型为text_notice，图文展示模版卡片的类型为news_notice
@@ -119,7 +119,73 @@ public class TemplateCard
     /// 模版卡片主要内容的一级标题main_title.title和二级普通文本sub_title_text必须有一项填写
     /// </summary>
     [JsonProperty(PropertyName = "sub_title_text")]
-    public string? SubTitleText { get; set; } = string.Empty;
+    public string? SubTitleText { get; set; }
+
+    /// <summary>
+    /// 二级标题+文本列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过6
+    /// </summary>
+    [JsonProperty(PropertyName = "horizontal_content_list")]
+    public List<HorizontalContent>? HorizontalContents { get; set; }
+
+    /// <summary>
+    /// 跳转指引样式的列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过3
+    /// </summary>
+    [JsonProperty(PropertyName = "jump_list")]
+    public List<Jump>? Jumps { get; set; }
+
+    /// <summary>
+    /// 整体卡片的点击跳转事件，text_notice模版卡片中该字段为必填项
+    /// </summary>
+    [JsonProperty(PropertyName = "card_action")]
+    public CardAction CardAction { get; set; } = new CardAction();
+}
+
+/// <summary>
+/// 图文展示模版卡片内容
+/// </summary>
+public class TemplateCardNewsNotice
+{
+    /// <summary>
+    /// 模版卡片的模版类型，文本通知模版卡片的类型为text_notice，图文展示模版卡片的类型为news_notice
+    /// </summary>
+    [JsonProperty(PropertyName = "card_type")]
+    public string CardType { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 卡片来源样式信息，非必填，不需要来源样式可不填写
+    /// </summary>
+    [JsonProperty(PropertyName = "source")]
+    public Source? Source { get; set; }
+
+    /// <summary>
+    /// 模版卡片的主要内容，包括一级标题和标题辅助信息
+    /// </summary>
+    [JsonProperty(PropertyName = "main_title")]
+    public MainTitle? MainTitle { get; set; }
+
+    /// <summary>
+    /// 图片样式
+    /// </summary>
+    [JsonProperty(PropertyName = "card_image")]
+    public CardImage CardImage { get; set; } = new CardImage();
+
+    /// <summary>
+    /// 左图右文样式
+    /// </summary>
+    [JsonProperty(PropertyName = "image_text_area")]
+    public ImageTextArea? ImageTextArea { get; set; }
+
+    /// <summary>
+    /// 引用文献样式，建议不与关键数据共用
+    /// </summary>
+    [JsonProperty(PropertyName = "quote_area")]
+    public QuoteArea? QuoteArea { get; set; }
+
+    /// <summary>
+    /// 卡片二级垂直内容，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过4
+    /// </summary>
+    [JsonProperty(PropertyName = "vertical_content_list")]
+    public List<VerticalContent>? VerticalContents { get; set; }
 
     /// <summary>
     /// 二级标题+文本列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过6
@@ -165,7 +231,7 @@ public class At
 /// <summary>
 /// 文章
 /// </summary>
-public class Articles
+public class Article
 {
     /// <summary>
     /// 标题，不超过128个字节，超过会自动截断
@@ -177,7 +243,7 @@ public class Articles
     /// 描述，非必填，不超过512个字节，超过会自动截断
     /// </summary>
     [JsonProperty(PropertyName = "description")]
-    public string? Description { get; set; } = string.Empty;
+    public string? Description { get; set; }
 
     /// <summary>
     /// 点击后跳转的链接
@@ -189,7 +255,7 @@ public class Articles
     /// 图文消息的图片链接，非必填，支持JPG、PNG格式，较好的效果为大图 1068*455，小图150*150
     /// </summary>
     [JsonProperty(PropertyName = "picurl")]
-    public string? PicUrl { get; set; } = string.Empty;
+    public string? PicUrl { get; set; }
 }
 
 /// <summary>
@@ -201,13 +267,13 @@ public class Source
     /// 来源图片的url，非必填
     /// </summary>
     [JsonProperty(PropertyName = "icon_url")]
-    public string? IconUrl { get; set; } = string.Empty;
+    public string? IconUrl { get; set; }
 
     /// <summary>
     /// 来源图片的描述，非必填，建议不超过13个字
     /// </summary>
     [JsonProperty(PropertyName = "desc")]
-    public string? Desc { get; set; } = string.Empty;
+    public string? Desc { get; set; }
 
     /// <summary>
     /// 来源文字的颜色，非必填，目前支持：0(默认) 灰色，1 黑色，2 红色，3 绿色
@@ -226,13 +292,13 @@ public class MainTitle
     /// 模版卡片主要内容的一级标题main_title.title和二级普通文本sub_title_text必须有一项填写
     /// </summary>
     [JsonProperty(PropertyName = "title")]
-    public string? Title { get; set; } = string.Empty;
+    public string? Title { get; set; }
 
     /// <summary>
     /// 标题辅助信息，非必填，建议不超过30个字
     /// </summary>
     [JsonProperty(PropertyName = "desc")]
-    public string? Desc { get; set; } = string.Empty;
+    public string? Desc { get; set; }
 }
 
 /// <summary>
@@ -244,13 +310,13 @@ public class EmphasisContent
     /// 关键数据样式的数据内容，非必填，建议不超过10个字
     /// </summary>
     [JsonProperty(PropertyName = "title")]
-    public string? Title { get; set; } = string.Empty;
+    public string? Title { get; set; }
 
     /// <summary>
     /// 关键数据样式的数据描述内容，非必填，建议不超过15个字
     /// </summary>
     [JsonProperty(PropertyName = "desc")]
-    public string? Desc { get; set; } = string.Empty;
+    public string? Desc { get; set; }
 }
 
 /// <summary>
@@ -268,31 +334,31 @@ public class QuoteArea
     /// 点击跳转的url，quote_area.type是1时必填
     /// </summary>
     [JsonProperty(PropertyName = "url")]
-    public string? Url { get; set; } = string.Empty;
+    public string? Url { get; set; }
 
     /// <summary>
     /// 点击跳转的小程序的appid，quote_area.type是2时必填
     /// </summary>
     [JsonProperty(PropertyName = "appid")]
-    public string? AppId { get; set; } = string.Empty;
+    public string? AppId { get; set; }
 
     /// <summary>
     /// 点击跳转的小程序的pagepath，quote_area.type是2时选填
     /// </summary>
     [JsonProperty(PropertyName = "pagepath")]
-    public string? PagePath { get; set; } = string.Empty;
+    public string? PagePath { get; set; }
 
     /// <summary>
     /// 引用文献样式的标题
     /// </summary>
     [JsonProperty(PropertyName = "title")]
-    public string? Title { get; set; } = string.Empty;
+    public string? Title { get; set; }
 
     /// <summary>
     /// 引用文献样式的引用文案
     /// </summary>
     [JsonProperty(PropertyName = "quote_text")]
-    public string? QuoteText { get; set; } = string.Empty;
+    public string? QuoteText { get; set; }
 }
 
 /// <summary>
@@ -304,7 +370,7 @@ public class HorizontalContent
     /// 链接类型，0或不填代表是普通文本，1 代表跳转url，2 代表下载附件，3 代表@员工
     /// </summary>
     [JsonProperty(PropertyName = "type")]
-    public int? Type { get; set; } = 0;
+    public int? Type { get; set; }
 
     /// <summary>
     /// 二级标题，建议不超过5个字
@@ -316,25 +382,25 @@ public class HorizontalContent
     /// 二级文本，如果horizontal_content_list.type是2，该字段代表文件名称（要包含文件类型），建议不超过26个字
     /// </summary>
     [JsonProperty(PropertyName = "value")]
-    public string? Value { get; set; } = string.Empty;
+    public string? Value { get; set; }
 
     /// <summary>
     /// 链接跳转的url，horizontal_content_list.type是1时必填
     /// </summary>
     [JsonProperty(PropertyName = "url")]
-    public string? Url { get; set; } = string.Empty;
+    public string? Url { get; set; }
 
     /// <summary>
     /// 附件的media_id，horizontal_content_list.type是2时必填
     /// </summary>
     [JsonProperty(PropertyName = "media_id")]
-    public string? MediaId { get; set; } = string.Empty;
+    public string? MediaId { get; set; }
 
     /// <summary>
     /// 被@的成员的userid，horizontal_content_list.type是3时必填
     /// </summary>
     [JsonProperty(PropertyName = "userid")]
-    public string? UserId { get; set; } = string.Empty;
+    public string? UserId { get; set; }
 }
 
 /// <summary>
@@ -358,19 +424,19 @@ public class Jump
     /// 跳转链接的url，jump_list.type是1时必填
     /// </summary>
     [JsonProperty(PropertyName = "url")]
-    public string? Url { get; set; } = string.Empty;
+    public string? Url { get; set; }
 
     /// <summary>
     /// 跳转链接的小程序的appid，jump_list.type是2时必填
     /// </summary>
     [JsonProperty(PropertyName = "appid")]
-    public string? AppId { get; set; } = string.Empty;
+    public string? AppId { get; set; }
 
     /// <summary>
     /// 跳转链接的小程序的pagepath，jump_list.type是2时选填
     /// </summary>
     [JsonProperty(PropertyName = "pagepath")]
-    public string? PagePath { get; set; } = string.Empty;
+    public string? PagePath { get; set; }
 }
 
 /// <summary>
@@ -388,37 +454,103 @@ public class CardAction
     /// 跳转事件的url，card_action.type是1时必填
     /// </summary>
     [JsonProperty(PropertyName = "url")]
-    public string? Url { get; set; } = string.Empty;
+    public string? Url { get; set; }
 
     /// <summary>
     /// 跳转事件的小程序的appid，card_action.type是2时必填
     /// </summary>
     [JsonProperty(PropertyName = "appid")]
-    public string? AppId { get; set; } = string.Empty;
+    public string? AppId { get; set; }
 
     /// <summary>
     /// 跳转事件的小程序的pagepath，card_action.type是2时选填
     /// </summary>
     [JsonProperty(PropertyName = "pagepath")]
-    public string? PagePath { get; set; } = string.Empty;
+    public string? PagePath { get; set; }
 }
 
 /// <summary>
-/// 结果信息
+/// 图片样式
 /// </summary>
-public class ResultInfo
+public class CardImage
 {
     /// <summary>
-    /// 结果代码 成功 0
+    /// 图片的url
     /// </summary>
-    [JsonProperty(PropertyName = "errcode")]
-    public string ErrCode { get; set; } = string.Empty;
+    [JsonProperty(PropertyName = "url")]
+    public string Url { get; set; } = string.Empty;
 
     /// <summary>
-    /// 结果消息 成功 ok
+    /// 图片的宽高比，宽高比要小于2.25，大于1.3，不填该参数默认1.3
     /// </summary>
-    [JsonProperty(PropertyName = "errmsg")]
-    public string ErrMsg { get; set; } = string.Empty;
+    [JsonProperty(PropertyName = "aspect_ratio")]
+    public float? AspectRatio { get; set; }
+}
+
+/// <summary>
+/// 左图右文样式
+/// </summary>
+public class ImageTextArea
+{
+    /// <summary>
+    /// 左图右文样式区域点击事件，0或不填代表没有点击事件，1 代表跳转url，2 代表跳转小程序
+    /// </summary>
+    [JsonProperty(PropertyName = "type")]
+    public int? Type { get; set; } = 0;
+
+    /// <summary>
+    /// 点击跳转的url，image_text_area.type是1时必填
+    /// </summary>
+    [JsonProperty(PropertyName = "url")]
+    public string? Url { get; set; }
+
+    /// <summary>
+    /// 点击跳转的小程序的appid，必须是与当前应用关联的小程序，image_text_area.type是2时必填
+    /// </summary>
+    [JsonProperty(PropertyName = "appid")]
+    public string? AppId { get; set; }
+
+    /// <summary>
+    /// 点击跳转的小程序的pagepath，image_text_area.type是2时选填
+    /// </summary>
+    [JsonProperty(PropertyName = "pagepath")]
+    public string? PagePath { get; set; }
+
+    /// <summary>
+    /// 左图右文样式的标题
+    /// </summary>
+    [JsonProperty(PropertyName = "title")]
+    public string? Title { get; set; }
+
+    /// <summary>
+    /// 左图右文样式的描述
+    /// </summary>
+    [JsonProperty(PropertyName = "desc")]
+    public string? Desc { get; set; }
+
+    /// <summary>
+    /// 左图右文样式的图片url
+    /// </summary>
+    [JsonProperty(PropertyName = "image_url")]
+    public string ImageUrl { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 卡片二级垂直内容，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过4
+/// </summary>
+public class VerticalContent
+{
+    /// <summary>
+    /// 卡片二级标题，建议不超过26个字
+    /// </summary>
+    [JsonProperty(PropertyName = "title")]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 二级普通文本，建议不超过112个字
+    /// </summary>
+    [JsonProperty(PropertyName = "desc")]
+    public string? Desc { get; set; }
 }
 
 #endregion 辅助类
