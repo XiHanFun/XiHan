@@ -95,8 +95,8 @@ public enum ResponseEnum
     InternalServerError = 500,
 
     /// <summary>
-    /// 服务器不支持的请求或未实现的异常接口
+    /// 服务器不支持的请求或未实现接口或异常接口
     /// </summary>
-    [Description("服务器不支持的请求或未实现的异常接口")]
+    [Description("服务器不支持的请求或未实现接口或异常接口")]
     NotImplemented = 501,
 }

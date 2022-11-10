@@ -47,7 +47,9 @@ public static class CorsSetup
                     // 允许任何方法
                     .AllowAnyMethod()
                     // 允许凭据
-                    .AllowCredentials();
+                    .AllowCredentials()
+                    // 允许请求头
+                    .WithExposedHeaders("X-Pagination");
                 });
             });
         }

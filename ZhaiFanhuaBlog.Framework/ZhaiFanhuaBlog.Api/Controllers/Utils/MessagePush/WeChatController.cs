@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Services.Utils.MessagePush;
@@ -13,6 +12,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 
 /// <summary>
 /// 微信消息推送
+/// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
 [AllowAnonymous]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Common)]
@@ -32,7 +32,7 @@ public class WeChatController : BaseApiController
     #region 发送消息
 
     /// <summary>
-    /// 文本内容
+    /// 文本
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
@@ -48,7 +48,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 文档内容
+    /// 文档
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
@@ -65,7 +65,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 图片内容
+    /// 图片
     /// </summary>
     /// <returns></returns>
     [HttpPost("Image")]
@@ -83,7 +83,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 图文内容
+    /// 图文
     /// </summary>
     /// <returns></returns>
     [HttpPost("News")]
@@ -106,7 +106,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 文件内容
+    /// 文件
     /// </summary>
     /// <returns></returns>
     [HttpPost("File")]
@@ -120,7 +120,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 文本通知模版卡片内容
+    /// 文本通知卡片
     /// </summary>
     /// <returns></returns>
     [HttpPost("TextNotice")]
@@ -207,7 +207,7 @@ public class WeChatController : BaseApiController
     }
 
     /// <summary>
-    /// 图文展示模版卡片内容
+    /// 图文展示卡片
     /// </summary>
     /// <returns></returns>
     [HttpPost("NewsNotice")]
@@ -249,7 +249,7 @@ public class WeChatController : BaseApiController
             Title = "引用文本标题",
             QuoteText = "Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
         };
-        // 卡片二级垂直内容
+        // 卡片二级垂直
         List<VerticalContent> verticalContents = new() {
             new VerticalContent(){
                 Title="惊喜红包等你来拿",

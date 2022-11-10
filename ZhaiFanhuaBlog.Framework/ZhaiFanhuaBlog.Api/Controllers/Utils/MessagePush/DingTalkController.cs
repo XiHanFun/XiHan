@@ -10,6 +10,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 
 /// <summary>
 /// 钉钉消息推送
+/// <code>包含：文本/链接/文档/任务卡片/卡片菜单</code>
 /// </summary>
 [AllowAnonymous]
 [ApiExplorerSettings(GroupName = SwaggerGroup.Common)]
@@ -27,7 +28,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 文本内容
+    /// 文本
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
@@ -44,7 +45,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 链接内容
+    /// 链接
     /// </summary>
     /// <returns></returns>
     [HttpPost("Link")]
@@ -63,7 +64,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 文档内容
+    /// 文档
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
@@ -84,7 +85,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 任务卡片内容(整体跳转)
+    /// 任务卡片(整体跳转)
     /// </summary>
     /// <returns></returns>
     [HttpPost("WholeActionCard")]
@@ -104,7 +105,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 推送任务卡片内容(独立跳转)
+    /// 任务卡片(独立跳转)
     /// </summary>
     /// <returns></returns>
     [HttpPost("PartActionCard")]
@@ -121,7 +122,7 @@ public class DingTalkController : BaseApiController
             Btns = new List<BtnInfo>()
                 {
                     new BtnInfo(){
-                        Title = keyWord +"内容不错",
+                        Title = keyWord +"不错",
                         ActionUrl = "https://www.dingtalk.com/"
                     },
                     new BtnInfo(){
@@ -134,7 +135,7 @@ public class DingTalkController : BaseApiController
     }
 
     /// <summary>
-    /// 卡片菜单内容
+    /// 卡片菜单
     /// </summary>
     /// <returns></returns>
     [HttpPost("FeedCard")]

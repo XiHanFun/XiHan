@@ -37,7 +37,7 @@ public static class JwtSetup
         var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
         var clockSkew = AppSettings.Auth.JWT.ClockSkew;
 
-        // 读取配置
+        // 签名密钥
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
         // 令牌验证参数
         var tokenValidationParameters = new TokenValidationParameters
