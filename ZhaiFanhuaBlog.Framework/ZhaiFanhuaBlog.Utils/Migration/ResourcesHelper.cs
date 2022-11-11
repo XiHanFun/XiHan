@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:CDNResourcesHelper
 // Guid:11b53a79-9ca9-4044-92bc-24061ec75715
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-03 下午 04:20:58
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Text;
 using ZhaiFanhuaBlog.Utils.DirFile;

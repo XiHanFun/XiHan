@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:CUserAccountDto
 // Guid:48466d27-6033-4199-b7d5-8928d39f92bf
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-07-03 上午 03:16:17
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
 

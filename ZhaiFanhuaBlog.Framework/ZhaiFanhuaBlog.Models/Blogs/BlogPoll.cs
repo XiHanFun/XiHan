@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BlogPoll
 // Guid:2fcf240c-8218-497c-aae9-83f9c5791dfe
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:29:20
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Models.Bases;
 

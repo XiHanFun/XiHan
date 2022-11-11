@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:StringFormatHelper
 // Guid:55d89543-b256-41ce-ba60-41ef0e0c4c4e
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-03 下午 08:15:19
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Text;
 

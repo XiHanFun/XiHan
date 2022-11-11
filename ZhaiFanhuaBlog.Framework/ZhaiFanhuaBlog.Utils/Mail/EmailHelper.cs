@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:EmailHelper
 // Guid:6cd058a5-9ec5-4ab3-8c7d-aeab0f513700
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-09 上午 01:21:27
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Net;
 using System.Net.Mail;

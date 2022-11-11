@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PingYinHelper
 // Guid:67d786c7-de53-41d0-aab6-399ca5b3d43d
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-07 上午 03:03:00
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.International.Converters.PinYinConverter;
 using System.Text.RegularExpressions;

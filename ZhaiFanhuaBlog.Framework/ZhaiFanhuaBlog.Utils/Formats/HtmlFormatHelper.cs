@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:HtmlFormatHelper
 // Guid:92253fa2-2ea7-4fbc-b803-fd48f337b515
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-07 上午 03:10:39
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 namespace ZhaiFanhuaBlog.Utils.Formats;
 

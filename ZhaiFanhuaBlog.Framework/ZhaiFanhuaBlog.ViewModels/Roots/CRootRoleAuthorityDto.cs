@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:CRootRoleAuthorityDto
 // Guid:b80feac5-81d8-4053-a4a7-9d61edd87fe1
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-07-01 上午 02:29:41
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
 

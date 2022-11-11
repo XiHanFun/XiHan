@@ -1,4 +1,17 @@
-﻿namespace ZhaiFanhuaBlog.Utils.Object;
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:ObjectConvertHelper
+// Guid:53530b50-ea0a-4f9e-b05a-af39735a6bc0
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-09-18 上午 02:20:49
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
+
+namespace ZhaiFanhuaBlog.Utils.Object;
 
 /// <summary>
 /// 对象转换帮助类

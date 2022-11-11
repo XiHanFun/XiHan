@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:VerificationCodeHelper
 // Guid:b18b6086-49ff-45f2-abb9-86a7a8505db4
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-18 上午 02:20:49
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 namespace ZhaiFanhuaBlog.Utils.Verification;
 

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootAuthority
 // Guid:8b190341-c474-4974-961f-895c2c6a831d
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 04:45:01
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;

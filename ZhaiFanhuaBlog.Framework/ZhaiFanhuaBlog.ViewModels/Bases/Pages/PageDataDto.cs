@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PageDataDto
 // Guid:729e1048-3950-4091-bd0d-ec69af98c4f4
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-16 上午 01:38:41
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 namespace ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SiteIpAddress
 // Guid:171a7673-fe61-4257-844e-84fdff2d5e0a
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-10-24 上午 10:40:37
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using SqlSugar;
 using ZhaiFanhuaBlog.Models.Bases;

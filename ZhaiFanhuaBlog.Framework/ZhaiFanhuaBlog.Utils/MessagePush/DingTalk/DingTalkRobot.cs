@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:DingTalkRobot
 // Guid:b9ebb234-1ebf-4b97-b308-0c525d2cd190
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-08 上午 12:48:23
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Security.Cryptography;
 using System.Text;

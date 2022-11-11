@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BaseValidationDto
 // Guid:0abbb204-7b98-466b-987c-f10ff997b123
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-02 上午 12:28:58
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
 

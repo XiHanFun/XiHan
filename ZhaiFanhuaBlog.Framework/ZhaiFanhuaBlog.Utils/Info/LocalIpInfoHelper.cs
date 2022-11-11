@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:LocalIpInfoHelper
 // Guid:dc0502e1-f675-41d3-8a67-dbd590e76260
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-09 上午 01:11:29
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Net;
 using System.Net.NetworkInformation;

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:MD5Helper
 // Guid:c77bf375-d1f2-4a68-b4d1-bb2affcc0aa8
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 03:26:25
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Security.Cryptography;
 using System.Text;

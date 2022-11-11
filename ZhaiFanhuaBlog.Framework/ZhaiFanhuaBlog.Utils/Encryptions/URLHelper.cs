@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:URLHelper
 // Guid:521ad433-968f-49dc-84b1-5948de76eaec
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-06 上午 05:04:40
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Text;
 using System.Web;

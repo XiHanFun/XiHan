@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BaseResultDto
 // Guid:4abbac7e-e91a-4ad2-a048-9f4c16a43464
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-02-20 下午 08:35:52
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Utils.Summary;
 using ZhaiFanhuaBlog.ViewModels.Response.Enum;

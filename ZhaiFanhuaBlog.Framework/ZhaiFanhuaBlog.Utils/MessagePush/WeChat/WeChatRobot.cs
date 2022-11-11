@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:WeChatRobot
 // Guid:1f9edb73-56c9-4849-88a8-c57488b3582d
@@ -7,11 +9,8 @@
 // CreateTime:2022-11-08 上午 02:32:32
 // ----------------------------------------------------------------
 
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
+#endregion <<版权版本注释>>
+
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
 

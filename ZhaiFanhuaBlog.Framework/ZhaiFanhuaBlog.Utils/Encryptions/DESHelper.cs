@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:DESHelper
 // Guid:c80cc02d-888f-4278-83ac-e6d1943633f1
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 03:25:18
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Security.Cryptography;
 using System.Text;

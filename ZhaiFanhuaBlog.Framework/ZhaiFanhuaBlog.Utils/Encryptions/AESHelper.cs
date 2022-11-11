@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:AESHelper
 // Guid:14326a53-9e3d-43c6-a57a-bc13dd9b0c2a
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 03:23:55
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Security.Cryptography;
 using System.Text;

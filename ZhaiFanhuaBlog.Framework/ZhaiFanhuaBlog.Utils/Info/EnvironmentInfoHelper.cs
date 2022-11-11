@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:EnvironmentInfoHelper
 // Guid:2015f59c-4a29-456c-acd8-73da55b46c1c
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 03:47:05
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Runtime.InteropServices;
 

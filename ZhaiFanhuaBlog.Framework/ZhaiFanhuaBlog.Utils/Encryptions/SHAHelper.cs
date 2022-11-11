@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SHAHelper
 // Guid:871e648a-233c-41fd-8531-de4ce3a3820f
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 03:28:31
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using System.Security.Cryptography;
 using System.Text;

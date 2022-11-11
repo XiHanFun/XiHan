@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:HttpHelper
 // Guid:a0813c9d-590b-48e3-90f1-91d62780ea3d
@@ -7,8 +9,9 @@
 // CreateTime:2022-09-07 上午 03:12:07
 // ----------------------------------------------------------------
 
+#endregion <<版权版本注释>>
+
 using Newtonsoft.Json;
-using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;

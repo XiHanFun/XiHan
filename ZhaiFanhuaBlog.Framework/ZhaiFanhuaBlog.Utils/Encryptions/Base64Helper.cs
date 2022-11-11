@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:Base64Helper
 // Guid:ba9e3c1a-7705-4876-b0ed-e82ea575fd48
@@ -7,10 +9,9 @@
 // CreateTime:2022-11-08 上午 03:49:57
 // ----------------------------------------------------------------
 
-using System.Drawing.Drawing2D;
-using System.Drawing;
+#endregion <<版权版本注释>>
+
 using System.Text;
-using System.Drawing.Imaging;
 
 namespace ZhaiFanhuaBlog.Utils.Encryptions;
 

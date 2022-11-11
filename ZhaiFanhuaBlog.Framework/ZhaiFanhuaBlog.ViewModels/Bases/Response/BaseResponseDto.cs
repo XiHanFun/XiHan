@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BaseResponseDto
 // Guid:3874a6ae-1ebc-49ab-b4a3-55e76dc68945
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 11:46:50
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
 using ZhaiFanhuaBlog.Utils.Summary;
