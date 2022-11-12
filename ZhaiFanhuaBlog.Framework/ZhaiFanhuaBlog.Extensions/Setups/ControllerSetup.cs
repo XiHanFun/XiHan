@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:ControllerSetup
 // Guid:8e7e9059-8ee8-4afb-a9f7-3f608305ef55
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-30 上午 03:17:15
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

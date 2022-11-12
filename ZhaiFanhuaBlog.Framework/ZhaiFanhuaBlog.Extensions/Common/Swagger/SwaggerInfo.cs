@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SwaggerInfo
 // Guid:fb9017cd-48ca-4cbc-93cf-f9372a9606af
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-02 上午 11:48:18
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.OpenApi.Models;
 

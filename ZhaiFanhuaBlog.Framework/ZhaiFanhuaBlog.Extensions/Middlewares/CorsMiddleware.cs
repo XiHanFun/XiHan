@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:CorsMiddleware
 // Guid:8015c072-e6b5-4a52-aec5-6bd747cfe0a2
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-29 上午 01:25:14
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
 using ZhaiFanhuaBlog.Core.AppSettings;

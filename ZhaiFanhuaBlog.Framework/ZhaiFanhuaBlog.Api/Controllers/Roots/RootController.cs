@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootController
 // Guid:69e9d954-b467-45e7-bab2-7d8fd437a433
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-29 下午 10:42:07
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

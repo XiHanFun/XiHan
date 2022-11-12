@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:WeChatMessagePush
 // Guid:a273c787-f81d-4c4b-875e-c20d8a04ab45
@@ -7,7 +9,8 @@
 // CreateTime:2022-11-08 上午 02:44:27
 // ----------------------------------------------------------------
 
-using Ubiety.Dns.Core.Records;
+#endregion <<版权版本注释>>
+
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SwaggerMiddleware
 // Guid:40c713e1-7cdf-42da-9e08-84d1bff1489f
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-29 上午 01:03:07
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
 using Serilog;

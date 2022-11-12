@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:IDingTalkMessagePush
 // Guid:c9b248ce-f261-4abd-88ac-f4dfc35ada28
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-06 下午 07:40:59
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Core.Services;
 using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;

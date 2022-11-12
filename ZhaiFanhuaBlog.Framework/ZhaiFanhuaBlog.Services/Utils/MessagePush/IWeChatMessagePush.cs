@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:IWeChartMessagePush
 // Guid:54d10161-b312-4b9f-bde7-603f416f2066
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-08 上午 02:43:46
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Core.Services;
 using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;

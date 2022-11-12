@@ -1,4 +1,6 @@
-﻿//// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+//// ----------------------------------------------------------------
 //// Copyright ©2022 ZhaiFanhua All Rights Reserved.
 //// FileName:TestCodeFirst
 //// Guid:10f07272-2415-495a-a87a-5bdccf209bb0
@@ -6,6 +8,8 @@
 //// Email:me@zhaifanhua.com
 //// CreateTime:2022-06-30 上午 01:39:10
 //// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 //using System.Text;
 //using ZhaiFanhuaBlog.Models.Roots;

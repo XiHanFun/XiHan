@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:AutoMapperProfile
 // Guid:406c1b6d-00cb-4d8a-b7ee-3abd0a6c0c76
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-29 上午 12:13:27
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using AutoMapper;
 using ZhaiFanhuaBlog.Extensions.Common.Authorizations;

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:CacheSetup
 // Guid:5c45f05d-b77a-4ffa-8975-77aff404eb20
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-28 下午 11:29:28
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using CSRedis;
 using Microsoft.Extensions.Caching.Distributed;

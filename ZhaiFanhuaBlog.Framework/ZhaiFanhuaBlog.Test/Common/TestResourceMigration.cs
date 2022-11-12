@@ -1,4 +1,5 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:TestResourceMigration
 // Guid:ec23382c-4c63-4d3e-b4a4-6c46b3b1808c

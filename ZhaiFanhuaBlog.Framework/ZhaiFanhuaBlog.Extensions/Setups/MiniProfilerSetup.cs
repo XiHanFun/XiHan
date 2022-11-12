@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:MiniProfilerSetup
 // Guid:5b0b173b-f1bc-4274-a2ce-04b12a18f1bd
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-09-07 上午 01:58:14
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Core.AppSettings;

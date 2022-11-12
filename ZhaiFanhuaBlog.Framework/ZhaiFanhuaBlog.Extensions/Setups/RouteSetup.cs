@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RouteSetup
 // Guid:110bb71a-7214-4344-8aea-ce3de16c4cae
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-30 上午 03:15:11
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
 

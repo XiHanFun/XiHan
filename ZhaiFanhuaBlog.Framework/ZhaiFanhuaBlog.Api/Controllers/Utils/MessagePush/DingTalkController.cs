@@ -1,4 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:DingTalkController
+// Guid:fccfeb28-624c-41cb-9c5c-0b0652648a6b
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-11-12 下午 07:50:21
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;

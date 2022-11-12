@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:IBlogCommentService
 // Guid:1bf19ecb-ac1e-34ed-80c2-81b54781ebdd
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2021-12-28 下午 11:11:44
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Core.Services;
 using ZhaiFanhuaBlog.Models.Blogs;

@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserAccountService
 // Guid:514a3309-e0b7-4b94-ae33-07f9ed9c1d55
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-06-04 下午 06:03:32
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Configuration;
 using ZhaiFanhuaBlog.Models.Users;

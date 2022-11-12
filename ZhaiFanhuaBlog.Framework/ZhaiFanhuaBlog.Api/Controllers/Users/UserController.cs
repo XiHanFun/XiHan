@@ -1,4 +1,6 @@
-﻿// ----------------------------------------------------------------
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserController
 // Guid:03069dd5-18ca-4109-b7da-4691b785bd11
@@ -6,6 +8,8 @@
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-15 下午 05:38:40
 // ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
