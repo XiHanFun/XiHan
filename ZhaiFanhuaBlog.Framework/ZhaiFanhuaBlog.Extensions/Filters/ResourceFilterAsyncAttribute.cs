@@ -73,7 +73,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                          $"\t 请求方法：{method}\n" +
                          $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
-        if (_IMemoryCache.TryGetValue(requestUrl + method, out object value))
+        if (_IMemoryCache.TryGetValue(requestUrl + method, out object? value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;

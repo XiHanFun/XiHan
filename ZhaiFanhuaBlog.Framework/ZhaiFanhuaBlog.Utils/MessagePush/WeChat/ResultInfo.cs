@@ -54,4 +54,4 @@ public class ResultInfo
 /// <summary>
 /// 文件上传返回结果
 /// </summary>
-public record WeChatUploadResult(string message, string mediaId);
+public record WeChatUploadResult(string Message, string MediaId);

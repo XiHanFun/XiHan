@@ -1,13 +1,13 @@
 ﻿#region <<版权版本注释>>
 
-//// ----------------------------------------------------------------
-//// Copyright ©2022 ZhaiFanhua All Rights Reserved.
-//// FileName:VerificationCodeImgHelper
-//// Guid:63867975-2e09-4307-9726-7f2428109e2e
-//// Author:zhaifanhua
-//// Email:me@zhaifanhua.com
-//// CreateTime:2022-09-18 上午 02:35:02
-//// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:VerificationCodeImgHelper
+// Guid:63867975-2e09-4307-9726-7f2428109e2e
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-09-18 上午 02:35:02
+// ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 

@@ -55,11 +55,11 @@ public class SiteController : BaseApiController
     {
         CSiteConfigurationDto configuration = new()
         {
-            Name = _IConfiguration.GetValue<string>("Configuration:Name"),
-            Description = _IConfiguration.GetValue<string>("Configuration:Description"),
-            KeyWord = _IConfiguration.GetValue<string>("Configuration:KeyWord"),
-            Domain = _IConfiguration.GetValue<string>("Configuration:Domain"),
-            AdminName = _IConfiguration.GetValue<string>("Configuration:Admin:Name")
+            Name = _IConfiguration.GetValue<string>("Configuration:Name") ?? string.Empty,
+            Description = _IConfiguration.GetValue<string>("Configuration:Description") ?? string.Empty,
+            KeyWord = _IConfiguration.GetValue<string>("Configuration:KeyWord") ?? string.Empty,
+            Domain = _IConfiguration.GetValue<string>("Configuration:Domain") ?? string.Empty,
+            AdminName = _IConfiguration.GetValue<string>("Configuration:Admin:Name") ?? string.Empty
         };
         var siteConfiguration = iMapper.Map<SiteConfiguration>(configuration);
         if (await _ISiteConfigurationService.CreateSiteConfigurationAsync(siteConfiguration))

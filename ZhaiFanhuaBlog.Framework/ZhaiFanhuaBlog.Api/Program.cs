@@ -39,6 +39,8 @@ ConsoleHelper.WriteLineWarning("Services Start……");
 services.AddCacheSetup();
 // JWT
 services.AddJwtSetup();
+// 健康检查
+services.AddHealthChecks();
 // Http请求
 services.AddHttpClient();
 // Swagger
@@ -85,8 +87,6 @@ app.UseMiniProfilerMiddleware();
 app.UseSwaggerMiddleware(() => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.Api.index.html")!);
 // 使用静态文件
 app.UseStaticFiles();
-// Serilog请求日志中间件---必须在 UseStaticFiles 和 UseRouting 之间
-//app.UseSerilog();
 // 路由
 app.UseRouting();
 // 跨域
@@ -95,13 +95,11 @@ app.UseCorsMiddleware();
 app.UseAuthentication();
 // 认证授权
 app.UseAuthorization();
+// 配置运行状况检查终端节点并需要授权用户
+app.MapHealthChecks("/health").RequireAuthorization();
+// 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
+app.MapControllers();
 
-// 路由映射
-app.UseEndpoints(options =>
-{
-    // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
-    options.MapControllers();
-});
 ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
 
 // 启动信息打印

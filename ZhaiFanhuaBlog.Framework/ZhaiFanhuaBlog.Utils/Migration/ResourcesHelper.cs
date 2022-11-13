@@ -30,6 +30,7 @@ public static class ResourcesHelper
     public static List<MigrationInfo> Migration(ResourceInfo resourceInfo)
     {
         if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
+
         List<MigrationInfo> list = new();
         string[] paths = DirFileHelper.GetFiles(resourceInfo.Path);
         foreach (string path in paths)

@@ -21,6 +21,13 @@ namespace ZhaiFanhuaBlog.Core.AppSettings;
 public class AppSettings
 {
     /// <summary>
+    /// 配置文件的根节点
+    /// </summary>
+    public static IConfiguration _IConfiguration = new ConfigurationBuilder().Build();
+
+    #region 构造函数
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="contentPath"></param>
@@ -47,23 +54,51 @@ public class AppSettings
         _IConfiguration = configuration;
     }
 
-    /// <summary>
-    /// 配置文件的根节点
-    /// </summary>
-    public static IConfiguration _IConfiguration = new ConfigurationBuilder().Build();
+    #endregion 构造函数
 
-    public static string EnvironmentName => _IConfiguration.GetValue<string>("EnvironmentName");
+    #region 基本方法
+
+    public static bool GetBoolValue(string key)
+    {
+        return _IConfiguration.GetValue<bool>(key);
+    }
+
+    public static int GetIntValue(string key)
+    {
+        return _IConfiguration.GetValue<int>(key);
+    }
+
+    public static string GetStringValue(string key)
+    {
+        return _IConfiguration.GetValue<string>(key) ?? string.Empty;
+    }
+
+    public static DateTime GetDateTimeValue(string key)
+    {
+        return _IConfiguration.GetValue<DateTime>(key);
+    }
+
+    public static string[] GetStringArrayValue(string key)
+    {
+        return _IConfiguration.GetSection(key).Get<string[]>() ?? Array.Empty<string>();
+    }
+
+    #endregion 基本方法
+
+    #region 读取配置
+
+    public static string EnvironmentName => GetStringValue("EnvironmentName");
 
     /// <summary>
     /// 日志
     /// </summary>
     public static class Logging
     {
-        public static bool Authorization => _IConfiguration.GetValue<bool>("Logging:Authorization");
-        public static bool Resource => _IConfiguration.GetValue<bool>("Logging:Resource");
-        public static bool Action => _IConfiguration.GetValue<bool>("Logging:Action");
-        public static bool Result => _IConfiguration.GetValue<bool>("Logging:Result");
-        public static bool Exception => _IConfiguration.GetValue<bool>("Logging:Exception");
+        public static bool Authorization => GetBoolValue("Logging:Authorization");
+        public static bool Resource => GetBoolValue("Logging:Resource");
+        public static bool Action => GetBoolValue("Logging:Action");
+        public static bool Result => GetBoolValue("Logging:Result");
+        public static bool Exception => GetBoolValue("Logging:Exception");
     }
 
     /// <summary>
@@ -71,16 +106,16 @@ public class AppSettings
     /// </summary>
     public static class Site
     {
-        public static string Name => _IConfiguration.GetValue<string>("Site:Name");
-        public static string Description => _IConfiguration.GetValue<string>("Site:Description");
-        public static string KeyWord => _IConfiguration.GetValue<string>("Site:KeyWord");
-        public static string Domain => _IConfiguration.GetValue<string>("Site:Domain");
-        public static DateTime UpdateTime => _IConfiguration.GetValue<DateTime>("Site:UpdateTime");
+        public static string Name => GetStringValue("Site:Name");
+        public static string Description => GetStringValue("Site:Description");
+        public static string KeyWord => GetStringValue("Site:KeyWord");
+        public static string Domain => GetStringValue("Site:Domain");
+        public static DateTime UpdateTime => GetDateTimeValue("Site:UpdateTime");
 
         public static class Admin
         {
-            public static string Name => _IConfiguration.GetValue<string>("Site:Admin:Name");
-            public static string Email => _IConfiguration.GetValue<string>("Site:Admin:Email");
+            public static string Name => GetStringValue("Site:Admin:Name");
+            public static string Email => GetStringValue("Site:Admin:Email");
         }
     }
 
@@ -89,8 +124,8 @@ public class AppSettings
     /// </summary>
     public static class Encryptions
     {
-        public static string AesKey => _IConfiguration.GetValue<string>("Encryptions:AesKey");
-        public static string DesKey => _IConfiguration.GetValue<string>("Encryptions:DesKey");
+        public static string AesKey => GetStringValue("Encryptions:AesKey");
+        public static string DesKey => GetStringValue("Encryptions:DesKey");
     }
 
     /// <summary>
@@ -98,9 +133,9 @@ public class AppSettings
     /// </summary>
     public static class Cors
     {
-        public static bool IsEnabled => _IConfiguration.GetValue<bool>("Cors:IsEnabled");
-        public static string PolicyName => _IConfiguration.GetValue<string>("Cors:PolicyName");
-        public static string[] Origins => _IConfiguration.GetSection("Cors:Origins").Get<string[]>();
+        public static bool IsEnabled => GetBoolValue("Cors:IsEnabled");
+        public static string PolicyName => GetStringValue("Cors:PolicyName");
+        public static string[] Origins => GetStringArrayValue("Cors:Origins");
     }
 
     /// <summary>
@@ -108,17 +143,17 @@ public class AppSettings
     /// </summary>
     public static class Database
     {
-        public static bool Console => _IConfiguration.GetValue<bool>("Database:Console");
-        public static bool Initialization => _IConfiguration.GetValue<bool>("Database:Initialization");
-        public static string Type => _IConfiguration.GetValue<string>("Database:Type");
+        public static bool Console => GetBoolValue("Database:Console");
+        public static bool Initialization => GetBoolValue("Database:Initialization");
+        public static string Type => GetStringValue("Database:Type");
 
         public static class Connectionstring
         {
-            public static string MySql => _IConfiguration.GetValue<string>("Database:Connectionstring:MySql");
-            public static string SqlServer => _IConfiguration.GetValue<string>("Database:Connectionstring:SqlServer");
-            public static string Sqlite => _IConfiguration.GetValue<string>("Database:Connectionstring:Sqlite");
-            public static string Oracle => _IConfiguration.GetValue<string>("Database:Connectionstring:Oracle");
-            public static string PostgreSQL => _IConfiguration.GetValue<string>("Database:Connectionstring:PostgreSQL");
+            public static string MySql => GetStringValue("Database:Connectionstring:MySql");
+            public static string SqlServer => GetStringValue("Database:Connectionstring:SqlServer");
+            public static string Sqlite => GetStringValue("Database:Connectionstring:Sqlite");
+            public static string Oracle => GetStringValue("Database:Connectionstring:Oracle");
+            public static string PostgreSQL => GetStringValue("Database:Connectionstring:PostgreSQL");
         }
     }
 
@@ -127,27 +162,27 @@ public class AppSettings
     /// </summary>
     public static class Cache
     {
-        public static int SyncTimeout => _IConfiguration.GetValue<int>("Cache:SyncTimeout");
+        public static int SyncTimeout => GetIntValue("Cache:SyncTimeout");
 
         public static class MemoryCache
         {
-            public static bool IsEnabled => _IConfiguration.GetValue<bool>("Cache:MemoryCache:IsEnabled");
+            public static bool IsEnabled => GetBoolValue("Cache:MemoryCache:IsEnabled");
         }
 
         public static class Distributedcache
         {
-            public static bool IsEnabled => _IConfiguration.GetValue<bool>("Cache:Distributedcache:IsEnabled");
+            public static bool IsEnabled => GetBoolValue("Cache:Distributedcache:IsEnabled");
 
             public static class Redis
             {
-                public static string ConnectionString => _IConfiguration.GetValue<string>("Cache:Distributedcache:Redis:ConnectionString");
-                public static string InstanceName => _IConfiguration.GetValue<string>("Cache:Distributedcache:Redis:InstanceName");
+                public static string ConnectionString => GetStringValue("Cache:Distributedcache:Redis:ConnectionString");
+                public static string InstanceName => GetStringValue("Cache:Distributedcache:Redis:InstanceName");
             }
         }
 
         public static class Responsecache
         {
-            public static bool IsEnabled => _IConfiguration.GetValue<bool>("Cache:Responsecache:IsEnabled");
+            public static bool IsEnabled => GetBoolValue("Cache:Responsecache:IsEnabled");
         }
     }
 
@@ -156,8 +191,8 @@ public class AppSettings
     /// </summary>
     public static class Swagger
     {
-        public static string Version => _IConfiguration.GetValue<string>("Swagger:Version");
-        public static string RoutePrefix => _IConfiguration.GetValue<string>("Swagger:RoutePrefix");
+        public static string Version => GetStringValue("Swagger:Version");
+        public static string RoutePrefix => GetStringValue("Swagger:RoutePrefix");
     }
 
     /// <summary>
@@ -165,7 +200,7 @@ public class AppSettings
     /// </summary>
     public static class Miniprofiler
     {
-        public static bool IsEnabled => _IConfiguration.GetValue<bool>("Miniprofiler:IsEnabled");
+        public static bool IsEnabled => GetBoolValue("Miniprofiler:IsEnabled");
     }
 
     /// <summary>
@@ -175,40 +210,40 @@ public class AppSettings
     {
         public static class JWT
         {
-            public static string Issuer => _IConfiguration.GetValue<string>("Auth:JWT:Issuer");
-            public static string Audience => _IConfiguration.GetValue<string>("Auth:JWT:Audience");
-            public static string SymmetricKey => _IConfiguration.GetValue<string>("Auth:JWT:SymmetricKey");
-            public static int ClockSkew => _IConfiguration.GetValue<int>("Auth:JWT:ClockSkew");
-            public static int Expires => _IConfiguration.GetValue<int>("Auth:JWT:Expires");
+            public static string Issuer => GetStringValue("Auth:JWT:Issuer");
+            public static string Audience => GetStringValue("Auth:JWT:Audience");
+            public static string SymmetricKey => GetStringValue("Auth:JWT:SymmetricKey");
+            public static int ClockSkew => GetIntValue("Auth:JWT:ClockSkew");
+            public static int Expires => GetIntValue("Auth:JWT:Expires");
         }
 
         public static class Oauth
         {
             public static class QQ
             {
-                public static bool IsEnabled => _IConfiguration.GetValue<bool>("Auth:Oauth:QQ:IsEnabled");
-                public static string ClientId => _IConfiguration.GetValue<string>("Auth:Oauth:QQ:ClientId");
-                public static string ClientSecret => _IConfiguration.GetValue<string>("Auth:Oauth:QQ:ClientSecret");
-                public static string Scope => _IConfiguration.GetValue<string>("Auth:Oauth:QQ:Scope");
-                public static string RedirectUrl => _IConfiguration.GetValue<string>("Auth:Oauth:QQ:RedirectUrl");
+                public static bool IsEnabled => GetBoolValue("Auth:Oauth:QQ:IsEnabled");
+                public static string ClientId => GetStringValue("Auth:Oauth:QQ:ClientId");
+                public static string ClientSecret => GetStringValue("Auth:Oauth:QQ:ClientSecret");
+                public static string Scope => GetStringValue("Auth:Oauth:QQ:Scope");
+                public static string RedirectUrl => GetStringValue("Auth:Oauth:QQ:RedirectUrl");
             }
 
             public static class Github
             {
-                public static bool IsEnabled => _IConfiguration.GetValue<bool>("Auth:Oauth:Github:IsEnabled");
-                public static string ClientID => _IConfiguration.GetValue<string>("Auth:Oauth:Github:ClientID");
-                public static string ClientSecret => _IConfiguration.GetValue<string>("Auth:Oauth:Github:ClientSecret");
-                public static string Scope => _IConfiguration.GetValue<string>("Auth:Oauth:Github:Scope");
-                public static string RedirectUri => _IConfiguration.GetValue<string>("Auth:Oauth:Github:RedirectUri");
+                public static bool IsEnabled => GetBoolValue("Auth:Oauth:Github:IsEnabled");
+                public static string ClientID => GetStringValue("Auth:Oauth:Github:ClientID");
+                public static string ClientSecret => GetStringValue("Auth:Oauth:Github:ClientSecret");
+                public static string Scope => GetStringValue("Auth:Oauth:Github:Scope");
+                public static string RedirectUri => GetStringValue("Auth:Oauth:Github:RedirectUri");
             }
 
             public static class Gitee
             {
-                public static bool IsEnabled => _IConfiguration.GetValue<bool>("Auth:Oauth:Gitee:IsEnabled");
-                public static string ClientID => _IConfiguration.GetValue<string>("Auth:Oauth:Gitee:ClientID");
-                public static string ClientSecret => _IConfiguration.GetValue<string>("Auth:Oauth:Gitee:ClientSecret");
-                public static string Scope => _IConfiguration.GetValue<string>("Auth:Oauth:Gitee:Scope");
-                public static string RedirectUri => _IConfiguration.GetValue<string>("Auth:Oauth:Gitee:RedirectUri");
+                public static bool IsEnabled => GetBoolValue("Auth:Oauth:Gitee:IsEnabled");
+                public static string ClientID => GetStringValue("Auth:Oauth:Gitee:ClientID");
+                public static string ClientSecret => GetStringValue("Auth:Oauth:Gitee:ClientSecret");
+                public static string Scope => GetStringValue("Auth:Oauth:Gitee:Scope");
+                public static string RedirectUri => GetStringValue("Auth:Oauth:Gitee:RedirectUri");
             }
         }
     }
@@ -218,13 +253,13 @@ public class AppSettings
     /// </summary>
     public static class CDN
     {
-        public static bool IsEnabled => _IConfiguration.GetValue<bool>("CDN:IsEnabled");
-        public static string Type => _IConfiguration.GetValue<string>("CDN:Type");
+        public static bool IsEnabled => GetBoolValue("CDN:IsEnabled");
+        public static string Type => GetStringValue("CDN:Type");
 
         public static class Tencentcloud
         {
-            public static string SecretId => _IConfiguration.GetValue<string>("CDN:Tencentcloud:SecretId");
-            public static string SecretKey => _IConfiguration.GetValue<string>("CDN:Tencentcloud:SecretKey");
+            public static string SecretId => GetStringValue("CDN:Tencentcloud:SecretId");
+            public static string SecretKey => GetStringValue("CDN:Tencentcloud:SecretKey");
         }
     }
 
@@ -233,8 +268,8 @@ public class AppSettings
     /// </summary>
     public static class Job
     {
-        public static bool IsEnabled => _IConfiguration.GetValue<bool>("Job:IsEnabled");
-        public static string Cron => _IConfiguration.GetValue<string>("Job:Cron");
+        public static bool IsEnabled => GetBoolValue("Job:IsEnabled");
+        public static string Cron => GetStringValue("Job:Cron");
     }
 
     /// <summary>
@@ -242,16 +277,16 @@ public class AppSettings
     /// </summary>
     public static class Email
     {
-        public static string Host => _IConfiguration.GetValue<string>("Email:Host");
-        public static int Port => _IConfiguration.GetValue<int>("Email:Port");
-        public static bool UseSsl => _IConfiguration.GetValue<bool>("Email:UseSsl");
+        public static string Host => GetStringValue("Email:Host");
+        public static int Port => GetIntValue("Email:Port");
+        public static bool UseSsl => GetBoolValue("Email:UseSsl");
 
         public static class From
         {
-            public static string Username => _IConfiguration.GetValue<string>("Email:From:Username");
-            public static string Password => _IConfiguration.GetValue<string>("Email:From:Password");
-            public static string Name => _IConfiguration.GetValue<string>("Email:From:Name");
-            public static string Address => _IConfiguration.GetValue<string>("Email:From:Address");
+            public static string Username => GetStringValue("Email:From:Username");
+            public static string Password => GetStringValue("Email:From:Password");
+            public static string Name => GetStringValue("Email:From:Name");
+            public static string Address => GetStringValue("Email:From:Address");
         }
     }
 
@@ -260,10 +295,10 @@ public class AppSettings
     /// </summary>
     public static class DingTalk
     {
-        public static string WebHookUrl => _IConfiguration.GetValue<string>("DingTalk:WebHookUrl");
-        public static string AccessToken => _IConfiguration.GetValue<string>("DingTalk:AccessToken");
-        public static string KeyWord => _IConfiguration.GetValue<string>("DingTalk:KeyWord");
-        public static string Secret => _IConfiguration.GetValue<string>("DingTalk:Secret");
+        public static string WebHookUrl => GetStringValue("DingTalk:WebHookUrl");
+        public static string AccessToken => GetStringValue("DingTalk:AccessToken");
+        public static string KeyWord => GetStringValue("DingTalk:KeyWord");
+        public static string Secret => GetStringValue("DingTalk:Secret");
     }
 
     /// <summary>
@@ -271,8 +306,10 @@ public class AppSettings
     /// </summary>
     public static class WeChart
     {
-        public static string WebHookUrl => _IConfiguration.GetValue<string>("WeChart:WebHookUrl");
-        public static string UploadkUrl => _IConfiguration.GetValue<string>("WeChart:UploadkUrl");
-        public static string Key => _IConfiguration.GetValue<string>("WeChart:Key");
+        public static string WebHookUrl => GetStringValue("WeChart:WebHookUrl");
+        public static string UploadkUrl => GetStringValue("WeChart:UploadkUrl");
+        public static string Key => GetStringValue("WeChart:Key");
     }
+
+    #endregion 读取配置
 }

@@ -83,7 +83,7 @@ public class UserController : BaseApiController
     public async Task<BaseResultDto> DeleteUserAccount([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
-        Guid deleteId = Guid.Parse(user);
+        Guid deleteId = Guid.Parse(user!);
         if (await _IUserAccountService.DeleteUserAccountAsync(guid, deleteId))
             return BaseResponseDto.OK("删除用户账户成功");
         return BaseResponseDto.BadRequest("删除用户账户失败");
@@ -102,7 +102,7 @@ public class UserController : BaseApiController
         var userAccount = iMapper.Map<UserAccount>(cUserAccountDto);
         // 密码加密
         userAccount.Password = cUserAccountDto.Password.ToMD5();
-        userAccount.ModifyId = Guid.Parse(user);
+        userAccount.ModifyId = Guid.Parse(user!);
         userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
         if (userAccount != null)
             return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
@@ -163,7 +163,7 @@ public class UserController : BaseApiController
     {
         var user = User.FindFirstValue("UserId");
         var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
-        userAccountRole.CreateId = Guid.Parse(user);
+        userAccountRole.CreateId = Guid.Parse(user!);
         if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
             return BaseResponseDto.OK("新增用户账户角色成功");
         return BaseResponseDto.BadRequest("新增用户账户角色失败");
@@ -178,7 +178,7 @@ public class UserController : BaseApiController
     public async Task<BaseResultDto> DeleteUserAccountRole([FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
-        Guid deleteId = Guid.Parse(user);
+        Guid deleteId = Guid.Parse(user!);
         if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid, deleteId))
             return BaseResponseDto.OK("删除用户账户角色成功");
         return BaseResponseDto.BadRequest("删除用户账户角色失败");
@@ -195,7 +195,7 @@ public class UserController : BaseApiController
     {
         var user = User.FindFirstValue("UserId");
         var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
-        userAccountRole.ModifyId = Guid.Parse(user);
+        userAccountRole.ModifyId = Guid.Parse(user!);
         userAccountRole = await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole);
         if (userAccountRole != null)
             return BaseResponseDto.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));

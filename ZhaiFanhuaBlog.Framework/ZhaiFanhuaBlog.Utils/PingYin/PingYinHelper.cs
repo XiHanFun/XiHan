@@ -25,14 +25,13 @@ public static class PingYinHelper
     {
         var chs = text.ToCharArray();
 
-        //记录每个汉字的全拼
+        // 记录每个汉字的全拼
         Dictionary<int, List<string>> totalPingYinList = new Dictionary<int, List<string>>();
 
         for (int i = 0; i < chs.Length; i++)
         {
             var pinyinList = new List<string>();
-
-            //是否是有效的汉字
+            // 是否是有效的汉字
             if (ChineseChar.IsValidChar(chs[i]))
             {
                 ChineseChar cc = new(chs[i]);
@@ -42,11 +41,9 @@ public static class PingYinHelper
             {
                 pinyinList.Add(chs[i].ToString());
             }
-
-            //去除声调，转小写
+            // 去除声调，转小写
             pinyinList = pinyinList.ConvertAll(p => Regex.Replace(p, @"\d", "").ToLower());
-
-            //去重
+            // 去重
             pinyinList = pinyinList.Where(p => !string.IsNullOrWhiteSpace(p)).Distinct().ToList();
             if (pinyinList.Any())
             {
@@ -74,7 +71,7 @@ public static class PingYinHelper
             }
             else
             {
-                //全拼循环匹配
+                // 全拼循环匹配
                 var newTotalPingYinList = new List<string>();
                 foreach (var totalPingYin in result)
                 {
@@ -104,7 +101,7 @@ public static class PingYinHelper
             }
             else
             {
-                //首字母循环匹配
+                // 首字母循环匹配
                 var newFirstPingYinList = new List<string>();
                 foreach (var firstPingYin in result)
                 {

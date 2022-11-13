@@ -13,8 +13,10 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Services.Utils;
@@ -34,17 +36,14 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
-    private readonly IConfiguration _IConfiguration;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="iHttpContextAccessor"></param>
-    /// <param name="iConfiguration"></param>
-    public TestController(IHttpContextAccessor iHttpContextAccessor, IConfiguration iConfiguration)
+    public TestController(IHttpContextAccessor iHttpContextAccessor)
     {
         _IHttpContextAccessor = iHttpContextAccessor;
-        _IConfiguration = iConfiguration;
     }
 
     /// <summary>
@@ -133,8 +132,8 @@ public class TestController : BaseApiController
     public ActionResult<BaseResultDto> EncryptOrDecrypt(string iEncryptOrDecrypt, string iType, string iStr)
     {
         if (string.IsNullOrEmpty(iStr)) return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
-        string aesKey = _IConfiguration.GetValue<string>("Encryptions:AesKey");
-        string desKey = _IConfiguration.GetValue<string>("Encryptions:DesKey");
+        string aesKey = AppSettings.Encryptions.AesKey;
+        string desKey = AppSettings.Encryptions.DesKey;
         string resultString = iEncryptOrDecrypt switch
         {
             "Encrypt" => "加密后结果为【" + Encrypt() + "】",

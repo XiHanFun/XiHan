@@ -109,7 +109,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     /// <returns></returns>
     private bool IsAjaxRequest(HttpRequest request)
     {
-        string header = request.Headers["X-Request-With"];
-        return "XMLHttpRequest".Equals(header);
+        var header = request.Headers["X-Request-With"];
+        return "XMLHttpRequest".Equals(header.FirstOrDefault());
     }
 }

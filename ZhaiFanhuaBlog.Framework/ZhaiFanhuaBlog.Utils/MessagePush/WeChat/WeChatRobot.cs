@@ -167,22 +167,6 @@ public class WeChatRobot
     }
 
     /// <summary>
-    /// 微信执行发送消息
-    /// </summary>
-    /// <param name="objSend"></param>
-    /// <returns></returns>
-    private async Task<ResultInfo?> SendMessage(object objSend)
-    {
-        // 发送消息地址
-        var url = _MessageUrl;
-        // 发送对象
-        var sendMessage = objSend.SerializeToJson();
-        // 发起请求
-        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
-        return result;
-    }
-
-    /// <summary>
     /// 微信执行上传文件
     /// 素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用
     /// 文件大小在5B~20M之间
@@ -201,6 +185,22 @@ public class WeChatRobot
         };
         // 发起请求
         ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, fileStream, headers);
+        return result;
+    }
+
+    /// <summary>
+    /// 微信执行发送消息
+    /// </summary>
+    /// <param name="objSend"></param>
+    /// <returns></returns>
+    private async Task<ResultInfo?> SendMessage(object objSend)
+    {
+        // 发送消息地址
+        var url = _MessageUrl;
+        // 发送对象
+        var sendMessage = objSend.SerializeToJson();
+        // 发起请求
+        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
         return result;
     }
 }
