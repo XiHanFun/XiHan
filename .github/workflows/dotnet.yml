@@ -4,9 +4,9 @@ name: ZhaiFanhuaBlog.Framework
 # 触发条件：在 push 和 pull 到 main 分支后
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 # 任务
 jobs:
@@ -18,16 +18,16 @@ jobs:
         working-directory: ./ZhaiFanhuaBlog.Framework/
 
     steps:
-    # 拉取代码
-    - uses: actions/checkout@v3
-    # 环境
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore ZhaiFanhuaBlog.sln
-    - name: Build
-      run: dotnet build --no-restore ZhaiFanhuaBlog.sln
-    - name: Test
-      run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
+      # 拉取代码
+      - uses: actions/checkout@v3
+      # 环境
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        run: dotnet restore ZhaiFanhuaBlog.sln
+      - name: Build
+        run: dotnet build --no-restore ZhaiFanhuaBlog.sln
+      - name: Test
+        run: dotnet test --no-build --verbosity normal ZhaiFanhuaBlog.sln
