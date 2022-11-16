@@ -37,7 +37,11 @@ public static class LogSetup
         string errorPath = AppContext.BaseDirectory + @"Logs/Error/.log";
         string fatalPath = AppContext.BaseDirectory + @"Logs/Fatal/.log";
         Log.Logger = new LoggerConfiguration()
+#if DEBUG
                 .MinimumLevel.Debug()
+#else
+                .MinimumLevel.Information()
+#endif
                 // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Information
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 // 输出到控制台
@@ -47,7 +51,7 @@ public static class LogSetup
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Information)
                 // 异步输出到文件
                 .WriteTo.Async(congfig => congfig.File(
-                    // 配置日志输出到文件，文件输出到当前项目的 Logs 目录下
+                    // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
                     infoPath.ToLower(),
                     // 日记的生成周期为每天
                     rollingInterval: RollingInterval.Day,

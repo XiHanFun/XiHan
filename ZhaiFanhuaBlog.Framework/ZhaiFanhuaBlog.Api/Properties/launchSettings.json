@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://127.0.0.1:9708",
+      "applicationUrl": "https://127.0.0.1:9709;http://127.0.0.1:9708",
       "sslPort": 0
     }
   },
@@ -36,7 +36,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "http://127.0.0.1:9708",
+      "applicationUrl": "https://127.0.0.1:9709;http://127.0.0.1:9708",
       "dotnetRunMessages": true
     }
   }
