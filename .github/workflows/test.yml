@@ -1,5 +1,5 @@
 # 名称
-name: test
+name: ZhaiFanhuaBlog.Framework
 
 # 触发条件：在 push 和 pull 到 main 分支后
 on:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /src
+        working-directory: ./src/
 
     steps:
       # 拉取代码
