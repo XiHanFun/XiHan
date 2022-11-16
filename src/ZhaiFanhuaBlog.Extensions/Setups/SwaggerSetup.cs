@@ -64,13 +64,16 @@ public static class SwaggerSetup
                 });
                 // 根据相对路径排序
                 //options.OrderActionsBy(o => o.RelativePath);
-                // 添加其他的地址域名
-                //options.AddServer(new OpenApiServer() { Url = "http://localhost:9708", Description = "地址1" });
-                //options.AddServer(new OpenApiServer() { Url = "http://127.0.0.1:9708", Description = "地址2" });
             });
 
-            // 定义认证方式 OAuth 方案名称必须是oauth2
-            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
+            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
+            {
+                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+                options.IncludeXmlComments(xmlPath, true);
+            });
+            // 定义安全方案
+            var securityScheme = new OpenApiSecurityScheme
             {
                 Description = "在下框中输入<code>{token}</code>进行身份验证",
                 // JWT默认的参数名称
@@ -83,37 +86,18 @@ public static class SwaggerSetup
                 In = ParameterLocation.Header,
                 // 表示认证方式，有ApiKey，Http，OAuth2，OpenIdConnect四种，其中ApiKey是用的最多的
                 Type = SecuritySchemeType.Http,
-            });
-
-            // 注册全局认证（所有的接口都可以使用认证）
+            };
+            // 定义认证方式 OAuth 方案名称必须是oauth2
+            options.AddSecurityDefinition("oauth2", securityScheme);
+            // 注册全局认证，即所有的接口都可以使用认证
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
-                    // 声明一个Scheme，注意下面的Id要和上面AddSecurityDefinition中的参数name一致
-                    new OpenApiSecurityScheme
-                    {
-                        Reference=new OpenApiReference
-                        {
-                            Type=ReferenceType.SecurityScheme,
-                            Id="oauth2",
-                        }
-                    },
+                    // 必须与上面声明的一致，否则小绿锁混乱,即API全部会加小绿锁
+                    securityScheme,
                     Array.Empty<string>()
                 }
             });
-
-            //// WebApi 注释文件
-            //var xmlWebApiPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.WebApi.xml");
-            //// 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-            //options.IncludeXmlComments(xmlWebApiPath, true);
-
-            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
-            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
-            {
-                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-                options.IncludeXmlComments(xmlPath, true);
-            });
-
             // 枚举添加摘要
             options.UseInlineDefinitionsForEnums();
             // 文档中显示安全小绿锁
