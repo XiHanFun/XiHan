@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
@@ -73,6 +74,7 @@ public class RootController : BaseApiController
     /// 初始化系统
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("InitData")]
     public async Task<bool> InitData()
     {

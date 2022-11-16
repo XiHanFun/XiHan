@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -53,7 +54,7 @@ public static class SwaggerSetup
                     {
                         Name = AppSettings.Site.Admin.Name,
                         Email = AppSettings.Site.Admin.Email,
-                        Url = new Uri("https://www.zhaifanhua.com/")
+                        Url = new Uri(AppSettings.Site.Domain)
                     },
                     License = new OpenApiLicense
                     {
@@ -68,27 +69,6 @@ public static class SwaggerSetup
                 //options.AddServer(new OpenApiServer() { Url = "http://127.0.0.1:9708", Description = "地址2" });
             });
 
-            //// WebApi 注释文件
-            //var xmlWebApiPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.WebApi.xml");
-            //// 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-            //options.IncludeXmlComments(xmlWebApiPath, true);
-
-            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
-            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
-            {
-                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-                options.IncludeXmlComments(xmlPath, true);
-            });
-
-            // 枚举添加摘要
-            options.UseInlineDefinitionsForEnums();
-            // 文档中显示安全小绿锁
-            options.OperationFilter<AddResponseHeadersFilter>();
-            // 安全小绿锁旁标记 Auth 标签
-            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            // 添加请求头的Header中的token,传递到后台
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
-
             // 定义认证方式 OAuth 方案名称必须是oauth2
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
@@ -97,7 +77,7 @@ public static class SwaggerSetup
                 Name = "Authorization",
                 // Bearer认证的数据格式
                 BearerFormat = "JWT",
-                // 认证主题，只对Type=Http生效，只能是basic和bearer
+                // 认证主题，只对Type=Http生效，只能是Basic和Bearer
                 Scheme = "Bearer",
                 // 表示认证信息发在Http请求的哪个位置
                 In = ParameterLocation.Header,
@@ -121,6 +101,27 @@ public static class SwaggerSetup
                     Array.Empty<string>()
                 }
             });
+
+            //// WebApi 注释文件
+            //var xmlWebApiPath = Path.Combine(AppContext.BaseDirectory, "ZhaiFanhuaBlog.WebApi.xml");
+            //// 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+            //options.IncludeXmlComments(xmlWebApiPath, true);
+
+            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
+            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
+            {
+                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+                options.IncludeXmlComments(xmlPath, true);
+            });
+
+            // 枚举添加摘要
+            options.UseInlineDefinitionsForEnums();
+            // 文档中显示安全小绿锁
+            options.OperationFilter<AddResponseHeadersFilter>();
+            // 安全小绿锁旁标记 Auth 标签
+            options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // 添加请求头的Header中的token,传递到后台
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
         // 指定Swagger接口文档中参数序列化组件为Newtonsoft.Json

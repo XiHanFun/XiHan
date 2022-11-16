@@ -32,7 +32,8 @@ public class UserSeedData
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="超级管理员",
             Signature="我是超级管理员",
-            Gender=true
+            Gender=true,
+            UserFrom="RootInit"
         },
         new UserAccount{
             UserName="admin",
@@ -41,7 +42,8 @@ public class UserSeedData
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="管理员",
             Signature="我是管理员",
-            Gender=true
+            Gender=true,
+            UserFrom="RootInit"
         },
         new UserAccount{
             UserName="user",
@@ -50,7 +52,8 @@ public class UserSeedData
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="用户",
             Signature="我是用户",
-            Gender=true
+            Gender=true,
+            UserFrom="RootInit"
         },
         new UserAccount{
             UserName="test",
@@ -59,7 +62,8 @@ public class UserSeedData
             AvatarPath= @"/Images/Accounts/Avatar/defult.png",
             NickName="测试员",
             Signature="我是测试员",
-            Gender=true
+            Gender=true,
+            UserFrom="RootInit"
         },
     };
 }

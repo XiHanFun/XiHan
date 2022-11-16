@@ -24,7 +24,7 @@ public class CUserAccountLoginByNameDto
     /// 用户名称
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(6, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
     public string UserName { get; set; } = string.Empty;
 
     /// <summary>

@@ -248,7 +248,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
     {
-        return await base.GetSingleAsync(func);
+        return await base.GetFirstAsync(func);
     }
 
     /// <summary>
