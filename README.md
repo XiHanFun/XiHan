@@ -1,10 +1,11 @@
 # ZhaiFanhuaBlog.Framework
 
-
-
 <div style="width: 400px;margin: 0 auto;">
         <img style="height:200px" align="center" src="LOGO.png" />
 </div>
+状态：
+
+[![pages-build-deployment](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/actions/workflows/pages/pages-build-deployment)
 
 This is a backend repository for DotNet6 based blog projects.
 
