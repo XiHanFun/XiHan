@@ -32,7 +32,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Users;
 /// <code>包含：账户/收藏/关注/通知/统计</code>
 /// </summary>
 [Authorize]
-[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[ApiGroup(ApiGroupNames.Backstage)]
 public class UserController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;

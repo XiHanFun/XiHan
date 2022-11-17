@@ -32,7 +32,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 /// <code>包含：测试工具/客户端信息/IP信息</code>
 /// </summary>
 [AllowAnonymous]
-[ApiExplorerSettings(GroupName = SwaggerGroup.Test)]
+[ApiGroup(ApiGroupNames.Test)]
 public class TestController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;

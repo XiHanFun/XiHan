@@ -28,7 +28,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers;
 /// 网站配置
 /// <code>包含：初始化网站/配置/皮肤/日志</code>
 /// </summary>
-[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[ApiGroup(ApiGroupNames.Backstage)]
 public class SiteController : BaseApiController
 {
     private IConfiguration _IConfiguration;
@@ -51,6 +51,7 @@ public class SiteController : BaseApiController
     /// <returns></returns>
     [HttpPost("InitData")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
+    [ApiGroup(ApiGroupNames.Reception, ApiGroupNames.Test)]
     public async Task<BaseResultDto> InitData([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()

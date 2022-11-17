@@ -45,26 +45,26 @@
 
     <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
     <script>
-        if (window.navigator.userAgent.indexOf("Edge") > -1) {
+if (window.navigator.userAgent.indexOf("Edge") > -1) {
             console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
             window.fetch = undefined;
-        }
+}
     </script>
 
     <script src="./swagger-ui-bundle.js"></script>
     <script src="./swagger-ui-standalone-preset.js"></script>
     <script>
-        /* Source: https://gist.github.com/lamberta/3768814
-         * Parse a string function definition and return a function object. Does not use eval.
-         * @param {string} str
-         * @return {function}
-         *
-         * Example:
-         *  var f = function (x, y) { return x * y; };
-         *  var g = parseFunction(f.toString());
-         *  g(33, 3); //=> 99
-         */
-        function parseFunction(str) {
+/* Source: https://gist.github.com/lamberta/3768814
+                 * Parse a string function definition and return a function object. Does not use eval.
+                 * @param {string} str
+                 * @return {function}
+                 *
+                 * Example:
+                 *  var f = function (x, y) { return x * y; };
+                 *  var g = parseFunction(f.toString());
+                 *  g(33, 3); //=> 99
+                 */
+function parseFunction(str) {
             if (!str) return void (0);
 
             var fn_body_idx = str.indexOf('{'),
@@ -81,9 +81,9 @@
             Fn.prototype = Function.prototype;
 
             return new Fn();
-        }
+}
 
-        window.onload = function () {
+window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
             var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
 
@@ -122,7 +122,7 @@
             // End Swagger UI call region
 
             window.ui = ui
-        }
+}
     </script>
 </body>
 </html>

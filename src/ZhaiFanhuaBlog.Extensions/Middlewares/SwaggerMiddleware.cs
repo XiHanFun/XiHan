@@ -36,12 +36,20 @@ public static class SwaggerMiddleware
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
+            // 需要暴露的分组
+            var publishGroup = AppSettings.Swagger.PublishGroup;
             // 根据分组遍历展示
-            SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
+            typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
             {
-                //切换版本操作,参数一是使用的哪个json文件,参数二是个名字
-                options.SwaggerEndpoint($"/swagger/{swaggerinfo.UrlPrefix}/swagger.json", swaggerinfo.OpenApiInfo?.Title);
+                // 获取枚举值上的特性
+                if (publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower()))
+                {
+                    var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
+                    //切换分组操作,参数一是使用的哪个json文件,参数二是个名字
+                    options.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", info?.Title);
+                }
             });
+
             // 性能分析
             if (AppSettings.Miniprofiler.IsEnabled)
             {

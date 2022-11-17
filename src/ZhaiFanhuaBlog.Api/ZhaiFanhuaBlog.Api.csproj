@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="index.html" />
   </ItemGroup>
 
   <ItemGroup>

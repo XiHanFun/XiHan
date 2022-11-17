@@ -191,8 +191,8 @@ public class AppSettings
     /// </summary>
     public static class Swagger
     {
-        public static string Version => GetStringValue("Swagger:Version");
         public static string RoutePrefix => GetStringValue("Swagger:RoutePrefix");
+        public static string[] PublishGroup => GetStringArrayValue("Swagger:PublishGroup");
     }
 
     /// <summary>

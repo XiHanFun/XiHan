@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -35,43 +34,65 @@ public static class SwaggerSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // 用于最小API Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        // 用于最小API
         services.AddEndpointsApiExplorer();
-        // 配置Swagger,从路由、控制器和模型构建对象
+
+        // 利用枚举反射加载出每个分组的Doc配置Swagger，从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>
         {
-            string version = AppSettings.Swagger.Version;
-            //生成多个文档显示
-            SwaggerInfo.SwaggerInfos.ForEach(swaggerinfo =>
+            // 需要暴露的分组
+            var publishGroup = AppSettings.Swagger.PublishGroup;
+            // 遍历ApiGroupNames所有枚举值生成多个接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
+            typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
             {
-                //添加文档介绍
-                options.SwaggerDoc(swaggerinfo.UrlPrefix, new OpenApiInfo
+                // 获取枚举值上的特性
+                if (publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower()))
                 {
-                    Version = version,
-                    Title = swaggerinfo.OpenApiInfo?.Title,
-                    Description = swaggerinfo.OpenApiInfo?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
-                    Contact = new OpenApiContact
+                    var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
+                    // 添加文档介绍
+                    options.SwaggerDoc(group.Name, new OpenApiInfo
                     {
-                        Name = AppSettings.Site.Admin.Name,
-                        Email = AppSettings.Site.Admin.Email,
-                        Url = new Uri(AppSettings.Site.Domain)
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "MIT",
-                        Url = new Uri("https://opensource.org/licenses/MIT")
-                    }
-                });
-                // 根据相对路径排序
-                //options.OrderActionsBy(o => o.RelativePath);
+                        Title = info?.Title,
+                        Version = info?.Version,
+                        Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                        Contact = new OpenApiContact
+                        {
+                            Name = AppSettings.Site.Admin.Name,
+                            Email = AppSettings.Site.Admin.Email,
+                            Url = new Uri(AppSettings.Site.Domain)
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "MIT",
+                            Url = new Uri("https://opensource.org/licenses/MIT")
+                        }
+                    });
+                    // 根据相对路径排序
+                    //options.OrderActionsBy(o => o.RelativePath);
+                }
             });
 
-            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有（Auth）标签
+            // 核心逻辑代码，利用反射的类进行判断标签值，判断接口归于哪个分组
+            options.DocInclusionPredicate((docName, apiDescription) =>
+            {
+                // 反射拿到值
+                var actionlist = apiDescription.ActionDescriptor.EndpointMetadata.Where(x => x is ApiGroupAttribute);
+                if (actionlist.Any())
+                {
+                    // 判断是否包含这个分组
+                    var actionfilter = actionlist.FirstOrDefault() as ApiGroupAttribute;
+                    return actionfilter!.GroupNames.Any(x => x.ToString() == docName);
+                }
+                return false;
+            });
+
+            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有(Auth)标签
             Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
             {
                 // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
                 options.IncludeXmlComments(xmlPath, true);
             });
+
             // 定义安全方案
             var securityScheme = new OpenApiSecurityScheme
             {
@@ -91,13 +112,14 @@ public static class SwaggerSetup
             options.AddSecurityDefinition("oauth2", securityScheme);
             // 注册全局认证，即所有的接口都可以使用认证
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+             {
                 {
                     // 必须与上面声明的一致，否则小绿锁混乱,即API全部会加小绿锁
                     securityScheme,
                     Array.Empty<string>()
                 }
-            });
+             });
+
             // 枚举添加摘要
             options.UseInlineDefinitionsForEnums();
             // 文档中显示安全小绿锁

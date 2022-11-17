@@ -30,7 +30,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Blogs;
 /// 博客管理
 /// <code>包含：分类/文章/标签/评论/点赞/评论点赞</code>
 /// </summary>
-[ApiExplorerSettings(GroupName = SwaggerGroup.Backstage)]
+[ApiGroup(ApiGroupNames.Backstage)]
 public class BlogController : BaseApiController
 {
     private readonly IUserAccountService _IUserAccountService;
@@ -132,6 +132,7 @@ public class BlogController : BaseApiController
     /// <param name="guid"></param>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Category/{guid}")]
     public async Task<BaseResultDto> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -151,6 +152,7 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Categories")]
     public async Task<BaseResultDto> QueryBlogCategories([FromServices] IMapper iMapper)
     {

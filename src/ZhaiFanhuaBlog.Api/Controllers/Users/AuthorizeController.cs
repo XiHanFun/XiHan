@@ -29,7 +29,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Users;
 /// 登录授权
 /// <code>包含：JWT登录授权/第三方登录</code>
 /// </summary>
-[ApiExplorerSettings(GroupName = SwaggerGroup.Authorize)]
+[ApiGroup(ApiGroupNames.Authorize)]
 public class AuthorizeController : BaseApiController
 {
     private readonly IHttpContextAccessor _IHttpContextAccessor;
@@ -63,8 +63,6 @@ public class AuthorizeController : BaseApiController
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
         var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
-        // Swagger 登录
-        _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
     }
 
@@ -86,8 +84,6 @@ public class AuthorizeController : BaseApiController
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
         var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
         userAccount.LastLoginTime = DateTime.Now;
-        // Swagger 登录
-        _IHttpContextAccessor.HttpContext!.SigninToSwagger(token);
         return BaseResponseDto.OK(token);
     }
 
@@ -109,8 +105,6 @@ public class AuthorizeController : BaseApiController
                 var userAccountDtoRefresh = iMapper.Map<RUserAccountDto>(userAccountRefresh);
                 var tokenModelRefresh = iMapper.Map<TokenModel>(userAccountDtoRefresh);
                 var tokenRefresh = JwtTokenUtil.IssueJwtRefresh(tokenModelRefresh);
-                // Swagger 登录
-                _IHttpContextAccessor.HttpContext!.SigninToSwagger(tokenRefresh);
                 return BaseResponseDto.OK(tokenRefresh);
             }
         }
@@ -125,8 +119,6 @@ public class AuthorizeController : BaseApiController
     [HttpPost("Logout")]
     public async Task<BaseResultDto> Logout()
     {
-        // Swagger 登出
-        _IHttpContextAccessor.HttpContext!.SignoutToSwagger();
         return await Task.FromResult(BaseResponseDto.Continue());
     }
 }
