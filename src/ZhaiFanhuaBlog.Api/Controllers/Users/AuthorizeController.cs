@@ -14,11 +14,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Crypto;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Auth;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;

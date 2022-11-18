@@ -73,6 +73,7 @@ public class BlogController : BaseApiController
     /// <param name="cBlogCategoryDto"></param>
     /// <returns></returns>
     [HttpPost("Category")]
+    [ApiGroup(ApiGroupNames.Reception)]
     public async Task<BaseResultDto> CreateBlogCategory([FromServices] IMapper iMapper, [FromBody] CBlogCategoryDto cBlogCategoryDto)
     {
         var user = User.FindFirstValue("UserId");
@@ -132,7 +133,6 @@ public class BlogController : BaseApiController
     /// <param name="guid"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Category/{guid}")]
     public async Task<BaseResultDto> FindBlogCategory([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -152,7 +152,6 @@ public class BlogController : BaseApiController
     /// <param name="iMapper"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Categories")]
     public async Task<BaseResultDto> QueryBlogCategories([FromServices] IMapper iMapper)
     {

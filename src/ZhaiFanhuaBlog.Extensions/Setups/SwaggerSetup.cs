@@ -11,10 +11,12 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Xml.Linq;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Utils.Info;
@@ -38,7 +40,7 @@ public static class SwaggerSetup
         // 用于最小API
         services.AddEndpointsApiExplorer();
 
-        // 利用枚举反射加载出每个分组的Doc配置Swagger，从路由、控制器和模型构建对象
+        // 配置Swagger，从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>
         {
             // 配置Swagger文档信息
@@ -61,13 +63,14 @@ public static class SwaggerSetup
     {
         // 需要暴露的分组
         var publishGroup = AppSettings.Swagger.PublishGroup;
-        // 遍历ApiGroupNames所有枚举值生成多个接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
+        // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
         typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
             if (publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower()))
             {
-                var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
+                // 获取分组信息
+                var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
                 // 添加文档介绍
                 options.SwaggerDoc(group.Name, new OpenApiInfo
                 {
@@ -91,16 +94,33 @@ public static class SwaggerSetup
             }
         });
 
-        // 核心逻辑代码，利用反射的类进行判断标签值，判断接口归于哪个分组
+        // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true则暴露，否则隐藏
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
-            // 反射拿到值
+            //if (ApiGroupNames.All.ToString() == docName)
+            //{
+            //    return true;
+            //}
+
+            var aaa = apiDescription.ActionDescriptor;
+
+            // 反射拿到所有的分组名称
             var actionlist = apiDescription.ActionDescriptor.EndpointMetadata.Where(x => x is ApiGroupAttribute);
             if (actionlist.Any())
             {
-                // 判断是否包含这个分组
-                var actionfilter = actionlist.FirstOrDefault() as ApiGroupAttribute;
-                return actionfilter!.GroupNames.Any(x => x.ToString() == docName);
+                // 所有的分组名称是否含有此名称
+                var isContain = new List<bool>();
+                // 遍历判断是否包含这个分组
+                actionlist.ToList().ForEach(action =>
+                {
+                    var actionfilter = action as ApiGroupAttribute;
+                    isContain.Add(actionfilter!.GroupNames.Any(x => x.ToString() == docName));
+                });
+                // 若有一个符合，则为该分组名称分配此 Action
+                if (isContain.Any(c => c == true))
+                {
+                    return true;
+                }
             }
             return false;
         });
@@ -130,7 +150,7 @@ public static class SwaggerSetup
             Name = "Authorization",
             // Bearer认证的数据格式
             BearerFormat = "JWT",
-            // 认证主题，只对Type=Http生效，只能是Basic和Bearer
+            // 认证主题，在Type=Http时，只能是Basic和Bearer
             Scheme = "Bearer",
             // 表示认证信息发在Http请求的哪个位置
             In = ParameterLocation.Header,

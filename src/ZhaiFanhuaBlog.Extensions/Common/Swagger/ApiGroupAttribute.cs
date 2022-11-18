@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Swagger;
 /// <summary>
  /// ApiGroupAttribute
  /// </summary>
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
 public class ApiGroupAttribute : Attribute
 {
     /// <summary>
