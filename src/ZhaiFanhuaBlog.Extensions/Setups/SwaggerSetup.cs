@@ -11,12 +11,13 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using SqlSugar;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Xml.Linq;
+using System.Linq;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Utils.Info;
@@ -97,26 +98,31 @@ public static class SwaggerSetup
         // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true则暴露，否则隐藏
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
-            //if (ApiGroupNames.All.ToString() == docName)
-            //{
-            //    return true;
-            //}
+            // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
+            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor).ControllerTypeInfo?.BaseType?
+                                          .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
+                                          .ToList();
+            // 反射获取派生类 Action 的 ApiGroupAttribute 信息
+            var actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
+                                      .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
+                                      .ToList();
+            // 所有含 ApiGroupAttribute 集合
+            var apiGroupAttributeList = new List<ApiGroupAttribute>();
+            // 为空时插入空，减少 if 判断
+            var emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
+            apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
+            apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
 
-            var aaa = apiDescription.ActionDescriptor;
-
-            // 反射拿到所有的分组名称
-            var actionlist = apiDescription.ActionDescriptor.EndpointMetadata.Where(x => x is ApiGroupAttribute);
-            if (actionlist.Any())
+            // 判断所有的分组名称是否含有此名称
+            if (apiGroupAttributeList.Any())
             {
-                // 所有的分组名称是否含有此名称
                 var isContain = new List<bool>();
                 // 遍历判断是否包含这个分组
-                actionlist.ToList().ForEach(action =>
+                apiGroupAttributeList.ForEach(attribute =>
                 {
-                    var actionfilter = action as ApiGroupAttribute;
-                    isContain.Add(actionfilter!.GroupNames.Any(x => x.ToString() == docName));
+                    isContain.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
-                // 若有一个符合，则为该分组名称分配此 Action
+                // 若有，则为该分组名称分配此 Action
                 if (isContain.Any(c => c == true))
                 {
                     return true;

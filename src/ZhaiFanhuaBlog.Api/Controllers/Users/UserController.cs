@@ -115,6 +115,7 @@ public class UserController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Account/{guid}")]
     public async Task<BaseResultDto> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -135,6 +136,7 @@ public class UserController : BaseApiController
     /// <param name="pageDto"></param>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpPost("Accounts")]
     public async Task<BaseResultDto> QueryUserAccounts([FromServices] IMapper iMapper, [FromBody] BasePageDto pageDto)
     {
@@ -208,6 +210,7 @@ public class UserController : BaseApiController
     /// <param name="iMapper"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Account/Role/{guid}")]
     public async Task<BaseResultDto> FindUserAccountRole([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
@@ -223,6 +226,7 @@ public class UserController : BaseApiController
     /// </summary>
     /// <param name="iMapper"></param>
     /// <returns></returns>
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpGet("Account/Roles")]
     public async Task<BaseResultDto> QueryUserAccountRoles([FromServices] IMapper iMapper)
     {
