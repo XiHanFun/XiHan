@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:JwtSetup
+// FileName:AuthJwtSetup
 // Guid:fcc7eece-77f0-4f6c-bc50-fbb21dc9d96f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -23,18 +23,19 @@ using ZhaiFanhuaBlog.ViewModels.Response;
 namespace ZhaiFanhuaBlog.Setups;
 
 /// <summary>
-/// JwtSetup
+/// AuthJwtSetup
 /// </summary>
-public static class JwtSetup
+public static class AuthJwtSetup
 {
     /// <summary>
-    /// AuthenticationJwt服务扩展
+    /// AuthJwt 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddJwtSetup(this IServiceCollection services)
+    public static IServiceCollection AddAuthJwtSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
+
         // 读取配置
         var issuer = AppSettings.Auth.JWT.Issuer;
         var audience = AppSettings.Auth.JWT.Audience;

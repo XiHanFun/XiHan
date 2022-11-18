@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using AutoMapper;
-using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
+using ZhaiFanhuaBlog.Extensions.Common.Auth;
 using ZhaiFanhuaBlog.Models.Blogs;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Sites;

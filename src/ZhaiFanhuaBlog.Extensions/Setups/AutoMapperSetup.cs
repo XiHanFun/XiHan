@@ -22,7 +22,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class AutoMapperSetup
 {
     /// <summary>
-    /// AutoMapper服务扩展
+    /// AutoMapper 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

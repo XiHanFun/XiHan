@@ -23,7 +23,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class LogSetup
 {
     /// <summary>
-    /// Log服务扩展
+    /// Log 服务扩展
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>

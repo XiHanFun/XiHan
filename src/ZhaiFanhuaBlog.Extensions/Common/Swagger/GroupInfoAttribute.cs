@@ -16,7 +16,6 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Swagger;
 /// <summary>
  /// GroupInfoAttribute
  /// </summary>
-
 [AttributeUsage(AttributeTargets.Field)]
 public class GroupInfoAttribute : Attribute
 {
