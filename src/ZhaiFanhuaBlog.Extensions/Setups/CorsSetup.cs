@@ -22,7 +22,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class CorsSetup
 {
     /// <summary>
-    /// Cors服务扩展
+    /// Cors 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

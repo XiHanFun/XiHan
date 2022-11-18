@@ -22,7 +22,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class MiniProfilerSetup
 {
     /// <summary>
-    /// MiniProfiler扩展
+    /// MiniProfiler 扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

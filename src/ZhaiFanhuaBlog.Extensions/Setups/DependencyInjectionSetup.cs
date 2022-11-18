@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IocSetup
+// FileName:DependencyInjectionSetup
 // Guid:2340e05b-ffd7-4a19-84bc-c3f73517b696
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,16 +18,16 @@ using ZhaiFanhuaBlog.Core.Services;
 namespace ZhaiFanhuaBlog.Setups;
 
 /// <summary>
-/// IocSetup
+/// DependencyInjectionSetup
 /// </summary>
-public static class IocSetup
+public static class DependencyInjectionSetup
 {
     /// <summary>
-    /// IOC服务扩展
+    /// 依赖注入服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddIocSetup(this IServiceCollection services)
+    public static IServiceCollection AddDependencyInjectionSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 

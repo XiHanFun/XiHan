@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.HttpOverrides;
-using Serilog;
 using System.Reflection;
 using ZhaiFanhuaBlog.Api;
 using ZhaiFanhuaBlog.Core.AppSettings;
@@ -38,8 +37,8 @@ var services = builder.Services;
 ConsoleHelper.WriteLineWarning("Services Start……");
 // Cache
 services.AddCacheSetup();
-// JWT
-services.AddJwtSetup();
+// Auth
+services.AddAuthJwtSetup();
 // 健康检查
 services.AddHealthChecks();
 // Http请求
@@ -50,8 +49,8 @@ services.AddSwaggerSetup();
 services.AddMiniProfilerSetup();
 // SqlSugar
 services.AddSqlSugarSetup();
-// IOC
-services.AddIocSetup();
+// 依赖注入
+services.AddDependencyInjectionSetup();
 // AutoMapper
 services.AddAutoMapperSetup();
 // Route

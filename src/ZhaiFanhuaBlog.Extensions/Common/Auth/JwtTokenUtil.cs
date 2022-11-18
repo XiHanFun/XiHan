@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SqlSugar;
@@ -22,7 +21,7 @@ using System.Text;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Utils.Object;
 
-namespace ZhaiFanhuaBlog.Extensions.Common.Authorizations;
+namespace ZhaiFanhuaBlog.Extensions.Common.Auth;
 
 /// <summary>
 /// JwtTokenTool
@@ -34,7 +33,7 @@ public static class JwtTokenUtil
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
-    public static string IssueJwtAccess(TokenModel tokenModel)
+    public static string JwtIssue(TokenModel tokenModel)
     {
         try
         {
@@ -54,66 +53,6 @@ public static class JwtTokenUtil
             // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
             List<string> RootRolesClaim = new(tokenModel.RootRoles.Split(','));
             claims.AddRange(RootRolesClaim.Select(role => new Claim("RootRole", role)));
-
-            // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
-            SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha256);
-
-            // Nuget引入：System.IdentityModel.Tokens.Jwt
-            JwtSecurityToken securityToken = new(
-                // 自定义选项
-                claims: claims,
-                // 颁发者
-                issuer: issuer,
-                // 签收者
-                audience: audience,
-                // 秘钥
-                signingCredentials: credentials,
-                // 生效时间
-                notBefore: DateTime.Now,
-                // 过期时间
-                expires: DateTime.Now.AddMinutes(expires)
-            );
-            var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
-
-            return accessToken;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    }
-
-    /// <summary>
-    /// 颁发JWT字符串
-    /// </summary>
-    /// <param name="tokenModel"></param>
-    /// <returns></returns>
-    public static string IssueJwtRefresh(TokenModel tokenModel)
-    {
-        try
-        {
-            // 读取配置
-            var issuer = AppSettings.Auth.JWT.Issuer;
-            var audience = AppSettings.Auth.JWT.Audience;
-            var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
-            var expires = AppSettings.Auth.JWT.Expires;
-
-            // Nuget引入：Microsoft.IdentityModel.Tokens
-            var claims = new List<Claim>
-            {
-                new Claim("UserId", tokenModel.UserId.ToString()),
-                new Claim("UserName", tokenModel.UserName??string.Empty),
-                new Claim("NickName", tokenModel.NickName ?? string.Empty),
-            };
-
-            // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-            List<string> RootRolesClaim = new(tokenModel.RootRoles.Split(','));
-            claims.AddRange(RootRolesClaim.Select(role => new Claim("RootRole", role)));
-
-            //用户标识
-            var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
-            identity.AddClaims(claims);
 
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
@@ -149,10 +88,10 @@ public static class JwtTokenUtil
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public static TokenModel SerializeJwt(string token)
+    public static TokenModel JwtSerialize(string token)
     {
+        var tokenModel = new TokenModel();
         var jwtHandler = new JwtSecurityTokenHandler();
-        TokenModel tokenModel = new();
 
         // 开始Token校验
         if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
@@ -183,11 +122,11 @@ public static class JwtTokenUtil
     }
 
     /// <summary>
-    /// 安全验证Token，刷新Token用
+    /// Token安全验证，刷新Token用
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public static bool SafeVerifyJwt(string token)
+    public static bool JwtTokenSafeVerify(string token)
     {
         try
         {
@@ -198,17 +137,18 @@ public static class JwtTokenUtil
             SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha256);
             // 读取旧token
             var jwt = jwtHandler.ReadJwtToken(token);
-            return jwt.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwt.RawHeader + "." + jwt.RawPayload, credentials);
+            var verifyResult = jwt.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwt.RawHeader + "." + jwt.RawPayload, credentials);
+            return verifyResult;
         }
         catch (Exception)
         {
-            throw new ApplicationException("Token无效，请重新登录！");
+            throw new ApplicationException("Token 被篡改或无效");
         }
     }
 }
 
 /// <summary>
-/// 令牌
+/// Token 模型
 /// </summary>
 public class TokenModel
 {
