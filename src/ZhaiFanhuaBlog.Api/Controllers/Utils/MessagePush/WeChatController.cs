@@ -26,7 +26,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 /// 微信消息推送
 /// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
-[ApiGroup(ApiGroupNames.Common)]
+[ApiGroup(ApiGroupNames.Common, ApiGroupNames.Backstage)]
 public class WeChatController : BaseApiController
 {
     private readonly IWeChatMessagePush _IWeChatMessagePush;

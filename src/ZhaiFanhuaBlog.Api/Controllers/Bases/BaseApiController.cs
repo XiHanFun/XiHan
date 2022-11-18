@@ -13,6 +13,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 
 namespace ZhaiFanhuaBlog.Api.Controllers.Bases;
 
@@ -23,6 +24,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Bases;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[ApiGroup(ApiGroupNames.All)]
 public class BaseApiController : ControllerBase
 {
 }

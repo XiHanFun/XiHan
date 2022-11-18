@@ -14,11 +14,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Crypto;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Common.Auth;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
@@ -53,6 +51,7 @@ public class AuthorizeController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpPost("Login/Token/Name")]
     public async Task<BaseResultDto> GetTokenByName([FromServices] IMapper iMapper, CUserAccountLoginByNameDto cUserAccountLoginByNameDto)
     {
@@ -75,6 +74,7 @@ public class AuthorizeController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpPost("Login/Token/Email")]
     public async Task<BaseResultDto> GetTokenByEmail([FromServices] IMapper iMapper, CUserAccountLoginByEmailDto cUserAccountLoginByEmailDto)
     {
@@ -97,6 +97,7 @@ public class AuthorizeController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpPost("Login/Token/Refresh")]
     public async Task<BaseResultDto> GetTokenByRefresh([FromServices] IMapper iMapper, string token)
     {
@@ -121,6 +122,7 @@ public class AuthorizeController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [Authorize]
+    [ApiGroup(ApiGroupNames.Reception)]
     [HttpPost("Logout")]
     public async Task<BaseResultDto> Logout()
     {

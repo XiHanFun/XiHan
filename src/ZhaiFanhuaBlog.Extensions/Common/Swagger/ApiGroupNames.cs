@@ -19,6 +19,12 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Swagger;
 public enum ApiGroupNames
 {
     /// <summary>
+    /// 所有接口
+    /// </summary>
+    [GroupInfo(Title = "所有接口", Description = "这是用于生成调试接口的博客所有接口", Version = "v1.0.0-20221117")]
+    All,
+
+    /// <summary>
     /// 前台接口
     /// </summary>
     [GroupInfo(Title = "前台接口", Description = "这是用于普通用户浏览的博客前台接口", Version = "v1.0.0-20221117")]
