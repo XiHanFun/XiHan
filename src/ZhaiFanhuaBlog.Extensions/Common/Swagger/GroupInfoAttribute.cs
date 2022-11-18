@@ -14,9 +14,9 @@
 namespace ZhaiFanhuaBlog.Extensions.Common.Swagger;
 
 /// <summary>
- /// GroupInfoAttribute
+ /// 分组信息 Attribute
  /// </summary>
-[AttributeUsage(AttributeTargets.Field)]
+[AttributeUsage(AttributeTargets.Field, Inherited = true)]
 public class GroupInfoAttribute : Attribute
 {
     /// <summary>

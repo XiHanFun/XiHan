@@ -50,8 +50,6 @@ public class SiteController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("InitData")]
-    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    [ApiGroup(ApiGroupNames.Reception, ApiGroupNames.Test)]
     public async Task<BaseResultDto> InitData([FromServices] IMapper iMapper)
     {
         CSiteConfigurationDto configuration = new()
