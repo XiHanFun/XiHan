@@ -4,6 +4,35 @@
 
 
 
+## 2022-11-19
+
+1. [`升级`：运行时版本升级至.NET 7；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/c8dde07627e3eb82ea46d8f227b101a8afbf209b) 
+2. 新增：健康检查；
+3. [新增：API文档根据配置动态显示隐藏；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/4ca155190aec49cb72fd7aec44d538dedb6104c9) 
+4. 新增：同一Action可分配更多组显示；
+5. [新增：Swagger 添加所有接口；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/90bc5890fb1d3433d7211f0ea29816f1555f5219)
+6. 优化：分组代码，更简洁且容易配置；
+7. 优化：更新文档；
+8. [优化：所有代码版本添加region;](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/490d5d86df3570a017ae40b78318f78a21c7a6c9)
+9. [优化：Swagger封装；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/9e8bd1970025f0d9ffe71d51dc73ab1ecd6328f4)
+10. 修复：配置为空检测；
+11. [修复：接口文档所有接口分组获取出错的问题；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/cb29b1638bba914430d4bca83cb1f32faaa7015e)
+12. [修复：文档小绿锁混乱的问题；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/a03c57d673953735b651f845acf1f157905be734)
+
+## 2022-11-09
+
+1. [新增：微信消息推送；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/1452f089a608916bcd61f82183855071e2de316c) 
+2. [新增：微信文件上传；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/b4610b11ba02f488c1563094a924aa8be10699a5)
+3. [新增：钉钉消息推送；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/03668ad8111de7bf280431b207d2a2b82b380eb0)
+4. [新增：全局注入接口；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/f0569d5be93e9cd2b797197665392962c2a82269) 
+5. [新增：批量注入服务依赖；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/4be3fd54e93b91dd5f90623678911512a8299f2c)
+6. 优化：钉钉消息推送加密；
+7. [修复：钉钉卡片菜单消息图片和链接错误的bug；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/d145c967b684456a26947c31b7314ead3f968a16)
+
+## 2022-10-31
+
+1. [优化：接口层融合；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/737fd2277652d403949a891e3882d8d4a7d85c87)
+
 ## 2022-10-30
 
 1. [新增：系统字典管理；](https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/commit/62f568aa626a306e7f7f5832695db23547dfcc4b) 
