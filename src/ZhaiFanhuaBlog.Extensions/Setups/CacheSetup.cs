@@ -26,7 +26,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class CacheSetup
 {
     /// <summary>
-    /// Cache服务扩展
+    /// Cache 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

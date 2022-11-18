@@ -21,7 +21,7 @@ namespace ZhaiFanhuaBlog.Setups;
 public static class RouteSetup
 {
     /// <summary>
-    /// Route服务扩展
+    /// Route 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -33,7 +33,7 @@ public static class RouteSetup
         {
             route.LowercaseUrls = true;
             route.LowercaseQueryStrings = true;
-            // 路由前加后加斜杠 /
+            // 路由前后加斜杠 /
             route.AppendTrailingSlash = false;
         });
         return services;

@@ -14,9 +14,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Crypto;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
-using ZhaiFanhuaBlog.Extensions.Common.Authorizations;
+using ZhaiFanhuaBlog.Extensions.Common.Auth;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
+using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Services.Users;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;
@@ -62,7 +64,9 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
-        var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
+        var token = JwtTokenUtil.JwtIssue(tokenModel);
+        userAccount.LastLoginTime = DateTime.Now;
+        await _IUserAccountService.UpdateAsync(userAccount);
         return BaseResponseDto.OK(token);
     }
 
@@ -82,8 +86,9 @@ public class AuthorizeController : BaseApiController
             throw new ApplicationException("密码错误，请重新登录");
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
-        var token = JwtTokenUtil.IssueJwtAccess(tokenModel);
+        var token = JwtTokenUtil.JwtIssue(tokenModel);
         userAccount.LastLoginTime = DateTime.Now;
+        await _IUserAccountService.UpdateAsync(userAccount);
         return BaseResponseDto.OK(token);
     }
 
@@ -95,16 +100,16 @@ public class AuthorizeController : BaseApiController
     [HttpPost("Login/Token/Refresh")]
     public async Task<BaseResultDto> GetTokenByRefresh([FromServices] IMapper iMapper, string token)
     {
-        if (JwtTokenUtil.SafeVerifyJwt(token))
+        if (JwtTokenUtil.JwtTokenSafeVerify(token))
         {
             // 获取原用户信息
-            var tokenModel = JwtTokenUtil.SerializeJwt(token);
+            var tokenModel = JwtTokenUtil.JwtSerialize(token);
             if (tokenModel != null)
             {
                 var userAccountRefresh = await _IUserAccountService.FindUserAccountByGuidAsync(tokenModel.UserId);
                 var userAccountDtoRefresh = iMapper.Map<RUserAccountDto>(userAccountRefresh);
                 var tokenModelRefresh = iMapper.Map<TokenModel>(userAccountDtoRefresh);
-                var tokenRefresh = JwtTokenUtil.IssueJwtRefresh(tokenModelRefresh);
+                var tokenRefresh = JwtTokenUtil.JwtIssue(tokenModelRefresh);
                 return BaseResponseDto.OK(tokenRefresh);
             }
         }

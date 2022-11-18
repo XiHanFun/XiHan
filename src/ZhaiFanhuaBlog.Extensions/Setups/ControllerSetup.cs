@@ -59,7 +59,7 @@ public static class ControllerSetup
             // 时间格式化
             options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             // 忽略Model中为null的属性
-            //options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             //设置本地时间而非UTC时间
             options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
         });
