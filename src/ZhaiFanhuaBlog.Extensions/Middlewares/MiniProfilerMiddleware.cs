@@ -25,7 +25,8 @@ public static class MiniProfilerMiddleware
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 
-        if (AppSettings.Miniprofiler.IsEnabled)
+        bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled;
+        if (isEnabledMiniprofiler)
         {
             // 性能分析
             app.UseMiniProfiler();

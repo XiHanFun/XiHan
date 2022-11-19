@@ -95,8 +95,8 @@ app.UseCorsMiddleware();
 app.UseAuthentication();
 // 认证授权
 app.UseAuthorization();
-// 配置运行状况检查终端节点并需要授权用户
-app.MapHealthChecks("/health").RequireAuthorization();
+// 配置运行状况检查终端节点
+app.MapHealthChecks("/health");
 // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
 app.MapControllers();
 
