@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Setups;
 using ZhaiFanhuaBlog.Utils.Console;
+using ZhaiFanhuaBlog.Utils.Info;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
 
 var config = builder.Configuration;
 ConsoleHelper.WriteLineWarning("Configuration Start……");
-AppSettings appSettings = new(config);
+AppSettings appSettings = new(ApplicationInfoHelper.CurrentDirectory);
 ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
 var services = builder.Services;

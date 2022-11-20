@@ -13,6 +13,7 @@
 
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace ZhaiFanhuaBlog.Utils.Object;
 
@@ -21,6 +22,18 @@ namespace ZhaiFanhuaBlog.Utils.Object;
 /// </summary>
 public static class ObjectPropertyHelper
 {
+    /// <summary>
+    /// 获取属性全名并转化为读取方式 例如 AppSettings.Database.Initialization => Database:Initialization
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="_"></param>
+    /// <param name="fullName"></param>
+    /// <returns></returns>
+    public static string FullNameOf<T>(this T _, [CallerArgumentExpression("_")] string fullName = "")
+    {
+        return fullName;
+    }
+
     /// <summary>
     /// 利用反射来判断对象是否包含某个属性
     /// </summary>
@@ -161,7 +174,7 @@ public class CustomPropertyInfo
 public class CustomPropertyVariance
 {
     /// <summary>
-    /// 属性
+    /// 属性名称
     /// </summary>
     public string PropertyName { get; set; } = string.Empty;
 

@@ -30,6 +30,15 @@ public class AppSettings
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="configuration"></param>
+    public AppSettings(IConfiguration configuration)
+    {
+        _IConfiguration = configuration;
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
     /// <param name="contentPath"></param>
     public AppSettings(string contentPath)
     {
@@ -43,15 +52,6 @@ public class AppSettings
             // 如果存在环境配置文件，优先使用这里的配置
             .AddJsonFile($"appsettings.{environmentName}.json", true, true)
             .Build();
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="configuration"></param>
-    public AppSettings(IConfiguration configuration)
-    {
-        _IConfiguration = configuration;
     }
 
     #endregion 构造函数

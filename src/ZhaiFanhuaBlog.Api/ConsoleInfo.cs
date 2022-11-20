@@ -55,7 +55,7 @@ public static class ConsoleInfo
         $@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}".WriteLineInfo();
         $@"当前版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}".WriteLineInfo();
         $@"所在路径：{ApplicationInfoHelper.CurrentDirectory}".WriteLineInfo();
-        $@"运行路径：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
+        $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
         $@"占用磁盘空间：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();

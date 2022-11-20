@@ -37,11 +37,12 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-        ConsoleHelper.WriteLineWarning("数据库正在初始化……");
+
         // 数据库是否初始化
         bool initDatabase = AppSettings.Database.Initialization;
         if (!initDatabase)
         {
+            ConsoleHelper.WriteLineWarning("数据库正在初始化……");
             ConsoleHelper.WriteLineWarning("创建数据库……");
             // 创建数据库
             base.Context.DbMaintenance.CreateDatabase();
