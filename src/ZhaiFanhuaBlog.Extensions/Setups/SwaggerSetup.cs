@@ -17,7 +17,6 @@ using Microsoft.OpenApi.Models;
 using SqlSugar;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Utils.Info;
@@ -116,14 +115,14 @@ public static class SwaggerSetup
             // 判断所有的分组名称是否含有此名称
             if (apiGroupAttributeList.Any())
             {
-                var isContain = new List<bool>();
+                var containList = new List<bool>();
                 // 遍历判断是否包含这个分组
                 apiGroupAttributeList.ForEach(attribute =>
                 {
-                    isContain.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
+                    containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
                 // 若有，则为该分组名称分配此 Action
-                if (isContain.Any(c => c == true))
+                if (containList.Any(c => c == true))
                 {
                     return true;
                 }

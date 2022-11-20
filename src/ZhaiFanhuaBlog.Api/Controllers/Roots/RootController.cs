@@ -74,6 +74,7 @@ public class RootController : BaseApiController
     /// 初始化系统
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("InitData")]
     public async Task<bool> InitData()
     {
@@ -86,7 +87,7 @@ public class RootController : BaseApiController
         }
         catch (Exception ex)
         {
-            throw new Exception("初始化状态异常" + ex.Message);
+            throw new Exception("初始化状态异常：" + ex.Message);
         }
     }
 
