@@ -45,5 +45,5 @@ public class CBlogCommentDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(1, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(4000, ErrorMessage = "{0}不能多于{1}个字")]
-    public string TheContent { get; set; } = string.Empty;
+    public string CommContent { get; set; } = string.Empty;
 }

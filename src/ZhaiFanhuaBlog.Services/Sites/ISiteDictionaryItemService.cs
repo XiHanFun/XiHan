@@ -20,12 +20,12 @@ namespace ZhaiFanhuaBlog.Services.Sites;
 /// <summary>
 /// ISiteDictionaryItemService
 /// </summary>
-public interface ISiteDictionaryItemService : IBaseService<SiteDictionaryItem>, IScopeDependency
+public interface ISiteDictionaryItemService : IBaseService<SiteDictionaryInfo>, IScopeDependency
 {
     /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="SiteDictionaryItems"></param>
     /// <returns></returns>
-    Task<bool> InitSiteDictionaryItemAsync(List<SiteDictionaryItem> SiteDictionaryItems);
+    Task<bool> InitSiteDictionaryItemAsync(List<SiteDictionaryInfo> SiteDictionaryItems);
 }

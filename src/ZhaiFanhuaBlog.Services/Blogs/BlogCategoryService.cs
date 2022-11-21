@@ -76,7 +76,7 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     {
         if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级博客文章分类不存在");
-        if (await _IBlogCategoryRepository.FindAsync(e => e.Name == blogCategory.Name && !e.SoftDeleteLock) != null)
+        if (await _IBlogCategoryRepository.FindAsync(e => e.CategoryName == blogCategory.CategoryName && !e.SoftDeleteLock) != null)
             throw new ApplicationException("博客文章分类名称已存在");
         blogCategory.SoftDeleteLock = false;
         var result = await _IBlogCategoryRepository.CreateAsync(blogCategory);
@@ -114,7 +114,7 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
         await IsExistenceAsync(blogCategory.BaseId);
         if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级博客文章分类不存在");
-        if (await _IBlogCategoryRepository.FindAsync(e => e.Name == blogCategory.Name && !e.SoftDeleteLock) != null)
+        if (await _IBlogCategoryRepository.FindAsync(e => e.CategoryName == blogCategory.CategoryName && !e.SoftDeleteLock) != null)
             throw new ApplicationException("博客文章分类名称已存在");
         var result = await _IBlogCategoryRepository.UpdateAsync(blogCategory);
         if (result) blogCategory = await _IBlogCategoryRepository.FindAsync(blogCategory.BaseId);
@@ -140,7 +140,7 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     {
         var blogCategory = from blogcategory in await _IBlogCategoryRepository.QueryListAsync(e => !e.SoftDeleteLock)
                            orderby blogcategory.CreateTime descending
-                           orderby blogcategory.Name descending
+                           orderby blogcategory.CategoryName descending
                            select blogcategory;
         return blogCategory.ToList();
     }

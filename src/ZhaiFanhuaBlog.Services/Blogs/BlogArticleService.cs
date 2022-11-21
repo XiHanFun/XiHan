@@ -70,7 +70,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     /// <exception cref="ApplicationException"></exception>
     public async Task<bool> CreateBlogArticleAsync(BlogArticle blogArticle)
     {
-        if (await _IBlogArticleRepository.FindAsync(e => e.Title == blogArticle.Title && !e.SoftDeleteLock) != null)
+        if (await _IBlogArticleRepository.FindAsync(e => e.ArtTitle == blogArticle.ArtTitle && !e.SoftDeleteLock) != null)
             throw new ApplicationException("博客文章标题已存在");
         blogArticle.SoftDeleteLock = false;
         var result = await _IBlogArticleRepository.CreateAsync(blogArticle);
@@ -124,7 +124,7 @@ public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
     {
         var blogArticle = from blogarticle in await _IBlogArticleRepository.QueryListAsync(e => !e.SoftDeleteLock)
                           orderby blogarticle.CreateTime descending
-                          orderby blogarticle.Title descending
+                          orderby blogarticle.ArtTitle descending
                           select blogarticle;
         return blogArticle.ToList();
     }

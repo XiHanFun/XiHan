@@ -30,19 +30,19 @@ public class RootAnnouncement : BaseEntity
     /// 公告标题
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string Title { get; set; } = string.Empty;
+    public string AnnoTitle { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告内容
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(4000)")]
-    public string TheContent { get; set; } = string.Empty;
+    public string AnnoContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告链接
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
-    public string? Url { get; set; }
+    public string? AnnoUrl { get; set; }
 
     /// <summary>
     /// 公告结束时间

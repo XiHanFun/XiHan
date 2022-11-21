@@ -31,13 +31,13 @@ public class RootAuthority : BaseEntity
     /// 权限名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string Name { get; set; } = string.Empty;
+    public string AuthName { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限类型
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string Type { get; set; } = string.Empty;
+    public string AuthType { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限描述

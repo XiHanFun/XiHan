@@ -77,7 +77,7 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
     {
         if (userRole.ParentId != null && await _IRootRoleRepository.FindAsync(e => e.ParentId == userRole.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级系统角色不存在");
-        if (await _IRootRoleRepository.FindAsync(e => e.Name == userRole.Name) != null)
+        if (await _IRootRoleRepository.FindAsync(e => e.RoleName == userRole.RoleName) != null)
             throw new ApplicationException("系统角色名称已存在");
         userRole.SoftDeleteLock = false;
         var result = await _IRootRoleRepository.CreateAsync(userRole);
@@ -115,7 +115,7 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
         await IsExistenceAsync(userRole.BaseId);
         if (userRole.ParentId != null && await _IRootRoleRepository.FindAsync(e => e.ParentId == userRole.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级系统角色不存在");
-        if (await _IRootRoleRepository.FindAsync(e => e.Name == userRole.Name) != null)
+        if (await _IRootRoleRepository.FindAsync(e => e.RoleName == userRole.RoleName) != null)
             throw new ApplicationException("系统角色名称已存在");
         var result = await _IRootRoleRepository.UpdateAsync(userRole);
         if (result) userRole = await _IRootRoleRepository.FindAsync(userRole.BaseId);
@@ -141,7 +141,7 @@ public class RootRoleService : BaseService<RootRole>, IRootRoleService
     {
         var userRole = from userrole in await _IRootRoleRepository.QueryListAsync(e => !e.SoftDeleteLock)
                        orderby userrole.CreateTime descending
-                       orderby userrole.Name descending
+                       orderby userrole.RoleName descending
                        select userrole;
         return userRole.ToList();
     }

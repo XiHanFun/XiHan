@@ -112,7 +112,7 @@ public static class AuthJwtSetup
                         // 返回自定义的未授权模型数据
                         return Task.FromResult(BaseResponseDto.Unauthorized("授权已过期"));
                     }
-                    return Task.CompletedTask;
+                    return Task.FromResult(BaseResponseDto.Unauthorized());
                 },
                 // 未授权时
                 OnChallenge = context =>

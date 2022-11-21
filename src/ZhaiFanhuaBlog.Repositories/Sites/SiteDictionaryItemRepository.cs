@@ -19,6 +19,6 @@ namespace ZhaiFanhuaBlog.Repositories.Sites;
 /// <summary>
 /// SiteDictionaryItemRepository
 /// </summary>
-public class SiteDictionaryItemRepository : BaseRepository<SiteDictionaryItem>, ISiteDictionaryItemRepository
+public class SiteDictionaryItemRepository : BaseRepository<SiteDictionaryInfo>, ISiteDictionaryItemRepository
 {
 }

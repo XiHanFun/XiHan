@@ -33,17 +33,17 @@ public class RBlogArticleDto : BaseResultFieldDto
     /// <summary>
     /// 文章标题
     /// </summary>
-    public string Title { get; set; } = string.Empty;
+    public string ArtTitle { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章概要
     /// </summary>
-    public string? Summary { get; set; }
+    public string? ArtSummary { get; set; }
 
     /// <summary>
     /// 文章内容
     /// </summary>
-    public string TheContent { get; set; } = string.Empty;
+    public string ArtContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 阅读数量

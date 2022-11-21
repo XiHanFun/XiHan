@@ -31,7 +31,7 @@ public class RootRole : BaseEntity
     /// 角色名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string Name { get; set; } = string.Empty;
+    public string RoleName { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述

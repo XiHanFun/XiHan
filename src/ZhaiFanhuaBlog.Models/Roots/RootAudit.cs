@@ -40,11 +40,11 @@ public class RootAudit : BaseEntity
     /// 审核内容
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(2000)")]
-    public string TheContent { get; set; } = string.Empty;
+    public string AuditContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核结果
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
-    public string? Result { get; set; }
+    public string? AuditResult { get; set; }
 }

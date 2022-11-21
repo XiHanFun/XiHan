@@ -31,7 +31,7 @@ public class CRootRoleDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(10, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Name { get; set; } = string.Empty;
+    public string RoleName { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述

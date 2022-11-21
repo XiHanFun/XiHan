@@ -20,6 +20,6 @@ namespace ZhaiFanhuaBlog.Repositories.Sites;
 /// <summary>
 /// ISiteDictionaryItemRepository
 /// </summary>
-public interface ISiteDictionaryItemRepository : IBaseRepository<SiteDictionaryItem>, IScopeDependency
+public interface ISiteDictionaryItemRepository : IBaseRepository<SiteDictionaryInfo>, IScopeDependency
 {
 }

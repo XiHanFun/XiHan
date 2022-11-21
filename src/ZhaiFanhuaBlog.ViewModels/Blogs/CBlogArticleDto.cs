@@ -39,19 +39,19 @@ public class CBlogArticleDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(100, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Title { get; set; } = string.Empty;
+    public string ArtTitle { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章概要
     /// </summary>
     [MaxLength(500, ErrorMessage = "{0}不能多于{1}个字")]
-    public string? Summary { get; set; }
+    public string? ArtSummary { get; set; }
 
     /// <summary>
     /// 文章内容
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public string TheContent { get; set; } = string.Empty;
+    public string ArtContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否置顶 是(true)否(false)

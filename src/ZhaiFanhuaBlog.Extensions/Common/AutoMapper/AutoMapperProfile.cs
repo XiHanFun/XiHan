@@ -72,7 +72,7 @@ public class AutoMapperProfile : Profile
         // Jwt
         CreateMap<RUserAccountDto, TokenModel>()
             .ForMember(dest => dest.UserId, sourse => sourse.MapFrom(src => src.BaseId))
-            .ForMember(dest => dest.RootRoles, sourse => sourse.MapFrom(src => string.Join(',', src.RootRoles == null ? string.Empty : src.RootRoles.Select(r => r.Name).ToList())))
+            .ForMember(dest => dest.RootRoles, sourse => sourse.MapFrom(src => string.Join(',', src.RootRoles == null ? string.Empty : src.RootRoles.Select(r => r.RoleName).ToList())))
             .ReverseMap();
     }
 }

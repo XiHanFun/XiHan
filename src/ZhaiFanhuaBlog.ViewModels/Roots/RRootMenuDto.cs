@@ -28,7 +28,7 @@ public class RRootMenuDto : BaseResultFieldDto
     /// <summary>
     /// 菜单名称
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string MenuName { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单描述
@@ -38,12 +38,12 @@ public class RRootMenuDto : BaseResultFieldDto
     /// <summary>
     /// 路由地址
     /// </summary>
-    public string Route { get; set; } = string.Empty;
+    public string MenuRoute { get; set; } = string.Empty;
 
     /// <summary>
     /// 页面路径
     /// </summary>
-    public string Path { get; set; } = string.Empty;
+    public string ComponentPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单排序

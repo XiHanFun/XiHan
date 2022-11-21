@@ -29,7 +29,14 @@ public class UserLogin : BaseEntity
     /// <summary>
     /// 登录Ip
     /// </summary>
-    public string? LoginIp;
+    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
+    public string? LoginIp { get; set; }
+
+    /// <summary>
+    /// 登录地点
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
+    public string? LoginLocation { get; set; }
 
     /// <summary>
     /// 浏览器名称

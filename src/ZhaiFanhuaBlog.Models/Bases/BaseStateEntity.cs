@@ -25,5 +25,5 @@ public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
     /// 状态
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public SiteDictionaryItem? State { get; set; }
+    public SiteDictionaryInfo? State { get; set; }
 }

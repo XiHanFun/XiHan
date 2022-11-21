@@ -22,16 +22,22 @@ namespace ZhaiFanhuaBlog.Models.Sites;
 public class SiteDictionary : BaseDeleteEntity<Guid>
 {
     /// <summary>
-    /// 字典编码
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string Code { get; set; } = string.Empty;
-
-    /// <summary>
     /// 字典名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string Name { get; set; } = string.Empty;
+    public string DictName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 字典类型
+    ///</summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    public string DictType { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 排序字段
+    ///</summary>
+    [SugarColumn(IsNullable = true)]
+    public int? SortOrder { get; set; }
 
     /// <summary>
     /// 字典描述

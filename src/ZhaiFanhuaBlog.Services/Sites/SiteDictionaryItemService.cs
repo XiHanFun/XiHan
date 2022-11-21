@@ -20,7 +20,7 @@ namespace ZhaiFanhuaBlog.Services.Sites;
 /// <summary>
 /// SiteDictionaryItemService
 /// </summary>
-public class SiteDictionaryItemService : BaseService<SiteDictionaryItem>, ISiteDictionaryItemService
+public class SiteDictionaryItemService : BaseService<SiteDictionaryInfo>, ISiteDictionaryItemService
 {
     private readonly ISiteDictionaryItemRepository _ISiteDictionaryItemRepository;
 
@@ -39,7 +39,7 @@ public class SiteDictionaryItemService : BaseService<SiteDictionaryItem>, ISiteD
     /// </summary>
     /// <param name="SiteDictionaryItems"></param>
     /// <returns></returns>
-    public async Task<bool> InitSiteDictionaryItemAsync(List<SiteDictionaryItem> SiteDictionaryItems)
+    public async Task<bool> InitSiteDictionaryItemAsync(List<SiteDictionaryInfo> SiteDictionaryItems)
     {
         return await _ISiteDictionaryItemRepository.CreateBatchAsync(SiteDictionaryItems);
     }

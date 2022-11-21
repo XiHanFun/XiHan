@@ -33,7 +33,7 @@ public class RBlogCategoryDto : BaseResultFieldDto
     /// <summary>
     /// 分类名称
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string CategoryName { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类描述

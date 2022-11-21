@@ -68,27 +68,4 @@ public class SiteLog : BaseDeleteEntity<Guid>
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true)]
     public string? LogException { get; set; }
-
-    /// <summary>
-    /// 来源Ip
-    /// </summary>
-    public string? SourceIp;
-
-    /// <summary>
-    /// 请求类型 GET、POST等
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true)]
-    public string? RequestType { get; set; }
-
-    /// <summary>
-    /// 来源页面
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
-    public string? Referrer { get; set; }
-
-    /// <summary>
-    /// 代理信息
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
-    public string? Agent { get; set; }
 }

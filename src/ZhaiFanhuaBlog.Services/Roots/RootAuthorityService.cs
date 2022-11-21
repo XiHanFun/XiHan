@@ -76,7 +76,7 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     {
         if (rootAuthority.ParentId != null && await _IRootAuthorityRepository.FindAsync(e => e.ParentId == rootAuthority.ParentId && e.SoftDeleteLock == false) == null)
             throw new ApplicationException("父级系统权限不存在");
-        if (await _IRootAuthorityRepository.FindAsync(e => e.Name == rootAuthority.Name) != null)
+        if (await _IRootAuthorityRepository.FindAsync(e => e.AuthName == rootAuthority.AuthName) != null)
             throw new ApplicationException("系统权限名称已存在");
         rootAuthority.SoftDeleteLock = false;
         var result = await _IRootAuthorityRepository.CreateAsync(rootAuthority);
@@ -114,7 +114,7 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
         await IsExistenceAsync(rootAuthority.BaseId);
         if (rootAuthority.ParentId != null && await _IRootAuthorityRepository.FindAsync(e => e.ParentId == rootAuthority.ParentId && e.SoftDeleteLock == false) == null)
             throw new ApplicationException("父级系统权限不存在");
-        if (await _IRootAuthorityRepository.FindAsync(e => e.Name == rootAuthority.Name) != null)
+        if (await _IRootAuthorityRepository.FindAsync(e => e.AuthName == rootAuthority.AuthName) != null)
             throw new ApplicationException("系统权限名称已存在");
         rootAuthority.ModifyTime = DateTime.Now;
         var result = await _IRootAuthorityRepository.UpdateAsync(rootAuthority);
@@ -141,7 +141,7 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     {
         var rootAuthority = from userauthority in await _IRootAuthorityRepository.QueryListAsync(e => e.SoftDeleteLock == false)
                             orderby userauthority.CreateTime descending
-                            orderby userauthority.Name descending
+                            orderby userauthority.AuthName descending
                             select userauthority;
         return rootAuthority.ToList();
     }

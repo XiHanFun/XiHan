@@ -36,7 +36,7 @@ public class BlogCategory : BaseEntity
     /// 分类名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string Name { get; set; } = string.Empty;
+    public string CategoryName { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类描述
@@ -47,5 +47,5 @@ public class BlogCategory : BaseEntity
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int ArticleCount { get; set; } = 0;
+    public int ArtCount { get; set; } = 0;
 }

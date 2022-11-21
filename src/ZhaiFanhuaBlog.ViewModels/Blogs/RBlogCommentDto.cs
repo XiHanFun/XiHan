@@ -38,12 +38,12 @@ public class RBlogCommentDto : BaseResultFieldDto
     /// <summary>
     /// 评论内容
     /// </summary>
-    public string TheContent { get; set; } = string.Empty;
+    public string CommContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 评论点赞数
     /// </summary>
-    public int PollCount { get; set; } = 0;
+    public int CommPollCount { get; set; } = 0;
 
     /// <summary>
     /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项

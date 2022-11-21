@@ -30,19 +30,19 @@ public class RootFriendlyLink : BaseEntity
     /// 友链名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string Name { get; set; } = string.Empty;
+    public string LinkName { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)")]
-    public string AvatarPath { get; set; } = "/Images/RootFriendlyLink/Avatar/defult.png";
+    public string LinkAvatarPath { get; set; } = "/Images/RootFriendlyLink/Avatar/defult.png";
 
     /// <summary>
     /// 友链地址
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(200)")]
-    public string Url { get; set; } = string.Empty;
+    public string LinkUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 友链描述

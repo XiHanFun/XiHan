@@ -72,11 +72,11 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
     {
         if (rootMenu.ParentId != null && await _IRootMenuRepository.FindAsync(e => e.ParentId == rootMenu.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级系统菜单不存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Name == rootMenu.Name && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.MenuName == rootMenu.MenuName && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单名称已存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Path == rootMenu.Path && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.ComponentPath == rootMenu.ComponentPath && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单页面路经已存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Route == rootMenu.Route && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.MenuRoute == rootMenu.MenuRoute && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单路由已存在");
         rootMenu.SoftDeleteLock = false;
         var result = await _IRootMenuRepository.CreateAsync(rootMenu);
@@ -109,11 +109,11 @@ public class RootMenuService : BaseService<RootMenu>, IRootMenuService
         await IsExistenceAsync(rootMenu.BaseId);
         if (rootMenu.ParentId != null && await _IRootMenuRepository.FindAsync(e => e.ParentId == rootMenu.ParentId && !e.SoftDeleteLock) == null)
             throw new ApplicationException("父级系统菜单不存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Name == rootMenu.Name && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.MenuName == rootMenu.MenuName && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单名称已存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Path == rootMenu.Path && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.ComponentPath == rootMenu.ComponentPath && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单页面路经已存在");
-        if (await _IRootMenuRepository.FindAsync(e => e.Route == rootMenu.Route && !e.SoftDeleteLock) != null)
+        if (await _IRootMenuRepository.FindAsync(e => e.MenuRoute == rootMenu.MenuRoute && !e.SoftDeleteLock) != null)
             throw new ApplicationException("系统菜单路由已存在");
         rootMenu.ModifyTime = DateTime.Now;
         var result = await _IRootMenuRepository.UpdateAsync(rootMenu);

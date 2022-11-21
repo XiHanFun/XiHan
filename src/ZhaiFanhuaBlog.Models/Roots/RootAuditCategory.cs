@@ -31,7 +31,7 @@ public class RootAuditCategory : BaseEntity
     /// 审核分类名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string Name { get; set; } = string.Empty;
+    public string CategoryName { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核分类描述

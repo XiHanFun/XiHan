@@ -28,12 +28,12 @@ public class RRootAuthorityDto : BaseResultFieldDto
     /// <summary>
     /// 权限名称
     /// </summary>
-    public string? Name { get; set; }
+    public string? RoleName { get; set; }
 
     /// <summary>
     /// 权限类型
     /// </summary>
-    public string? Type { get; set; }
+    public string? RoleType { get; set; }
 
     /// <summary>
     /// 权限描述

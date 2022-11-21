@@ -31,7 +31,7 @@ public class CRootMenuDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(10, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Name { get; set; } = string.Empty;
+    public string MenuName { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单描述
@@ -44,14 +44,14 @@ public class CRootMenuDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(200, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Route { get; set; } = string.Empty;
+    public string MenuRoute { get; set; } = string.Empty;
 
     /// <summary>
-    /// 页面路径
+    /// 组件路径
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(2, ErrorMessage = "{0}不能少于{1}个字"), MaxLength(200, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Path { get; set; } = string.Empty;
+    public string ComponentPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单排序

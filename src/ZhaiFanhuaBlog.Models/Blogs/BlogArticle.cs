@@ -35,19 +35,19 @@ public class BlogArticle : BaseEntity
     /// 文章标题
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string Title { get; set; } = string.Empty;
+    public string ArtTitle { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章概要
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
-    public string? Summary { get; set; }
+    public string? ArtSummary { get; set; }
 
     /// <summary>
     /// 文章内容
     /// </summary>
     [SugarColumn(ColumnDataType = "text")]
-    public string TheContent { get; set; } = string.Empty;
+    public string ArtContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 阅读数量
