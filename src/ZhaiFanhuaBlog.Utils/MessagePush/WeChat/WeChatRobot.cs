@@ -27,21 +27,6 @@ public class WeChatRobot
     private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
-    /// 网络挂钩地址
-    /// </summary>
-    private readonly string _WebHookUrl = string.Empty;
-
-    /// <summary>
-    /// 文件上传地址
-    /// </summary>
-    private readonly string _UploadkUrl = string.Empty;
-
-    /// <summary>
-    /// 访问令牌
-    /// </summary>
-    private readonly string _Key = string.Empty;
-
-    /// <summary>
     /// 正式访问地址
     /// </summary>
     private readonly string _MessageUrl = string.Empty;
@@ -55,17 +40,12 @@ public class WeChatRobot
     /// 构造函数
     /// </summary>
     /// <param name="iHttpHelper"></param>
-    /// <param name="webHookUrl"></param>
-    /// <param name="uploadkUrl"></param>
-    /// <param name="key"></param>
-    public WeChatRobot(IHttpHelper iHttpHelper, string webHookUrl, string uploadkUrl, string key)
+    /// <param name="weChatConnection"></param>
+    public WeChatRobot(IHttpHelper iHttpHelper, WeChatConnection weChatConnection)
     {
         _IHttpHelper = iHttpHelper;
-        _WebHookUrl = webHookUrl;
-        _UploadkUrl = uploadkUrl;
-        _Key = key;
-        _MessageUrl = _WebHookUrl + "?key=" + _Key;
-        _FileUrl = _UploadkUrl + "?key=" + _Key + "&type=";
+        _MessageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
+        _FileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=";
     }
 
     /// <summary>

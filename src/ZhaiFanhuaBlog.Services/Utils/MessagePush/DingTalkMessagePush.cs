@@ -30,21 +30,6 @@ public class DingTalkMessagePush : IDingTalkMessagePush
     private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
-    /// 网络挂钩地址
-    /// </summary>
-    private readonly string _WebHookUrl = string.Empty;
-
-    /// <summary>
-    /// 访问令牌
-    /// </summary>
-    private readonly string _AccessToken = string.Empty;
-
-    /// <summary>
-    /// 机密
-    /// </summary>
-    private readonly string? _Secret = string.Empty;
-
-    /// <summary>
     /// 机器人实例
     /// </summary>
     private readonly DingTalkRobot _DingTalkRobot;
@@ -56,10 +41,13 @@ public class DingTalkMessagePush : IDingTalkMessagePush
     public DingTalkMessagePush(IHttpHelper iHttpHelper)
     {
         _IHttpHelper = iHttpHelper;
-        _WebHookUrl = AppSettings.DingTalk.WebHookUrl;
-        _AccessToken = AppSettings.DingTalk.AccessToken;
-        _Secret = AppSettings.DingTalk.Secret;
-        _DingTalkRobot = new DingTalkRobot(_IHttpHelper, _WebHookUrl, _AccessToken, _Secret);
+        DingTalkConnection conn = new()
+        {
+            WebHookUrl = AppSettings.DingTalk.WebHookUrl,
+            AccessToken = AppSettings.DingTalk.AccessToken,
+            Secret = AppSettings.DingTalk.Secret
+        };
+        _DingTalkRobot = new DingTalkRobot(_IHttpHelper, conn);
     }
 
     #region DingTalk

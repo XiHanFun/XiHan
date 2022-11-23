@@ -30,16 +30,6 @@ public class DingTalkRobot
     private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
-    /// 网络挂钩地址
-    /// </summary>
-    private readonly string _WebHookUrl = string.Empty;
-
-    /// <summary>
-    /// 访问令牌
-    /// </summary>
-    private readonly string _AccessToken = string.Empty;
-
-    /// <summary>
     /// 正式访问地址
     /// </summary>
     private readonly string _Url = string.Empty;
@@ -53,16 +43,12 @@ public class DingTalkRobot
     /// 构造函数
     /// </summary>
     /// <param name="iHttpHelper"></param>
-    /// <param name="webHookUrl"></param>
-    /// <param name="accessToken"></param>
-    /// <param name="secret"></param>
-    public DingTalkRobot(IHttpHelper iHttpHelper, string webHookUrl, string accessToken, string? secret)
+    /// <param name="dingTalkConnection"></param>
+    public DingTalkRobot(IHttpHelper iHttpHelper, DingTalkConnection dingTalkConnection)
     {
         _IHttpHelper = iHttpHelper;
-        _WebHookUrl = webHookUrl;
-        _AccessToken = accessToken;
-        _Url = _WebHookUrl + "?access_token=" + _AccessToken;
-        _Secret = secret;
+        _Url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
+        _Secret = dingTalkConnection.Secret;
     }
 
     /// <summary>

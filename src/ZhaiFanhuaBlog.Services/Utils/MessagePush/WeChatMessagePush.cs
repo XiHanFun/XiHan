@@ -31,21 +31,6 @@ public class WeChatMessagePush : IWeChatMessagePush
     private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
-    /// 网络挂钩地址
-    /// </summary>
-    private readonly string _WebHookUrl = string.Empty;
-
-    /// <summary>
-    /// 文件上传地址
-    /// </summary>
-    private readonly string _UploadkUrl = string.Empty;
-
-    /// <summary>
-    /// 访问令牌
-    /// </summary>
-    private readonly string _Key = string.Empty;
-
-    /// <summary>
     /// 机器人实例
     /// </summary>
     private readonly WeChatRobot _WeChatRobot;
@@ -56,10 +41,13 @@ public class WeChatMessagePush : IWeChatMessagePush
     public WeChatMessagePush(IHttpHelper iHttpHelper)
     {
         _IHttpHelper = iHttpHelper;
-        _WebHookUrl = AppSettings.WeChart.WebHookUrl;
-        _UploadkUrl = AppSettings.WeChart.UploadkUrl;
-        _Key = AppSettings.WeChart.Key;
-        _WeChatRobot = new WeChatRobot(_IHttpHelper, _WebHookUrl, _UploadkUrl, _Key);
+        WeChatConnection conn = new()
+        {
+            WebHookUrl = AppSettings.WeChart.WebHookUrl,
+            UploadkUrl = AppSettings.WeChart.UploadkUrl,
+            Key = AppSettings.WeChart.Key
+        };
+        _WeChatRobot = new WeChatRobot(_IHttpHelper, conn);
     }
 
     /// <summary>
