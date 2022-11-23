@@ -42,8 +42,8 @@ public static class LogSetup
 #else
                 .MinimumLevel.Information()
 #endif
-                // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Information
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                // 日志调用类命名空间如果以 Microsoft 开头，覆盖日志输出最小级别为 Warning
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 // 输出到控制台
                 //.WriteTo.Console()
                 .Enrich.FromLogContext()

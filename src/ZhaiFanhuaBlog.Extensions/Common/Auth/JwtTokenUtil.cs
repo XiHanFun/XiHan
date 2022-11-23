@@ -69,9 +69,9 @@ public static class JwtTokenUtil
                 // 秘钥
                 signingCredentials: credentials,
                 // 生效时间
-                notBefore: DateTime.Now,
+                notBefore: DateTime.UtcNow,
                 // 过期时间
-                expires: DateTime.Now.AddMinutes(expires)
+                expires: DateTime.UtcNow.AddMinutes(expires)
             );
             var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
 

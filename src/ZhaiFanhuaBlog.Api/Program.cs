@@ -31,7 +31,7 @@ ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
 
 var config = builder.Configuration;
 ConsoleHelper.WriteLineWarning("Configuration Start……");
-AppSettings appSettings = new(ApplicationInfoHelper.CurrentDirectory);
+AppSettings appSettings = new(config);
 ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
 var services = builder.Services;
