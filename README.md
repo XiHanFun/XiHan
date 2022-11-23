@@ -4,7 +4,7 @@
         <img style="height:200px" align="center" src="LOGO.png" />
 </div>
 
-This is a backend repository for DotNet6 based blog projects.
+This is a backend repository for DotNet7 based blog projects.
 
 [贡献代码](CONTRIBUTING.md)
 
@@ -76,7 +76,7 @@ dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Pro
 
 ## Status
 
-![Alt](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg "Repobeats analytics image")
+![](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg)
 
 ## Star History
 
