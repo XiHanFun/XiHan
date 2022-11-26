@@ -1,9 +1,6 @@
 # ZhaiFanhuaBlog.Framework
 
-<div style="width: 200px;margin: 0 auto;">
-        <img style="width:200px" align="center" src="LOGO.png" />
-</div>
-
+![LOGO](LOGO.png)
 
 
 This is a backend repository for DotNet7 based blog projects.
