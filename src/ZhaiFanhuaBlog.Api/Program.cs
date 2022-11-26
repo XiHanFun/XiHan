@@ -18,7 +18,6 @@ using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Setups;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.Info;
 
 var builder = WebApplication.CreateBuilder(args);
 

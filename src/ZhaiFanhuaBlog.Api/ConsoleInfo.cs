@@ -30,6 +30,8 @@ public static class ConsoleInfo
     /// </summary>
     public static void Print()
     {
+        ApplicationInfoHelper.Logo.WriteLineHandle();
+        ApplicationInfoHelper.Copyright.WriteLineHandle();
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
         $@"系统描述：{SystemInfoHelper.OSDescription}".WriteLineInfo();
@@ -50,10 +52,8 @@ public static class ConsoleInfo
         $@"用户域名：{EnvironmentInfoHelper.UserDomainName}".WriteLineInfo();
         $@"关联用户：{EnvironmentInfoHelper.UserName}".WriteLineInfo();
         "==============================应用信息==============================".WriteLineInfo();
-        ApplicationInfoHelper.Logo.WriteLineHandle();
-        ApplicationInfoHelper.Copyright.WriteLineHandle();
         $@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}".WriteLineInfo();
-        $@"当前版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}".WriteLineInfo();
+        $@"应用版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}".WriteLineInfo();
         $@"所在路径：{ApplicationInfoHelper.CurrentDirectory}".WriteLineInfo();
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
