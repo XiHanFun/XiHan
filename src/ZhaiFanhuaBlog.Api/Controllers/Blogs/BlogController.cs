@@ -358,7 +358,9 @@ public class BlogController : BaseApiController
     {
         var blogTags = await _IBlogTagService.QueryBlogTagAsync();
         if (blogTags.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogTagDto>>(blogTags));
+        }
         return BaseResponseDto.BadRequest("未查询到博客标签");
     }
 
@@ -458,7 +460,9 @@ public class BlogController : BaseApiController
     {
         var blogArticleTags = await _IBlogArticleTagService.QueryBlogArticleTagAsync();
         if (blogArticleTags.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogArticleTagDto>>(blogArticleTags));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章标签");
     }
 
@@ -560,7 +564,9 @@ public class BlogController : BaseApiController
     {
         var blogCategories = await _IBlogPollService.QueryBlogPollAsync();
         if (blogCategories.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogPollDto>>(blogCategories));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章点赞");
     }
 

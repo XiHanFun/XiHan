@@ -51,7 +51,9 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
     {
         var rootRoleAuthority = await _IRootRoleAuthorityRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
         if (rootRoleAuthority == null)
+        {
             throw new ApplicationException("系统角色权限不存在");
+        }
         return rootRoleAuthority;
     }
 
@@ -81,7 +83,9 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         await _IRootAuthorityService.IsExistenceAsync(rootRoleAuthority.AuthorityId);
         await _IRootRoleService.IsExistenceAsync(rootRoleAuthority.RoleId);
         if (await _IRootRoleAuthorityRepository.FindAsync(e => e.AuthorityId == rootRoleAuthority.AuthorityId && e.RoleId == rootRoleAuthority.RoleId) != null)
+        {
             throw new ApplicationException("系统角色权限已存在");
+        }
         rootRoleAuthority.SoftDeleteLock = false;
         var result = await _IRootRoleAuthorityRepository.CreateAsync(rootRoleAuthority);
         return result;
@@ -114,7 +118,9 @@ public class RootRoleAuthorityService : BaseService<RootRoleAuthority>, IRootRol
         await _IRootAuthorityService.IsExistenceAsync(rootRoleAuthority.AuthorityId);
         await _IRootRoleService.IsExistenceAsync(rootRoleAuthority.RoleId);
         if (await _IRootRoleAuthorityRepository.FindAsync(e => e.AuthorityId == rootRoleAuthority.AuthorityId && e.RoleId == rootRoleAuthority.RoleId && e.SoftDeleteLock == false) != null)
+        {
             throw new ApplicationException("系统角色权限已存在");
+        }
         rootRoleAuthority.ModifyTime = DateTime.Now;
         var result = await _IRootRoleAuthorityRepository.UpdateAsync(rootRoleAuthority);
         if (result) rootRoleAuthority = await _IRootRoleAuthorityRepository.FindAsync(rootRoleAuthority.BaseId);

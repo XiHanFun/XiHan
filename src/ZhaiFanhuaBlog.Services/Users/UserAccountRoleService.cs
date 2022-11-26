@@ -52,7 +52,9 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
     {
         var userAccountRole = await _IUserAccountRoleRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
         if (userAccountRole == null)
+        {
             throw new ApplicationException("用户账户角色不存在");
+        }
         return userAccountRole;
     }
 
@@ -82,7 +84,9 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
         await _IRootRoleService.IsExistenceAsync(userAccountRole.RoleId);
         if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
+        {
             throw new ApplicationException("用户账户角色已存在");
+        }
         userAccountRole.SoftDeleteLock = false;
         var result = await _IUserAccountRoleRepository.CreateAsync(userAccountRole);
         return result;
@@ -115,7 +119,9 @@ public class UserAccountRoleService : BaseService<UserAccountRole>, IUserAccount
         await _IUserAccountService.IsExistenceAsync(userAccountRole.AccountId);
         await _IRootRoleService.IsExistenceAsync(userAccountRole.RoleId);
         if (await _IUserAccountRoleRepository.FindAsync(e => e.AccountId == userAccountRole.AccountId && e.RoleId == userAccountRole.RoleId && !e.SoftDeleteLock) != null)
+        {
             throw new ApplicationException("用户账户角色已存在");
+        }
         userAccountRole.ModifyTime = DateTime.Now;
         var result = await _IUserAccountRoleRepository.UpdateAsync(userAccountRole);
         if (result) userAccountRole = await _IUserAccountRoleRepository.FindAsync(userAccountRole.BaseId);

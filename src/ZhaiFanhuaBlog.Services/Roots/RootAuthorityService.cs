@@ -47,7 +47,10 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     {
         var rootAuthority = await _IRootAuthorityRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
         if (rootAuthority == null)
+        {
             throw new ApplicationException("系统权限不存在");
+        }
+
         return rootAuthority;
     }
 
@@ -75,9 +78,13 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     public async Task<bool> CreateRootAuthorityAsync(RootAuthority rootAuthority)
     {
         if (rootAuthority.ParentId != null && await _IRootAuthorityRepository.FindAsync(e => e.ParentId == rootAuthority.ParentId && e.SoftDeleteLock == false) == null)
+        {
             throw new ApplicationException("父级系统权限不存在");
+        }
         if (await _IRootAuthorityRepository.FindAsync(e => e.AuthName == rootAuthority.AuthName) != null)
+        {
             throw new ApplicationException("系统权限名称已存在");
+        }
         rootAuthority.SoftDeleteLock = false;
         var result = await _IRootAuthorityRepository.CreateAsync(rootAuthority);
         return result;
@@ -94,9 +101,13 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     {
         var rootAuthority = await IsExistenceAsync(guid);
         if ((await _IRootAuthorityRepository.QueryListAsync(e => e.ParentId == rootAuthority.ParentId && e.SoftDeleteLock == false)).Count != 0)
+        {
             throw new ApplicationException("该系统权限下有子系统权限，不能删除");
+        }
         if ((await _IRootRoleAuthorityRepository.QueryListAsync(e => e.AuthorityId == rootAuthority.BaseId)).Count != 0)
+        {
             throw new ApplicationException("该系统权限已有系统角色使用，不能删除");
+        }
         rootAuthority.SoftDeleteLock = true;
         rootAuthority.DeleteId = deleteId;
         rootAuthority.DeleteTime = DateTime.Now;
@@ -113,9 +124,13 @@ public class RootAuthorityService : BaseService<RootAuthority>, IRootAuthoritySe
     {
         await IsExistenceAsync(rootAuthority.BaseId);
         if (rootAuthority.ParentId != null && await _IRootAuthorityRepository.FindAsync(e => e.ParentId == rootAuthority.ParentId && e.SoftDeleteLock == false) == null)
+        {
             throw new ApplicationException("父级系统权限不存在");
+        }
         if (await _IRootAuthorityRepository.FindAsync(e => e.AuthName == rootAuthority.AuthName) != null)
+        {
             throw new ApplicationException("系统权限名称已存在");
+        }
         rootAuthority.ModifyTime = DateTime.Now;
         var result = await _IRootAuthorityRepository.UpdateAsync(rootAuthority);
         if (result) rootAuthority = await _IRootAuthorityRepository.FindAsync(rootAuthority.BaseId);

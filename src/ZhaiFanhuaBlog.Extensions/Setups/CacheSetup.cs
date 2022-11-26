@@ -32,7 +32,10 @@ public static class CacheSetup
     /// <returns></returns>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 内存缓存
         if (AppSettings.Cache.MemoryCache.IsEnabled)

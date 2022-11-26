@@ -35,7 +35,10 @@ public static class SwaggerSetup
     /// <returns></returns>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 用于最小API
         services.AddEndpointsApiExplorer();

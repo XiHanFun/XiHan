@@ -29,7 +29,10 @@ public static class DependencyInjectionSetup
     /// <returns></returns>
     public static IServiceCollection AddDependencyInjectionSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 全局依赖注入接口
         var baseType = typeof(IDependency);

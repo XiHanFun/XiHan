@@ -28,7 +28,10 @@ public static class CorsSetup
     /// <returns></returns>
     public static IServiceCollection AddCorsSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         bool isEnabledCors = AppSettings.Cors.IsEnabled;
         if (isEnabledCors)

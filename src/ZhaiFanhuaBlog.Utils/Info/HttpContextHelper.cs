@@ -27,8 +27,8 @@ public class HttpContextHelper
     public HttpContextHelper(HttpContext httpContext)
     {
         var header = httpContext.Request.HttpContext.Request.Headers;
-        RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4()?.ToString();
-        RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6()?.ToString();
+        RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4()?.ToString();
+        RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv6()?.ToString();
 
         var ua = header["User-Agent"].ToString().ToLower();
         Agent = ua;
@@ -106,35 +106,65 @@ public class HttpContextHelper
         string sn = "Unknown";
 
         if (ua.Contains("nt 5.0"))
+        {
             sn = "Windows 2000";
+        }
         else if (ua.Contains("nt 5.1"))
+        {
             sn = "Windows XP";
+        }
         else if (ua.Contains("nt 5.2"))
+        {
             sn = "Windows 2003";
+        }
         else if (ua.Contains("nt 6.0"))
+        {
             sn = "Windows Vista";
+        }
         else if (ua.Contains("nt 6.1"))
+        {
             sn = "Windows 7";
+        }
         else if (ua.Contains("nt 6.2"))
+        {
             sn = "Windows 8";
+        }
         else if (ua.Contains("nt 6.3"))
+        {
             sn = "Windows 8.1";
+        }
         else if (ua.Contains("nt 6.4") || ua.Contains("nt 10.0"))
+        {
             sn = "Windows 10";
+        }
         else if (ua.Contains("android"))
+        {
             sn = "Android";
+        }
         else if (ua.Contains("mac os x"))
+        {
             sn = "IOS";
+        }
         else if (ua.Contains("windows phone"))
+        {
             sn = "Windows Phone";
+        }
         else if (ua.Contains("unix"))
+        {
             sn = "Unix";
+        }
         else if (ua.Contains("linux"))
+        {
             sn = "Linux";
+        }
         else if (ua.Contains("mac"))
+        {
             sn = "Mac";
+        }
         else if (ua.Contains("sunos"))
+        {
             sn = "SunOS";
+        }
         return sn;
     }
 
@@ -161,33 +191,61 @@ public class HttpContextHelper
     {
         string bn = "Unknown";
         if (ua.Contains("opera/ucweb"))
+        {
             bn = "UC Opera";
+        }
         else if (ua.Contains("openwave/ucweb"))
+        {
             bn = "UCOpenwave";
+        }
         else if (ua.Contains("ucweb"))
+        {
             bn = "UC";
+        }
         else if (ua.Contains("360se"))
+        {
             bn = "360";
+        }
         else if (ua.Contains("metasr"))
+        {
             bn = "搜狗";
+        }
         else if (ua.Contains("maxthon"))
+        {
             bn = "遨游";
+        }
         else if (ua.Contains("the world"))
+        {
             bn = "世界之窗";
+        }
         else if (ua.Contains("tencenttraveler") || ua.Contains("qqbn"))
+        {
             bn = "腾讯";
+        }
         else if (ua.Contains("msie"))
+        {
             bn = "IE";
+        }
         else if (ua.Contains("edg"))
+        {
             bn = "Edge";
+        }
         else if (ua.Contains("chrome"))
+        {
             bn = "Chrome";
+        }
         else if (ua.Contains("safari"))
+        {
             bn = "Safari";
+        }
         else if (ua.Contains("firefox"))
+        {
             bn = "Firefox";
+        }
         else if (ua.Contains("opera"))
+        {
             bn = "Opera";
+        }
 
         return bn;
     }

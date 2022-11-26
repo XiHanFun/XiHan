@@ -11,6 +11,10 @@
 
 #endregion <<版权版本注释>>
 
+using Google.Protobuf.WellKnownTypes;
+using System;
+using System.Text;
+
 namespace ZhaiFanhuaBlog.Utils.Date;
 
 /// <summary>
@@ -21,52 +25,52 @@ public class CNDate
     /// <summary>
     /// 农历年(整型)
     /// </summary>
-    public int cnIntYear = 0;
+    public int cnIntYear { get; set; }
 
     /// <summary>
     /// 农历月份(整型)
     /// </summary>
-    public int cnIntMonth = 0;
+    public int cnIntMonth { get; set; }
 
     /// <summary>
     /// 农历天(整型)
     /// </summary>
-    public int cnIntDay = 0;
+    public int cnIntDay { get; set; }
 
     /// <summary>
     /// 农历年(支干)
     /// </summary>
-    public string cnStrYear = "";
+    public string cnStrYear { get; set; } = "";
 
     /// <summary>
     /// 农历月份(字符)
     /// </summary>
-    public string cnStrMonth = "";
+    public string cnStrMonth { get; set; } = "";
 
     /// <summary>
     /// 农历天(字符)
     /// </summary>
-    public string cnStrDay = "";
+    public string cnStrDay { get; set; } = "";
 
     /// <summary>
     /// 农历属象
     /// </summary>
-    public string cnAnm = "";
+    public string cnAnm { get; set; } = "";
 
     /// <summary>
     /// 二十四节气
     /// </summary>
-    public string cnSolarTerm = "";
+    public string cnSolarTerm { get; set; } = "";
 
     /// <summary>
     /// 阴历节日
     /// </summary>
-    public string cnFtvl = "";
+    public string cnFtvl { get; set; } = "";
 
     /// <summary>
     /// 阳历节日
     /// </summary>
-    public string cnFtvs = "";
+    public string cnFtvs { get; set; } = "";
 }
 
 /// <summary>
@@ -492,6 +496,9 @@ public class ChinaDate
             case 9:
                 a += "九";
                 break;
+
+            default:
+                break;
         }
         return a;
     }
@@ -535,12 +542,32 @@ public class ChinaDate
         switch ((int)dt.DayOfWeek)
         {
             //case 1: d = 0; break;
-            case 2: d = -1; break;
-            case 3: d = -2; break;
-            case 4: d = -3; break;
-            case 5: d = -4; break;
-            case 6: d = -5; break;
-            case 0: d = -6; break;
+            case 2:
+                d = -1;
+                break;
+
+            case 3:
+                d = -2;
+                break;
+
+            case 4:
+                d = -3;
+                break;
+
+            case 5:
+                d = -4;
+                break;
+
+            case 6:
+                d = -5;
+                break;
+
+            case 0:
+                d = -6;
+                break;
+
+            default:
+                break;
         }
         return dt.AddDays(d);
     }
@@ -632,7 +659,7 @@ public class ChineseCalendar
     /// <summary>
     /// 阳历
     /// </summary>
-    private struct SolarHolidayStruct
+    private struct SolarHolidayStruct : IEquatable<SolarHolidayStruct>
     {
         public int Month;
         public int Day;
@@ -646,12 +673,17 @@ public class ChineseCalendar
             Recess = recess;
             HolidayName = name;
         }
+
+        public bool Equals(SolarHolidayStruct other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <summary>
     /// 农历
     /// </summary>
-    private struct LunarHolidayStruct
+    private struct LunarHolidayStruct : IEquatable<LunarHolidayStruct>
     {
         public int Month;
         public int Day;
@@ -665,9 +697,14 @@ public class ChineseCalendar
             Recess = recess;
             HolidayName = name;
         }
+
+        public bool Equals(LunarHolidayStruct other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    private struct WeekHolidayStruct
+    private struct WeekHolidayStruct : IEquatable<WeekHolidayStruct>
     {
         public int Month;
         public int WeekAtMonth;
@@ -680,6 +717,11 @@ public class ChineseCalendar
             WeekAtMonth = weekAtMonth;
             WeekDay = weekDay;
             HolidayName = name;
+        }
+
+        public bool Equals(WeekHolidayStruct other)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -1272,7 +1314,11 @@ public class ChineseCalendar
     /// </summary>
     private string ConvertNumToChineseNum(char n)
     {
-        if ((n < '0') || (n > '9')) return "";
+        if ((n < '0') || (n > '9'))
+        {
+            return "";
+        }
+
         switch (n)
         {
             case '0':
@@ -1758,11 +1804,11 @@ public class ChineseCalendar
     {
         get
         {
-            string tempStr = "";
+            StringBuilder tempStr = new();
             string num = this._cYear.ToString();
             for (int i = 0; i < 4; i++)
             {
-                tempStr += ConvertNumToChineseNum(num[i]);
+                tempStr.Append(ConvertNumToChineseNum(num[i]));
             }
             return tempStr + "年";
         }
@@ -1816,7 +1862,6 @@ public class ChineseCalendar
             string tempStr = "";
 
             y = this._date.Year;
-
             for (int i = 1; i <= 24; i++)
             {
                 num = 525948.76 * (y - 1900) + sTermInfo[i - 1];
@@ -2061,6 +2106,9 @@ public class ChineseCalendar
 
                 case 9: //癸
                     ganIndex = 1;
+                    break;
+
+                default:
                     break;
 
                     #endregion ...

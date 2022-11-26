@@ -104,7 +104,11 @@ public class BlogCommentPollService : BaseService<BlogCommentPoll>, IBlogComment
         await IsExistenceAsync(blogCommentPoll.BaseId);
         await _IBlogCommentService.IsExistenceAsync(blogCommentPoll.CommentId);
         var result = await _IBlogCommentPollRepository.UpdateAsync(blogCommentPoll);
-        if (result) blogCommentPoll = await _IBlogCommentPollRepository.FindAsync(blogCommentPoll.BaseId);
+        if (result)
+        {
+            blogCommentPoll = await _IBlogCommentPollRepository.FindAsync(blogCommentPoll.BaseId);
+        }
+
         return blogCommentPoll;
     }
 

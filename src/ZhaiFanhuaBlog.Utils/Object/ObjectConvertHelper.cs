@@ -26,7 +26,10 @@ public static class ObjectConvertHelper
     public static int ObjToInt(this object thisValue)
     {
         int reval = 0;
-        if (thisValue == null) return 0;
+        if (thisValue == null)
+        {
+            return 0;
+        }
         if (thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reval))
         {
             return reval;

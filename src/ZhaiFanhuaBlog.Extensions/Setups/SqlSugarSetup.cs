@@ -30,7 +30,10 @@ public static class SqlSugarSetup
     /// <returns></returns>
     public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         string databaseType = AppSettings.Database.Type;
         services.AddSqlSugar(databaseType switch

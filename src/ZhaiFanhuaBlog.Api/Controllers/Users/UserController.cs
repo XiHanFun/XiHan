@@ -70,7 +70,9 @@ public class UserController : BaseApiController
         userAccount.Password = cUserAccountDto.Password.ToMD5();
         userAccount.RegisterIp = _IHttpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         if (await _IUserAccountService.CreateUserAccountAsync(userAccount))
+        {
             return BaseResponseDto.OK("新增用户账户成功");
+        }
         return BaseResponseDto.BadRequest("新增用户账户失败");
     }
 
@@ -85,7 +87,9 @@ public class UserController : BaseApiController
         var user = User.FindFirstValue("UserId");
         Guid deleteId = Guid.Parse(user!);
         if (await _IUserAccountService.DeleteUserAccountAsync(guid, deleteId))
+        {
             return BaseResponseDto.OK("删除用户账户成功");
+        }
         return BaseResponseDto.BadRequest("删除用户账户失败");
     }
 
@@ -105,7 +109,9 @@ public class UserController : BaseApiController
         userAccount.ModifyId = Guid.Parse(user!);
         userAccount = await _IUserAccountService.ModifyUserAccountAsync(userAccount);
         if (userAccount != null)
+        {
             return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
+        }
         return BaseResponseDto.BadRequest("修改用户账户失败");
     }
 
@@ -125,7 +131,9 @@ public class UserController : BaseApiController
 
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         if (userAccount != null)
+        {
             return BaseResponseDto.OK(iMapper.Map<RUserAccountDto>(userAccount));
+        }
         return BaseResponseDto.BadRequest("该用户账户不存在");
     }
 
@@ -167,7 +175,9 @@ public class UserController : BaseApiController
         var userAccountRole = iMapper.Map<UserAccountRole>(cUserAccountRoleDto);
         userAccountRole.CreateId = Guid.Parse(user!);
         if (await _IUserAccountRoleService.CreateUserAccountRoleAsync(userAccountRole))
+        {
             return BaseResponseDto.OK("新增用户账户角色成功");
+        }
         return BaseResponseDto.BadRequest("新增用户账户角色失败");
     }
 
@@ -182,7 +192,9 @@ public class UserController : BaseApiController
         var user = User.FindFirstValue("UserId");
         Guid deleteId = Guid.Parse(user!);
         if (await _IUserAccountRoleService.DeleteUserAccountRoleAsync(guid, deleteId))
+        {
             return BaseResponseDto.OK("删除用户账户角色成功");
+        }
         return BaseResponseDto.BadRequest("删除用户账户角色失败");
     }
 
@@ -200,7 +212,9 @@ public class UserController : BaseApiController
         userAccountRole.ModifyId = Guid.Parse(user!);
         userAccountRole = await _IUserAccountRoleService.ModifyUserAccountRoleAsync(userAccountRole);
         if (userAccountRole != null)
+        {
             return BaseResponseDto.OK(iMapper.Map<RUserAccountRoleDto>(userAccountRole));
+        }
         return BaseResponseDto.BadRequest("修改用户账户角色失败");
     }
 
