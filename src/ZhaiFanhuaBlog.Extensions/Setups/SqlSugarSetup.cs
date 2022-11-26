@@ -35,37 +35,37 @@ public static class SqlSugarSetup
         string databaseType = AppSettings.Database.Type;
         services.AddSqlSugar(databaseType switch
         {
-            "MySql" => new IocConfig()
+            "MySql" => new IocConfig
             {
                 DbType = IocDbType.MySql,
                 ConnectionString = AppSettings.Database.Connectionstring.MySql,
                 IsAutoCloseConnection = true
             },
-            "SqlServer" => new IocConfig()
+            "SqlServer" => new IocConfig
             {
                 DbType = IocDbType.SqlServer,
                 ConnectionString = AppSettings.Database.Connectionstring.SqlServer,
                 IsAutoCloseConnection = true
             },
-            "Sqlite" => new IocConfig()
+            "Sqlite" => new IocConfig
             {
                 DbType = IocDbType.Sqlite,
                 ConnectionString = AppSettings.Database.Connectionstring.Sqlite,
                 IsAutoCloseConnection = true
             },
-            "Oracle" => new IocConfig()
+            "Oracle" => new IocConfig
             {
                 DbType = IocDbType.Oracle,
                 ConnectionString = AppSettings.Database.Connectionstring.Oracle,
                 IsAutoCloseConnection = true
             },
-            "PostgreSQL" => new IocConfig()
+            "PostgreSQL" => new IocConfig
             {
                 DbType = IocDbType.PostgreSQL,
                 ConnectionString = AppSettings.Database.Connectionstring.PostgreSQL,
                 IsAutoCloseConnection = true
             },
-            _ => new IocConfig()
+            _ => new IocConfig
             {
                 DbType = IocDbType.SqlServer,
                 ConnectionString = AppSettings.Database.Connectionstring.SqlServer,

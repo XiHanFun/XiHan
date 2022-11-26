@@ -47,7 +47,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToText()
     {
         string keyWord = "消息提醒";
-        Text text = new()
+        var text = new Text
         {
             Content = keyWord + "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
@@ -64,7 +64,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToLink()
     {
         string keyWord = "消息提醒";
-        Link link = new()
+        var link = new Link
         {
             Title = keyWord + "时代在召唤",
             Text = "这个即将发布的新版本，创始人陈航（花名“无招”）称它为“红树林”。而在此之前，每当面临重大升级，产品经理们都会取一个应景的代号，这一次，为什么是“红树林”？",
@@ -83,7 +83,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToMarkdown()
     {
         string keyWord = "消息提醒";
-        Markdown markdown = new()
+        var markdown = new Markdown
         {
             Title = keyWord + "长沙天气",
             Text = "#### 长沙天气 \n" +
@@ -104,7 +104,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToWholeActionCard()
     {
         string keyWord = "消息提醒";
-        ActionCard actionCard = new()
+        var actionCard = new ActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
@@ -124,7 +124,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToPartActionCard()
     {
         string keyWord = "消息提醒";
-        ActionCard actionCard = new()
+        var actionCard = new ActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
@@ -133,11 +133,13 @@ public class DingTalkController : BaseApiController
             BtnOrientation = "1",
             Btns = new List<BtnInfo>()
                 {
-                    new BtnInfo(){
+                    new BtnInfo
+                    {
                         Title = keyWord +"不错",
                         ActionUrl = "https://www.dingtalk.com/"
                     },
-                    new BtnInfo(){
+                    new BtnInfo
+                    {
                         Title = keyWord +"不感兴趣",
                         ActionUrl = "https://www.dingtalk.com/"
                     }
@@ -154,16 +156,18 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToFeedCard()
     {
         string keyWord = "消息提醒";
-        FeedCard feedCard = new()
+        var feedCard = new FeedCard
         {
             Links = new List<FeedCardLink>()
                 {
-                    new FeedCardLink(){
+                    new FeedCardLink
+                    {
                         Title = keyWord + "时代的火车向前开",
                         MessageUrl="https://www.dingtalk.com/",
                         PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                     },
-                    new FeedCardLink(){
+                    new FeedCardLink
+                    {
                         Title = keyWord + "时代在召唤",
                         MessageUrl="https://www.dingtalk.com/",
                         PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"

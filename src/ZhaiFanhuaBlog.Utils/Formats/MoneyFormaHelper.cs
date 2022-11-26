@@ -27,14 +27,14 @@ public static class MoneyFormaHelper
     {
         try
         {
-            string moneyStr = money.ToString();
+            string moneyStr = money.ToString().ToLowerInvariant();
             string moneyRes = string.Empty;
             string moneyInt = string.Empty;
             string moneyDecimal = string.Empty;
             if (moneyStr.Contains('.'))
             {
-                moneyInt = moneyStr.Split('.')[0].ToString();
-                moneyDecimal = "." + moneyStr.Split('.')[1].ToString();
+                moneyInt = moneyStr.Split('.')[0];
+                moneyDecimal = "." + moneyStr.Split('.')[1];
                 moneyRes = FormatStringComma(moneyInt);
             }
             else
@@ -57,7 +57,7 @@ public static class MoneyFormaHelper
     /// <returns></returns>
     public static string FormatStringComma(string moneyint)
     {
-        if (moneyint.ToString().Length <= 4) return moneyint;
+        if (moneyint.Length <= 4) return moneyint;
         string moneyNoFormat = moneyint[..^4];
         string moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
         if (moneyNoFormat.Length > 4)

@@ -33,5 +33,5 @@ public class RBlogTagDto : BaseResultFieldDto
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int BlogCount { get; set; } = 0;
+    public int BlogCount { get; set; }
 }

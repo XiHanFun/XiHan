@@ -23,7 +23,7 @@ public class AppSettings
     /// <summary>
     /// 配置文件的根节点
     /// </summary>
-    public static IConfiguration _IConfiguration = new ConfigurationBuilder().Build();
+    public static IConfiguration _IConfiguration { get; set; } = new ConfigurationBuilder().Build();
 
     #region 构造函数
 
@@ -42,15 +42,16 @@ public class AppSettings
     /// <param name="contentPath"></param>
     public AppSettings(string contentPath)
     {
-        // 获取环境名称
-        var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        string path = "appsettings.json";
+        // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
+        string envpath = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
 
         // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
         _IConfiguration = new ConfigurationBuilder().SetBasePath(contentPath)
             // 默认读取appsettings.json
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile(path, false, true)
             // 如果存在环境配置文件，优先使用这里的配置
-            .AddJsonFile($"appsettings.{environmentName}.json", true, true)
+            .AddJsonFile(envpath, false, true)
             .Build();
     }
 

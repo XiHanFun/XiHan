@@ -81,22 +81,15 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 _ILogger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             ActionExecutedContext actionExecuted = await next();
-            try
+            if (actionExecuted.Result != null)
             {
-                if (actionExecuted.Result != null)
-                {
-                    // 获取返回的结果
-                    var returnResult = actionExecuted.Result as ActionResult;
-                    // 判断是否请求成功，没有异常就是请求成功
-                    var isRequestSucceed = actionExecuted.Exception == null;
-                    // 请求成功就写入日志
-                    if (isRequestSucceed && ActionLogSwitch)
-                        _ILogger.LogInformation($"请求数据\n{info}\n {JsonConvert.SerializeObject(returnResult)}");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                // 获取返回的结果
+                var returnResult = actionExecuted.Result as ActionResult;
+                // 判断是否请求成功，没有异常就是请求成功
+                var isRequestSucceed = actionExecuted.Exception == null;
+                // 请求成功就写入日志
+                if (isRequestSucceed && ActionLogSwitch)
+                    _ILogger.LogInformation($"请求数据\n{info}\n {JsonConvert.SerializeObject(returnResult)}");
             }
         }
     }

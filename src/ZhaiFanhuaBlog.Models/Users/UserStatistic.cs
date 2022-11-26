@@ -28,25 +28,25 @@ public class UserStatistic : BaseEntity
     /// <summary>
     /// 关注数量
     /// </summary>
-    public int FollowsCount { get; set; } = 0;
+    public int FollowsCount { get; set; }
 
     /// <summary>
     /// 粉丝数量
     /// </summary>
-    public int FocusCount { get; set; } = 0;
+    public int FocusCount { get; set; }
 
     /// <summary>
     /// 收藏数量
     /// </summary>
-    public int CollectsCount { get; set; } = 0;
+    public int CollectsCount { get; set; }
 
     /// <summary>
     /// 通知数量
     /// </summary>
-    public int NoticesCount { get; set; } = 0;
+    public int NoticesCount { get; set; }
 
     /// <summary>
     /// 登录次数
     /// </summary>
-    public int LoginCount { get; set; } = 0;
+    public int LoginCount { get; set; }
 }

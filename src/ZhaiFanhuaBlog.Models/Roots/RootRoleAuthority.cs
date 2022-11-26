@@ -33,5 +33,5 @@ public class RootRoleAuthority : BaseDeleteEntity<Guid>
     /// <summary>
     /// 权限类型（0:可访问，1:可授权）
     /// </summary>
-    public int AuthorityType { get; set; } = 0;
+    public int AuthorityType { get; set; }
 }

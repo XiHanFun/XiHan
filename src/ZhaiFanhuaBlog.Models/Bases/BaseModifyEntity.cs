@@ -24,7 +24,7 @@ public abstract class BaseModifyEntity<Tkey> : BaseCreateEntity<Guid>
     /// 修改用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "修改用户")]
-    public virtual Guid? ModifyId { get; set; }
+    public virtual Tkey? ModifyId { get; set; }
 
     /// <summary>
     /// 修改时间

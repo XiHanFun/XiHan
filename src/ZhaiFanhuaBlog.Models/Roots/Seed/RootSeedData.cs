@@ -21,7 +21,7 @@ public class RootSeedData
     /// <summary>
     /// 系统权限种子数据
     /// </summary>
-    public static List<RootAuthority> RootAuthorityList = new()
+    public static List<RootAuthority> RootAuthorityList { get; set; } = new()
     {
         // 数据管理权限
         new RootAuthority{
@@ -45,7 +45,7 @@ public class RootSeedData
     /// <summary>
     /// 系统角色种子数据
     /// </summary>
-    public static List<RootRole> RootRoleList = new()
+    public static List<RootRole> RootRoleList { get; set; } = new()
     {
         new RootRole{
             RoleName="超级管理员",

@@ -47,5 +47,5 @@ public class BlogCategory : BaseEntity
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int ArtCount { get; set; } = 0;
+    public int ArtCount { get; set; }
 }

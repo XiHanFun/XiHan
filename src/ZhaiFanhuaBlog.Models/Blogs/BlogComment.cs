@@ -46,7 +46,7 @@ public class BlogComment : BaseEntity
     /// <summary>
     /// 评论点赞数
     /// </summary>
-    public int CommPollCount { get; set; } = 0;
+    public int CommPollCount { get; set; }
 
     /// <summary>
     /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项
@@ -56,7 +56,8 @@ public class BlogComment : BaseEntity
     /// <summary>
     /// 评论者Ip
     /// </summary>
-    public string? CommIp;
+    [SugarColumn(IsNullable = true)]
+    public string? CommIp { get; set; }
 
     /// <summary>
     /// 代理信息

@@ -26,7 +26,7 @@ public static class TestIpAddress
     /// </summary>
     public static void ParseIp()
     {
-        byte[] address = new byte[4] { 127, 0, 0, 1 };
+        var address = new byte[] { 127, 0, 0, 1 };
         IPAddress iPAddress = new(address);
         Console.WriteLine(iPAddress.ToString());
     }

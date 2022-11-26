@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.Text;
+
 namespace ZhaiFanhuaBlog.Utils.Verification;
 
 /// <summary>
@@ -64,12 +66,12 @@ public static class VerificationCodeHelper
             if (length <= 0) throw new ArgumentOutOfRangeException(nameof(length));
             if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));
 
-            string result = string.Empty;
+            StringBuilder result = new();
             Random random = new(~unchecked((int)DateTime.Now.Ticks));
             for (int i = 0; i < length; i++)
             {
                 Task.Delay(3);
-                result += source[random.Next(0, source.Length)];
+                result.Append(source[random.Next(0, source.Length)]);
             }
             return result.ToString();
         }

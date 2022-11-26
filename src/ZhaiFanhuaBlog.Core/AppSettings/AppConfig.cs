@@ -47,11 +47,12 @@ public class AppConfig
     {
         string path = "appsettings.json";
         // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
-        path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
+        string envpath = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
 
         _IConfiguration = new ConfigurationBuilder().SetBasePath(contentPath)
                         // 直接读目录里的json文件，而不是 bin 文件夹下的，所以不用修改复制属性
                         .Add(new JsonConfigurationSource { Path = path, Optional = false, ReloadOnChange = true })
+                        .Add(new JsonConfigurationSource { Path = envpath, Optional = false, ReloadOnChange = true })
                         .Build();
     }
 

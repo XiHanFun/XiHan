@@ -23,7 +23,7 @@ public class UserSeedData
     /// <summary>
     /// 用户账户种子数据
     /// </summary>
-    public static List<UserAccount> UserAccountList = new()
+    public static List<UserAccount> UserAccountList { get; set; } = new()
     {
         new UserAccount{
             UserName="administrator",

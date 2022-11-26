@@ -26,11 +26,6 @@ namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 public class WeChatMessagePush : IWeChatMessagePush
 {
     /// <summary>
-    /// 请求接口
-    /// </summary>
-    private readonly IHttpHelper _IHttpHelper;
-
-    /// <summary>
     /// 机器人实例
     /// </summary>
     private readonly WeChatRobot _WeChatRobot;
@@ -40,14 +35,13 @@ public class WeChatMessagePush : IWeChatMessagePush
     /// </summary>
     public WeChatMessagePush(IHttpHelper iHttpHelper)
     {
-        _IHttpHelper = iHttpHelper;
         WeChatConnection conn = new()
         {
             WebHookUrl = AppSettings.WeChart.WebHookUrl,
             UploadkUrl = AppSettings.WeChart.UploadkUrl,
             Key = AppSettings.WeChart.Key
         };
-        _WeChatRobot = new WeChatRobot(_IHttpHelper, conn);
+        _WeChatRobot = new WeChatRobot(iHttpHelper, conn);
     }
 
     /// <summary>

@@ -63,7 +63,7 @@ public class DingTalkRobot
         // 消息类型
         var msgtype = MsgTypeEnum.text.ToString();
         // 指定目标人群
-        var at = new At()
+        var at = new At
         {
             AtMobiles = atMobiles,
             IsAtAll = isAtAll
@@ -97,7 +97,7 @@ public class DingTalkRobot
         // 消息类型
         var msgtype = MsgTypeEnum.markdown.ToString();
         // 指定目标人群
-        var at = new At()
+        var at = new At
         {
             AtMobiles = atMobiles,
             IsAtAll = isAtAll

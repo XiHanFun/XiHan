@@ -39,7 +39,7 @@ public class BaseResultDto
     /// <summary>
     /// 数据集合
     /// </summary>
-    public dynamic? Data { get; set; } = null;
+    public dynamic? Data { get; set; }
 
     /// <summary>
     /// 时间戳

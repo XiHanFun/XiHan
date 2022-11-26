@@ -29,7 +29,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 系统描述
     /// </summary>
-    public static string OSDescription => RuntimeInformation.OSDescription.ToString();
+    public static string OSDescription => RuntimeInformation.OSDescription;
 
     /// <summary>
     /// 系统版本
@@ -54,7 +54,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 系统目录
     /// </summary>
-    public static string SystemDirectory => Environment.SystemDirectory.ToString();
+    public static string SystemDirectory => Environment.SystemDirectory;
 
     /// <summary>
     /// 磁盘分区
@@ -69,7 +69,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 交互模式
     /// </summary>
-    public static string InteractiveMode => (Environment.UserInteractive == true ? "交互运行" : "非交互运行").ToString();
+    public static string InteractiveMode => Environment.UserInteractive == true ? "交互运行" : "非交互运行";
 
     /// <summary>
     /// 操作系统

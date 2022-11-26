@@ -83,7 +83,7 @@ public class DirFileHelper
             {
                 foreach (string d in directories)
                 {
-                    CopyFolder(d, varToDirectory + d.Substring(d.LastIndexOf(@"\")));
+                    CopyFolder(d, varToDirectory + d[d.LastIndexOf(@"\")..]);
                 }
             }
             string[] files = Directory.GetFiles(varFromDirectory);
@@ -91,7 +91,7 @@ public class DirFileHelper
             {
                 foreach (string s in files)
                 {
-                    File.Copy(s, varToDirectory + s.Substring(s.LastIndexOf(@"\")), true);
+                    File.Copy(s, varToDirectory + s[s.LastIndexOf(@"\")..], true);
                 }
             }
         }
@@ -120,7 +120,10 @@ public class DirFileHelper
         try
         {
             dir = dir.Replace(@"/", @"\");
-            if (dir.IndexOf(@"\") > -1) CreateDirectory(dir.Substring(0, dir.LastIndexOf(@"\")));
+            if (dir.IndexOf(@"\") > -1)
+            {
+                CreateDirectory(dir.Substring(0, dir.LastIndexOf(@"\")));
+            }
             StreamWriter sw = new(dir, false, encoding);
             sw.Write(pagestr);
             sw.Close();

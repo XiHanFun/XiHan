@@ -24,7 +24,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 应用名称
     /// </summary>
-    public static string Name(Assembly assembly) => assembly.GetName().Name!.ToString();
+    public static string Name(Assembly assembly) => assembly.GetName().Name!;
 
     /// <summary>
     /// 应用版本
@@ -34,12 +34,12 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 所在路径
     /// </summary>
-    public static string CurrentDirectory => AppContext.BaseDirectory.ToString();
+    public static string CurrentDirectory => AppContext.BaseDirectory;
 
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Environment.ProcessPath == null ? string.Empty.ToString() : Environment.ProcessPath!.ToString();
+    public static string ProcessPath => Environment.ProcessPath == null ? string.Empty : Environment.ProcessPath!;
 
     /// <summary>
     /// 当前进程
@@ -54,7 +54,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// Logo
     /// </summary>
-    public static string Logo = $@"
+    public static string Logo { get; set; } = $@"
 ███████╗██╗  ██╗ █████╗ ██╗███████╗ █████╗ ███╗   ██╗██╗  ██╗██╗   ██╗ █████╗ ██████╗ ██╗      ██████╗  ██████╗
 ╚══███╔╝██║  ██║██╔══██╗██║██╔════╝██╔══██╗████╗  ██║██║  ██║██║   ██║██╔══██╗██╔══██╗██║     ██╔═══██╗██╔════╝
   ███╔╝ ███████║███████║██║█████╗  ███████║██╔██╗ ██║███████║██║   ██║███████║██████╔╝██║     ██║   ██║██║  ███╗
@@ -65,5 +65,5 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// Copyright
     /// </summary>
-    public static string Copyright = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
+    public static string Copyright { get; set; } = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 }

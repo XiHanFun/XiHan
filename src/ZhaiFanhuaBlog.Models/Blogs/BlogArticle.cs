@@ -52,17 +52,17 @@ public class BlogArticle : BaseEntity
     /// <summary>
     /// 阅读数量
     /// </summary>
-    public int ReadCount { get; set; } = 0;
+    public int ReadCount { get; set; }
 
     /// <summary>
     /// 点赞数量
     /// </summary>
-    public int PollCount { get; set; } = 0;
+    public int PollCount { get; set; }
 
     /// <summary>
     /// 评论数量
     /// </summary>
-    public int CommentCount { get; set; } = 0;
+    public int CommentCount { get; set; }
 
     /// <summary>
     /// 是否置顶 是(true)否(false)

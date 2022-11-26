@@ -1,20 +1,21 @@
-# ZhaiFanhuaBlog.Framework
-
 ![LOGO](LOGO.png)
 
+![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5045beecc88149cf8c52432086aeb06c)](https://www.codacy.com/gh/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework&amp;utm_campaign=Badge_Grade)
 
-This is a backend repository for DotNet7 based blog projects.
+![last commit](https://img.shields.io/github/last-commit/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework.svg?style=flat-square)![downloads](https://img.shields.io/github/downloads/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/total?style=flat-square)![release](https://img.shields.io/github/v/release/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![commit activity](https://img.shields.io/github/commit-activity/y/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![issues](https://img.shields.io/github/issues/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![](https://img.shields.io/github/issues-closed-raw/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![forks](https://img.shields.io/github/forks/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![stars](https://img.shields.io/github/stars/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)![watchers](https://img.shields.io/github/watchers/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)
 
-[贡献代码](CONTRIBUTING.md)
+这是基于DotNet7的博客项目，高效、快速、开源、免费。
 
-[更新沿程](CHANGELOG.md)
+## 快速开始
+
+请参考部署文档： [https://docs.blog.zhaifanhua.com](https://docs.blog.zhaifanhua.com)
 
 ## 所用框架
 
 - DotNet7(CSharp);
 - WebApi;
 
-## 框架模块：
+### 框架模块：
 
 - [x] 采用`仓储+服务+接口`的形式封装框架；
 
@@ -38,7 +39,7 @@ This is a backend repository for DotNet7 based blog projects.
 
 - [ ] 统一集成 IdentityServer4 认证 ✨;
 
-## 组件模块：
+### 组件模块：
 
 - [x] 提供 Redis 做缓存处理；
 - [x] 使用 Swagger 做API文档；
@@ -57,13 +58,17 @@ This is a backend repository for DotNet7 based blog projects.
 - [ ] 新增 EventBus 事件总线 ✨;
 - [ ] 新增 ES 搜索配置;
 
-## 微服务模块：
+### 微服务模块：
 
 - [x] 可配合 Docker 实现容器化；
 - [x] 可配合 Nginx 实现负载均衡；
 - [ ] 可配合 Ids4 实现认证中心；
 
+## 项目相关
 
+贡献代码：[贡献代码](CONTRIBUTING.md)
+
+更新沿程：[更新沿程](CHANGELOG.md)
 
 启动：
 

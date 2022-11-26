@@ -86,8 +86,6 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
                 // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
                 var userId = httpContext.User?.FindFirstValue("UserId");
-                // 请求时间
-                var requestedTime = DateTimeOffset.Now;
                 // 写入日志
                 string info = $"\t 请求Ip：{remoteIp}\n" +
                          $"\t 请求地址：{requestUrl}\n" +

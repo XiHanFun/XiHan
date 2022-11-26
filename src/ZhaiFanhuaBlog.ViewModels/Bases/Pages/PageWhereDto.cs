@@ -21,7 +21,7 @@ public class PageWhereDto
     /// <summary>
     /// 是否选择所有
     /// </summary>
-    public bool SelectAll { get; set; } = false;
+    public bool SelectAll { get; set; }
 
     /// <summary>
     /// 排序列名

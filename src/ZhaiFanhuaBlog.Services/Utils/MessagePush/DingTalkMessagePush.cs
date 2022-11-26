@@ -25,11 +25,6 @@ namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
 public class DingTalkMessagePush : IDingTalkMessagePush
 {
     /// <summary>
-    /// 请求接口
-    /// </summary>
-    private readonly IHttpHelper _IHttpHelper;
-
-    /// <summary>
     /// 机器人实例
     /// </summary>
     private readonly DingTalkRobot _DingTalkRobot;
@@ -40,14 +35,13 @@ public class DingTalkMessagePush : IDingTalkMessagePush
     /// <param name="iHttpHelper"></param>
     public DingTalkMessagePush(IHttpHelper iHttpHelper)
     {
-        _IHttpHelper = iHttpHelper;
         DingTalkConnection conn = new()
         {
             WebHookUrl = AppSettings.DingTalk.WebHookUrl,
             AccessToken = AppSettings.DingTalk.AccessToken,
             Secret = AppSettings.DingTalk.Secret
         };
-        _DingTalkRobot = new DingTalkRobot(_IHttpHelper, conn);
+        _DingTalkRobot = new DingTalkRobot(iHttpHelper, conn);
     }
 
     #region DingTalk

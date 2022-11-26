@@ -53,7 +53,7 @@ public static class LogSetup
                 // 异步输出到文件
                 .WriteTo.Async(congfig => congfig.File(
                         // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
-                        path: infoPath.ToLower(),
+                        path: infoPath.ToLowerInvariant(),
                         // 生成周期：天
                         rollingInterval: RollingInterval.Day,
                         // 文件大小：10M，默认1GB
@@ -70,7 +70,7 @@ public static class LogSetup
                 // -----------------------------------------Warning------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Warning)
                 .WriteTo.Async(congfig => congfig.File(
-                        path: waringPath.ToLower(),
+                        path: waringPath.ToLowerInvariant(),
                         rollingInterval: RollingInterval.Day,
                         fileSizeLimitBytes: 1024 * 1024 * 10,
                         retainedFileCountLimit: 10,
@@ -81,7 +81,7 @@ public static class LogSetup
                 // ---------------------------------------- - Error------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Error)
                 .WriteTo.Async(congfig => congfig.File(
-                        path: errorPath.ToLower(),
+                        path: errorPath.ToLowerInvariant(),
                         rollingInterval: RollingInterval.Day,
                         fileSizeLimitBytes: 1024 * 1024 * 10,
                         retainedFileCountLimit: 10,
@@ -92,7 +92,7 @@ public static class LogSetup
                 // -----------------------------------------Fatal------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Fatal)
                 .WriteTo.Async(congfig => congfig.File(
-                        path: fatalPath.ToLower(),
+                        path: fatalPath.ToLowerInvariant(),
                         rollingInterval: RollingInterval.Day,
                         fileSizeLimitBytes: 1024 * 1024 * 10,
                         retainedFileCountLimit: 10,
