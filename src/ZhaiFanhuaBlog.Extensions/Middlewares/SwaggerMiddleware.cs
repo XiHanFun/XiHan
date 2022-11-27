@@ -31,7 +31,10 @@ public static class SwaggerMiddleware
     /// <returns></returns>
     public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, Func<Stream> streamHtml)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
         app.UseSwagger();
         app.UseSwaggerUI(options =>

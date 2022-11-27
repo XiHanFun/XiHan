@@ -43,5 +43,5 @@ public class RBlogCategoryDto : BaseResultFieldDto
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int ArticleCount { get; set; } = 0;
+    public int ArticleCount { get; set; }
 }

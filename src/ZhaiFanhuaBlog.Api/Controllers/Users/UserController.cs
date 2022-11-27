@@ -126,9 +126,6 @@ public class UserController : BaseApiController
     public async Task<BaseResultDto> FindUserAccount([FromServices] IMapper iMapper, [FromRoute] Guid guid)
     {
         var user = User.FindFirstValue("UserId");
-
-        //var auser = JwtTokenTool.SerializeJwt(_IHttpContextAccessor.HttpContext!.Request.Headers["Authorization"].ToString()["Bearer ".Length..].Trim());
-
         var userAccount = await _IUserAccountService.FindUserAccountByGuidAsync(guid);
         if (userAccount != null)
         {

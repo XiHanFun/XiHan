@@ -62,11 +62,11 @@ public static class EmailHelper
             client.UseDefaultCredentials = true;
             // 网页形式
             message.IsBodyHtml = true;
-            //// 解决远程证书验证无效
-            //ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, error) =>
-            //{
-            //    return true;
-            //};
+            // 解决远程证书验证无效
+            ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, error) =>
+            {
+                return true;
+            };
 
             // 将邮件发送到SMTP邮件服务器
             await client.SendMailAsync(message);

@@ -94,7 +94,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)
+                    {
                         _ILogger.LogInformation($"请求缓存\n{info}\n{JsonConvert.SerializeObject(result)}");
+                    }
                 }
             }
             catch (Exception)

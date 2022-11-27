@@ -23,7 +23,10 @@ public static class MiniProfilerMiddleware
 {
     public static IApplicationBuilder UseMiniProfilerMiddleware(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
         bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled;
         if (isEnabledMiniprofiler)

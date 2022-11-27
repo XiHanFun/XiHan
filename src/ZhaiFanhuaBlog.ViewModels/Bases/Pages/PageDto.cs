@@ -38,7 +38,7 @@ public class PageDto : BasePageDto
     /// <summary>
     /// 数据总数
     /// </summary>
-    public int TotalCount { get; set; } = 0;
+    public int TotalCount { get; set; }
 
     /// <summary>
     /// 总页数

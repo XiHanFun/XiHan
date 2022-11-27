@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.Models.Bases;
 /// <summary>
 /// 状态基类，含主键，创建，修改，删除
 /// </summary>
-public abstract class BaseStateEntity<Tkey> : BaseAuditEntity<Guid>
+public abstract class BaseStateEntity<TKey> : BaseAuditEntity<Guid>
 {
     /// <summary>
     /// 状态

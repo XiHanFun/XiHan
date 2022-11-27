@@ -47,7 +47,9 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     {
         var blogCategory = await _IBlogCategoryRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
         if (blogCategory == null)
+        {
             throw new ApplicationException("博客文章分类不存在");
+        }
         return blogCategory;
     }
 
@@ -75,9 +77,13 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     public async Task<bool> CreateBlogCategoryAsync(BlogCategory blogCategory)
     {
         if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
+        {
             throw new ApplicationException("父级博客文章分类不存在");
+        }
         if (await _IBlogCategoryRepository.FindAsync(e => e.CategoryName == blogCategory.CategoryName && !e.SoftDeleteLock) != null)
+        {
             throw new ApplicationException("博客文章分类名称已存在");
+        }
         blogCategory.SoftDeleteLock = false;
         var result = await _IBlogCategoryRepository.CreateAsync(blogCategory);
         return result;
@@ -94,9 +100,13 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     {
         var blogCategory = await IsExistenceAsync(guid);
         if ((await _IBlogCategoryRepository.QueryListAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock)).Count != 0)
+        {
             throw new ApplicationException("该博客文章分类下有子博客文章分类，不能删除");
+        }
         if ((await _IBlogArticleRepository.QueryListAsync(e => e.CategoryId == blogCategory.BaseId && !e.SoftDeleteLock)).Count != 0)
+        {
             throw new ApplicationException("该博客文章分类已有博客文章使用，不能删除");
+        }
         blogCategory.SoftDeleteLock = true;
         blogCategory.DeleteId = deleteId;
         blogCategory.DeleteTime = DateTime.Now;
@@ -113,11 +123,18 @@ public class BlogCategoryService : BaseService<BlogCategory>, IBlogCategoryServi
     {
         await IsExistenceAsync(blogCategory.BaseId);
         if (blogCategory.ParentId != null && await _IBlogCategoryRepository.FindAsync(e => e.ParentId == blogCategory.ParentId && !e.SoftDeleteLock) == null)
+        {
             throw new ApplicationException("父级博客文章分类不存在");
+        }
         if (await _IBlogCategoryRepository.FindAsync(e => e.CategoryName == blogCategory.CategoryName && !e.SoftDeleteLock) != null)
+        {
             throw new ApplicationException("博客文章分类名称已存在");
+        }
         var result = await _IBlogCategoryRepository.UpdateAsync(blogCategory);
-        if (result) blogCategory = await _IBlogCategoryRepository.FindAsync(blogCategory.BaseId);
+        if (result)
+        {
+            blogCategory = await _IBlogCategoryRepository.FindAsync(blogCategory.BaseId);
+        }
         return blogCategory;
     }
 

@@ -35,10 +35,10 @@ public class BaseValidationDto
     /// <summary>
     /// 数据总数
     /// </summary>
-    public int TotalCount { get; set; } = 0;
+    public int TotalCount { get; }
 
     /// <summary>
     /// 验证出错字段
     /// </summary>
-    public List<BaseValidationErrorDto>? ValidationErrorDto { get; set; }
+    public List<BaseValidationErrorDto>? ValidationErrorDto { get; }
 }

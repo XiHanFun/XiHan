@@ -24,7 +24,7 @@ public abstract class BaseCreateEntity<Tkey> : BaseIdEntity<Guid>
     /// 创建用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "创建用户")]
-    public virtual Tkey? CreateId { get; set; }
+    public virtual Guid? CreateId { get; set; }
 
     /// <summary>
     /// 创建时间

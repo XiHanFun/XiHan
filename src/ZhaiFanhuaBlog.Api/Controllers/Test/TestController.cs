@@ -107,7 +107,10 @@ public class TestController : BaseApiController
     [HttpGet("Encrypt")]
     public ActionResult<BaseResultDto> Encrypt(string encryptType, string iStr)
     {
-        if (string.IsNullOrEmpty(iStr)) return BaseResponseDto.BadRequest("请输入待加密字符串");
+        if (string.IsNullOrEmpty(iStr))
+        {
+            return BaseResponseDto.BadRequest("请输入待加密字符串");
+        }
         string resultString = encryptType switch
         {
             "SHA1" => SHAHelper.EncryptSHA1(Encoding.UTF8, iStr),
@@ -129,7 +132,10 @@ public class TestController : BaseApiController
     [HttpGet("EncryptOrDecrypt")]
     public ActionResult<BaseResultDto> EncryptOrDecrypt(string iEncryptOrDecrypt, string iType, string iStr)
     {
-        if (string.IsNullOrEmpty(iStr)) return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
+        if (string.IsNullOrEmpty(iStr))
+        {
+            return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
+        }
         string aesKey = AppSettings.Encryptions.AesKey;
         string desKey = AppSettings.Encryptions.DesKey;
         string resultString = iEncryptOrDecrypt switch

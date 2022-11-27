@@ -440,9 +440,9 @@ public class ChinaDate
         return nongDate;
     }
 
-    private static String getChinaDate(int day)
+    private static string getChinaDate(int day)
     {
-        String a = "";
+        string a = "";
         if (day == 10)
             return "初十";
         if (day == 20)
@@ -458,7 +458,7 @@ public class ChinaDate
             a = "廿";
         if (two == 3)
             a = "三";
-        int one = (int)(day % 10);
+        int one = day % 10;
         switch (one)
         {
             case 1:
@@ -966,7 +966,6 @@ public class ChineseCalendar
         _datetime = dt;
 
         //农历日期计算部分
-        leap = 0;
         temp = 0;
 
         //计算两天的基本差距
@@ -1955,7 +1954,6 @@ public class ChineseCalendar
         {
             int index = 0;
             int y, m, d;
-            y = _date.Year;
             m = _date.Month;
             d = _date.Day;
             y = m * 100 + d;

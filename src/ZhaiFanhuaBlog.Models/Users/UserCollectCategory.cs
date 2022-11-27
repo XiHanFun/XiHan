@@ -47,5 +47,5 @@ public class UserCollectCategory : BaseEntity
     /// <summary>
     /// 收藏总数
     /// </summary>
-    public int CollectCount { get; set; } = 0;
+    public int CollectCount { get; set; }
 }

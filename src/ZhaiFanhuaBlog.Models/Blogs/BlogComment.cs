@@ -51,7 +51,7 @@ public class BlogComment : BaseEntity
     /// <summary>
     /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项
     /// </summary>
-    public bool IsTop { get; set; } = false;
+    public bool IsTop { get; set; }
 
     /// <summary>
     /// 评论者Ip

@@ -99,7 +99,7 @@ public class HttpHelper : IHttpHelper
             var response = await client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                return await response.Content.ReadAsStringAsync(); ;
+                return await response.Content.ReadAsStringAsync();
             }
             else
             {

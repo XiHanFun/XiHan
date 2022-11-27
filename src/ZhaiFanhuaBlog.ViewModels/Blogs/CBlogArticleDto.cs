@@ -57,19 +57,19 @@ public class CBlogArticleDto
     /// 是否置顶 是(true)否(false)
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public bool IsTop { get; set; } = false;
+    public bool IsTop { get; set; }
 
     /// <summary>
     /// 是否精华 是(true)否(false)
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public bool IsEssence { get; set; } = false;
+    public bool IsEssence { get; set; }
 
     /// <summary>
     /// 是否是转发文章 是(true)否(false)
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public bool IsForward { get; set; } = false;
+    public bool IsForward { get; set; }
 
     /// <summary>
     /// 转发文章链接
@@ -81,7 +81,7 @@ public class CBlogArticleDto
     /// 是否加密文章 是(true)否(false)
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public bool IsEncryption { get; set; } = false;
+    public bool IsEncryption { get; set; }
 
     /// <summary>
     /// 用户密码（MD5加密）

@@ -22,7 +22,7 @@ namespace ZhaiFanhuaBlog.ViewModels.Response;
 /// <summary>
 /// 通用响应实体
 /// </summary>
-public class BaseResponseDto
+public static class BaseResponseDto
 {
     /// <summary>
     /// 继续响应 100

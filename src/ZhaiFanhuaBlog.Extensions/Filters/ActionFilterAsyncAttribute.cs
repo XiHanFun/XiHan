@@ -76,6 +76,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             string info = $"\t 请求Ip：{remoteIp}\n" +
                           $"\t 请求地址：{requestUrl}\n" +
                           $"\t 请求方法：{method}\n" +
+                          $"\t 请求参数：{parameters}\n" +
                           $"\t 操作用户：{userId}";
             if (ActionLogSwitch)
                 _ILogger.LogInformation($"发起请求\n{info}");

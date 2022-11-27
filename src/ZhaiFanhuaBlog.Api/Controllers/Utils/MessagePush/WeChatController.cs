@@ -168,7 +168,8 @@ public class WeChatController : BaseApiController
         // 二级普通文本
         string subTitleText = "下载企业微信还能抢红包！";
         // 二级标题和文本
-        List<HorizontalContent> horizontalContents = new() {
+        var horizontalContents = new List<HorizontalContent>
+        {
             new HorizontalContent
             {
                 Type=0,
@@ -191,7 +192,8 @@ public class WeChatController : BaseApiController
             }
         };
         // 跳转指引
-        List<Jump> jumps = new() {
+        var jumps = new List<Jump>
+        {
             new Jump
             {
                 Type=1,
@@ -266,7 +268,8 @@ public class WeChatController : BaseApiController
             QuoteText = "Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
         };
         // 卡片二级垂直
-        List<VerticalContent> verticalContents = new() {
+        var verticalContents = new List<VerticalContent>
+         {
             new VerticalContent
             {
                 Title="惊喜红包等你来拿",
@@ -274,28 +277,28 @@ public class WeChatController : BaseApiController
             }
         };
         // 二级标题和文本
-        List<HorizontalContent> horizontalContents = new() {
+        var horizontalContents = new List<HorizontalContent>
+        {
             new HorizontalContent
             {
-                Type=0,
-                KeyName="邀请人",
-                Value="张三"
-            },
+                Type = 0,
+                KeyName = "邀请人",
+                Value = "张三" },
             new HorizontalContent
             {
-                KeyName="企微官网",
-                Value="点击访问",
-                Type=1,
-                Url="https://work.weixin.qq.com/?from=openApi"
+                KeyName = "企微官网",
+                Value = "点击访问",
+                Type = 1,
+                Url = "https://work.weixin.qq.com/?from=openApi"
             }
         };
         // 跳转指引
-        List<Jump> jumps = new() {
-            new Jump
-            {
-                Type=1,
-                Url="https://work.weixin.qq.com/?from=openApi",
-                Title="企业微信官网"
+        var jumps = new List<Jump>
+        {
+            new Jump {
+                Type = 1,
+                Url = "https://work.weixin.qq.com/?from=openApi",
+                Title = "企业微信官网"
             }
         };
         // 整体卡片的点击跳转事件

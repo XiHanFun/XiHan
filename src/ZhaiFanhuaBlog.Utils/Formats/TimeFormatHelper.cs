@@ -31,7 +31,10 @@ public static class TimeFormatHelper
             TimeSpan timeSpan = dateTimeAfter - dateTimeBefore;
             return TimeSpanToString(timeSpan);
         }
-        else throw new Exception("开始日期必须小于结束日期");
+        else
+        {
+            throw new Exception("开始日期必须小于结束日期");
+        }
     }
 
     /// <summary>
@@ -65,15 +68,25 @@ public static class TimeFormatHelper
     {
         string result = string.Empty;
         if (timeSpan.Days >= 1)
+        {
             result = timeSpan.Days + "天";
+        }
         if (timeSpan.Hours >= 1)
+        {
             result += timeSpan.Hours + "时";
+        }
         if (timeSpan.Minutes >= 1)
+        {
             result += timeSpan.Minutes + "分";
+        }
         if (timeSpan.Seconds >= 1)
+        {
             result += timeSpan.Seconds + "秒";
+        }
         if (timeSpan.Milliseconds >= 1)
+        {
             result += timeSpan.Milliseconds + "毫秒";
+        }
         return result;
     }
 }

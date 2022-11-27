@@ -58,9 +58,13 @@ public class AuthorizeController : BaseApiController
         // 根据用户名获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByNameAsync(cUserAccountLoginByNameDto.UserName);
         if (userAccount == null)
+        {
             throw new ApplicationException("该用户名称账号不存在，请先注册账号");
+        }
         if (userAccount.Password != cUserAccountLoginByNameDto.Password.ToMD5())
+        {
             throw new ApplicationException("密码错误，请重新登录");
+        }
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
         var token = JwtTokenUtil.JwtIssue(tokenModel);
@@ -81,9 +85,13 @@ public class AuthorizeController : BaseApiController
         // 根据邮箱获取用户
         var userAccount = await _IUserAccountService.FindUserAccountByEmailAsync(cUserAccountLoginByEmailDto.UserEmail);
         if (userAccount == null)
+        {
             throw new ApplicationException("该邮箱账号不存在，请先注册账号");
+        }
         if (userAccount.Password != cUserAccountLoginByEmailDto.Password.ToMD5())
+        {
             throw new ApplicationException("密码错误，请重新登录");
+        }
         var userAccountDto = iMapper.Map<RUserAccountDto>(userAccount);
         var tokenModel = iMapper.Map<TokenModel>(userAccountDto);
         var token = JwtTokenUtil.JwtIssue(tokenModel);

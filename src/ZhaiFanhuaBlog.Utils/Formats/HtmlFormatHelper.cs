@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Utils.Formats;
 /// <summary>
 /// HtmlFormatHelper
 /// </summary>
-public static partial class HtmlFormatHelper
+public static class HtmlFormatHelper
 {
     /// <summary>
     /// 去除富文本中的HTML标签
@@ -26,7 +26,7 @@ public static partial class HtmlFormatHelper
     /// <returns></returns>
     public static string ReplaceHtmlTag(string html, int length = 0)
     {
-        string strText = MyRegex().Replace(html, "");
+        string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
         strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
         if (length > 0 && strText.Length > length)
         {
@@ -34,7 +34,4 @@ public static partial class HtmlFormatHelper
         }
         return strText;
     }
-
-    [System.Text.RegularExpressions.GeneratedRegex("<[^>]+>")]
-    private static partial System.Text.RegularExpressions.Regex MyRegex();
 }

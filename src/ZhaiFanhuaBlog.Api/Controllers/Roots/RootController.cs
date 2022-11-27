@@ -108,7 +108,9 @@ public class RootController : BaseApiController
             var rootAuthority = iMapper.Map<RootAuthority>(cRootAuthorityDto);
             rootAuthority.CreateId = Guid.Parse(user);
             if (await _IRootAuthorityService.CreateRootAuthorityAsync(rootAuthority))
+            {
                 return BaseResponseDto.OK("新增系统权限成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增系统权限失败");
     }
@@ -126,7 +128,9 @@ public class RootController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootAuthorityService.DeleteRootAuthorityAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除系统权限成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除系统权限失败");
     }
@@ -147,8 +151,11 @@ public class RootController : BaseApiController
             rootAuthority.ModifyId = Guid.Parse(user);
             rootAuthority = await _IRootAuthorityService.ModifyRootAuthorityAsync(rootAuthority);
             if (rootAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
+            }
         }
+
         return BaseResponseDto.BadRequest("修改系统权限失败");
     }
 
@@ -166,8 +173,11 @@ public class RootController : BaseApiController
         {
             var rootAuthority = await _IRootAuthorityService.FindRootAuthorityAsync(guid);
             if (rootAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootAuthorityDto>(rootAuthority));
+            }
         }
+
         return BaseResponseDto.BadRequest("该系统权限不存在");
     }
 
@@ -181,7 +191,9 @@ public class RootController : BaseApiController
     {
         var rootAuthority = await _IRootAuthorityService.QueryRootAuthorityAsync();
         if (rootAuthority.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RRootAuthorityDto>>(rootAuthority));
+        }
         return BaseResponseDto.BadRequest("未查询到系统权限");
     }
 
@@ -204,7 +216,9 @@ public class RootController : BaseApiController
             var userRole = iMapper.Map<RootRole>(cRootRoleDto);
             userRole.CreateId = Guid.Parse(user);
             if (await _IRootRoleService.CreateRootRoleAsync(userRole))
+            {
                 return BaseResponseDto.OK("新增系统角色成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增系统角色失败");
     }
@@ -222,7 +236,9 @@ public class RootController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleService.DeleteRootRoleAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除系统角色成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除系统角色失败");
     }
@@ -243,7 +259,9 @@ public class RootController : BaseApiController
             userRole.ModifyId = Guid.Parse(user);
             userRole = await _IRootRoleService.ModifyRootRoleAsync(userRole);
             if (userRole != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleDto>(userRole));
+            }
         }
         return BaseResponseDto.BadRequest("修改系统角色失败");
     }
@@ -262,7 +280,9 @@ public class RootController : BaseApiController
         {
             var userRole = await _IRootRoleService.FindRootRoleAsync(guid);
             if (userRole != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleDto>(userRole));
+            }
         }
         return BaseResponseDto.BadRequest("该系统角色不存在");
     }
@@ -277,7 +297,9 @@ public class RootController : BaseApiController
     {
         var userRole = await _IRootRoleService.QueryRootRoleAsync();
         if (userRole.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RRootRoleDto>>(userRole));
+        }
         return BaseResponseDto.BadRequest("未查询到系统角色");
     }
 
@@ -300,8 +322,11 @@ public class RootController : BaseApiController
             var rootRoleAuthority = iMapper.Map<RootRoleAuthority>(cRootRoleAuthorityDto);
             rootRoleAuthority.CreateId = Guid.Parse(user);
             if (await _IRootRoleAuthorityService.CreateRootRoleAuthorityAsync(rootRoleAuthority))
+            {
                 return BaseResponseDto.OK("新增系统角色权限成功");
+            }
         }
+
         return BaseResponseDto.BadRequest("新增系统角色权限失败");
     }
 
@@ -318,7 +343,9 @@ public class RootController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleAuthorityService.DeleteRootRoleAuthorityAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除系统角色权限成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除系统角色权限失败");
     }
@@ -339,7 +366,9 @@ public class RootController : BaseApiController
             rootRoleAuthority.ModifyId = Guid.Parse(user);
             rootRoleAuthority = await _IRootRoleAuthorityService.ModifyRootRoleAuthorityAsync(rootRoleAuthority);
             if (rootRoleAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
+            }
         }
         return BaseResponseDto.BadRequest("修改系统角色权限失败");
     }
@@ -358,7 +387,9 @@ public class RootController : BaseApiController
         {
             var rootRoleAuthority = await _IRootRoleAuthorityService.FindRootRoleAuthorityAsync(guid);
             if (rootRoleAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleAuthorityDto>(rootRoleAuthority));
+            }
         }
         return BaseResponseDto.BadRequest("该系统角色权限不存在");
     }
@@ -373,7 +404,9 @@ public class RootController : BaseApiController
     {
         var rootRoleAuthority = await _IRootRoleAuthorityService.QueryRootRoleAuthorityAsync();
         if (rootRoleAuthority.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RRootRoleAuthorityDto>>(rootRoleAuthority));
+        }
         return BaseResponseDto.BadRequest("未查询到系统角色权限");
     }
 
@@ -396,7 +429,9 @@ public class RootController : BaseApiController
             var rootMenu = iMapper.Map<RootMenu>(cRootMenuDto);
             rootMenu.CreateId = Guid.Parse(user);
             if (await _IRootMenuService.CreateRootMenuAsync(rootMenu))
+            {
                 return BaseResponseDto.OK("新增系统菜单成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增系统菜单失败");
     }
@@ -414,7 +449,9 @@ public class RootController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootMenuService.DeleteRootMenuAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除系统菜单成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除系统菜单失败");
     }
@@ -435,7 +472,9 @@ public class RootController : BaseApiController
             rootMenu.ModifyId = Guid.Parse(user);
             rootMenu = await _IRootMenuService.ModifyRootMenuAsync(rootMenu);
             if (rootMenu != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootMenuDto>(rootMenu));
+            }
         }
         return BaseResponseDto.BadRequest("修改系统菜单失败");
     }
@@ -454,7 +493,9 @@ public class RootController : BaseApiController
         {
             var rootMenu = await _IRootMenuService.FindRootMenuAsync(guid);
             if (rootMenu != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootMenuDto>(rootMenu));
+            }
         }
         return BaseResponseDto.BadRequest("该系统菜单不存在");
     }
@@ -469,7 +510,9 @@ public class RootController : BaseApiController
     {
         var rootMenu = await _IRootMenuService.QueryRootMenuAsync();
         if (rootMenu.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RRootMenuDto>>(rootMenu));
+        }
         return BaseResponseDto.BadRequest("未查询到系统菜单");
     }
 
@@ -492,7 +535,9 @@ public class RootController : BaseApiController
             var rootRoleAuthority = iMapper.Map<RootRoleMenu>(cRootRoleMenuDto);
             rootRoleAuthority.CreateId = Guid.Parse(user);
             if (await _IRootRoleMenuService.CreateRootRoleMenuAsync(rootRoleAuthority))
+            {
                 return BaseResponseDto.OK("新增系统角色菜单成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增系统角色菜单失败");
     }
@@ -510,7 +555,9 @@ public class RootController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IRootRoleMenuService.DeleteRootRoleMenuAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除系统角色菜单成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除系统角色菜单失败");
     }
@@ -531,7 +578,9 @@ public class RootController : BaseApiController
             rootRoleAuthority.ModifyId = Guid.Parse(user);
             rootRoleAuthority = await _IRootRoleMenuService.ModifyRootRoleMenuAsync(rootRoleAuthority);
             if (rootRoleAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
+            }
         }
         return BaseResponseDto.BadRequest("修改系统角色菜单失败");
     }
@@ -550,7 +599,9 @@ public class RootController : BaseApiController
         {
             var rootRoleAuthority = await _IRootRoleMenuService.FindRootRoleMenuAsync(guid);
             if (rootRoleAuthority != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RRootRoleMenuDto>(rootRoleAuthority));
+            }
         }
         return BaseResponseDto.BadRequest("该系统角色菜单不存在");
     }
@@ -565,7 +616,9 @@ public class RootController : BaseApiController
     {
         var rootRoleAuthority = await _IRootRoleMenuService.QueryRootRoleMenuAsync();
         if (rootRoleAuthority.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RRootRoleMenuDto>>(rootRoleAuthority));
+        }
         return BaseResponseDto.BadRequest("未查询到系统角色菜单");
     }
 

@@ -50,7 +50,9 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     {
         var userAccount = await _IUserAccountRepository.FindAsync(e => e.BaseId == guid && !e.SoftDeleteLock);
         if (userAccount == null)
+        {
             throw new ApplicationException("用户账户不存在");
+        }
         return userAccount;
     }
 
@@ -78,7 +80,9 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     public async Task<bool> CreateUserAccountAsync(UserAccount userAccount)
     {
         if (await _IUserAccountRepository.FindAsync(e => e.UserName == userAccount.UserName || e.UserEmail == userAccount.UserEmail && !e.SoftDeleteLock) != null)
+        {
             throw new ApplicationException("用户账户名称或邮箱已注册");
+        }
         userAccount.SoftDeleteLock = false;
         var result = await _IUserAccountRepository.CreateAsync(userAccount);
         return result;
@@ -109,7 +113,10 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
         await IsExistenceAsync(userAccount.BaseId);
         userAccount.ModifyTime = DateTime.Now;
         var result = await _IUserAccountRepository.UpdateAsync(userAccount);
-        if (result) userAccount = await _IUserAccountRepository.FindAsync(userAccount.BaseId);
+        if (result)
+        {
+            userAccount = await _IUserAccountRepository.FindAsync(userAccount.BaseId);
+        }
         return userAccount;
     }
 
@@ -134,7 +141,9 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     {
         var userAccount = await _IUserAccountRepository.FindAsync(e => e.UserName == accountName && !e.SoftDeleteLock);
         if (userAccount == null)
+        {
             throw new ApplicationException("用户账户不存在");
+        }
         return userAccount;
     }
 
@@ -148,7 +157,9 @@ public class UserAccountService : BaseService<UserAccount>, IUserAccountService
     {
         var userAccount = await _IUserAccountRepository.FindAsync(e => e.UserEmail == accountEmail && !e.SoftDeleteLock);
         if (userAccount == null)
+        {
             throw new ApplicationException("用户账户不存在");
+        }
         return userAccount;
     }
 

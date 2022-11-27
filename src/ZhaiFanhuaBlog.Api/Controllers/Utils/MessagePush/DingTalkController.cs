@@ -131,19 +131,19 @@ public class DingTalkController : BaseApiController
                     "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
                     "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
             BtnOrientation = "1",
-            Btns = new List<BtnInfo>()
+            Btns = new List<BtnInfo>
+            {
+                new BtnInfo
                 {
-                    new BtnInfo
-                    {
-                        Title = keyWord +"不错",
-                        ActionUrl = "https://www.dingtalk.com/"
-                    },
-                    new BtnInfo
-                    {
-                        Title = keyWord +"不感兴趣",
-                        ActionUrl = "https://www.dingtalk.com/"
-                    }
+                    Title = keyWord +"不错",
+                    ActionUrl = "https://www.dingtalk.com/"
+                },
+                new BtnInfo
+                {
+                    Title = keyWord +"不感兴趣",
+                    ActionUrl = "https://www.dingtalk.com/"
                 }
+            }
         };
         return await _IDingTalkMessagePush.DingTalkToActionCard(actionCard);
     }
@@ -158,21 +158,21 @@ public class DingTalkController : BaseApiController
         string keyWord = "消息提醒";
         var feedCard = new FeedCard
         {
-            Links = new List<FeedCardLink>()
+            Links = new List<FeedCardLink>
+            {
+                new FeedCardLink
                 {
-                    new FeedCardLink
-                    {
-                        Title = keyWord + "时代的火车向前开",
-                        MessageUrl="https://www.dingtalk.com/",
-                        PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
-                    },
-                    new FeedCardLink
-                    {
-                        Title = keyWord + "时代在召唤",
-                        MessageUrl="https://www.dingtalk.com/",
-                        PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
-                    }
+                    Title = keyWord + "时代的火车向前开",
+                    MessageUrl="https://www.dingtalk.com/",
+                    PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
+                },
+                new FeedCardLink
+                {
+                    Title = keyWord + "时代在召唤",
+                    MessageUrl="https://www.dingtalk.com/",
+                    PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 }
+            }
         };
         return await _IDingTalkMessagePush.DingTalkToFeedCard(feedCard);
     }

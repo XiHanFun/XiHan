@@ -180,7 +180,7 @@ public class At
     /// 是否@所有人(如要 @所有人为 true，反之用 false)
     /// </summary>
     [JsonProperty(PropertyName = "isAtAll")]
-    public bool IsAtAll { set; get; } = false;
+    public bool IsAtAll { set; get; }
 }
 
 /// <summary>

@@ -52,5 +52,5 @@ public class MigrationInfo
     /// <summary>
     /// 是否迁移成功
     /// </summary>
-    public bool IsSucess { get; set; } = false;
+    public bool IsSucess { get; set; }
 }

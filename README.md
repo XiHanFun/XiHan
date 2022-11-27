@@ -31,11 +31,11 @@
 
 - [x] 搭配全套前端项目：
 
-  后端：ZhaiFanhuaBlog.Framework；
+  - 后端：ZhaiFanhuaBlog.Framework；
 
-  前端：ZhaiFanhuaBlog.Manage（后台管理）、ZhaiFanhuaBlog.Display（前台展示）；
+  - 前端：ZhaiFanhuaBlog.Manage（后台管理）、ZhaiFanhuaBlog.Display（前台展示）；
 
-  文档：ZhaiFanhuaBlog.Docs
+  - 文档：ZhaiFanhuaBlog.Docs
 
 - [ ] 统一集成 IdentityServer4 认证 ✨;
 
@@ -80,8 +80,8 @@ dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Pro
 
 ## Status
 
-![](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg)
+![Status](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg)
 
 ## Star History
 
-![](https://api.star-history.com/svg?repos=ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework&type=Date)
+![Star History](https://api.star-history.com/svg?repos=ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework&type=Date)

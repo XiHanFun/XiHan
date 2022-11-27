@@ -28,6 +28,11 @@ public static class CorsMiddleware
     /// <returns></returns>
     public static IApplicationBuilder UseCorsMiddleware(this IApplicationBuilder app)
     {
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
+
         bool isEnabledCors = AppSettings.Cors.IsEnabled;
         if (isEnabledCors)
         {

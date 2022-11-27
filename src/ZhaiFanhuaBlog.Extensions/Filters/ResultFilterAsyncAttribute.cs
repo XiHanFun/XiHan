@@ -101,7 +101,9 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
                      $"\t 请求方法：{method}";
             var result = JsonConvert.SerializeObject(resultExecuted.Result);
             if (ResultLogSwitch)
+            {
                 _ILogger.LogInformation($"返回数据\n{info}\n{result}");
+            }
         }
     }
 }
