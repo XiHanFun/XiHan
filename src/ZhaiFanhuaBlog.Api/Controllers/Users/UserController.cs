@@ -146,13 +146,12 @@ public class UserController : BaseApiController
     public async Task<BaseResultDto> QueryUserAccounts([FromServices] IMapper iMapper, [FromBody] BasePageDto pageDto)
     {
         var userAccount = await _IUserAccountService.QueryPageDataDtoAsync(pageDto);
-        return BaseResponseDto.OK(userAccount);
-        //if (userAccount.Datas != null)
-        //{
-        //    var result = iMapper.Map<List<RUserAccountDto>>(userAccount.Datas);
-        //    return BaseResponseDto.OK(result);
-        //}
-        //return BaseResponseDto.BadRequest("未查询到用户账户");
+        if (userAccount.Datas != null)
+        {
+            var result = iMapper.Map<List<RUserAccountDto>>(userAccount.Datas);
+            return BaseResponseDto.OK(result);
+        }
+        return BaseResponseDto.BadRequest("未查询到用户账户");
     }
 
     #endregion 用户账户

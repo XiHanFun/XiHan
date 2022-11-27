@@ -81,7 +81,9 @@ public class BlogController : BaseApiController
             var blogCategory = iMapper.Map<BlogCategory>(cBlogCategoryDto);
             blogCategory.CreateId = Guid.Parse(user);
             if (await _IBlogCategoryService.CreateBlogCategoryAsync(blogCategory))
+            {
                 return BaseResponseDto.OK("新增博客文章分类成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章分类失败");
     }
@@ -99,7 +101,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogCategoryService.DeleteBlogCategoryAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章分类成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章分类失败");
     }
@@ -120,7 +124,9 @@ public class BlogController : BaseApiController
             blogCategory.ModifyId = Guid.Parse(user);
             blogCategory = await _IBlogCategoryService.ModifyBlogCategoryAsync(blogCategory);
             if (blogCategory != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章分类失败");
     }
@@ -141,7 +147,9 @@ public class BlogController : BaseApiController
         {
             var blogCategory = await _IBlogCategoryService.FindBlogCategoryAsync(guid);
             if (blogCategory != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCategoryDto>(blogCategory));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章分类不存在");
     }
@@ -158,7 +166,9 @@ public class BlogController : BaseApiController
     {
         var blogCategories = await _IBlogCategoryService.QueryBlogCategoryAsync();
         if (blogCategories.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogCategoryDto>>(blogCategories));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章分类");
     }
 
@@ -181,7 +191,9 @@ public class BlogController : BaseApiController
             var blogArticle = iMapper.Map<BlogArticle>(cBlogArticleDto);
             blogArticle.CreateId = Guid.Parse(user);
             if (await _IBlogArticleService.CreateBlogArticleAsync(blogArticle))
+            {
                 return BaseResponseDto.OK("新增博客文章成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章失败");
     }
@@ -199,7 +211,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogArticleService.DeleteBlogArticleAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章失败");
     }
@@ -220,7 +234,9 @@ public class BlogController : BaseApiController
             blogArticle.ModifyId = Guid.Parse(user);
             blogArticle = await _IBlogArticleService.ModifyBlogArticleAsync(blogArticle);
             if (blogArticle != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogArticleDto>(blogArticle));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章失败");
     }
@@ -241,7 +257,9 @@ public class BlogController : BaseApiController
         {
             var blogArticle = await _IBlogArticleService.FindBlogArticleAsync(guid);
             if (blogArticle != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogArticleDto>(blogArticle));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章不存在");
     }
@@ -258,7 +276,9 @@ public class BlogController : BaseApiController
     {
         var blogArticles = await _IBlogArticleService.QueryBlogArticleAsync();
         if (blogArticles.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogArticleDto>>(blogArticles));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章");
     }
 
@@ -281,7 +301,9 @@ public class BlogController : BaseApiController
             var blogTag = iMapper.Map<BlogTag>(cBlogTagDto);
             blogTag.CreateId = Guid.Parse(user);
             if (await _IBlogTagService.CreateBlogTagAsync(blogTag))
+            {
                 return BaseResponseDto.OK("新增博客标签成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客标签失败");
     }
@@ -299,7 +321,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogTagService.DeleteBlogTagAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客标签成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客标签失败");
     }
@@ -320,7 +344,9 @@ public class BlogController : BaseApiController
             blogTag.ModifyId = Guid.Parse(user);
             blogTag = await _IBlogTagService.ModifyBlogTagAsync(blogTag);
             if (blogTag != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogTagDto>(blogTag));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客标签失败");
     }
@@ -341,7 +367,9 @@ public class BlogController : BaseApiController
         {
             var blogTag = await _IBlogTagService.FindBlogTagAsync(guid);
             if (blogTag != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogTagDto>(blogTag));
+            }
         }
         return BaseResponseDto.BadRequest("该博客标签不存在");
     }
@@ -383,7 +411,9 @@ public class BlogController : BaseApiController
             var blogArticleTag = iMapper.Map<BlogArticleTag>(cBlogArticleTagDto);
             blogArticleTag.CreateId = Guid.Parse(user);
             if (await _IBlogArticleTagService.CreateBlogArticleTagAsync(blogArticleTag))
+            {
                 return BaseResponseDto.OK("新增博客文章标签成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章标签失败");
     }
@@ -401,7 +431,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogArticleTagService.DeleteBlogArticleTagAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章标签成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章标签失败");
     }
@@ -422,7 +454,9 @@ public class BlogController : BaseApiController
             blogArticleTag.ModifyId = Guid.Parse(user);
             blogArticleTag = await _IBlogArticleTagService.ModifyBlogArticleTagAsync(blogArticleTag);
             if (blogArticleTag != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogArticleTagDto>(blogArticleTag));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章标签失败");
     }
@@ -443,7 +477,9 @@ public class BlogController : BaseApiController
         {
             var blogArticleTag = await _IBlogArticleTagService.FindBlogArticleTagAsync(guid);
             if (blogArticleTag != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogArticleTagDto>(blogArticleTag));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章标签不存在");
     }
@@ -486,7 +522,9 @@ public class BlogController : BaseApiController
             var blogPoll = iMapper.Map<BlogPoll>(cBlogPollDto);
             blogPoll.CreateId = Guid.Parse(user);
             if (await _IBlogPollService.CreateBlogPollAsync(blogPoll))
+            {
                 return BaseResponseDto.OK("新增博客文章点赞成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章点赞失败");
     }
@@ -505,7 +543,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogPollService.DeleteBlogPollAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章点赞成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章点赞失败");
     }
@@ -526,7 +566,9 @@ public class BlogController : BaseApiController
             blogPoll.ModifyId = Guid.Parse(user);
             blogPoll = await _IBlogPollService.ModifyBlogPollAsync(blogPoll);
             if (blogPoll != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogPollDto>(blogPoll));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章点赞失败");
     }
@@ -547,7 +589,9 @@ public class BlogController : BaseApiController
         {
             var blogPoll = await _IBlogPollService.FindBlogPollAsync(guid);
             if (blogPoll != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogPollDto>(blogPoll));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章点赞不存在");
     }
@@ -590,7 +634,9 @@ public class BlogController : BaseApiController
             var blogComment = iMapper.Map<BlogComment>(cBlogCommentDto);
             blogComment.CreateId = Guid.Parse(user);
             if (await _IBlogCommentService.CreateBlogCommentAsync(blogComment))
+            {
                 return BaseResponseDto.OK("新增博客文章评论成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章评论失败");
     }
@@ -609,7 +655,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogCommentService.DeleteBlogCommentAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章评论成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章评论失败");
     }
@@ -631,7 +679,9 @@ public class BlogController : BaseApiController
             blogComment.ModifyId = Guid.Parse(user);
             blogComment = await _IBlogCommentService.ModifyBlogCommentAsync(blogComment);
             if (blogComment != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCommentDto>(blogComment));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章评论失败");
     }
@@ -652,7 +702,9 @@ public class BlogController : BaseApiController
         {
             var blogComment = await _IBlogCommentService.FindBlogCommentAsync(guid);
             if (blogComment != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCommentDto>(blogComment));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章评论不存在");
     }
@@ -669,7 +721,9 @@ public class BlogController : BaseApiController
     {
         var blogComments = await _IBlogCommentService.QueryBlogCommentAsync();
         if (blogComments.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogCommentDto>>(blogComments));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章评论");
     }
 
@@ -693,7 +747,9 @@ public class BlogController : BaseApiController
             var blogPoll = iMapper.Map<BlogCommentPoll>(cBlogCommentPollDto);
             blogPoll.CreateId = Guid.Parse(user);
             if (await _IBlogCommentPollService.CreateBlogCommentPollAsync(blogPoll))
+            {
                 return BaseResponseDto.OK("新增博客文章评论点赞成功");
+            }
         }
         return BaseResponseDto.BadRequest("新增博客文章评论点赞失败");
     }
@@ -712,7 +768,9 @@ public class BlogController : BaseApiController
         {
             Guid deleteId = Guid.Parse(user);
             if (await _IBlogCommentPollService.DeleteBlogCommentPollAsync(guid, deleteId))
+            {
                 return BaseResponseDto.OK("删除博客文章评论点赞成功");
+            }
         }
         return BaseResponseDto.BadRequest("删除博客文章评论点赞失败");
     }
@@ -733,7 +791,9 @@ public class BlogController : BaseApiController
             blogPoll.ModifyId = Guid.Parse(user);
             blogPoll = await _IBlogCommentPollService.ModifyBlogCommentPollAsync(blogPoll);
             if (blogPoll != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCommentPollDto>(blogPoll));
+            }
         }
         return BaseResponseDto.BadRequest("修改博客文章评论点赞失败");
     }
@@ -754,7 +814,9 @@ public class BlogController : BaseApiController
         {
             var blogPoll = await _IBlogCommentPollService.FindBlogCommentPollAsync(guid);
             if (blogPoll != null)
+            {
                 return BaseResponseDto.OK(iMapper.Map<RBlogCommentPollDto>(blogPoll));
+            }
         }
         return BaseResponseDto.BadRequest("该博客文章评论点赞不存在");
     }
@@ -771,7 +833,9 @@ public class BlogController : BaseApiController
     {
         var blogCategories = await _IBlogCommentPollService.QueryBlogCommentPollAsync();
         if (blogCategories.Count != 0)
+        {
             return BaseResponseDto.OK(iMapper.Map<List<RBlogCommentPollDto>>(blogCategories));
+        }
         return BaseResponseDto.BadRequest("未查询到博客文章评论点赞");
     }
 

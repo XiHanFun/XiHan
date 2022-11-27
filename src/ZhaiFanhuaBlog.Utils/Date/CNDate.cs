@@ -1087,7 +1087,7 @@ public class ChineseCalendar
             //检查日期是否大于最大天
             if (cd > GetChineseMonthDays(cy, cm))
             {
-                throw new Exception("不合法的农历日期");
+                throw new ArgumentNullException("不合法的农历日期");
             }
             //加上当月的天数
             offset = offset + cd;
@@ -1111,7 +1111,7 @@ public class ChineseCalendar
 
                 if (cd > GetChineseMonthDays(cy, cm))
                 {
-                    throw new Exception("不合法的农历日期");
+                    throw new ArgumentNullException("不合法的农历日期");
                 }
                 offset = offset + cd;
             }
@@ -1128,7 +1128,7 @@ public class ChineseCalendar
 
                 if (cd > GetChineseLeapMonthDays(cy))
                 {
-                    throw new Exception("不合法的农历日期");
+                    throw new ArgumentNullException("不合法的农历日期");
                 }
                 offset = offset + cd;
             }
@@ -1272,7 +1272,7 @@ public class ChineseCalendar
     {
         if ((dt < MinDay) || (dt > MaxDay))
         {
-            throw new Exception("超出可转换的日期");
+            throw new ArgumentNullException("超出可转换的日期");
         }
     }
 
@@ -1287,20 +1287,20 @@ public class ChineseCalendar
     {
         if ((year < MinYear) || (year > MaxYear))
         {
-            throw new Exception("非法农历日期");
+            throw new ArgumentNullException("非法农历日期");
         }
         if ((month < 1) || (month > 12))
         {
-            throw new Exception("非法农历日期");
+            throw new ArgumentNullException("非法农历日期");
         }
         if ((day < 1) || (day > 30)) //中国的月最多30天
         {
-            throw new Exception("非法农历日期");
+            throw new ArgumentNullException("非法农历日期");
         }
         int leap = GetChineseLeapMonth(year);// 计算该年应该闰哪个月
         if ((leapMonth == true) && (month != leap))
         {
-            throw new Exception("非法农历日期");
+            throw new ArgumentNullException("非法农历日期");
         }
     }
 
@@ -1365,7 +1365,7 @@ public class ChineseCalendar
     private bool BitTest32(int num, int bitpostion)
     {
         if ((bitpostion > 31) || (bitpostion < 0))
-            throw new Exception("Error Param: bitpostion[0-31]:" + bitpostion.ToString());
+            throw new ArgumentNullException("Error Param: bitpostion[0-31]:" + bitpostion.ToString());
 
         int bit = 1 << bitpostion;
 
