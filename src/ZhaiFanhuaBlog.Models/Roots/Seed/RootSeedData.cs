@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Models.Roots.Seed;
 /// <summary>
 /// RootSeedData
 /// </summary>
-public class RootSeedData
+public static class RootSeedData
 {
     /// <summary>
     /// 系统权限种子数据

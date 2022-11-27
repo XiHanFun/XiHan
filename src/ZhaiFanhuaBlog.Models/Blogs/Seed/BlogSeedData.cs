@@ -16,6 +16,6 @@ namespace ZhaiFanhuaBlog.Models.Blogs.Seed;
 /// <summary>
 /// BlogSeedData
 /// </summary>
-public class BlogSeedData
+public static class BlogSeedData
 {
 }

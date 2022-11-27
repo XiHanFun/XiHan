@@ -16,6 +16,6 @@ namespace ZhaiFanhuaBlog.Models.Sites.Seed;
 /// <summary>
 /// 网站种子数据
 /// </summary>
-public class SiteSeedData
+public static class SiteSeedData
 {
 }

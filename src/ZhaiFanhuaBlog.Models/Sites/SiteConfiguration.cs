@@ -52,6 +52,12 @@ public class SiteConfiguration : BaseDeleteEntity<Guid>
     public string AdminName { get; set; } = string.Empty;
 
     /// <summary>
+    /// 站长邮箱
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    public string AdminEmail { get; set; } = string.Empty;
+
+    /// <summary>
     /// 升级时间
     /// </summary>
     [SugarColumn(IsNullable = true)]

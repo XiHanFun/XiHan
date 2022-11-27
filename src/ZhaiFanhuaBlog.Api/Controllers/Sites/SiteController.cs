@@ -14,6 +14,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
+using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Models.Sites;
@@ -31,17 +32,14 @@ namespace ZhaiFanhuaBlog.Api.Controllers;
 [ApiGroup(ApiGroupNames.Backstage)]
 public class SiteController : BaseApiController
 {
-    private IConfiguration _IConfiguration;
     private readonly ISiteConfigurationService _ISiteConfigurationService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="configuration"></param>
     /// <param name="iSiteConfigurationService"></param>
-    public SiteController(IConfiguration configuration, ISiteConfigurationService iSiteConfigurationService)
+    public SiteController(ISiteConfigurationService iSiteConfigurationService)
     {
-        _IConfiguration = configuration;
         _ISiteConfigurationService = iSiteConfigurationService;
     }
 
@@ -54,11 +52,12 @@ public class SiteController : BaseApiController
     {
         CSiteConfigurationDto configuration = new()
         {
-            Name = _IConfiguration.GetValue<string>("Configuration:Name") ?? string.Empty,
-            Description = _IConfiguration.GetValue<string>("Configuration:Description") ?? string.Empty,
-            KeyWord = _IConfiguration.GetValue<string>("Configuration:KeyWord") ?? string.Empty,
-            Domain = _IConfiguration.GetValue<string>("Configuration:Domain") ?? string.Empty,
-            AdminName = _IConfiguration.GetValue<string>("Configuration:Admin:Name") ?? string.Empty
+            Name = AppSettings.Site.Name,
+            Description = AppSettings.Site.Description,
+            KeyWord = AppSettings.Site.KeyWord,
+            Domain = AppSettings.Site.Domain,
+            AdminName = AppSettings.Site.Admin.Name,
+            AdminEmail = AppSettings.Site.Admin.Email
         };
         var siteConfiguration = iMapper.Map<SiteConfiguration>(configuration);
         if (await _ISiteConfigurationService.CreateSiteConfigurationAsync(siteConfiguration))

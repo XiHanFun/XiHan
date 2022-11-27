@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Models.Users.Seed;
 /// <summary>
 /// UserSeedData
 /// </summary>
-public class UserSeedData
+public static class UserSeedData
 {
     /// <summary>
     /// 用户账户种子数据

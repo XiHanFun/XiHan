@@ -55,6 +55,14 @@ public class CSiteConfigurationDto
     public string AdminName { get; set; } = string.Empty;
 
     /// <summary>
+    /// 电子邮件
+    /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
+    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", ErrorMessage = "请输入正确的邮箱地址")]
+    public string AdminEmail { get; set; } = string.Empty;
+
+    /// <summary>
     /// 升级时间
     /// </summary>
     public DateTime? UpdateTime { get; set; }
