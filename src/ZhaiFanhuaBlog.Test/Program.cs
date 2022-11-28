@@ -11,7 +11,13 @@
 
 #endregion <<版权版本注释>>
 
+using ZhaiFanhuaBlog.Test.Common;
+
 Console.WriteLine("Hello, World!");
-// TestChinaDate.ChinaDate();
+while (true)
+{
+    // TestChinaDate.ChinaDate();
+    TestRegex.TestCardId();
+}
 
 Console.ReadKey();
