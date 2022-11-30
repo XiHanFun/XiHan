@@ -30,5 +30,5 @@ public abstract class BaseAuditEntity<Tkey> : BaseDeleteEntity<Guid>
     /// 审核时间
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "审核时间")]
-    public virtual DateTime? AuditTime { get; set; } = null;
+    public virtual DateTime? AuditTime { get; set; }
 }

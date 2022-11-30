@@ -27,10 +27,22 @@ public class BlogTag : BaseEntity
     public Guid AccountId { get; set; }
 
     /// <summary>
+    /// 标签别名
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(20)")]
+    public string TagAlias { get; set; } = string.Empty;
+
+    /// <summary>
     /// 标签名称
     /// </summary>
     [SugarColumn(ColumnDataType = "nvarchar(20)")]
     public string TagName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 标签描述
+    /// </summary>
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    public string TagDescription { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章总数

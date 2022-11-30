@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
 
 namespace ZhaiFanhuaBlog.Utils.Verification;
@@ -24,25 +23,23 @@ public static class RegexHelper
     /// <summary>
     /// Guid格式验证（a480500f-a181-4d3d-8ada-461f69eecfdd）
     /// </summary>
-    /// <param name="guid">Guid</param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsGuid(string guid)
+    public static bool IsGuid(string checkValue)
     {
-        Regex regex = new(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", RegexOptions.IgnoreCase);
-        Match result = regex.Match(guid);
-        return result.Success;
+        string pattern = @"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 电话号码（正确格式为：xxx-xxxxxxx或xxxx-xxxxxxxx）
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Tel(string str)
+    public static bool IsNumber_Tel(string checkValue)
     {
-        Regex regex = new(@"^(\d{3.4}-)\d{7,8}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^(\d{3.4}-)\d{7,8}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
@@ -65,15 +62,15 @@ public static class RegexHelper
     /// 然后用189除以11得出的结果是189÷11 = 17余下2，也就是说其余数是2。
     /// 最后通过对应规则就可以知道余数2对应的检验码是X。所以，可以判定这是一个正确的身份证号码。
     /// </summary>
-    /// <param name="cardId"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static (bool adopt, string message) IsNumber_People(string cardId)
+    public static (bool adopt, string message) IsNumber_People(string checkValue)
     {
         try
         {
-            Regex regex = new(@"^\d{17}(?:\d|X)$");
+            string pattern = @"^\d{17}(?:\d|X)$";
             // 首先18位格式检查
-            if (regex.Match(cardId).Success)
+            if (Regex.IsMatch(checkValue, pattern))
             {
                 // 加权数组,用于验证最后一位的校验数字
                 int[] arrWeight = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
@@ -84,16 +81,16 @@ public static class RegexHelper
                 //通过循环前16位计算出最后一位的数字
                 for (int i = 0; i < arrWeight.Length; i++)
                 {
-                    sum += arrWeight[i] * int.Parse(cardId[i].ToString());
+                    sum += arrWeight[i] * int.Parse(checkValue[i].ToString());
                 }
                 // 实际校验位的值
                 int lastCheck = sum % 11;
                 // 出生日期检查
-                string birth = cardId.Substring(6, 8).Insert(6, "-").Insert(4, "-");
+                string birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
                 if (DateTime.TryParse(birth, out DateTime time))
                 {
                     // 校验位检查
-                    if (arrIdLastCheck[lastCheck].Equals(cardId[^1].ToString()))
+                    if (arrIdLastCheck[lastCheck].Equals(checkValue[^1].ToString()))
                     {
                         throw new Exception("OK，身份证验证成功");
                     }
@@ -129,252 +126,232 @@ public static class RegexHelper
     /// <summary>
     /// Email地址
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsEmail(string str)
+    public static bool IsEmail(string checkValue)
     {
-        Regex regex = new(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 数字或英文字母
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumberOrLetter(string str)
+    public static bool IsNumberOrLetter(string checkValue)
     {
-        Regex regex = new(@"^[A-Za-z0-9]+$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[A-Za-z0-9]+$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 整数或者小数
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_IntOrDouble(string str)
+    public static bool IsNumber_IntOrDouble(string checkValue)
     {
-        Regex regex = new(@"^[0-9]+\.{0,1}[0-9]{0,2}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[0-9]+\.{0,1}[0-9]{0,2}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 数字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber(string str)
+    public static bool IsNumber(string checkValue)
     {
-        Regex regex = new(@"^[0-9]*$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[0-9]*$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// n位的数字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_n(string str)
+    public static bool IsNumber_Several_n(string checkValue)
     {
-        Regex regex = new(@"^\d{n}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^\d{n}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 至少n位的数字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_AtLeast_n(string str)
+    public static bool IsNumber_Several_AtLeast_n(string checkValue)
     {
-        Regex regex = new(@"^\d{n,}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^\d{n,}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// m至n位的数字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_m_n(string str)
+    public static bool IsNumber_Several_m_n(string checkValue)
     {
-        Regex regex = new(@"^\d{m,n}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^\d{m,n}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 零和非零开头的数字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Begin_ZeroOrNotZero(string str)
+    public static bool IsNumber_Begin_ZeroOrNotZero(string checkValue)
     {
-        Regex regex = new(@"^(0|[1-9] [0-9]*)$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^(0|[1-9] [0-9]*)$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 2位小数的正实数
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Real_TwoDouble(string str)
+    public static bool IsNumber_Positive_Real_TwoDouble(string checkValue)
     {
-        Regex regex = new(@"^[0-9]+(.[0-9]{2})?$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[0-9]+(.[0-9]{2})?$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 有1-3位小数的正实数
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Real_OneOrThreeDouble(string str)
+    public static bool IsNumber_Positive_Real_OneOrThreeDouble(string checkValue)
     {
-        Regex regex = new(@"^[0-9]+(.[0-9]{1,3})?$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[0-9]+(.[0-9]{1,3})?$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 非零的正整数
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Int_NotZero(string str)
+    public static bool IsNumber_Positive_Int_NotZero(string checkValue)
     {
-        Regex regex = new(@"^\+?[1-9][0-9]*$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^\+?[1-9][0-9]*$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 非零的负整数
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Negative_Int_NotZero(string str)
+    public static bool IsNumber_Negative_Int_NotZero(string checkValue)
     {
-        Regex regex = new(@"^\-?[1-9][0-9]*$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^\-?[1-9][0-9]*$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 长度为3的字符
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsChar_Three(string str)
+    public static bool IsChar_Three(string checkValue)
     {
-        Regex regex = new(@"^.{3}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^.{3}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 字母
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsLetter(string str)
+    public static bool IsLetter(string checkValue)
     {
-        Regex regex = new(@"^[A-Za-z]+$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[A-Za-z]+$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 大写字母
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsLetter_Capital(string str)
+    public static bool IsLetter_Capital(string checkValue)
     {
-        Regex regex = new(@"^[A-Z]+$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[A-Z]+$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 小写字母
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsLetter_Lower(string str)
+    public static bool IsLetter_Lower(string checkValue)
     {
-        Regex regex = new(@"^[a-z]+$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[a-z]+$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 是否含有=，。：等特殊字符
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsChar_Special(string str)
+    public static bool IsChar_Special(string checkValue)
     {
-        Regex regex = new(@"[^%&',;=?$\x22]+");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"[^%&',;=?$\x22]+";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 汉字
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsChinese(string str)
+    public static bool IsChinese(string checkValue)
     {
-        Regex regex = new(@"^[\u4e00-\u9fa5]{0,}$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^[\u4e00-\u9fa5]{0,}$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// URL
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsURL(string str)
+    public static bool IsURL(string checkValue)
     {
-        Regex regex = new(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 一年的12个月（正确格式为："01"～"09"和"1"～"12"）
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsMonth(string str)
+    public static bool IsMonth(string checkValue)
     {
-        Regex regex = new(@"^^(0?[1-9]|1[0-2])$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^^(0?[1-9]|1[0-2])$";
+        return Regex.IsMatch(checkValue, pattern);
     }
 
     /// <summary>
     /// 一月的31天（正确格式为："01"～"09"和"1"～"31"）
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsDay(string str)
+    public static bool IsDay(string checkValue)
     {
-        Regex regex = new(@"^((0?[1-9])|((1|2)[0-9])|30|31)$");
-        Match result = regex.Match(str);
-        return result.Success;
+        string pattern = @"^((0?[1-9])|((1|2)[0-9])|30|31)$";
+
+        return Regex.IsMatch(checkValue, pattern);
     }
 }

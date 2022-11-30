@@ -30,5 +30,5 @@ public abstract class BaseModifyEntity<Tkey> : BaseCreateEntity<Guid>
     /// 修改时间
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
-    public virtual DateTime? ModifyTime { get; set; } = null;
+    public virtual DateTime? ModifyTime { get; set; }
 }
