@@ -35,7 +35,7 @@ public static class DESHelper
     {
         try
         {
-            byte[] rgbKey = encode.GetBytes(desKey[..8]);
+            byte[] rgbKey = encode.GetBytes(desKey[..16]);
             byte[] rgbIV = IV;
             byte[] inputByteArray = encode.GetBytes(inputString);
             using DES des = DES.Create();
@@ -62,7 +62,7 @@ public static class DESHelper
     {
         try
         {
-            byte[] rgbKey = encode.GetBytes(desKey[..8]);
+            byte[] rgbKey = encode.GetBytes(desKey[..16]);
             byte[] rgbIV = IV;
             byte[] inputByteArray = Convert.FromBase64String(inputString);
             using DES des = DES.Create();

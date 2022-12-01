@@ -60,7 +60,7 @@ public static class TimeFormatHelper
     }
 
     /// <summary>
-    /// 间跨度转换字符串
+    /// 时间跨度转换字符串
     /// </summary>
     /// <param name="timeSpan"></param>
     /// <returns></returns>
