@@ -242,58 +242,57 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <summary>
         /// 将字符串转换为新样式
         /// </summary>
-        /// <param name="StrList"></param>
-        /// <param name="NewStyle"></param>
-        /// <param name="SplitString"></param>
-        /// <param name="Error"></param>
+        /// <param name="strList"></param>
+        /// <param name="newStyle"></param>
+        /// <param name="splitString"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public static string GetNewStyle(string StrList, string NewStyle, string SplitString, out string Error)
+        public static string GetNewStyle(string strList, string newStyle, string splitString, out string error)
         {
-            string ReturnValue = "";
+            string returnValue;
             //如果输入空值，返回空，并给出错误提示
-            if (StrList == null)
+            if (strList == null)
             {
-                ReturnValue = "";
-                Error = "请输入需要划分格式的字符串";
+                returnValue = "";
+                error = "请输入需要划分格式的字符串";
             }
             else
             {
                 //检查传入的字符串长度和样式是否匹配,如果不匹配，则说明使用错误。给出错误信息并返回空值
-                int strListLength = StrList.Length;
-                int NewStyleLength = GetCleanStyle(NewStyle, SplitString).Length;
-                if (strListLength != NewStyleLength)
+                int strListLength = strList.Length;
+                int newStyleLength = GetCleanStyle(newStyle, splitString).Length;
+                if (strListLength != newStyleLength)
                 {
-                    ReturnValue = "";
-                    Error = "样式格式的长度与输入的字符长度不符，请重新输入";
+                    returnValue = "";
+                    error = "样式格式的长度与输入的字符长度不符，请重新输入";
                 }
                 else
                 {
                     //检查新样式中分隔符的位置
-                    string Lengstr = "";
-                    for (int i = 0; i < NewStyle.Length; i++)
+                    StringBuilder lengstr = new();
+                    for (int i = 0; i < newStyle.Length; i++)
                     {
-                        if (NewStyle.Substring(i, 1) == SplitString)
+                        if (newStyle.Substring(i, 1) == splitString)
                         {
-                            Lengstr = Lengstr + "," + i;
+                            lengstr.Append(i + ",");
                         }
                     }
-                    if (Lengstr != "")
+                    if (!string.IsNullOrWhiteSpace(lengstr.ToString()))
                     {
-                        Lengstr = Lengstr.Substring(1);
-                    }
-                    //将分隔符放在新样式中的位置
-                    string[] str = Lengstr.Split(',');
-                    foreach (string bb in str)
-                    {
-                        StrList = StrList.Insert(int.Parse(bb), SplitString);
+                        //将分隔符放在新样式中的位置
+                        string[] str = lengstr.ToString().Split(',');
+                        foreach (string bb in str)
+                        {
+                            strList = strList.Insert(int.Parse(bb), splitString);
+                        }
                     }
                     //给出最后的结果
-                    ReturnValue = StrList;
+                    returnValue = strList;
                     //因为是正常的输出，没有错误
-                    Error = "";
+                    error = "";
                 }
             }
-            return ReturnValue;
+            return returnValue;
         }
 
         #endregion
@@ -427,7 +426,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
             }
             ASCIIEncoding ascii = new();
             int tempLen = 0;
-            string tempString = "";
+            StringBuilder tempString = new();
             byte[] s = ascii.GetBytes(inputString);
             for (int i = 0; i < s.Length; i++)
             {
@@ -438,7 +437,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
 
                 try
                 {
-                    tempString += inputString.Substring(i, 1);
+                    tempString.Append(inputString.AsSpan(i, 1));
                 }
                 catch
                 {
@@ -451,8 +450,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
 
             byte[] mybyte = Encoding.Default.GetBytes(inputString);
             if (isShowFix && mybyte.Length > len)
-                tempString += "…";
-            return tempString;
+                tempString.Append('…');
+            return tempString.ToString();
         }
 
         #endregion
