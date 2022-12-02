@@ -22,7 +22,7 @@ namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 /// <summary>
 /// 钉钉机器人消息推送
 /// </summary>
-public class DingTalkRobot
+public class DingTalkRobotHelper
 {
     /// <summary>
     /// 请求接口
@@ -44,7 +44,7 @@ public class DingTalkRobot
     /// </summary>
     /// <param name="iHttpHelper"></param>
     /// <param name="dingTalkConnection"></param>
-    public DingTalkRobot(IHttpHelper iHttpHelper, DingTalkConnection dingTalkConnection)
+    public DingTalkRobotHelper(IHttpHelper iHttpHelper, DingTalkConnection dingTalkConnection)
     {
         _IHttpHelper = iHttpHelper;
         _Url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;

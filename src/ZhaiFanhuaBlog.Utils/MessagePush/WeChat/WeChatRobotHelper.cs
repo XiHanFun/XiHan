@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 /// <summary>
 /// 微信机器人消息推送
 /// </summary>
-public class WeChatRobot
+public class WeChatRobotHelper
 {
     /// <summary>
     /// 请求接口
@@ -41,7 +41,7 @@ public class WeChatRobot
     /// </summary>
     /// <param name="iHttpHelper"></param>
     /// <param name="weChatConnection"></param>
-    public WeChatRobot(IHttpHelper iHttpHelper, WeChatConnection weChatConnection)
+    public WeChatRobotHelper(IHttpHelper iHttpHelper, WeChatConnection weChatConnection)
     {
         _IHttpHelper = iHttpHelper;
         _MessageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;

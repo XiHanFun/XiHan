@@ -28,7 +28,7 @@ public class WeChatMessagePush : IWeChatMessagePush
     /// <summary>
     /// 机器人实例
     /// </summary>
-    private readonly WeChatRobot _WeChatRobot;
+    private readonly WeChatRobotHelper _WeChatRobot;
 
     /// <summary>
     /// 构造函数
@@ -37,11 +37,11 @@ public class WeChatMessagePush : IWeChatMessagePush
     {
         WeChatConnection conn = new()
         {
-            WebHookUrl = AppSettings.WeChart.WebHookUrl,
-            UploadkUrl = AppSettings.WeChart.UploadkUrl,
-            Key = AppSettings.WeChart.Key
+            WebHookUrl = AppSettings.MessagePush.WeChart.WebHookUrl,
+            UploadkUrl = AppSettings.MessagePush.WeChart.UploadkUrl,
+            Key = AppSettings.MessagePush.WeChart.Key
         };
-        _WeChatRobot = new WeChatRobot(iHttpHelper, conn);
+        _WeChatRobot = new WeChatRobotHelper(iHttpHelper, conn);
     }
 
     /// <summary>

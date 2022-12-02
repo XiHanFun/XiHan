@@ -274,42 +274,47 @@ public class AppSettings
     }
 
     /// <summary>
-    /// 邮件
+    /// 消息推送
     /// </summary>
-    public static class Email
+    public static class MessagePush
     {
-        public static string Host => GetStringValue("Email:Host");
-        public static int Port => GetIntValue("Email:Port");
-        public static bool UseSsl => GetBoolValue("Email:UseSsl");
-
-        public static class From
+        /// <summary>
+        /// 钉钉
+        /// </summary>
+        public static class DingTalk
         {
-            public static string Username => GetStringValue("Email:From:Username");
-            public static string Password => GetStringValue("Email:From:Password");
-            public static string Name => GetStringValue("Email:From:Name");
-            public static string Address => GetStringValue("Email:From:Address");
+            public static string WebHookUrl => GetStringValue("MessagePush:DingTalk:WebHookUrl");
+            public static string AccessToken => GetStringValue("MessagePush:DingTalk:AccessToken");
+            public static string KeyWord => GetStringValue("MessagePush:DingTalk:KeyWord");
+            public static string Secret => GetStringValue("MessagePush:DingTalk:Secret");
         }
-    }
 
-    /// <summary>
-    /// 钉钉
-    /// </summary>
-    public static class DingTalk
-    {
-        public static string WebHookUrl => GetStringValue("DingTalk:WebHookUrl");
-        public static string AccessToken => GetStringValue("DingTalk:AccessToken");
-        public static string KeyWord => GetStringValue("DingTalk:KeyWord");
-        public static string Secret => GetStringValue("DingTalk:Secret");
-    }
+        /// <summary>
+        /// 微信
+        /// </summary>
+        public static class WeChart
+        {
+            public static string WebHookUrl => GetStringValue("MessagePush:WeChart:WebHookUrl");
+            public static string UploadkUrl => GetStringValue("MessagePush:WeChart:UploadkUrl");
+            public static string Key => GetStringValue("MessagePush:WeChart:Key");
+        }
 
-    /// <summary>
-    /// 微信
-    /// </summary>
-    public static class WeChart
-    {
-        public static string WebHookUrl => GetStringValue("WeChart:WebHookUrl");
-        public static string UploadkUrl => GetStringValue("WeChart:UploadkUrl");
-        public static string Key => GetStringValue("WeChart:Key");
+        /// <summary>
+        /// 邮件
+        /// </summary>
+        public static class Email
+        {
+            public static string Host => GetStringValue("MessagePush:Email:Host");
+            public static int Port => GetIntValue("MessagePush:Email:Port");
+            public static bool UseSsl => GetBoolValue("MessagePush:Email:UseSsl");
+
+            public static class From
+            {
+                public static string Username => GetStringValue("MessagePush:Email:From:Username");
+                public static string Password => GetStringValue("MessagePush:Email:From:Password");
+                public static string Address => GetStringValue("MessagePush:Email:From:Address");
+            }
+        }
     }
 
     #endregion 读取配置

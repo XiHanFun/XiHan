@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
+using ZhaiFanhuaBlog.Utils.Verification;
 
 namespace ZhaiFanhuaBlog.ViewModels.Blogs;
 

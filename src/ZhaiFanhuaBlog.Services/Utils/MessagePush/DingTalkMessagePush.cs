@@ -27,7 +27,7 @@ public class DingTalkMessagePush : IDingTalkMessagePush
     /// <summary>
     /// 机器人实例
     /// </summary>
-    private readonly DingTalkRobot _DingTalkRobot;
+    private readonly DingTalkRobotHelper _DingTalkRobot;
 
     /// <summary>
     /// 构造函数
@@ -37,11 +37,11 @@ public class DingTalkMessagePush : IDingTalkMessagePush
     {
         DingTalkConnection conn = new()
         {
-            WebHookUrl = AppSettings.DingTalk.WebHookUrl,
-            AccessToken = AppSettings.DingTalk.AccessToken,
-            Secret = AppSettings.DingTalk.Secret
+            WebHookUrl = AppSettings.MessagePush.DingTalk.WebHookUrl,
+            AccessToken = AppSettings.MessagePush.DingTalk.AccessToken,
+            Secret = AppSettings.MessagePush.DingTalk.Secret
         };
-        _DingTalkRobot = new DingTalkRobot(iHttpHelper, conn);
+        _DingTalkRobot = new DingTalkRobotHelper(iHttpHelper, conn);
     }
 
     #region DingTalk
