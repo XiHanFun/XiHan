@@ -28,7 +28,10 @@ public static class SwaggerMiddleware
     /// Swagger应用扩展
     /// </summary>
     /// <param name="app"></param>
+    /// <param name="streamHtml"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="Exception"></exception>
     public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, Func<Stream> streamHtml)
     {
         if (app == null)

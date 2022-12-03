@@ -13,7 +13,6 @@
 
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.Mail;
 
@@ -26,7 +25,7 @@ public static class EmailHelper
     /// 发送
     /// </summary>
     /// <param name="model">发送参数</param>
-    public static async Task Send(SendModel model)
+    public static async Task Send(EmailModel model)
     {
         try
         {
@@ -75,66 +74,5 @@ public static class EmailHelper
         {
             throw new Exception("邮件发送出错:" + ex);
         }
-    }
-
-    /// <summary>
-    /// 发送邮件
-    /// </summary>
-    public class SendModel
-    {
-        /// <summary>
-        /// 服务
-        /// </summary>
-        public string Host { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 端口
-        /// </summary>
-        public int Port { get; set; } = 587;
-
-        /// <summary>
-        /// 发送者邮箱
-        /// </summary>
-        public string FromMail { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 发送者名称
-        /// </summary>
-        public string FromName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 发送者邮箱密码
-        /// </summary>
-        public string FromPassword { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 发送主题
-        /// </summary>
-        public string Subject { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 发送内容
-        /// </summary>
-        public string Body { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 内容编码
-        /// </summary>
-        public Encoding Coding { get; set; } = Encoding.UTF8;
-
-        /// <summary>
-        /// 接收者邮箱
-        /// </summary>
-        public List<string> ToMail { get; set; } = new List<string>();
-
-        /// <summary>
-        /// 抄送给邮箱
-        /// </summary>
-        public List<string> CcMail { get; set; } = new List<string>();
-
-        /// <summary>
-        /// 附件
-        /// </summary>
-        public List<string> AttachmentsPath { get; set; } = new List<string>();
     }
 }

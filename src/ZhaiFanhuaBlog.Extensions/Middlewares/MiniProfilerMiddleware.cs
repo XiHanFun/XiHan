@@ -21,6 +21,12 @@ namespace ZhaiFanhuaBlog.Extensions.Middlewares;
 /// </summary>
 public static class MiniProfilerMiddleware
 {
+    /// <summary>
+    /// 性能分析
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseMiniProfilerMiddleware(this IApplicationBuilder app)
     {
         if (app == null)

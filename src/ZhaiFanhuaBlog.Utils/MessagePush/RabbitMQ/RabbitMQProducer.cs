@@ -30,7 +30,7 @@ public class RabbitMQProducer
     /// <param name="routingKey"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static async Task<bool> ProducerSend(RabbitMQConnection conn, string? exchangeName, string? queueName, string? routingKey, string message)
+    public static Task<bool> ProducerSend(MQConnection conn, string? exchangeName, string? queueName, string? routingKey, string message)
     {
         try
         {
@@ -55,11 +55,11 @@ public class RabbitMQProducer
             // 发送消息
             var body = Encoding.UTF8.GetBytes(message);
             channel.BasicPublish(exchange: exchangeName, routingKey: queueName, basicProperties: null, body: body);
-            return true;
+            return Task.FromResult(true);
         }
         catch (Exception)
         {
-            return false;
+            return Task.FromResult(false);
             throw;
         }
     }

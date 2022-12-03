@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using MySqlX.XDevAPI.Common;
 using ZhaiFanhuaBlog.Utils.Verification;
 
 namespace ZhaiFanhuaBlog.Test.Common;

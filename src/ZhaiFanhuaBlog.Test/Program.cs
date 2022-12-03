@@ -19,5 +19,3 @@ while (true)
     // TestChinaDate.ChinaDate();
     TestRegex.TestCardId();
 }
-
-Console.ReadKey();

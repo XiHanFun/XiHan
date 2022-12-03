@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Models.Sites;
 using ZhaiFanhuaBlog.Services.Sites;
 using ZhaiFanhuaBlog.ViewModels.Bases.Results;

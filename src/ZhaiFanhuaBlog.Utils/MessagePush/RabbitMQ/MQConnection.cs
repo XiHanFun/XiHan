@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RabbitMQConnection
+// FileName:MQConnection
 // Guid:2be95905-9bde-4006-84ff-54dc5e348dad
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -11,14 +11,12 @@
 
 #endregion <<版权版本注释>>
 
-using RabbitMQ.Client;
-
 namespace ZhaiFanhuaBlog.Utils.MessagePush.RabbitMQ;
 
 /// <summary>
-/// RabbitMQConnection
+/// MQConnection
 /// </summary>
-public class RabbitMQConnection
+public class MQConnection
 {
     /// <summary>
     /// 主机名称
