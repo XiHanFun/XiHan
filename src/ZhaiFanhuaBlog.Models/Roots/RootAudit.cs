@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Roots;
 
@@ -21,16 +21,6 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// </summary>
 public class RootAudit : BaseEntity
 {
-    /// <summary>
-    /// 申请人
-    /// </summary>
-    public Guid AccountId { get; set; }
-
-    /// <summary>
-    /// 审核人
-    /// </summary>
-    public Guid AuditAccountId { get; set; }
-
     /// <summary>
     /// 审核分类
     /// </summary>

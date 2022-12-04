@@ -13,10 +13,10 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Services.Utils.MessagePush;
 using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
-using ZhaiFanhuaBlog.ViewModels.Bases.Results;
 
 namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 
@@ -27,15 +27,15 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 [ApiGroup(ApiGroupNames.Common, ApiGroupNames.Backstage)]
 public class DingTalkController : BaseApiController
 {
-    private readonly IDingTalkMessagePush _IDingTalkMessagePush;
+    private readonly IDingTalkMessagePushService _IDingTalkMessagePushService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iDingTalkMessagePush"></param>
-    public DingTalkController(IDingTalkMessagePush iDingTalkMessagePush)
+    /// <param name="iDingTalkMessagePushService"></param>
+    public DingTalkController(IDingTalkMessagePushService iDingTalkMessagePushService)
     {
-        _IDingTalkMessagePush = iDingTalkMessagePush;
+        _IDingTalkMessagePushService = iDingTalkMessagePushService;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class DingTalkController : BaseApiController
         };
         List<string> atMobiles = new() { "1302873****" };
         bool isAtAll = false;
-        return await _IDingTalkMessagePush.DingTalkToText(text, atMobiles, isAtAll);
+        return await _IDingTalkMessagePushService.DingTalkToText(text, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class DingTalkController : BaseApiController
             MessageUrl = "https://www.dingtalk.com/"
         };
 
-        return await _IDingTalkMessagePush.DingTalkToLink(link);
+        return await _IDingTalkMessagePushService.DingTalkToLink(link);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class DingTalkController : BaseApiController
         };
         List<string> atMobiles = new() { "1302873****" };
         bool isAtAll = false;
-        return await _IDingTalkMessagePush.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
+        return await _IDingTalkMessagePushService.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class DingTalkController : BaseApiController
             SingleTitle = "阅读全文",
             SingleUrl = "https://www.dingtalk.com/"
         };
-        return await _IDingTalkMessagePush.DingTalkToActionCard(actionCard);
+        return await _IDingTalkMessagePushService.DingTalkToActionCard(actionCard);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class DingTalkController : BaseApiController
                 }
             }
         };
-        return await _IDingTalkMessagePush.DingTalkToActionCard(actionCard);
+        return await _IDingTalkMessagePushService.DingTalkToActionCard(actionCard);
     }
 
     /// <summary>
@@ -173,6 +173,6 @@ public class DingTalkController : BaseApiController
                 }
             }
         };
-        return await _IDingTalkMessagePush.DingTalkToFeedCard(feedCard);
+        return await _IDingTalkMessagePushService.DingTalkToFeedCard(feedCard);
     }
 }

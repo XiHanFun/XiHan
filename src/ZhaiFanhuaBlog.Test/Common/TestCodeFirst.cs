@@ -25,22 +25,22 @@
 //    public static async Task<bool> CodeFirst()
 //    {
 //        string filein = @"D:\Project\ZhaiFanhuaBlog_\架构设计\数据库设计.xlsx";
-//        string fileout = @"D:\CodeFirstOfSiteDictionary.txt";
+//        string fileout = @"D:\CodeFirstOfSysDictionary.txt";
 //        //需要注明非商业用途
 //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 //        var file = new FileInfo(filein);
-//        var SiteDictionaryList = await LoadExcelFile(file);
+//        var SysDictionaryList = await LoadExcelFile(file);
 //        Console.WriteLine($@"导入完成【{filein}】");
-//        SiteDictionaryList = SiteDictionaryList.OrderByDescending(e => e.TypeKey).OrderByDescending(e => e.StateKey).ToList();
+//        SysDictionaryList = SysDictionaryList.OrderByDescending(e => e.TypeKey).OrderByDescending(e => e.StateKey).ToList();
 //        StringBuilder sb = new StringBuilder();
-//        foreach (var SiteDictionary in SiteDictionaryList)
+//        foreach (var SysDictionary in SysDictionaryList)
 //        {
-//            string s = @"new SiteDictionary{" + Environment.NewLine
-//                        + "\t" + @"TypeKey = """ + SiteDictionary.TypeKey + @"""," + Environment.NewLine
-//                        + "\t" + @"TypeName = """ + SiteDictionary.TypeName + @"""," + Environment.NewLine
-//                        + "\t" + @"StateKey = " + SiteDictionary.StateKey + @"," + Environment.NewLine
-//                        + "\t" + @"StateName = """ + SiteDictionary.StateName + @"""," + Environment.NewLine
+//            string s = @"new SysDictionary{" + Environment.NewLine
+//                        + "\t" + @"TypeKey = """ + SysDictionary.TypeKey + @"""," + Environment.NewLine
+//                        + "\t" + @"TypeName = """ + SysDictionary.TypeName + @"""," + Environment.NewLine
+//                        + "\t" + @"StateKey = " + SysDictionary.StateKey + @"," + Environment.NewLine
+//                        + "\t" + @"StateName = """ + SysDictionary.StateName + @"""," + Environment.NewLine
 //                        + @"}," + Environment.NewLine;
 //            sb.Append(s);
 //            DirFileHelper.CreateFile(fileout, sb.ToString(), Encoding.UTF8);
@@ -50,9 +50,9 @@
 //    }
 
 //    //从Excel读取数据
-//    private static async Task<List<SiteDictionary>> LoadExcelFile(FileInfo file)
+//    private static async Task<List<SysDictionary>> LoadExcelFile(FileInfo file)
 //    {
-//        var SiteDictionaryList = new List<SiteDictionary>();
+//        var SysDictionaryList = new List<SysDictionary>();
 
 //        using (var package = new ExcelPackage(file))
 //        {
@@ -62,18 +62,18 @@
 //            int col = 1;
 //            while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
 //            {
-//                var SiteDictionary = new SiteDictionary
+//                var SysDictionary = new SysDictionary
 //                {
 //                    //TypeKey = ws.Cells[row, col].Value.ToString(),
 //                    //TypeName = ws.Cells[row, col + 1].Value.ToString(),
 //                    //StateKey = int.Parse(ws.Cells[row, col + 2].Value.ToString()),
 //                    //StateName = ws.Cells[row, col + 3].Value.ToString()
 //                };
-//                SiteDictionaryList.Add(SiteDictionary);
+//                SysDictionaryList.Add(SysDictionary);
 //                row += 1;
-//                Console.WriteLine(SiteDictionary.TypeKey + " " + SiteDictionary.TypeName + " " + SiteDictionary.StateKey + " " + SiteDictionary.StateName);
+//                Console.WriteLine(SysDictionary.TypeKey + " " + SysDictionary.TypeName + " " + SysDictionary.StateKey + " " + SysDictionary.StateName);
 //            }
 //        }
-//        return SiteDictionaryList;
+//        return SysDictionaryList;
 //    }
 //}

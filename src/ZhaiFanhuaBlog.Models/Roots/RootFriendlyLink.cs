@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Roots;
 
@@ -21,11 +21,6 @@ namespace ZhaiFanhuaBlog.Models.Roots;
 /// </summary>
 public class RootFriendlyLink : BaseEntity
 {
-    /// <summary>
-    /// 用户名
-    /// </summary>
-    public Guid AccountId { get; set; }
-
     /// <summary>
     /// 友链名称
     /// </summary>

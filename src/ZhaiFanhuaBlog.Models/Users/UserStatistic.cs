@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 

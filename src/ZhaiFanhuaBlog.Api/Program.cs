@@ -14,8 +14,9 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Reflection;
 using ZhaiFanhuaBlog.Api;
-using ZhaiFanhuaBlog.Core.AppSettings;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
+using ZhaiFanhuaBlog.Extensions.Setups;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Setups;
 using ZhaiFanhuaBlog.Utils.Console;
 
@@ -41,16 +42,16 @@ services.AddCacheSetup();
 services.AddAuthJwtSetup();
 // 健康检查
 services.AddHealthChecks();
-// Http请求
-services.AddHttpClient();
+// Http
+services.AddHttpSetup();
 // Swagger
 services.AddSwaggerSetup();
 // 性能分析
 services.AddMiniProfilerSetup();
 // SqlSugar
 services.AddSqlSugarSetup();
-// 依赖注入
-services.AddDependencyInjectionSetup();
+// 服务注入
+services.AddServiceSetup();
 // AutoMapper
 services.AddAutoMapperSetup();
 // Route

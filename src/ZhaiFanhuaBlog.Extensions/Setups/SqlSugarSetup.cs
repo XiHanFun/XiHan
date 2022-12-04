@@ -13,7 +13,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar.IOC;
-using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Setups;

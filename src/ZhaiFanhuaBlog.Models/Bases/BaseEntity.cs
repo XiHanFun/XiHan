@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Models.Bases;
+namespace ZhaiFanhuaBlog.Models.Bases.Entity;
 
 /// <summary>
 /// 基类

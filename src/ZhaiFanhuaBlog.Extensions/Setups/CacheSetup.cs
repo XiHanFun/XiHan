@@ -16,7 +16,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 namespace ZhaiFanhuaBlog.Setups;
 

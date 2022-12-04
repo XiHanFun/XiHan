@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj" />
+    <ProjectReference Include="..\ZhaiFanhuaBlog.Services\ZhaiFanhuaBlog.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

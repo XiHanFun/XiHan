@@ -13,12 +13,12 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ZhaiFanhuaBlog.ViewModels.Sites;
+namespace ZhaiFanhuaBlog.ViewModels.Sys;
 
 /// <summary>
-/// CSiteConfigurationDto
+/// CSysConfigurationDto
 /// </summary>
-public class CSiteConfigurationDto
+public class CSysConfigurationDto
 {
     /// <summary>
     /// 网站名称

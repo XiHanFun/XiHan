@@ -24,7 +24,7 @@ public class WeChatRobotHelper
     /// <summary>
     /// 请求接口
     /// </summary>
-    private readonly IHttpHelper _IHttpHelper;
+    private readonly HttpHelper _HttpHelper;
 
     /// <summary>
     /// 正式访问地址
@@ -39,11 +39,11 @@ public class WeChatRobotHelper
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iHttpHelper"></param>
+    /// <param name="httpHelper"></param>
     /// <param name="weChatConnection"></param>
-    public WeChatRobotHelper(IHttpHelper iHttpHelper, WeChatConnection weChatConnection)
+    public WeChatRobotHelper(HttpHelper httpHelper, WeChatConnection weChatConnection)
     {
-        _IHttpHelper = iHttpHelper;
+        _HttpHelper = httpHelper;
         _MessageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
         _FileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=";
     }
@@ -164,7 +164,7 @@ public class WeChatRobotHelper
             { "filelength",fileStream.Length.ToString() },
         };
         // 发起请求
-        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, fileStream, headers);
+        ResultInfo? result = await _HttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, fileStream, headers);
         return result;
     }
 
@@ -180,7 +180,7 @@ public class WeChatRobotHelper
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求
-        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
+        ResultInfo? result = await _HttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
         return result;
     }
 }

@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.DirFile;
 using ZhaiFanhuaBlog.Utils.Formats;

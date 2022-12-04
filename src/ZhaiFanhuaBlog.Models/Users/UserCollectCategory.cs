@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -26,11 +26,6 @@ public class UserCollectCategory : BaseEntity
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public Guid? ParentId { get; set; }
-
-    /// <summary>
-    /// 所属用户
-    /// </summary>
-    public Guid AccountId { get; set; }
 
     /// <summary>
     /// 收藏分类名称

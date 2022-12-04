@@ -16,8 +16,8 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ZhaiFanhuaBlog.Core.AppSettings;
-using ZhaiFanhuaBlog.ViewModels.Bases.Results;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 namespace ZhaiFanhuaBlog.Extensions.Filters;
 

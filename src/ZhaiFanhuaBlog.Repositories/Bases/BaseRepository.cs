@@ -14,13 +14,13 @@
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
-using ZhaiFanhuaBlog.Core.AppSettings;
-using ZhaiFanhuaBlog.Models.Blogs;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Models.Posts;
 using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.Models.Sites;
+using ZhaiFanhuaBlog.Models.Syses;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -50,16 +50,21 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             ConsoleHelper.WriteLineWarning("创建数据表……");
             // 创建表
             base.Context.CodeFirst.SetStringDefaultLength(200).InitTables(
-                //Sites
-                typeof(SiteConfiguration),
-                typeof(SiteLog),
-                typeof(SiteSkin),
+                // Syses
+                typeof(SysConfig),
+                typeof(SysSkin),
+                typeof(SysLog),
+                typeof(SysLoginLog),
+                typeof(SysOperationLog),
+                typeof(SysDictType),
+                typeof(SysDictData),
+                typeof(SysFile),
+                typeof(SysIpAddress),
 
                 // Users
-                typeof(RootRoleAuthority),
                 typeof(UserAccount),
+                typeof(UserAccountRole),
                 typeof(UserOauth),
-                typeof(UserLogin),
                 typeof(UserStatistic),
                 typeof(UserNotice),
                 typeof(UserFollow),
@@ -69,22 +74,21 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 // Roots
                 typeof(RootAuthority),
                 typeof(RootRole),
-                typeof(RootAuditCategory),
+                typeof(RootRoleAuthority),
                 typeof(RootMenu),
                 typeof(RootRoleMenu),
-                typeof(SiteDictionary),
                 typeof(RootAnnouncement),
+                typeof(RootAuditCategory),
                 typeof(RootAudit),
                 typeof(RootFriendlyLink),
 
                 // Blogs
-                typeof(BlogCategory),
-                typeof(BlogArticle),
-                typeof(BlogTag),
-                typeof(BlogArticleTag),
-                typeof(BlogComment),
-                typeof(BlogCommentPoll),
-                typeof(BlogPoll)
+                typeof(PostCategory),
+                typeof(PostTag),
+                typeof(PostArticle),
+                typeof(PostArticleTag),
+                typeof(PostComment),
+                typeof(PostPoll)
                 );
             ConsoleHelper.WriteLineSuccess("数据表创建成功！");
             ConsoleHelper.WriteLineSuccess("数据库初始化已完成！");
@@ -289,7 +293,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize)
     {
         return await base.Context.Queryable<TEntity>().ToPageDataDto(currentIndex, pageSize);
     }
@@ -299,7 +303,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto)
     {
         return await base.Context.Queryable<TEntity>().ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
     }
@@ -324,7 +328,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize)
     {
         return await base.Context.Queryable<TEntity>().Where(func).ToPageDataDto(currentIndex, pageSize);
     }
@@ -335,7 +339,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="func">自定义条件</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto)
     {
         return await base.Context.Queryable<TEntity>().Where(func).ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
     }

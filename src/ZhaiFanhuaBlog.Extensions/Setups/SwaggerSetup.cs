@@ -17,7 +17,7 @@ using Microsoft.OpenApi.Models;
 using SqlSugar;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using ZhaiFanhuaBlog.Core.AppSettings;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Utils.Info;
 
@@ -82,9 +82,9 @@ public static class SwaggerSetup
                     Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
-                        Name = AppSettings.Site.Admin.Name,
-                        Email = AppSettings.Site.Admin.Email,
-                        Url = new Uri(AppSettings.Site.Domain)
+                        Name = AppSettings.Sys.Admin.Name,
+                        Email = AppSettings.Sys.Admin.Email,
+                        Url = new Uri(AppSettings.Sys.Domain)
                     },
                     License = new OpenApiLicense
                     {

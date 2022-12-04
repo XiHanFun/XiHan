@@ -13,14 +13,6 @@
 
 using AutoMapper;
 using ZhaiFanhuaBlog.Extensions.Common.Auth;
-using ZhaiFanhuaBlog.Models.Blogs;
-using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.Models.Sites;
-using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.ViewModels.Blogs;
-using ZhaiFanhuaBlog.ViewModels.Roots;
-using ZhaiFanhuaBlog.ViewModels.Sites;
-using ZhaiFanhuaBlog.ViewModels.Users;
 
 namespace ZhaiFanhuaBlog.Extensions.Common.AutoMapper;
 
@@ -34,45 +26,45 @@ public class AutoMapperProfile : Profile
     /// </summary>
     public AutoMapperProfile()
     {
-        // Root
-        CreateMap<RootRole, CRootRoleDto>().ReverseMap();
-        CreateMap<RootRole, RRootRoleDto>().ReverseMap();
-        CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
-        CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
-        CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
-        CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
-        CreateMap<RootRoleAuthority, CRootRoleAuthorityDto>().ReverseMap();
-        CreateMap<RootRoleAuthority, RRootRoleAuthorityDto>().ReverseMap();
+        //// Root
+        //CreateMap<RootRole, CRootRoleDto>().ReverseMap();
+        //CreateMap<RootRole, RRootRoleDto>().ReverseMap();
+        //CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
+        //CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
+        //CreateMap<RootAuthority, CRootAuthorityDto>().ReverseMap();
+        //CreateMap<RootAuthority, RRootAuthorityDto>().ReverseMap();
+        //CreateMap<RootRoleAuthority, CRootRoleAuthorityDto>().ReverseMap();
+        //CreateMap<RootRoleAuthority, RRootRoleAuthorityDto>().ReverseMap();
 
-        // User
-        CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
-        CreateMap<UserAccount, RUserAccountDto>().ReverseMap();
-        CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
-        CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
+        //// User
+        //CreateMap<UserAccount, CUserAccountDto>().ReverseMap();
+        //CreateMap<UserAccount, RUserAccountDto>().ReverseMap();
+        //CreateMap<UserAccountRole, CUserAccountRoleDto>().ReverseMap();
+        //CreateMap<UserAccountRole, RUserAccountRoleDto>().ReverseMap();
 
-        // Blog
-        CreateMap<BlogCategory, CBlogCategoryDto>().ReverseMap();
-        CreateMap<BlogCategory, RBlogCategoryDto>().ReverseMap();
-        CreateMap<BlogArticle, CBlogArticleDto>().ReverseMap();
-        CreateMap<BlogArticle, RBlogArticleDto>().ReverseMap();
-        CreateMap<BlogTag, CBlogTagDto>().ReverseMap();
-        CreateMap<BlogTag, RBlogTagDto>().ReverseMap();
-        CreateMap<BlogArticleTag, CBlogArticleTagDto>().ReverseMap();
-        CreateMap<BlogArticleTag, RBlogArticleTagDto>().ReverseMap();
-        CreateMap<BlogPoll, CBlogPollDto>().ReverseMap();
-        CreateMap<BlogPoll, RBlogPollDto>().ReverseMap();
-        CreateMap<BlogComment, CBlogCommentDto>().ReverseMap();
-        CreateMap<BlogComment, RBlogCommentDto>().ReverseMap();
-        CreateMap<BlogCommentPoll, CBlogCommentPollDto>().ReverseMap();
-        CreateMap<BlogCommentPoll, RBlogCommentPollDto>().ReverseMap();
+        //// Blog
+        //CreateMap<BlogCategory, CBlogCategoryDto>().ReverseMap();
+        //CreateMap<BlogCategory, RBlogCategoryDto>().ReverseMap();
+        //CreateMap<BlogArticle, CBlogArticleDto>().ReverseMap();
+        //CreateMap<BlogArticle, RBlogArticleDto>().ReverseMap();
+        //CreateMap<BlogTag, CBlogTagDto>().ReverseMap();
+        //CreateMap<BlogTag, RBlogTagDto>().ReverseMap();
+        //CreateMap<BlogArticleTag, CBlogArticleTagDto>().ReverseMap();
+        //CreateMap<BlogArticleTag, RBlogArticleTagDto>().ReverseMap();
+        //CreateMap<BlogPoll, CBlogPollDto>().ReverseMap();
+        //CreateMap<BlogPoll, RBlogPollDto>().ReverseMap();
+        //CreateMap<BlogComment, CBlogCommentDto>().ReverseMap();
+        //CreateMap<BlogComment, RBlogCommentDto>().ReverseMap();
+        //CreateMap<BlogCommentPoll, CBlogCommentPollDto>().ReverseMap();
+        //CreateMap<BlogCommentPoll, RBlogCommentPollDto>().ReverseMap();
 
-        // Site
-        CreateMap<SiteConfiguration, CSiteConfigurationDto>().ReverseMap();
+        //// Sys
+        //CreateMap<SysConfiguration, CSysConfigurationDto>().ReverseMap();
 
-        // Jwt
-        CreateMap<RUserAccountDto, TokenModel>()
-            .ForMember(dest => dest.UserId, sourse => sourse.MapFrom(src => src.BaseId))
-            .ForMember(dest => dest.RootRoles, sourse => sourse.MapFrom(src => string.Join(',', src.RootRoles == null ? string.Empty : src.RootRoles.Select(r => r.RoleName).ToList())))
-            .ReverseMap();
+        //// Jwt
+        //CreateMap<RUserAccountDto, TokenModel>()
+        //    .ForMember(dest => dest.UserId, sourse => sourse.MapFrom(src => src.BaseId))
+        //    .ForMember(dest => dest.RootRoles, sourse => sourse.MapFrom(src => string.Join(',', src.RootRoles == null ? string.Empty : src.RootRoles.Select(r => r.RoleName).ToList())))
+        //    .ReverseMap();
     }
 }

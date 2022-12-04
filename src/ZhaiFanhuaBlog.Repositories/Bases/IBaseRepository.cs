@@ -13,7 +13,7 @@
 
 using SqlSugar;
 using System.Linq.Expressions;
-using ZhaiFanhuaBlog.ViewModels.Bases.Pages;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -21,7 +21,7 @@ namespace ZhaiFanhuaBlog.Repositories.Bases;
 /// 仓储基类接口
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IBaseRepository<TEntity> where TEntity : class, new()
+public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity : class, new()
 {
     /// <summary>
     /// 新增
@@ -163,14 +163,14 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize);
 
     /// <summary>
     /// 分页查询
     /// </summary>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto);
 
     /// <summary>
     /// 按页条件查询
@@ -189,7 +189,7 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize);
 
     /// <summary>
     /// 自定义条件分页查询
@@ -197,5 +197,5 @@ public interface IBaseRepository<TEntity> where TEntity : class, new()
     /// <param name="func">自定义条件</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto);
 }

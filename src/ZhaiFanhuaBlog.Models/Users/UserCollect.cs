@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -20,11 +20,6 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// </summary>
 public class UserCollect : BaseEntity
 {
-    /// <summary>
-    /// 所属用户
-    /// </summary>
-    public Guid AccountId { get; set; }
-
     /// <summary>
     /// 收藏分类
     /// </summary>

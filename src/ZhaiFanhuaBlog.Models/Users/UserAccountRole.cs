@@ -11,14 +11,14 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
 /// <summary>
 /// 用户账户角色关联表
 /// </summary>
-public class UserAccountRole : BaseDeleteEntity<Guid>
+public class UserAccountRole : BaseEntity
 {
     /// <summary>
     /// 用户账户

@@ -37,9 +37,6 @@ public static class ControllerSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 注入 Http 相关实例
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IHttpHelper, HttpHelper>();
         services.AddControllers(options =>
         {
             // 全局注入过滤器

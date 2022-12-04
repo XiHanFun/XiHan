@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Roots;
 
@@ -36,14 +36,14 @@ public class RootMenu : BaseEntity
     /// <summary>
     /// 菜单图标
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? MenuIcon { get; set; }
+    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    public string MenuIcon { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由地址
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
-    public string? MenuRoute { get; set; }
+    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    public string MenuRoute { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由参数
@@ -60,26 +60,22 @@ public class RootMenu : BaseEntity
     /// <summary>
     /// 菜单排序
     /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public int? SortOrder { get; set; }
+    public int SortOrder { get; set; }
 
     /// <summary>
     /// 是否为外部链接
     ///</summary>
-    [SugarColumn(IsNullable = true)]
-    public bool? IsLink { get; set; }
+    public bool IsLink { get; set; }
 
     /// <summary>
     /// 是否缓存
     ///</summary>
-    [SugarColumn(IsNullable = true)]
-    public bool? IsCache { get; set; }
+    public bool IsCache { get; set; }
 
     /// <summary>
     /// 是否显示
     ///</summary>
-    [SugarColumn(IsNullable = true)]
-    public bool? IsShow { get; set; }
+    public bool IsShow { get; set; }
 
     /// <summary>
     /// 菜单描述

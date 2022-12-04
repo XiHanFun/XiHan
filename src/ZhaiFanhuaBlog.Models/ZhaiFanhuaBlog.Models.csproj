@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ZhaiFanhuaBlog.Core\ZhaiFanhuaBlog.Core.csproj" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.3.36" />
   </ItemGroup>
 
 </Project>

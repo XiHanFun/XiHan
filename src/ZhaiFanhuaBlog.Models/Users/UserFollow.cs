@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases;
+using ZhaiFanhuaBlog.Models.Bases.Entity;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -21,11 +21,6 @@ namespace ZhaiFanhuaBlog.Models.Users;
 /// </summary>
 public class UserFollow : BaseEntity
 {
-    /// <summary>
-    /// 所属用户
-    /// </summary>
-    public Guid AccountId { get; set; }
-
     /// <summary>
     /// 关注用户
     /// </summary>
