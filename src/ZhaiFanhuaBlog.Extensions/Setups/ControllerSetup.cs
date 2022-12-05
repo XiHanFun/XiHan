@@ -11,14 +11,14 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using ZhaiFanhuaBlog.Extensions.Common.Controller;
 using ZhaiFanhuaBlog.Extensions.Filters;
-using ZhaiFanhuaBlog.Utils.Http;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// ControllerSetup
@@ -50,19 +50,25 @@ public static class ControllerSetup
             //关闭默认模型验证，通过CustomActionFilterAsyncAttribute自定义验证
             options.SuppressModelStateInvalidFilter = true;
         })
-        .AddNewtonsoftJson(options =>
+        .AddJsonOptions(options =>
         {
+            // 格式化日期时间格式，需要自己创建指定的转换类DatetimeJsonConverter
+            options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
+            //设置bool获取格式
+            options.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
             // 忽略循环引用
-            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            // 首字母小写(驼峰样式，不使用驼峰样式为：new DefaultContractResolver())
-            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            // 时间格式化
-            options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-            // 忽略Model中为null的属性
-            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            //设置本地时间而非UTC时间
-            options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            // 数据格式首字母小写(驼峰样式)，null则为不改变大小写
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+            // 获取或设置要在转义字符串时使用的编码器，不转义字符
+            options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            // 允许额外符号
+            options.JsonSerializerOptions.AllowTrailingCommas = true;
+            // 反序列化过程中属性名称是否使用不区分大小写的比较
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
         });
+
         return services;
     }
 }

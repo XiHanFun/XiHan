@@ -11,9 +11,9 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace ZhaiFanhuaBlog.Utils.Object;
 
@@ -141,7 +141,11 @@ public static class ObjectPropertyHelper
         }
         if (newList.ToList()?.Count > 0)
         {
-            return JsonConvert.SerializeObject(newList, Formatting.Indented);
+            JsonSerializerOptions options = new()
+            {
+                WriteIndented = true
+            };
+            return JsonSerializer.Serialize(newList, options);
         }
         return string.Empty;
     }

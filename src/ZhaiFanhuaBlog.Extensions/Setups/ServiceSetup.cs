@@ -16,7 +16,7 @@ using System.Reflection;
 using ZhaiFanhuaBlog.Infrastructure.AppService;
 using ZhaiFanhuaBlog.Utils.Console;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// ServiceSetup

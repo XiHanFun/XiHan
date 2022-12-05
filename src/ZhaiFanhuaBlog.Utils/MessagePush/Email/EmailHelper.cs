@@ -14,7 +14,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.Mail;
+namespace ZhaiFanhuaBlog.Utils.MessagePush.Email;
 
 /// <summary>
 /// 邮件帮助类

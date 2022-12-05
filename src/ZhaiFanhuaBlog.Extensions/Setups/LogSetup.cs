@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// LogSetup

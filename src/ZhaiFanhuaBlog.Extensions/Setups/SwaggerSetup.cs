@@ -21,7 +21,7 @@ using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Utils.Info;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// SwaggerSetup
@@ -51,10 +51,6 @@ public static class SwaggerSetup
             // 配置Swagger文档请求 带JWT Token
             SwaggerJWTConfig(options);
         });
-
-        // 指定Swagger接口文档中参数序列化组件为Newtonsoft.Json
-        services.AddSwaggerGenNewtonsoftSupport();
-
         return services;
     }
 

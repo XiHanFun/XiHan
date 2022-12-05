@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 
@@ -25,7 +25,7 @@ public class Text
     /// <summary>
     /// 文本内容
     /// </summary>
-    [JsonProperty(PropertyName = "content")]
+    [JsonPropertyName("content")]
     public string Content { get; set; } = string.Empty;
 }
 
@@ -37,25 +37,25 @@ public class Link
     /// <summary>
     /// 消息标题
     /// </summary>
-    [JsonProperty(PropertyName = "title")]
+    [JsonPropertyName("title")]
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
     /// 消息内容
     /// </summary>
-    [JsonProperty(PropertyName = "text")]
+    [JsonPropertyName("text")]
     public string Text { set; get; } = string.Empty;
 
     /// <summary>
     /// 图片URL
     /// </summary>
-    [JsonProperty(PropertyName = "picUrl")]
+    [JsonPropertyName("picUrl")]
     public string PicUrl { set; get; } = string.Empty;
 
     /// <summary>
     /// 点击消息跳转的URL
     /// </summary>
-    [JsonProperty(PropertyName = "messageUrl")]
+    [JsonPropertyName("messageUrl")]
     public string MessageUrl { set; get; } = string.Empty;
 }
 
@@ -67,13 +67,13 @@ public class Markdown
     /// <summary>
     /// 首屏会话透出的展示内容
     /// </summary>
-    [JsonProperty(PropertyName = "title")]
+    [JsonPropertyName("title")]
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
     /// Markdown格式的消息
     /// </summary>
-    [JsonProperty(PropertyName = "text")]
+    [JsonPropertyName("text")]
     public string Text { set; get; } = string.Empty;
 }
 
@@ -85,37 +85,37 @@ public class ActionCard
     /// <summary>
     /// 首屏会话透出的展示内容
     /// </summary>
-    [JsonProperty(PropertyName = "title")]
+    [JsonPropertyName("title")]
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
     /// Markdown格式的消息
     /// </summary>
-    [JsonProperty(PropertyName = "text")]
+    [JsonPropertyName("text")]
     public string Text { set; get; } = string.Empty;
 
     /// <summary>
     /// 单个按钮方案(设置此项后btns无效)
     /// </summary>
-    [JsonProperty(PropertyName = "singleTitle")]
+    [JsonPropertyName("singleTitle")]
     public string SingleTitle { set; get; } = string.Empty;
 
     /// <summary>
     /// 单个按钮方案触发的URL(设置此项后btns无效)
     /// </summary>
-    [JsonProperty(PropertyName = "singleURL")]
+    [JsonPropertyName("singleURL")]
     public string SingleUrl { set; get; } = string.Empty;
 
     /// <summary>
     /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
     /// </summary>
-    [JsonProperty(PropertyName = "btnOrientation")]
+    [JsonPropertyName("btnOrientation")]
     public string? BtnOrientation { set; get; } = "0";
 
     /// <summary>
     /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
     /// </summary>
-    [JsonProperty(PropertyName = "btns")]
+    [JsonPropertyName("btns")]
     public List<BtnInfo>? Btns { set; get; }
 }
 
@@ -127,7 +127,7 @@ public class FeedCard
     /// <summary>
     /// 链接列表
     /// </summary>
-    [JsonProperty(PropertyName = "links")]
+    [JsonPropertyName("links")]
     public List<FeedCardLink>? Links { get; set; }
 }
 
@@ -143,19 +143,19 @@ public class FeedCardLink
     /// <summary>
     /// 消息标题
     /// </summary>
-    [JsonProperty(PropertyName = "title")]
+    [JsonPropertyName("title")]
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
     /// 图片URL
     /// </summary>
-    [JsonProperty(PropertyName = "picURL")]
+    [JsonPropertyName("picURL")]
     public string PicUrl { set; get; } = string.Empty;
 
     /// <summary>
     /// 点击消息跳转的URL
     /// </summary>
-    [JsonProperty(PropertyName = "messageURL")]
+    [JsonPropertyName("messageURL")]
     public string MessageUrl { set; get; } = string.Empty;
 }
 
@@ -167,19 +167,19 @@ public class At
     /// <summary>
     /// 被@的手机号
     /// </summary>
-    [JsonProperty(PropertyName = "atMobiles")]
+    [JsonPropertyName("atMobiles")]
     public List<string>? AtMobiles { set; get; }
 
     /// <summary>
     /// 被@的用户ID
     /// </summary>
-    [JsonProperty(PropertyName = "atUserIds")]
+    [JsonPropertyName("atUserIds")]
     public List<string>? AtUserIds { set; get; }
 
     /// <summary>
     /// 是否@所有人(如要 @所有人为 true，反之用 false)
     /// </summary>
-    [JsonProperty(PropertyName = "isAtAll")]
+    [JsonPropertyName("isAtAll")]
     public bool IsAtAll { set; get; }
 }
 
@@ -191,13 +191,13 @@ public class BtnInfo
     /// <summary>
     /// 按钮方案
     /// </summary>
-    [JsonProperty(PropertyName = "title")]
+    [JsonPropertyName("title")]
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 动作触发的URL
     /// </summary>
-    [JsonProperty(PropertyName = "actionURL")]
+    [JsonPropertyName("actionURL")]
     public string ActionUrl { get; set; } = string.Empty;
 }
 

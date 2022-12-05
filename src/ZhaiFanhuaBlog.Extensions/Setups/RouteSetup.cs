@@ -13,7 +13,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// RouteSetup

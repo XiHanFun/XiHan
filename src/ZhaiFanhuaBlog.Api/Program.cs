@@ -17,7 +17,7 @@ using ZhaiFanhuaBlog.Api;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Extensions.Setups;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
-using ZhaiFanhuaBlog.Setups;
+using ZhaiFanhuaBlog.Extensions.Setups;
 using ZhaiFanhuaBlog.Utils.Console;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -14,7 +14,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// CorsSetup

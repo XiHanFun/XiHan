@@ -77,7 +77,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> DeleteAsync(TEntity entity);
+    new Task<bool> DeleteAsync(TEntity entity);
 
     /// <summary>
     /// 批量删除
@@ -98,14 +98,14 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
+    new Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
 
     /// <summary>
     /// 更新
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> UpdateAsync(TEntity entity);
+    new Task<bool> UpdateAsync(TEntity entity);
 
     /// <summary>
     /// 批量更新

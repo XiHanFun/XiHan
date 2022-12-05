@@ -13,7 +13,7 @@
 
 using System.Text;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.Mail;
+namespace ZhaiFanhuaBlog.Utils.MessagePush.Email;
 
 /// <summary>
 /// EmailModel

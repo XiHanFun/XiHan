@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
 
@@ -23,31 +23,31 @@ public class ResultInfo
     /// <summary>
     /// 结果代码 成功 0
     /// </summary>
-    [JsonProperty(PropertyName = "errcode")]
+    [JsonPropertyName("errcode")]
     public string ErrCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 结果消息 成功 ok
     /// </summary>
-    [JsonProperty(PropertyName = "errmsg")]
+    [JsonPropertyName("errmsg")]
     public string ErrMsg { get; set; } = string.Empty;
 
     /// <summary>
     /// 媒体文件类型，分别有图片（image）、语音（voice）、视频（video），普通文件(file)
     /// </summary>
-    [JsonProperty(PropertyName = "type")]
+    [JsonPropertyName("type")]
     public string Type { get; set; } = string.Empty;
 
     /// <summary>
     /// 媒体文件上传后获取的唯一标识，3天内有效
     /// </summary>
-    [JsonProperty(PropertyName = "media_id")]
+    [JsonPropertyName("media_id")]
     public string MediaId { get; set; } = string.Empty;
 
     /// <summary>
     /// 媒体文件上传时间戳
     /// </summary>
-    [JsonProperty(PropertyName = "created_at")]
+    [JsonPropertyName("created_at")]
     public string CreatedAt { get; set; } = string.Empty;
 }
 

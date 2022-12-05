@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Text.Json;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 namespace ZhaiFanhuaBlog.Extensions.Filters;
@@ -95,7 +95,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                     _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)
                     {
-                        _ILogger.LogInformation($"请求缓存\n{info}\n{JsonConvert.SerializeObject(result)}");
+                        _ILogger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
                     }
                 }
             }

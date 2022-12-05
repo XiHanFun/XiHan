@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Text.Json;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
@@ -99,7 +99,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             string info = $"\t 请求Ip：{remoteIp}\n" +
                      $"\t 请求地址：{requestUrl}\n" +
                      $"\t 请求方法：{method}";
-            var result = JsonConvert.SerializeObject(resultExecuted.Result);
+            var result = JsonSerializer.Serialize(resultExecuted.Result);
             if (ResultLogSwitch)
             {
                 _ILogger.LogInformation($"返回数据\n{info}\n{result}");

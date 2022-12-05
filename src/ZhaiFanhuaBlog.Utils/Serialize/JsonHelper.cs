@@ -11,9 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace ZhaiFanhuaBlog.Utils.Serialize;
 
@@ -48,7 +47,7 @@ public class JsonHelper
             return default;
         }
         string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-        var result = JsonConvert.DeserializeObject<T>(jsonStr);
+        var result = JsonSerializer.Deserialize<T>(jsonStr);
         return result;
     }
 
@@ -66,8 +65,8 @@ public class JsonHelper
         }
         using StreamReader streamReader = new(_JsonFileName);
         string jsonStr = streamReader.ReadToEnd();
-        dynamic? obj = JsonConvert.DeserializeObject(jsonStr);
-        obj ??= (JObject)JToken.FromObject(new object());
+        dynamic? obj = JsonSerializer.Deserialize<T>(jsonStr);
+        obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         var keys = keyLink.Split('.');
         dynamic currentObject = obj;
         foreach (var key in keys)
@@ -78,7 +77,7 @@ public class JsonHelper
                 return default;
             }
         }
-        var result = JsonConvert.DeserializeObject<T>(currentObject.ToString());
+        var result = JsonSerializer.Deserialize<T>(currentObject.ToString());
         return result;
     }
 
@@ -93,14 +92,14 @@ public class JsonHelper
         dynamic? jsoObj;
         if (!File.Exists(_JsonFileName))
         {
-            jsoObj = (JObject)JToken.FromObject(new object());
+            jsoObj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         }
         else
         {
             string jsonStr;
             jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-            jsoObj = JsonConvert.DeserializeObject(jsonStr);
-            jsoObj ??= (JObject)JToken.FromObject(new object());
+            jsoObj = JsonSerializer.Deserialize<T>(jsonStr);
+            jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         }
 
         var keys = keyLink.Split('.');
@@ -114,11 +113,11 @@ public class JsonHelper
             {
                 if (isValueType || value is string)
                 {
-                    oldObject[keys[i]] = new JValue(value);
+                    oldObject[keys[i]] = JsonSerializer.Serialize(value);
                 }
                 else
                 {
-                    oldObject[keys[i]] = JToken.FromObject(value);
+                    oldObject[keys[i]] = value;
                 }
             }
             else
@@ -126,7 +125,7 @@ public class JsonHelper
                 //如果不存在，新建
                 if (currentObject == null)
                 {
-                    JObject obj = (JObject)JToken.FromObject(new object());
+                    JsonDocument obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
                     oldObject[keys[i]] = obj;
                     currentObject = oldObject[keys[i]];
                     continue;
@@ -143,7 +142,11 @@ public class JsonHelper
     /// <param name="jsoObj"></param>
     public void Save<T>(T jsoObj)
     {
-        string jsonStr = JsonConvert.SerializeObject(jsoObj, Formatting.Indented);
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = true
+        };
+        string jsonStr = JsonSerializer.Serialize(jsoObj, options);
         File.WriteAllText(_JsonFileName, jsonStr, Encoding.UTF8);
     }
 }

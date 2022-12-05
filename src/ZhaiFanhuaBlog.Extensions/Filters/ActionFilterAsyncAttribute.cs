@@ -15,8 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Text.Json;
 using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
@@ -90,7 +90,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 var isRequestSucceed = actionExecuted.Exception == null;
                 // 请求成功就写入日志
                 if (isRequestSucceed && ActionLogSwitch)
-                    _ILogger.LogInformation($"请求数据\n{info}\n {JsonConvert.SerializeObject(returnResult)}");
+                    _ILogger.LogInformation($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
             }
         }
     }

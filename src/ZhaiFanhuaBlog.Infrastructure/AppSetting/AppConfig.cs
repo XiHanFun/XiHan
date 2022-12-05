@@ -60,53 +60,53 @@ public class AppConfig
 
     #region 基本方法
 
-    /// <summary>
-    /// 获取属性名称
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="tentity"></param>
-    /// <returns></returns>
-    public static string GetPropertyName<TEntity>(TEntity tentity)
-    {
-        return tentity.FullNameOf().Replace("AppSettings.", "");
-    }
+    ///// <summary>
+    ///// 获取属性名称
+    ///// </summary>
+    ///// <typeparam name="TEntity"></typeparam>
+    ///// <param name="tentity"></param>
+    ///// <returns></returns>
+    //public static string GetPropertyName<TEntity>(TEntity tentity)
+    //{
+    //    return tentity.FullNameOf().Replace("AppSettings.", "").Replace(".", ":");
+    //}
 
-    /// <summary>
-    /// 获取值
-    /// </summary>
-    /// <typeparam name="R"></typeparam>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="t"></param>
-    /// <returns></returns>
-    public static R? GetStringValue<R, T>(T t)
-    {
-        return _IConfiguration.GetValue<R>(GetPropertyName(t).Replace(".", ":"));
-    }
+    ///// <summary>
+    ///// 获取值
+    ///// </summary>
+    ///// <typeparam name="R"></typeparam>
+    ///// <typeparam name="T"></typeparam>
+    ///// <param name="t"></param>
+    ///// <returns></returns>
+    //public static R? GetStringValue<R, T>(T t)
+    //{
+    //    return _IConfiguration.GetSection(GetPropertyName(t));
+    //}
 
-    /// <summary>
-    /// 获取对象值
-    /// </summary>
-    /// <typeparam name="R"></typeparam>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="t"></param>
-    /// <returns></returns>
-    public static R? GetSectionValue<R, T>(T t)
-    {
-        return _IConfiguration.GetSection(GetPropertyName(t).Replace(".", ":")).Get<R>();
-    }
+    ///// <summary>
+    ///// 获取对象值
+    ///// </summary>
+    ///// <typeparam name="R"></typeparam>
+    ///// <typeparam name="T"></typeparam>
+    ///// <param name="t"></param>
+    ///// <returns></returns>
+    //public static R? GetSectionValue<R, T>(T t)
+    //{
+    //    return _IConfiguration.GetSection(GetPropertyName(t).Get<R>());
+    //}
 
-    /// <summary>
-    /// 保存
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="t"></param>
-    /// <param name="value"></param>
-    public static void SetValue<T>(T t, dynamic value)
-    {
-        string path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
-        JsonHelper jsonHelper = new(path);
-        jsonHelper.Set(GetPropertyName(t), value);
-    }
+    ///// <summary>
+    ///// 保存
+    ///// </summary>
+    ///// <typeparam name="T"></typeparam>
+    ///// <param name="t"></param>
+    ///// <param name="value"></param>
+    //public static void SetValue<T>(T t, dynamic value)
+    //{
+    //    string path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
+    //    JsonHelper jsonHelper = new(path);
+    //    jsonHelper.Set(GetPropertyName(t), value);
+    //}
 
     #endregion 基本方法
 }

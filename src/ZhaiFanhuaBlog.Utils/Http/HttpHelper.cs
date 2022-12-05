@@ -11,10 +11,10 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace ZhaiFanhuaBlog.Utils.Http;
 
@@ -61,7 +61,7 @@ public class HttpHelper
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -137,12 +137,12 @@ public class HttpHelper
                     }
                 }
             }
-            var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, stringContent);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -186,7 +186,7 @@ public class HttpHelper
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -228,7 +228,7 @@ public class HttpHelper
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -265,7 +265,7 @@ public class HttpHelper
                     }
                 }
             }
-            var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, stringContent);
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -347,12 +347,12 @@ public class HttpHelper
                     }
                 }
             }
-            var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
             var response = await client.PutAsync(url, stringContent);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -394,7 +394,7 @@ public class HttpHelper
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {
@@ -434,7 +434,7 @@ public class HttpHelper
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             else
             {

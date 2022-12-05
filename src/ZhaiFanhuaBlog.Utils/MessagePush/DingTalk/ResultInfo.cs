@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 
@@ -23,12 +23,12 @@ public class ResultInfo
     /// <summary>
     /// 结果代码 成功 0
     /// </summary>
-    [JsonProperty(PropertyName = "errcode")]
+    [JsonPropertyName("errcode")]
     public string ErrCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 结果消息 成功 ok
     /// </summary>
-    [JsonProperty(PropertyName = "errmsg")]
+    [JsonPropertyName("errmsg")]
     public string ErrMsg { get; set; } = string.Empty;
 }

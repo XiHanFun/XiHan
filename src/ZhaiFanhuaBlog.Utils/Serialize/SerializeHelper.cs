@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json;
 
 namespace ZhaiFanhuaBlog.Utils.Serialize;
 
@@ -28,7 +28,7 @@ public static class SerializeHelper
     /// <returns></returns>
     public static string SerializeToJson(this object item)
     {
-        return JsonConvert.SerializeObject(item);
+        return JsonSerializer.Serialize(item);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public static class SerializeHelper
     /// <returns></returns>
     public static TEntity? DeserializeToObject<TEntity>(this string jsonString)
     {
-        return JsonConvert.DeserializeObject<TEntity>(jsonString);
+        return JsonSerializer.Deserialize<TEntity>(jsonString);
     }
 
     /// <summary>

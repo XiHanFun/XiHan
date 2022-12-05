@@ -14,7 +14,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Extensions.Common.AutoMapper;
 
-namespace ZhaiFanhuaBlog.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups;
 
 /// <summary>
 /// AutoMapperSetup
