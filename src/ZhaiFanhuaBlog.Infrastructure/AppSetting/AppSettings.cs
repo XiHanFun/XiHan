@@ -285,7 +285,6 @@ public class AppSettings
         {
             public static string WebHookUrl => GetStringValue("MessagePush:DingTalk:WebHookUrl");
             public static string AccessToken => GetStringValue("MessagePush:DingTalk:AccessToken");
-            public static string KeyWord => GetStringValue("MessagePush:DingTalk:KeyWord");
             public static string Secret => GetStringValue("MessagePush:DingTalk:Secret");
         }
 
