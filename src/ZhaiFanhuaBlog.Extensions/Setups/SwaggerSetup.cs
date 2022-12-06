@@ -98,12 +98,12 @@ public static class SwaggerSetup
         {
             // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
             var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor).ControllerTypeInfo?.BaseType?
-                                          .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
-                                          .ToList();
+                .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
+                .ToList();
             // 反射获取派生类 Action 的 ApiGroupAttribute 信息
             var actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
-                                      .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
-                                      .ToList();
+                .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
+                .ToList();
             // 所有含 ApiGroupAttribute 集合
             var apiGroupAttributeList = new List<ApiGroupAttribute>();
             // 为空时插入空，减少 if 判断

@@ -21,7 +21,7 @@ namespace ZhaiFanhuaBlog.Utils.Http;
 /// <summary>
 /// HttpHelper
 /// </summary>
-public class HttpHelper
+public class HttpHelper : IHttpHelper
 {
     private readonly IHttpClientFactory _IHttpClientFactory;
 

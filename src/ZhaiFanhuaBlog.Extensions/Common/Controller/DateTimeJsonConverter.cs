@@ -35,11 +35,16 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
 
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return DateTime.Parse(reader.GetString());
+        if (reader.TokenType == JsonTokenType.String)
+        {
+            if (DateTime.TryParse(reader.GetString(), out DateTime date))
+                return date;
+        }
+        return reader.GetDateTime();
     }
 
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToUniversalTime().ToString(_dateFormatString));
+        writer.WriteStringValue(value.ToString(_dateFormatString));
     }
 }

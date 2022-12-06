@@ -35,8 +35,8 @@ public class WeChatMessagePushService : IWeChatMessagePushService
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iHttpClientFactory"></param>
-    public WeChatMessagePushService(IHttpClientFactory iHttpClientFactory)
+    /// <param name="iHttpHelper"></param>
+    public WeChatMessagePushService(IHttpHelper iHttpHelper)
     {
         WeChatConnection conn = new()
         {
@@ -44,8 +44,7 @@ public class WeChatMessagePushService : IWeChatMessagePushService
             UploadkUrl = AppSettings.MessagePush.WeChart.UploadkUrl,
             Key = AppSettings.MessagePush.WeChart.Key
         };
-        HttpHelper httpHelper = new(iHttpClientFactory);
-        _WeChatRobot = new WeChatRobotHelper(httpHelper, conn);
+        _WeChatRobot = new WeChatRobotHelper(iHttpHelper, conn);
     }
 
     /// <summary>
@@ -147,7 +146,7 @@ public class WeChatMessagePushService : IWeChatMessagePushService
     {
         if (result != null)
         {
-            if (result.ErrCode == "0" || result?.ErrMsg == "ok")
+            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
                 return BaseResponseDto.OK("发送成功");
             else
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
@@ -164,7 +163,7 @@ public class WeChatMessagePushService : IWeChatMessagePushService
     {
         if (result != null)
         {
-            if (result.ErrCode == "0" || result?.ErrMsg == "ok")
+            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
             {
                 WeChatUploadResult uploadResult = new("上传成功", result.MediaId);
                 return BaseResponseDto.OK(uploadResult);

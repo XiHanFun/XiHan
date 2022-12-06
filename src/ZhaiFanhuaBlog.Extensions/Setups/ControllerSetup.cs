@@ -52,21 +52,24 @@ public static class ControllerSetup
         })
         .AddJsonOptions(options =>
         {
-            // 格式化日期时间格式，需要自己创建指定的转换类DatetimeJsonConverter
-            options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-            //设置bool获取格式
-            options.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
             // 忽略循环引用
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            // 数据格式首字母小写(驼峰样式)，null则为不改变大小写
-            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-            // 获取或设置要在转义字符串时使用的编码器，不转义字符
-            options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            // 布尔类型
+            options.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
+            // 数字类型
+            options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals |
+                                                           JsonNumberHandling.AllowReadingFromString |
+                                                           JsonNumberHandling.WriteAsString;
+            // 日期类型
+            options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
             // 允许额外符号
             options.JsonSerializerOptions.AllowTrailingCommas = true;
-            // 反序列化过程中属性名称是否使用不区分大小写的比较
+            // 属性名称不使用不区分大小写的比较
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
+            // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写
+            options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            // 获取或设置要在转义字符串时使用的编码器，不转义字符
+            options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
         });
 
         return services;

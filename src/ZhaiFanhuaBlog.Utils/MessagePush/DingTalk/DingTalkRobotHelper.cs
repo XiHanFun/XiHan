@@ -27,7 +27,7 @@ public class DingTalkRobotHelper
     /// <summary>
     /// 请求接口
     /// </summary>
-    private readonly HttpHelper _HttpHelper;
+    private readonly IHttpHelper _IHttpHelper;
 
     /// <summary>
     /// 正式访问地址
@@ -42,11 +42,11 @@ public class DingTalkRobotHelper
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpHelper"></param>
+    /// <param name="iHttpHelper"></param>
     /// <param name="dingTalkConnection"></param>
-    public DingTalkRobotHelper(HttpHelper httpHelper, DingTalkConnection dingTalkConnection)
+    public DingTalkRobotHelper(IHttpHelper iHttpHelper, DingTalkConnection dingTalkConnection)
     {
-        _HttpHelper = httpHelper;
+        _IHttpHelper = iHttpHelper;
         _Url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
         _Secret = dingTalkConnection.Secret;
     }
@@ -162,7 +162,7 @@ public class DingTalkRobotHelper
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        ResultInfo? result = await _HttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
+        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
         return result;
     }
 }

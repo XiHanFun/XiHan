@@ -24,7 +24,7 @@ public class ResultInfo
     /// 结果代码 成功 0
     /// </summary>
     [JsonPropertyName("errcode")]
-    public string ErrCode { get; set; } = string.Empty;
+    public int ErrCode { get; set; }
 
     /// <summary>
     /// 结果消息 成功 ok

@@ -34,8 +34,8 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iHttpClientFactory"></param>
-    public DingTalkMessagePushService(IHttpClientFactory iHttpClientFactory)
+    /// <param name="iHttpHelper"></param>
+    public DingTalkMessagePushService(IHttpHelper iHttpHelper)
     {
         DingTalkConnection conn = new()
         {
@@ -43,8 +43,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
             AccessToken = AppSettings.MessagePush.DingTalk.AccessToken,
             Secret = AppSettings.MessagePush.DingTalk.Secret
         };
-        HttpHelper httpHelper = new(iHttpClientFactory);
-        _DingTalkRobot = new DingTalkRobotHelper(httpHelper, conn);
+        _DingTalkRobot = new DingTalkRobotHelper(iHttpHelper, conn);
     }
 
     #region DingTalk
@@ -117,7 +116,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     {
         if (result != null)
         {
-            if (result.ErrCode == "0" || result?.ErrMsg == "ok")
+            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
                 return BaseResponseDto.OK("发送成功");
             else
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");

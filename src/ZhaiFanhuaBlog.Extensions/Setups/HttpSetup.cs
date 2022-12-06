@@ -13,6 +13,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using ZhaiFanhuaBlog.Utils.Http;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -33,9 +34,10 @@ public static class HttpSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // Http请求
+        // 注入 Http 请求
         services.AddHttpClient();
         // 注入 Http 相关实例
+        services.AddSingleton<IHttpHelper, HttpHelper>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         return services;
