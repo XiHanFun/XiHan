@@ -27,9 +27,8 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Test;
 
 /// <summary>
 /// 系统测试
-/// <code>包含：测试工具/客户端信息/IP信息</code>
+/// <code>包含：工具/客户端信息/IP信息/授权信息</code>
 /// </summary>
-[AllowAnonymous]
 [ApiGroup(ApiGroupNames.Test)]
 public class TestController : BaseApiController
 {
@@ -45,7 +44,7 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 获取客户端信息
+    /// 客户端信息
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
@@ -54,28 +53,39 @@ public class TestController : BaseApiController
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
         HttpContextHelper clientInfoHelper = new(httpContext);
+        return BaseResponseDto.OK(clientInfoHelper);
+
         //string ip = "60.163.239.151";
         //string datatype = "jsonp";
         //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";
         //var result = HttpHelper.GetAsync($@"http://api.ip138.com/ip/?ip={ip}&datatype={datatype}&token={token}");
         //var result = HttpHelper.PostAsync();
-        return BaseResponseDto.OK(clientInfoHelper);
     }
 
     /// <summary>
-    /// 测试接口【过时】
+    /// 过时
     /// </summary>
-    /// <param name="str"></param>
     /// <returns></returns>
-    [HttpPost("Test")]
     [Obsolete]
-    public string Test(string? str)
+    [HttpPost("Obsolete")]
+    public string Obsolete()
     {
-        return "测试字符串：" + str;
+        return "过时接口";
     }
 
     /// <summary>
-    /// 未实现的异常接口
+    /// 授权
+    /// </summary>
+    /// <returns></returns>
+    [Authorize]
+    [HttpPost("Authorize")]
+    public string Authorize()
+    {
+        return "授权接口";
+    }
+
+    /// <summary>
+    /// 未实现或异常
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
@@ -83,23 +93,23 @@ public class TestController : BaseApiController
     [Route("Exception")]
     public string Exception()
     {
-        throw new NotImplementedException("这是一个未实现的异常接口");
+        throw new NotImplementedException("这是一个未实现或异常的接口");
     }
 
     /// <summary>
-    /// 测试日志
+    /// 日志
     /// </summary>
-    /// <param name="iLog"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
     [HttpGet("Log")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> Log(string iLog)
+    public ActionResult<BaseResultDto> Log(string log)
     {
-        return BaseResponseDto.OK($"测试日志写入:{iLog}");
+        return BaseResponseDto.OK($"测试日志写入:{log}");
     }
 
     /// <summary>
-    /// 测试工具类加密
+    /// 工具类加密
     /// </summary>
     /// <param name="encryptType">加密类型</param>
     /// <param name="iStr">待加密字符串</param>
@@ -123,7 +133,7 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 测试工具类加密或解密
+    /// 工具类加密或解密
     /// </summary>
     /// <param name="iEncryptOrDecrypt">选择加密或解密</param>
     /// <param name="iType">待加密解密方式</param>
@@ -166,7 +176,7 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 测试工具类资源过滤器属性
+    /// 资源过滤器
     /// </summary>
     /// <returns></returns>
     [HttpGet("ResourceFilterAttribute")]
@@ -177,7 +187,7 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 测试工具类异步资源过滤器属性
+    /// 异步资源过滤器
     /// </summary>
     /// <returns></returns>
     [HttpGet("ResourceFilterAsyncAttribute")]

@@ -24,7 +24,7 @@ public static class HtmlFormatHelper
     /// <param name="html"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    public static string ReplaceHtmlTag(string html, int length = 0)
+    public static string ReplaceHtmlTag(this string html, int length = 0)
     {
         string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
         strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");

@@ -12,6 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using ZhaiFanhuaBlog.Utils.Formats;
+using ZhaiFanhuaBlog.Utils.Ip;
 
 namespace ZhaiFanhuaBlog.Utils.Info;
 
@@ -30,17 +33,24 @@ public class HttpContextHelper
         RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4()?.ToString();
         RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv6()?.ToString();
 
-        var ua = header["User-Agent"].ToString().ToLower();
-        Agent = ua;
-        SystemName = GetSystemName(ua);
-        SystemType = GetSystemType(ua);
-        BrowserName = GetBrowserName(ua);
-
-        //取代理IP
+        // 取代理IP
         if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
         {
-            RemoteIPv4 = header["X-Real-IP"].FirstOrDefault() ??
-                         header["X-Forwarded-For"].FirstOrDefault();
+            if (httpContext.Request.HttpContext.Connection.RemoteIpAddress != null)
+            {
+                RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6().ToString();
+            }
+            else
+            {
+                string? ip = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
+                if (ip != null)
+                {
+                    IPAddress address = IpFormatHelper.FormatStringToIPAddress(ip);
+                    RemoteIPv4 = address.MapToIPv4().ToString();
+                    RemoteIPv6 = address.MapToIPv6().ToString();
+                }
+            }
         }
         if (header.ContainsKey("Accept-Language"))
         {
@@ -50,6 +60,13 @@ public class HttpContextHelper
         {
             Referer = header["Referer"].ToString();
         }
+
+        var ua = header["User-Agent"].ToString().ToLower();
+        Agent = ua;
+        SystemName = GetSystemName(ua);
+        SystemType = GetSystemType(ua);
+        BrowserName = GetBrowserName(ua);
+        AddressInfo = IpSearchHelper.Search(RemoteIPv4 ?? string.Empty);
     }
 
     /// <summary>
@@ -96,6 +113,11 @@ public class HttpContextHelper
     /// 引荐
     /// </summary>
     public string? Referer { get; set; }
+
+    /// <summary>
+    /// 地址信息
+    /// </summary>
+    public IpAddressModel? AddressInfo { get; set; }
 
     /// <summary>
     /// 获取系统名称

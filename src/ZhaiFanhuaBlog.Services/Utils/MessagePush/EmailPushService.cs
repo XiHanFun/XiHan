@@ -41,12 +41,12 @@ public class EmailPushService : IEmailPushService
     {
         string subject = "测试";
         string body = "测试";
-        List<string> toMail = new() { "zhaifanhua@126.com" };
-        List<string> ccMail = new() { "zhaifanhua@foxmail.com" };
-        List<string> bccMail = new() { "2359184174@qq.com" };
+        List<string> toMail = new() { "" };
+        List<string> ccMail = new() { "" };
+        List<string> bccMail = new() { "" };
         List<Attachment> attachmentsPath = new()
         {
-            new Attachment(@"D:\DataCompany\WiFi.txt")
+            new Attachment(@"")
         };
         var model = new EmailModel
         {

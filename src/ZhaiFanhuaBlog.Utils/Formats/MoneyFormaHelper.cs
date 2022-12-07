@@ -23,7 +23,7 @@ public static class MoneyFormaHelper
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
-    public static string FormatDecimalToString(decimal money)
+    public static string FormatDecimalToString(this decimal money)
     {
         try
         {

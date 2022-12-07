@@ -59,7 +59,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
                 typeof(SysDictType),
                 typeof(SysDictData),
                 typeof(SysFile),
-                typeof(SysIpAddress),
 
                 // Users
                 typeof(UserAccount),

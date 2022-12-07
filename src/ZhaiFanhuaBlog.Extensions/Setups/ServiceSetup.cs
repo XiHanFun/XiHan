@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using IP2Region.Net.XDB;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using ZhaiFanhuaBlog.Infrastructure.AppService;
@@ -35,6 +36,21 @@ public static class ServiceSetup
             throw new ArgumentNullException(nameof(services));
         }
 
+        // 注册自身服务
+        RegisterSelfService(services);
+        // 注册其他服务
+        RegisterOtherService(services);
+
+        return services;
+    }
+
+    /// <summary>
+    /// 注册自身服务
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="types"></param>
+    private static void RegisterSelfService(IServiceCollection services)
+    {
         // 所有涉及服务的组件库
         string[] libraries = new string[] { "ZhaiFanhuaBlog.Repositories", "ZhaiFanhuaBlog.Services", "ZhaiFanhuaBlog.Tasks" };
         // 根据程序路径反射出所有引用的程序集
@@ -52,16 +68,8 @@ public static class ServiceSetup
                 ConsoleHelper.WriteLineError($"找不到{library}组件库");
             }
         }
-        // 所有直接或间接继承自接口但不是其本身的接口和类
-        Register(services, referencedTypes);
-
-        return services;
-    }
-
-    private static void Register(IServiceCollection services, List<Type> types)
-    {
         // 批量注入
-        foreach (var classType in types)
+        foreach (var classType in referencedTypes)
         {
             // 服务周期
             var serviceAttribute = classType.GetCustomAttribute<AppServiceAttribute>();
@@ -92,5 +100,15 @@ public static class ServiceSetup
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 注册其他服务
+    /// </summary>
+    /// <param name="services"></param>
+    private static void RegisterOtherService(IServiceCollection services)
+    {
+        // Ip 查询服务
+        services.AddSingleton<ISearcher, Searcher>();
     }
 }

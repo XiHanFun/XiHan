@@ -18,10 +18,11 @@
     },
     "Production": {
       "commandName": "Project",
+      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "https://127.0.0.1:9709;http://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "Docker": {
@@ -36,7 +37,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://127.0.0.1:9709;http://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "sslPort": 0
     }
   }

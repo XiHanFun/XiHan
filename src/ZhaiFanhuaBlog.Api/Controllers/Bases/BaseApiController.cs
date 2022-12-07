@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 
@@ -20,7 +19,6 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Bases;
 /// <summary>
 /// BaseApiController
 /// </summary>
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]

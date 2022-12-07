@@ -15,32 +15,42 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Config\Log4Net.config" />
-    <None Remove="Config\NLog.config" />
-    <None Remove="Config\Serilog.json" />
+    <Content Remove="C:\Users\zhaifanhua\.nuget\packages\ip2region.net\1.0.10\contentFiles\any\net6.0\Data\ip2region.xdb" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Config\Log4Net.config">
+    <None Remove="ConfigData\Log4Net.config" />
+    <None Remove="ConfigData\NLog.config" />
+    <None Remove="ConfigData\Serilog.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ConfigData\Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Config\NLog.config">
+    <Content Include="ConfigData\NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Config\Serilog.json">
+    <Content Include="ConfigData\Serilog.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="IP2Region.Net" Version="1.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 		<PackageReference Include="Seethoven.PinYinConverter" Version="2.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="ConfigData\ip2region.xdb">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

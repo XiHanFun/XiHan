@@ -11,12 +11,14 @@
 
 #endregion <<版权版本注释>>
 
+using System.Runtime.CompilerServices;
+
 namespace ZhaiFanhuaBlog.Utils.Formats;
 
 /// <summary>
 /// 文件大小格式化
 /// </summary>
-public class FileSizeFormatHelper
+public static class FileSizeFormatHelper
 {
     private static readonly string[] suffixes = new string[] { " B", " KB", " MB", " GB", " TB", " PB" };
 
@@ -25,7 +27,7 @@ public class FileSizeFormatHelper
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static string FormatByteToString(long bytes)
+    public static string FormatByteToString(this long bytes)
     {
         double last = 1;
         for (int i = 0; i < suffixes.Length; i++)

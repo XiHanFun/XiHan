@@ -93,7 +93,7 @@ public static class SwaggerSetup
             }
         });
 
-        // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true则暴露，否则隐藏
+        // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true就暴露，否则隐藏
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
@@ -104,6 +104,7 @@ public static class SwaggerSetup
             var actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
                 .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
                 .ToList();
+
             // 所有含 ApiGroupAttribute 集合
             var apiGroupAttributeList = new List<ApiGroupAttribute>();
             // 为空时插入空，减少 if 判断
@@ -132,12 +133,19 @@ public static class SwaggerSetup
         // 枚举添加摘要
         options.UseInlineDefinitionsForEnums();
 
-        // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有(Auth)标签
-        Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
+        try
         {
-            // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
-            options.IncludeXmlComments(xmlPath, true);
-        });
+            // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有(Auth)标签
+            Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
+            {
+                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+                options.IncludeXmlComments(xmlPath, true);
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Swagger 文档加载失败" + ex.Message);
+        }
     }
 
     /// <summary>
@@ -147,12 +155,12 @@ public static class SwaggerSetup
     public static void SwaggerJWTConfig(SwaggerGenOptions options)
     {
         // 定义安全方案
-        var securityScheme = new OpenApiSecurityScheme
+        var securitySchemeOauth2 = new OpenApiSecurityScheme
         {
             Description = "在下框中输入<code>{token}</code>进行身份验证",
             // JWT默认的参数名称
             Name = "Authorization",
-            // Bearer认证的数据格式
+            // 标识承载令牌的Bearer认证的数据格式，该信息主要是用于文档
             BearerFormat = "JWT",
             // 认证主题，在Type=Http时，只能是Basic和Bearer
             Scheme = "Bearer",
@@ -161,23 +169,24 @@ public static class SwaggerSetup
             // 表示认证方式，有ApiKey，Http，OAuth2，OpenIdConnect四种，其中ApiKey是用的最多的
             Type = SecuritySchemeType.Http,
         };
-        // 定义认证方式 OAuth 方案名称必须是oauth2
-        options.AddSecurityDefinition("oauth2", securityScheme);
+
+        // 定义认证，方案名称必须是 oauth2
+        options.AddSecurityDefinition("oauth2", securitySchemeOauth2);
         // 注册全局认证，即所有的接口都可以使用认证
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
                 // 必须与上面声明的一致，否则小绿锁混乱,即API全部会加小绿锁
-                securityScheme,
+                securitySchemeOauth2,
                 Array.Empty<string>()
             }
         });
 
-        // 文档中显示安全小绿锁
+        // 文档中显示安全小绿锁，在对应的 Action 上添加[Authorize]
         options.OperationFilter<AddResponseHeadersFilter>();
-        // 添加请求头的Header中的token,传递到后台
-        options.OperationFilter<SecurityRequirementsOperationFilter>();
         // 安全小绿锁旁标记 Auth 标签
         options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+        // 添加请求头的 Header 中的 token,传递到后台
+        options.OperationFilter<SecurityRequirementsOperationFilter>();
     }
 }

@@ -14,6 +14,7 @@
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -32,10 +33,10 @@ public static class LogSetup
     {
         string infoTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}{NewLine}";
         string errorTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}================{NewLine}{NewLine}";
-        string infoPath = AppContext.BaseDirectory + @"Logs/Info/.log";
-        string waringPath = AppContext.BaseDirectory + @"Logs/Waring/.log";
-        string errorPath = AppContext.BaseDirectory + @"Logs/Error/.log";
-        string fatalPath = AppContext.BaseDirectory + @"Logs/Fatal/.log";
+        string infoPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Info/.log";
+        string waringPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Waring/.log";
+        string errorPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Error/.log";
+        string fatalPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Fatal/.log";
         Log.Logger = new LoggerConfiguration()
                 // 记录相关上下文信息
                 .Enrich.FromLogContext()
@@ -78,7 +79,7 @@ public static class LogSetup
                         restrictedToMinimumLevel: LogEventLevel.Warning,
                         outputTemplate: infoTemplate)
                 ))
-                // ---------------------------------------- - Error------------------------------------------------
+                // ------------------------------------------ Error------------------------------------------------
                 .WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == LogEventLevel.Error)
                 .WriteTo.Async(congfig => congfig.File(
                         path: errorPath.ToLowerInvariant(),

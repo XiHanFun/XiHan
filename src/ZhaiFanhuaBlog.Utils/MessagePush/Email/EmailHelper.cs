@@ -79,7 +79,7 @@ public static class EmailHelper
                 if (status == SmtpStatusCode.MailboxBusy || status == SmtpStatusCode.MailboxUnavailable)
                 {
                     ConsoleHelper.WriteLineError("Delivery failed - retrying in 5 seconds.");
-                    Thread.Sleep(5000);
+                    await Task.Delay(5000);
                     await client.SendMailAsync(message);
                 }
                 else
@@ -90,7 +90,7 @@ public static class EmailHelper
         }
         catch (Exception ex)
         {
-            throw new ApplicationException($"Exception caught in RetryIfBusy(): {ex}");
+            throw new Exception($"Exception caught in RetryIfBusy(): {ex}");
         }
         return false;
     }

@@ -91,13 +91,13 @@ app.UseStaticFiles();
 app.UseRouting();
 // 跨域
 app.UseCorsMiddleware();
-// 身份验证
+// 鉴权
 app.UseAuthentication();
-// 认证授权
+// 授权
 app.UseAuthorization();
 // 配置运行状况检查终端节点
 app.MapHealthChecks("/health");
-// 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由， 一般用在WebAPI项目中
+// 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
 app.MapControllers();
 
 ConsoleHelper.WriteLineSuccess("ZhaiFanhuaBlog Application Started Successfully！");
