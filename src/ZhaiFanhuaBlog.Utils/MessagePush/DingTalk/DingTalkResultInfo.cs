@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ResultInfo
+// FileName:DingTalkResultInfo
 // Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
 /// <summary>
 /// 结果信息
 /// </summary>
-public class ResultInfo
+public class DingTalkResultInfo
 {
     /// <summary>
     /// 结果代码 成功 0

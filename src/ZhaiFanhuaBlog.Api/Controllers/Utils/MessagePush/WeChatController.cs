@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
@@ -26,7 +27,8 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 /// 微信消息推送
 /// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
-[ApiGroup(ApiGroupNames.Common, ApiGroupNames.Backstage)]
+[AllowAnonymous]
+[ApiGroup(ApiGroupNames.Common)]
 public class WeChatController : BaseApiController
 {
     private readonly IWeChatMessagePushService _IWeChatMessagePushService;
@@ -341,7 +343,7 @@ public class WeChatController : BaseApiController
         // 设置当前流的位置为流的开始
         stream.Seek(0, SeekOrigin.Begin);
         // 把 byte[] 写入文件
-        FileStream fileStream = new(@"Upload/" + formFile.FileName, FileMode.OpenOrCreate);
+        FileStream fileStream = new(@"Upload/" + formFile.FileName, FileMode.Create);
         BinaryWriter binaryWriter = new(fileStream);
         binaryWriter.Write(bytes);
         fileStream.Close();

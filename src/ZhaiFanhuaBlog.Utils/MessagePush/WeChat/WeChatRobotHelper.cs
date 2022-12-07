@@ -45,7 +45,7 @@ public class WeChatRobotHelper
     {
         _IHttpHelper = iHttpHelper;
         _MessageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
-        _FileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=";
+        _FileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=file";
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="text">内容</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> TextMessage(Text text)
+    public async Task<WeChatResultInfo?> TextMessage(Text text)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.text.ToString();
@@ -67,7 +67,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="markdown">文档</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> MarkdownMessage(Markdown markdown)
+    public async Task<WeChatResultInfo?> MarkdownMessage(Markdown markdown)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.markdown.ToString();
@@ -81,7 +81,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="image">图片</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> ImageMessage(Image image)
+    public async Task<WeChatResultInfo?> ImageMessage(Image image)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.image.ToString();
@@ -95,7 +95,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> NewsMessage(News news)
+    public async Task<WeChatResultInfo?> NewsMessage(News news)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.news.ToString();
@@ -109,7 +109,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> FileMessage(File file)
+    public async Task<WeChatResultInfo?> FileMessage(File file)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.file.ToString();
@@ -123,7 +123,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> TextNoticeMessage(TemplateCardTextNotice template_card)
+    public async Task<WeChatResultInfo?> TextNoticeMessage(TemplateCardTextNotice template_card)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.template_card.ToString();
@@ -137,7 +137,7 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice template_card)
+    public async Task<WeChatResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice template_card)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.template_card.ToString();
@@ -152,19 +152,15 @@ public class WeChatRobotHelper
     /// 文件大小在5B~20M之间
     /// </summary>
     /// <returns></returns>
-    public async Task<ResultInfo?> UploadkFile(FileStream fileStream)
+    public async Task<WeChatResultInfo?> UploadkFile(FileStream fileStream)
     {
-        // 文件类型，固定传file
-        string type = "file";
-        // 上传地址，调用接口凭证, 机器人webhookurl中的key参数
-        var url = _FileUrl + type;
         Dictionary<string, string> headers = new()
         {
             { "filename",fileStream.Name },
             { "filelength",fileStream.Length.ToString() },
         };
-        // 发起请求
-        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, fileStream, headers);
+        // 发起请求，上传地址，调用接口凭证, 机器人webhookurl中的key参数
+        WeChatResultInfo? result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _FileUrl, fileStream, headers);
         return result;
     }
 
@@ -173,14 +169,12 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<ResultInfo?> SendMessage(object objSend)
+    private async Task<WeChatResultInfo?> SendMessage(object objSend)
     {
-        // 发送消息地址
-        var url = _MessageUrl;
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
-        // 发起请求
-        ResultInfo? result = await _IHttpHelper.PostAsync<ResultInfo>(HttpEnum.LocalHost, url, sendMessage, null);
+        // 发起请求，发送消息地址
+        WeChatResultInfo? result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _MessageUrl, sendMessage, null);
         return result;
     }
 }

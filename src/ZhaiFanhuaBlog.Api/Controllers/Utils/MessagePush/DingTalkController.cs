@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
@@ -24,7 +25,8 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
 /// 钉钉消息推送
 /// <code>包含：文本/链接/文档/任务卡片/卡片菜单</code>
 /// </summary>
-[ApiGroup(ApiGroupNames.Common, ApiGroupNames.Backstage)]
+[AllowAnonymous]
+[ApiGroup(ApiGroupNames.Common)]
 public class DingTalkController : BaseApiController
 {
     private readonly IDingTalkMessagePushService _IDingTalkMessagePushService;

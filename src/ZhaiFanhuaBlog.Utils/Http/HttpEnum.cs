@@ -24,6 +24,11 @@ public enum HttpEnum
     Common,
 
     /// <summary>
+    /// 工具
+    /// </summary>
+    Util,
+
+    /// <summary>
     /// 本地
     /// </summary>
     LocalHost

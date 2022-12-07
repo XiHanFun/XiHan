@@ -57,7 +57,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToText(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        ResultInfo? result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
+        DingTalkResultInfo? result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -68,7 +68,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToLink(Link link)
     {
-        ResultInfo? result = await _DingTalkRobot.LinkMessage(link);
+        DingTalkResultInfo? result = await _DingTalkRobot.LinkMessage(link);
         return DingTalkMessageReturn(result);
     }
 
@@ -81,7 +81,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToMarkdown(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        ResultInfo? result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
+        DingTalkResultInfo? result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -92,7 +92,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToActionCard(ActionCard actionCard)
     {
-        ResultInfo? result = await _DingTalkRobot.ActionCardMessage(actionCard);
+        DingTalkResultInfo? result = await _DingTalkRobot.ActionCardMessage(actionCard);
         return DingTalkMessageReturn(result);
     }
 
@@ -103,7 +103,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToFeedCard(FeedCard feedCard)
     {
-        ResultInfo? result = await _DingTalkRobot.FeedCardMessage(feedCard);
+        DingTalkResultInfo? result = await _DingTalkRobot.FeedCardMessage(feedCard);
         return DingTalkMessageReturn(result);
     }
 
@@ -112,7 +112,7 @@ public class DingTalkMessagePushService : IDingTalkMessagePushService
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    private static BaseResultDto DingTalkMessageReturn(ResultInfo? result)
+    private static BaseResultDto DingTalkMessageReturn(DingTalkResultInfo? result)
     {
         if (result != null)
         {

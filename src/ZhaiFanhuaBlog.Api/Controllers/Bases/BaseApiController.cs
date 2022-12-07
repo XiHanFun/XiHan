@@ -20,7 +20,7 @@ namespace ZhaiFanhuaBlog.Api.Controllers.Bases;
 /// <summary>
 /// BaseApiController
 /// </summary>
-//[Authorize]
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]

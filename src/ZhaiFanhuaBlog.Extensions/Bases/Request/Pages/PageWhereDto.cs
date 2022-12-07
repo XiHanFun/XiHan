@@ -13,7 +13,7 @@
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Query.Pages;
+namespace ZhaiFanhuaBlog.Extensions.Bases.Request.Pages;
 
 /// <summary>
 /// 通用分页实体基类(不含条件)

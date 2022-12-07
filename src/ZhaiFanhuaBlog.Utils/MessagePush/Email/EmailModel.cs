@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Net.Mail;
 using System.Text;
 
 namespace ZhaiFanhuaBlog.Utils.MessagePush.Email;
@@ -21,7 +22,7 @@ namespace ZhaiFanhuaBlog.Utils.MessagePush.Email;
 public class EmailModel
 {
     /// <summary>
-    /// 服务
+    /// 服务器
     /// </summary>
     public string Host { get; set; } = string.Empty;
 
@@ -61,6 +62,11 @@ public class EmailModel
     public Encoding Coding { get; set; } = Encoding.UTF8;
 
     /// <summary>
+    /// SSL
+    /// </summary>
+    public bool UseSsl { get; set; } = true;
+
+    /// <summary>
     /// 接收者邮箱
     /// </summary>
     public List<string> ToMail { get; set; } = new List<string>();
@@ -71,7 +77,12 @@ public class EmailModel
     public List<string> CcMail { get; set; } = new List<string>();
 
     /// <summary>
+    /// 密送给邮箱
+    /// </summary>
+    public List<string> BccMail { get; set; } = new List<string>();
+
+    /// <summary>
     /// 附件
     /// </summary>
-    public List<string> AttachmentsPath { get; set; } = new List<string>();
+    public List<Attachment> AttachmentsPath { get; set; } = new List<Attachment>();
 }
