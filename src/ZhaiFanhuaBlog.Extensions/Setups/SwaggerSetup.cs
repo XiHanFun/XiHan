@@ -17,8 +17,8 @@ using Microsoft.OpenApi.Models;
 using SqlSugar;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
+using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;

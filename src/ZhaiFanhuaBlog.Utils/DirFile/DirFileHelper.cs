@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Utils.DirFile;
 /// <summary>
 /// 文件或目录信息
 /// </summary>
-public class DirFileHelper
+public static class DirFileHelper
 {
     /// <summary>
     /// 清空指定目录下所有文件及子目录

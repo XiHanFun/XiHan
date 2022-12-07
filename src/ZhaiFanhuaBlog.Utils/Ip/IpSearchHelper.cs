@@ -13,14 +13,13 @@
 
 using IP2Region.Net.XDB;
 using ZhaiFanhuaBlog.Utils.Info;
-using ZhaiFanhuaBlog.Utils.PingYin;
 
 namespace ZhaiFanhuaBlog.Utils.Ip;
 
 /// <summary>
 /// IpSearchHelper
 /// </summary>
-public class IpSearchHelper
+public static class IpSearchHelper
 {
     /// <summary>
     /// 单一实例

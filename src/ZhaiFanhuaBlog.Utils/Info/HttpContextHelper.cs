@@ -33,15 +33,15 @@ public class HttpContextHelper
         RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4()?.ToString();
         RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv6()?.ToString();
 
-        // 取代理IP
-        if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
+        if (httpContext.Request.HttpContext.Connection.RemoteIpAddress != null)
         {
-            if (httpContext.Request.HttpContext.Connection.RemoteIpAddress != null)
-            {
-                RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6().ToString();
-            }
-            else
+            RemoteIPv4 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            RemoteIPv6 = httpContext.Request.HttpContext.Connection.RemoteIpAddress.MapToIPv6().ToString();
+        }
+        else
+        {
+            // 取代理IP
+            if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
             {
                 string? ip = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
                 if (ip != null)
@@ -61,11 +61,12 @@ public class HttpContextHelper
             Referer = header["Referer"].ToString();
         }
 
-        var ua = header["User-Agent"].ToString().ToLower();
-        Agent = ua;
-        SystemName = GetSystemName(ua);
-        SystemType = GetSystemType(ua);
-        BrowserName = GetBrowserName(ua);
+        var agent = header["User-Agent"].ToString().ToLower();
+        Agent = agent;
+        SystemName = GetSystemName(agent);
+        SystemType = GetSystemType(agent);
+        BrowserName = GetBrowserName(agent);
+        BrowserVersion = GetBrowserVersion(agent);
         AddressInfo = IpSearchHelper.Search(RemoteIPv4 ?? string.Empty);
     }
 
@@ -122,68 +123,68 @@ public class HttpContextHelper
     /// <summary>
     /// 获取系统名称
     /// </summary>
-    /// <param name="ua"></param>
-    private static string GetSystemName(string ua)
+    /// <param name="agent"></param>
+    private string GetSystemName(string agent)
     {
         string sn = "Unknown";
 
-        if (ua.Contains("nt 5.0"))
+        if (agent.Contains("nt 5.0"))
         {
             sn = "Windows 2000";
         }
-        else if (ua.Contains("nt 5.1"))
+        else if (agent.Contains("nt 5.1"))
         {
             sn = "Windows XP";
         }
-        else if (ua.Contains("nt 5.2"))
+        else if (agent.Contains("nt 5.2"))
         {
             sn = "Windows 2003";
         }
-        else if (ua.Contains("nt 6.0"))
+        else if (agent.Contains("nt 6.0"))
         {
             sn = "Windows Vista";
         }
-        else if (ua.Contains("nt 6.1"))
+        else if (agent.Contains("nt 6.1"))
         {
             sn = "Windows 7";
         }
-        else if (ua.Contains("nt 6.2"))
+        else if (agent.Contains("nt 6.2"))
         {
             sn = "Windows 8";
         }
-        else if (ua.Contains("nt 6.3"))
+        else if (agent.Contains("nt 6.3"))
         {
             sn = "Windows 8.1";
         }
-        else if (ua.Contains("nt 6.4") || ua.Contains("nt 10.0"))
+        else if (agent.Contains("nt 6.4") || agent.Contains("nt 10.0"))
         {
             sn = "Windows 10";
         }
-        else if (ua.Contains("android"))
+        else if (agent.Contains("android"))
         {
             sn = "Android";
         }
-        else if (ua.Contains("mac os x"))
+        else if (agent.Contains("mac os x"))
         {
             sn = "IOS";
         }
-        else if (ua.Contains("windows phone"))
+        else if (agent.Contains("windows phone"))
         {
             sn = "Windows Phone";
         }
-        else if (ua.Contains("unix"))
+        else if (agent.Contains("unix"))
         {
             sn = "Unix";
         }
-        else if (ua.Contains("linux"))
+        else if (agent.Contains("linux"))
         {
             sn = "Linux";
         }
-        else if (ua.Contains("mac"))
+        else if (agent.Contains("mac"))
         {
             sn = "Mac";
         }
-        else if (ua.Contains("sunos"))
+        else if (agent.Contains("sunos"))
         {
             sn = "SunOS";
         }
@@ -193,14 +194,14 @@ public class HttpContextHelper
     /// <summary>
     /// 获取系统类型
     /// </summary>
-    /// <param name="ua"></param>
+    /// <param name="agent"></param>
     /// <returns></returns>
-    private static string GetSystemType(string ua)
+    private string GetSystemType(string agent)
     {
         string st = "Unknown";
-        if (ua.Contains("x64"))
+        if (agent.Contains("x64"))
             st = "64位";
-        else if (ua.Contains("x86"))
+        else if (agent.Contains("x86"))
             st = "32位";
         return st;
     }
@@ -208,67 +209,77 @@ public class HttpContextHelper
     /// <summary>
     /// 获取浏览器名称
     /// </summary>
-    /// <param name="ua"></param>
-    private static string GetBrowserName(string ua)
+    /// <param name="agent"></param>
+    private static string GetBrowserName(string agent)
     {
         string bn = "Unknown";
-        if (ua.Contains("opera/ucweb"))
+        if (agent.Contains("opera/ucweb/"))
         {
             bn = "UC Opera";
         }
-        else if (ua.Contains("openwave/ucweb"))
+        else if (agent.Contains("openwave/ucweb/"))
         {
             bn = "UCOpenwave";
         }
-        else if (ua.Contains("ucweb"))
+        else if (agent.Contains("ucweb/"))
         {
             bn = "UC";
         }
-        else if (ua.Contains("360se"))
+        else if (agent.Contains("360se/"))
         {
             bn = "360";
         }
-        else if (ua.Contains("metasr"))
+        else if (agent.Contains("metasr/"))
         {
             bn = "搜狗";
         }
-        else if (ua.Contains("maxthon"))
+        else if (agent.Contains("maxthon/"))
         {
             bn = "遨游";
         }
-        else if (ua.Contains("the world"))
+        else if (agent.Contains("the world/"))
         {
             bn = "世界之窗";
         }
-        else if (ua.Contains("tencenttraveler") || ua.Contains("qqbn"))
+        else if (agent.Contains("tencenttraveler/") || agent.Contains("qqbn/"))
         {
             bn = "腾讯";
         }
-        else if (ua.Contains("msie"))
+        else if (agent.Contains("msie/"))
         {
             bn = "IE";
         }
-        else if (ua.Contains("edg"))
+        else if (agent.Contains("edg/"))
         {
             bn = "Edge";
         }
-        else if (ua.Contains("chrome"))
+        else if (agent.Contains("chrome/"))
         {
             bn = "Chrome";
         }
-        else if (ua.Contains("safari"))
+        else if (agent.Contains("safari/"))
         {
             bn = "Safari";
         }
-        else if (ua.Contains("firefox"))
+        else if (agent.Contains("firefox/"))
         {
             bn = "Firefox";
         }
-        else if (ua.Contains("opera"))
+        else if (agent.Contains("opera/"))
         {
             bn = "Opera";
         }
 
         return bn;
+    }
+
+    /// <summary>
+    /// 获取浏览器版本
+    /// </summary>
+    /// <param name="agent"></param>
+    private static string GetBrowserVersion(string agent)
+    {
+        string bv = "Unknown";
+        return bv;
     }
 }

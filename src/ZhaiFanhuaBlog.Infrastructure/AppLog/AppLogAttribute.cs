@@ -11,8 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Serilog;
-
 namespace ZhaiFanhuaBlog.Infrastructure.AppLog;
 
 /// <summary>

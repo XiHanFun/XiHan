@@ -25,7 +25,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static byte[] FormatIPAddressToByte(this IPAddress address)
+    public static byte[] FormatIPAddressToByte(IPAddress address)
     {
         return address.GetAddressBytes();
     }
@@ -35,7 +35,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static string FormatIPAddressToString(this IPAddress address)
+    public static string FormatIPAddressToString(IPAddress address)
     {
         return address.ToString();
     }
@@ -45,7 +45,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static string FormatByteToString(this byte[] bytes)
+    public static string FormatByteToString(byte[] bytes)
     {
         return new IPAddress(bytes).ToString();
     }
@@ -55,7 +55,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static IPAddress FormatByteToIPAddress(this byte[] bytes)
+    public static IPAddress FormatByteToIPAddress(byte[] bytes)
     {
         return new IPAddress(bytes);
     }
@@ -65,7 +65,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static IPAddress FormatStringToIPAddress(this string str)
+    public static IPAddress FormatStringToIPAddress(string str)
     {
         return IPAddress.Parse(str);
     }
@@ -75,7 +75,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="ipV4str"></param>
     /// <returns></returns>
-    public static string FormatV4ToV6(this string ipV4str)
+    public static string FormatV4ToV6(string ipV4str)
     {
         return IPAddress.Parse(ipV4str).MapToIPv6().ToString();
     }
@@ -85,7 +85,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="ipV6str"></param>
     /// <returns></returns>
-    public static string FormatV6ToV4(this string ipV6str)
+    public static string FormatV6ToV4(string ipV6str)
     {
         return IPAddress.Parse(ipV6str).MapToIPv4().ToString();
     }

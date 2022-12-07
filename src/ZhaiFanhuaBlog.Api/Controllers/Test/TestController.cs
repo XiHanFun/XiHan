@@ -101,9 +101,9 @@ public class TestController : BaseApiController
     /// </summary>
     /// <param name="log"></param>
     /// <returns></returns>
-    [HttpGet("Log")]
+    [HttpGet("LogInfo")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> Log(string log)
+    public ActionResult<BaseResultDto> LogInfo(string log)
     {
         return BaseResponseDto.OK($"测试日志写入:{log}");
     }
