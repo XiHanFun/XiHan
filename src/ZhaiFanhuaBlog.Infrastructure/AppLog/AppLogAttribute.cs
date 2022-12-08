@@ -19,6 +19,9 @@ namespace ZhaiFanhuaBlog.Infrastructure.AppLog;
 [AttributeUsage(AttributeTargets.All, Inherited = false)]
 public class AppLogAttribute : Attribute
 {
+    /// <summary>
+    /// 全局日志
+    /// </summary>
     public AppLogAttribute()
     {
     }

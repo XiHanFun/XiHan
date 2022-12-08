@@ -4,8 +4,20 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<DebugType>embedded</DebugType>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<PackageIcon>logo.png</PackageIcon>
+	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
+	<AssemblyVersion>0.2.2</AssemblyVersion>
+	<FileVersion>0.2.2</FileVersion>
+	<Title>ZhaiFanhuaBlog.Utils</Title>
+	<Version>0.2.2</Version>
+	<Authors>ZhaiFanhua</Authors>
+	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
+	<ApplicationIcon>favicon.ico</ApplicationIcon>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Description>ZhaiFanhuaBlog.Utils</Description>
+	<PackageReadmeFile>readme.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +56,18 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="logo.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="IP2Region.Net" Version="1.0.10" />
@@ -51,5 +75,11 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 		<PackageReference Include="Seethoven.PinYinConverter" Version="2.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

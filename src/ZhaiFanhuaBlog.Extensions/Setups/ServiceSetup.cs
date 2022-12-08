@@ -48,7 +48,6 @@ public static class ServiceSetup
     /// 注册自身服务
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="types"></param>
     private static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库
