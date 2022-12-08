@@ -16,9 +16,9 @@ using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.AppService;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
-using ZhaiFanhuaBlog.Utils.MessagePush.Email;
+using ZhaiFanhuaBlog.Utils.Message.Email;
 
-namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Services.Utils.Message;
 
 /// <summary>
 /// EmailPushService

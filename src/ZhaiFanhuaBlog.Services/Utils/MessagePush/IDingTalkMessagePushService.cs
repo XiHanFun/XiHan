@@ -12,9 +12,9 @@
 #endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
-using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
-namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Services.Utils.Message;
 
 /// <summary>
 /// IDingTalkMessagePushService

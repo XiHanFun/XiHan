@@ -12,10 +12,10 @@
 #endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
-using ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
-using File = ZhaiFanhuaBlog.Utils.MessagePush.WeChat.File;
+using ZhaiFanhuaBlog.Utils.Message.WeChat;
+using File = ZhaiFanhuaBlog.Utils.Message.WeChat.File;
 
-namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Services.Utils.Message;
 
 /// <summary>
 /// IWeChatMessagePushService

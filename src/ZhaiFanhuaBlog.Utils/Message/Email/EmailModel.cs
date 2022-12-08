@@ -14,7 +14,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.Email;
+namespace ZhaiFanhuaBlog.Utils.Message.Email;
 
 /// <summary>
 /// EmailModel

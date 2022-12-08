@@ -16,9 +16,9 @@ using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Services.Utils.MessagePush;
+using ZhaiFanhuaBlog.Services.Utils.Message;
 
-namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Api.Controllers.Utils.Message;
 
 /// <summary>
 /// 邮件推送

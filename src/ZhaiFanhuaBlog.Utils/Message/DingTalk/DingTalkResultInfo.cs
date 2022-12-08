@@ -13,7 +13,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+namespace ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
 /// <summary>
 /// 结果信息

@@ -19,12 +19,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ConfigData\ip2region.xdb" />
     <None Remove="ConfigData\Log4Net.config" />
     <None Remove="ConfigData\NLog.config" />
     <None Remove="ConfigData\Serilog.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ConfigData\ip2region.xdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ConfigData\Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -47,10 +51,5 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 		<PackageReference Include="Seethoven.PinYinConverter" Version="2.0.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="ConfigData\ip2region.xdb">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+namespace ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
 /// <summary>
 /// 钉钉机器人消息推送

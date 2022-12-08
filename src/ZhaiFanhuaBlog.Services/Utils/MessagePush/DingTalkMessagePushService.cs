@@ -16,9 +16,9 @@ using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.AppService;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Utils.Http;
-using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
-namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Services.Utils.Message;
 
 /// <summary>
 /// DingTalkMessagePush

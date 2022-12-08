@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.RabbitMQ;
+namespace ZhaiFanhuaBlog.Utils.Message.RabbitMQ;
 
 /// <summary>
 /// MQConnection

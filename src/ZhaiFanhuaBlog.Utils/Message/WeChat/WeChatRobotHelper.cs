@@ -14,7 +14,7 @@
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
+namespace ZhaiFanhuaBlog.Utils.Message.WeChat;
 
 /// <summary>
 /// 微信机器人消息推送

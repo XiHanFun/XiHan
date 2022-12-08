@@ -13,7 +13,7 @@
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 
-namespace ZhaiFanhuaBlog.Services.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Services.Utils.Message;
 
 /// <summary>
 /// IEmailPushService

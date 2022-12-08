@@ -14,7 +14,7 @@
 using RabbitMQ.Client;
 using System.Text;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.RabbitMQ;
+namespace ZhaiFanhuaBlog.Utils.Message.RabbitMQ;
 
 /// <summary>
 /// RabbitMQ生产者

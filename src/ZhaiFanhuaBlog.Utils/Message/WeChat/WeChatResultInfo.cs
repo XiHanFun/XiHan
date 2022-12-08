@@ -13,7 +13,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
+namespace ZhaiFanhuaBlog.Utils.Message.WeChat;
 
 /// <summary>
 /// 结果信息

@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Utils.MessagePush.WeChat;
+namespace ZhaiFanhuaBlog.Utils.Message.WeChat;
 
 /// <summary>
 /// WeChatConnection

@@ -16,10 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Services.Utils.MessagePush;
-using ZhaiFanhuaBlog.Utils.MessagePush.DingTalk;
+using ZhaiFanhuaBlog.Services.Utils.Message;
+using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
-namespace ZhaiFanhuaBlog.Api.Controllers.Utils.MessagePush;
+namespace ZhaiFanhuaBlog.Api.Controllers.Utils.Message;
 
 /// <summary>
 /// 钉钉消息推送
