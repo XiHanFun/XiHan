@@ -18,6 +18,7 @@ using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Extensions.Setups;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
 using ZhaiFanhuaBlog.Utils.Console;
+using ZhaiFanhuaBlog.Utils.Object;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,10 @@ ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
 
 var config = builder.Configuration;
 ConsoleHelper.WriteLineWarning("Configuration Start……");
-AppSettings appSettings = new(config);
+AppConfig appConfig = new(config);
+string sdsad = AppSettings.Auth.JWT.Issuer.FullNameOf();
+var fefewf = AppConfig.GetValue<string>(sdsad);
+
 ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
 var services = builder.Services;

@@ -12,7 +12,9 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.Serialize;
 
@@ -22,13 +24,37 @@ namespace ZhaiFanhuaBlog.Utils.Serialize;
 public static class SerializeHelper
 {
     /// <summary>
+    /// 公共参数
+    /// </summary>
+    public static JsonSerializerOptions JsonSerializerOptionsInstance = new()
+    {
+        // 序列化格式
+        WriteIndented = true,
+        // 忽略循环引用
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+        // 数字类型
+        NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals |
+                         JsonNumberHandling.AllowReadingFromString |
+                         JsonNumberHandling.WriteAsString,
+        //Converters = new List<JsonConverter>() { new BoolJsonConverter(), new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss") },
+        // 允许额外符号
+        AllowTrailingCommas = true,
+        // 属性名称不使用不区分大小写的比较
+        PropertyNameCaseInsensitive = false,
+        // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写
+        PropertyNamingPolicy = null,
+        // 获取或设置要在转义字符串时使用的编码器，不转义字符
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
+
+    /// <summary>
     /// 序列化为Json
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
     public static string SerializeToJson(this object item)
     {
-        return JsonSerializer.Serialize(item);
+        return JsonSerializer.Serialize(item, JsonSerializerOptionsInstance);
     }
 
     /// <summary>

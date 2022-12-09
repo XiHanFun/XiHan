@@ -7,13 +7,12 @@
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<PackageIcon>logo.png</PackageIcon>
 	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
-	<AssemblyVersion>0.2.2</AssemblyVersion>
-	<FileVersion>0.2.2</FileVersion>
+	<AssemblyVersion>0.2.2.1</AssemblyVersion>
+	<FileVersion>0.2.2.1</FileVersion>
 	<Title>ZhaiFanhuaBlog.Utils</Title>
-	<Version>0.2.2</Version>
+	<Version>0.2.2.1</Version>
 	<Authors>ZhaiFanhua</Authors>
 	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>ZhaiFanhuaBlog.Utils</Description>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -21,46 +20,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Cache\**" />
-    <EmbeddedResource Remove="Cache\**" />
-    <None Remove="Cache\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\ip2region.net\1.0.10\contentFiles\any\net6.0\Data\ip2region.xdb" />
     <Content Remove="C:\Users\zhaifanhua\.nuget\packages\ip2region.net\1.0.10\contentFiles\any\net6.0\Data\ip2region.xdb" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ConfigData\ip2region.xdb" />
-    <None Remove="ConfigData\Log4Net.config" />
-    <None Remove="ConfigData\NLog.config" />
-    <None Remove="ConfigData\Serilog.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ConfigData\ip2region.xdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigData\Log4Net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="ConfigData\NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="ConfigData\Serilog.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="favicon.ico" />
-    <Content Include="logo.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -77,6 +38,10 @@
 		<PackageReference Include="Seethoven.PinYinConverter" Version="2.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Update="logo.png">
+	    <PackagePath>\</PackagePath>
+	    <Pack>True</Pack>
+	  </None>
 	  <None Update="readme.md">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>

@@ -23,13 +23,13 @@ namespace ZhaiFanhuaBlog.Utils.Object;
 public static class ObjectPropertyHelper
 {
     /// <summary>
-    /// 获取属性全名并转化为读取方式 例如 AppSettings.Database.Initialization => Database:Initialization
+    /// 获取属性全名并转化为读取方式
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="_"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static string FullNameOf<T>(this T _, [CallerArgumentExpression("_")] string fullName = "")
+    public static string FullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression("_")] string fullName = "")
     {
         return fullName;
     }

@@ -12,94 +12,29 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 /// <summary>
 /// AppSettings
 /// </summary>
-public class AppSettings
+public static class AppSettings
 {
-    /// <summary>
-    /// 配置文件的根节点
-    /// </summary>
-    public static IConfiguration _IConfiguration { get; set; } = new ConfigurationBuilder().Build();
-
-    #region 构造函数
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="configuration"></param>
-    public AppSettings(IConfiguration configuration)
-    {
-        _IConfiguration = configuration;
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="contentPath"></param>
-    public AppSettings(string contentPath)
-    {
-        string path = "appsettings.json";
-        // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
-        string envpath = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
-
-        // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
-        _IConfiguration = new ConfigurationBuilder().SetBasePath(contentPath)
-            // 默认读取appsettings.json
-            .AddJsonFile(path, false, true)
-            // 如果存在环境配置文件，优先使用这里的配置
-            .AddJsonFile(envpath, false, true)
-            .Build();
-    }
-
-    #endregion 构造函数
-
-    #region 基本方法
-
-    public static bool GetBoolValue(string key)
-    {
-        return _IConfiguration.GetValue<bool>(key);
-    }
-
-    public static int GetIntValue(string key)
-    {
-        return _IConfiguration.GetValue<int>(key);
-    }
-
-    public static string GetStringValue(string key)
-    {
-        return _IConfiguration.GetValue<string>(key) ?? string.Empty;
-    }
-
-    public static DateTime GetDateTimeValue(string key)
-    {
-        return _IConfiguration.GetValue<DateTime>(key);
-    }
-
-    public static string[] GetStringArrayValue(string key)
-    {
-        return _IConfiguration.GetSection(key).Get<string[]>() ?? Array.Empty<string>();
-    }
-
-    #endregion 基本方法
-
     #region 读取配置
 
-    public static string EnvironmentName => GetStringValue("EnvironmentName");
+    public static string EnvironmentName { get; }
 
     /// <summary>
     /// 日志
     /// </summary>
     public static class Logging
     {
-        public static bool Authorization => GetBoolValue("Logging:Authorization");
-        public static bool Resource => GetBoolValue("Logging:Resource");
-        public static bool Action => GetBoolValue("Logging:Action");
-        public static bool Result => GetBoolValue("Logging:Result");
-        public static bool Exception => GetBoolValue("Logging:Exception");
+        public static bool Authorization { get; }
+        public static bool Resource { get; }
+        public static bool Action { get; }
+        public static bool Result { get; }
+        public static bool Exception { get; }
     }
 
     /// <summary>
@@ -107,16 +42,16 @@ public class AppSettings
     /// </summary>
     public static class Sys
     {
-        public static string Name => GetStringValue("Sys:Name");
-        public static string Description => GetStringValue("Sys:Description");
-        public static string KeyWord => GetStringValue("Sys:KeyWord");
-        public static string Domain => GetStringValue("Sys:Domain");
-        public static DateTime UpdateTime => GetDateTimeValue("Sys:UpdateTime");
+        public static string Name { get; }
+        public static string Description { get; }
+        public static string KeyWord { get; }
+        public static string Domain { get; }
+        public static DateTime UpdateTime { get; }
 
         public static class Admin
         {
-            public static string Name => GetStringValue("Sys:Admin:Name");
-            public static string Email => GetStringValue("Sys:Admin:Email");
+            public static string Name { get; }
+            public static string Email { get; }
         }
     }
 
@@ -125,8 +60,8 @@ public class AppSettings
     /// </summary>
     public static class Encryptions
     {
-        public static string AesKey => GetStringValue("Encryptions:AesKey");
-        public static string DesKey => GetStringValue("Encryptions:DesKey");
+        public static string AesKey { get; }
+        public static string DesKey { get; }
     }
 
     /// <summary>
@@ -134,9 +69,9 @@ public class AppSettings
     /// </summary>
     public static class Cors
     {
-        public static bool IsEnabled => GetBoolValue("Cors:IsEnabled");
-        public static string PolicyName => GetStringValue("Cors:PolicyName");
-        public static string[] Origins => GetStringArrayValue("Cors:Origins");
+        public static bool IsEnabled { get; }
+        public static string PolicyName { get; }
+        public static string[] Origins { get; }
     }
 
     /// <summary>
@@ -144,17 +79,17 @@ public class AppSettings
     /// </summary>
     public static class Database
     {
-        public static bool Console => GetBoolValue("Database:Console");
-        public static bool Initialization => GetBoolValue("Database:Initialization");
-        public static string Type => GetStringValue("Database:Type");
+        public static bool Console { get; }
+        public static bool Initialization { get; }
+        public static string Type { get; }
 
         public static class Connectionstring
         {
-            public static string MySql => GetStringValue("Database:Connectionstring:MySql");
-            public static string SqlServer => GetStringValue("Database:Connectionstring:SqlServer");
-            public static string Sqlite => GetStringValue("Database:Connectionstring:Sqlite");
-            public static string Oracle => GetStringValue("Database:Connectionstring:Oracle");
-            public static string PostgreSQL => GetStringValue("Database:Connectionstring:PostgreSQL");
+            public static string MySql { get; }
+            public static string SqlServer { get; }
+            public static string Sqlite { get; }
+            public static string Oracle { get; }
+            public static string PostgreSQL { get; }
         }
     }
 
@@ -163,27 +98,27 @@ public class AppSettings
     /// </summary>
     public static class Cache
     {
-        public static int SyncTimeout => GetIntValue("Cache:SyncTimeout");
+        public static int SyncTimeout { get; }
 
         public static class MemoryCache
         {
-            public static bool IsEnabled => GetBoolValue("Cache:MemoryCache:IsEnabled");
+            public static bool IsEnabled { get; }
         }
 
         public static class Distributedcache
         {
-            public static bool IsEnabled => GetBoolValue("Cache:Distributedcache:IsEnabled");
+            public static bool IsEnabled { get; }
 
             public static class Redis
             {
-                public static string ConnectionString => GetStringValue("Cache:Distributedcache:Redis:ConnectionString");
-                public static string InstanceName => GetStringValue("Cache:Distributedcache:Redis:InstanceName");
+                public static string ConnectionString { get; }
+                public static string InstanceName { get; }
             }
         }
 
         public static class Responsecache
         {
-            public static bool IsEnabled => GetBoolValue("Cache:Responsecache:IsEnabled");
+            public static bool IsEnabled { get; }
         }
     }
 
@@ -192,8 +127,8 @@ public class AppSettings
     /// </summary>
     public static class Swagger
     {
-        public static string RoutePrefix => GetStringValue("Swagger:RoutePrefix");
-        public static string[] PublishGroup => GetStringArrayValue("Swagger:PublishGroup");
+        public static string RoutePrefix { get; }
+        public static string[] PublishGroup { get; }
     }
 
     /// <summary>
@@ -201,7 +136,7 @@ public class AppSettings
     /// </summary>
     public static class Miniprofiler
     {
-        public static bool IsEnabled => GetBoolValue("Miniprofiler:IsEnabled");
+        public static bool IsEnabled { get; }
     }
 
     /// <summary>
@@ -211,40 +146,40 @@ public class AppSettings
     {
         public static class JWT
         {
-            public static string Issuer => GetStringValue("Auth:JWT:Issuer");
-            public static string Audience => GetStringValue("Auth:JWT:Audience");
-            public static string SymmetricKey => GetStringValue("Auth:JWT:SymmetricKey");
-            public static int ClockSkew => GetIntValue("Auth:JWT:ClockSkew");
-            public static int Expires => GetIntValue("Auth:JWT:Expires");
+            public static string Issuer { get; }
+            public static string Audience { get; }
+            public static string SymmetricKey { get; }
+            public static int ClockSkew { get; }
+            public static int Expires { get; }
         }
 
         public static class Oauth
         {
             public static class QQ
             {
-                public static bool IsEnabled => GetBoolValue("Auth:Oauth:QQ:IsEnabled");
-                public static string ClientId => GetStringValue("Auth:Oauth:QQ:ClientId");
-                public static string ClientSecret => GetStringValue("Auth:Oauth:QQ:ClientSecret");
-                public static string Scope => GetStringValue("Auth:Oauth:QQ:Scope");
-                public static string RedirectUrl => GetStringValue("Auth:Oauth:QQ:RedirectUrl");
+                public static bool IsEnabled { get; }
+                public static string ClientId { get; }
+                public static string ClientSecret { get; }
+                public static string Scope { get; }
+                public static string RedirectUrl { get; }
             }
 
             public static class Github
             {
-                public static bool IsEnabled => GetBoolValue("Auth:Oauth:Github:IsEnabled");
-                public static string ClientID => GetStringValue("Auth:Oauth:Github:ClientID");
-                public static string ClientSecret => GetStringValue("Auth:Oauth:Github:ClientSecret");
-                public static string Scope => GetStringValue("Auth:Oauth:Github:Scope");
-                public static string RedirectUri => GetStringValue("Auth:Oauth:Github:RedirectUri");
+                public static bool IsEnabled { get; }
+                public static string ClientID { get; }
+                public static string ClientSecret { get; }
+                public static string Scope { get; }
+                public static string RedirectUri { get; }
             }
 
             public static class Gitee
             {
-                public static bool IsEnabled => GetBoolValue("Auth:Oauth:Gitee:IsEnabled");
-                public static string ClientID => GetStringValue("Auth:Oauth:Gitee:ClientID");
-                public static string ClientSecret => GetStringValue("Auth:Oauth:Gitee:ClientSecret");
-                public static string Scope => GetStringValue("Auth:Oauth:Gitee:Scope");
-                public static string RedirectUri => GetStringValue("Auth:Oauth:Gitee:RedirectUri");
+                public static bool IsEnabled { get; }
+                public static string ClientID { get; }
+                public static string ClientSecret { get; }
+                public static string Scope { get; }
+                public static string RedirectUri { get; }
             }
         }
     }
@@ -254,13 +189,13 @@ public class AppSettings
     /// </summary>
     public static class CDN
     {
-        public static bool IsEnabled => GetBoolValue("CDN:IsEnabled");
-        public static string Type => GetStringValue("CDN:Type");
+        public static bool IsEnabled { get; }
+        public static string Type { get; }
 
         public static class Tencentcloud
         {
-            public static string SecretId => GetStringValue("CDN:Tencentcloud:SecretId");
-            public static string SecretKey => GetStringValue("CDN:Tencentcloud:SecretKey");
+            public static string SecretId { get; }
+            public static string SecretKey { get; }
         }
     }
 
@@ -269,23 +204,23 @@ public class AppSettings
     /// </summary>
     public static class Job
     {
-        public static bool IsEnabled => GetBoolValue("Job:IsEnabled");
-        public static string Cron => GetStringValue("Job:Cron");
+        public static bool IsEnabled { get; }
+        public static string Cron { get; }
     }
 
     /// <summary>
     /// 消息推送
     /// </summary>
-    public static class MessagePush
+    public static class Message
     {
         /// <summary>
         /// 钉钉
         /// </summary>
         public static class DingTalk
         {
-            public static string WebHookUrl => GetStringValue("MessagePush:DingTalk:WebHookUrl");
-            public static string AccessToken => GetStringValue("MessagePush:DingTalk:AccessToken");
-            public static string Secret => GetStringValue("MessagePush:DingTalk:Secret");
+            public static string WebHookUrl { get; }
+            public static string AccessToken { get; }
+            public static string Secret { get; }
         }
 
         /// <summary>
@@ -293,9 +228,9 @@ public class AppSettings
         /// </summary>
         public static class WeChart
         {
-            public static string WebHookUrl => GetStringValue("MessagePush:WeChart:WebHookUrl");
-            public static string UploadkUrl => GetStringValue("MessagePush:WeChart:UploadkUrl");
-            public static string Key => GetStringValue("MessagePush:WeChart:Key");
+            public static string WebHookUrl { get; }
+            public static string UploadkUrl { get; }
+            public static string Key { get; }
         }
 
         /// <summary>
@@ -303,15 +238,15 @@ public class AppSettings
         /// </summary>
         public static class Email
         {
-            public static string Host => GetStringValue("MessagePush:Email:Host");
-            public static int Port => GetIntValue("MessagePush:Email:Port");
-            public static bool UseSsl => GetBoolValue("MessagePush:Email:UseSsl");
+            public static string Host { get; }
+            public static int Port { get; }
+            public static bool UseSsl { get; }
 
             public static class From
             {
-                public static string Username => GetStringValue("MessagePush:Email:From:Username");
-                public static string Password => GetStringValue("MessagePush:Email:From:Password");
-                public static string Address => GetStringValue("MessagePush:Email:From:Address");
+                public static string Username { get; }
+                public static string Password { get; }
+                public static string Address { get; }
             }
         }
     }

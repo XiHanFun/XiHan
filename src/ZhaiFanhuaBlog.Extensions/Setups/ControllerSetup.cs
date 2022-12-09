@@ -51,6 +51,8 @@ public static class ControllerSetup
         })
         .AddJsonOptions(options =>
         {
+            // 序列化格式
+            options.JsonSerializerOptions.WriteIndented = true;
             // 忽略循环引用
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             // 布尔类型

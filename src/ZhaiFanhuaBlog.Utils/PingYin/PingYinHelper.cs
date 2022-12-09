@@ -13,6 +13,7 @@
 
 using Microsoft.International.Converters.PinYinConverter;
 using System.Text.RegularExpressions;
+using System;
 
 namespace ZhaiFanhuaBlog.Utils.PingYin;
 
@@ -26,7 +27,7 @@ public static class PingYinHelper
         var chs = text.ToCharArray();
 
         // 记录每个汉字的全拼
-        Dictionary<int, List<string>> totalPingYinList = new Dictionary<int, List<string>>();
+        var totalPingYinList = new Dictionary<int, List<string>>();
 
         for (int i = 0; i < chs.Length; i++)
         {
@@ -105,7 +106,7 @@ public static class PingYinHelper
                 var newFirstPingYinList = new List<string>();
                 foreach (var firstPingYin in result)
                 {
-                    newFirstPingYinList.AddRange(items.Select(item => firstPingYin + item.Substring(0, 1)));
+                    newFirstPingYinList.AddRange(items.Select(item => string.Concat(firstPingYin, item.AsSpan(0, 1))));
                 }
                 newFirstPingYinList = newFirstPingYinList.Distinct().ToList();
                 result = newFirstPingYinList;

@@ -47,7 +47,7 @@ public class JsonHelper
             return default;
         }
         string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-        var result = JsonSerializer.Deserialize<T>(jsonStr);
+        var result = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
@@ -65,7 +65,7 @@ public class JsonHelper
         }
         using StreamReader streamReader = new(_JsonFileName);
         string jsonStr = streamReader.ReadToEnd();
-        dynamic? obj = JsonSerializer.Deserialize<T>(jsonStr);
+        dynamic? obj = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         var keys = keyLink.Split('.');
         dynamic currentObject = obj;
@@ -77,7 +77,7 @@ public class JsonHelper
                 return default;
             }
         }
-        var result = JsonSerializer.Deserialize<T>(currentObject.ToString());
+        var result = JsonSerializer.Deserialize<T>(currentObject.ToString(), SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
@@ -98,11 +98,11 @@ public class JsonHelper
         {
             string jsonStr;
             jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-            jsoObj = JsonSerializer.Deserialize<T>(jsonStr);
+            jsoObj = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
             jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         }
 
-        var keys = keyLink.Split('.');
+        var keys = keyLink.Split(':');
         dynamic currentObject = jsoObj;
         for (int i = 0; i < keys.Length; i++)
         {
@@ -142,11 +142,7 @@ public class JsonHelper
     /// <param name="jsoObj"></param>
     public void Save<T>(T jsoObj)
     {
-        JsonSerializerOptions options = new()
-        {
-            WriteIndented = true
-        };
-        string jsonStr = JsonSerializer.Serialize(jsoObj, options);
+        string jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
         File.WriteAllText(_JsonFileName, jsonStr, Encoding.UTF8);
     }
 }

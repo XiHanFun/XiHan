@@ -13,6 +13,8 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using ZhaiFanhuaBlog.Utils.Object;
+using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
@@ -24,87 +26,113 @@ public class AppConfig
     /// <summary>
     /// 配置文件的根节点
     /// </summary>
-    public static IConfiguration _IConfiguration { get; set; } = new ConfigurationBuilder().Build();
+    public static IConfiguration _ConfigurationRoot { get; set; } = new ConfigurationBuilder().Build();
+
+    /// <summary>
+    /// 自定义配置文件位置
+    /// </summary>
+    public static string ConfigurationFile { get; set; } = string.Empty;
 
     #region 构造函数
 
     /// <summary>
-    /// 构造函数
+    /// 通过构造函数
     /// </summary>
     /// <param name="configuration"></param>
     public AppConfig(IConfiguration configuration)
     {
-        _IConfiguration = configuration;
+        _ConfigurationRoot = configuration;
+
+        // 获取配置文件
+        try
+        {
+            if (configuration is ConfigurationManager configurationManager)
+            {
+                var jsonFilePath = configurationManager.Sources
+                                   .Where(manager => manager is JsonConfigurationSource)
+                                   .Select(manager => manager as JsonConfigurationSource)
+                                   .Select(file => file?.Path!);
+                if (jsonFilePath.Any())
+                {
+                    string envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
+                    string configurationFile = jsonFilePath.First(name => name.Contains(envName));
+                    ConfigurationFile = configurationFile;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException(ex.Message);
+        }
     }
 
     /// <summary>
-    /// 构造函数
+    /// 通过指定配置文件构造函数
     /// </summary>
     /// <param name="contentPath"></param>
     public AppConfig(string contentPath)
     {
-        string path = "appsettings.json";
-        // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
-        string envpath = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
+        string envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
+        string file = "appsettings.json";
+        string configurationFile = $"appsettings.{envName}.json";
 
-        _IConfiguration = new ConfigurationBuilder().SetBasePath(contentPath)
-                        // 直接读目录里的json文件，而不是 bin 文件夹下的，所以不用修改复制属性
-                        .Add(new JsonConfigurationSource { Path = path, Optional = false, ReloadOnChange = true })
-                        .Add(new JsonConfigurationSource { Path = envpath, Optional = false, ReloadOnChange = true })
-                        .Build();
+        // 根据ASPNETCORE_ENVIRONMENT环境变量来读取不同的配置，如ASPNETCORE_ENVIRONMENT = Test，则会读取appsettings.Test.json文件
+        _ConfigurationRoot = new ConfigurationBuilder().SetBasePath(contentPath)
+            // 默认读取appsettings.json
+            .AddJsonFile(file, false, true)
+            // 如果存在环境配置文件，优先使用这里的配置
+            .AddJsonFile(configurationFile, false, true)
+            .Build();
+        ConfigurationFile = configurationFile;
     }
 
     #endregion 构造函数
 
     #region 基本方法
 
-    ///// <summary>
-    ///// 获取属性名称
-    ///// </summary>
-    ///// <typeparam name="TEntity"></typeparam>
-    ///// <param name="tentity"></param>
-    ///// <returns></returns>
-    //public static string GetPropertyName<TEntity>(TEntity tentity)
-    //{
-    //    return tentity.FullNameOf().Replace("AppSettings.", "").Replace(".", ":");
-    //}
+    /// <summary>
+    /// 获取值
+    /// </summary>
+    /// <typeparam name="R"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public static R? GetValue<R>(string key)
+    {
+        return _ConfigurationRoot.GetValue<R>(GetPropertyName(key));
+    }
 
-    ///// <summary>
-    ///// 获取值
-    ///// </summary>
-    ///// <typeparam name="R"></typeparam>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="t"></param>
-    ///// <returns></returns>
-    //public static R? GetStringValue<R, T>(T t)
-    //{
-    //    return _IConfiguration.GetSection(GetPropertyName(t));
-    //}
+    /// <summary>
+    /// 获取对象
+    /// </summary>
+    /// <typeparam name="R"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public static R? GetSectionValue<R>(string key)
+    {
+        return _ConfigurationRoot.GetSection(GetPropertyName(key)).Get<R>();
+    }
 
-    ///// <summary>
-    ///// 获取对象值
-    ///// </summary>
-    ///// <typeparam name="R"></typeparam>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="t"></param>
-    ///// <returns></returns>
-    //public static R? GetSectionValue<R, T>(T t)
-    //{
-    //    return _IConfiguration.GetSection(GetPropertyName(t).Get<R>());
-    //}
+    /// <summary>
+    /// 设置对象
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="value"></param>
+    public static void SetValue<T>(T entity, dynamic value)
+    {
+        JsonHelper jsonHelper = new(ConfigurationFile);
+        jsonHelper.Set(GetPropertyName(entity.FullNameOf()), value);
+    }
 
-    ///// <summary>
-    ///// 保存
-    ///// </summary>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="t"></param>
-    ///// <param name="value"></param>
-    //public static void SetValue<T>(T t, dynamic value)
-    //{
-    //    string path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
-    //    JsonHelper jsonHelper = new(path);
-    //    jsonHelper.Set(GetPropertyName(t), value);
-    //}
+    /// <summary>
+    /// 获取属性名称 例如 AppSettings.Database.Initialization => Database:Initialization
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private static string GetPropertyName(string key)
+    {
+        return key.Replace("AppSettings.", "").Replace(".", ":");
+    }
 
     #endregion 基本方法
 }
