@@ -33,7 +33,7 @@ public static class MiniProfilerSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        if (AppSettings.Miniprofiler.IsEnabled)
+        if (AppSettings.Miniprofiler.IsEnabled.Get())
         {
             services.AddMiniProfiler(options => options.RouteBasePath = @"/profiler");
         }

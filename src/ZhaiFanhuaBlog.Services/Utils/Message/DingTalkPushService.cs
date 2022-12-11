@@ -39,9 +39,9 @@ public class DingTalkPushService : IDingTalkPushService
     {
         DingTalkConnection conn = new()
         {
-            WebHookUrl = AppSettings.Message.DingTalk.WebHookUrl,
-            AccessToken = AppSettings.Message.DingTalk.AccessToken,
-            Secret = AppSettings.Message.DingTalk.Secret
+            WebHookUrl = AppSettings.Message.DingTalk.WebHookUrl.Get(),
+            AccessToken = AppSettings.Message.DingTalk.AccessToken.Get(),
+            Secret = AppSettings.Message.DingTalk.Secret.Get()
         };
         _DingTalkRobot = new DingTalkRobotHelper(iHttpHelper, conn);
     }

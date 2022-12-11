@@ -37,10 +37,10 @@ public static class JwtTokenUtil
         try
         {
             // 读取配置
-            var issuer = AppSettings.Auth.JWT.Issuer;
-            var audience = AppSettings.Auth.JWT.Audience;
-            var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
-            var expires = AppSettings.Auth.JWT.Expires;
+            var issuer = AppSettings.Auth.JWT.Issuer.Get();
+            var audience = AppSettings.Auth.JWT.Audience.Get();
+            var symmetricKey = AppSettings.Auth.JWT.SymmetricKey.Get();
+            var expires = AppSettings.Auth.JWT.Expires.Get();
 
             // Nuget引入：Microsoft.IdentityModel.Tokens
             var claims = new List<Claim>
@@ -130,7 +130,7 @@ public static class JwtTokenUtil
         try
         {
             var jwtHandler = new JwtSecurityTokenHandler();
-            var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
+            var symmetricKey = AppSettings.Auth.JWT.SymmetricKey.Get();
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
             SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha256);

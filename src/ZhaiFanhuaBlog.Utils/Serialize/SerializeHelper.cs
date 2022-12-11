@@ -33,12 +33,11 @@ public static class SerializeHelper
         // 忽略循环引用
         ReferenceHandler = ReferenceHandler.IgnoreCycles,
         // 数字类型
-        NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals |
-                         JsonNumberHandling.AllowReadingFromString |
-                         JsonNumberHandling.WriteAsString,
-        //Converters = new List<JsonConverter>() { new BoolJsonConverter(), new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss") },
+        NumberHandling = JsonNumberHandling.Strict,
         // 允许额外符号
         AllowTrailingCommas = true,
+        // 注释处理，允许在 JSON 输入中使用注释并忽略它们
+        ReadCommentHandling = JsonCommentHandling.Skip,
         // 属性名称不使用不区分大小写的比较
         PropertyNameCaseInsensitive = false,
         // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写

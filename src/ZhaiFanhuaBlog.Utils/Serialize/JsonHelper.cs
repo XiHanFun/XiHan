@@ -38,26 +38,26 @@ public class JsonHelper
     /// <summary>
     /// 加载整个文件并反序列化为一个对象
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <returns></returns>
-    public T? Get<T>()
+    public TEntity? Get<TEntity>()
     {
         if (!File.Exists(_JsonFileName))
         {
             return default;
         }
         string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-        var result = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+        var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
     /// <summary>
     /// 从Json文件中读取对象
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="keyLink">对象的键名链，例如 Order.User</param>
-    /// <returns>类型为T的对象</returns>
-    public T? Get<T>(string keyLink)
+    /// <returns>类型为TEntity的对象</returns>
+    public TEntity? Get<TEntity>(string keyLink)
     {
         if (!File.Exists(_JsonFileName))
         {
@@ -65,7 +65,7 @@ public class JsonHelper
         }
         using StreamReader streamReader = new(_JsonFileName);
         string jsonStr = streamReader.ReadToEnd();
-        dynamic? obj = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+        dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         var keys = keyLink.Split('.');
         dynamic currentObject = obj;
@@ -77,36 +77,31 @@ public class JsonHelper
                 return default;
             }
         }
-        var result = JsonSerializer.Deserialize<T>(currentObject.ToString(), SerializeHelper.JsonSerializerOptionsInstance);
+        var result = JsonSerializer.Deserialize<TEntity>(currentObject.ToString(), SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
     /// <summary>
     /// 设置对象值
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="keyLink">对象的键名链，例如 Order.User，当其上级不存在时将创建</param>
     /// <param name="value"></param>
-    public void Set<T>(string keyLink, T value)
+    public void Set<REntity>(string keyLink, REntity value)
     {
         dynamic? jsoObj;
-        if (!File.Exists(_JsonFileName))
-        {
-            jsoObj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
-        }
-        else
-        {
-            string jsonStr;
-            jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-            jsoObj = JsonSerializer.Deserialize<T>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
-            jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
-        }
+        string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
+        jsoObj = JsonSerializer.Deserialize<REntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+        jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
         var keys = keyLink.Split(':');
         dynamic currentObject = jsoObj;
         for (int i = 0; i < keys.Length; i++)
         {
             var oldObject = currentObject;
+
+            var sss = keys[i];
+
             currentObject = currentObject[keys[i]];
             var isValueType = value!.GetType().IsValueType;
             if (i == keys.Length - 1)
@@ -138,9 +133,9 @@ public class JsonHelper
     /// <summary>
     /// 保存Json文件
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="jsoObj"></param>
-    public void Save<T>(T jsoObj)
+    public void Save<TEntity>(TEntity jsoObj)
     {
         string jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
         File.WriteAllText(_JsonFileName, jsonStr, Encoding.UTF8);

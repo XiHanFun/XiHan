@@ -38,7 +38,7 @@ public static class CacheSetup
         }
 
         // 内存缓存
-        if (AppSettings.Cache.MemoryCache.IsEnabled)
+        if (AppSettings.Cache.MemoryCache.IsEnabled.Get())
         {
             services.AddMemoryCache(options => new MemoryCacheOptions
             {
@@ -48,11 +48,11 @@ public static class CacheSetup
         }
 
         // 分布式缓存
-        if (AppSettings.Cache.Distributedcache.IsEnabled)
+        if (AppSettings.Cache.Distributedcache.IsEnabled.Get())
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString;
-            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName;
+            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.Get();
+            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName.Get();
             var redisStr = $"{connectionString}, prefix = {instanceName}";
             // 用法一：基于Redis初始化IDistributedCache
             services.AddSingleton(new CSRedisClient(redisStr));
@@ -62,7 +62,7 @@ public static class CacheSetup
         }
 
         // 响应缓存
-        if (AppSettings.Cache.Responsecache.IsEnabled)
+        if (AppSettings.Cache.Responsecache.IsEnabled.Get())
         {
             services.AddResponseCaching();
         }

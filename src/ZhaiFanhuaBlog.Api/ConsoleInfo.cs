@@ -61,25 +61,25 @@ public static class ConsoleInfo
         $@"占用磁盘空间：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
         $@"本地IPv4地址：{LocalIpInfoHelper.GetLocalIpV4()}".WriteLineInfo();
         $@"本地IPv6地址：{LocalIpInfoHelper.GetLocalIpV6()}".WriteLineInfo();
-        $@"应用启动环境：{AppSettings.EnvironmentName}".WriteLineInfo();
+        $@"应用启动环境：{AppSettings.EnvironmentName.Get()}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
-        $@"连接类型：{AppSettings.Database.Type}".WriteLineInfo();
-        $@"是否初始化：{AppSettings.Database.Initialization}".WriteLineInfo();
+        $@"连接类型：{AppSettings.Database.Type.Get()}".WriteLineInfo();
+        $@"是否初始化：{AppSettings.Database.Initialization.Get()}".WriteLineInfo();
         "===============分析===============".WriteLineInfo();
-        $@"是否启用：{AppSettings.Miniprofiler.IsEnabled}".WriteLineInfo();
+        $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.Get()}".WriteLineInfo();
         "===============缓存===============".WriteLineInfo();
-        $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout}分钟".WriteLineInfo();
-        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled}".WriteLineInfo();
-        $@"响应式缓存：{AppSettings.Cache.Responsecache.IsEnabled}".WriteLineInfo();
+        $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.Get()}分钟".WriteLineInfo();
+        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.Get()}".WriteLineInfo();
+        $@"响应式缓存：{AppSettings.Cache.Responsecache.IsEnabled.Get()}".WriteLineInfo();
         "===============跨域===============".WriteLineInfo();
-        $@"是否启用：{AppSettings.Cors.IsEnabled}".WriteLineInfo();
+        $@"是否启用：{AppSettings.Cors.IsEnabled.Get()}".WriteLineInfo();
         "===============日志===============".WriteLineInfo();
-        $@"授权日志：{AppSettings.Logging.Authorization}".WriteLineInfo();
-        $@"资源日志：{AppSettings.Logging.Resource}".WriteLineInfo();
-        $@"请求日志：{AppSettings.Logging.Action}".WriteLineInfo();
-        $@"结果日志：{AppSettings.Logging.Result}".WriteLineInfo();
-        $@"异常日志：{AppSettings.Logging.Exception}".WriteLineInfo();
+        $@"授权日志：{AppSettings.Logging.Authorization.Get()}".WriteLineInfo();
+        $@"资源日志：{AppSettings.Logging.Resource.Get()}".WriteLineInfo();
+        $@"请求日志：{AppSettings.Logging.Action.Get()}".WriteLineInfo();
+        $@"结果日志：{AppSettings.Logging.Result.Get()}".WriteLineInfo();
+        $@"异常日志：{AppSettings.Logging.Exception.Get()}".WriteLineInfo();
         "==============================启动信息==============================".WriteLineInfo();
     }
 }

@@ -7,6 +7,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Test": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Test"
+      },
+      "applicationUrl": "http://127.0.0.1:9708",
+      "dotnetRunMessages": true
+    },
     "Development": {
       "commandName": "Project",
       "launchBrowser": true,

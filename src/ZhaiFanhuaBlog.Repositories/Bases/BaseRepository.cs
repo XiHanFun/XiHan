@@ -39,7 +39,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         base.Context = DbScoped.SugarScope;
 
         // 数据库是否初始化
-        bool initDatabase = AppSettings.Database.Initialization;
+        bool initDatabase = AppSettings.Database.Initialization.Get();
         if (!initDatabase)
         {
             ConsoleHelper.WriteLineWarning("数据库正在初始化……");

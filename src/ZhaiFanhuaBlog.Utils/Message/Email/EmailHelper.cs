@@ -28,17 +28,6 @@ public static class EmailHelper
     /// <param name="model">发送参数</param>
     public static async Task<bool> Send(EmailModel model)
     {
-        // 初始化连接实例
-        using SmtpClient client = new(model.Host, model.Port)
-        {
-            Credentials = new NetworkCredential(model.FromMail, model.FromPassword),
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            EnableSsl = model.UseSsl,
-            //若已经指定了 Credentials，此值必须为 false，否则出现一下错误：
-            // Mailbox name not allowed. The server response was: authentication is required.
-            // UseDefaultCredentials = false,
-            Timeout = 5 * 1000
-        };
         // 初始化邮件实例
         using MailMessage message = new()
         {
@@ -65,10 +54,20 @@ public static class EmailHelper
         // 在有附件的情况下添加附件
         model.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
 
+        // 初始化连接实例
+        using SmtpClient client = new(model.Host, model.Port)
+        {
+            Credentials = new NetworkCredential(model.FromMail, model.FromPassword),
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            EnableSsl = model.UseSsl,
+            Timeout = 5 * 1000
+        };
         try
         {
+            // 解决远程证书验证无效
+            //client.ServerCertificateValidationCallback = (sender, cert, chain, error) => true;
             // 将邮件发送到SMTP邮件服务器
-            await client.SendMailAsync(message);
+            client.Send(message);
             return true;
         }
         catch (SmtpFailedRecipientsException ex)
@@ -80,7 +79,7 @@ public static class EmailHelper
                 {
                     ConsoleHelper.WriteLineError("Delivery failed - retrying in 5 seconds.");
                     await Task.Delay(5000);
-                    await client.SendMailAsync(message);
+                    client.Send(message);
                 }
                 else
                 {

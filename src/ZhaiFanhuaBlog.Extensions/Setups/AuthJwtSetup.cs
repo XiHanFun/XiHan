@@ -40,10 +40,10 @@ public static class AuthJwtSetup
         }
 
         // 读取配置
-        var issuer = AppSettings.Auth.JWT.Issuer;
-        var audience = AppSettings.Auth.JWT.Audience;
-        var symmetricKey = AppSettings.Auth.JWT.SymmetricKey;
-        var clockSkew = AppSettings.Auth.JWT.ClockSkew;
+        var issuer = AppSettings.Auth.JWT.Issuer.Get();
+        var audience = AppSettings.Auth.JWT.Audience.Get();
+        var symmetricKey = AppSettings.Auth.JWT.SymmetricKey.Get();
+        var clockSkew = AppSettings.Auth.JWT.ClockSkew.Get();
 
         // 签名密钥
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));

@@ -13,7 +13,6 @@
 
 using Microsoft.International.Converters.PinYinConverter;
 using System.Text.RegularExpressions;
-using System;
 
 namespace ZhaiFanhuaBlog.Utils.PingYin;
 
@@ -22,51 +21,18 @@ namespace ZhaiFanhuaBlog.Utils.PingYin;
 /// </summary>
 public static class PingYinHelper
 {
-    private static Dictionary<int, List<string>> GetTotalPingYinDictionary(string text)
-    {
-        var chs = text.ToCharArray();
-
-        // 记录每个汉字的全拼
-        var totalPingYinList = new Dictionary<int, List<string>>();
-
-        for (int i = 0; i < chs.Length; i++)
-        {
-            var pinyinList = new List<string>();
-            // 是否是有效的汉字
-            if (ChineseChar.IsValidChar(chs[i]))
-            {
-                ChineseChar cc = new(chs[i]);
-                pinyinList = cc.Pinyins.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
-            }
-            else
-            {
-                pinyinList.Add(chs[i].ToString());
-            }
-            // 去除声调，转小写
-            pinyinList = pinyinList.ConvertAll(p => Regex.Replace(p, @"\d", "").ToLower());
-            // 去重
-            pinyinList = pinyinList.Where(p => !string.IsNullOrWhiteSpace(p)).Distinct().ToList();
-            if (pinyinList.Any())
-            {
-                totalPingYinList[i] = pinyinList;
-            }
-        }
-
-        return totalPingYinList;
-    }
-
     /// <summary>
-    /// 获取汉语拼音全拼
+    /// 获取汉语拼音全拼（含多音字多次匹配）
     /// </summary>
     /// <param name="text">The string.</param>
     /// <returns></returns>
     public static List<string> GetTotalPingYin(this string text)
     {
         var result = new List<string>();
-        foreach (var pys in GetTotalPingYinDictionary(text))
+        foreach (var pinyins in GetTotalPingYinDictionary(text))
         {
-            var items = pys.Value;
-            if (result.Count <= 0)
+            var items = pinyins.Value;
+            if (!result.Any())
             {
                 result = items;
             }
@@ -76,7 +42,7 @@ public static class PingYinHelper
                 var newTotalPingYinList = new List<string>();
                 foreach (var totalPingYin in result)
                 {
-                    newTotalPingYinList.AddRange(items.Select(item => totalPingYin + item));
+                    newTotalPingYinList.AddRange(items.Select(item => string.Concat(totalPingYin, " ", item)));
                 }
                 newTotalPingYinList = newTotalPingYinList.Distinct().ToList();
                 result = newTotalPingYinList;
@@ -86,17 +52,17 @@ public static class PingYinHelper
     }
 
     /// <summary>
-    /// 获取汉语拼音首字母
+    /// 获取汉语拼音首字母（含多音字多次匹配）
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
     public static List<string> GetFirstPingYin(this string text)
     {
         var result = new List<string>();
-        foreach (var pys in GetTotalPingYinDictionary(text))
+        foreach (var pinyins in GetTotalPingYinDictionary(text))
         {
-            var items = pys.Value;
-            if (result.Count <= 0)
+            var items = pinyins.Value;
+            if (!result.Any())
             {
                 result = items.ConvertAll(p => p[..1]).Distinct().ToList();
             }
@@ -106,12 +72,48 @@ public static class PingYinHelper
                 var newFirstPingYinList = new List<string>();
                 foreach (var firstPingYin in result)
                 {
-                    newFirstPingYinList.AddRange(items.Select(item => string.Concat(firstPingYin, item.AsSpan(0, 1))));
+                    newFirstPingYinList.AddRange(items.Select(item => string.Concat(firstPingYin, " ", item.AsSpan(0, 1))));
                 }
                 newFirstPingYinList = newFirstPingYinList.Distinct().ToList();
                 result = newFirstPingYinList;
             }
         }
         return result;
+    }
+
+    /// <summary>
+    /// 获取所有汉字的拼音（含多音）字典
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static Dictionary<int, List<string>> GetTotalPingYinDictionary(string text)
+    {
+        var chs = text.ToCharArray();
+        // 记录每个汉字的全拼
+        var totalPingYinList = new Dictionary<int, List<string>>();
+        for (int i = 0; i < chs.Length; i++)
+        {
+            // 每个字的所有拼音
+            var pinyinList = new List<string>();
+            // 是否是有效的汉字
+            if (ChineseChar.IsValidChar(chs[i]))
+            {
+                ChineseChar cc = new(chs[i]);
+                pinyinList = cc.Pinyins.Where(pinyin => !string.IsNullOrWhiteSpace(pinyin)).ToList();
+            }
+            else
+            {
+                pinyinList.Add(chs[i].ToString());
+            }
+            // 去除声调并转小写
+            pinyinList = pinyinList.ConvertAll(pinyin => Regex.Replace(pinyin, @"\d", string.Empty).ToLower());
+            // 去掉因声调（或轻声）不同而产生的重复，不去多音
+            pinyinList = pinyinList.Where(pinyin => !string.IsNullOrWhiteSpace(pinyin)).Distinct().ToList();
+            if (pinyinList.Any())
+            {
+                totalPingYinList[i] = pinyinList;
+            }
+        }
+        return totalPingYinList;
     }
 }

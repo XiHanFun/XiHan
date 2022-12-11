@@ -11,9 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-
 namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 /// <summary>

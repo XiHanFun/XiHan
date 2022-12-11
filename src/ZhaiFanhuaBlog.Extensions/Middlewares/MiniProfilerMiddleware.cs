@@ -34,7 +34,7 @@ public static class MiniProfilerMiddleware
             throw new ArgumentNullException(nameof(app));
         }
 
-        bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled;
+        bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.Get();
         if (isEnabledMiniprofiler)
         {
             // 性能分析

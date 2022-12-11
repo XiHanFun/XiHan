@@ -61,7 +61,7 @@ public static class SwaggerSetup
     public static void SwaggerInfoConfig(SwaggerGenOptions options)
     {
         // 需要暴露的分组
-        var publishGroup = AppSettings.Swagger.PublishGroup;
+        string[] publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
         // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
         typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
         {
@@ -78,9 +78,9 @@ public static class SwaggerSetup
                     Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                     Contact = new OpenApiContact
                     {
-                        Name = AppSettings.Sys.Admin.Name,
-                        Email = AppSettings.Sys.Admin.Email,
-                        Url = new Uri(AppSettings.Sys.Domain)
+                        Name = AppSettings.Sys.Admin.Name.Get(),
+                        Email = AppSettings.Sys.Admin.Email.Get(),
+                        Url = new Uri(AppSettings.Sys.Domain.Get())
                     },
                     License = new OpenApiLicense
                     {

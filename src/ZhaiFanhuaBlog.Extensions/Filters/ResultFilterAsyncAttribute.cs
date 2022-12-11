@@ -28,7 +28,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     // 日志开关
-    private readonly bool ResultLogSwitch = AppSettings.Logging.Result;
+    private readonly bool ResultLogSwitch = AppSettings.Logging.Result.Get();
 
     private readonly ILogger<ResultFilterAsyncAttribute> _ILogger;
 

@@ -146,8 +146,8 @@ public class TestController : BaseApiController
         {
             return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
         }
-        string aesKey = AppSettings.Encryptions.AesKey;
-        string desKey = AppSettings.Encryptions.DesKey;
+        string aesKey = AppSettings.Encryptions.AesKey.Get();
+        string desKey = AppSettings.Encryptions.DesKey.Get();
         string resultString = iEncryptOrDecrypt switch
         {
             "Encrypt" => "加密后结果为【" + Encrypt() + "】",

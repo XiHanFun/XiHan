@@ -29,7 +29,7 @@ namespace ZhaiFanhuaBlog.Extensions.Filters;
 public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionLogSwitch = AppSettings.Logging.Action;
+    private readonly bool ActionLogSwitch = AppSettings.Logging.Action.Get();
 
     private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
 

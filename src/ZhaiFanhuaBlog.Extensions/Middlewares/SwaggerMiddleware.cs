@@ -43,7 +43,7 @@ public static class SwaggerMiddleware
         app.UseSwaggerUI(options =>
         {
             // 需要暴露的分组
-            var publishGroup = AppSettings.Swagger.PublishGroup;
+            var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
             // 根据分组遍历展示
             typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
             {
@@ -57,7 +57,7 @@ public static class SwaggerMiddleware
             });
 
             // 性能分析
-            if (AppSettings.Miniprofiler.IsEnabled)
+            if (AppSettings.Miniprofiler.IsEnabled.Get())
             {
                 if (streamHtml.Invoke() == null)
                 {
@@ -70,7 +70,7 @@ public static class SwaggerMiddleware
             }
 
             // 站点名称
-            string siteName = AppSettings.Sys.Name;
+            string siteName = AppSettings.Sys.Name.Get();
             // API页面标题
             options.DocumentTitle = $"{siteName} - 接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）
@@ -78,7 +78,7 @@ public static class SwaggerMiddleware
             // 模型的默认扩展深度，设置为 -1 完全隐藏模型
             options.DefaultModelsExpandDepth(-1);
             // API前缀设置为空
-            options.RoutePrefix = AppSettings.Swagger.RoutePrefix;
+            options.RoutePrefix = AppSettings.Swagger.RoutePrefix.Get();
         });
         return app;
     }
