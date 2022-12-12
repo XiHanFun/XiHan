@@ -19,7 +19,7 @@ using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Info;
 

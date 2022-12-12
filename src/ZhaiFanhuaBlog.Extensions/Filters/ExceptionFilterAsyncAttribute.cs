@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using System.Security.Claims;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Filters;
 

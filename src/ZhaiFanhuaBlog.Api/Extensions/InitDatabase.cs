@@ -1,0 +1,88 @@
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// FileName:InitDatabaseStep
+// Guid:65152a82-82db-4a62-88ff-15ace89b57c4
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2022-12-13 上午 02:10:28
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
+
+using SqlSugar;
+using SqlSugar.IOC;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Models.Posts;
+using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Syses;
+using ZhaiFanhuaBlog.Models.Users;
+using ZhaiFanhuaBlog.Utils.Console;
+
+namespace ZhaiFanhuaBlog.Api.Extensions;
+
+/// <summary>
+/// InitDatabaseStep
+/// </summary>
+public static class InitDatabaseStep
+{
+    /// <summary>
+    /// 初始化数据库
+    /// </summary>
+    /// <param name="service"></param>
+    public static void InitDatabase(this IServiceProvider service)
+    {
+        var db = DbScoped.SugarScope;
+        if (AppSettings.Database.Initialization.Get() == false)
+        {
+            ConsoleHelper.WriteLineWarning("数据库正在初始化……");
+            ConsoleHelper.WriteLineWarning("创建数据库……");
+            db.DbMaintenance.CreateDatabase();
+            ConsoleHelper.WriteLineSuccess("数据库创建成功！");
+            ConsoleHelper.WriteLineWarning("创建数据表……");
+            db.CodeFirst.SetStringDefaultLength(512).InitTables(
+               // Syses
+               typeof(SysConfig),
+               typeof(SysSkin),
+               typeof(SysLog),
+               typeof(SysLoginLog),
+               typeof(SysOperationLog),
+               typeof(SysDictType),
+               typeof(SysDictData),
+               typeof(SysFile),
+
+               // Users
+               typeof(UserAccount),
+               typeof(UserAccountRole),
+               typeof(UserOauth),
+               typeof(UserStatistic),
+               typeof(UserNotice),
+               typeof(UserFollow),
+               typeof(UserCollectCategory),
+               typeof(UserCollect),
+
+               // Roots
+               typeof(RootAuthority),
+               typeof(RootRole),
+               typeof(RootRoleAuthority),
+               typeof(RootMenu),
+               typeof(RootRoleMenu),
+               typeof(RootAnnouncement),
+               typeof(RootAuditCategory),
+               typeof(RootAudit),
+               typeof(RootFriendlyLink),
+
+               // Blogs
+               typeof(PostCategory),
+               typeof(PostTag),
+               typeof(PostArticle),
+               typeof(PostArticleTag),
+               typeof(PostComment),
+               typeof(PostPoll)
+               );
+            ConsoleHelper.WriteLineSuccess("数据表创建成功！");
+            ConsoleHelper.WriteLineSuccess("数据库初始化已完成！");
+        }
+    }
+}

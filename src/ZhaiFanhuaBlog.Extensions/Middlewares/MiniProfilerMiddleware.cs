@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Middlewares;
 

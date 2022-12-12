@@ -14,7 +14,8 @@
 using IP2Region.Net.XDB;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using ZhaiFanhuaBlog.Infrastructure.AppService;
+using ZhaiFanhuaBlog.Infrastructure.App.Service;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
@@ -80,15 +81,15 @@ public static class ServiceSetup
                 {
                     switch (serviceAttribute.ServiceLifetime)
                     {
-                        case LifeTime.Singleton:
+                        case LifeTimeEnum.SINGLETON:
                             services.AddSingleton(interfaceType, classType);
                             break;
 
-                        case LifeTime.Scoped:
+                        case LifeTimeEnum.SCOPED:
                             services.AddScoped(interfaceType, classType);
                             break;
 
-                        case LifeTime.Transient:
+                        case LifeTimeEnum.TRANSIENT:
                             services.AddTransient(interfaceType, classType);
                             break;
 

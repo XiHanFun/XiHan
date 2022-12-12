@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Object;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;

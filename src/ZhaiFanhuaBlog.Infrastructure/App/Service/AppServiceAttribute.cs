@@ -11,9 +11,9 @@
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 
-namespace ZhaiFanhuaBlog.Infrastructure.AppService;
+namespace ZhaiFanhuaBlog.Infrastructure.App.Service;
 
 /// <summary>
 /// 标记服务
@@ -25,7 +25,7 @@ public class AppServiceAttribute : Attribute
     /// 服务声明周期
     /// 不给默认值的话注册的是AddSingleton
     /// </summary>
-    public LifeTime ServiceLifetime { get; set; } = LifeTime.Singleton;
+    public LifeTimeEnum ServiceLifetime { get; set; } = LifeTimeEnum.SINGLETON;
 
     /// <summary>
     /// 指定服务类型
@@ -36,28 +36,4 @@ public class AppServiceAttribute : Attribute
     /// 是否可以从第一个接口获取服务类型
     /// </summary>
     public bool InterfaceServiceType { get; set; }
-}
-
-/// <summary>
-/// 生命周期
-/// </summary>
-public enum LifeTime
-{
-    /// <summary>
-    /// 单例
-    /// </summary>
-    [Description("单例")]
-    Singleton,
-
-    /// <summary>
-    /// 作用域
-    /// </summary>
-    [Description("作用域")]
-    Scoped,
-
-    /// <summary>
-    /// 瞬时
-    /// </summary>
-    [Description("瞬时")]
-    Transient
 }

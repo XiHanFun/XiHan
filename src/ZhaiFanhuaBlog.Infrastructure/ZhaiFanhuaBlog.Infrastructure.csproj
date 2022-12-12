@@ -3,21 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<Nullable>enable</Nullable>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	
 	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
-	<AssemblyVersion>0.2.2</AssemblyVersion>
-	<FileVersion>0.2.2</FileVersion>
+	<AssemblyVersion>0.2.2.1</AssemblyVersion>
+	<FileVersion>0.2.2.1</FileVersion>
 	<Title>ZhaiFanhuaBlog.Infrastructure</Title>
-	<Version>0.2.2</Version>
+	<Version>0.2.2.1</Version>
 	<Authors>ZhaiFanhua</Authors>
 	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>ZhaiFanhuaBlog.Infrastructure</Description>
-	
-	
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<PackageIcon>readme.png</PackageIcon>
+	<PackageReadmeFile>readme.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,5 +28,19 @@
   </ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\ZhaiFanhuaBlog.Utils\ZhaiFanhuaBlog.Utils.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>

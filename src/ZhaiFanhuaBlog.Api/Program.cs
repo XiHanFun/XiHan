@@ -14,9 +14,10 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Reflection;
 using ZhaiFanhuaBlog.Api;
+using ZhaiFanhuaBlog.Api.Extensions;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Extensions.Setups;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,13 +32,6 @@ ConsoleHelper.WriteLineSuccess("Log Started Successfully！");
 var config = builder.Configuration;
 ConsoleHelper.WriteLineWarning("Configuration Start……");
 AppConfigManager appConfig = new(config);
-var qqq1 = AppSettings.Auth.JWT.Issuer.Get();
-ConsoleHelper.WriteLineSuccess("第一次读取");
-AppSettings.Auth.JWT.Issuer.Set<AppSettings, string>("456456456ssssdasd454554");
-ConsoleHelper.WriteLineSuccess("写入");
-var qqq2 = AppSettings.Auth.JWT.Issuer.Get();
-ConsoleHelper.WriteLineSuccess("第二次读取");
-// ggdfh
 ConsoleHelper.WriteLineSuccess("Configuration Started Successfully！");
 
 var services = builder.Services;
@@ -70,6 +64,8 @@ ConsoleHelper.WriteLineSuccess("Services Started Successfully！");
 
 var app = builder.Build();
 ConsoleHelper.WriteLineWarning("ZhaiFanhuaBlog Application Start……");
+// 初始化数据库
+app.Services.InitDatabase();
 // 环境变量，开发环境
 if (app.Environment.IsDevelopment())
 {

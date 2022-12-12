@@ -16,7 +16,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -62,7 +62,7 @@ public static class CacheSetup
         }
 
         // 响应缓存
-        if (AppSettings.Cache.Responsecache.IsEnabled.Get())
+        if (AppSettings.Cache.ResponseCache.IsEnabled.Get())
         {
             services.AddResponseCaching();
         }

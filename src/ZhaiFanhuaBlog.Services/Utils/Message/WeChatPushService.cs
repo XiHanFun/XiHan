@@ -13,8 +13,9 @@
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppService;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Service;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Message.WeChat;
 using File = ZhaiFanhuaBlog.Utils.Message.WeChat.File;
@@ -24,7 +25,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// WeChatMessagePushService
 /// </summary>
-[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = LifeTime.Scoped)]
+[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
 public class WeChatPushService : IWeChatPushService
 {
     /// <summary>

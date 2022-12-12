@@ -78,6 +78,6 @@ public class SysOperationLog : BaseDeleteEntity<Guid>
     /// <summary>
     /// 请求结果
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(5000)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true)]
     public string? RequestResult { get; set; }
 }

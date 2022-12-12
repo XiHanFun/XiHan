@@ -49,7 +49,7 @@ public static class IpSearchHelper
     /// <summary>
     /// 数据库位置
     /// </summary>
-    public static string IpDbPath { get; set; }
+    public static string IpDbPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 查询Ip
@@ -58,28 +58,35 @@ public static class IpSearchHelper
     /// <returns></returns>
     public static IpAddressModel? Search(string ip)
     {
-        // 中国|0|浙江省|杭州市|电信
-        string? modelStr = GetSearcher.Search(ip);
-        var addressArray = modelStr?.Split('|');
-        IpAddressModel model = new()
+        try
         {
-            // Ip
-            Ip = ip,
-            // 国家 中国
-            Country = addressArray?[0],
-            // 省份/自治区/直辖市 贵州
-            State = addressArray?[2],
-            // 地级市 安顺
-            PrefectureLevelCity = addressArray?[3],
-            // 区/县 西秀区
-            DistrictOrCounty = string.Empty,
-            // 运营商 联通
-            Operator = addressArray?[4],
-            // 邮政编码 561000
-            PostalCode = null,
-            // 地区区号 0851
-            AreaCode = null,
-        };
-        return model;
+            // 中国|0|浙江省|杭州市|电信
+            string? modelStr = GetSearcher.Search(ip);
+            var addressArray = modelStr?.Split('|');
+            IpAddressModel model = new()
+            {
+                // Ip
+                Ip = ip,
+                // 国家 中国
+                Country = addressArray?[0],
+                // 省份/自治区/直辖市 贵州
+                State = addressArray?[2],
+                // 地级市 安顺
+                PrefectureLevelCity = addressArray?[3],
+                // 区/县 西秀区
+                DistrictOrCounty = string.Empty,
+                // 运营商 联通
+                Operator = addressArray?[4],
+                // 邮政编码 561000
+                PostalCode = null,
+                // 地区区号 0851
+                AreaCode = null,
+            };
+            return model;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }

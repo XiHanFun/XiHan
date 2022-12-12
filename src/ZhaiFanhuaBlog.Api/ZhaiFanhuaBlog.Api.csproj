@@ -4,26 +4,25 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <UserSecretsId>cfd2e93f-edba-404a-9fae-b08d34162057</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    
     <RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
-    <AssemblyVersion>0.2.2</AssemblyVersion>
-    <FileVersion>0.2.2</FileVersion>
+    <AssemblyVersion>0.2.2.1</AssemblyVersion>
+    <FileVersion>0.2.2.1</FileVersion>
     <Title>ZhaiFanhuaBlog.Api</Title>
-    <Version>0.2.2</Version>
+    <Version>0.2.2.1</Version>
     <Authors>ZhaiFanhua</Authors>
     <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>ZhaiFanhuaBlog.Api</Description>
-	
-	
 	<IsPackable>true</IsPackable>
 	<OutputType>Exe</OutputType>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<PackageIcon>readme.png</PackageIcon>
+	<PackageReadmeFile>readme.md</PackageReadmeFile>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,10 +31,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="favicon.ico" />
-    <Content Include="logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -67,13 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+    <None Update="ConfigData\ip2region.xdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Properties\PublishProfiles\DevelopmentLinux.pubxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -86,11 +77,22 @@
     <None Update="Properties\PublishProfiles\ProductionWindows.pubxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="readme.md">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
   </ItemGroup>
+
+    <ItemGroup>
+	    <None Update="LICENSE">
+		    <Pack>True</Pack>
+		    <PackagePath>\</PackagePath>
+	    </None>
+	    <None Update="readme.md">
+		    <Pack>True</Pack>
+		    <PackagePath>\</PackagePath>
+	    </None>
+	    <None Update="readme.png">
+		    <Pack>True</Pack>
+		    <PackagePath>\</PackagePath>
+	    </None>
+    </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 

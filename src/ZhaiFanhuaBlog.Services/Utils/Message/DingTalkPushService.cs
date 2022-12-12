@@ -13,8 +13,9 @@
 
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppService;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Service;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
@@ -23,7 +24,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// DingTalkMessagePush
 /// </summary>
-[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = LifeTime.Scoped)]
+[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
 public class DingTalkPushService : IDingTalkPushService
 {
     /// <summary>

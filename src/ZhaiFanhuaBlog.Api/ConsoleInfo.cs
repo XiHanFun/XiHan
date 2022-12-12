@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.DirFile;
 using ZhaiFanhuaBlog.Utils.Formats;
@@ -71,7 +71,7 @@ public static class ConsoleInfo
         "===============缓存===============".WriteLineInfo();
         $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.Get()}分钟".WriteLineInfo();
         $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.Get()}".WriteLineInfo();
-        $@"响应式缓存：{AppSettings.Cache.Responsecache.IsEnabled.Get()}".WriteLineInfo();
+        $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.Get()}".WriteLineInfo();
         "===============跨域===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.Get()}".WriteLineInfo();
         "===============日志===============".WriteLineInfo();

@@ -13,9 +13,10 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
-namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
+namespace ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 /// <summary>
 /// AppConfigManager
@@ -114,13 +115,14 @@ public class AppConfigManager
     /// <summary>
     /// 设置对象
     /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="REntity"></typeparam>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public static void Set<REntity>(string key, REntity value)
+    public static void Set<TEntity, REntity>(string key, REntity value)
     {
         JsonHelper jsonHelper = new(_ConfigurationFile);
-        jsonHelper.Set<REntity>(GetPropertyName(key), value);
+        jsonHelper.Set<TEntity, REntity>(GetPropertyName(key), value);
     }
 
     /// <summary>

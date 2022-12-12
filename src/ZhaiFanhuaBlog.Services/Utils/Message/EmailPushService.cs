@@ -14,8 +14,9 @@
 using System.Net.Mail;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Response;
-using ZhaiFanhuaBlog.Infrastructure.AppService;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Service;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Message.Email;
 
 namespace ZhaiFanhuaBlog.Services.Utils.Message;
@@ -23,7 +24,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// EmailPushService
 /// </summary>
-[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = LifeTime.Scoped)]
+[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
 public class EmailPushService : IEmailPushService
 {
     /// <summary>
@@ -54,7 +55,7 @@ public class EmailPushService : IEmailPushService
             Port = AppSettings.Message.Email.Port.Get(),
             UseSsl = AppSettings.Message.Email.UseSsl.Get(),
             FromMail = AppSettings.Message.Email.From.Address.Get(),
-            FromName = AppSettings.Message.Email.From.Username.Get(),
+            FromName = AppSettings.Message.Email.From.UserName.Get(),
             FromPassword = AppSettings.Message.Email.From.Password.Get(),
             Subject = subject,
             Body = body,

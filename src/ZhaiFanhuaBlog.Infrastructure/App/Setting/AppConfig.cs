@@ -13,7 +13,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
+namespace ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 /// <summary>
 /// AppConfig
@@ -21,7 +21,7 @@ namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
 public static class AppConfig
 {
     /// <summary>
-    ///
+    /// 获取值
     /// </summary>
     /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
@@ -33,7 +33,7 @@ public static class AppConfig
     }
 
     /// <summary>
-    ///
+    /// 获取对象
     /// </summary>
     /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
@@ -45,8 +45,9 @@ public static class AppConfig
     }
 
     /// <summary>
-    ///
+    /// 赋值
     /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="value"></param>

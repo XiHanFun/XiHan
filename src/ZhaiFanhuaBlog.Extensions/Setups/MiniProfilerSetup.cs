@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -35,7 +35,15 @@ public static class MiniProfilerSetup
 
         if (AppSettings.Miniprofiler.IsEnabled.Get())
         {
-            services.AddMiniProfiler(options => options.RouteBasePath = @"/profiler");
+            services.AddMiniProfiler(options =>
+            {
+                options.RouteBasePath = @"/profiler";
+                options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
+                options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
+                options.PopupShowTimeWithChildren = true;
+                options.PopupShowTrivial = true;
+                options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+            });
         }
         return services;
     }
