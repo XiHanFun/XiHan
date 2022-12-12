@@ -86,7 +86,7 @@ public static class SqlSugarSetup
                 client.Aop.OnLogExecuting = (sql, pars) =>
                 {
                     var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
-                    var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}" + Environment.NewLine;
+                    var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}";
                     ConsoleHelper.WriteLineHandle(info);
                     Log.Information(info);
                 };
@@ -98,7 +98,7 @@ public static class SqlSugarSetup
                 };
                 client.Aop.OnError = (exp) =>
                 {
-                    Log.Error(exp, $"SQL出错：{exp.Message}" + Environment.NewLine);
+                    Log.Error(exp, $"SQL出错：{exp.Message}");
                 };
             }
         });
