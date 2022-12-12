@@ -34,7 +34,7 @@ public static class IpSearchHelper
     /// <summary>
     /// 访问器
     /// </summary>
-    public static Searcher GetSearcher
+    private static Searcher GetSearcher
     {
         get
         {
@@ -45,6 +45,11 @@ public static class IpSearchHelper
             return _SearcherInstance;
         }
     }
+
+    /// <summary>
+    /// 数据库位置
+    /// </summary>
+    public static string IpDbPath { get; set; }
 
     /// <summary>
     /// 查询Ip

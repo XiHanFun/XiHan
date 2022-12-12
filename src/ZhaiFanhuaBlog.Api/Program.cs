@@ -33,7 +33,7 @@ ConsoleHelper.WriteLineWarning("Configuration Start……");
 AppConfigManager appConfig = new(config);
 var qqq1 = AppSettings.Auth.JWT.Issuer.Get();
 ConsoleHelper.WriteLineSuccess("第一次读取");
-//AppSettings.Auth.JWT.Issuer.Set("456456456ssssdasd454554");
+AppSettings.Auth.JWT.Issuer.Set<AppSettings, string>("456456456ssssdasd454554");
 ConsoleHelper.WriteLineSuccess("写入");
 var qqq2 = AppSettings.Auth.JWT.Issuer.Get();
 ConsoleHelper.WriteLineSuccess("第二次读取");

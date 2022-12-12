@@ -12,8 +12,13 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using SqlSugar;
 using SqlSugar.IOC;
 using ZhaiFanhuaBlog.Infrastructure.AppSetting;
+using ZhaiFanhuaBlog.Models.Posts;
+using ZhaiFanhuaBlog.Models.Roots;
+using ZhaiFanhuaBlog.Models.Syses;
+using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
@@ -75,21 +80,82 @@ public static class SqlSugarSetup
                 IsAutoCloseConnection = true
             }
         });
-        bool databaseConsole = AppSettings.Database.Console.Get();
-        if (databaseConsole)
+
+        services.ConfigurationSugar(client =>
         {
-            services.ConfigurationSugar(db =>
+            // SQL语句输出方便排查问题
+            bool databaseConsole = AppSettings.Database.Console.Get();
+            if (databaseConsole)
             {
-                // SQL语句输出方便排查问题
-                db.Aop.OnLogExecuting = (sql, pars) =>
+                client.Aop.OnLogExecuting = (sql, pars) =>
                 {
                     ConsoleHelper.WriteLineHandle("===========================================================================");
                     ConsoleHelper.WriteLineHandle($"{DateTime.Now}，SQL语句：");
-                    ConsoleHelper.WriteLineHandle(sql + Environment.NewLine + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                    ConsoleHelper.WriteLineHandle(sql + Environment.NewLine + client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
                     ConsoleHelper.WriteLineHandle("===========================================================================");
                 };
-            });
-        }
+            }
+        });
+        services.ConfigurationSugar(client =>
+        {
+            // 初始化数据库
+            InitDatabase(client);
+        });
         return services;
+    }
+
+    /// <summary>
+    /// 初始化数据库
+    /// </summary>
+    /// <param name="client"></param>
+    public static void InitDatabase(SqlSugarClient client)
+    {
+        ConsoleHelper.WriteLineWarning("数据库正在初始化……");
+        ConsoleHelper.WriteLineWarning("创建数据库……");
+        client.Context.DbMaintenance.CreateDatabase();
+        ConsoleHelper.WriteLineSuccess("数据库创建成功！");
+        ConsoleHelper.WriteLineWarning("创建数据表……");
+        client.Context.CodeFirst.SetStringDefaultLength(200).InitTables(
+            // Syses
+            typeof(SysConfig),
+            typeof(SysSkin),
+            typeof(SysLog),
+            typeof(SysLoginLog),
+            typeof(SysOperationLog),
+            typeof(SysDictType),
+            typeof(SysDictData),
+            typeof(SysFile),
+
+            // Users
+            typeof(UserAccount),
+            typeof(UserAccountRole),
+            typeof(UserOauth),
+            typeof(UserStatistic),
+            typeof(UserNotice),
+            typeof(UserFollow),
+            typeof(UserCollectCategory),
+            typeof(UserCollect),
+
+            // Roots
+            typeof(RootAuthority),
+            typeof(RootRole),
+            typeof(RootRoleAuthority),
+            typeof(RootMenu),
+            typeof(RootRoleMenu),
+            typeof(RootAnnouncement),
+            typeof(RootAuditCategory),
+            typeof(RootAudit),
+            typeof(RootFriendlyLink),
+
+            // Blogs
+            typeof(PostCategory),
+            typeof(PostTag),
+            typeof(PostArticle),
+            typeof(PostArticleTag),
+            typeof(PostComment),
+            typeof(PostPoll)
+            );
+        ConsoleHelper.WriteLineSuccess("数据表创建成功！");
+        ConsoleHelper.WriteLineSuccess("数据库初始化已完成！");
     }
 }

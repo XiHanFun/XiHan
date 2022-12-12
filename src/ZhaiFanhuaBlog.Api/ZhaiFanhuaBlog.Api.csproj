@@ -4,12 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <UserSecretsId>cfd2e93f-edba-404a-9fae-b08d34162057</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    <PackageIcon>logo.png</PackageIcon>
+    
     <RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
     <AssemblyVersion>0.2.2</AssemblyVersion>
     <FileVersion>0.2.2</FileVersion>
@@ -17,11 +17,11 @@
     <Version>0.2.2</Version>
     <Authors>ZhaiFanhua</Authors>
     <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-	<ApplicationIcon>favicon.ico</ApplicationIcon>
+	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>ZhaiFanhuaBlog.Api</Description>
-	<PackageReadmeFile>readme.md</PackageReadmeFile>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	
+	
 	<IsPackable>true</IsPackable>
 	<OutputType>Exe</OutputType>
   </PropertyGroup>

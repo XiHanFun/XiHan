@@ -15,12 +15,6 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
-using ZhaiFanhuaBlog.Infrastructure.AppSetting;
-using ZhaiFanhuaBlog.Models.Posts;
-using ZhaiFanhuaBlog.Models.Roots;
-using ZhaiFanhuaBlog.Models.Syses;
-using ZhaiFanhuaBlog.Models.Users;
-using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 
@@ -37,61 +31,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         base.Context = DbScoped.SugarScope;
-
-        // 数据库是否初始化
-        bool initDatabase = AppSettings.Database.Initialization.Get();
-        if (!initDatabase)
-        {
-            ConsoleHelper.WriteLineWarning("数据库正在初始化……");
-            ConsoleHelper.WriteLineWarning("创建数据库……");
-            // 创建数据库
-            base.Context.DbMaintenance.CreateDatabase();
-            ConsoleHelper.WriteLineSuccess("数据库创建成功！");
-            ConsoleHelper.WriteLineWarning("创建数据表……");
-            // 创建表
-            base.Context.CodeFirst.SetStringDefaultLength(200).InitTables(
-                // Syses
-                typeof(SysConfig),
-                typeof(SysSkin),
-                typeof(SysLog),
-                typeof(SysLoginLog),
-                typeof(SysOperationLog),
-                typeof(SysDictType),
-                typeof(SysDictData),
-                typeof(SysFile),
-
-                // Users
-                typeof(UserAccount),
-                typeof(UserAccountRole),
-                typeof(UserOauth),
-                typeof(UserStatistic),
-                typeof(UserNotice),
-                typeof(UserFollow),
-                typeof(UserCollectCategory),
-                typeof(UserCollect),
-
-                // Roots
-                typeof(RootAuthority),
-                typeof(RootRole),
-                typeof(RootRoleAuthority),
-                typeof(RootMenu),
-                typeof(RootRoleMenu),
-                typeof(RootAnnouncement),
-                typeof(RootAuditCategory),
-                typeof(RootAudit),
-                typeof(RootFriendlyLink),
-
-                // Blogs
-                typeof(PostCategory),
-                typeof(PostTag),
-                typeof(PostArticle),
-                typeof(PostArticleTag),
-                typeof(PostComment),
-                typeof(PostPoll)
-                );
-            ConsoleHelper.WriteLineSuccess("数据表创建成功！");
-            ConsoleHelper.WriteLineSuccess("数据库初始化已完成！");
-        }
     }
 
     /// <summary>

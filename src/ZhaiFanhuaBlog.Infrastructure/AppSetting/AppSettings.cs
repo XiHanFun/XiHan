@@ -11,12 +11,14 @@
 
 #endregion <<版权版本注释>>
 
+using System.Text.Json.Serialization;
+
 namespace ZhaiFanhuaBlog.Infrastructure.AppSetting;
 
 /// <summary>
 /// AppSettings
 /// </summary>
-public static class AppSettings
+public class AppSettings
 {
     #region 读取配置
 

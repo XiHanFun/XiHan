@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<PackageIcon>logo.png</PackageIcon>
+	
 	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
 	<AssemblyVersion>0.2.2</AssemblyVersion>
 	<FileVersion>0.2.2</FileVersion>
@@ -13,35 +13,14 @@
 	<Version>0.2.2</Version>
 	<Authors>ZhaiFanhua</Authors>
 	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-	<ApplicationIcon>favicon.ico</ApplicationIcon>
+	
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>ZhaiFanhuaBlog.Repositories</Description>
-	<PackageReadmeFile>readme.md</PackageReadmeFile>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	
+	
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="favicon.ico" />
-    <Content Include="logo.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj" />
 	  <ProjectReference Include="..\ZhaiFanhuaBlog.Models\ZhaiFanhuaBlog.Models.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="readme.md">
-	    <PackagePath>\</PackagePath>
-	    <Pack>True</Pack>
-	  </None>
 	</ItemGroup>
 </Project>

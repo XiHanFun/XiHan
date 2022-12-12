@@ -51,8 +51,8 @@ public static class AppConfig
     /// <param name="entity"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<REntity>(this REntity entity, REntity value, [CallerArgumentExpression("entity")] string fullName = "")
+    public static void Set<TEntity, REntity>(this REntity entity, REntity value, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        AppConfigManager.Set<REntity>(fullName, value);
+        AppConfigManager.Set<TEntity, REntity>(fullName, value);
     }
 }

@@ -87,11 +87,13 @@ public class JsonHelper
     /// <typeparam name="REntity"></typeparam>
     /// <param name="keyLink">对象的键名链，例如 Order.User，当其上级不存在时将创建</param>
     /// <param name="value"></param>
-    public void Set<REntity>(string keyLink, REntity value)
+    public void Set<TEntity, REntity>(string keyLink, REntity value)
     {
         dynamic? jsoObj;
         string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-        jsoObj = JsonSerializer.Deserialize<REntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+
+        Type type = typeof(TEntity);
+        jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
         var keys = keyLink.Split(':');
