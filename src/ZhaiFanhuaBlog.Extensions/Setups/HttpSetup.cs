@@ -36,8 +36,8 @@ public static class HttpSetup
 
         // 注入 Http 请求
         services.AddHttpClient();
-        // 注入 Http 相关实例
         services.AddSingleton<IHttpHelper, HttpHelper>();
+        // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         return services;

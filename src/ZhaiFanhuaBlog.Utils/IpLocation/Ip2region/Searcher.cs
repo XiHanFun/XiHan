@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 
-namespace ZhaiFanhuaBlog.Utils.Ip.Ip2region;
+namespace ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
 /// <summary>
 /// ²éÑ¯Æ÷

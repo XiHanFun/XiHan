@@ -62,7 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ConfigData\ip2region.xdb">
+    <None Update="configdata\ip2region.xdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\PublishProfiles\DevelopmentLinux.pubxml">

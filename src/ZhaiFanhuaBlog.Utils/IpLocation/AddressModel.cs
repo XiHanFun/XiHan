@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Utils.Ip;
+
+namespace ZhaiFanhuaBlog.Utils.IpLocation;
 
 /// <summary>
 /// Ip地区信息

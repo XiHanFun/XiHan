@@ -11,10 +11,9 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Utils.Info;
-using ZhaiFanhuaBlog.Utils.Ip.Ip2region;
+using ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
-namespace ZhaiFanhuaBlog.Utils.Ip;
+namespace ZhaiFanhuaBlog.Utils.IpLocation;
 
 /// <summary>
 /// IpSearchHelper
@@ -40,7 +39,7 @@ public static class IpSearchHelper
         {
             lock (_Lock)
             {
-                _SearcherInstance ??= new(CachePolicyEnum.File, ApplicationInfoHelper.CurrentDirectory + @"ConfigData/ip2region.xdb");
+                _SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
             }
             return _SearcherInstance;
         }

@@ -16,7 +16,8 @@ using System.Reflection;
 using ZhaiFanhuaBlog.Infrastructure.App.Service;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.Ip.Ip2region;
+using ZhaiFanhuaBlog.Utils.IpLocation;
+using ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -37,12 +38,23 @@ public static class ServiceSetup
             throw new ArgumentNullException(nameof(services));
         }
 
+        // 注册基础服务
+        RegisterBaseService(services);
         // 注册自身服务
         RegisterSelfService(services);
-        // 注册其他服务
-        RegisterOtherService(services);
 
         return services;
+    }
+
+    /// <summary>
+    /// 注册基础服务
+    /// </summary>
+    /// <param name="services"></param>
+    private static void RegisterBaseService(IServiceCollection services)
+    {
+        // Ip 查询服务
+        services.AddSingleton<ISearcher, Searcher>();
+        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "configdata", "ip2region.xdb");
     }
 
     /// <summary>
@@ -100,15 +112,5 @@ public static class ServiceSetup
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// 注册其他服务
-    /// </summary>
-    /// <param name="services"></param>
-    private static void RegisterOtherService(IServiceCollection services)
-    {
-        // Ip 查询服务
-        services.AddSingleton<ISearcher, Searcher>();
     }
 }
