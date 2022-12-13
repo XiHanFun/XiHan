@@ -118,7 +118,7 @@ public class HttpContextHelper
     /// <summary>
     /// 地址信息
     /// </summary>
-    public IpAddressModel? AddressInfo { get; set; }
+    public AddressModel? AddressInfo { get; set; }
 
     /// <summary>
     /// 获取系统名称

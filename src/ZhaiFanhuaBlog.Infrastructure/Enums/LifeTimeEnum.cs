@@ -24,17 +24,17 @@ public enum LifeTimeEnum
     /// 单例
     /// </summary>
     [Description("单例")]
-    SINGLETON,
+    Singleton,
 
     /// <summary>
     /// 作用域
     /// </summary>
     [Description("作用域")]
-    SCOPED,
+    Scoped,
 
     /// <summary>
     /// 瞬时
     /// </summary>
     [Description("瞬时")]
-    TRANSIENT
+    Transient
 }

@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using IP2Region.Net.XDB;
 using ZhaiFanhuaBlog.Utils.Info;
+using ZhaiFanhuaBlog.Utils.Ip.Ip2region;
 
 namespace ZhaiFanhuaBlog.Utils.Ip;
 
@@ -40,7 +40,7 @@ public static class IpSearchHelper
         {
             lock (_Lock)
             {
-                _SearcherInstance ??= new(CachePolicy.File, ApplicationInfoHelper.CurrentDirectory + @"ConfigData/ip2region.xdb");
+                _SearcherInstance ??= new(CachePolicyEnum.File, ApplicationInfoHelper.CurrentDirectory + @"ConfigData/ip2region.xdb");
             }
             return _SearcherInstance;
         }
@@ -56,14 +56,14 @@ public static class IpSearchHelper
     /// </summary>
     /// <param name="ip"></param>
     /// <returns></returns>
-    public static IpAddressModel? Search(string ip)
+    public static AddressModel? Search(string ip)
     {
         try
         {
             // 中国|0|浙江省|杭州市|电信
             string? modelStr = GetSearcher.Search(ip);
             var addressArray = modelStr?.Split('|');
-            IpAddressModel model = new()
+            AddressModel model = new()
             {
                 // Ip
                 Ip = ip,

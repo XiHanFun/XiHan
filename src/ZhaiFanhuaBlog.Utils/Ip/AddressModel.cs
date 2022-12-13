@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IpAddressModel
+// FileName:AddressModel
 // Guid:98352a24-4798-46d7-8760-69ad2ddb0151
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Utils.Ip;
 /// <summary>
 /// Ip地区信息
 /// </summary>
-public class IpAddressModel
+public class AddressModel
 {
     /// <summary>
     /// Ip地址

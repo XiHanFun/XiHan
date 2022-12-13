@@ -25,7 +25,7 @@ public class AppServiceAttribute : Attribute
     /// 服务声明周期
     /// 不给默认值的话注册的是AddSingleton
     /// </summary>
-    public LifeTimeEnum ServiceLifetime { get; set; } = LifeTimeEnum.SINGLETON;
+    public LifeTimeEnum ServiceLifetime { get; set; } = LifeTimeEnum.Singleton;
 
     /// <summary>
     /// 指定服务类型

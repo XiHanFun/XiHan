@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// EmailPushService
 /// </summary>
-[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
+[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
 public class EmailPushService : IEmailPushService
 {
     /// <summary>

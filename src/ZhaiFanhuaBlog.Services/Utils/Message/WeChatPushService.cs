@@ -25,7 +25,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// WeChatMessagePushService
 /// </summary>
-[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
+[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
 public class WeChatPushService : IWeChatPushService
 {
     /// <summary>

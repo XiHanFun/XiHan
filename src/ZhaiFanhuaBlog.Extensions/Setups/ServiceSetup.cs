@@ -11,12 +11,12 @@
 
 #endregion <<版权版本注释>>
 
-using IP2Region.Net.XDB;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using ZhaiFanhuaBlog.Infrastructure.App.Service;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Console;
+using ZhaiFanhuaBlog.Utils.Ip.Ip2region;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -81,15 +81,15 @@ public static class ServiceSetup
                 {
                     switch (serviceAttribute.ServiceLifetime)
                     {
-                        case LifeTimeEnum.SINGLETON:
+                        case LifeTimeEnum.Singleton:
                             services.AddSingleton(interfaceType, classType);
                             break;
 
-                        case LifeTimeEnum.SCOPED:
+                        case LifeTimeEnum.Scoped:
                             services.AddScoped(interfaceType, classType);
                             break;
 
-                        case LifeTimeEnum.TRANSIENT:
+                        case LifeTimeEnum.Transient:
                             services.AddTransient(interfaceType, classType);
                             break;
 

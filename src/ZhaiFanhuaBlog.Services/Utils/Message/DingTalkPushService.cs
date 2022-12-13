@@ -24,7 +24,7 @@ namespace ZhaiFanhuaBlog.Services.Utils.Message;
 /// <summary>
 /// DingTalkMessagePush
 /// </summary>
-[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = LifeTimeEnum.SCOPED)]
+[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
 public class DingTalkPushService : IDingTalkPushService
 {
     /// <summary>
