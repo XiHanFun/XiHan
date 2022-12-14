@@ -144,11 +144,6 @@ public static class AppSettings
     public static class Database
     {
         /// <summary>
-        /// 控制台打印
-        /// </summary>
-        public static bool Console { get; set; }
-
-        /// <summary>
         /// 是否初始化
         /// </summary>
         public static bool Initialization { get; set; }
@@ -187,6 +182,27 @@ public static class AppSettings
             /// PostgreSQL
             /// </summary>
             public static string PostgreSQL { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// 控制台打印
+        /// </summary>
+        public static bool Console { get; set; }
+
+        /// <summary>
+        /// 日志打印
+        /// </summary>
+        public static class Logging
+        {
+            /// <summary>
+            /// 普通日志
+            /// </summary>
+            public static bool Info { get; set; }
+
+            /// <summary>
+            /// 错误日志
+            /// </summary>
+            public static bool Error { get; set; }
         }
     }
 

@@ -81,26 +81,30 @@ public static class SqlSugarSetup
         {
             // SQL语句输出方便排查问题
             bool databaseConsole = AppSettings.Database.Console.Get();
-            if (databaseConsole)
+            bool databaseLogInfo = AppSettings.Database.Logging.Info.Get();
+            bool databaseLogError = AppSettings.Database.Logging.Error.Get();
+            client.Aop.OnLogExecuting = (sql, pars) =>
             {
-                client.Aop.OnLogExecuting = (sql, pars) =>
-                {
-                    var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
-                    var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}";
+                var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
+                var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}";
+                if (databaseConsole)
                     ConsoleHelper.WriteLineHandle(info);
+                if (databaseLogInfo)
                     Log.Information(info);
-                };
-                client.Aop.OnLogExecuted = (sql, pars) =>
-                {
-                    var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime.ToString();
+            };
+            client.Aop.OnLogExecuted = (sql, pars) =>
+            {
+                var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime.ToString();
+                if (databaseConsole)
                     ConsoleHelper.WriteLineHandle(handle);
+                if (databaseLogInfo)
                     Log.Information(handle);
-                };
-                client.Aop.OnError = (exp) =>
-                {
+            };
+            client.Aop.OnError = (exp) =>
+            {
+                if (databaseLogError)
                     Log.Error(exp, $"SQL出错：{exp.Message}");
-                };
-            }
+            };
         });
         return services;
     }
