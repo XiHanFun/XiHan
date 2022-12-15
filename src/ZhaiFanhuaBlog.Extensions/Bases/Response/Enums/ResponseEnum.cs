@@ -63,15 +63,15 @@ public enum ResponseEnum
     BadRequest = 400,
 
     /// <summary>
-    /// 需要身份认证验证或认证参数有误或认证已过期
+    /// 需要身份认证验证，或认证参数有误，或认证已过期
     /// </summary>
-    [Description("需要身份认证验证或认证参数有误或认证已过期")]
+    [Description("需要身份认证验证，或认证参数有误，或认证已过期")]
     Unauthorized = 401,
 
     /// <summary>
-    /// 内容禁止访问
+    /// 访问权限等级不够，或禁止访问
     /// </summary>
-    [Description("访问权限等级不够或禁止访问的内容")]
+    [Description("访问权限等级不够，或禁止访问")]
     Forbidden = 403,
 
     /// <summary>
@@ -99,8 +99,8 @@ public enum ResponseEnum
     InternalServerError = 500,
 
     /// <summary>
-    /// 服务器不支持的请求或未实现接口或异常接口
+    /// 服务器不支持的请求，或未实现接口，或异常接口
     /// </summary>
-    [Description("服务器不支持的请求或未实现接口或异常接口")]
+    [Description("服务器不支持的请求，或未实现接口，或异常接口")]
     NotImplemented = 501,
 }
