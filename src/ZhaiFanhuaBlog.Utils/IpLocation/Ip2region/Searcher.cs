@@ -55,6 +55,14 @@ public class Searcher : ISearcher
                 _vectorIndex = new byte[vectorLength];
                 Read(HeaderInfoLength, _vectorIndex);
                 break;
+
+            default:
+                using (var stream = new MemoryStream())
+                {
+                    _contentStream.CopyTo(stream);
+                    _contentBuff = stream.ToArray();
+                }
+                break;
         }
     }
 

@@ -33,7 +33,10 @@ public static class InitDatabaseStep
     public static void InitDatabase(this IServiceProvider service)
     {
         var db = DbScoped.SugarScope;
-        if (AppSettings.Database.Initialization.Get() != false) return;
+        if (AppSettings.Database.Initialization.Get() != false)
+        {
+            return;
+        }
         "数据库正在初始化……".WriteLineWarning();
         "创建数据库……".WriteLineWarning();
         db.DbMaintenance.CreateDatabase();
