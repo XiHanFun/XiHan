@@ -28,19 +28,19 @@ public class RootAuditCategory : BaseEntity
     public Guid? ParentId { get; set; }
 
     /// <summary>
-    /// 审核分类名称
+    /// 分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string CategoryName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 审核分类描述
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn(Length = 20)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核等级
     /// </summary>
     public int Tier { get; set; } = 1;
+
+    /// <summary>
+    /// 分类描述
+    /// </summary>
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Remark { get; set; }
 }

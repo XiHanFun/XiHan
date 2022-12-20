@@ -24,62 +24,62 @@ public class SysFile : BaseDeleteEntity<Guid>
     /// <summary>
     /// 文件原名
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)")]
+    [SugarColumn(Length =100)]
     public string RealName { get; set; } = string.Empty;
 
     /// <summary>
     /// 文件类型
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length =50)]
     public string FileType { get; set; } = string.Empty;
 
     /// <summary>
     /// 存储名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)")]
+    [SugarColumn(Length =100)]
     public string StorageName { get; set; } = string.Empty;
 
     /// <summary>
     /// 存储地址
     /// 例如：/uploads/20221205/{GUID}
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    [SugarColumn(Length =200)]
     public string StorageUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 文件大小
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length =50)]
     public string FileSize { get; set; } = string.Empty;
 
     /// <summary>
     /// 文件扩展名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
+    [SugarColumn(Length =20)]
     public string FileExt { get; set; } = string.Empty;
 
     /// <summary>
     /// 存储类型
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length =50)]
     public string StoreType { get; set; } = string.Empty;
 
     /// <summary>
     /// 存储位置
     /// 例如：/uploads
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length =50)]
     public string StorePath { get; set; } = string.Empty;
 
     /// <summary>
     /// 访问路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    [SugarColumn(Length =200)]
     public string AccessUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn(Length =50, IsNullable = true)]
+    public string? Remark { get; set; }
 }

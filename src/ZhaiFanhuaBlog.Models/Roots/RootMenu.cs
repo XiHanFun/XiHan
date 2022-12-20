@@ -30,31 +30,31 @@ public class RootMenu : BaseEntity
     /// <summary>
     /// 菜单名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string MenuName { get; set; } = string.Empty;
+    [SugarColumn(Length = 10)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单图标
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string MenuIcon { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string Icon { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由地址
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
-    public string MenuRoute { get; set; } = string.Empty;
+    [SugarColumn(Length = 200)]
+    public string Route { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由参数
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Query { get; set; }
 
     /// <summary>
     /// 组件路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? ComponentPath { get; set; }
 
     /// <summary>
@@ -80,6 +80,6 @@ public class RootMenu : BaseEntity
     /// <summary>
     /// 菜单描述
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDataType = "nvarchar(50)")]
-    public string? Description { get; set; }
+    [SugarColumn(IsNullable = true, Length = 50)]
+    public string? Remark { get; set; }
 }

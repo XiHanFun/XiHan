@@ -12,9 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using ZhaiFanhuaBlog.Infrastructure.App.Setting;
-using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
 namespace ZhaiFanhuaBlog.Infrastructure.App.Setting;
@@ -70,7 +68,15 @@ public class AppConfigManager
     /// <returns></returns>
     public static REntity Get<REntity>(string key)
     {
-        return _ConfigurationRoot.GetValue<REntity>(GetPropertyName(key));
+        var result = _ConfigurationRoot.GetValue<REntity>(GetPropertyName(key));
+        if (result != null)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception("配置文件未配置该设置 ");
+        }
     }
 
     /// <summary>
@@ -81,7 +87,15 @@ public class AppConfigManager
     /// <returns></returns>
     public static REntity GetSection<REntity>(string key)
     {
-        return _ConfigurationRoot.GetSection(GetPropertyName(key)).Get<REntity>();
+        var result = _ConfigurationRoot.GetSection(GetPropertyName(key)).Get<REntity>();
+        if (result != null)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception("配置文件未配置该设置 ");
+        }
     }
 
     /// <summary>

@@ -29,6 +29,6 @@ public class UserFollow : BaseEntity
     /// <summary>
     /// 备注名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
+    [SugarColumn(Length =20, IsNullable = true)]
     public string? RemarkName { get; set; }
 }

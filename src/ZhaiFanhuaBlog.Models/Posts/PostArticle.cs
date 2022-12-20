@@ -25,38 +25,38 @@ public class PostArticle : BaseEntity
     /// <summary>
     /// 文章别名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string ArtAlias { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string Alias { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章标题
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string ArtTitle { get; set; } = string.Empty;
+    [SugarColumn(Length = 100)]
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章关键词
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)")]
-    public string ArtKeyword { get; set; } = string.Empty;
+    [SugarColumn(Length = 500)]
+    public string Keyword { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章概要
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
-    public string? ArtSummary { get; set; }
+    [SugarColumn(Length = 500, IsNullable = true)]
+    public string? Summary { get; set; }
 
     /// <summary>
     /// 文章缩略图
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)")]
-    public string ArtThumbnail { get; set; } = string.Empty;
+    [SugarColumn(Length = 500)]
+    public string Thumbnail { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章内容
     /// </summary>
     [SugarColumn(ColumnDataType = "text")]
-    public string ArtContent { get; set; } = string.Empty;
+    public string Content { get; set; } = string.Empty;
 
     #region 文章设置
 
@@ -68,28 +68,28 @@ public class PostArticle : BaseEntity
     /// <summary>
     /// 发布状态 (已发布、草稿箱、回收站)
     /// </summary>
-    public ArtPubStatusEnum ArtPubStatus { get; set; }
+    public PubStatusEnum PubStatus { get; set; }
 
     /// <summary>
     /// 公开类型 (公开、私密、保留)
     /// </summary>
-    public ArtExposedTypeEnum ArtExposedType { get; set; }
+    public ExposedTypeEnum ExposedType { get; set; }
 
     /// <summary>
     /// 私密密码（MD5加密）
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(64)", IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Password { get; set; }
 
     /// <summary>
     /// 文章来源 (原创、转载、衍生)
     /// </summary>
-    public ArtSourceEnum ArtSource { get; set; }
+    public SourceEnum Source { get; set; }
 
     /// <summary>
     /// 转载链接
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
+    [SugarColumn(Length = 500, IsNullable = true)]
     public string? ReprintUrl { get; set; }
 
     /// <summary>

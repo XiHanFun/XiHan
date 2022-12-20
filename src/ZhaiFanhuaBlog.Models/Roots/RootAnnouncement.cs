@@ -24,20 +24,20 @@ public class RootAnnouncement : BaseEntity
     /// <summary>
     /// 公告标题
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string AnnoTitle { get; set; } = string.Empty;
+    [SugarColumn(Length = 100)]
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(4000)")]
-    public string AnnoContent { get; set; } = string.Empty;
+    [SugarColumn(Length = 4000)]
+    public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告链接
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
-    public string? AnnoUrl { get; set; }
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? Url { get; set; }
 
     /// <summary>
     /// 公告结束时间

@@ -35,13 +35,13 @@ public class PostComment : BaseEntity
     /// <summary>
     /// 评论内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(4000)")]
-    public string CommContent { get; set; } = string.Empty;
+    [SugarColumn(Length = 4000)]
+    public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// 评论点赞数
     /// </summary>
-    public int CommPollCount { get; set; }
+    public int PollCount { get; set; }
 
     /// <summary>
     /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项
@@ -52,11 +52,5 @@ public class PostComment : BaseEntity
     /// 评论者Ip
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public string? CommIp { get; set; }
-
-    /// <summary>
-    /// 代理信息
-    /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
-    public string? Agent { get; set; }
+    public string? Ip { get; set; }
 }

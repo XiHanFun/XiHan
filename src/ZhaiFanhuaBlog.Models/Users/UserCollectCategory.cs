@@ -30,14 +30,14 @@ public class UserCollectCategory : BaseEntity
     /// <summary>
     /// 收藏分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
+    [SugarColumn(Length =20, IsNullable = true)]
     public string CategoryName { get; set; } = string.Empty;
 
     /// <summary>
     /// 收藏分类描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? CategoryDescription { get; set; }
+    [SugarColumn(Length =50, IsNullable = true)]
+    public string? CategoryRemark { get; set; }
 
     /// <summary>
     /// 收藏总数

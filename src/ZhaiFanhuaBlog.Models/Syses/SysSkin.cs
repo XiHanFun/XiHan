@@ -24,12 +24,12 @@ public class SysSkin : BaseDeleteEntity<Guid>
     /// <summary>
     /// 皮肤名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
+    [SugarColumn(Length =20)]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 皮肤路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    [SugarColumn(Length =200)]
     public string Path { get; set; } = string.Empty;
 }

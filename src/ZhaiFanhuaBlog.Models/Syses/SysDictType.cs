@@ -24,13 +24,13 @@ public class SysDictType : BaseDeleteEntity<Guid>
     /// <summary>
     /// 字典名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
+    [SugarColumn(Length =10)]
     public string DictName { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典类型
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length =50)]
     public string DictType { get; set; } = string.Empty;
 
     /// <summary>
@@ -46,6 +46,6 @@ public class SysDictType : BaseDeleteEntity<Guid>
     /// <summary>
     /// 字典描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn(Length =50, IsNullable = true)]
+    public string? Remark { get; set; }
 }

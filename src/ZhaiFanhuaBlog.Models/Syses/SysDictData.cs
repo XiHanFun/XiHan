@@ -24,20 +24,20 @@ public class SysDictData : BaseDeleteEntity<Guid>
     /// <summary>
     /// 字典类型
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string DictType { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string Type { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典标签
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string DictLabel { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string Label { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项值
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)")]
-    public string DictValue { get; set; } = string.Empty;
+    [SugarColumn(Length = 100)]
+    public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项排序
@@ -47,7 +47,7 @@ public class SysDictData : BaseDeleteEntity<Guid>
     /// <summary>
     /// 样式
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length = 50)]
     public string CssClass { get; set; } = string.Empty;
 
     /// <summary>
@@ -64,6 +64,6 @@ public class SysDictData : BaseDeleteEntity<Guid>
     /// <summary>
     /// 字典项描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
-    public string? Discription { get; set; }
+    [SugarColumn(Length = 100, IsNullable = true)]
+    public string? Remark { get; set; }
 }

@@ -24,7 +24,7 @@ public class UserNotice : BaseEntity
     /// <summary>
     /// 通知标题
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    [SugarColumn(Length =200)]
     public string NoticeTitle { get; set; } = string.Empty;
 
     /// <summary>

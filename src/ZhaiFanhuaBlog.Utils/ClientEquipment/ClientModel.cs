@@ -21,27 +21,27 @@ public class ClientModel
     /// <summary>
     /// 设备类型
     /// </summary>
-    public string? EquipmentType { get; set; }
+    public string? DeviceType { get; set; }
 
     /// <summary>
     /// 系统名称
     /// </summary>
-    public string? SystemName { get; set; }
+    public string? OsName { get; set; }
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public string? SystemVersion { get; set; }
+    public string? OsVersion { get; set; }
 
     /// <summary>
     /// 浏览器名称
     /// </summary>
-    public string? BrowserName { get; set; }
+    public string? UaName { get; set; }
 
     /// <summary>
     /// 浏览器版本
     /// </summary>
-    public string? BrowserVersion { get; set; }
+    public string? UaVersion { get; set; }
 
     /// <summary>
     /// 语言

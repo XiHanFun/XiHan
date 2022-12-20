@@ -24,43 +24,43 @@ public class UserAccount : BaseEntity
     /// <summary>
     /// 用户名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
+    [SugarColumn(Length = 20)]
     public string UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 电子邮件
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length = 50)]
     public string UserEmail { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户来源
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
+    [SugarColumn(Length = 50)]
     public string UserFrom { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(64)")]
+    [SugarColumn(Length = 64)]
     public string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)")]
+    [SugarColumn(Length = 200)]
     public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/defult.png";
 
     /// <summary>
     /// 用户昵称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
+    [SugarColumn(Length = 20, IsNullable = true)]
     public string? NickName { get; set; }
 
     /// <summary>
     /// 用户签名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Signature { get; set; }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class UserAccount : BaseEntity
     /// <summary>
     /// 用户地址
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Address { get; set; }
 
     /// <summary>

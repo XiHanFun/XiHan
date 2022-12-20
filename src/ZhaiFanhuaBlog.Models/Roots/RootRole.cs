@@ -30,12 +30,12 @@ public class RootRole : BaseEntity
     /// <summary>
     /// 角色名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string RoleName { get; set; } = string.Empty;
+    [SugarColumn(Length = 10)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Remark { get; set; }
 }

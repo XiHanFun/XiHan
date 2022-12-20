@@ -24,23 +24,23 @@ public class PostTag : BaseEntity
     /// <summary>
     /// 标签别名
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string TagAlias { get; set; } = string.Empty;
+    [SugarColumn(Length = 20)]
+    public string Alias { get; set; } = string.Empty;
 
     /// <summary>
     /// 标签名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)")]
-    public string TagName { get; set; } = string.Empty;
+    [SugarColumn(Length = 20)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 标签描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)")]
-    public string TagDescription { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string Remark { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int BlogCount { get; set; }
+    public int ArticleCount { get; set; }
 }

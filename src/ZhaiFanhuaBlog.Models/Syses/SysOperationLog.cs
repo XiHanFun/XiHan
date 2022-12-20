@@ -24,60 +24,60 @@ public class SysOperationLog : BaseDeleteEntity<Guid>
     /// <summary>
     /// 操作模块
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
-    public string? OperModule { get; set; }
+    [SugarColumn(Length = 20, IsNullable = true)]
+    public string? Module { get; set; }
 
     /// <summary>
     /// 操作类型
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true)]
-    public int? OperType { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public int? Type { get; set; }
 
     /// <summary>
     /// 请求类型 GET、POST等
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)", IsNullable = true)]
+    [SugarColumn(Length = 10, IsNullable = true)]
     public string? RequestType { get; set; }
 
     /// <summary>
     /// 操作人员
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
-    public string? OperUser { get; set; }
+    [SugarColumn(Length = 20, IsNullable = true)]
+    public string? User { get; set; }
 
     /// <summary>
     /// 操作Ip
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(20)", IsNullable = true)]
-    public string? OperIp { get; set; }
+    [SugarColumn(Length = 20, IsNullable = true)]
+    public string? Ip { get; set; }
 
     /// <summary>
     /// 操作地点
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? OperLocation { get; set; }
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Location { get; set; }
 
     /// <summary>
     /// 来源页面
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
+    [SugarColumn(Length = 100, IsNullable = true)]
     public string? Referrer { get; set; }
 
     /// <summary>
     /// 操作方法
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? OperMethod { get; set; }
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Method { get; set; }
 
     /// <summary>
     /// 请求参数
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(200)", IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? RequestParam { get; set; }
 
     /// <summary>
     /// 请求结果
     ///</summary>
-    [SugarColumn(ColumnDataType = "nvarchar(4000)", IsNullable = true)]
+    [SugarColumn(Length = 4000, IsNullable = true)]
     public string? RequestResult { get; set; }
 }

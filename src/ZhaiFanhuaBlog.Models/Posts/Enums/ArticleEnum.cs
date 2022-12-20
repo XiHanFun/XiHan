@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Models.Blogs.Enums;
 /// <summary>
 /// 发布状态
 /// </summary>
-public enum ArtPubStatusEnum
+public enum PubStatusEnum
 {
     /// <summary>
     /// 回收站
@@ -42,7 +42,7 @@ public enum ArtPubStatusEnum
 /// <summary>
 /// 文章来源
 /// </summary>
-public enum ArtSourceEnum
+public enum SourceEnum
 {
     /// <summary>
     /// 转载
@@ -66,7 +66,7 @@ public enum ArtSourceEnum
 /// <summary>
 /// 公开类型
 /// </summary>
-public enum ArtExposedTypeEnum
+public enum ExposedTypeEnum
 {
     /// <summary>
     /// 保留

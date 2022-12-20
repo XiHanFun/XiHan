@@ -54,11 +54,25 @@ public static class ClientInfoHelper
             var uaParser = Parser.GetDefault();
             ClientInfo clientInfo = uaParser.Parse(agent);
             clientModel.Agent = agent;
-            clientModel.EquipmentType = clientInfo.Device.Family;
-            clientModel.SystemName = clientInfo.OS.Family;
-            clientModel.SystemVersion = clientInfo.OS.Major;
-            clientModel.BrowserName = clientInfo.UA.Family;
-            clientModel.BrowserVersion = clientInfo.UA.Major + "." + clientInfo.UA.Minor;
+            clientModel.DeviceType = clientInfo.Device.Family;
+            clientModel.OsName = clientInfo.OS.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
+            {
+                clientModel.OsVersion = clientInfo.OS.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
+                {
+                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
+                }
+            }
+            clientModel.UaName = clientInfo.UA.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
+            {
+                clientModel.UaVersion = clientInfo.UA.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
+                {
+                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
+                }
+            }
         }
         return clientModel;
     }

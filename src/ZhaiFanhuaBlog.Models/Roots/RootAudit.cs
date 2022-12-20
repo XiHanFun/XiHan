@@ -29,12 +29,12 @@ public class RootAudit : BaseEntity
     /// <summary>
     /// 审核内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(2000)")]
-    public string AuditContent { get; set; } = string.Empty;
+    [SugarColumn(Length = 2000)]
+    public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核结果
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(500)", IsNullable = true)]
-    public string? AuditResult { get; set; }
+    [SugarColumn(Length = 500, IsNullable = true)]
+    public string? Result { get; set; }
 }

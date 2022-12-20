@@ -30,17 +30,17 @@ public class PostCategory : BaseEntity
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(10)")]
-    public string CategoryName { get; set; } = string.Empty;
+    [SugarColumn(Length = 10)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类描述
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(50)", IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Remark { get; set; }
 
     /// <summary>
     /// 文章总数
     /// </summary>
-    public int ArtCount { get; set; }
+    public int ArticleCount { get; set; }
 }

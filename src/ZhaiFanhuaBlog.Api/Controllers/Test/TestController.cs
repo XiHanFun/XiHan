@@ -11,9 +11,9 @@
 
 #endregion <<版权版本注释>>
 
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
@@ -54,12 +54,6 @@ public class TestController : BaseApiController
         var httpContext = _IHttpContextAccessor.HttpContext!;
         HttpContextHelper clientInfoHelper = new(httpContext);
         return BaseResponseDto.OK(clientInfoHelper);
-
-        //string ip = "60.163.239.151";
-        //string datatype = "jsonp";
-        //string token = "d09f8d316fcfdbe68108cab08cb8bd0d";
-        //var result = HttpHelper.GetAsync($@"http://api.ip138.com/ip/?ip={ip}&datatype={datatype}&token={token}");
-        //var result = HttpHelper.PostAsync();
     }
 
     /// <summary>
