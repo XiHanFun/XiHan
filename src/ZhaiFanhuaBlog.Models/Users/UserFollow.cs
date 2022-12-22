@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases.Entity;
+using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -29,6 +29,6 @@ public class UserFollow : BaseEntity
     /// <summary>
     /// 备注名称
     /// </summary>
-    [SugarColumn(Length =20, IsNullable = true)]
+    [SugarColumn(Length = 20, IsNullable = true)]
     public string? RemarkName { get; set; }
 }

@@ -29,30 +29,30 @@ public class SysLoginLog : BaseDeleteEntity<Guid>
     /// <summary>
     /// 提示消息
     /// </summary>
-    [SugarColumn(Length =200, IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Message { get; set; }
 
     /// <summary>
     /// 登录Ip
     /// </summary>
-    [SugarColumn(Length =20, IsNullable = true)]
+    [SugarColumn(Length = 20, IsNullable = true)]
     public string? LoginIp { get; set; }
 
     /// <summary>
     /// 浏览器
     /// </summary>
-    [SugarColumn(Length =100, IsNullable = true)]
+    [SugarColumn(Length = 100, IsNullable = true)]
     public string? Browser { get; set; }
 
     /// <summary>
     /// 操作系统名称
     /// </summary>
-    [SugarColumn(Length =50, IsNullable = true)]
+    [SugarColumn(Length = 50, IsNullable = true)]
     public string? OsName { get; set; }
 
     /// <summary>
     /// 代理信息
     /// </summary>
-    [SugarColumn(Length =100, IsNullable = true)]
+    [SugarColumn(Length = 100, IsNullable = true)]
     public string? Agent { get; set; }
 }

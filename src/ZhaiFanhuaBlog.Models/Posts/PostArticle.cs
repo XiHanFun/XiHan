@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases.Entity;
+using ZhaiFanhuaBlog.Models.Bases;
 using ZhaiFanhuaBlog.Models.Blogs.Enums;
 
 namespace ZhaiFanhuaBlog.Models.Posts;

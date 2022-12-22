@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases.Entity;
+using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -24,24 +24,24 @@ public class UserOauth : BaseEntity
     /// <summary>
     /// 第三方登陆类型 weibo、qq、wechat 等
     /// </summary>
-    [SugarColumn(Length =20)]
+    [SugarColumn(Length = 20)]
     public string OauthType { get; set; } = string.Empty;
 
     /// <summary>
     /// 第三方 uid 、openid 等
     /// </summary>
-    [SugarColumn(Length =50)]
+    [SugarColumn(Length = 50)]
     public string OauthId { get; set; } = string.Empty;
 
     /// <summary>
     /// QQ / 微信同一主体下 Unionid 相同
     /// </summary>
-    [SugarColumn(Length =100)]
+    [SugarColumn(Length = 100)]
     public string? UnionId { get; set; }
 
     /// <summary>
     /// 密码凭证 /access_token (目前更多是存储在缓存里)
     /// </summary>
-    [SugarColumn(Length =100)]
+    [SugarColumn(Length = 100)]
     public string Credential { get; set; } = string.Empty;
 }

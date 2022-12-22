@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using ZhaiFanhuaBlog.Models.Bases.Entity;
+using ZhaiFanhuaBlog.Models.Bases;
 
 namespace ZhaiFanhuaBlog.Models.Users;
 
@@ -24,7 +24,7 @@ public class UserNotice : BaseEntity
     /// <summary>
     /// 通知标题
     /// </summary>
-    [SugarColumn(Length =200)]
+    [SugarColumn(Length = 200)]
     public string NoticeTitle { get; set; } = string.Empty;
 
     /// <summary>

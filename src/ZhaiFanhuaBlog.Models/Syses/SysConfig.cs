@@ -24,37 +24,37 @@ public class SysConfig : BaseDeleteEntity<Guid>
     /// <summary>
     /// 网站名称
     /// </summary>
-    [SugarColumn(Length =20)]
+    [SugarColumn(Length = 20)]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 网站描述
     /// </summary>
-    [SugarColumn(Length =200, IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Remark { get; set; }
 
     /// <summary>
     /// 网站关键字
     /// </summary>
-    [SugarColumn(Length =200)]
+    [SugarColumn(Length = 200)]
     public string KeyWord { get; set; } = string.Empty;
 
     /// <summary>
     /// 网站域名
     /// </summary>
-    [SugarColumn(Length =50)]
+    [SugarColumn(Length = 50)]
     public string Domain { get; set; } = string.Empty;
 
     /// <summary>
     /// 站长名称
     /// </summary>
-    [SugarColumn(Length =20)]
+    [SugarColumn(Length = 20)]
     public string AdminName { get; set; } = string.Empty;
 
     /// <summary>
     /// 站长邮箱
     /// </summary>
-    [SugarColumn(Length =50)]
+    [SugarColumn(Length = 50)]
     public string AdminEmail { get; set; } = string.Empty;
 
     /// <summary>
