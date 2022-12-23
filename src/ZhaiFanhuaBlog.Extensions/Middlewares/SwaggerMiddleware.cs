@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Middlewares;
 

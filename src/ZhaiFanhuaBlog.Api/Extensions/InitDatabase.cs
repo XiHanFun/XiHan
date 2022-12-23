@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar.IOC;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Models.Posts;
 using ZhaiFanhuaBlog.Models.Roots;
 using ZhaiFanhuaBlog.Models.Syses;

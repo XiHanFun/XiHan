@@ -30,19 +30,19 @@ public static class TestResourceMigration
         resourceInfo.Path = @"C:\Users\zhaifanhua\Desktop\technology";
         resourceInfo.OldPrefix = @"https://img.zhaifanhua.com/blogimg";
         resourceInfo.NewPrefix = @"https://cdn.zhaifanhua.com/blog/img";
-        ConsoleHelper.WriteLineInfo($@"============资源迁移开始============");
+        $@"============资源迁移开始============".WriteLineInfo();
         var migrationInfos = ResourcesHelper.Migration(resourceInfo);
         foreach (var migrationInfo in migrationInfos)
         {
             if (migrationInfo.IsSucess)
             {
-                ConsoleHelper.WriteLineSuccess($@"资源迁移成功，路径【{migrationInfo.Path}】");
+                $@"资源迁移成功，路径【{migrationInfo.Path}】".WriteLineSuccess();
             }
             else
             {
-                ConsoleHelper.WriteLineError($@"资源迁移失败，路径【{migrationInfo.Path}】");
+                $@"资源迁移失败，路径【{migrationInfo.Path}】".WriteLineError();
             }
         }
-        ConsoleHelper.WriteLineInfo($@"============资源迁移结束============");
+        $@"============资源迁移结束============".WriteLineInfo();
     }
 }

@@ -19,7 +19,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Filters;
 

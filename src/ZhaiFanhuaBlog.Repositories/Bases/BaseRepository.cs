@@ -14,7 +14,7 @@
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Pages;
 
 namespace ZhaiFanhuaBlog.Repositories.Bases;
 

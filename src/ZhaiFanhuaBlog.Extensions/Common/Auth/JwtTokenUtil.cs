@@ -17,7 +17,7 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Object;
 
 namespace ZhaiFanhuaBlog.Extensions.Common.Auth;

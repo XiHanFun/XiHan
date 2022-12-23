@@ -11,10 +11,10 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Summary;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
 
 /// <summary>
 /// 通用结果实体
@@ -29,12 +29,12 @@ public class BaseResultDto
     /// <summary>
     /// 状态码
     /// </summary>
-    public ResponseEnum Code { get; set; } = ResponseEnum.OK;
+    public ResponseEnum Code { get; set; } = ResponseEnum.Ok;
 
     /// <summary>
     /// 返回信息
     /// </summary>
-    public string? Message { get; set; } = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK);
+    public string? Message { get; set; } = ResponseEnum.Ok.GetEnumDescription();
 
     /// <summary>
     /// 数据集合

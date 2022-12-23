@@ -77,13 +77,13 @@ public static class EmailHelper
                 var status = ex.InnerExceptions[i].StatusCode;
                 if (status == SmtpStatusCode.MailboxBusy || status == SmtpStatusCode.MailboxUnavailable)
                 {
-                    ConsoleHelper.WriteLineError("Delivery failed - retrying in 5 seconds.");
+                    "Delivery failed - retrying in 5 seconds.".WriteLineError();
                     await Task.Delay(5000);
                     client.Send(message);
                 }
                 else
                 {
-                    ConsoleHelper.WriteLineError($"Failed to deliver message to {ex.InnerExceptions[i].FailedRecipient}");
+                    $"Failed to deliver message to {ex.InnerExceptions[i].FailedRecipient}".WriteLineError();
                 }
             }
         }

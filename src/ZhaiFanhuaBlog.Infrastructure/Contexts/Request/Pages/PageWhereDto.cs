@@ -11,9 +11,9 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Pages;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Request.Pages;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Request.Pages;
 
 /// <summary>
 /// 通用分页实体基类(不含条件)

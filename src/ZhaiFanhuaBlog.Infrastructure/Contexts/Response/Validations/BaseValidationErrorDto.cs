@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Validations;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Validations;
 
 /// <summary>
 /// 验证出错字段实体基类

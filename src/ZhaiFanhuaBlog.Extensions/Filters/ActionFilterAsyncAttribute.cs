@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
-using ZhaiFanhuaBlog.Extensions.Bases.Response;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 namespace ZhaiFanhuaBlog.Extensions.Filters;
 

@@ -13,7 +13,7 @@
 
 using SqlSugar;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Pages;
 
 /// <summary>
 /// 分页拓展

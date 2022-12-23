@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
 using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
 namespace ZhaiFanhuaBlog.Services.Utils.Message;

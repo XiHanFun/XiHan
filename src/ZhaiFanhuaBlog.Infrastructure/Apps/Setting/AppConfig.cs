@@ -13,7 +13,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace ZhaiFanhuaBlog.Infrastructure.App.Setting;
+namespace ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 /// <summary>
 /// AppConfig
@@ -23,37 +23,37 @@ public static class AppConfig
     /// <summary>
     /// 获取值
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static REntity Get<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TREntity Get<TREntity>(this TREntity entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.Get<REntity>(fullName);
+        return AppConfigManager.Get<TREntity>(fullName);
     }
 
     /// <summary>
     /// 获取对象
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static REntity GetSection<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TREntity GetSection<TREntity>(this TREntity entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.GetSection<REntity>(fullName);
+        return AppConfigManager.GetSection<TREntity>(fullName);
     }
 
     /// <summary>
     /// 赋值
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TEntity, REntity>(this REntity entity, REntity value, [CallerArgumentExpression("entity")] string fullName = "")
+    public static void Set<TEntity, TREntity>(this TREntity entity, TREntity value, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        AppConfigManager.Set<TEntity, REntity>(fullName, value);
+        AppConfigManager.Set<TEntity, TREntity>(fullName, value);
     }
 }

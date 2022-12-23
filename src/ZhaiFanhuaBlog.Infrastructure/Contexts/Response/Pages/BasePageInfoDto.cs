@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Pages;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Pages;
 
 /// <summary>
 /// 通用数据分页信息基类

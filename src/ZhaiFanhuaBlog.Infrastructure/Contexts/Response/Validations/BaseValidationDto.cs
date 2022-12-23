@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Validations;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Validations;
 
 /// <summary>
 /// 验证实体

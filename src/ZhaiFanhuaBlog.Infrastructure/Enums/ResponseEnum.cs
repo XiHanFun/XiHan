@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
+namespace ZhaiFanhuaBlog.Infrastructure.Enums;
 
 /// <summary>
 /// 通用结果标识
@@ -36,7 +36,7 @@ public enum ResponseEnum
     /// 请求成功
     /// </summary>
     [Description("请求成功")]
-    OK = 200,
+    Ok = 200,
 
     /// <summary>
     /// 请求已被接受，等待资源响应

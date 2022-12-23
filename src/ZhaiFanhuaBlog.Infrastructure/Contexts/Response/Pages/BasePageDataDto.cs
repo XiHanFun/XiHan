@@ -2,29 +2,29 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BaseTableDto
-// Guid:9d512d36-cd5c-4102-bed2-6457e9093085
+// FileName:BasePageDataDto
+// Guid:42dc207c-570e-4128-bcf1-cea65179e64b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-02-20 下午 08:44:39
+// CreateTime:2022-12-04 下午 11:16:04
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Tables;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Pages;
 
 /// <summary>
-/// 通用表格实体(支持分页)
+/// 通用分页数据实体基类
 /// </summary>
-public class BaseTableDto<TEntity> where TEntity : class
+public class BasePageDataDto<Entity> where Entity : class
 {
     /// <summary>
-    /// 数据总数
+    /// 分页数据
     /// </summary>
-    public int TotalCount { get; set; }
+    public BasePageInfoDto? Page { get; set; }
 
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Data { get; set; }
+    public List<Entity>? Datas { get; set; }
 }

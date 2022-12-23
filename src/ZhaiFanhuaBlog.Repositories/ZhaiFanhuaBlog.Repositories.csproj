@@ -20,7 +20,7 @@
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj" />
+	  <ProjectReference Include="..\ZhaiFanhuaBlog.Infrastructure\ZhaiFanhuaBlog.Infrastructure.csproj" />
 	  <ProjectReference Include="..\ZhaiFanhuaBlog.Models\ZhaiFanhuaBlog.Models.csproj" />
 	</ItemGroup>
 	

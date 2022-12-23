@@ -13,7 +13,7 @@
 
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 
-namespace ZhaiFanhuaBlog.Infrastructure.App.Service;
+namespace ZhaiFanhuaBlog.Infrastructure.Apps.Services;
 
 /// <summary>
 /// 标记服务
@@ -35,5 +35,5 @@ public class AppServiceAttribute : Attribute
     /// <summary>
     /// 是否可以从第一个接口获取服务类型
     /// </summary>
-    public bool InterfaceServiceType { get; set; }
+    public bool IsInterfaceServiceType { get; set; }
 }

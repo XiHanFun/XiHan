@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Infrastructure.App.Setting;
+namespace ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 /// <summary>
 /// AppSettings

@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
+namespace ZhaiFanhuaBlog.Infrastructure.Enums;
 
 /// <summary>
 /// 通用结果状态

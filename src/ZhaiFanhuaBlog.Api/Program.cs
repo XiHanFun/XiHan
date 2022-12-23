@@ -18,53 +18,21 @@ using ZhaiFanhuaBlog.Api;
 using ZhaiFanhuaBlog.Api.Extensions;
 using ZhaiFanhuaBlog.Extensions.Middlewares;
 using ZhaiFanhuaBlog.Extensions.Setups;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var webHost = builder.WebHost;
-
 var log = builder.Logging;
-"Log Start……".WriteLineWarning();
 log.AddLogSetup();
-"Log Started Successfully！".WriteLineSuccess();
+
 try
 {
     var config = builder.Configuration;
-    "Configuration Start……".WriteLineWarning();
-    AppConfigManager appConfig = new(config);
-    "Configuration Started Successfully！".WriteLineSuccess();
-
+    config.AddConfigSetup();
     var services = builder.Services;
-    "Services Start……".WriteLineWarning();
-    // Cache
-    services.AddCacheSetup();
-    // Auth
-    services.AddAuthJwtSetup();
-    // 健康检查
-    services.AddHealthChecks();
-    // Http
-    services.AddHttpSetup();
-    // Swagger
-    services.AddSwaggerSetup();
-    // 性能分析
-    services.AddMiniProfilerSetup();
-    // SqlSugar
-    services.AddSqlSugarSetup();
-    // 服务注入
     services.AddServiceSetup();
-    // AutoMapper
-    services.AddAutoMapperSetup();
-    // Route
-    services.AddRouteSetup();
-    // Cors
-    services.AddCorsSetup();
-    // Controllers
-    services.AddControllersSetup();
-    "Services Started Successfully！".WriteLineSuccess();
-
     var app = builder.Build();
+
     "ZhaiFanhuaBlog Application Start……".WriteLineWarning();
     // 初始化数据库
     app.Services.InitDatabase();
@@ -104,7 +72,6 @@ try
     app.MapHealthChecks("/health");
     // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
     app.MapControllers();
-
     "ZhaiFanhuaBlog Application Started Successfully！".WriteLineSuccess();
 
     // 启动信息打印

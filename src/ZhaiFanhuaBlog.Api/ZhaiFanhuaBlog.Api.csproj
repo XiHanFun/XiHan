@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZhaiFanhuaBlog.Extensions\ZhaiFanhuaBlog.Extensions.csproj" />
     <ProjectReference Include="..\ZhaiFanhuaBlog.Services\ZhaiFanhuaBlog.Services.csproj" />
   </ItemGroup>
 
@@ -62,9 +63,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="configdata\ip2region.xdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Properties\PublishProfiles\DevelopmentLinux.pubxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

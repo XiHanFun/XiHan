@@ -13,7 +13,7 @@
 
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 
-namespace ZhaiFanhuaBlog.Infrastructure.App.Logging;
+namespace ZhaiFanhuaBlog.Infrastructure.Apps.Logging;
 
 /// <summary>
 /// 全局日志

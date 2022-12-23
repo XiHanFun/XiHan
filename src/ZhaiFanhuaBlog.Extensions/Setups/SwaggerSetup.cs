@@ -14,11 +14,10 @@
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using SqlSugar;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
@@ -49,7 +48,7 @@ public static class SwaggerSetup
             // 配置Swagger文档信息
             SwaggerInfoConfig(options);
             // 配置Swagger文档请求 带JWT Token
-            SwaggerJWTConfig(options);
+            SwaggerJwtConfig(options);
         });
         return services;
     }
@@ -97,7 +96,7 @@ public static class SwaggerSetup
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
-            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor).ControllerTypeInfo?.BaseType?
+            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor).ControllerTypeInfo.BaseType?
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
             // 反射获取派生类 Action 的 ApiGroupAttribute 信息
@@ -110,7 +109,7 @@ public static class SwaggerSetup
             // 为空时插入空，减少 if 判断
             var emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
             apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
-            apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
+            apiGroupAttributeList.AddRange(actionAttributeList);
 
             // 判断所有的分组名称是否含有此名称
             if (apiGroupAttributeList.Any())
@@ -122,7 +121,7 @@ public static class SwaggerSetup
                     containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
                 // 若有，则为该分组名称分配此 Action
-                if (containList.Any(c => c == true))
+                if (containList.Any(c => c))
                 {
                     return true;
                 }
@@ -152,7 +151,7 @@ public static class SwaggerSetup
     /// Swagger文档中请求带JWT Token
     /// </summary>
     /// <param name="options"></param>
-    public static void SwaggerJWTConfig(SwaggerGenOptions options)
+    public static void SwaggerJwtConfig(SwaggerGenOptions options)
     {
         // 定义安全方案
         var securitySchemeOauth2 = new OpenApiSecurityScheme

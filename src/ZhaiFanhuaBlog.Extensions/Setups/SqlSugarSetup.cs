@@ -14,7 +14,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar.IOC;
-using ZhaiFanhuaBlog.Infrastructure.App.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
@@ -88,15 +88,15 @@ public static class SqlSugarSetup
                 var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
                 var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}";
                 if (databaseConsole)
-                    ConsoleHelper.WriteLineHandle(info);
+                    info.WriteLineHandle();
                 if (databaseLogInfo)
                     Log.Information(info);
             };
             client.Aop.OnLogExecuted = (sql, pars) =>
             {
-                var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime.ToString();
+                var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime;
                 if (databaseConsole)
-                    ConsoleHelper.WriteLineHandle(handle);
+                    handle.WriteLineHandle();
                 if (databaseLogInfo)
                     Log.Information(handle);
             };

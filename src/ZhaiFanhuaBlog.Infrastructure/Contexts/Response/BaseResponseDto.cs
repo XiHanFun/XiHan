@@ -12,12 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Validations;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Validations;
+using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Summary;
 
-namespace ZhaiFanhuaBlog.Extensions.Bases.Response;
+namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
 
 /// <summary>
 /// 通用响应实体
@@ -34,7 +34,7 @@ public static class BaseResponseDto
         {
             Success = true,
             Code = ResponseEnum.Continue,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Continue),
+            Message = ResponseEnum.Continue.GetEnumDescription(),
             Data = null
         };
     }
@@ -48,8 +48,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
+            Code = ResponseEnum.Ok,
+            Message = ResponseEnum.Ok.GetEnumDescription(),
             Data = null
         };
     }
@@ -63,8 +63,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
+            Code = ResponseEnum.Ok,
+            Message = ResponseEnum.Ok.GetEnumDescription(),
             Data = messageData
         };
     }
@@ -79,8 +79,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.OK,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.OK),
+            Code = ResponseEnum.Ok,
+            Message = ResponseEnum.Ok.GetEnumDescription(),
             Data = data
         };
     }
@@ -95,7 +95,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.BadRequest,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.BadRequest),
+            Message = ResponseEnum.BadRequest.GetEnumDescription(),
             Data = messageData
         };
     }
@@ -110,7 +110,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.BadRequest,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.BadRequest),
+            Message = ResponseEnum.BadRequest.GetEnumDescription(),
             Data = data
         };
     }
@@ -125,7 +125,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Unauthorized,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Unauthorized),
+            Message = ResponseEnum.Unauthorized.GetEnumDescription(),
             Data = null
         };
     }
@@ -140,7 +140,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Unauthorized,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Unauthorized),
+            Message = ResponseEnum.Unauthorized.GetEnumDescription(),
             Data = messageData
         };
     }
@@ -155,7 +155,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Forbidden,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.Forbidden),
+            Message = ResponseEnum.Forbidden.GetEnumDescription(),
             Data = null
         };
     }
@@ -170,7 +170,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotFound,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotFound),
+            Message = ResponseEnum.NotFound.GetEnumDescription(),
             Data = null
         };
     }
@@ -185,7 +185,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotFound,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotFound),
+            Message = ResponseEnum.NotFound.GetEnumDescription(),
             Data = messageData
         };
     }
@@ -200,7 +200,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.UnprocessableEntity,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.UnprocessableEntity),
+            Message = ResponseEnum.UnprocessableEntity.GetEnumDescription(),
             Data = messageData
         };
     }
@@ -215,7 +215,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.UnprocessableEntity,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.UnprocessableEntity),
+            Message = ResponseEnum.UnprocessableEntity.GetEnumDescription(),
             Data = new BaseValidationDto(context)
         };
     }
@@ -230,7 +230,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.InternalServerError,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.InternalServerError),
+            Message = ResponseEnum.InternalServerError.GetEnumDescription(),
             Data = null
         };
     }
@@ -245,7 +245,7 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotImplemented,
-            Message = EnumDescriptionHelper.GetEnumDescription(ResponseEnum.NotImplemented),
+            Message = ResponseEnum.NotImplemented.GetEnumDescription(),
             Data = null
         };
     }

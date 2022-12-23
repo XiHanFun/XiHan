@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
-using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Services.Utils.Message;
 using ZhaiFanhuaBlog.Utils.Message.DingTalk;

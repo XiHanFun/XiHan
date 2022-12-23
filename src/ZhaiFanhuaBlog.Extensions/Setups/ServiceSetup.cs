@@ -12,12 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using ZhaiFanhuaBlog.Infrastructure.App.Service;
-using ZhaiFanhuaBlog.Infrastructure.Enums;
+using ZhaiFanhuaBlog.Infrastructure.Apps.Services;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.IpLocation;
-using ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -38,79 +34,35 @@ public static class ServiceSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 注册基础服务
-        RegisterBaseService(services);
-        // 注册自身服务
-        RegisterSelfService(services);
+        // 注册服务
+        "Services Start……".WriteLineWarning();
+        // Cache
+        services.AddCacheSetup();
+        // Auth
+        services.AddAuthJwtSetup();
+        // 健康检查
+        services.AddHealthChecks();
+        // Http
+        services.AddHttpSetup();
+        // Swagger
+        services.AddSwaggerSetup();
+        // 性能分析
+        services.AddMiniProfilerSetup();
+        // SqlSugar
+        services.AddSqlSugarSetup();
+        // 服务注入
+        AppServiceManager.RegisterBaseService(services);
+        AppServiceManager.RegisterSelfService(services);
+        // AutoMapper
+        services.AddAutoMapperSetup();
+        // Route
+        services.AddRouteSetup();
+        // Cors
+        services.AddCorsSetup();
+        // Controllers
+        services.AddControllersSetup();
+        "Services Started Successfully！".WriteLineSuccess();
 
         return services;
-    }
-
-    /// <summary>
-    /// 注册基础服务
-    /// </summary>
-    /// <param name="services"></param>
-    private static void RegisterBaseService(IServiceCollection services)
-    {
-        // Ip 查询服务
-        services.AddSingleton<ISearcher, Searcher>();
-        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "configdata", "ip2region.xdb");
-    }
-
-    /// <summary>
-    /// 注册自身服务
-    /// </summary>
-    /// <param name="services"></param>
-    private static void RegisterSelfService(IServiceCollection services)
-    {
-        // 所有涉及服务的组件库
-        string[] libraries = new string[] { "ZhaiFanhuaBlog.Repositories", "ZhaiFanhuaBlog.Services", "ZhaiFanhuaBlog.Tasks" };
-        // 根据程序路径反射出所有引用的程序集
-        var referencedTypes = new List<Type>();
-        foreach (var library in libraries)
-        {
-            try
-            {
-                var assemblyTypes = Assembly.Load(library).GetTypes()
-                    .Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
-                referencedTypes.AddRange(assemblyTypes);
-            }
-            catch (Exception)
-            {
-                ConsoleHelper.WriteLineError($"找不到{library}组件库");
-            }
-        }
-        // 批量注入
-        foreach (var classType in referencedTypes)
-        {
-            // 服务周期
-            var serviceAttribute = classType.GetCustomAttribute<AppServiceAttribute>();
-            if (serviceAttribute != null)
-            {
-                var interfaceType = serviceAttribute.ServiceType;
-                // 判断是否实现了该接口，若是，则注入服务
-                if (interfaceType != null && interfaceType.IsAssignableFrom(classType))
-                {
-                    switch (serviceAttribute.ServiceLifetime)
-                    {
-                        case LifeTimeEnum.Singleton:
-                            services.AddSingleton(interfaceType, classType);
-                            break;
-
-                        case LifeTimeEnum.Scoped:
-                            services.AddScoped(interfaceType, classType);
-                            break;
-
-                        case LifeTimeEnum.Transient:
-                            services.AddTransient(interfaceType, classType);
-                            break;
-
-                        default:
-                            services.AddTransient(interfaceType, classType);
-                            break;
-                    }
-                }
-            }
-        }
     }
 }
