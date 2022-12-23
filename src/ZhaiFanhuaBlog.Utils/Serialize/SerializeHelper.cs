@@ -26,7 +26,7 @@ public static class SerializeHelper
     /// <summary>
     /// 公共参数
     /// </summary>
-    public static JsonSerializerOptions JsonSerializerOptionsInstance = new()
+    public static readonly JsonSerializerOptions JsonSerializerOptionsInstance = new()
     {
         // 序列化格式
         WriteIndented = true,
@@ -85,10 +85,6 @@ public static class SerializeHelper
     /// <returns></returns>
     public static TEntity? Deserialize<TEntity>(this byte[] value)
     {
-        if (value == null)
-        {
-            return default;
-        }
         return Encoding.UTF8.GetString(value).DeserializeToObject<TEntity>();
     }
 }

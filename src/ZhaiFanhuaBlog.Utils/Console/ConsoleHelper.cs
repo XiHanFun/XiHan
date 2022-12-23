@@ -18,18 +18,18 @@ namespace ZhaiFanhuaBlog.Utils.Console;
 /// </summary>
 public static class ConsoleHelper
 {
-    private static readonly object _ObjLock = new();
+    private static readonly object ObjLock = new();
 
     /// <summary>
     /// 在控制台输出
     /// </summary>
     /// <param name="inputStr">打印文本</param>
     /// <param name="frontColor">前置颜色</param>
-    public static void WriteColorLine(string inputStr, ConsoleColor frontColor)
+    private static void WriteColorLine(string inputStr, ConsoleColor frontColor)
     {
-        lock (_ObjLock)
+        lock (ObjLock)
         {
-            ConsoleColor currentForeColor = System.Console.ForegroundColor;
+            var currentForeColor = System.Console.ForegroundColor;
             System.Console.ForegroundColor = frontColor;
             System.Console.WriteLine(inputStr);
             System.Console.ForegroundColor = currentForeColor;

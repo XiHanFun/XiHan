@@ -32,11 +32,11 @@ namespace ZhaiFanhuaBlog.Utils.Object
         {
             List<string> list = new();
             string[] ss = str.Split(speater);
-            foreach (string s in ss)
+            foreach (var s in ss)
             {
                 if (!string.IsNullOrEmpty(s) && s != speater.ToString())
                 {
-                    string strVal = s;
+                    var strVal = s;
                     if (toLower)
                     {
                         strVal = s.ToLower();
@@ -66,7 +66,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
         public static string GetArrayStr(List<string> list, string speater)
         {
             StringBuilder sb = new();
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (i == list.Count - 1)
                 {
@@ -88,8 +88,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <returns></returns>
         public static string GetArrayStr(List<int> list)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < list.Count; i++)
+            var sb = new StringBuilder();
+            for (var i = 0; i < list.Count; i++)
             {
                 if (i == list.Count - 1)
                 {
@@ -111,8 +111,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <returns></returns>
         public static string GetArrayValueStr(Dictionary<int, int> list)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (KeyValuePair<int, int> kvp in list)
+            var sb = new StringBuilder();
+            foreach (var kvp in list)
             {
                 sb.Append(kvp.Value + ",");
             }
@@ -120,10 +120,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
             {
                 return DelLastComma(sb.ToString());
             }
-            else
-            {
-                return "";
-            }
+
+            return "";
         }
 
         #region 删除最后一个字符之后的字符
@@ -133,7 +131,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         public static string DelLastComma(string str)
         {
-            return str.Substring(0, str.LastIndexOf(","));
+            return str.Substring(0, str.LastIndexOf(",", StringComparison.Ordinal));
         }
 
         /// <summary>
@@ -141,7 +139,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         public static string DelLastChar(string str, string strchar)
         {
-            return str.Substring(0, str.LastIndexOf(strchar));
+            return str.Substring(0, str.LastIndexOf(strchar, StringComparison.Ordinal));
         }
 
         #endregion
@@ -151,11 +149,11 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string ToSBC(string input)
+        public static string ToSbc(string input)
         {
             //半角转全角：
-            char[] c = input.ToCharArray();
-            for (int i = 0; i < c.Length; i++)
+            var c = input.ToCharArray();
+            for (var i = 0; i < c.Length; i++)
             {
                 if (c[i] == 32)
                 {
@@ -173,10 +171,10 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         /// <param name="input">输入</param>
         /// <returns></returns>
-        public static string ToDBC(string input)
+        public static string ToDbc(string input)
         {
-            char[] c = input.ToCharArray();
-            for (int i = 0; i < c.Length; i++)
+            var c = input.ToCharArray();
+            for (var i = 0; i < c.Length; i++)
             {
                 if (c[i] == 12288)
                 {
@@ -195,11 +193,11 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="o_str"></param>
         /// <param name="sepeater"></param>
         /// <returns></returns>
-        public static List<string> GetSubStringList(string o_str, char sepeater)
+        public static List<string> GetSubStringList(string oStr, char sepeater)
         {
             List<string> list = new List<string>();
-            string[] ss = o_str.Split(sepeater);
-            foreach (string s in ss)
+            string[] ss = oStr.Split(sepeater);
+            foreach (var s in ss)
             {
                 if (!string.IsNullOrEmpty(s) && s != sepeater.ToString())
                 {
@@ -214,25 +212,25 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <summary>
         ///  将字符串样式转换为纯字符串
         /// </summary>
-        /// <param name="StrList"></param>
-        /// <param name="SplitString"></param>
+        /// <param name="strList"></param>
+        /// <param name="splitString"></param>
         /// <returns></returns>
-        public static string GetCleanStyle(string StrList, string SplitString)
+        public static string GetCleanStyle(string strList, string splitString)
         {
-            string RetrunValue = "";
+            var retrunValue = "";
             //如果为空，返回空值
-            if (StrList == null)
+            if (strList == null)
             {
-                RetrunValue = "";
+                retrunValue = "";
             }
             else
             {
                 //返回去掉分隔符
-                string NewString = "";
-                NewString = StrList.Replace(SplitString, "");
-                RetrunValue = NewString;
+                var newString = "";
+                newString = strList.Replace(splitString, "");
+                retrunValue = newString;
             }
-            return RetrunValue;
+            return retrunValue;
         }
 
         #endregion
@@ -259,8 +257,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
             else
             {
                 //检查传入的字符串长度和样式是否匹配,如果不匹配，则说明使用错误。给出错误信息并返回空值
-                int strListLength = strList.Length;
-                int newStyleLength = GetCleanStyle(newStyle, splitString).Length;
+                var strListLength = strList.Length;
+                var newStyleLength = GetCleanStyle(newStyle, splitString).Length;
                 if (strListLength != newStyleLength)
                 {
                     returnValue = "";
@@ -270,7 +268,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
                 {
                     //检查新样式中分隔符的位置
                     StringBuilder lengstr = new();
-                    for (int i = 0; i < newStyle.Length; i++)
+                    for (var i = 0; i < newStyle.Length; i++)
                     {
                         if (newStyle.Substring(i, 1) == splitString)
                         {
@@ -281,7 +279,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
                     {
                         //将分隔符放在新样式中的位置
                         string[] str = lengstr.ToString().Split(',');
-                        foreach (string bb in str)
+                        foreach (var bb in str)
                         {
                             strList = strList.Insert(int.Parse(bb), splitString);
                         }
@@ -339,12 +337,11 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         /// <param name="_value"></param>
         /// <returns>返回正确的整数ID，失败返回0</returns>
-        public static int StrToId(string _value)
+        public static int StrToId(string value)
         {
-            if (IsNumberId(_value))
-                return int.Parse(_value);
-            else
-                return 0;
+            if (IsNumberId(value))
+                return int.Parse(value);
+            return 0;
         }
 
         #endregion
@@ -356,9 +353,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         /// <param name="_value">需验证的字符串。。</param>
         /// <returns>是否合法的bool值。</returns>
-        public static bool IsNumberId(string _value)
+        public static bool IsNumberId(string value)
         {
-            return QuickValidate("^[1-9]*[0-9]*$", _value);
+            return QuickValidate("^[1-9]*[0-9]*$", value);
         }
 
         #endregion
@@ -371,15 +368,15 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="_express">正则表达式的内容。</param>
         /// <param name="_value">需验证的字符串。</param>
         /// <returns>是否合法的bool值。</returns>
-        public static bool QuickValidate(string _express, string _value)
+        public static bool QuickValidate(string express, string value)
         {
-            if (_value == null) return false;
-            Regex myRegex = new Regex(_express);
-            if (_value.Length == 0)
+            if (value == null) return false;
+            var myRegex = new Regex(express);
+            if (value.Length == 0)
             {
                 return false;
             }
-            return myRegex.IsMatch(_value);
+            return myRegex.IsMatch(value);
         }
 
         #endregion
@@ -394,9 +391,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
         public static int StrLength(string inputString)
         {
             System.Text.ASCIIEncoding ascii = new();
-            int tempLen = 0;
-            byte[] s = ascii.GetBytes(inputString);
-            for (int i = 0; i < s.Length; i++)
+            var tempLen = 0;
+            var s = ascii.GetBytes(inputString);
+            for (var i = 0; i < s.Length; i++)
             {
                 if (s[i] == 63)
                     tempLen += 2;
@@ -418,17 +415,17 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <returns>返回处理后的字符串</returns>
         public static string ClipString(string inputString, int len)
         {
-            bool isShowFix = false;
+            var isShowFix = false;
             if (len % 2 == 1)
             {
                 isShowFix = true;
                 len--;
             }
             ASCIIEncoding ascii = new();
-            int tempLen = 0;
+            var tempLen = 0;
             StringBuilder tempString = new();
-            byte[] s = ascii.GetBytes(inputString);
-            for (int i = 0; i < s.Length; i++)
+            var s = ascii.GetBytes(inputString);
+            for (var i = 0; i < s.Length; i++)
             {
                 if (s[i] == 63)
                     tempLen += 2;
@@ -448,7 +445,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
                     break;
             }
 
-            byte[] mybyte = Encoding.Default.GetBytes(inputString);
+            var mybyte = Encoding.Default.GetBytes(inputString);
             if (isShowFix && mybyte.Length > len)
                 tempString.Append('…');
             return tempString.ToString();
@@ -483,9 +480,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
             @"<!--.*\n"
             };
 
-            string newReg = aryReg[0];
-            string strOutput = strHtml;
-            for (int i = 0; i < aryReg.Length; i++)
+            var newReg = aryReg[0];
+            var strOutput = strHtml;
+            for (var i = 0; i < aryReg.Length; i++)
             {
                 Regex regex = new(aryReg[i], RegexOptions.IgnoreCase);
                 strOutput = regex.Replace(strOutput, string.Empty);

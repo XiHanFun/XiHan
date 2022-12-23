@@ -50,8 +50,8 @@ public static class JwtTokenUtil
                 new Claim("NickName", tokenModel.NickName ?? string.Empty),
             };
             // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-            List<string> RootRolesClaim = new(tokenModel.RootRoles.Split(','));
-            claims.AddRange(RootRolesClaim.Select(role => new Claim("RootRole", role)));
+            List<string> rootRolesClaim = new(tokenModel.RootRoles.Split(','));
+            claims.AddRange(rootRolesClaim.Select(role => new Claim("RootRole", role)));
 
             // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(symmetricKey));
@@ -93,30 +93,28 @@ public static class JwtTokenUtil
         var jwtHandler = new JwtSecurityTokenHandler();
 
         // 开始Token校验
-        if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
+        if (!token.IsNotEmptyOrNull() || !jwtHandler.CanReadToken(token)) return tokenModel;
+        var jwtToken = jwtHandler.ReadJwtToken(token);
+        List<Claim> claims = jwtToken.Claims.ToList();
+
+        // 分离参数
+        var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
+        var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
+        var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
+        var rootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
+
+        var userId = new Guid(userIdClaim.Value);
+        var userName = userNameClaim.Value;
+        var nickName = nickNameClaim.Value;
+        var rootRoles = rootRolesClaim.Select(c => c.Value).ToList();
+
+        tokenModel = new TokenModel
         {
-            JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(token);
-            List<Claim> claims = jwtToken.Claims.ToList();
-
-            // 分离参数
-            Claim UserIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
-            Claim UserNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
-            Claim NickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
-            List<Claim> RootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
-
-            var userId = new Guid(UserIdClaim.Value);
-            var userName = UserNameClaim.Value;
-            var nickName = NickNameClaim.Value;
-            List<string> rootRoles = RootRolesClaim.Select(c => c.Value).ToList();
-
-            tokenModel = new TokenModel
-            {
-                UserId = userId,
-                UserName = userName,
-                NickName = nickName,
-                RootRoles = string.Join(',', rootRoles),
-            };
-        }
+            UserId = userId,
+            UserName = userName,
+            NickName = nickName,
+            RootRoles = string.Join(',', rootRoles),
+        };
         return tokenModel;
     }
 
@@ -154,20 +152,20 @@ public class TokenModel
     /// <summary>
     /// 用户主键
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 
     /// <summary>
     /// 用户名称
     /// </summary>
-    public string UserName { get; set; } = string.Empty;
+    public string UserName { get; init; } = string.Empty;
 
     /// <summary>
     /// 用户昵称
     /// </summary>
-    public string NickName { get; set; } = string.Empty;
+    public string NickName { get; init; } = string.Empty;
 
     /// <summary>
     /// 用户角色
     /// </summary>
-    public string RootRoles { get; set; } = string.Empty;
+    public string RootRoles { get; init; } = string.Empty;
 }

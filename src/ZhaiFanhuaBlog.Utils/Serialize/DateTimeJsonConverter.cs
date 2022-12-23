@@ -21,14 +21,14 @@ namespace ZhaiFanhuaBlog.Utils.Serialize;
 /// </summary>
 public class DateTimeJsonConverter : JsonConverter<DateTime>
 {
-    private readonly string _dateFormatString;
+    private readonly string _DateFormatString;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public DateTimeJsonConverter()
     {
-        _dateFormatString = "yyyy-MM-dd HH:mm:ss";
+        _DateFormatString = "yyyy-MM-dd HH:mm:ss";
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="dateFormatString"></param>
     public DateTimeJsonConverter(string dateFormatString)
     {
-        _dateFormatString = dateFormatString;
+        _DateFormatString = dateFormatString;
     }
 
     /// <summary>
@@ -49,11 +49,8 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <returns></returns>
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            if (DateTime.TryParse(reader.GetString(), out DateTime date))
-                return date;
-        }
+        if (reader.TokenType == JsonTokenType.String&&DateTime.TryParse(reader.GetString(), out var date))
+            return date;
         return reader.GetDateTime();
     }
 
@@ -65,6 +62,6 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="options"></param>
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString(_dateFormatString));
+        writer.WriteStringValue(value.ToString(_DateFormatString));
     }
 }

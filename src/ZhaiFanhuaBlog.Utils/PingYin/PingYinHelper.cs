@@ -91,7 +91,7 @@ public static class PingYinHelper
         var chs = text.ToCharArray();
         // 记录每个汉字的全拼
         var totalPingYinList = new Dictionary<int, List<string>>();
-        for (int i = 0; i < chs.Length; i++)
+        for (var i = 0; i < chs.Length; i++)
         {
             // 每个字的所有拼音
             var pinyinList = new List<string>();

@@ -16,6 +16,6 @@ namespace ZhaiFanhuaBlog.Utils.Message.RabbitMQ;
 /// <summary>
 /// RabbitMQ消费者
 /// </summary>
-public class RabbitMQConsumer
+public class RabbitMqConsumer
 {
 }

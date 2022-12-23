@@ -28,25 +28,18 @@ public static class LocalIpInfoHelper
     /// <returns></returns>
     public static string GetLocalIpV4()
     {
-        try
+        IEnumerable<UnicastIPAddressInformation>? unicastIpAddressInformations = LocalIpAddressInfo();
+        if (unicastIpAddressInformations != null)
         {
-            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = LocalIPAddressInfo();
-            if (unicastIPAddressInformations != null)
+            foreach (var ipInfo in unicastIpAddressInformations)
             {
-                foreach (var ipInfo in unicastIPAddressInformations)
+                if (!IPAddress.IsLoopback(ipInfo.Address) && ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    if (!IPAddress.IsLoopback(ipInfo.Address) && ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return ipInfo.Address.ToString();
-                    }
+                    return ipInfo.Address.ToString();
                 }
             }
-            return "No IP address was obtained";
         }
-        catch (Exception)
-        {
-            throw;
-        }
+        return "No IP address was obtained";
     }
 
     /// <summary>
@@ -55,40 +48,33 @@ public static class LocalIpInfoHelper
     /// <returns></returns>
     public static string GetLocalIpV6()
     {
-        try
+        IEnumerable<UnicastIPAddressInformation>? unicastIpAddressInformations = LocalIpAddressInfo();
+        if (unicastIpAddressInformations != null)
         {
-            IEnumerable<UnicastIPAddressInformation>? unicastIPAddressInformations = LocalIPAddressInfo();
-            if (unicastIPAddressInformations != null)
+            foreach (var ipInfo in unicastIpAddressInformations)
             {
-                foreach (var ipInfo in unicastIPAddressInformations)
+                if (!IPAddress.IsLoopback(ipInfo.Address) && ipInfo.Address.AddressFamily == AddressFamily.InterNetworkV6)
                 {
-                    if (!IPAddress.IsLoopback(ipInfo.Address) && ipInfo.Address.AddressFamily == AddressFamily.InterNetworkV6)
-                    {
-                        return ipInfo.Address.ToString();
-                    }
+                    return ipInfo.Address.ToString();
                 }
             }
-            return "No IP address was obtained";
         }
-        catch (Exception)
-        {
-            throw;
-        }
+        return "No IP address was obtained";
     }
 
     /// <summary>
     /// 获取本机所有可用网卡IP信息
     /// </summary>
     /// <returns></returns>
-    private static IEnumerable<UnicastIPAddressInformation>? LocalIPAddressInfo()
+    private static IEnumerable<UnicastIPAddressInformation>? LocalIpAddressInfo()
     {
         // 获取可用网卡
         var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()?.Where(network => network.OperationalStatus == OperationalStatus.Up);
         // 获取所有可用网卡IP信息
-        var unicastIPAddressInformations = networkInterfaces?.Select(x => x.GetIPProperties())?.SelectMany(x => x.UnicastAddresses);
-        if (unicastIPAddressInformations != null)
+        var unicastIpAddressInformations = networkInterfaces?.Select(x => x.GetIPProperties())?.SelectMany(x => x.UnicastAddresses);
+        if (unicastIpAddressInformations != null)
         {
-            return unicastIPAddressInformations;
+            return unicastIpAddressInformations;
         }
         return null;
     }

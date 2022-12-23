@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:MoneyFormaHelper
+// FileName:MoneyFormatHelper
 // Guid:09739585-bfe3-4b22-81a4-45b135d3466d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -11,12 +11,14 @@
 
 #endregion <<版权版本注释>>
 
+using System.Globalization;
+
 namespace ZhaiFanhuaBlog.Utils.Formats;
 
 /// <summary>
 /// 金额格式化帮助类
 /// </summary>
-public static class MoneyFormaHelper
+public static class MoneyFormatHelper
 {
     /// <summary>
     /// 格式化金额(由千位转万位，如 12,345,678.90=>1234,5678.90 )
@@ -25,29 +27,21 @@ public static class MoneyFormaHelper
     /// <returns></returns>
     public static string FormatDecimalToString(decimal money)
     {
-        try
+        var moneyStr = money.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
+        string moneyRes;
+        var moneyDecimal = string.Empty;
+        if (moneyStr.Contains('.'))
         {
-            string moneyStr = money.ToString().ToLowerInvariant();
-            string moneyRes = string.Empty;
-            string moneyInt = string.Empty;
-            string moneyDecimal = string.Empty;
-            if (moneyStr.Contains('.'))
-            {
-                moneyInt = moneyStr.Split('.')[0];
-                moneyDecimal = "." + moneyStr.Split('.')[1];
-                moneyRes = FormatStringComma(moneyInt);
-            }
-            else
-            {
-                moneyRes = FormatStringComma(moneyStr);
-            }
+            var moneyInt = moneyStr.Split('.')[0];
+            moneyDecimal = "." + moneyStr.Split('.')[1];
+            moneyRes = FormatStringComma(moneyInt);
+        }
+        else
+        {
+            moneyRes = FormatStringComma(moneyStr);
+        }
 
-            return moneyRes + moneyDecimal;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        return moneyRes + moneyDecimal;
     }
 
     /// <summary>
@@ -58,11 +52,10 @@ public static class MoneyFormaHelper
     public static string FormatStringComma(string moneyint)
     {
         if (moneyint.Length <= 4) return moneyint;
-        string moneyNoFormat = moneyint[..^4];
-        string moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
+        var moneyNoFormat = moneyint[..^4];
+        var moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
         if (moneyNoFormat.Length > 4)
             return FormatStringComma(moneyNoFormat) + "," + moneyFormat;
-        else
-            return moneyNoFormat + "," + moneyFormat;
+        return moneyNoFormat + "," + moneyFormat;
     }
 }

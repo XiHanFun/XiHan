@@ -54,7 +54,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsGuid(string checkValue)
     {
-        string pattern = @"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$";
+        const string pattern = @"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -69,7 +69,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Tel(string checkValue)
     {
-        string pattern = @"^(\d{3,4}-)\d{7,8}$";
+        const string pattern = @"^(\d{3,4}-)\d{7,8}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -84,19 +84,20 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_People(string checkValue)
     {
-        if (checkValue.Length == 18)
+        switch (checkValue.Length)
         {
-            bool check = IsNumber_People_18(checkValue);
-            return check;
-        }
-        else if (checkValue.Length == 15)
-        {
-            bool check = IsNumber_People_15(checkValue);
-            return check;
-        }
-        else
-        {
-            return false;
+            case 18:
+            {
+                var check = IsNumber_People_18(checkValue);
+                return check;
+            }
+            case 15:
+            {
+                var check = IsNumber_People_15(checkValue);
+                return check;
+            }
+            default:
+                return false;
         }
     }
 
@@ -108,32 +109,32 @@ public static class RegexHelper
     public static bool IsNumber_People_18(string checkValue)
     {
         // 数字验证
-        if (long.TryParse(checkValue.Remove(17), out long n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out n) == false)
+        if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out n) == false)
         {
             return false;
         }
         // 省份验证
-        string address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
         if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture))
         {
             return false;
         }
         // 生日验证
-        string birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
+        var birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
         if (!DateTime.TryParse(birth, out _))
         {
             return false;
         }
         // 校验码验证
         string[] arrVarifyCode = ("1,0,x,9,8,7,6,5,4,3,2").Split(',');
-        string[] Wi = ("7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2").Split(',');
-        char[] Ai = checkValue.Remove(17).ToCharArray();
-        int sum = 0;
-        for (int i = 0; i < 17; i++)
+        string[] wi = ("7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2").Split(',');
+        var ai = checkValue.Remove(17).ToCharArray();
+        var sum = 0;
+        for (var i = 0; i < 17; i++)
         {
-            sum += int.Parse(Wi[i]) * int.Parse(Ai[i].ToString());
+            sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
         }
-        Math.DivRem(sum, 11, out int y);
+        Math.DivRem(sum, 11, out var y);
         if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLower())
         {
             return false;
@@ -150,18 +151,18 @@ public static class RegexHelper
     public static bool IsNumber_People_15(string checkValue)
     {
         // 数字验证
-        if (long.TryParse(checkValue, out long n) == false || n < Math.Pow(10, 14))
+        if (long.TryParse(checkValue, out var n) == false || n < Math.Pow(10, 14))
         {
             return false;
         }
         // 省份验证
-        string address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
         if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture))
         {
             return false;
         }
         // 生日验证
-        string birth = checkValue.Substring(6, 6).Insert(4, "-").Insert(2, "-");
+        var birth = checkValue.Substring(6, 6).Insert(4, "-").Insert(2, "-");
         if (DateTime.TryParse(birth, out _) == false)
         {
             return false;
@@ -181,7 +182,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsEmail(string checkValue)
     {
-        string pattern = @"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$";
+        const string pattern = @"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -196,7 +197,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber(string checkValue)
     {
-        string pattern = @"^[0-9]*$";
+        var pattern = @"^[0-9]*$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -226,7 +227,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_IntOrDouble(string checkValue)
     {
-        string pattern = @"^[0-9]+\.{0,1}[0-9]{0,2}$";
+        var pattern = @"^[0-9]+\.{0,1}[0-9]{0,2}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -237,7 +238,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Several_N(string checkValue)
     {
-        string pattern = @"^\d{n}$";
+        var pattern = @"^\d{n}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -248,7 +249,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Several_AtLeast_N(string checkValue)
     {
-        string pattern = @"^\d{n,}$";
+        var pattern = @"^\d{n,}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -259,7 +260,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Several_M_N(string checkValue)
     {
-        string pattern = @"^\d{m,n}$";
+        var pattern = @"^\d{m,n}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -270,7 +271,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Begin_ZeroOrNotZero(string checkValue)
     {
-        string pattern = @"^(0|[1-9] [0-9]*)$";
+        var pattern = @"^(0|[1-9] [0-9]*)$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -281,7 +282,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Positive_Real_TwoDouble(string checkValue)
     {
-        string pattern = @"^[0-9]+(.[0-9]{2})?$";
+        var pattern = @"^[0-9]+(.[0-9]{2})?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -292,7 +293,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Positive_Real_OneOrThreeDouble(string checkValue)
     {
-        string pattern = @"^[0-9]+(.[0-9]{1,3})?$";
+        var pattern = @"^[0-9]+(.[0-9]{1,3})?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -303,7 +304,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Positive_Int_NotZero(string checkValue)
     {
-        string pattern = @"^\+?[1-9][0-9]*$";
+        var pattern = @"^\+?[1-9][0-9]*$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -314,7 +315,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber_Negative_Int_NotZero(string checkValue)
     {
-        string pattern = @"^\-?[1-9][0-9]*$";
+        var pattern = @"^\-?[1-9][0-9]*$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -329,7 +330,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetter(string checkValue)
     {
-        string pattern = @"^[A-Za-z]+$";
+        const string pattern = @"^[A-Za-z]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -340,7 +341,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetter_Capital(string checkValue)
     {
-        string pattern = @"^[A-Z]+$";
+        const string pattern = @"^[A-Z]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -351,7 +352,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetter_Lower(string checkValue)
     {
-        string pattern = @"^[a-z]+$";
+        var pattern = @"^[a-z]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -366,7 +367,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberOrLetter(string checkValue)
     {
-        string pattern = @"^[A-Za-z0-9]+$";
+        const string pattern = @"^[A-Za-z0-9]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -383,12 +384,8 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLengthStr(string source, int begin, int end)
     {
-        int length = Regex.Replace(source, @"[^\x00-\xff]", "OK").Length;
-        if ((length <= begin) && (length >= end))
-        {
-            return false;
-        }
-        return true;
+        var length = Regex.Replace(source, @"[^\x00-\xff]", "OK").Length;
+        return (length > begin) || (length < end);
     }
 
     /// <summary>
@@ -398,7 +395,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsChar_Three(string checkValue)
     {
-        string pattern = @"^.{3}$";
+        var pattern = @"^.{3}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -427,7 +424,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsChar_Special(string checkValue)
     {
-        string pattern = @"[^%&',;=?$\x22]+";
+        const string pattern = @"[^%&',;=?$\x22]+";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -442,7 +439,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsContainChinese(string checkValue)
     {
-        string pattern = @"^[\u4e00-\u9fa5]{0,}$";
+        const string pattern = @"^[\u4e00-\u9fa5]{0,}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -470,9 +467,9 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsURL(string checkValue)
+    public static bool IsUrl(string checkValue)
     {
-        string pattern = @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?$";
+        const string pattern = @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -489,8 +486,7 @@ public static class RegexHelper
     {
         try
         {
-            DateTime time = Convert.ToDateTime(checkValue);
-            return true;
+            return DateTime.TryParse(checkValue,out var result);
         }
         catch
         {
@@ -505,7 +501,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsMonth(string checkValue)
     {
-        string pattern = @"^^(0?[1-9]|1[0-2])$";
+        const string pattern = @"^^(0?[1-9]|1[0-2])$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -516,7 +512,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsDay(string checkValue)
     {
-        string pattern = @"^((0?[1-9])|((1|2)[0-9])|30|31)$";
+        const string pattern = @"^((0?[1-9])|((1|2)[0-9])|30|31)$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -529,7 +525,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsIP(string checkValue)
+    public static bool IsIpRegex(string checkValue)
     {
         return Regex.IsMatch(checkValue, @"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$", RegexOptions.IgnoreCase);
     }
@@ -541,21 +537,18 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsIp(string checkValue)
     {
-        bool result = false;
+        var result = false;
         try
         {
-            string[] checkValuearg = checkValue.Split('.');
-            if (string.Empty != checkValue && checkValue.Length < 16 && checkValuearg.Length == 4)
+            var checkValueArg = checkValue.Split('.');
+            if (string.Empty != checkValue && checkValue.Length < 16 && checkValueArg.Length == 4)
             {
-                int intcheckValue;
-                for (int i = 0; i < 4; i++)
+                for (var i = 0; i < 4; i++)
                 {
-                    intcheckValue = Convert.ToInt16(checkValuearg[i]);
-                    if (intcheckValue > 255)
-                    {
-                        result = false;
-                        return result;
-                    }
+                    int intCheckValue = Convert.ToInt16(checkValueArg[i]);
+                    if (intCheckValue <= 255) continue;
+                    result = false;
+                    return result;
                 }
                 result = true;
             }

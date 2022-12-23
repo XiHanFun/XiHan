@@ -28,13 +28,11 @@ public static class TimeFormatHelper
     {
         if (dateTimeBefore < dateTimeAfter)
         {
-            TimeSpan timeSpan = dateTimeAfter - dateTimeBefore;
+            var timeSpan = dateTimeAfter - dateTimeBefore;
             return TimeSpanToString(timeSpan);
         }
-        else
-        {
-            throw new Exception("开始日期必须小于结束日期");
-        }
+
+        throw new Exception("开始日期必须小于结束日期");
     }
 
     /// <summary>
@@ -44,7 +42,7 @@ public static class TimeFormatHelper
     /// <returns></returns>
     public static string MillisecondsToString(long milliseconds)
     {
-        TimeSpan timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+        var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
         return TimeSpanToString(timeSpan);
     }
 
@@ -55,7 +53,7 @@ public static class TimeFormatHelper
     /// <returns></returns>
     public static string TimeTicksToString(long ticks)
     {
-        TimeSpan timeSpan = TimeSpan.FromTicks(ticks);
+        var timeSpan = TimeSpan.FromTicks(ticks);
         return TimeSpanToString(timeSpan);
     }
 
@@ -66,7 +64,7 @@ public static class TimeFormatHelper
     /// <returns></returns>
     public static string TimeSpanToString(TimeSpan timeSpan)
     {
-        string result = string.Empty;
+        var result = string.Empty;
         if (timeSpan.Days >= 1)
         {
             result = timeSpan.Days + "天";
@@ -102,8 +100,8 @@ public static class TimeFormatHelper
             return string.Empty;
         }
 
-        string strDate = date.Value.ToString("yyyy-MM-dd");
-        string vDate = string.Empty;
+        var strDate = date.Value.ToString("yyyy-MM-dd");
+        string vDate;
         if (DateTime.Now.ToString("yyyy-MM-dd") == strDate)
         {
             vDate = "今天";

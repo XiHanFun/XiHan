@@ -28,7 +28,7 @@ public static class ClientIpInfoHelper
     /// <returns></returns>
     public static string GetClientIpV4(HttpContext httpContext)
     {
-        return ClientIPAddressInfo(httpContext).MapToIPv4().ToString();
+        return ClientIpAddressInfo(httpContext).MapToIPv4().ToString();
     }
 
     /// <summary>
@@ -37,14 +37,14 @@ public static class ClientIpInfoHelper
     /// <returns></returns>
     public static string GetClientIpV6(HttpContext httpContext)
     {
-        return ClientIPAddressInfo(httpContext).MapToIPv6().ToString();
+        return ClientIpAddressInfo(httpContext).MapToIPv6().ToString();
     }
 
     /// <summary>
     /// 取得客户端IP
     /// </summary>
     /// <returns></returns>
-    public static IPAddress ClientIPAddressInfo(HttpContext httpContext)
+    public static IPAddress ClientIpAddressInfo(HttpContext httpContext)
     {
         if (httpContext == null)
         {
@@ -72,6 +72,6 @@ public static class ClientIpInfoHelper
         {
             result = "0.0.0.0";
         }
-        return IpFormatHelper.FormatStringToIPAddress(result);
+        return IpFormatHelper.FormatStringToIpAddress(result);
     }
 }

@@ -567,32 +567,32 @@ public enum MsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    text,
+    Text,
 
     /// <summary>
     /// 文档类型
     /// </summary>
-    markdown,
+    Markdown,
 
     /// <summary>
     /// 图片类型
     /// </summary>
-    image,
+    Image,
 
     /// <summary>
     /// 图文类型
     /// </summary>
-    news,
+    News,
 
     /// <summary>
     /// 文件类型
     /// </summary>
-    file,
+    File,
 
     /// <summary>
     /// 模版卡片类型
     /// </summary>
-    template_card
+    TemplateCard
 }
 
 /// <summary>
@@ -603,10 +603,10 @@ public enum TemplateCardType
     /// <summary>
     /// 文本通知类型，属于模版卡片类型
     /// </summary>
-    text_notice,
+    TextNotice,
 
     /// <summary>
     /// 图文展示类型，属于模版卡片类型
     /// </summary>
-    news_notice
+    NewsNotice
 }

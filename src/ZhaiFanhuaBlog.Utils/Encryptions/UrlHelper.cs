@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:URLHelper
+// FileName:UrlHelper
 // Guid:521ad433-968f-49dc-84b1-5948de76eaec
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.Utils.Encryptions;
 /// <summary>
 /// URL编码帮助类
 /// </summary>
-public static class URLHelper
+public static class UrlHelper
 {
     /// <summary>
     /// Url编码

@@ -30,12 +30,9 @@ public class BoolJsonConverter : JsonConverter<bool>
     /// <returns></returns>
     public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
-        {
-            if (bool.TryParse(reader.GetString(), out bool date))
-                return date;
-        }
-        return reader.GetBoolean();
+        if (reader.TokenType != JsonTokenType.True && reader.TokenType != JsonTokenType.False)
+            return reader.GetBoolean();
+        return bool.TryParse(reader.GetString(), out var date) ? date : reader.GetBoolean();
     }
 
     /// <summary>

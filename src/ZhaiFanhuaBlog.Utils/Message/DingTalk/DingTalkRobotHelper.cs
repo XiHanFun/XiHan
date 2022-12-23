@@ -61,7 +61,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.text.ToString();
+        var msgtype = MsgTypeEnum.Text.ToString();
         // 指定目标人群
         var at = new At
         {
@@ -80,7 +80,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> LinkMessage(Link link)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.link.ToString();
+        var msgtype = MsgTypeEnum.Link.ToString();
         // 发送
         var result = await Send(new { msgtype, link });
         return result;
@@ -95,7 +95,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.markdown.ToString();
+        var msgtype = MsgTypeEnum.Markdown.ToString();
         // 指定目标人群
         var at = new At
         {
@@ -114,7 +114,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> ActionCardMessage(ActionCard actionCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.actionCard.ToString();
+        var msgtype = MsgTypeEnum.ActionCard.ToString();
         // 发送
         var result = await Send(new { msgtype, actionCard });
         return result;
@@ -127,7 +127,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> FeedCardMessage(FeedCard feedCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.feedCard.ToString();
+        var msgtype = MsgTypeEnum.FeedCard.ToString();
         // 发送
         var result = await Send(new { msgtype, feedCard });
         return result;
@@ -149,12 +149,12 @@ public class DingTalkRobotHelper
             // 把timestamp + "\n" + 密钥当做签名字符串
             var sign = timeStamp + "\n" + _Secret;
             var encoding = new UTF8Encoding();
-            byte[] keyByte = encoding.GetBytes(_Secret);
-            byte[] messageBytes = encoding.GetBytes(sign);
+            var keyByte = encoding.GetBytes(_Secret);
+            var messageBytes = encoding.GetBytes(sign);
             // 使用HmacSHA256算法计算签名
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
-                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+                var hashmessage = hmacsha256.ComputeHash(messageBytes);
                 // 然后进行Base64 encode，最后再把签名参数再进行urlEncode
                 sign = Convert.ToBase64String(hashmessage).ToUrlEncode();
             }
@@ -162,7 +162,7 @@ public class DingTalkRobotHelper
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        DingTalkResultInfo? result = await _IHttpHelper.PostAsync<DingTalkResultInfo>(HttpEnum.Util, url, sendMessage, null);
+        var result = await _IHttpHelper.PostAsync<DingTalkResultInfo>(HttpEnum.Util, url, sendMessage, null);
         return result;
     }
 }

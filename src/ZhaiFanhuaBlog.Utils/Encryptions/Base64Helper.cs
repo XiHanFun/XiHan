@@ -28,16 +28,8 @@ public static class Base64Helper
     /// <returns>返回编码后的字符串</returns>
     public static string EncodeBase64String(Encoding encode, string source)
     {
-        byte[] bytes = encode.GetBytes(source);
-        string result;
-        try
-        {
-            result = Convert.ToBase64String(bytes);
-        }
-        catch
-        {
-            throw;
-        }
+        var bytes = encode.GetBytes(source);
+        var result = Convert.ToBase64String(bytes);
         return result;
     }
 
@@ -49,16 +41,8 @@ public static class Base64Helper
     /// <returns>返回解码后的字符串</returns>
     public static string DecodeBase64String(Encoding encode, string source)
     {
-        byte[] bytes = Convert.FromBase64String(source);
-        string result;
-        try
-        {
-            result = encode.GetString(bytes);
-        }
-        catch
-        {
-            throw;
-        }
+        var bytes = Convert.FromBase64String(source);
+        var result = encode.GetString(bytes);
         return result;
     }
 }

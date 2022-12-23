@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using ZhaiFanhuaBlog.Extensions.Bases.Response;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
-using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.App.Service;
 using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
@@ -118,7 +118,7 @@ public class DingTalkPushService : IDingTalkPushService
         if (result != null)
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-                return BaseResponseDto.OK("发送成功");
+                return BaseResponseDto.Ok("发送成功");
             else
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
         }

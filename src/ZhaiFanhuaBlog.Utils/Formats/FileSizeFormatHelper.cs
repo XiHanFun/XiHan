@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Utils.Formats;
 /// </summary>
 public static class FileSizeFormatHelper
 {
-    private static readonly string[] suffixes = new string[] { " B", " KB", " MB", " GB", " TB", " PB" };
+    private static readonly string[] Suffixes = new string[] { " B", " KB", " MB", " GB", " TB", " PB" };
 
     /// <summary>
     /// 格式化文件大小显示为字符串
@@ -28,13 +28,13 @@ public static class FileSizeFormatHelper
     public static string FormatByteToString(long bytes)
     {
         double last = 1;
-        for (int i = 0; i < suffixes.Length; i++)
+        for (var i = 0; i < Suffixes.Length; i++)
         {
             var current = Math.Pow(1024, i + 1);
             var temp = bytes / current;
             if (temp < 1)
             {
-                return (bytes / last).ToString("f3") + suffixes[i];
+                return (bytes / last).ToString("f3") + Suffixes[i];
             }
             last = current;
         }

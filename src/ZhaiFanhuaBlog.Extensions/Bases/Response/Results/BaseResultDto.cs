@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using ZhaiFanhuaBlog.Extensions.Response.Enum;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
 using ZhaiFanhuaBlog.Utils.Summary;
 
 namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Results;

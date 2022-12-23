@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Utils.Message.RabbitMQ;
 /// <summary>
 /// MQConnection
 /// </summary>
-public class MQConnection
+public class MqConnection
 {
     /// <summary>
     /// 主机名称

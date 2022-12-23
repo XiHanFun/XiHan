@@ -211,25 +211,25 @@ public enum MsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    text,
+    Text,
 
     /// <summary>
     /// 链接类型
     /// </summary>
-    link,
+    Link,
 
     /// <summary>
     /// 文档类型
     /// </summary>
-    markdown,
+    Markdown,
 
     /// <summary>
     /// 任务卡片类型
     /// </summary>
-    actionCard,
+    ActionCard,
 
     /// <summary>
     /// 菜单卡片类型
     /// </summary>
-    feedCard
+    FeedCard
 }

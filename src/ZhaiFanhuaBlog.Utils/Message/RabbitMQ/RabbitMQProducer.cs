@@ -19,7 +19,7 @@ namespace ZhaiFanhuaBlog.Utils.Message.RabbitMQ;
 /// <summary>
 /// RabbitMQ生产者
 /// </summary>
-public class RabbitMQProducer
+public class RabbitMqProducer
 {
     /// <summary>
     ///
@@ -30,7 +30,7 @@ public class RabbitMQProducer
     /// <param name="routingKey"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static Task<bool> ProducerSend(MQConnection conn, string? exchangeName, string? queueName, string? routingKey, string message)
+    public static Task<bool> ProducerSend(MqConnection conn, string? exchangeName, string? queueName, string? routingKey, string message)
     {
         try
         {

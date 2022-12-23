@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using ZhaiFanhuaBlog.Extensions.Response;
+using ZhaiFanhuaBlog.Extensions.Bases.Response;
 using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Object;
 

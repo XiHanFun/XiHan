@@ -28,21 +28,12 @@ public static class EnumDescriptionHelper
     /// <returns></returns>
     public static string GetEnumDescription(Enum enumObj)
     {
-        try
-        {
-            string enumname = enumObj.ToString();
-            Type type = enumObj.GetType();
-            FieldInfo? field = type.GetField(enumname);
-            if (field != null)
-            {
-                if (field.GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] description)
-                    return description[0].Description;
-            }
-            return string.Empty;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        var enumName = enumObj.ToString();
+        var type = enumObj.GetType();
+        var field = type.GetField(enumName);
+        if (field == null) return string.Empty;
+        if (field.GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] description)
+            return description[0].Description;
+        return string.Empty;
     }
 }

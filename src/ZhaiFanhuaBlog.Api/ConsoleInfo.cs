@@ -34,11 +34,11 @@ public static class ConsoleInfo
         ApplicationInfoHelper.Copyright.WriteLineHandle();
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
-        $@"系统描述：{SystemInfoHelper.OSDescription}".WriteLineInfo();
-        $@"系统版本：{SystemInfoHelper.OSVersion}".WriteLineInfo();
+        $@"系统描述：{SystemInfoHelper.OsDescription}".WriteLineInfo();
+        $@"系统版本：{SystemInfoHelper.OsVersion}".WriteLineInfo();
         $@"系统核数：{SystemInfoHelper.ProcessorCount}".WriteLineInfo();
         $@"系统平台：{SystemInfoHelper.Platform}".WriteLineInfo();
-        $@"系统架构：{SystemInfoHelper.OSArchitecture}".WriteLineInfo();
+        $@"系统架构：{SystemInfoHelper.OsArchitecture}".WriteLineInfo();
         $@"系统目录：{SystemInfoHelper.SystemDirectory}".WriteLineInfo();
         $@"磁盘分区：{SystemInfoHelper.DiskPartition}".WriteLineInfo();
         $@"运行时间：{SystemInfoHelper.RunningTime}".WriteLineInfo();

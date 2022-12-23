@@ -29,12 +29,12 @@ public static class SystemInfoHelper
     /// <summary>
     /// 系统描述
     /// </summary>
-    public static string OSDescription => RuntimeInformation.OSDescription;
+    public static string OsDescription => RuntimeInformation.OSDescription;
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public static string OSVersion => Environment.OSVersion.Version.ToString();
+    public static string OsVersion => Environment.OSVersion.Version.ToString();
 
     /// <summary>
     /// 系统平台
@@ -44,7 +44,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 系统架构
     /// </summary>
-    public static string OSArchitecture => RuntimeInformation.OSArchitecture.ToString();
+    public static string OsArchitecture => RuntimeInformation.OSArchitecture.ToString();
 
     /// <summary>
     /// CPU个数
@@ -82,14 +82,16 @@ public static class SystemInfoHelper
         {
             return OSPlatform.OSX;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             return OSPlatform.Linux;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return OSPlatform.Windows;
         }
+
         throw new Exception("Cannot determine operating system!");
     }
 }

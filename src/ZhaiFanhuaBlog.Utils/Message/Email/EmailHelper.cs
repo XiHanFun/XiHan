@@ -72,9 +72,9 @@ public static class EmailHelper
         }
         catch (SmtpFailedRecipientsException ex)
         {
-            for (int i = 0; i < ex.InnerExceptions.Length; i++)
+            for (var i = 0; i < ex.InnerExceptions.Length; i++)
             {
-                SmtpStatusCode status = ex.InnerExceptions[i].StatusCode;
+                var status = ex.InnerExceptions[i].StatusCode;
                 if (status == SmtpStatusCode.MailboxBusy || status == SmtpStatusCode.MailboxUnavailable)
                 {
                     ConsoleHelper.WriteLineError("Delivery failed - retrying in 5 seconds.");

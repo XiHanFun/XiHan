@@ -44,34 +44,22 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<T?> GetAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var response = await client.GetAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var response = await client.GetAsync(url);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -83,76 +71,52 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<string> GetAsync(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var response = await client.GetAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var response = await client.GetAsync(url);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            return await response.Content.ReadAsStringAsync();
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
     /// Post请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PostAsync<T, R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null)
+    public async Task<T?> PostAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -166,37 +130,25 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var formDataContent = new MultipartFormDataContent();
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            using var formDataContent = new MultipartFormDataContent();
-            if (headers != null)
+            foreach (var header in headers.Where(header => !formDataContent.Headers.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!formDataContent.Headers.Contains(header.Key))
-                    {
-                        formDataContent.Headers.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            formDataContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
-            formDataContent.Add(new StreamContent(fileStream, (int)fileStream.Length), "file", fileStream.Name);
-            var response = await client.PostAsync(url, formDataContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                formDataContent.Headers.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        formDataContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+        formDataContent.Add(new StreamContent(fileStream, (int)fileStream.Length), "file", fileStream.Name);
+        var response = await client.PostAsync(url, formDataContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -210,76 +162,52 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
+        var response = await client.PostAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync<R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync<TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            return await response.Content.ReadAsStringAsync();
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -292,77 +220,53 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<string> PostAsync(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
+        var response = await client.PostAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            return await response.Content.ReadAsStringAsync();
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
     /// Put请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PutAsync<T, R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null)
+    public async Task<T?> PutAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var response = await client.PutAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+        var response = await client.PutAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -376,35 +280,23 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<T?> PutAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync(url, stringContent);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
+        var response = await client.PutAsync(url, stringContent);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 
     /// <summary>
@@ -417,33 +309,21 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<T?> DeleteAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        try
+        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        if (headers != null)
         {
-            using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
-            if (headers != null)
+            foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
             {
-                foreach (var header in headers)
-                {
-                    if (!client.DefaultRequestHeaders.Contains(header.Key))
-                    {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                }
-            }
-            var response = await client.DeleteAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(result);
-            }
-            else
-            {
-                throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
-        catch (Exception)
+        var response = await client.DeleteAsync(url);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            throw;
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(result);
         }
+
+        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
     }
 }

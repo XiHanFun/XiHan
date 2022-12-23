@@ -25,7 +25,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static byte[] FormatIPAddressToByte(IPAddress address)
+    public static byte[] FormatIpAddressToByte(IPAddress address)
     {
         return address.GetAddressBytes();
     }
@@ -35,7 +35,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public static string FormatIPAddressToString(IPAddress address)
+    public static string FormatIpAddressToString(IPAddress address)
     {
         return address.ToString();
     }
@@ -55,7 +55,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static IPAddress FormatByteToIPAddress(byte[] bytes)
+    public static IPAddress FormatByteToIpAddress(byte[] bytes)
     {
         return new IPAddress(bytes);
     }
@@ -65,7 +65,7 @@ public static class IpFormatHelper
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static IPAddress FormatStringToIPAddress(string str)
+    public static IPAddress FormatStringToIpAddress(string str)
     {
         return IPAddress.Parse(str);
     }
@@ -73,20 +73,20 @@ public static class IpFormatHelper
     /// <summary>
     /// ipV4转ipV6
     /// </summary>
-    /// <param name="ipV4str"></param>
+    /// <param name="ipV4Str"></param>
     /// <returns></returns>
-    public static string FormatV4ToV6(string ipV4str)
+    public static string FormatV4ToV6(string ipV4Str)
     {
-        return IPAddress.Parse(ipV4str).MapToIPv6().ToString();
+        return IPAddress.Parse(ipV4Str).MapToIPv6().ToString();
     }
 
     /// <summary>
     /// ipV4转ipV6
     /// </summary>
-    /// <param name="ipV6str"></param>
+    /// <param name="ipV6Str"></param>
     /// <returns></returns>
-    public static string FormatV6ToV4(string ipV6str)
+    public static string FormatV6ToV4(string ipV6Str)
     {
-        return IPAddress.Parse(ipV6str).MapToIPv4().ToString();
+        return IPAddress.Parse(ipV6Str).MapToIPv4().ToString();
     }
 }

@@ -33,12 +33,12 @@ public static class StringFormatHelper
         if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
         // 有替换字符串开始替换
         StringBuilder strBuffer = new();
-        int start = 0;
-        int end = 0;
+        var start = 0;
+        var end = 0;
         // 查找替换内容，把它之前和上一个替换内容之后的字符串拼接起来
         while (true)
         {
-            start = content.IndexOf(oldStr, start);
+            start = content.IndexOf(oldStr, start, StringComparison.Ordinal);
             if (start == -1) break;
             strBuffer.Append(content[end..start]);
             strBuffer.Append(newStr);

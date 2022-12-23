@@ -44,10 +44,10 @@ public class PageWhereDto
 /// <summary>
 /// 通用分页实体基类(包含条件)
 /// </summary>
-public class PageWhereDto<Entity> : PageWhereDto where Entity : class
+public class PageWhereDto<TEntity> : PageWhereDto where TEntity : class
 {
     /// <summary>
     /// 查询条件
     /// </summary>
-    public Entity? Where { get; set; }
+    public TEntity? Where { get; set; }
 }

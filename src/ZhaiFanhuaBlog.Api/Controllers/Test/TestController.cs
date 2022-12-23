@@ -15,10 +15,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using ZhaiFanhuaBlog.Api.Controllers.Bases;
+using ZhaiFanhuaBlog.Extensions.Bases.Response;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Extensions.Filters;
-using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Info;
@@ -53,7 +53,7 @@ public class TestController : BaseApiController
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
         HttpContextHelper clientInfoHelper = new(httpContext);
-        return BaseResponseDto.OK(clientInfoHelper);
+        return BaseResponseDto.Ok(clientInfoHelper);
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> LogInfo(string log)
     {
-        return BaseResponseDto.OK($"测试日志写入:{log}");
+        return BaseResponseDto.Ok($"测试日志写入:{log}");
     }
 
     /// <summary>
@@ -117,13 +117,13 @@ public class TestController : BaseApiController
         }
         string resultString = encryptType switch
         {
-            "SHA1" => SHAHelper.EncryptSHA1(Encoding.UTF8, iStr),
-            "SHA256" => SHAHelper.EncryptSHA256(Encoding.UTF8, iStr),
-            "SHA384" => SHAHelper.EncryptSHA384(Encoding.UTF8, iStr),
-            "SHA512" => SHAHelper.EncryptSHA512(Encoding.UTF8, iStr),
-            _ => SHAHelper.EncryptSHA1(Encoding.UTF8, iStr),
+            "SHA1" => ShaHelper.EncryptSha1(Encoding.UTF8, iStr),
+            "SHA256" => ShaHelper.EncryptSha256(Encoding.UTF8, iStr),
+            "SHA384" => ShaHelper.EncryptSha384(Encoding.UTF8, iStr),
+            "SHA512" => ShaHelper.EncryptSha512(Encoding.UTF8, iStr),
+            _ => ShaHelper.EncryptSha1(Encoding.UTF8, iStr),
         };
-        return BaseResponseDto.OK(encryptType + "加密后结果为【" + resultString + "】");
+        return BaseResponseDto.Ok(encryptType + "加密后结果为【" + resultString + "】");
     }
 
     /// <summary>
@@ -152,21 +152,21 @@ public class TestController : BaseApiController
         {
             return iType switch
             {
-                "DES" => DESHelper.EncryptDES(Encoding.UTF8, desKey, iStr),
-                "AES" => AESHelper.EncryptAES(Encoding.UTF8, aesKey, iStr),
-                _ => DESHelper.EncryptDES(Encoding.UTF8, desKey, iStr),
+                "DES" => DesHelper.EncryptDes(Encoding.UTF8, desKey, iStr),
+                "AES" => AesHelper.EncryptAes(Encoding.UTF8, aesKey, iStr),
+                _ => DesHelper.EncryptDes(Encoding.UTF8, desKey, iStr),
             };
         }
         string Decrypt()
         {
             return iType switch
             {
-                "DES" => DESHelper.DecryptDES(Encoding.UTF8, desKey, iStr),
-                "AES" => AESHelper.DecryptAES(Encoding.UTF8, aesKey, iStr),
-                _ => DESHelper.DecryptDES(Encoding.UTF8, desKey, iStr),
+                "DES" => DesHelper.DecryptDes(Encoding.UTF8, desKey, iStr),
+                "AES" => AesHelper.DecryptAes(Encoding.UTF8, aesKey, iStr),
+                _ => DesHelper.DecryptDes(Encoding.UTF8, desKey, iStr),
             };
         }
-        return BaseResponseDto.OK("你选择了" + iEncryptOrDecrypt + "," + resultString);
+        return BaseResponseDto.Ok("你选择了" + iEncryptOrDecrypt + "," + resultString);
     }
 
     /// <summary>
@@ -177,7 +177,7 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAttribute()
     {
-        return BaseResponseDto.OK(DateTime.Now);
+        return BaseResponseDto.Ok(DateTime.Now);
     }
 
     /// <summary>
@@ -188,6 +188,6 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
-        return BaseResponseDto.OK(DateTime.Now);
+        return BaseResponseDto.Ok(DateTime.Now);
     }
 }

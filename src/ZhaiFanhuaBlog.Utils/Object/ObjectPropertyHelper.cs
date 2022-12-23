@@ -44,7 +44,7 @@ public static class ObjectPropertyHelper
     {
         if (instance != null && !string.IsNullOrEmpty(propertyName))
         {
-            PropertyInfo? findedPropertyInfo = instance.GetType().GetProperty(propertyName);
+            var findedPropertyInfo = instance.GetType().GetProperty(propertyName);
             if (findedPropertyInfo != null)
                 return true;
         }
@@ -60,11 +60,11 @@ public static class ObjectPropertyHelper
     /// <returns></returns>
     public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname) where TEntity : class
     {
-        Type type = typeof(TEntity);
-        PropertyInfo? property = type.GetProperty(propertyname);
+        var type = typeof(TEntity);
+        var property = type.GetProperty(propertyname);
         if (property != null)
         {
-            object? obj = property.GetValue(tentity, null);
+            var obj = property.GetValue(tentity, null);
             if (obj != null && obj.ToString() != null)
             {
                 return obj.ToString()!;
@@ -79,10 +79,10 @@ public static class ObjectPropertyHelper
     /// <typeparam name="TEntity"></typeparam>
     public static List<CustomPropertyInfo> GetObjectProperty<TEntity>()
     {
-        Type type = typeof(TEntity);
+        var type = typeof(TEntity);
         PropertyInfo[] properties = type.GetProperties();
         List<CustomPropertyInfo> customPropertyInfos = new();
-        foreach (PropertyInfo info in properties)
+        foreach (var info in properties)
         {
             CustomPropertyInfo customPropertyInfo = new()
             {

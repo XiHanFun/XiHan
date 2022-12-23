@@ -61,10 +61,10 @@ public class ClientModel
     /// <summary>
     /// 远程IPv4
     /// </summary>
-    public string? RemoteIPv4 { get; set; }
+    public string? RemoteIPv4 { get; init; }
 
     /// <summary>
     /// 远程IPv6
     /// </summary>
-    public string? RemoteIPv6 { get; set; }
+    public string? RemoteIPv6 { get; init; }
 }

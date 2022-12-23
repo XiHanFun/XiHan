@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using ZhaiFanhuaBlog.Extensions.Bases.Response;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
-using ZhaiFanhuaBlog.Extensions.Response;
 using ZhaiFanhuaBlog.Infrastructure.App.Service;
 using ZhaiFanhuaBlog.Infrastructure.App.Setting;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
@@ -110,7 +110,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToTextNotice(TemplateCardTextNotice templateCard)
     {
-        templateCard.CardType = TemplateCardType.text_notice.ToString();
+        templateCard.CardType = TemplateCardType.TextNotice.ToString();
         WeChatResultInfo? result = await _WeChatRobot.TextNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
@@ -122,7 +122,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard)
     {
-        templateCard.CardType = TemplateCardType.news_notice.ToString();
+        templateCard.CardType = TemplateCardType.NewsNotice.ToString();
         WeChatResultInfo? result = await _WeChatRobot.NewsNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
@@ -148,7 +148,7 @@ public class WeChatPushService : IWeChatPushService
         if (result != null)
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-                return BaseResponseDto.OK("发送成功");
+                return BaseResponseDto.Ok("发送成功");
             else
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
         }
@@ -167,7 +167,7 @@ public class WeChatPushService : IWeChatPushService
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
             {
                 WeChatUploadResult uploadResult = new("上传成功", result.MediaId);
-                return BaseResponseDto.OK(uploadResult);
+                return BaseResponseDto.Ok(uploadResult);
             }
             else
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "上传失败");

@@ -56,7 +56,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> TextMessage(Text text)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.text.ToString();
+        var msgtype = MsgTypeEnum.Text.ToString();
         // 发送
         var result = await SendMessage(new { msgtype, text });
         return result;
@@ -70,7 +70,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> MarkdownMessage(Markdown markdown)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.markdown.ToString();
+        var msgtype = MsgTypeEnum.Markdown.ToString();
         // 发送
         var result = await SendMessage(new { msgtype, markdown });
         return result;
@@ -84,7 +84,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> ImageMessage(Image image)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.image.ToString();
+        var msgtype = MsgTypeEnum.Image.ToString();
         // 发送
         var result = await SendMessage(new { msgtype, image });
         return result;
@@ -98,7 +98,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> NewsMessage(News news)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.news.ToString();
+        var msgtype = MsgTypeEnum.News.ToString();
         // 发送
         var result = await SendMessage(new { msgtype, news });
         return result;
@@ -112,7 +112,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> FileMessage(File file)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.file.ToString();
+        var msgtype = MsgTypeEnum.File.ToString();
         // 发送
         var result = await SendMessage(new { msgtype, file });
         return result;
@@ -123,12 +123,12 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<WeChatResultInfo?> TextNoticeMessage(TemplateCardTextNotice template_card)
+    public async Task<WeChatResultInfo?> TextNoticeMessage(TemplateCardTextNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.template_card.ToString();
+        var msgtype = MsgTypeEnum.TemplateCard.ToString();
         // 发送
-        var result = await SendMessage(new { msgtype, template_card });
+        var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;
     }
 
@@ -137,12 +137,12 @@ public class WeChatRobotHelper
     /// </summary>
     /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<WeChatResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice template_card)
+    public async Task<WeChatResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.template_card.ToString();
+        var msgtype = MsgTypeEnum.TemplateCard.ToString();
         // 发送
-        var result = await SendMessage(new { msgtype, template_card });
+        var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;
     }
 
@@ -160,7 +160,7 @@ public class WeChatRobotHelper
             { "filelength",fileStream.Length.ToString() },
         };
         // 发起请求，上传地址，调用接口凭证, 机器人webhookurl中的key参数
-        WeChatResultInfo? result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _FileUrl, fileStream, headers);
+        var result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _FileUrl, fileStream, headers);
         return result;
     }
 
@@ -174,7 +174,7 @@ public class WeChatRobotHelper
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        WeChatResultInfo? result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _MessageUrl, sendMessage, null);
+        var result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _MessageUrl, sendMessage, null);
         return result;
     }
 }

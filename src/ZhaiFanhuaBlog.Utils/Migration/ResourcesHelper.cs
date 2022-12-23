@@ -33,14 +33,14 @@ public static class ResourcesHelper
 
         List<MigrationInfo> list = new();
         string[] paths = DirFileHelper.GetFiles(resourceInfo.Path);
-        foreach (string path in paths)
+        foreach (var path in paths)
         {
             MigrationInfo migrationInfo = new()
             {
                 // 路径
                 Path = path
             };
-            string content = File.ReadAllText(path, Encoding.UTF8);
+            var content = File.ReadAllText(path, Encoding.UTF8);
             // 替换资源
             content = StringFormatHelper.ReplaceStr(content, resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写

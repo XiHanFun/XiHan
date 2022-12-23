@@ -23,12 +23,12 @@ public static class IpSearchHelper
     /// <summary>
     /// 单一实例
     /// </summary>
-    private static Searcher? _SearcherInstance = null;
+    private static Searcher? _searcherInstance = null;
 
     /// <summary>
     /// 锁
     /// </summary>
-    private static readonly object _Lock = new();
+    private static readonly object Lock = new();
 
     /// <summary>
     /// 访问器
@@ -37,11 +37,11 @@ public static class IpSearchHelper
     {
         get
         {
-            lock (_Lock)
+            lock (Lock)
             {
-                _SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
+                _searcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
             }
-            return _SearcherInstance;
+            return _searcherInstance;
         }
     }
 
@@ -60,7 +60,7 @@ public static class IpSearchHelper
         try
         {
             // 中国|0|浙江省|杭州市|电信
-            string? modelStr = GetSearcher.Search(ip);
+            var modelStr = GetSearcher.Search(ip);
             var addressArray = modelStr?.Split('|');
             AddressModel model = new()
             {

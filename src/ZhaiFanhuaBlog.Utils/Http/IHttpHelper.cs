@@ -41,13 +41,13 @@ public interface IHttpHelper
     /// Post请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PostAsync<T, R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null);
+    Task<T?> PostAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求上传文件
@@ -74,13 +74,13 @@ public interface IHttpHelper
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<string> PostAsync<R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null);
+    Task<string> PostAsync<TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求
@@ -96,13 +96,13 @@ public interface IHttpHelper
     /// Put请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="TR"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PutAsync<T, R>(HttpEnum httpEnum, string url, R request, Dictionary<string, string>? headers = null);
+    Task<T?> PutAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Put请求

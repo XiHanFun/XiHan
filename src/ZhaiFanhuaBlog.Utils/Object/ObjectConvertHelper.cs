@@ -25,7 +25,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static int ObjToInt(this object thisValue)
     {
-        int reval = 0;
+        var reval = 0;
         if (thisValue == null)
         {
             return 0;
@@ -45,7 +45,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static int ObjToInt(this object thisValue, int errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out int reval))
+        if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -59,7 +59,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static double ObjToMoney(this object thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out double reval))
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -74,7 +74,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static double ObjToMoney(this object thisValue, double errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out double reval))
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -123,7 +123,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static decimal ObjToDecimal(this object thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out decimal reval))
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -138,7 +138,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static decimal ObjToDecimal(this object thisValue, decimal errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out decimal reval))
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -152,7 +152,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static DateTime ObjToDate(this object thisValue)
     {
-        DateTime reval = DateTime.MinValue;
+        var reval = DateTime.MinValue;
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reval))
         {
             reval = Convert.ToDateTime(thisValue);
@@ -168,7 +168,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static DateTime ObjToDate(this object thisValue, DateTime errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out DateTime reval))
+        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reval))
         {
             return reval;
         }
@@ -182,7 +182,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static bool ObjToBool(this object thisValue)
     {
-        bool reval = false;
+        var reval = false;
         if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
         {
             return reval;
@@ -197,7 +197,7 @@ public static class ObjectConvertHelper
     /// <returns></returns>
     public static string DateToTimeStamp(this DateTime thisValue)
     {
-        TimeSpan ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        var ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return Convert.ToInt64(ts.TotalSeconds).ToString();
     }
 }

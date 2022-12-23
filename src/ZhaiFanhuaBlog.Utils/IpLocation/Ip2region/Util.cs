@@ -3,13 +3,13 @@ using System.Net;
 namespace ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
 /// <summary>
-/// ¹¤¾ßÀà
+/// å·¥å…·ç±»
 /// powerd by https://github.com/lionsoul2014/ip2region
 /// </summary>
 public static class Util
 {
     /// <summary>
-    /// µØÖ·×ª»»
+    /// åœ°å€è½¬æ¢
     /// </summary>
     /// <param name="ipAddress"></param>
     /// <returns></returns>
@@ -20,19 +20,19 @@ public static class Util
     }
 
     /// <summary>
-    /// µØÖ·×ª»»
+    /// åœ°å€è½¬æ¢
     /// </summary>
     /// <param name="ipAddress"></param>
     /// <returns></returns>
     public static uint IpAddressToUInt32(IPAddress ipAddress)
     {
-        byte[] bytes = ipAddress.GetAddressBytes();
+        var bytes = ipAddress.GetAddressBytes();
         Array.Reverse(bytes);
         return BitConverter.ToUInt32(bytes, 0);
     }
 
     /// <summary>
-    /// ÖĞ¼äIP
+    /// ä¸­é—´IP
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
@@ -41,7 +41,7 @@ public static class Util
         => (x & y) + ((x ^ y) >> 1);
 
     /// <summary>
-    /// ÖĞ¼äIP
+    /// ä¸­é—´IP
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>

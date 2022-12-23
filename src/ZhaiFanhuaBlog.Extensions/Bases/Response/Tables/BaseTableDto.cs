@@ -16,7 +16,7 @@ namespace ZhaiFanhuaBlog.Extensions.Bases.Response.Tables;
 /// <summary>
 /// 通用表格实体(支持分页)
 /// </summary>
-public class BaseTableDto<Entity> where Entity : class
+public class BaseTableDto<TEntity> where TEntity : class
 {
     /// <summary>
     /// 数据总数
@@ -26,5 +26,5 @@ public class BaseTableDto<Entity> where Entity : class
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<Entity>? Data { get; set; }
+    public List<TEntity>? Data { get; set; }
 }

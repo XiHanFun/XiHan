@@ -35,9 +35,11 @@ public static class ClientInfoHelper
             throw new ArgumentNullException(nameof(httpContext));
         }
 
-        ClientModel clientModel = new();
-        clientModel.RemoteIPv4 = ClientIpInfoHelper.GetClientIpV4(httpContext);
-        clientModel.RemoteIPv6 = ClientIpInfoHelper.GetClientIpV6(httpContext);
+        ClientModel clientModel = new()
+        {
+            RemoteIPv4 = ClientIpInfoHelper.GetClientIpV4(httpContext),
+            RemoteIPv6 = ClientIpInfoHelper.GetClientIpV6(httpContext)
+        };
 
         var header = httpContext.Request.HttpContext.Request.Headers;
         if (header.ContainsKey("Accept-Language"))
@@ -48,31 +50,27 @@ public static class ClientInfoHelper
         {
             clientModel.Referer = header["Referer"].ToString();
         }
-        if (header.ContainsKey("User-Agent"))
+
+        if (!header.ContainsKey("User-Agent")) return clientModel;
+        var agent = header["User-Agent"].ToString();
+        var uaParser = Parser.GetDefault();
+        var clientInfo = uaParser.Parse(agent);
+        clientModel.Agent = agent;
+        clientModel.OsName = clientInfo.OS.Family;
+        if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
         {
-            string agent = header["User-Agent"].ToString();
-            var uaParser = Parser.GetDefault();
-            ClientInfo clientInfo = uaParser.Parse(agent);
-            clientModel.Agent = agent;
-            clientModel.DeviceType = clientInfo.Device.Family;
-            clientModel.OsName = clientInfo.OS.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
+            clientModel.OsVersion = clientInfo.OS.Major;
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
             {
-                clientModel.OsVersion = clientInfo.OS.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
-                {
-                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
-                }
+                clientModel.OsVersion += "." + clientInfo.OS.Minor;
             }
-            clientModel.UaName = clientInfo.UA.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
-            {
-                clientModel.UaVersion = clientInfo.UA.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
-                {
-                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
-                }
-            }
+        }
+        clientModel.UaName = clientInfo.UA.Family;
+        if (string.IsNullOrWhiteSpace(clientInfo.UA.Major)) return clientModel;
+        clientModel.UaVersion = clientInfo.UA.Major;
+        if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
+        {
+            clientModel.UaVersion += "." + clientInfo.UA.Minor;
         }
         return clientModel;
     }
@@ -85,7 +83,7 @@ public static class ClientInfoHelper
     /// <param name="agent"></param>
     private static string GetSystemName(string agent)
     {
-        string sn = "Unknown";
+        var sn = "Unknown";
 
         if (agent.Contains("nt 5.0"))
         {
@@ -157,7 +155,7 @@ public static class ClientInfoHelper
     /// <returns></returns>
     private static string GetSystemType(string agent)
     {
-        string st = "Unknown";
+        var st = "Unknown";
         if (agent.Contains("x64"))
             st = "64位";
         else if (agent.Contains("x86"))
@@ -171,7 +169,7 @@ public static class ClientInfoHelper
     /// <param name="agent"></param>
     private static string GetBrowserName(string agent)
     {
-        string bn = "Unknown";
+        var bn = "Unknown";
         if (agent.Contains("opera/ucweb/"))
         {
             bn = "UC Opera";
@@ -238,7 +236,7 @@ public static class ClientInfoHelper
     /// <param name="agent"></param>
     private static string GetBrowserVersion(string agent)
     {
-        string bv = "Unknown";
+        var bv = "Unknown";
         return bv;
     }
 

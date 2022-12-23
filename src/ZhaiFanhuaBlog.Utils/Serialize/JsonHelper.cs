@@ -24,7 +24,7 @@ public class JsonHelper
     /// <summary>
     /// 文件路径
     /// </summary>
-    private readonly string _JsonFileName = string.Empty;
+    private readonly string _JsonFileName;
 
     /// <summary>
     /// 构造函数
@@ -46,7 +46,7 @@ public class JsonHelper
         {
             return default;
         }
-        string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
         var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
@@ -64,11 +64,11 @@ public class JsonHelper
             return default;
         }
         using StreamReader streamReader = new(_JsonFileName);
-        string jsonStr = streamReader.ReadToEnd();
+        var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         var keys = keyLink.Split(':');
-        dynamic currentObject = obj;
+        var currentObject = obj;
         foreach (var key in keys)
         {
             currentObject = currentObject[key];
@@ -85,19 +85,18 @@ public class JsonHelper
     /// 设置对象值
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="keyLink">对象的键名链，例如 Order.User，当其上级不存在时将创建</param>
     /// <param name="value"></param>
-    public void Set<TEntity, REntity>(string keyLink, REntity value)
+    public void Set<TEntity, TREntity>(string keyLink, TREntity value)
     {
-        dynamic? jsoObj;
-        string jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
-        jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+        var jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
+        dynamic? jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
         var keys = keyLink.Split(':');
-        dynamic currentObject = jsoObj;
-        for (int i = 0; i < keys.Length; i++)
+        var currentObject = jsoObj;
+        for (var i = 0; i < keys.Length; i++)
         {
             var oldObject = currentObject;
             currentObject = currentObject[keys[i]];
@@ -116,13 +115,11 @@ public class JsonHelper
             else
             {
                 //如果不存在，新建
-                if (currentObject == null)
-                {
-                    JsonDocument obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
-                    oldObject[keys[i]] = obj;
-                    currentObject = oldObject[keys[i]];
-                    continue;
-                }
+                if (currentObject != null) continue;
+                var obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
+                oldObject[keys[i]] = obj;
+                currentObject = oldObject[keys[i]];
+                continue;
             }
         }
         Save<dynamic>(jsoObj);
@@ -133,9 +130,9 @@ public class JsonHelper
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="jsoObj"></param>
-    public void Save<TEntity>(TEntity jsoObj)
+    private void Save<TEntity>(TEntity jsoObj)
     {
-        string jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
+        var jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
         File.WriteAllText(_JsonFileName, jsonStr, Encoding.UTF8);
     }
 }

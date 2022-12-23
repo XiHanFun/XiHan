@@ -12,12 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
+using ZhaiFanhuaBlog.Extensions.Bases.Response.Enums;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Results;
 using ZhaiFanhuaBlog.Extensions.Bases.Response.Validations;
-using ZhaiFanhuaBlog.Extensions.Response.Enum;
 using ZhaiFanhuaBlog.Utils.Summary;
 
-namespace ZhaiFanhuaBlog.Extensions.Response;
+namespace ZhaiFanhuaBlog.Extensions.Bases.Response;
 
 /// <summary>
 /// 通用响应实体
@@ -43,7 +43,7 @@ public static class BaseResponseDto
     /// 响应成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto OK()
+    public static BaseResultDto Ok()
     {
         return new BaseResultDto
         {
@@ -58,7 +58,7 @@ public static class BaseResponseDto
     /// 响应成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto OK(string messageData)
+    public static BaseResultDto Ok(string messageData)
     {
         return new BaseResultDto
         {
@@ -74,7 +74,7 @@ public static class BaseResponseDto
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static BaseResultDto OK(dynamic data)
+    public static BaseResultDto Ok(dynamic data)
     {
         return new BaseResultDto
         {
