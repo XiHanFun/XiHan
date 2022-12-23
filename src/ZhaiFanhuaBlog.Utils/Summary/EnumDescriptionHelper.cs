@@ -26,7 +26,7 @@ public static class EnumDescriptionHelper
     /// </summary>
     /// <param name="enumObj"></param>
     /// <returns></returns>
-    public static string GetEnumDescription(Enum enumObj)
+    public static string GetEnumDescription(this Enum enumObj)
     {
         var enumName = enumObj.ToString();
         var type = enumObj.GetType();

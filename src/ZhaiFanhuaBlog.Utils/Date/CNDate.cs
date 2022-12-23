@@ -1975,9 +1975,6 @@ public class ChineseCalendar
                 case >= 219 and <= 320:
                     index = 11;
                     break;
-                default:
-                    index = 0;
-                    break;
             }
 
             return ConstellationName[index];

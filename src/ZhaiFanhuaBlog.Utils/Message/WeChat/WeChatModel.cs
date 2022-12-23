@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.Message.WeChat;
@@ -567,31 +568,37 @@ public enum MsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
+    [Description("text")]
     Text,
 
     /// <summary>
     /// 文档类型
     /// </summary>
+    [Description("markdown")]
     Markdown,
 
     /// <summary>
     /// 图片类型
     /// </summary>
+    [Description("image")]
     Image,
 
     /// <summary>
     /// 图文类型
     /// </summary>
+    [Description("news")]
     News,
 
     /// <summary>
     /// 文件类型
     /// </summary>
+    [Description("file")]
     File,
 
     /// <summary>
     /// 模版卡片类型
     /// </summary>
+    [Description("template_card")]
     TemplateCard
 }
 
@@ -603,10 +610,12 @@ public enum TemplateCardType
     /// <summary>
     /// 文本通知类型，属于模版卡片类型
     /// </summary>
+    [Description("text_notice")]
     TextNotice,
 
     /// <summary>
     /// 图文展示类型，属于模版卡片类型
     /// </summary>
+    [Description("news_notice")]
     NewsNotice
 }

@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Models.Bases.Entity;
 /// <summary>
 /// 审核基类，含主键，创建，修改，删除
 /// </summary>
-public abstract class BaseAuditEntity<Tkey> : BaseDeleteEntity<Guid>
+public abstract class BaseAuditEntity<TKey> : BaseDeleteEntity<Guid>
 {
     /// <summary>
     /// 审核用户

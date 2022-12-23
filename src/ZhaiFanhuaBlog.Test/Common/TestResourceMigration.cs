@@ -26,13 +26,13 @@ public static class TestResourceMigration
     /// </summary>
     public static void ResourceMigration()
     {
-        ResourceInfo resourceInfo = new ResourceInfo();
+        var resourceInfo = new ResourceInfo();
         resourceInfo.Path = @"C:\Users\zhaifanhua\Desktop\technology";
         resourceInfo.OldPrefix = @"https://img.zhaifanhua.com/blogimg";
         resourceInfo.NewPrefix = @"https://cdn.zhaifanhua.com/blog/img";
         ConsoleHelper.WriteLineInfo($@"============资源迁移开始============");
-        List<MigrationInfo> migrationInfos = ResourcesHelper.Migration(resourceInfo);
-        foreach (MigrationInfo migrationInfo in migrationInfos)
+        var migrationInfos = ResourcesHelper.Migration(resourceInfo);
+        foreach (var migrationInfo in migrationInfos)
         {
             if (migrationInfo.IsSucess)
             {

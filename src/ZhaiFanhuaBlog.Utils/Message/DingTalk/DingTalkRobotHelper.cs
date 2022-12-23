@@ -16,6 +16,7 @@ using System.Text;
 using ZhaiFanhuaBlog.Utils.Encryptions;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
+using ZhaiFanhuaBlog.Utils.Summary;
 
 namespace ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
@@ -32,12 +33,12 @@ public class DingTalkRobotHelper
     /// <summary>
     /// 正式访问地址
     /// </summary>
-    private readonly string _Url = string.Empty;
+    private readonly string _Url;
 
     /// <summary>
     /// 机密
     /// </summary>
-    private readonly string? _Secret = string.Empty;
+    private readonly string? _Secret;
 
     /// <summary>
     /// 构造函数
@@ -61,7 +62,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Text.ToString();
+        var msgtype = MsgTypeEnum.Text.GetEnumDescription();
         // 指定目标人群
         var at = new At
         {
@@ -80,7 +81,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> LinkMessage(Link link)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Link.ToString();
+        var msgtype = MsgTypeEnum.Link.GetEnumDescription();
         // 发送
         var result = await Send(new { msgtype, link });
         return result;
@@ -95,7 +96,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Markdown.ToString();
+        var msgtype = MsgTypeEnum.Markdown.GetEnumDescription();
         // 指定目标人群
         var at = new At
         {
@@ -114,7 +115,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> ActionCardMessage(ActionCard actionCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.ActionCard.ToString();
+        var msgtype = MsgTypeEnum.ActionCard.GetEnumDescription();
         // 发送
         var result = await Send(new { msgtype, actionCard });
         return result;
@@ -127,7 +128,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> FeedCardMessage(FeedCard feedCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.FeedCard.ToString();
+        var msgtype = MsgTypeEnum.FeedCard.GetEnumDescription();
         // 发送
         var result = await Send(new { msgtype, feedCard });
         return result;

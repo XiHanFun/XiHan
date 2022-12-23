@@ -33,13 +33,13 @@ public static class CorsSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        bool isEnabledCors = AppSettings.Cors.IsEnabled.Get();
+        var isEnabledCors = AppSettings.Cors.IsEnabled.Get();
         if (isEnabledCors)
         {
             services.AddCors(options =>
             {
                 // 策略名称
-                string policyName = AppSettings.Cors.PolicyName.Get();
+                var policyName = AppSettings.Cors.PolicyName.Get();
                 // 支持多个域名端口，端口号后不可带/符号
                 string[] origins = AppSettings.Cors.Origins.GetSection();
                 // 添加指定策略

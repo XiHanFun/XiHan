@@ -80,7 +80,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             }
         }
         // 请求构造函数和方法,调用下一个过滤器
-        ResultExecutedContext resultExecuted = await next();
+        var resultExecuted = await next();
         // 执行结果
         if (resultExecuted.Result != null)
         {
@@ -96,9 +96,9 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             // 获取请求的 Url 地址(域名、路径、参数)
             var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
             // 写入日志
-            string info = $"\t 请求Ip：{remoteIp}\n" +
-                     $"\t 请求地址：{requestUrl}\n" +
-                     $"\t 请求方法：{method}";
+            var info = $"\t 请求Ip：{remoteIp}\n" +
+                       $"\t 请求地址：{requestUrl}\n" +
+                       $"\t 请求方法：{method}";
             var result = JsonSerializer.Serialize(resultExecuted.Result);
             if (ResultLogSwitch)
             {

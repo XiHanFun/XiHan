@@ -115,7 +115,7 @@ public class TestController : BaseApiController
         {
             return BaseResponseDto.BadRequest("请输入待加密字符串");
         }
-        string resultString = encryptType switch
+        var resultString = encryptType switch
         {
             "SHA1" => ShaHelper.EncryptSha1(Encoding.UTF8, iStr),
             "SHA256" => ShaHelper.EncryptSha256(Encoding.UTF8, iStr),
@@ -140,9 +140,9 @@ public class TestController : BaseApiController
         {
             return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
         }
-        string aesKey = AppSettings.Encryptions.AesKey.Get();
-        string desKey = AppSettings.Encryptions.DesKey.Get();
-        string resultString = iEncryptOrDecrypt switch
+        var aesKey = AppSettings.Encryptions.AesKey.Get();
+        var desKey = AppSettings.Encryptions.DesKey.Get();
+        var resultString = iEncryptOrDecrypt switch
         {
             "Encrypt" => "加密后结果为【" + Encrypt() + "】",
             "Decrypt" => "解密后结果为【" + Decrypt() + "】",

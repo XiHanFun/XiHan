@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Models.Bases.Entity;
 /// <summary>
 /// 删除基类，含主键，创建，修改
 /// </summary>
-public abstract class BaseDeleteEntity<Tkey> : BaseModifyEntity<Guid>
+public abstract class BaseDeleteEntity<TKey> : BaseModifyEntity<Guid>
 {
     /// <summary>
     /// 软删除

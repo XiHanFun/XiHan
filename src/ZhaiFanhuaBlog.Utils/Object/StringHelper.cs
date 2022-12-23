@@ -31,18 +31,16 @@ namespace ZhaiFanhuaBlog.Utils.Object
         public static List<string> GetStrArray(string str, char speater, bool toLower)
         {
             List<string> list = new();
-            string[] ss = str.Split(speater);
+            var ss = str.Split(speater);
             foreach (var s in ss)
             {
-                if (!string.IsNullOrEmpty(s) && s != speater.ToString())
+                if (string.IsNullOrEmpty(s) || s == speater.ToString()) continue;
+                var strVal = s;
+                if (toLower)
                 {
-                    var strVal = s;
-                    if (toLower)
-                    {
-                        strVal = s.ToLower();
-                    }
-                    list.Add(strVal);
+                    strVal = s.ToLower();
                 }
+                list.Add(strVal);
             }
             return list;
         }
@@ -53,8 +51,8 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="str"></param>
         /// <returns></returns>
         public static string[] GetStrArray(string str)
-        {
-            return str.Split(new Char[] { ',' });
+        { 
+            return str.Split(new char[] { ',' });
         }
 
         /// <summary>
@@ -93,12 +91,12 @@ namespace ZhaiFanhuaBlog.Utils.Object
             {
                 if (i == list.Count - 1)
                 {
-                    sb.Append(list[i].ToString());
+                    sb.Append(list[i]);
                 }
                 else
                 {
                     sb.Append(list[i]);
-                    sb.Append(",");
+                    sb.Append(',');
                 }
             }
             return sb.ToString();
@@ -190,21 +188,13 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <summary>
         /// 把字符串按照指定分隔符装成 List 去除重复
         /// </summary>
-        /// <param name="o_str"></param>
+        /// <param name="oStr"></param>
         /// <param name="sepeater"></param>
         /// <returns></returns>
         public static List<string> GetSubStringList(string oStr, char sepeater)
         {
-            List<string> list = new List<string>();
-            string[] ss = oStr.Split(sepeater);
-            foreach (var s in ss)
-            {
-                if (!string.IsNullOrEmpty(s) && s != sepeater.ToString())
-                {
-                    list.Add(s);
-                }
-            }
-            return list;
+            var ss = oStr.Split(sepeater);
+            return ss.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString()).ToList();
         }
 
         #region 将字符串样式转换为纯字符串
@@ -215,22 +205,21 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="strList"></param>
         /// <param name="splitString"></param>
         /// <returns></returns>
-        public static string GetCleanStyle(string strList, string splitString)
+        public static string GetCleanStyle(string? strList, string splitString)
         {
-            var retrunValue = "";
+            var result = "";
             //如果为空，返回空值
             if (strList == null)
             {
-                retrunValue = "";
+                result = "";
             }
             else
             {
                 //返回去掉分隔符
-                var newString = "";
-                newString = strList.Replace(splitString, "");
-                retrunValue = newString;
+                var newString = strList.Replace(splitString, "");
+                result = newString;
             }
-            return retrunValue;
+            return result;
         }
 
         #endregion
@@ -245,9 +234,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="splitString"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public static string GetNewStyle(string strList, string newStyle, string splitString, out string error)
+        public static string? GetNewStyle(string? strList, string? newStyle, string splitString, out string error)
         {
-            string returnValue;
+            string? returnValue;
             //如果输入空值，返回空，并给出错误提示
             if (strList == null)
             {
@@ -268,21 +257,20 @@ namespace ZhaiFanhuaBlog.Utils.Object
                 {
                     //检查新样式中分隔符的位置
                     StringBuilder lengstr = new();
-                    for (var i = 0; i < newStyle.Length; i++)
-                    {
-                        if (newStyle.Substring(i, 1) == splitString)
+                    if (newStyle != null)
+                        for (var i = 0; i < newStyle.Length; i++)
                         {
-                            lengstr.Append(i + ",");
+                            if (newStyle.Substring(i, 1) == splitString)
+                            {
+                                lengstr.Append(i + ",");
+                            }
                         }
-                    }
+
                     if (!string.IsNullOrWhiteSpace(lengstr.ToString()))
                     {
                         //将分隔符放在新样式中的位置
-                        string[] str = lengstr.ToString().Split(',');
-                        foreach (var bb in str)
-                        {
-                            strList = strList.Insert(int.Parse(bb), splitString);
-                        }
+                        var str = lengstr.ToString().Split(',');
+                        strList = str.Aggregate(strList, (current, bb) => current.Insert(int.Parse(bb), splitString));
                     }
                     //给出最后的结果
                     returnValue = strList;
@@ -301,10 +289,10 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <param name="str"></param>
         /// <param name="splitstr"></param>
         /// <returns></returns>
-        public static string[]? SplitMulti(string str, string splitstr)
+        public static string[]? SplitMulti(string? str, string splitstr)
         {
             string[]? strArray = null;
-            if ((str != null) && (str != ""))
+            if (!string.IsNullOrEmpty(str))
             {
                 strArray = new Regex(splitstr).Split(str);
             }
@@ -335,13 +323,12 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <summary>
         /// 获取正确的Id，如果不是正整数，返回0
         /// </summary>
-        /// <param name="_value"></param>
+        /// <param name="value"></param>
         /// <returns>返回正确的整数ID，失败返回0</returns>
-        public static int StrToId(string value)
+        public static int StrToId(string? value)
         {
-            if (IsNumberId(value))
-                return int.Parse(value);
-            return 0;
+            if (!IsNumberId(value)) return 0;
+            return value != null ? int.Parse(value) : 0;
         }
 
         #endregion
@@ -351,9 +338,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// <summary>
         /// 检查一个字符串是否是纯数字构成的，一般用于查询字符串参数的有效性验证。(0除外)
         /// </summary>
-        /// <param name="_value">需验证的字符串。。</param>
+        /// <param name="value">需验证的字符串。。</param>
         /// <returns>是否合法的bool值。</returns>
-        public static bool IsNumberId(string value)
+        public static bool IsNumberId(string? value)
         {
             return QuickValidate("^[1-9]*[0-9]*$", value);
         }
@@ -362,21 +349,17 @@ namespace ZhaiFanhuaBlog.Utils.Object
 
         #region 快速验证一个字符串是否符合指定的正则表达式。
 
-        /// <summary>
-        /// 快速验证一个字符串是否符合指定的正则表达式。
-        /// </summary>
-        /// <param name="_express">正则表达式的内容。</param>
-        /// <param name="_value">需验证的字符串。</param>
-        /// <returns>是否合法的bool值。</returns>
-        public static bool QuickValidate(string express, string value)
+       /// <summary>
+       /// 快速验证一个字符串是否符合指定的正则表达式
+       /// </summary>
+       /// <param name="express"></param>
+       /// <param name="value"></param>
+       /// <returns></returns>
+        public static bool QuickValidate(string express, string? value)
         {
             if (value == null) return false;
             var myRegex = new Regex(express);
-            if (value.Length == 0)
-            {
-                return false;
-            }
-            return myRegex.IsMatch(value);
+            return value.Length != 0 && myRegex.IsMatch(value);
         }
 
         #endregion
@@ -393,9 +376,9 @@ namespace ZhaiFanhuaBlog.Utils.Object
             System.Text.ASCIIEncoding ascii = new();
             var tempLen = 0;
             var s = ascii.GetBytes(inputString);
-            for (var i = 0; i < s.Length; i++)
+            foreach (var t in s)
             {
-                if (s[i] == 63)
+                if (t == 63)
                     tempLen += 2;
                 else
                     tempLen += 1;
@@ -481,16 +464,11 @@ namespace ZhaiFanhuaBlog.Utils.Object
             };
 
             var newReg = aryReg[0];
-            var strOutput = strHtml;
-            for (var i = 0; i < aryReg.Length; i++)
-            {
-                Regex regex = new(aryReg[i], RegexOptions.IgnoreCase);
-                strOutput = regex.Replace(strOutput, string.Empty);
-            }
+            var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
 
-            strOutput.Replace("<", "");
-            strOutput.Replace(">", "");
-            strOutput.Replace("\r\n", "");
+            var replace = strOutput.Replace("<", "");
+            var s = strOutput.Replace(">", "");
+            var replace1 = strOutput.Replace("\r\n", "");
 
             return strOutput;
         }
@@ -504,7 +482,7 @@ namespace ZhaiFanhuaBlog.Utils.Object
         /// </summary>
         /// <typeparam name="T">要验证的对象的类型</typeparam>
         /// <param name="data">要验证的对象</param>
-        public static bool IsNullOrEmpty<T>(T data)
+        public static bool IsNullOrEmpty<T>(T? data)
         {
             //如果为null
             if (data == null)
@@ -513,29 +491,21 @@ namespace ZhaiFanhuaBlog.Utils.Object
             }
 
             //如果为""
-            if (data.GetType() == typeof(string))
-            {
-                if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-                {
-                    return true;
-                }
-            }
-
-            //如果为DBNull
-            if (data.GetType() == typeof(DBNull))
+            if (data is not string) return data is DBNull;
+            if (string.IsNullOrEmpty(data.ToString()?.Trim()))
             {
                 return true;
             }
 
-            //不为空
-            return false;
+            //如果为DBNull
+            return data is DBNull;
         }
 
         /// <summary>
         /// 判断对象是否为空，为空返回true
         /// </summary>
         /// <param name="data">要验证的对象</param>
-        public static bool IsNullOrEmpty(object data)
+        public static bool IsNullOrEmpty(object? data)
         {
             //如果为null
             if (data == null)
@@ -544,22 +514,14 @@ namespace ZhaiFanhuaBlog.Utils.Object
             }
 
             //如果为""
-            if (data.GetType() == typeof(string))
-            {
-                if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-                {
-                    return true;
-                }
-            }
-
-            //如果为DBNull
-            if (data.GetType() == typeof(DBNull))
+            if (data is not string) return data is DBNull;
+            if (string.IsNullOrEmpty(data.ToString()?.Trim()))
             {
                 return true;
             }
 
-            //不为空
-            return false;
+            //如果为DBNull
+            return data is DBNull;
         }
 
         #endregion

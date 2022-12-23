@@ -87,10 +87,10 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
                 var userId = httpContext.User?.FindFirstValue("UserId");
                 // 写入日志
-                string info = $"\t 请求Ip：{remoteIp}\n" +
-                         $"\t 请求地址：{requestUrl}\n" +
-                         $"\t 请求方法：{method}\n" +
-                         $"\t 操作用户：{userId}";
+                var info = $"\t 请求Ip：{remoteIp}\n" +
+                           $"\t 请求地址：{requestUrl}\n" +
+                           $"\t 请求方法：{method}\n" +
+                           $"\t 操作用户：{userId}";
                 if (ExceptionLogSwitch)
                     _ILogger.LogError($"系统异常\n{info}\n{context.Exception}");
             }

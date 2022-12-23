@@ -18,7 +18,7 @@ namespace ZhaiFanhuaBlog.Models.Bases.Entity;
 /// <summary>
 /// 修改基类，含主键，创建
 /// </summary>
-public abstract class BaseModifyEntity<Tkey> : BaseCreateEntity<Guid>
+public abstract class BaseModifyEntity<TKey> : BaseCreateEntity<Guid>
 {
     /// <summary>
     /// 修改用户

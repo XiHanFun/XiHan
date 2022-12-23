@@ -32,7 +32,7 @@ public class BoolJsonConverter : JsonConverter<bool>
     {
         if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
         {
-            if (bool.TryParse(reader.GetString(), out bool date))
+            if (bool.TryParse(reader.GetString(), out var date))
                 return date;
         }
         return reader.GetBoolean();

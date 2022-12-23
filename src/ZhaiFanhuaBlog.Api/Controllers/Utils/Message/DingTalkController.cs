@@ -47,13 +47,13 @@ public class DingTalkController : BaseApiController
     [HttpPost("Text")]
     public async Task<BaseResultDto> DingTalkToText()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var text = new Text
         {
             Content = keyWord + "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
         List<string> atMobiles = new() { "1302873****" };
-        bool isAtAll = false;
+        var isAtAll = false;
         return await _IDingTalkMessagePushService.DingTalkToText(text, atMobiles, isAtAll);
     }
 
@@ -64,7 +64,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("Link")]
     public async Task<BaseResultDto> DingTalkToLink()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var link = new Link
         {
             Title = keyWord + "时代在召唤",
@@ -83,7 +83,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("Markdown")]
     public async Task<BaseResultDto> DingTalkToMarkdown()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var markdown = new Markdown
         {
             Title = keyWord + "长沙天气",
@@ -93,7 +93,7 @@ public class DingTalkController : BaseApiController
                     "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n",
         };
         List<string> atMobiles = new() { "1302873****" };
-        bool isAtAll = false;
+        var isAtAll = false;
         return await _IDingTalkMessagePushService.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
     }
 
@@ -104,7 +104,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("WholeActionCard")]
     public async Task<BaseResultDto> DingTalkToWholeActionCard()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var actionCard = new ActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
@@ -124,7 +124,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("PartActionCard")]
     public async Task<BaseResultDto> DingTalkToPartActionCard()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var actionCard = new ActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
@@ -156,7 +156,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("FeedCard")]
     public async Task<BaseResultDto> DingTalkToFeedCard()
     {
-        string keyWord = "消息提醒";
+        const string keyWord = "消息提醒";
         var feedCard = new FeedCard
         {
             Links = new List<FeedCardLink>

@@ -70,7 +70,7 @@ public static class SwaggerMiddleware
             }
 
             // 站点名称
-            string siteName = AppSettings.Sys.Name.Get();
+            var siteName = AppSettings.Sys.Name.Get();
             // API页面标题
             options.DocumentTitle = $"{siteName} - 接口文档";
             // API文档仅展开标记 List：列表式（展开子类），默认值;Full：完全展开;None：列表式（不展开子类）

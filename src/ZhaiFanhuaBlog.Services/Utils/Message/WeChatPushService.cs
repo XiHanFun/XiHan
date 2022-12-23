@@ -55,7 +55,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToText(Text text)
     {
-        WeChatResultInfo? result = await _WeChatRobot.TextMessage(text);
+        var result = await _WeChatRobot.TextMessage(text);
         return WeChatMessageReturn(result);
     }
 
@@ -66,7 +66,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToMarkdown(Markdown markdown)
     {
-        WeChatResultInfo? result = await _WeChatRobot.MarkdownMessage(markdown);
+        var result = await _WeChatRobot.MarkdownMessage(markdown);
         return WeChatMessageReturn(result);
     }
 
@@ -77,7 +77,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToImage(Image image)
     {
-        WeChatResultInfo? result = await _WeChatRobot.ImageMessage(image);
+        var result = await _WeChatRobot.ImageMessage(image);
         return WeChatMessageReturn(result);
     }
 
@@ -88,7 +88,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToNews(News news)
     {
-        WeChatResultInfo? result = await _WeChatRobot.NewsMessage(news);
+        var result = await _WeChatRobot.NewsMessage(news);
         return WeChatMessageReturn(result);
     }
 
@@ -99,7 +99,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToFile(File file)
     {
-        WeChatResultInfo? result = await _WeChatRobot.FileMessage(file);
+        var result = await _WeChatRobot.FileMessage(file);
         return WeChatMessageReturn(result);
     }
 
@@ -110,8 +110,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToTextNotice(TemplateCardTextNotice templateCard)
     {
-        templateCard.CardType = TemplateCardType.TextNotice.ToString();
-        WeChatResultInfo? result = await _WeChatRobot.TextNoticeMessage(templateCard);
+        var result = await _WeChatRobot.TextNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
 
@@ -122,8 +121,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard)
     {
-        templateCard.CardType = TemplateCardType.NewsNotice.ToString();
-        WeChatResultInfo? result = await _WeChatRobot.NewsNoticeMessage(templateCard);
+        var result = await _WeChatRobot.NewsNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
 
@@ -134,7 +132,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToUploadkFile(FileStream fileStream)
     {
-        WeChatResultInfo? result = await _WeChatRobot.UploadkFile(fileStream);
+        var result = await _WeChatRobot.UploadkFile(fileStream);
         return WeChatUploadReturn(result);
     }
 

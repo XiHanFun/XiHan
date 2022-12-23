@@ -24,7 +24,7 @@ public class TestRegex
     public static void TestCardId()
     {
         Console.WriteLine("输入身份证号码");
-        string? cardId = Console.ReadLine();
+        var cardId = Console.ReadLine();
         if (cardId != null)
         {
             var result = RegexHelper.IsNumber_People(cardId);

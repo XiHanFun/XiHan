@@ -31,12 +31,12 @@ public static class LogSetup
     /// <exception cref="NotImplementedException"></exception>
     public static ILoggingBuilder AddLogSetup(this ILoggingBuilder builder)
     {
-        string infoTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}{NewLine}";
-        string errorTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}================{NewLine}{NewLine}";
-        string infoPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Info/.log";
-        string waringPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Waring/.log";
-        string errorPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Error/.log";
-        string fatalPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Fatal/.log";
+        var infoTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}{NewLine}";
+        var errorTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}================{NewLine}{NewLine}";
+        var infoPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Info/.log";
+        var waringPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Waring/.log";
+        var errorPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Error/.log";
+        var fatalPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Fatal/.log";
         Log.Logger = new LoggerConfiguration()
                 // 记录相关上下文信息
                 .Enrich.FromLogContext()

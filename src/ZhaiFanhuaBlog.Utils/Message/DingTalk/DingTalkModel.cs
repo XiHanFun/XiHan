@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace ZhaiFanhuaBlog.Utils.Message.DingTalk;
@@ -211,25 +213,30 @@ public enum MsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
+    [Description("text")]
     Text,
 
     /// <summary>
     /// 链接类型
     /// </summary>
+    [Description("link")]
     Link,
 
     /// <summary>
     /// 文档类型
     /// </summary>
+    [Description("markdown")]
     Markdown,
 
     /// <summary>
     /// 任务卡片类型
     /// </summary>
+    [Description("actionCard")]
     ActionCard,
 
     /// <summary>
     /// 菜单卡片类型
     /// </summary>
+    [Description("feedCard")]
     FeedCard
 }

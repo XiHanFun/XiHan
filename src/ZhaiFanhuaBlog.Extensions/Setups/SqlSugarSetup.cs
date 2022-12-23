@@ -36,7 +36,7 @@ public static class SqlSugarSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        string databaseType = AppSettings.Database.Type.Get();
+        var databaseType = AppSettings.Database.Type.Get();
         services.AddSqlSugar(databaseType switch
         {
             "MySql" => new IocConfig
@@ -80,9 +80,9 @@ public static class SqlSugarSetup
         services.ConfigurationSugar(client =>
         {
             // SQL语句输出方便排查问题
-            bool databaseConsole = AppSettings.Database.Console.Get();
-            bool databaseLogInfo = AppSettings.Database.Logging.Info.Get();
-            bool databaseLogError = AppSettings.Database.Logging.Error.Get();
+            var databaseConsole = AppSettings.Database.Console.Get();
+            var databaseLogInfo = AppSettings.Database.Logging.Info.Get();
+            var databaseLogError = AppSettings.Database.Logging.Error.Get();
             client.Aop.OnLogExecuting = (sql, pars) =>
             {
                 var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));

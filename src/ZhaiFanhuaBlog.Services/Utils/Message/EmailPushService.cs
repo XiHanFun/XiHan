@@ -40,8 +40,8 @@ public class EmailPushService : IEmailPushService
     /// <returns></returns>
     public async Task<BaseResultDto> SendEmail()
     {
-        string subject = "测试";
-        string body = "测试";
+        var subject = "测试";
+        var body = "测试";
         List<string> toMail = new() { "" };
         List<string> ccMail = new() { "" };
         List<string> bccMail = new() { "" };

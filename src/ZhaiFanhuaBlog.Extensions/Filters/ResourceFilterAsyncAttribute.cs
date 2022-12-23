@@ -68,12 +68,12 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
         var userId = httpContext.User?.FindFirstValue("UserId");
         // 写入日志
-        string info = $"\t 请求Ip：{remoteIp}\n" +
-                         $"\t 请求地址：{requestUrl}\n" +
-                         $"\t 请求方法：{method}\n" +
-                         $"\t 操作用户：{userId}";
+        var info = $"\t 请求Ip：{remoteIp}\n" +
+                   $"\t 请求地址：{requestUrl}\n" +
+                   $"\t 请求方法：{method}\n" +
+                   $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
-        if (_IMemoryCache.TryGetValue(requestUrl + method, out object? value))
+        if (_IMemoryCache.TryGetValue(requestUrl + method, out var value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
@@ -83,14 +83,14 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         else
         {
             // 请求构造函数和方法,调用下一个过滤器
-            ResourceExecutedContext resourceExecuted = await next();
+            var resourceExecuted = await next();
             // 执行结果
             try
             {
                 // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
                 if (resourceExecuted.Result != null)
                 {
-                    TimeSpan SyncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.Get());
+                    var SyncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.Get());
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)

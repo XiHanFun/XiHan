@@ -58,7 +58,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToText(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        DingTalkResultInfo? result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
+        var result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -69,7 +69,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToLink(Link link)
     {
-        DingTalkResultInfo? result = await _DingTalkRobot.LinkMessage(link);
+        var result = await _DingTalkRobot.LinkMessage(link);
         return DingTalkMessageReturn(result);
     }
 
@@ -82,7 +82,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToMarkdown(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        DingTalkResultInfo? result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
+        var result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -93,7 +93,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToActionCard(ActionCard actionCard)
     {
-        DingTalkResultInfo? result = await _DingTalkRobot.ActionCardMessage(actionCard);
+        var result = await _DingTalkRobot.ActionCardMessage(actionCard);
         return DingTalkMessageReturn(result);
     }
 
@@ -104,7 +104,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToFeedCard(FeedCard feedCard)
     {
-        DingTalkResultInfo? result = await _DingTalkRobot.FeedCardMessage(feedCard);
+        var result = await _DingTalkRobot.FeedCardMessage(feedCard);
         return DingTalkMessageReturn(result);
     }
 

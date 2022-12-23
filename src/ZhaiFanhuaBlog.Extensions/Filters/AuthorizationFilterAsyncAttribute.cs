@@ -68,9 +68,9 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
                             || controllerType.IsDefined(typeof(AuthorizeAttribute), true)
                             || methodType.IsDefined(typeof(AuthorizeAttribute), true);
         // 写入日志
-        string info = $"\t 请求Ip：{remoteIp}\n" +
-               $"\t 请求地址：{requestUrl}\n" +
-               $"\t 请求方法：{method}";
+        var info = $"\t 请求Ip：{remoteIp}\n" +
+                   $"\t 请求地址：{requestUrl}\n" +
+                   $"\t 请求方法：{method}";
         // 授权访问就进行权限检查
         if (isAuthorize)
         {

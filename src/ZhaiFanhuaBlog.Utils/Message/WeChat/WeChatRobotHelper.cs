@@ -13,6 +13,7 @@
 
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Serialize;
+using ZhaiFanhuaBlog.Utils.Summary;
 
 namespace ZhaiFanhuaBlog.Utils.Message.WeChat;
 
@@ -29,12 +30,12 @@ public class WeChatRobotHelper
     /// <summary>
     /// 正式访问地址
     /// </summary>
-    private readonly string _MessageUrl = string.Empty;
+    private readonly string _MessageUrl;
 
     /// <summary>
     /// 正式文件上传地址
     /// </summary>
-    private readonly string _FileUrl = string.Empty;
+    private readonly string _FileUrl;
 
     /// <summary>
     /// 构造函数
@@ -56,7 +57,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> TextMessage(Text text)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Text.ToString();
+        var msgtype = MsgTypeEnum.Text.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, text });
         return result;
@@ -70,7 +71,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> MarkdownMessage(Markdown markdown)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Markdown.ToString();
+        var msgtype = MsgTypeEnum.Markdown.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, markdown });
         return result;
@@ -84,7 +85,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> ImageMessage(Image image)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Image.ToString();
+        var msgtype = MsgTypeEnum.Image.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, image });
         return result;
@@ -98,7 +99,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> NewsMessage(News news)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.News.ToString();
+        var msgtype = MsgTypeEnum.News.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, news });
         return result;
@@ -112,7 +113,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> FileMessage(File file)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.File.ToString();
+        var msgtype = MsgTypeEnum.File.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, file });
         return result;
@@ -121,12 +122,13 @@ public class WeChatRobotHelper
     /// <summary>
     /// 发送文本通知模版卡片消息
     /// </summary>
-    /// <param name="template_card">模版卡片</param>
+    /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
     public async Task<WeChatResultInfo?> TextNoticeMessage(TemplateCardTextNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.TemplateCard.ToString();
+        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescription();
+        templateCard.CardType = TemplateCardType.TextNotice.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;
@@ -135,12 +137,13 @@ public class WeChatRobotHelper
     /// <summary>
     /// 发送图文展示模版卡片消息
     /// </summary>
-    /// <param name="template_card">模版卡片</param>
+    /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
     public async Task<WeChatResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.TemplateCard.ToString();
+        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescription();
+        templateCard.CardType = TemplateCardType.NewsNotice.GetEnumDescription();
         // 发送
         var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;
@@ -174,7 +177,7 @@ public class WeChatRobotHelper
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        var result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _MessageUrl, sendMessage, null);
+        var result = await _IHttpHelper.PostAsync<WeChatResultInfo>(HttpEnum.Util, _MessageUrl, sendMessage);
         return result;
     }
 }
