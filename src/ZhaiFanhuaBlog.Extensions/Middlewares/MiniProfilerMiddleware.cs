@@ -35,11 +35,9 @@ public static class MiniProfilerMiddleware
         }
 
         var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.Get();
-        if (isEnabledMiniprofiler)
-        {
-            // 性能分析
-            app.UseMiniProfiler();
-        }
+        if (!isEnabledMiniprofiler) return app;
+        // 性能分析
+        app.UseMiniProfiler();
         return app;
     }
 }

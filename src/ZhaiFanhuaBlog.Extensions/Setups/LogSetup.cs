@@ -13,7 +13,6 @@
 
 using Microsoft.Extensions.Logging;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Logging;
-using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -36,9 +35,7 @@ public static class LogSetup
         }
 
         // 配置日志
-        "Log Start……".WriteLineWarning();
         AppLogManager.RegisterLog(builder);
-        "Log Started Successfully！".WriteLineSuccess();
 
         return builder;
     }

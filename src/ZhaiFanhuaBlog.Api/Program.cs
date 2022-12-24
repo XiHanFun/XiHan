@@ -22,18 +22,62 @@ using ZhaiFanhuaBlog.Utils.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region 日志
+
+"Log Start……".WriteLineWarning();
 var log = builder.Logging;
 log.AddLogSetup();
+"Log Started Successfully！".WriteLineSuccess();
+
+#endregion
 
 try
 {
+    #region 配置
+
+    "Configuration Start……".WriteLineWarning();
     var config = builder.Configuration;
     config.AddConfigSetup();
+    "Configuration Started Successfully！".WriteLineSuccess();
+
+    #endregion
+
+    #region 服务
+
+    "Services Start……".WriteLineWarning();
     var services = builder.Services;
+    // Cache
+    services.AddCacheSetup();
+    // Auth
+    services.AddAuthJwtSetup();
+    // 健康检查
+    services.AddHealthChecks();
+    // Http
+    services.AddHttpSetup();
+    // Swagger
+    services.AddSwaggerSetup();
+    // 性能分析
+    services.AddMiniProfilerSetup();
+    // SqlSugar
+    services.AddSqlSugarSetup();
+    // 服务注册
     services.AddServiceSetup();
-    var app = builder.Build();
+    // AutoMapper
+    services.AddAutoMapperSetup();
+    // Route
+    services.AddRouteSetup();
+    // Cors
+    services.AddCorsSetup();
+    // Controllers
+    services.AddControllersSetup();
+    "Services Started Successfully！".WriteLineSuccess();
+
+    #endregion
+
+    #region 应用
 
     "ZhaiFanhuaBlog Application Start……".WriteLineWarning();
+    var app = builder.Build();
     // 初始化数据库
     app.Services.InitDatabase();
     // 环境变量，开发环境
@@ -73,6 +117,8 @@ try
     // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
     app.MapControllers();
     "ZhaiFanhuaBlog Application Started Successfully！".WriteLineSuccess();
+
+    #endregion
 
     // 启动信息打印
     ConsoleInfo.Print();

@@ -12,11 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Reflection;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Console;
-using ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 using ZhaiFanhuaBlog.Utils.IpLocation;
+using ZhaiFanhuaBlog.Utils.IpLocation.Ip2region;
 
 namespace ZhaiFanhuaBlog.Infrastructure.Apps.Services;
 
@@ -54,9 +55,11 @@ public static class AppServiceManager
                     .Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
                 referencedTypes.AddRange(assemblyTypes);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                $"找不到{library}组件库".WriteLineError();
+                var errorMsg = $"找不到{library}组件库";
+                Log.Error(errorMsg, ex.Message);
+                errorMsg.WriteLineError();
             }
         }
         // 批量注入
@@ -93,7 +96,9 @@ public static class AppServiceManager
                         services.AddTransient(serviceType, classType);
                         break;
                 }
-                $"服务注册：{serviceType.Name}-{classType.Name}".WriteLineSuccess();
+                var infoMsg = $"服务注册：{serviceType.Name}-{classType.Name}";
+                Log.Information(infoMsg);
+                infoMsg.WriteLineSuccess();
             }
         }
     }

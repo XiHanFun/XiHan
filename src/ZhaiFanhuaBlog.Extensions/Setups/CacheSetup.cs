@@ -38,7 +38,8 @@ public static class CacheSetup
         }
 
         // 内存缓存
-        if (AppSettings.Cache.MemoryCache.IsEnabled.Get())
+        var isEnabledMemoryCache = AppSettings.Cache.MemoryCache.IsEnabled.Get();
+        if (isEnabledMemoryCache)
         {
             services.AddMemoryCache(options => new MemoryCacheOptions
             {
@@ -48,7 +49,8 @@ public static class CacheSetup
         }
 
         // 分布式缓存
-        if (AppSettings.Cache.Distributedcache.IsEnabled.Get())
+        var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.Get();
+        if (isEnabledDistributedcache)
         {
             // CSRedis
             var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.Get();
@@ -62,7 +64,8 @@ public static class CacheSetup
         }
 
         // 响应缓存
-        if (AppSettings.Cache.ResponseCache.IsEnabled.Get())
+        var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.Get();
+        if (isEnabledResponseCache)
         {
             services.AddResponseCaching();
         }

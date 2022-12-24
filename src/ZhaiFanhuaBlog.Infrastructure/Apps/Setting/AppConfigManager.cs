@@ -11,8 +11,12 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.DependencyModel;
+using NetTaste;
+using Serilog;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Serialize;
 
@@ -39,20 +43,33 @@ public static class AppConfigManager
     /// <param name="configs"></param>
     public static void RegisterLog(IConfigurationBuilder configs)
     {
-        ConfigurationRoot = configs.Build();
-        if (configs is ConfigurationManager configurationManager)
+        try
         {
-            var jsonFilePath = configurationManager.Sources
-                .OfType<JsonConfigurationSource>()
-                .Select(file => file?.Path!);
-            if (jsonFilePath.Any())
+            ConfigurationRoot = configs.Build();
+            if (configs is ConfigurationManager configurationManager)
             {
-                string envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!.ToString()!;
-                string configurationFile = jsonFilePath.First(name => name.Contains(envName));
-                ConfigurationFile = configurationFile;
+                var jsonFilePath = configurationManager.Sources
+                    .OfType<JsonConfigurationSource>()
+                    .Select(file => file?.Path!)
+                    .ToList();
+                if (jsonFilePath.Any())
+                {
+                    var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
+                    var configurationFile = jsonFilePath.First(name => name.Contains(envName));
+                    ConfigurationFile = configurationFile;
+
+                    var infoMsg = $"配置注册成功，环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
+                    Log.Information(infoMsg);
+                    infoMsg.WriteLineSuccess();
+                }
             }
         }
-        $"配置注册：{nameof(ConfigurationRoot)}".WriteLineSuccess();
+        catch (Exception ex)
+        {
+            var errorMsg = $"配置注册出错";
+            Log.Error(errorMsg, ex.Message);
+            errorMsg.WriteLineError();
+        }
     }
 
     /// <summary>
@@ -60,18 +77,12 @@ public static class AppConfigManager
     /// </summary>
     /// <typeparam name="TREntity"></typeparam>
     /// <param name="key"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
     public static TREntity Get<TREntity>(string key)
     {
         var result = ConfigurationRoot.GetValue<TREntity>(GetPropertyName(key));
-        if (result != null)
-        {
-            return result;
-        }
-        else
-        {
-            throw new Exception($"配置文件未配置该设置 {key}");
-        }
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置{key}");
     }
 
     /// <summary>
@@ -79,18 +90,12 @@ public static class AppConfigManager
     /// </summary>
     /// <typeparam name="TREntity"></typeparam>
     /// <param name="key"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
     public static TREntity GetSection<TREntity>(string key)
     {
         var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TREntity>();
-        if (result != null)
-        {
-            return result;
-        }
-        else
-        {
-            throw new Exception($"配置文件未配置该设置{key}");
-        }
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置{key}");
     }
 
     /// <summary>

@@ -14,10 +14,12 @@
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
+using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Info;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
@@ -60,36 +62,34 @@ public static class SwaggerSetup
     public static void SwaggerInfoConfig(SwaggerGenOptions options)
     {
         // 需要暴露的分组
-        string[] publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
+        var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
         // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
         typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
-            if (publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower()))
+            if (!publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower())) return;
+            // 获取分组信息
+            var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
+            // 添加文档介绍
+            options.SwaggerDoc(group.Name, new OpenApiInfo
             {
-                // 获取分组信息
-                var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
-                // 添加文档介绍
-                options.SwaggerDoc(group.Name, new OpenApiInfo
+                Title = info?.Title,
+                Version = info?.Version,
+                Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                Contact = new OpenApiContact
                 {
-                    Title = info?.Title,
-                    Version = info?.Version,
-                    Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
-                    Contact = new OpenApiContact
-                    {
-                        Name = AppSettings.Syses.Admin.Name.Get(),
-                        Email = AppSettings.Syses.Admin.Email.Get(),
-                        Url = new Uri(AppSettings.Syses.Domain.Get())
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "MIT",
-                        Url = new Uri("https://opensource.org/licenses/MIT")
-                    }
-                });
-                // 根据相对路径排序
-                //options.OrderActionsBy(o => o.RelativePath);
-            }
+                    Name = AppSettings.Syses.Admin.Name.Get(),
+                    Email = AppSettings.Syses.Admin.Email.Get(),
+                    Url = new Uri(AppSettings.Syses.Domain.Get())
+                },
+                License = new OpenApiLicense
+                {
+                    Name = "MIT",
+                    Url = new Uri("https://opensource.org/licenses/MIT")
+                }
+            });
+            // 根据相对路径排序
+            //options.OrderActionsBy(o => o.RelativePath);
         });
 
         // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true就暴露，否则隐藏
@@ -143,7 +143,9 @@ public static class SwaggerSetup
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Swagger 文档加载失败" + ex.Message);
+            var errorMsg = $"Swagger 文档加载失败";
+            Log.Error(errorMsg, ex);
+            errorMsg.WriteLineError();
         }
     }
 

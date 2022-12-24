@@ -33,18 +33,17 @@ public static class MiniProfilerSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        if (AppSettings.Miniprofiler.IsEnabled.Get())
+        var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.Get();
+        if (!isEnabledMiniprofiler) return services;
+        services.AddMiniProfiler(options =>
         {
-            services.AddMiniProfiler(options =>
-            {
-                options.RouteBasePath = @"/profiler";
-                options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
-                options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
-                options.PopupShowTimeWithChildren = true;
-                options.PopupShowTrivial = true;
-                options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
-            });
-        }
+            options.RouteBasePath = @"/profiler";
+            options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
+            options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
+            options.PopupShowTimeWithChildren = true;
+            options.PopupShowTrivial = true;
+            options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+        });
         return services;
     }
 }

@@ -21,14 +21,14 @@ namespace ZhaiFanhuaBlog.Extensions.Common.Controller;
 /// </summary>
 public class DateTimeJsonConverter : JsonConverter<DateTime>
 {
-    private readonly string _dateFormatString;
+    private readonly string _DateFormatString;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public DateTimeJsonConverter()
     {
-        _dateFormatString = "yyyy-MM-dd HH:mm:ss";
+        _DateFormatString = "yyyy-MM-dd HH:mm:ss";
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="dateFormatString"></param>
     public DateTimeJsonConverter(string dateFormatString)
     {
-        _dateFormatString = dateFormatString;
+        _DateFormatString = dateFormatString;
     }
 
     /// <summary>
@@ -65,6 +65,6 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="options"></param>
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString(_dateFormatString));
+        writer.WriteStringValue(value.ToString(_DateFormatString));
     }
 }

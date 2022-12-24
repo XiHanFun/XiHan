@@ -13,11 +13,12 @@
 
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.Data;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
+using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Object;
 
 namespace ZhaiFanhuaBlog.Extensions.Common.Auth;
@@ -76,8 +77,11 @@ public static class JwtTokenUtil
 
             return accessToken;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            var errorMsg = $"Jwt 字符串颁发失败";
+            Log.Error(errorMsg, ex);
+            errorMsg.WriteLineError();
             throw;
         }
     }
@@ -89,33 +93,43 @@ public static class JwtTokenUtil
     /// <returns></returns>
     public static TokenModel JwtSerialize(string token)
     {
-        var tokenModel = new TokenModel();
-        var jwtHandler = new JwtSecurityTokenHandler();
-
-        // 开始Token校验
-        if (!token.IsNotEmptyOrNull() || !jwtHandler.CanReadToken(token)) return tokenModel;
-        var jwtToken = jwtHandler.ReadJwtToken(token);
-        List<Claim> claims = jwtToken.Claims.ToList();
-
-        // 分离参数
-        var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
-        var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
-        var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
-        var rootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
-
-        var userId = new Guid(userIdClaim.Value);
-        var userName = userNameClaim.Value;
-        var nickName = nickNameClaim.Value;
-        var rootRoles = rootRolesClaim.Select(c => c.Value).ToList();
-
-        tokenModel = new TokenModel
+        try
         {
-            UserId = userId,
-            UserName = userName,
-            NickName = nickName,
-            RootRoles = string.Join(',', rootRoles),
-        };
-        return tokenModel;
+            var tokenModel = new TokenModel();
+            var jwtHandler = new JwtSecurityTokenHandler();
+
+            // 开始Token校验
+            if (!token.IsNotEmptyOrNull() || !jwtHandler.CanReadToken(token)) return tokenModel;
+            var jwtToken = jwtHandler.ReadJwtToken(token);
+            List<Claim> claims = jwtToken.Claims.ToList();
+
+            // 分离参数
+            var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId")!;
+            var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName")!;
+            var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName")!;
+            var rootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
+
+            var userId = new Guid(userIdClaim.Value);
+            var userName = userNameClaim.Value;
+            var nickName = nickNameClaim.Value;
+            var rootRoles = rootRolesClaim.Select(c => c.Value).ToList();
+
+            tokenModel = new TokenModel
+            {
+                UserId = userId,
+                UserName = userName,
+                NickName = nickName,
+                RootRoles = string.Join(',', rootRoles),
+            };
+            return tokenModel;
+        }
+        catch (Exception ex)
+        {
+            var errorMsg = $"Jwt 字符串解析失败";
+            Log.Error(errorMsg, ex);
+            errorMsg.WriteLineError();
+            throw;
+        }
     }
 
     /// <summary>
@@ -137,9 +151,12 @@ public static class JwtTokenUtil
             var verifyResult = jwt.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwt.RawHeader + "." + jwt.RawPayload, credentials);
             return verifyResult;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new ApplicationException("Token 被篡改或无效");
+            var errorMsg = $"Token 被篡改或无效";
+            Log.Error(errorMsg, ex);
+            errorMsg.WriteLineError();
+            throw;
         }
     }
 }

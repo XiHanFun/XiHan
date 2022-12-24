@@ -13,7 +13,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Services;
-using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -34,34 +33,9 @@ public static class ServiceSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 注册服务
-        "Services Start……".WriteLineWarning();
-        // Cache
-        services.AddCacheSetup();
-        // Auth
-        services.AddAuthJwtSetup();
-        // 健康检查
-        services.AddHealthChecks();
-        // Http
-        services.AddHttpSetup();
-        // Swagger
-        services.AddSwaggerSetup();
-        // 性能分析
-        services.AddMiniProfilerSetup();
-        // SqlSugar
-        services.AddSqlSugarSetup();
-        // 服务注入
+        // 服务注册
         AppServiceManager.RegisterBaseService(services);
         AppServiceManager.RegisterSelfService(services);
-        // AutoMapper
-        services.AddAutoMapperSetup();
-        // Route
-        services.AddRouteSetup();
-        // Cors
-        services.AddCorsSetup();
-        // Controllers
-        services.AddControllersSetup();
-        "Services Started Successfully！".WriteLineSuccess();
 
         return services;
     }

@@ -35,9 +35,7 @@ public static class ConfigSetup
         }
 
         // 配置创建
-        "Configuration Start……".WriteLineWarning();
         AppConfigManager.RegisterLog(configs);
-        "Configuration Started Successfully！".WriteLineSuccess();
 
         return configs;
     }

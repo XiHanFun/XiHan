@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Logging;
-using Serilog.Events;
 using Serilog;
+using Serilog.Events;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Info;
 
@@ -102,6 +102,8 @@ public static class AppLogManager
                 ))
                 .CreateLogger();
         builder.AddSerilog();
-        $"日志注册：{nameof(Log)}".WriteLineSuccess();
+        var infoMsg = $"日志注册：{Log.Logger}";
+        Log.Information(infoMsg);
+        infoMsg.WriteLineSuccess();
     }
 }

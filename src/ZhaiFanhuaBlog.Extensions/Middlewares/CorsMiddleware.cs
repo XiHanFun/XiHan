@@ -34,13 +34,11 @@ public static class CorsMiddleware
         }
 
         var isEnabledCors = AppSettings.Cors.IsEnabled.Get();
-        if (isEnabledCors)
-        {
-            // 策略名称
-            var policyName = AppSettings.Cors.PolicyName.Get();
-            // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
-            app.UseCors(policyName);
-        }
+        if (!isEnabledCors) return app;
+        // 策略名称
+        var policyName = AppSettings.Cors.PolicyName.Get();
+        // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
+        app.UseCors(policyName);
         return app;
     }
 }
