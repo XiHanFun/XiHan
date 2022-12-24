@@ -57,7 +57,7 @@ public static class AppSettings
     /// <summary>
     /// 站点
     /// </summary>
-    public static class Sys
+    public static class Syses
     {
         /// <summary>
         /// 名称

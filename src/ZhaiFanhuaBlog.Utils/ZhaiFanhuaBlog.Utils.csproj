@@ -6,10 +6,10 @@
 	<Nullable>enable</Nullable>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
-	<AssemblyVersion>0.2.2.1</AssemblyVersion>
-	<FileVersion>0.2.2.1</FileVersion>
+	<AssemblyVersion>0.2.3</AssemblyVersion>
+	<FileVersion>0.2.3</FileVersion>
 	<Title>ZhaiFanhuaBlog.Utils</Title>
-	<Version>0.2.2.1</Version>
+	<Version>0.2.3</Version>
 	<Authors>ZhaiFanhua</Authors>
 	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -25,12 +25,10 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="ConfigData\ip2region.xdb">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	  <None Update="LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>

@@ -70,7 +70,7 @@ public static class AppConfigManager
         }
         else
         {
-            throw new Exception("配置文件未配置该设置 ");
+            throw new Exception($"配置文件未配置该设置 {key}");
         }
     }
 
@@ -89,7 +89,7 @@ public static class AppConfigManager
         }
         else
         {
-            throw new Exception("配置文件未配置该设置 ");
+            throw new Exception($"配置文件未配置该设置{key}");
         }
     }
 

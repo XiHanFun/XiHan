@@ -1,14 +1,18 @@
 ![LOGO](LOGO.png)
 
-![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/850e879239474ca9a8fd6d990c09c6b0)](https://www.codacy.com/gh/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework&amp;utm_campaign=Badge_Grade)
+![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square) 
 
 ![last commit](https://img.shields.io/github/last-commit/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)
 
-这是基于DotNet7的博客项目，高效、快速、开源、免费。
+这是基于DotNet7的博客项目。
+
+高效快速 返哺开源 用心创作 探索未知
 
 ## 快速开始
 
-请参考部署文档： [https://docs.blog.zhaifanhua.com](https://docs.blog.zhaifanhua.com)
+官方文档：[摘繁华博客官方文档](https://docs.blog.zhaifanhua.com)
+
+在线体验：[摘繁华博客接口文档（后端仅只）](https://api.blog.zhaifanhua.com)
 
 ## 所用框架
 
