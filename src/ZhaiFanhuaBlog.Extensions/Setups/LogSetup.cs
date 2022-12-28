@@ -13,6 +13,7 @@
 
 using Microsoft.Extensions.Logging;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Logging;
+using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -29,6 +30,7 @@ public static class LogSetup
     /// <exception cref="NotImplementedException"></exception>
     public static ILoggingBuilder AddLogSetup(this ILoggingBuilder builder)
     {
+        "Log Start……".WriteLineWarning();
         if (builder == null)
         {
             throw new ArgumentNullException(nameof(builder));
@@ -37,6 +39,7 @@ public static class LogSetup
         // 配置日志
         AppLogManager.RegisterLog(builder);
 
+        "Log Started Successfully！".WriteLineSuccess();
         return builder;
     }
 }

@@ -62,6 +62,7 @@ public static class ConsoleInfo
         $@"本地IPv4地址：{LocalIpInfoHelper.GetLocalIpV4()}".WriteLineInfo();
         $@"本地IPv6地址：{LocalIpInfoHelper.GetLocalIpV6()}".WriteLineInfo();
         $@"应用启动环境：{AppSettings.EnvironmentName.Get()}".WriteLineInfo();
+        $@"应用启动端口：{AppSettings.Port.Get()}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.Get()}".WriteLineInfo();

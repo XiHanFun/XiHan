@@ -29,6 +29,7 @@ public static class ConfigSetup
     /// <returns></returns>
     public static IConfigurationBuilder AddConfigSetup(this IConfigurationBuilder configs)
     {
+        "Configuration Start……".WriteLineWarning();
         if (configs == null)
         {
             throw new ArgumentNullException(nameof(configs));
@@ -37,6 +38,7 @@ public static class ConfigSetup
         // 配置创建
         AppConfigManager.RegisterConfig(configs);
 
+        "Configuration Started Successfully！".WriteLineSuccess();
         return configs;
     }
 }

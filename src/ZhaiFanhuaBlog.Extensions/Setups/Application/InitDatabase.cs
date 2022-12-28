@@ -19,7 +19,7 @@ using ZhaiFanhuaBlog.Models.Syses;
 using ZhaiFanhuaBlog.Models.Users;
 using ZhaiFanhuaBlog.Utils.Console;
 
-namespace ZhaiFanhuaBlog.Api.Extensions;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Application;
 
 /// <summary>
 /// InitDatabaseStep

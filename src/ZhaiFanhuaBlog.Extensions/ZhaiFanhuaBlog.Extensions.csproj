@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZhaiFanhuaBlog.Infrastructure\ZhaiFanhuaBlog.Infrastructure.csproj" />
+    <ProjectReference Include="..\ZhaiFanhuaBlog.Repositories\ZhaiFanhuaBlog.Repositories.csproj" />
   </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />

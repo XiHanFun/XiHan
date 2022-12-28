@@ -22,7 +22,7 @@ using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Info;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
 /// SwaggerSetup
@@ -101,7 +101,7 @@ public static class SwaggerSetup
                 .ToList();
             // 反射获取派生类 Action 的 ApiGroupAttribute 信息
             var actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
-                .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
+                .Where(x => x is ApiGroupAttribute).OfType<ApiGroupAttribute>()
                 .ToList();
 
             // 所有含 ApiGroupAttribute 的集合

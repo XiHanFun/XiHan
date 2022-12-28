@@ -12,7 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using ZhaiFanhuaBlog.Extensions.Setups.Services;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Services;
+using ZhaiFanhuaBlog.Utils.Console;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups;
 
@@ -28,15 +30,39 @@ public static class ServiceSetup
     /// <returns></returns>
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
+        "Services Start……".WriteLineWarning();
         if (services == null)
         {
             throw new ArgumentNullException(nameof(services));
         }
 
+        // Cache
+        services.AddCacheSetup();
+        // Auth
+        services.AddAuthJwtSetup();
+        // 健康检查
+        services.AddHealthChecks();
+        // Http
+        services.AddHttpSetup();
+        // Swagger
+        services.AddSwaggerSetup();
+        // 性能分析
+        services.AddMiniProfilerSetup();
+        // SqlSugar
+        services.AddSqlSugarSetup();
         // 服务注册
         AppServiceManager.RegisterBaseService(services);
         AppServiceManager.RegisterSelfService(services);
+        // AutoMapper
+        services.AddAutoMapperSetup();
+        // Route
+        services.AddRouteSetup();
+        // Cors
+        services.AddCorsSetup();
+        // Controllers
+        services.AddControllersSetup();
 
+        "Services Started Successfully！".WriteLineSuccess();
         return services;
     }
 }

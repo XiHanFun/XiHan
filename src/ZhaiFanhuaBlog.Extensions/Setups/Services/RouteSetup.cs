@@ -2,41 +2,43 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AutoMapperSetup
-// Guid:4960fc12-c08b-426e-abf1-efaf35db4d9f
+// FileName:RouteSetup
+// Guid:110bb71a-7214-4344-8aea-ce3de16c4cae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-30 上午 02:57:37
+// CreateTime:2022-05-30 上午 03:15:11
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using ZhaiFanhuaBlog.Extensions.Common.AutoMapper;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
-/// AutoMapperSetup
+/// RouteSetup
 /// </summary>
-public static class AutoMapperSetup
+public static class RouteSetup
 {
     /// <summary>
-    /// AutoMapper 服务扩展
+    /// Route 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
+    public static IServiceCollection AddRouteSetup(this IServiceCollection services)
     {
         if (services == null)
         {
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 创建具体的映射对象
-        services.AddAutoMapper(typeof(AutoMapperConfig));
-        // 注册配置
-        AutoMapperConfig.RegisterMappings();
+        services.AddRouting(route =>
+        {
+            route.LowercaseUrls = true;
+            route.LowercaseQueryStrings = true;
+            // 路由前后加斜杠 /
+            route.AppendTrailingSlash = false;
+        });
         return services;
     }
 }

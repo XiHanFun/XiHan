@@ -24,6 +24,11 @@ public static class AppSettings
     public static string EnvironmentName { get; set; } = string.Empty;
 
     /// <summary>
+    /// 端口
+    /// </summary>
+    public static int Port { get; set; }
+
+    /// <summary>
     /// 日志
     /// </summary>
     public static class Logging

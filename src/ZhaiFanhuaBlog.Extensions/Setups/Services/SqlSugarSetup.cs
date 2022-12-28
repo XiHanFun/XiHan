@@ -17,7 +17,7 @@ using SqlSugar.IOC;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Console;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
 /// SqlSugarSetup

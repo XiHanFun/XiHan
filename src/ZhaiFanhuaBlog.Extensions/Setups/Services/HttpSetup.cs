@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ZhaiFanhuaBlog.Utils.Http;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
 /// HttpSetup

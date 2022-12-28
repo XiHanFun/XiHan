@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SwaggerMiddleware
+// FileName:SwaggerSetup
 // Guid:40c713e1-7cdf-42da-9e08-84d1bff1489f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,16 +14,15 @@
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Runtime;
 using ZhaiFanhuaBlog.Extensions.Common.Swagger;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
-namespace ZhaiFanhuaBlog.Extensions.Middlewares;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Application;
 
 /// <summary>
-/// SwaggerMiddleware
+/// SwaggerSetup
 /// </summary>
-public static class SwaggerMiddleware
+public static class SwaggerSetup
 {
     /// <summary>
     /// Swagger应用扩展
@@ -33,7 +32,7 @@ public static class SwaggerMiddleware
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="Exception"></exception>
-    public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, Func<Stream> streamHtml)
+    public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app, Func<Stream> streamHtml)
     {
         if (app == null)
         {

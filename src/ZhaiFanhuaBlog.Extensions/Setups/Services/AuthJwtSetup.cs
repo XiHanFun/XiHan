@@ -20,7 +20,7 @@ using ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Utils.Object;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
 /// AuthJwtSetup

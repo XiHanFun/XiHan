@@ -17,7 +17,7 @@ using System.Text.Json.Serialization;
 using ZhaiFanhuaBlog.Extensions.Common.Controller;
 using ZhaiFanhuaBlog.Extensions.Filters;
 
-namespace ZhaiFanhuaBlog.Extensions.Setups;
+namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
 
 /// <summary>
 /// ControllerSetup
