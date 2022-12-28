@@ -20,7 +20,7 @@ using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Message.WeChat;
 using File = ZhaiFanhuaBlog.Utils.Message.WeChat.File;
 
-namespace ZhaiFanhuaBlog.Services.Utils.Message;
+namespace ZhaiFanhuaBlog.Services.Utils.Message.Impl;
 
 /// <summary>
 /// WeChatMessagePushService

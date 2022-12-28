@@ -98,7 +98,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteAsync(Guid guid)
+    public virtual async Task<bool> DeleteByGuidAsync(Guid guid)
     {
         return await base.DeleteByIdAsync(guid);
     }
@@ -118,7 +118,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteBatchAsync(Guid[] guids)
+    public virtual async Task<bool> DeleteByGuidBatchAsync(Guid[] guids)
     {
         object[] newguids = guids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newguids);
@@ -179,7 +179,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindAsync(Guid guid)
+    public virtual async Task<TEntity> FindByGuidAsync(Guid guid)
     {
         return await base.GetByIdAsync(guid);
     }

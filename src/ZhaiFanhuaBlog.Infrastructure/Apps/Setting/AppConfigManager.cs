@@ -11,11 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
-using Microsoft.Extensions.DependencyModel;
-using NetTaste;
 using Serilog;
 using ZhaiFanhuaBlog.Utils.Console;
 using ZhaiFanhuaBlog.Utils.Serialize;
@@ -38,15 +35,15 @@ public static class AppConfigManager
     private static string ConfigurationFile { get; set; } = string.Empty;
 
     /// <summary>
-    /// 注册日志
+    /// 注册配置
     /// </summary>
-    /// <param name="configs"></param>
-    public static void RegisterLog(IConfigurationBuilder configs)
+    /// <param name="config"></param>
+    public static void RegisterConfig(IConfigurationBuilder config)
     {
         try
         {
-            ConfigurationRoot = configs.Build();
-            if (configs is ConfigurationManager configurationManager)
+            ConfigurationRoot = config.Build();
+            if (config is ConfigurationManager configurationManager)
             {
                 var jsonFilePath = configurationManager.Sources
                     .OfType<JsonConfigurationSource>()
@@ -82,7 +79,7 @@ public static class AppConfigManager
     public static TREntity Get<TREntity>(string key)
     {
         var result = ConfigurationRoot.GetValue<TREntity>(GetPropertyName(key));
-        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置{key}");
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
     /// <summary>
@@ -95,7 +92,7 @@ public static class AppConfigManager
     public static TREntity GetSection<TREntity>(string key)
     {
         var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TREntity>();
-        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置{key}");
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
     /// <summary>

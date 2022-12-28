@@ -122,7 +122,7 @@ try
 
     // 启动信息打印
     ConsoleInfo.Print();
-    app.Run();
+    await app.RunAsync();
     return 0;
 }
 catch (Exception ex)
@@ -132,5 +132,6 @@ catch (Exception ex)
 }
 finally
 {
+    Log.Information("Application has closed");
     Log.CloseAndFlush();
 }

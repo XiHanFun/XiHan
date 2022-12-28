@@ -70,7 +70,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    Task<bool> DeleteAsync(Guid guid);
+    Task<bool> DeleteByGuidAsync(Guid guid);
 
     /// <summary>
     /// 删除
@@ -84,7 +84,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    Task<bool> DeleteBatchAsync(Guid[] guids);
+    Task<bool> DeleteByGuidBatchAsync(Guid[] guids);
 
     /// <summary>
     /// 批量删除
@@ -126,7 +126,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    Task<TEntity> FindAsync(Guid guid);
+    Task<TEntity> FindByGuidAsync(Guid guid);
 
     /// <summary>
     /// 条件查找

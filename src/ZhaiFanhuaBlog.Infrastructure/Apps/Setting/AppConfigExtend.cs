@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AppConfig
+// FileName:AppConfigExtend
 // Guid:6d94d4d9-7ab6-4feb-95b2-d055bcc13494
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,9 +16,9 @@ using System.Runtime.CompilerServices;
 namespace ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 
 /// <summary>
-/// AppConfig
+/// AppConfigExtend
 /// </summary>
-public static class AppConfig
+public static class AppConfigExtend
 {
     /// <summary>
     /// 获取值

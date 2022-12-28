@@ -35,7 +35,7 @@ public static class ConfigSetup
         }
 
         // 配置创建
-        AppConfigManager.RegisterLog(configs);
+        AppConfigManager.RegisterConfig(configs);
 
         return configs;
     }

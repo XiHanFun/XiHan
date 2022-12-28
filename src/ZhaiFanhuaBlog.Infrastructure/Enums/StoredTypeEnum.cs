@@ -54,7 +54,7 @@ public enum StoredTypeEnum
     /// 又拍云
     /// </summary>
     [Description("又拍云")]
-    YoupaiCloudKodo = 6,
+    YoupaiCloudUss = 6,
 
     /// <summary>
     /// 华为云

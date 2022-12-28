@@ -19,7 +19,7 @@ using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Message.Email;
 
-namespace ZhaiFanhuaBlog.Services.Utils.Message;
+namespace ZhaiFanhuaBlog.Services.Utils.Message.Impl;
 
 /// <summary>
 /// EmailPushService

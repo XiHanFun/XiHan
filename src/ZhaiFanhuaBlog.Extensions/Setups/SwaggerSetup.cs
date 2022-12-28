@@ -104,7 +104,7 @@ public static class SwaggerSetup
                 .Where(x => (x is ApiGroupAttribute)).OfType<ApiGroupAttribute>()
                 .ToList();
 
-            // 所有含 ApiGroupAttribute 集合
+            // 所有含 ApiGroupAttribute 的集合
             var apiGroupAttributeList = new List<ApiGroupAttribute>();
             // 为空时插入空，减少 if 判断
             var emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();

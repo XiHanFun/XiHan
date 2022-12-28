@@ -19,7 +19,7 @@ using ZhaiFanhuaBlog.Infrastructure.Enums;
 using ZhaiFanhuaBlog.Utils.Http;
 using ZhaiFanhuaBlog.Utils.Message.DingTalk;
 
-namespace ZhaiFanhuaBlog.Services.Utils.Message;
+namespace ZhaiFanhuaBlog.Services.Utils.Message.Impl;
 
 /// <summary>
 /// DingTalkMessagePush
