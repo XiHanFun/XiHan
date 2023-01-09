@@ -16,8 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
 using ZhaiFanhuaBlog.Infrastructure.Apps.Setting;
+using ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
 using ZhaiFanhuaBlog.Utils.Object;
 
 namespace ZhaiFanhuaBlog.Extensions.Setups.Services;
@@ -77,9 +77,9 @@ public static class AuthJwtSetup
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        // 配置鉴权逻辑，添加JwtBearer服务
         .AddJwtBearer(options =>
         {
+            // 配置鉴权逻辑，添加JwtBearer服务
             options.SaveToken = true;
             options.TokenValidationParameters = tokenValidationParameters;
             options.Events = new JwtBearerEvents

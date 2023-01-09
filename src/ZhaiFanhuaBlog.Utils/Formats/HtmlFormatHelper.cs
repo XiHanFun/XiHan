@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.Text.RegularExpressions;
+
 namespace ZhaiFanhuaBlog.Utils.Formats;
 
 /// <summary>
@@ -26,17 +28,12 @@ public static partial class HtmlFormatHelper
     /// <returns></returns>
     public static string ReplaceHtmlTag(string html, int length = 0)
     {
-        var strText = MyRegex().Replace(html, "");
-        strText = MyRegex1().Replace(strText, "");
+        var strText = Regex.Replace(html, "<[^>]+>", "");
+        strText = Regex.Replace(strText, "&[^;]+;", "");
         if (length > 0 && strText.Length > length)
         {
             return strText[..length];
         }
         return strText;
     }
-
-    [System.Text.RegularExpressions.GeneratedRegex("<[^>]+>")]
-    private static partial System.Text.RegularExpressions.Regex MyRegex();
-    [System.Text.RegularExpressions.GeneratedRegex("&[^;]+;")]
-    private static partial System.Text.RegularExpressions.Regex MyRegex1();
 }

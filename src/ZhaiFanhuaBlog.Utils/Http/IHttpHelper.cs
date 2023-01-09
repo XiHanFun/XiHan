@@ -21,12 +21,12 @@ public interface IHttpHelper
     /// <summary>
     /// Get请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> GetAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
+    Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Get请求
@@ -40,47 +40,47 @@ public interface IHttpHelper
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PostAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求上传文件
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<string> PostAsync<TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
+    Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post请求
@@ -95,33 +95,33 @@ public interface IHttpHelper
     /// <summary>
     /// Put请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PutAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Put请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> PutAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Delete请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<T?> DeleteAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
+    Task<TEntity?> DeleteAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
 }

@@ -37,12 +37,12 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Get请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> GetAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -56,7 +56,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -91,14 +91,14 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PostAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -113,7 +113,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -122,13 +122,13 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Post请求上传文件
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
@@ -145,7 +145,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -154,13 +154,13 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PostAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -175,7 +175,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -184,13 +184,13 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Post请求
     /// </summary>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync<TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -241,14 +241,14 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Put请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TR"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PutAsync<T, TR>(HttpEnum httpEnum, string url, TR request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -263,7 +263,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -272,13 +272,13 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Put请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> PutAsync<T>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -293,7 +293,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");
@@ -302,12 +302,12 @@ public class HttpHelper : IHttpHelper
     /// <summary>
     /// Delete请求
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<T?> DeleteAsync<T>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> DeleteAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
         using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
@@ -321,7 +321,7 @@ public class HttpHelper : IHttpHelper
         if (response.StatusCode == HttpStatusCode.OK)
         {
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(result);
+            return JsonSerializer.Deserialize<TEntity>(result);
         }
 
         throw new Exception($"Http Error StatusCode:{response.StatusCode}");

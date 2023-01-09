@@ -87,15 +87,15 @@ public static class RegexHelper
         switch (checkValue.Length)
         {
             case 18:
-            {
-                var check = IsNumber_People_18(checkValue);
-                return check;
-            }
+                {
+                    var check = IsNumber_People_18(checkValue);
+                    return check;
+                }
             case 15:
-            {
-                var check = IsNumber_People_15(checkValue);
-                return check;
-            }
+                {
+                    var check = IsNumber_People_15(checkValue);
+                    return check;
+                }
             default:
                 return false;
         }
@@ -486,7 +486,7 @@ public static class RegexHelper
     {
         try
         {
-            return DateTime.TryParse(checkValue,out var result);
+            return DateTime.TryParse(checkValue, out var result);
         }
         catch
         {

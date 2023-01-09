@@ -333,20 +333,20 @@ public class ChinaDate
         switch (offset)
         {
             case 0 when leap > 0 && i == leap + 1:
-            {
-                if (nongDate[6] == 1)
                 {
-                    nongDate[6] = 0;
-                }
-                else
-                {
-                    nongDate[6] = 1;
-                    --i;
-                    --nongDate[4];
-                }
+                    if (nongDate[6] == 1)
+                    {
+                        nongDate[6] = 0;
+                    }
+                    else
+                    {
+                        nongDate[6] = 1;
+                        --i;
+                        --nongDate[4];
+                    }
 
-                break;
-            }
+                    break;
+                }
             case < 0:
                 offset += temp;
                 --i;
@@ -419,20 +419,20 @@ public class ChinaDate
         switch (offset)
         {
             case 0 when leap > 0 && i == leap + 1:
-            {
-                if (nongDate[6] == 1)
                 {
-                    nongDate[6] = 0;
-                }
-                else
-                {
-                    nongDate[6] = 1;
-                    --i;
-                    --nongDate[4];
-                }
+                    if (nongDate[6] == 1)
+                    {
+                        nongDate[6] = 0;
+                    }
+                    else
+                    {
+                        nongDate[6] = 1;
+                        --i;
+                        --nongDate[4];
+                    }
 
-                break;
-            }
+                    break;
+                }
             case < 0:
                 offset += temp;
                 --i;
@@ -452,8 +452,10 @@ public class ChinaDate
         {
             case 10:
                 return "初十";
+
             case 20:
                 return "二十";
+
             case 30:
                 return "三十";
         }
@@ -1941,37 +1943,48 @@ public class ChineseCalendar
                 case >= 321 and <= 419:
                     index = 0;
                     break;
+
                 case >= 420 and <= 520:
                     index = 1;
                     break;
+
                 case >= 521 and <= 620:
                     index = 2;
                     break;
+
                 case >= 621 and <= 722:
                     index = 3;
                     break;
+
                 case >= 723 and <= 822:
                     index = 4;
                     break;
+
                 case >= 823 and <= 922:
                     index = 5;
                     break;
+
                 case >= 923 and <= 1022:
                     index = 6;
                     break;
+
                 case >= 1023 and <= 1121:
                     index = 7;
                     break;
+
                 case >= 1122 and <= 1221:
                     index = 8;
                     break;
+
                 case >= 1222:
                 case <= 119:
                     index = 9;
                     break;
+
                 case >= 120 and <= 218:
                     index = 10;
                     break;
+
                 case >= 219 and <= 320:
                     index = 11;
                     break;

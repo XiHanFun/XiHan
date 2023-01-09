@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 

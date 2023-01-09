@@ -34,6 +34,18 @@ public class PostTag : BaseEntity
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
+    /// 标签封面
+    /// </summary>
+    [SugarColumn(Length = 500)]
+    public string Cover { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 标签颜色
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string Color { get; set; } = string.Empty;
+
+    /// <summary>
     /// 标签描述
     /// </summary>
     [SugarColumn(Length = 50)]
