@@ -66,7 +66,7 @@ public static class ConsoleInfo
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.Get()}".WriteLineInfo();
-        $@"是否初始化：{AppSettings.Database.Initialization.Get()}".WriteLineInfo();
+        $@"是否已经初始化：{AppSettings.Database.Inited.Get()}".WriteLineInfo();
         "===============分析===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.Get()}".WriteLineInfo();
         "===============缓存===============".WriteLineInfo();

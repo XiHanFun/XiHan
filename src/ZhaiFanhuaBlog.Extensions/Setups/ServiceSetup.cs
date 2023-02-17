@@ -51,8 +51,7 @@ public static class ServiceSetup
         // SqlSugar
         services.AddSqlSugarSetup();
         // 服务注册
-        AppServiceManager.RegisterBaseService(services);
-        AppServiceManager.RegisterSelfService(services);
+        AppServiceManager.RegisterService(services);
         // AutoMapper
         services.AddAutoMapperSetup();
         // Route

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:JwtTokenTool
+// FileName:JwtTokenUtil
 // Guid:df38addc-198d-4f69-aca1-5f3cc1c1c01b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

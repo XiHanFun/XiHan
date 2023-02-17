@@ -18,20 +18,25 @@ using ZhaiFanhuaBlog.Extensions.Setups;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 日志
 var log = builder.Logging;
 log.AddLogSetup();
 
 try
 {
+    // 配置
     var config = builder.Configuration;
     config.AddConfigSetup();
 
+    // 主机
     var host = builder.WebHost;
     host.AddWebHostSetup();
 
+    // 服务
     var services = builder.Services;
     services.AddServiceSetup();
 
+    // 应用
     var app = builder.Build();
     app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("ZhaiFanhuaBlog.Api.index.html")!);
 

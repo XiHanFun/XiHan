@@ -27,6 +27,16 @@ namespace ZhaiFanhuaBlog.Infrastructure.Apps.Services;
 public static class AppServiceManager
 {
     /// <summary>
+    /// 注册服务
+    /// </summary>
+    /// <param name="services"></param>
+    public static void RegisterService(IServiceCollection services)
+    {
+        RegisterBaseService(services);
+        RegisterSelfService(services);
+    }
+
+    /// <summary>
     /// 注册基础服务
     /// </summary>
     /// <param name="services"></param>

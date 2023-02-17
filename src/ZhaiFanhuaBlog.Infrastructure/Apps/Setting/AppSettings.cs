@@ -149,9 +149,9 @@ public static class AppSettings
     public static class Database
     {
         /// <summary>
-        /// 是否初始化
+        /// 是否已经初始化
         /// </summary>
-        public static bool Initialization { get; set; }
+        public static bool Inited { get; set; }
 
         /// <summary>
         /// 类型

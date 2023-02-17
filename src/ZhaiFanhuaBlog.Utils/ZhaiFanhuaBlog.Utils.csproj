@@ -6,10 +6,10 @@
 	<Nullable>enable</Nullable>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<RepositoryUrl>https://github.com/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework</RepositoryUrl>
-	<AssemblyVersion>0.2.3</AssemblyVersion>
-	<FileVersion>0.2.3</FileVersion>
+	<AssemblyVersion>0.2.4</AssemblyVersion>
+	<FileVersion>0.2.4</FileVersion>
 	<Title>ZhaiFanhuaBlog.Utils</Title>
-	<Version>0.2.3</Version>
+	<Version>0.2.4</Version>
 	<Authors>ZhaiFanhua</Authors>
 	<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
