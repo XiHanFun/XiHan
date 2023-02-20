@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using ZhaiFanhuaBlog.Infrastructure.Enums;
-using ZhaiFanhuaBlog.Utils.Summary;
+using ZhaiFanhuaBlog.Utils.Summary.Enums;
 
 namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
 

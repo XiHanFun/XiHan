@@ -82,7 +82,6 @@ public static class SystemInfoHelper
         {
             return OSPlatform.OSX;
         }
-
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             return OSPlatform.Linux;

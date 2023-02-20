@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Results;
 using ZhaiFanhuaBlog.Infrastructure.Contexts.Response.Validations;
 using ZhaiFanhuaBlog.Infrastructure.Enums;
-using ZhaiFanhuaBlog.Utils.Summary;
+using ZhaiFanhuaBlog.Utils.Summary.Enums;
 
 namespace ZhaiFanhuaBlog.Infrastructure.Contexts.Response;
 
