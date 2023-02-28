@@ -2,7 +2,7 @@
 
 ![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square) 
 
-![last commit](https://img.shields.io/github/last-commit/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework?style=flat-square)
+![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
 这是基于DotNet7的博客项目。
 
@@ -10,9 +10,9 @@
 
 ## 快速开始
 
-官方文档：[摘繁华博客官方文档](https://docs.blog.zhaifanhua.com)
+官方文档：[曦寒博客官方文档](https://docs.xihan.fun)
 
-在线体验：[摘繁华博客接口文档（后端仅只）](https://api.blog.zhaifanhua.com)
+在线体验：[曦寒博客接口文档（后端仅只）](https://api.xihan.fun)
 
 ## 所用框架
 
@@ -35,11 +35,11 @@
 
 - [x] 搭配全套前端项目：
 
-  - 后端：ZhaiFanhuaBlog.Framework；
+  - 后端：XiHan.Framework；
 
-  - 前端：ZhaiFanhuaBlog.Manage（后台管理）、ZhaiFanhuaBlog.Display（前台展示）；
+  - 前端：XiHan.Manage（后台管理）、XiHan.Display（前台展示）；
 
-  - 文档：ZhaiFanhuaBlog.Docs
+  - 文档：XiHan.Docs
 
 - [ ] 统一集成 IdentityServer4 认证 ✨;
 
@@ -77,7 +77,7 @@
 启动：
 
 ```
-dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Production --urls=http://*:9708 --ip=127.0.0.1
+dotnet /home/web/zhaifanhua.com/blog/XiHan.WebApi.dll --environment=Production --urls=http://*:9708 --ip=127.0.0.1
 ```
 
 
@@ -88,4 +88,4 @@ dotnet /home/web/zhaifanhua.com/blog/ZhaiFanhuaBlog.WebApi.dll --environment=Pro
 
 ## Star History
 
-![Star History](https://api.star-history.com/svg?repos=ZhaiFanhuaBlog/ZhaiFanhuaBlog.Framework&type=Date)
+![Star History](https://api.star-history.com/svg?repos=XiHanBlog/XiHan.Framework&type=Date)
