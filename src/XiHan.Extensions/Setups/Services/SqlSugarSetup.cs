@@ -104,7 +104,7 @@ public static class SqlSugarSetup
             client.Aop.OnError = (exp) =>
             {
                 if (databaseLogError)
-                    Log.Error(exp, $"SQL出错：{exp.Message}");
+                    Log.Error("SQL出错", exp);
             };
         });
         return services;

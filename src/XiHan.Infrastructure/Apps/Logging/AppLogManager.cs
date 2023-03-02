@@ -30,8 +30,8 @@ public static class AppLogManager
     /// <param name="builder"></param>
     public static void RegisterLog(ILoggingBuilder builder)
     {
-        var infoTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}{NewLine}";
-        var errorTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}================{NewLine}{NewLine}";
+        var infoTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}";
+        var errorTemplate = @"================{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}================{NewLine}";
         var infoPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Info/.log";
         var waringPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Waring/.log";
         var errorPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Error/.log";

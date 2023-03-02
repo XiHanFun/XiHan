@@ -42,6 +42,8 @@ public static class ServiceSetup
         services.AddAuthJwtSetup();
         // 健康检查
         services.AddHealthChecks();
+        // 即时通讯
+        services.AddSignalR();
         // Http
         services.AddHttpSetup();
         // Swagger

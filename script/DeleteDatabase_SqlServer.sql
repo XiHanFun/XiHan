@@ -1,4 +1,4 @@
-use [ZhaiFanHuaBlog]
+use [XiHan]
 GO
 declare @sql varchar(8000)
 while (select count(*) from sysobjects where type='U')>0

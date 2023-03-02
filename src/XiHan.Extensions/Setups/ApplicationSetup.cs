@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
 using XiHan.Extensions.Setups.Application;
 using XiHan.Utils.Console;
+using XiHan.Utils.Message.ChatHub;
 
 namespace XiHan.Extensions.Setups;
 
@@ -75,12 +76,15 @@ public static class ApplicationSetup
         app.UseAuthentication();
         // 授权
         app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
-            // 配置运行状况检查终端节点
-            endpoints.MapHealthChecks("/health");
             // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
             endpoints.MapControllers();
+            // 健康检查
+            endpoints.MapHealthChecks("/health");
+            // 即时通讯
+            endpoints.MapHub<ChatHubHelper>("/chathub");
         });
 
         "XiHan Application Started Successfully！".WriteLineSuccess();

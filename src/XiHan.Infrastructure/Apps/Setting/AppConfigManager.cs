@@ -13,8 +13,12 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using NetTaste;
 using Serilog;
+using System.IO;
 using XiHan.Utils.Console;
+using XiHan.Utils.Info;
+using XiHan.Utils.Object;
 using XiHan.Utils.Serialize;
 
 namespace XiHan.Infrastructure.Apps.Setting;
@@ -40,32 +44,31 @@ public static class AppConfigManager
     /// <param name="config"></param>
     public static void RegisterConfig(IConfigurationBuilder config)
     {
-        try
+        ConfigurationRoot = config.Build();
+        if (config is ConfigurationManager configurationManager)
         {
-            ConfigurationRoot = config.Build();
-            if (config is ConfigurationManager configurationManager)
+            var jsonFilePath = configurationManager.Sources
+                .OfType<JsonConfigurationSource>()
+                .Select(file => file?.Path!)
+                .ToList();
+            if (jsonFilePath.Any() && jsonFilePath.Remove("appsettings.json"))
             {
-                var jsonFilePath = configurationManager.Sources
-                    .OfType<JsonConfigurationSource>()
-                    .Select(file => file?.Path!)
-                    .ToList();
-                if (jsonFilePath.Any())
+                try
                 {
-                    var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
-                    var configurationFile = jsonFilePath.First(name => name.Contains(envName));
+                    var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
+                    var envName = configurationFile.Split('.')[1].ToString();
                     ConfigurationFile = configurationFile;
-
                     var infoMsg = $"配置注册成功，环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
                     Log.Information(infoMsg);
                     infoMsg.WriteLineSuccess();
                 }
+                catch (Exception ex)
+                {
+                    var errorMsg = $"配置注册出错，配置文件未找到！";
+                    Log.Error(errorMsg, ex.Message);
+                    errorMsg.WriteLineError();
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            var errorMsg = $"配置注册出错";
-            Log.Error(errorMsg, ex.Message);
-            errorMsg.WriteLineError();
         }
     }
 
