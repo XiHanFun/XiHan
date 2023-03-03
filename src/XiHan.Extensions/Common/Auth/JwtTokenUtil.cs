@@ -80,7 +80,7 @@ public static class JwtTokenUtil
         catch (Exception ex)
         {
             var errorMsg = $"Jwt 字符串颁发失败";
-            Log.Error(errorMsg, ex);
+            Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
             throw;
         }
@@ -126,7 +126,7 @@ public static class JwtTokenUtil
         catch (Exception ex)
         {
             var errorMsg = $"Jwt 字符串解析失败";
-            Log.Error(errorMsg, ex);
+            Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
             throw;
         }
@@ -154,7 +154,7 @@ public static class JwtTokenUtil
         catch (Exception ex)
         {
             var errorMsg = $"Token 被篡改或无效";
-            Log.Error(errorMsg, ex);
+            Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
             throw;
         }

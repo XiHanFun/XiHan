@@ -13,12 +13,8 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
-using NetTaste;
 using Serilog;
-using System.IO;
 using XiHan.Utils.Console;
-using XiHan.Utils.Info;
-using XiHan.Utils.Object;
 using XiHan.Utils.Serialize;
 
 namespace XiHan.Infrastructure.Apps.Setting;
@@ -65,7 +61,7 @@ public static class AppConfigManager
                 catch (Exception ex)
                 {
                     var errorMsg = $"配置注册出错，配置文件未找到！";
-                    Log.Error(errorMsg, ex.Message);
+                    Log.Error(ex, errorMsg);
                     errorMsg.WriteLineError();
                 }
             }

@@ -29,7 +29,7 @@ public static class ConfigSetup
     /// <returns></returns>
     public static IConfigurationBuilder AddConfigSetup(this IConfigurationBuilder configs)
     {
-        "Configuration Start……".WriteLineWarning();
+        "Configuration Start……".WriteLineInfo();
         if (configs == null)
         {
             throw new ArgumentNullException(nameof(configs));

@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using System.Security.Claims;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts.Response;
+using XiHan.Infrastructure.Contexts;
 
 namespace XiHan.Extensions.Filters;
 

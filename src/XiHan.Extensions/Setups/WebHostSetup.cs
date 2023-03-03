@@ -29,7 +29,7 @@ public static class WebHostSetup
     /// <returns></returns>
     public static IWebHostBuilder AddWebHostSetup(this IWebHostBuilder host)
     {
-        "Host Start……".WriteLineWarning();
+        "Host Start……".WriteLineInfo();
         if (host == null)
         {
             throw new ArgumentNullException(nameof(host));

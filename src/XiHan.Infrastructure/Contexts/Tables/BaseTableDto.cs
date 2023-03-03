@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Contexts.Response.Tables;
+
+namespace XiHan.Infrastructure.Contexts.Tables;
 
 /// <summary>
 /// 通用表格实体(支持分页)

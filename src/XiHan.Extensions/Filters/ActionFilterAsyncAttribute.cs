@@ -18,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts.Response;
+using XiHan.Infrastructure.Contexts;
 
 namespace XiHan.Extensions.Filters;
 

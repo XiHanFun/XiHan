@@ -12,12 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Infrastructure.Contexts.Response.Results;
-using XiHan.Infrastructure.Contexts.Response.Validations;
+using XiHan.Infrastructure.Contexts.Validations;
+using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Summary.Enums;
 
-namespace XiHan.Infrastructure.Contexts.Response;
+namespace XiHan.Infrastructure.Contexts;
 
 /// <summary>
 /// 通用响应实体

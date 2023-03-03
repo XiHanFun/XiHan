@@ -13,7 +13,7 @@
 
 using SqlSugar;
 
-namespace XiHan.Infrastructure.Contexts.Response.Pages;
+namespace XiHan.Infrastructure.Contexts.Pages;
 
 /// <summary>
 /// 分页拓展

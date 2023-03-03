@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
-using XiHan.Infrastructure.Contexts.Response.Results;
+using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Services.Utils.Message;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Message.WeChat;

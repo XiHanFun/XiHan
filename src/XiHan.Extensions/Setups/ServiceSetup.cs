@@ -30,7 +30,7 @@ public static class ServiceSetup
     /// <returns></returns>
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
-        "Services Start……".WriteLineWarning();
+        "Services Start……".WriteLineInfo();
         if (services == null)
         {
             throw new ArgumentNullException(nameof(services));

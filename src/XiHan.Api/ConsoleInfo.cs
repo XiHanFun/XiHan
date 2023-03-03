@@ -26,12 +26,20 @@ namespace XiHan.Api;
 public static class ConsoleInfo
 {
     /// <summary>
-    /// 打印系统信息
+    /// 欢迎使用曦寒
     /// </summary>
-    public static void Print()
+    public static void SayHello()
     {
         ApplicationInfoHelper.Logo.WriteLineHandle();
+        ApplicationInfoHelper.SendWord.WriteLineHandle();
         ApplicationInfoHelper.Copyright.WriteLineHandle();
+    }
+
+    /// <summary>
+    /// 打印系统信息
+    /// </summary>
+    public static void PrintInfo()
+    {
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
         $@"系统描述：{SystemInfoHelper.OsDescription}".WriteLineInfo();

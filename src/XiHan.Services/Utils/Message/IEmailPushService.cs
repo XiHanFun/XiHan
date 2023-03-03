@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Contexts.Response.Results;
+using XiHan.Infrastructure.Contexts.Results;
 
 namespace XiHan.Services.Utils.Message;
 

@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Contexts.Response.Validations;
+
+namespace XiHan.Infrastructure.Contexts.Validations;
 
 /// <summary>
 /// 验证出错字段实体基类

@@ -14,7 +14,7 @@
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
-using XiHan.Infrastructure.Contexts.Response.Pages;
+using XiHan.Infrastructure.Contexts.Pages;
 
 namespace XiHan.Repositories.Bases;
 

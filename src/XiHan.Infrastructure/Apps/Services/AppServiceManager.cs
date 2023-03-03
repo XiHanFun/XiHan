@@ -68,8 +68,8 @@ public static class AppServiceManager
             catch (Exception ex)
             {
                 var errorMsg = $"找不到{library}组件库";
-                Log.Error(errorMsg, ex.Message);
-                errorMsg.WriteLineError();
+                Log.Error(ex, errorMsg);
+                errorMsg.WriteLineWarning();
             }
         }
         // 批量注入

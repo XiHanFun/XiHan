@@ -13,8 +13,8 @@
 
 using XiHan.Infrastructure.Apps.Services;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts.Response;
-using XiHan.Infrastructure.Contexts.Response.Results;
+using XiHan.Infrastructure.Contexts;
+using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Http;
 using XiHan.Utils.Message.DingTalk;

@@ -41,11 +41,11 @@ public static class InitDatabaseStep
         }
         else
         {
-            "数据库正在初始化……".WriteLineWarning();
-            "创建数据库……".WriteLineWarning();
+            "数据库正在初始化……".WriteLineInfo();
+            "创建数据库……".WriteLineInfo();
             db.DbMaintenance.CreateDatabase();
             "数据库创建成功！".WriteLineSuccess();
-            "创建数据表……".WriteLineWarning();
+            "创建数据表……".WriteLineInfo();
             db.CodeFirst.SetStringDefaultLength(512).InitTables(
                 // Syses
                 typeof(SysConfig),

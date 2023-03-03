@@ -14,7 +14,7 @@
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Summary.Enums;
 
-namespace XiHan.Infrastructure.Contexts.Response.Results;
+namespace XiHan.Infrastructure.Contexts.Results;
 
 /// <summary>
 /// 通用结果实体

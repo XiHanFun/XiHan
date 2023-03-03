@@ -30,7 +30,7 @@ public static class LogSetup
     /// <exception cref="NotImplementedException"></exception>
     public static ILoggingBuilder AddLogSetup(this ILoggingBuilder builder)
     {
-        "Log Start……".WriteLineWarning();
+        "Log Start……".WriteLineInfo();
         if (builder == null)
         {
             throw new ArgumentNullException(nameof(builder));

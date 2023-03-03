@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Contexts.Response.Pages;
+
+namespace XiHan.Infrastructure.Contexts.Pages;
 
 /// <summary>
 /// 通用数据分页信息基类

@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts.Response.Results;
+using XiHan.Infrastructure.Contexts.Results;
 
 namespace XiHan.Extensions.Filters;
 

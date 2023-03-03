@@ -36,7 +36,7 @@ public static class ApplicationSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env, Func<Stream> streamHtml)
     {
-        "XiHan Application Start……".WriteLineWarning();
+        "XiHan Application Start……".WriteLineInfo();
         if (app == null)
         {
             throw new ArgumentNullException(nameof(app));
