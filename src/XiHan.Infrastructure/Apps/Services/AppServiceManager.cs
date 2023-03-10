@@ -44,7 +44,7 @@ public static class AppServiceManager
     {
         // Ip 查询服务
         services.AddSingleton<ISearcher, Searcher>();
-        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "configdata", "ip2region.xdb");
+        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "ConfigData", "ip2region.xdb");
     }
 
     /// <summary>
