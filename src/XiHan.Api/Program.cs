@@ -16,9 +16,6 @@ using System.Reflection;
 using XiHan.Api;
 using XiHan.Extensions.Setups;
 
-// 启动信息打印
-ConsoleInfo.SayHello();
-
 var builder = WebApplication.CreateBuilder(args);
 
 // 日志
@@ -44,7 +41,8 @@ try
     app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.Api.index.html")!);
 
     // 启动信息打印
-    ConsoleInfo.PrintInfo();
+    ConsoleInfo.SayHello();
+
     await app.RunAsync();
 
     return 0;
