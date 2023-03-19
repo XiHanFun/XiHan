@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Migration;
+namespace XiHan.Services.Utils.Migration;
 
 /// <summary>
 /// 资源信息

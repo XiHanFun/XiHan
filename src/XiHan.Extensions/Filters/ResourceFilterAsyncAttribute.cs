@@ -30,7 +30,7 @@ namespace XiHan.Extensions.Filters;
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 日志开关
-    private readonly bool ResourceLogSwitch = AppSettings.Logging.Resource.Get();
+    private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.Get();
 
     private readonly IMemoryCache _IMemoryCache;
     private readonly ILogger<ResourceFilterAsyncAttribute> _ILogger;

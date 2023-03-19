@@ -24,10 +24,10 @@ public static class UrlHelper
     /// <summary>
     /// Url编码
     /// </summary>
-    /// <param name="encode"></param>
-    /// <param name="inputString"></param>
+    /// <param name="inputString">输入</param>
+    /// <param name="encode">编码</param>
     /// <returns></returns>
-    public static string UrlEncode(Encoding encode, string inputString)
+    public static string UrlEncode(this string inputString, Encoding encode)
     {
         return HttpUtility.UrlEncode(inputString, encode);
     }
@@ -35,31 +35,11 @@ public static class UrlHelper
     /// <summary>
     /// Url解码
     /// </summary>
-    /// <param name="encode"></param>
-    /// <param name="inputString"></param>
+    /// <param name="inputString">输入</param>
+    /// <param name="encode">编码</param>
     /// <returns></returns>
-    public static string UrlDecode(Encoding encode, string inputString)
+    public static string UrlDecode(this string inputString, Encoding encode)
     {
         return HttpUtility.UrlDecode(inputString, encode);
-    }
-
-    /// <summary>
-    /// Url编码扩展
-    /// </summary>
-    /// <param name="inputString"></param>
-    /// <returns></returns>
-    public static string ToUrlEncode(this string inputString)
-    {
-        return UrlEncode(Encoding.UTF8, inputString);
-    }
-
-    /// <summary>
-    /// Url解码扩展
-    /// </summary>
-    /// <param name="inputString"></param>
-    /// <returns></returns>
-    public static string ToUrlDecode(this string inputString)
-    {
-        return UrlDecode(Encoding.UTF8, inputString);
     }
 }

@@ -34,15 +34,10 @@ public static class SwaggerSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
-
-        // 用于最小API
-        services.AddEndpointsApiExplorer();
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 配置Swagger，从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>
@@ -59,7 +54,7 @@ public static class SwaggerSetup
     /// Swagger文档信息配置
     /// </summary>
     /// <param name="options"></param>
-    public static void SwaggerInfoConfig(SwaggerGenOptions options)
+    internal static void SwaggerInfoConfig(SwaggerGenOptions options)
     {
         // 需要暴露的分组
         var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
@@ -153,7 +148,7 @@ public static class SwaggerSetup
     /// Swagger文档中请求带JWT Token
     /// </summary>
     /// <param name="options"></param>
-    public static void SwaggerJwtConfig(SwaggerGenOptions options)
+    internal static void SwaggerJwtConfig(SwaggerGenOptions options)
     {
         // 定义安全方案
         var securitySchemeOauth2 = new OpenApiSecurityScheme

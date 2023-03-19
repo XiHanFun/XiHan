@@ -14,7 +14,7 @@
 using RabbitMQ.Client;
 using System.Text;
 
-namespace XiHan.Utils.Message.RabbitMQ;
+namespace XiHan.Utils.EventBus.RabbitMQ;
 
 /// <summary>
 /// RabbitMQ生产者

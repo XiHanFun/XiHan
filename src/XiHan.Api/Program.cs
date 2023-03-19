@@ -28,15 +28,15 @@ try
     var config = builder.Configuration;
     config.AddConfigSetup();
 
-    // 主机
+    // 配置主机
     var host = builder.WebHost;
     host.AddWebHostSetup();
 
-    // 服务
+    // 配置服务
     var services = builder.Services;
     services.AddServiceSetup();
 
-    // 应用
+    // 配置中间件
     var app = builder.Build();
     app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.Api.index.html")!);
 

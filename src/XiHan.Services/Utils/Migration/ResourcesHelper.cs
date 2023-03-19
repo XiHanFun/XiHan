@@ -15,7 +15,7 @@ using System.Text;
 using XiHan.Utils.DirFile;
 using XiHan.Utils.Formats;
 
-namespace XiHan.Utils.Migration;
+namespace XiHan.Services.Utils.Migration;
 
 /// <summary>
 /// 资源迁移帮助类
@@ -42,7 +42,7 @@ public static class ResourcesHelper
             };
             var content = File.ReadAllText(path, Encoding.UTF8);
             // 替换资源
-            content = StringFormatHelper.ReplaceStr(content, resourceInfo.OldPrefix, resourceInfo.NewPrefix);
+            content = content.ReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写
             DirFileHelper.ClearFile(content);
             DirFileHelper.WriteText(path, content, Encoding.UTF8);

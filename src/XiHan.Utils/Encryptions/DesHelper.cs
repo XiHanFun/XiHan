@@ -27,11 +27,11 @@ public static class DesHelper
     /// <summary>
     /// DES加密
     /// </summary>
+    /// <param name="inputString"></param>
     /// <param name="encode"></param>
     /// <param name="desKey"></param>
-    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string EncryptDes(Encoding encode, string desKey, string inputString)
+    public static string EncryptDes(this string inputString, Encoding encode, string desKey)
     {
         var rgbKey = encode.GetBytes(desKey[..16]);
         var rgbIv = Iv;
@@ -47,11 +47,11 @@ public static class DesHelper
     /// <summary>
     /// DES解密
     /// </summary>
+    /// <param name="inputString"></param>
     /// <param name="encode"></param>
     /// <param name="desKey"></param>
-    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string DecryptDes(Encoding encode, string desKey, string inputString)
+    public static string DecryptDes(this string inputString, Encoding encode, string desKey)
     {
         var rgbKey = encode.GetBytes(desKey[..16]);
         var rgbIv = Iv;

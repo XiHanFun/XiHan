@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Summary.Enums;
+
+namespace XiHan.Utils.Enums;
 
 /// <summary>
 /// EnumDescDto

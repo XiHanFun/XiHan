@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructure.Enums;
-using XiHan.Utils.Summary.Enums;
+using XiHan.Utils.Enums;
 
 namespace XiHan.Infrastructure.Contexts.Results;
 

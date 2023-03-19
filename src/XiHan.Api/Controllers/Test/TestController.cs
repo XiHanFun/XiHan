@@ -117,11 +117,11 @@ public class TestController : BaseApiController
         }
         var resultString = encryptType switch
         {
-            "SHA1" => ShaHelper.EncryptSha1(Encoding.UTF8, iStr),
-            "SHA256" => ShaHelper.EncryptSha256(Encoding.UTF8, iStr),
-            "SHA384" => ShaHelper.EncryptSha384(Encoding.UTF8, iStr),
-            "SHA512" => ShaHelper.EncryptSha512(Encoding.UTF8, iStr),
-            _ => ShaHelper.EncryptSha1(Encoding.UTF8, iStr),
+            "SHA1" => iStr.EncryptSha1(Encoding.UTF8),
+            "SHA256" => iStr.EncryptSha256(Encoding.UTF8),
+            "SHA384" => iStr.EncryptSha384(Encoding.UTF8),
+            "SHA512" => iStr.EncryptSha512(Encoding.UTF8),
+            _ => iStr.EncryptSha1(Encoding.UTF8),
         };
         return BaseResponseDto.Ok(encryptType + "加密后结果为【" + resultString + "】");
     }
@@ -152,18 +152,18 @@ public class TestController : BaseApiController
         {
             return iType switch
             {
-                "DES" => DesHelper.EncryptDes(Encoding.UTF8, desKey, iStr),
-                "AES" => AesHelper.EncryptAes(Encoding.UTF8, aesKey, iStr),
-                _ => DesHelper.EncryptDes(Encoding.UTF8, desKey, iStr),
+                "DES" => iStr.EncryptDes(Encoding.UTF8, desKey),
+                "AES" => iStr.EncryptAes(Encoding.UTF8, aesKey),
+                _ => iStr.EncryptDes(Encoding.UTF8, desKey),
             };
         }
         string Decrypt()
         {
             return iType switch
             {
-                "DES" => DesHelper.DecryptDes(Encoding.UTF8, desKey, iStr),
-                "AES" => AesHelper.DecryptAes(Encoding.UTF8, aesKey, iStr),
-                _ => DesHelper.DecryptDes(Encoding.UTF8, desKey, iStr),
+                "DES" => iStr.DecryptDes(Encoding.UTF8, desKey),
+                "AES" => iStr.DecryptAes(Encoding.UTF8, aesKey),
+                _ => iStr.DecryptDes(Encoding.UTF8, desKey),
             };
         }
         return BaseResponseDto.Ok("你选择了" + iEncryptOrDecrypt + "," + resultString);

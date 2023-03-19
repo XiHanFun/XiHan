@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Message.RabbitMQ;
+namespace XiHan.Utils.EventBus.RabbitMQ;
 
 /// <summary>
 /// MQConnection
@@ -26,7 +26,7 @@ public class MqConnection
     /// <summary>
     /// 端口
     /// </summary>
-    public int Port { get; set; } = 5672;
+    public int Port { get; set; }
 
     /// <summary>
     /// 连接名称

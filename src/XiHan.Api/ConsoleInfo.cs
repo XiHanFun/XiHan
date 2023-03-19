@@ -77,11 +77,11 @@ public static class ConsoleInfo
         "===============跨域===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.Get()}".WriteLineInfo();
         "===============日志===============".WriteLineInfo();
-        $@"授权日志：{AppSettings.Logging.Authorization.Get()}".WriteLineInfo();
-        $@"资源日志：{AppSettings.Logging.Resource.Get()}".WriteLineInfo();
-        $@"请求日志：{AppSettings.Logging.Action.Get()}".WriteLineInfo();
-        $@"结果日志：{AppSettings.Logging.Result.Get()}".WriteLineInfo();
-        $@"异常日志：{AppSettings.Logging.Exception.Get()}".WriteLineInfo();
+        $@"授权日志：{AppSettings.LogConfig.Authorization.Get()}".WriteLineInfo();
+        $@"资源日志：{AppSettings.LogConfig.Resource.Get()}".WriteLineInfo();
+        $@"请求日志：{AppSettings.LogConfig.Action.Get()}".WriteLineInfo();
+        $@"结果日志：{AppSettings.LogConfig.Result.Get()}".WriteLineInfo();
+        $@"异常日志：{AppSettings.LogConfig.Exception.Get()}".WriteLineInfo();
         "==============================启动信息==============================".WriteLineInfo();
     }
 }

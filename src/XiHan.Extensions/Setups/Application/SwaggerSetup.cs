@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
-using NetTaste;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using XiHan.Extensions.Common.Swagger;

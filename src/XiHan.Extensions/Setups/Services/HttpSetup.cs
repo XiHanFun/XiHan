@@ -27,18 +27,16 @@ public static class HttpSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddHttpSetup(this IServiceCollection services)
+    /// <exception cref="ArgumentNullException"></exception>
+    public static IServiceCollection AddHttpContextSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 注入 Http 请求
         services.AddHttpClient();
-        services.AddSingleton<IHttpHelper, HttpHelper>();
         // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IHttpHelper, HttpHelper>();
 
         return services;
     }

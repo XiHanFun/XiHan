@@ -14,9 +14,9 @@
 using System.Security.Cryptography;
 using System.Text;
 using XiHan.Utils.Encryptions;
+using XiHan.Utils.Enums;
 using XiHan.Utils.Http;
 using XiHan.Utils.Serialize;
-using XiHan.Utils.Summary.Enums;
 
 namespace XiHan.Utils.Message.DingTalk;
 
@@ -157,7 +157,7 @@ public class DingTalkRobotHelper
             {
                 var hashmessage = hmacsha256.ComputeHash(messageBytes);
                 // 然后进行Base64 encode，最后再把签名参数再进行urlEncode
-                sign = Convert.ToBase64String(hashmessage).ToUrlEncode();
+                sign = Convert.ToBase64String(hashmessage).UrlEncode(Encoding.UTF8);
             }
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";

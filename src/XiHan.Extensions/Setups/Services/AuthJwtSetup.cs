@@ -32,12 +32,10 @@ public static class AuthJwtSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAuthJwtSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 读取配置
         var issuer = AppSettings.Auth.JWT.Issuer.Get();

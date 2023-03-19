@@ -25,7 +25,7 @@ public static class MoneyFormatHelper
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
-    public static string FormatDecimalToString(decimal money)
+    public static string FormatDecimalToString(this decimal money)
     {
         var moneyStr = money.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
         string moneyRes;

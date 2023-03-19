@@ -27,7 +27,7 @@ namespace XiHan.Extensions.Setups;
 public static class ApplicationSetup
 {
     /// <summary>
-    /// 应用扩展
+    /// 应用扩展 配置中间件
     /// </summary>
     /// <param name="app"></param>
     /// <param name="env"></param>
@@ -52,6 +52,7 @@ public static class ApplicationSetup
         }
         else
         {
+            app.UseExceptionHandler("/Error");
             // 使用HSTS的中间件，该中间件添加了严格传输安全头
             app.UseHsts();
         }

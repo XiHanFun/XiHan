@@ -26,12 +26,10 @@ public static class AutoMapperSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 创建具体的映射对象
         services.AddAutoMapper(typeof(AutoMapperConfig));

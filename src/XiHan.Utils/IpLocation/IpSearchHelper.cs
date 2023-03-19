@@ -23,12 +23,17 @@ public static class IpSearchHelper
     /// <summary>
     /// 单一实例
     /// </summary>
-    private static Searcher? _searcherInstance = null;
+    private static Searcher? _SearcherInstance = null;
 
     /// <summary>
     /// 锁
     /// </summary>
-    private static readonly object Lock = new();
+    private static object _Lock = new();
+
+    /// <summary>
+    /// 数据库位置
+    /// </summary>
+    public static string IpDbPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 访问器
@@ -37,18 +42,13 @@ public static class IpSearchHelper
     {
         get
         {
-            lock (Lock)
+            lock (_Lock)
             {
-                _searcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
+                _SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
             }
-            return _searcherInstance;
+            return _SearcherInstance;
         }
     }
-
-    /// <summary>
-    /// 数据库位置
-    /// </summary>
-    public static string IpDbPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 查询Ip

@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Utils.Summary.Enums;
+namespace XiHan.Utils.Enums;
 
 /// <summary>
 /// 枚举描述帮助类

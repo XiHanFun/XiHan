@@ -24,10 +24,10 @@ public static class Md5Helper
     /// <summary>
     /// MD5字符串加密
     /// </summary>
+    ///  <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
-    /// <param name="inputString">输入</param>
     /// <returns>加密后字符串</returns>
-    public static string EncryptMd5(Encoding encode, string inputString)
+    public static string EncryptMd5(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密
@@ -58,15 +58,5 @@ public static class Md5Helper
             strBuild.Append(buff.ToString("x2"));
         }
         return strBuild.ToString();
-    }
-
-    /// <summary>
-    /// MD5字符串加密扩展方法
-    /// </summary>
-    /// <param name="inputString"></param>
-    /// <returns></returns>
-    public static string ToMd5(this string inputString)
-    {
-        return EncryptMd5(Encoding.UTF8, inputString);
     }
 }

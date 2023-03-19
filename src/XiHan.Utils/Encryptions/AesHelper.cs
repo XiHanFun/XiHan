@@ -27,11 +27,11 @@ public static class AesHelper
     /// <summary>
     /// AES加密
     /// </summary>
+    /// <param name="inputString"></param>
     /// <param name="encode"></param>
     /// <param name="aesKey"></param>
-    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string EncryptAes(Encoding encode, string aesKey, string inputString)
+    public static string EncryptAes(this string inputString, Encoding encode, string aesKey)
     {
         var rgbKey = encode.GetBytes(aesKey[..16]);
         var rgbIv = Iv;
@@ -47,11 +47,11 @@ public static class AesHelper
     /// <summary>
     /// AES解密
     /// </summary>
+    /// <param name="inputString"></param>
     /// <param name="encode"></param>
     /// <param name="aesKey"></param>
-    /// <param name="inputString"></param>
     /// <returns></returns>
-    public static string DecryptAes(Encoding encode, string aesKey, string inputString)
+    public static string DecryptAes(this string inputString, Encoding encode, string aesKey)
     {
         var rgbKey = encode.GetBytes(aesKey[..16]);
         var rgbIv = Iv;

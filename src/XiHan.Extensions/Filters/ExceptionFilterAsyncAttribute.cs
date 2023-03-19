@@ -30,7 +30,7 @@ namespace XiHan.Extensions.Filters;
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
     // 日志开关
-    private readonly bool ExceptionLogSwitch = AppSettings.Logging.Exception.Get();
+    private readonly bool ExceptionLogSwitch = AppSettings.LogConfig.Exception.Get();
 
     private readonly ILogger<ExceptionFilterAsyncAttribute> _ILogger;
 

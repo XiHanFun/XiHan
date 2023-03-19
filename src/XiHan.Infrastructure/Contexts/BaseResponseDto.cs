@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using XiHan.Infrastructure.Contexts.Validations;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
-using XiHan.Utils.Summary.Enums;
+using XiHan.Utils.Enums;
 
 namespace XiHan.Infrastructure.Contexts;
 

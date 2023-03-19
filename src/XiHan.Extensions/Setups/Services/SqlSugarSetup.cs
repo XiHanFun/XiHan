@@ -29,12 +29,10 @@ public static class SqlSugarSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         var databaseType = AppSettings.Database.Type.Get();
         var databaseConsole = AppSettings.Database.Console.Get();

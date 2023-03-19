@@ -31,7 +31,7 @@ public static class AppSettings
     /// <summary>
     /// 日志
     /// </summary>
-    public static class Logging
+    public static class LogConfig
     {
         /// <summary>
         /// 授权
@@ -209,6 +209,42 @@ public static class AppSettings
             /// </summary>
             public static bool Error { get; set; }
         }
+    }
+
+    /// <summary>
+    /// RabbitMQ
+    /// </summary>
+    public static class RabbitMQ
+    {
+        /// <summary>
+        /// 是否可用
+        /// </summary>
+        public static bool Enabled { get; set; }
+
+        /// <summary>
+        /// 主机名称
+        /// </summary>
+        public static string HostName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public static string UserName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public static string Password { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 端口
+        /// </summary>
+        public static int Port { get; set; }
+
+        /// <summary>
+        /// 重试次数
+        /// </summary>
+        public static int RetryCount { get; set; }
     }
 
     /// <summary>

@@ -27,7 +27,7 @@ public static class StringFormatHelper
     /// <param name="oldStr"></param>
     /// <param name="newStr"></param>
     /// <returns></returns>
-    public static string ReplaceStr(string content, string oldStr, string newStr)
+    public static string ReplaceStr(this string content, string oldStr, string newStr)
     {
         // 没有替换字符串直接返回源字符串
         if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
