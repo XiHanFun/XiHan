@@ -61,7 +61,7 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [Obsolete]
-    [HttpPost("Obsolete")]
+    [HttpGet("Obsolete")]
     public string Obsolete()
     {
         return "过时接口";
@@ -72,7 +72,7 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [Authorize]
-    [HttpPost("Authorize")]
+    [HttpGet("Authorize")]
     public string Authorize()
     {
         return "授权接口";
@@ -83,23 +83,10 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    [HttpGet]
-    [Route("Exception")]
+    [HttpGet("Exception")]
     public string Exception()
     {
         throw new NotImplementedException("这是一个未实现或异常的接口");
-    }
-
-    /// <summary>
-    /// 日志
-    /// </summary>
-    /// <param name="log"></param>
-    /// <returns></returns>
-    [HttpGet("LogInfo")]
-    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> LogInfo(string log)
-    {
-        return BaseResponseDto.Ok($"测试日志写入:{log}");
     }
 
     /// <summary>
@@ -167,6 +154,18 @@ public class TestController : BaseApiController
             };
         }
         return BaseResponseDto.Ok("你选择了" + iEncryptOrDecrypt + "," + resultString);
+    }
+
+    /// <summary>
+    /// 日志
+    /// </summary>
+    /// <param name="log"></param>
+    /// <returns></returns>
+    [HttpGet("LogInfo")]
+    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
+    public ActionResult<BaseResultDto> LogInfo(string log)
+    {
+        return BaseResponseDto.Ok($"测试日志写入:{log}");
     }
 
     /// <summary>

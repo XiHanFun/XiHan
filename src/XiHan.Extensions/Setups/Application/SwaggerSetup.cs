@@ -60,7 +60,7 @@ public static class SwaggerSetup
                     if (publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower()))
                     {
                         var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
-                        //切换分组操作,参数一是使用的哪个json文件,参数二是个名字
+                        // 切换分组操作,参数一是使用的哪个json文件,参数二是个名字
                         options.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", info?.Title);
                     }
                 });
