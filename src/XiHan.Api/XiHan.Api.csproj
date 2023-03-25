@@ -8,7 +8,7 @@
     <UserSecretsId>cfd2e93f-edba-404a-9fae-b08d34162057</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    <RepositoryUrl>https://github.com/XiHan/XiHan.Framework</RepositoryUrl>
+    <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
     <AssemblyVersion>0.2.4</AssemblyVersion>
     <FileVersion>0.2.4</FileVersion>
     <Title>XiHan.Api</Title>

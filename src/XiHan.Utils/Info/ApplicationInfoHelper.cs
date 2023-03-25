@@ -65,7 +65,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 寄语
     /// </summary>
-    public static string SendWord = $@"有一故人，名曰曦寒，思终成忆，谨此为怀。";
+    public static string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
 
     /// <summary>
     /// Copyright
