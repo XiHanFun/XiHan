@@ -4,15 +4,15 @@
 
 ![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
-这是基于DotNet7的博客项目。
+这是基于DotNet7的打造个人知识产权的新型全场景应用型软件项目。
 
 高效快速 返哺开源 用心创作 探索未知
 
 ## 快速开始
 
-官方文档：[曦寒博客官方文档](https://docs.xihan.fun)
+官方文档：[曦寒官方文档](https://docs.xihan.fun)
 
-在线体验：[曦寒博客接口文档（后端仅只）](https://api.xihan.fun)
+在线体验：[曦寒接口文档（后端仅只）](https://api.xihan.fun)
 
 ## 所用框架
 
