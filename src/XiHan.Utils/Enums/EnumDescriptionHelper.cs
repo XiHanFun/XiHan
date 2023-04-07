@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel;
+using System.Reflection;
 
 namespace XiHan.Utils.Enums;
 
@@ -27,11 +28,17 @@ public static class EnumDescriptionHelper
     /// <returns></returns>
     public static string GetEnumDescription(this Enum enumObj)
     {
-        var enumName = enumObj.ToString();
-        var field = enumObj.GetType().GetField(enumName);
-        if (field == null) return string.Empty;
-        if (field.GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] description)
-            return description.First().Description;
+        Type type = enumObj.GetType();
+        string? name = Enum.GetName(type, enumObj);
+        if (name != null)
+        {
+            var fieldInfo = type.GetField(name);
+            if (fieldInfo != null)
+            {
+                if (fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
+                    return description.Description;
+            }
+        }
         return string.Empty;
     }
 
@@ -40,23 +47,22 @@ public static class EnumDescriptionHelper
     /// </summary>
     /// <param name="enumType"></param>
     /// <returns></returns>
-    public static List<EnumDescDto>? GetEnumDescriptions(this Type enumType)
+    public static List<EnumDescDto> GetEnumDescriptions(this Type enumType)
     {
         List<EnumDescDto> result = new();
-        var fields = enumType.GetFields().ToList();
-        if (fields.Any()) return null;
-        fields.ForEach(field =>
+        var fieldInfos = enumType.GetFields().ToList();
+        fieldInfos.ForEach(fieldInfo =>
         {
             // 不是枚举字段不处理
-            if (field.FieldType.IsEnum)
+            if (fieldInfo.FieldType.IsEnum)
             {
                 var desc = string.Empty;
-                if (field.GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] description)
-                    desc = description[0].Description;
+                if (fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
+                    desc = description.Description;
                 result.Add(new EnumDescDto()
                 {
-                    Key = field.Name.ToString(),
-                    Value = (int)field.GetRawConstantValue()!,
+                    Key = fieldInfo.Name.ToString(),
+                    Value = Convert.ToInt32(fieldInfo.GetRawConstantValue()),
                     Label = desc,
                 });
             }
