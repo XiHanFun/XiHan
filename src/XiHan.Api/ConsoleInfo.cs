@@ -14,9 +14,10 @@
 using System.Reflection;
 using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Utils.Console;
-using XiHan.Utils.DirFile;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Info;
+using XiHan.Utils.Info.BaseInfos;
+using XiHan.Utils.Serialize;
 
 namespace XiHan.Api;
 
@@ -30,20 +31,23 @@ public static class ConsoleInfo
     /// </summary>
     public static void SayHello()
     {
-        ApplicationInfoHelper.Logo.WriteLineHandle();
-        ApplicationInfoHelper.SendWord.WriteLineHandle();
-        ApplicationInfoHelper.Copyright.WriteLineHandle();
+        Logo.WriteLineHandle();
+        SendWord.WriteLineHandle();
+        Copyright.WriteLineHandle();
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
         $@"系统描述：{SystemInfoHelper.OsDescription}".WriteLineInfo();
         $@"系统版本：{SystemInfoHelper.OsVersion}".WriteLineInfo();
-        $@"系统核数：{SystemInfoHelper.ProcessorCount}".WriteLineInfo();
         $@"系统平台：{SystemInfoHelper.Platform}".WriteLineInfo();
         $@"系统架构：{SystemInfoHelper.OsArchitecture}".WriteLineInfo();
         $@"系统目录：{SystemInfoHelper.SystemDirectory}".WriteLineInfo();
-        $@"磁盘分区：{SystemInfoHelper.DiskPartition}".WriteLineInfo();
         $@"运行时间：{SystemInfoHelper.RunningTime}".WriteLineInfo();
         $@"交互模式：{SystemInfoHelper.InteractiveMode}".WriteLineInfo();
+        $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeToJson()}".WriteLineInfo();
+        $@"内存信息：{SystemInfoHelper.RamInfo.SerializeToJson()}".WriteLineInfo();
+        $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeToJson()}".WriteLineInfo();
+        $@"IPv4地址：{LocalIpHelper.GetLocalIpV4()}".WriteLineInfo();
+        $@"IPv6地址：{LocalIpHelper.GetLocalIpV6()}".WriteLineInfo();
         "==============================环境信息==============================".WriteLineInfo();
         $@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}".WriteLineInfo();
         $@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}".WriteLineInfo();
@@ -59,29 +63,48 @@ public static class ConsoleInfo
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
-        $@"占用磁盘空间：{FileSizeFormatHelper.FormatByteToString(DirFileHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
-        $@"本地IPv4地址：{LocalIpInfoHelper.GetLocalIpV4()}".WriteLineInfo();
-        $@"本地IPv6地址：{LocalIpInfoHelper.GetLocalIpV6()}".WriteLineInfo();
-        $@"应用启动环境：{AppSettings.EnvironmentName.Get()}".WriteLineInfo();
-        $@"应用启动端口：{AppSettings.Port.Get()}".WriteLineInfo();
+        $@"占用空间：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
+        $@"启动环境：{AppSettings.EnvironmentName.GetValue()}".WriteLineInfo();
+        $@"启动端口：{AppSettings.Port.GetValue()}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
-        $@"连接类型：{AppSettings.Database.Type.Get()}".WriteLineInfo();
-        $@"是否已经初始化：{AppSettings.Database.Inited.Get()}".WriteLineInfo();
+        $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();
+        $@"是否初始化：{AppSettings.Database.Inited.GetValue()}".WriteLineInfo();
         "===============分析===============".WriteLineInfo();
-        $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.Get()}".WriteLineInfo();
+        $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}".WriteLineInfo();
         "===============缓存===============".WriteLineInfo();
-        $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.Get()}分钟".WriteLineInfo();
-        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.Get()}".WriteLineInfo();
-        $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.Get()}".WriteLineInfo();
+        $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.GetValue()}分钟".WriteLineInfo();
+        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.GetValue()}".WriteLineInfo();
+        $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}".WriteLineInfo();
         "===============跨域===============".WriteLineInfo();
-        $@"是否启用：{AppSettings.Cors.IsEnabled.Get()}".WriteLineInfo();
+        $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}".WriteLineInfo();
         "===============日志===============".WriteLineInfo();
-        $@"授权日志：{AppSettings.LogConfig.Authorization.Get()}".WriteLineInfo();
-        $@"资源日志：{AppSettings.LogConfig.Resource.Get()}".WriteLineInfo();
-        $@"请求日志：{AppSettings.LogConfig.Action.Get()}".WriteLineInfo();
-        $@"结果日志：{AppSettings.LogConfig.Result.Get()}".WriteLineInfo();
-        $@"异常日志：{AppSettings.LogConfig.Exception.Get()}".WriteLineInfo();
+        $@"授权日志：{AppSettings.LogConfig.Authorization.GetValue()}".WriteLineInfo();
+        $@"资源日志：{AppSettings.LogConfig.Resource.GetValue()}".WriteLineInfo();
+        $@"请求日志：{AppSettings.LogConfig.Action.GetValue()}".WriteLineInfo();
+        $@"结果日志：{AppSettings.LogConfig.Result.GetValue()}".WriteLineInfo();
+        $@"异常日志：{AppSettings.LogConfig.Exception.GetValue()}".WriteLineInfo();
         "==============================启动信息==============================".WriteLineInfo();
     }
+
+    /// <summary>
+    /// Logo
+    /// </summary>
+    public static string Logo { get; set; } = $@"
+██╗  ██╗██╗██╗  ██╗ █████╗ ███╗   ██╗
+╚██╗██╔╝██║██║  ██║██╔══██╗████╗  ██║
+ ╚███╔╝ ██║███████║███████║██╔██╗ ██║
+ ██╔██╗ ██║██╔══██║██╔══██║██║╚██╗██║
+██╔╝ ██╗██║██║  ██║██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝";
+
+    /// <summary>
+    /// 寄语
+    /// </summary>
+    public static string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
+
+    /// <summary>
+    /// Copyright
+    /// </summary>
+    public static string Copyright { get; set; } = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 }

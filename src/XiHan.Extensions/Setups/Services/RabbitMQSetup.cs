@@ -31,14 +31,14 @@ public static class RabbitMQSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        var isEnabledRabbitMQ = AppSettings.RabbitMQ.Enabled.Get();
+        var isEnabledRabbitMQ = AppSettings.RabbitMQ.Enabled.GetValue();
         if (isEnabledRabbitMQ)
         {
-            var hostName = AppSettings.RabbitMQ.HostName.Get();
-            var userName = AppSettings.RabbitMQ.UserName.Get();
-            var password = AppSettings.RabbitMQ.Password.Get();
-            var port = AppSettings.RabbitMQ.Port.Get();
-            var retryCount = AppSettings.RabbitMQ.RetryCount.Get();
+            var hostName = AppSettings.RabbitMQ.HostName.GetValue();
+            var userName = AppSettings.RabbitMQ.UserName.GetValue();
+            var password = AppSettings.RabbitMQ.Password.GetValue();
+            var port = AppSettings.RabbitMQ.Port.GetValue();
+            var retryCount = AppSettings.RabbitMQ.RetryCount.GetValue();
 
             var factory = new ConnectionFactory()
             {

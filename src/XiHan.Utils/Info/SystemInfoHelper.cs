@@ -11,8 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using System.Runtime.InteropServices;
-using XiHan.Utils.Formats;
+using XiHan.Utils.Info.BaseInfos;
 
 namespace XiHan.Utils.Info;
 
@@ -24,73 +23,58 @@ public static class SystemInfoHelper
     /// <summary>
     /// 操作系统
     /// </summary>
-    public static string OperatingSystem => GetOperatingSystem().ToString();
+    public static string OperatingSystem => OSPlatformHelper.GetOperatingSystem().ToString();
 
     /// <summary>
     /// 系统描述
     /// </summary>
-    public static string OsDescription => RuntimeInformation.OSDescription;
+    public static string OsDescription => OSPlatformHelper.GetOsDescription();
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public static string OsVersion => Environment.OSVersion.Version.ToString();
+    public static string OsVersion => OSPlatformHelper.GetOsVersion();
 
     /// <summary>
     /// 系统平台
     /// </summary>
-    public static string Platform => Environment.OSVersion.Platform.ToString();
+    public static string Platform => OSPlatformHelper.GetPlatform();
 
     /// <summary>
     /// 系统架构
     /// </summary>
-    public static string OsArchitecture => RuntimeInformation.OSArchitecture.ToString();
-
-    /// <summary>
-    /// CPU个数
-    /// </summary>
-    public static string ProcessorCount => Environment.ProcessorCount.ToString();
+    public static string OsArchitecture => OSPlatformHelper.GetOsArchitecture();
 
     /// <summary>
     /// 系统目录
     /// </summary>
-    public static string SystemDirectory => Environment.SystemDirectory;
-
-    /// <summary>
-    /// 磁盘分区
-    /// </summary>
-    public static string DiskPartition => string.Join("；", Environment.GetLogicalDrives()).ToString();
+    public static string SystemDirectory => OSPlatformHelper.GetSystemDirectory();
 
     /// <summary>
     /// 运行时间
     /// </summary>
-    public static string RunningTime => TimeFormatHelper.MillisecondsToString(Environment.TickCount).ToString();
+    public static string RunningTime => OSPlatformHelper.GetRunningTime();
 
     /// <summary>
     /// 交互模式
     /// </summary>
-    public static string InteractiveMode => Environment.UserInteractive == true ? "交互运行" : "非交互运行";
+    public static string InteractiveMode => OSPlatformHelper.GetInteractiveMode();
 
     /// <summary>
-    /// 操作系统
+    /// 处理器信息
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public static OSPlatform GetOperatingSystem()
-    {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            return OSPlatform.OSX;
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            return OSPlatform.Linux;
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            return OSPlatform.Windows;
-        }
+    public static CpuInfo CpuInfo => CpuHelper.GetCpuInfos();
 
-        throw new Exception("Cannot determine operating system!");
-    }
+    /// <summary>
+    /// 内存信息
+    /// </summary>
+    /// <returns></returns>
+    public static RamInfo RamInfo => RamHelper.GetRamInfos();
+
+    /// <summary>
+    /// 磁盘信息
+    /// </summary>
+    /// <returns></returns>
+    public static List<DiskInfo> DiskInfo => DiskHelper.GetDiskInfos();
 }

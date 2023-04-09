@@ -50,25 +50,4 @@ public static class ApplicationInfoHelper
     /// 会话标识
     /// </summary>
     public static string CurrentProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
-
-    /// <summary>
-    /// Logo
-    /// </summary>
-    public static string Logo { get; set; } = $@"
-██╗  ██╗██╗██╗  ██╗ █████╗ ███╗   ██╗
-╚██╗██╔╝██║██║  ██║██╔══██╗████╗  ██║
- ╚███╔╝ ██║███████║███████║██╔██╗ ██║
- ██╔██╗ ██║██╔══██║██╔══██║██║╚██╗██║
-██╔╝ ██╗██║██║  ██║██║  ██║██║ ╚████║
-╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝";
-
-    /// <summary>
-    /// 寄语
-    /// </summary>
-    public static string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
-
-    /// <summary>
-    /// Copyright
-    /// </summary>
-    public static string Copyright { get; set; } = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 }

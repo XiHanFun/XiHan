@@ -83,9 +83,9 @@ public static class ApplicationSetup
             // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
             endpoints.MapControllers();
             // 健康检查
-            endpoints.MapHealthChecks("/health");
+            endpoints.MapHealthChecks("/Health");
             // 即时通讯
-            endpoints.MapHub<ChatHubHelper>("/chathub");
+            endpoints.MapHub<ChatHubHelper>("/Chathub");
         });
 
         "XiHan Application Started Successfully！".WriteLineSuccess();

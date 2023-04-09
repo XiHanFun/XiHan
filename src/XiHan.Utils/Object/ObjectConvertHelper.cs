@@ -11,6 +11,9 @@
 
 #endregion <<版权版本注释>>
 
+using Newtonsoft.Json.Linq;
+using System.Collections;
+
 namespace XiHan.Utils.Object;
 
 /// <summary>
@@ -18,12 +21,33 @@ namespace XiHan.Utils.Object;
 /// </summary>
 public static class ObjectConvertHelper
 {
+    #region Bool
+
+    /// <summary>
+    /// 对象转布尔值
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static bool ParseToBool(this object thisValue)
+    {
+        var reval = false;
+        if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
+        {
+            return reval;
+        }
+        return reval;
+    }
+
+    #endregion
+
+    #region Int
+
     /// <summary>
     /// 对象转数字
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static int ObjToInt(this object thisValue)
+    public static int ParseToInt(this object thisValue)
     {
         var reval = 0;
         if (thisValue == null)
@@ -43,7 +67,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static int ObjToInt(this object thisValue, int errorValue)
+    public static int ParseToInt(this object thisValue, int errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reval))
         {
@@ -52,12 +76,187 @@ public static class ObjectConvertHelper
         return errorValue;
     }
 
+    #endregion
+
+    #region Short
+
+    /// <summary>
+    /// 对象转短整数
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static short ParseToShort(this object thisValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && short.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return 0;
+    }
+
+    /// <summary>
+    /// 对象转短整数
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static short ParseToShort(this object thisValue, short errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && short.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Long
+
+    /// <summary>
+    /// 对象转长整数
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static long ParseToLong(this object thisValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && long.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return 0L;
+    }
+
+    /// <summary>
+    /// 对象转长整数
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static long ParseToLong(this object thisValue, long errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && long.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Float
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±1.5 x 10 e−45 至 ±3.4 x 10 e38	大约 6-9 位数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static float ParseToFloat(this object thisValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && float.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return 0.0F;
+    }
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±1.5 x 10 e−45 至 ±3.4 x 10 e38	大约 6-9 位数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static float ParseToFloat(this object thisValue, float errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && float.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Double
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±5.0 × 10 e−324 到 ±1.7 × 10 e308	大约 15-17 位数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static double ParseToDouble(this object thisValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return 0.0D;
+    }
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±5.0 × 10 e−324 到 ±1.7 × 10 e308	大约 15-17 位数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static double ParseToDouble(this object thisValue, double errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Decimal
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±1.0 x 10 e-28 至 ±7.9228 x 10 e28	28-29 位
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static decimal ParseToDecimal(this object thisValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return 0M;
+    }
+
+    /// <summary>
+    /// 对象转浮点数
+    /// ±1.0 x 10 e-28 至 ±7.9228 x 10 e28	28-29 位
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static decimal ParseToDecimal(this object thisValue, decimal errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
+        {
+            return reval;
+        }
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Money
+
     /// <summary>
     /// 对象转金额
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static double ObjToMoney(this object thisValue)
+    public static double ParseToMoney(this object thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -72,7 +271,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static double ObjToMoney(this object thisValue, double errorValue)
+    public static double ParseToMoney(this object thisValue, double errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -81,12 +280,16 @@ public static class ObjectConvertHelper
         return errorValue;
     }
 
+    #endregion
+
+    #region String
+
     /// <summary>
     /// 对象转字符串
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static string ObjToString(this object thisValue)
+    public static string ParseToString(this object thisValue)
     {
         if (thisValue != null)
             return thisValue.ToString()!.Trim();
@@ -99,7 +302,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static string ObjToString(this object thisValue, string errorValue)
+    public static string ParseToString(this object thisValue, string errorValue)
     {
         if (thisValue != null)
             return thisValue.ToString()!.Trim();
@@ -111,46 +314,51 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
+    public static bool IsEmptyOrNull(this object thisValue)
+    {
+        return !IsNotEmptyOrNull(thisValue);
+    }
+
+    /// <summary>
+    /// 判断是否为空
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
     public static bool IsNotEmptyOrNull(this object thisValue)
     {
-        return ObjToString(thisValue) != "" && ObjToString(thisValue) != "undefined" && ObjToString(thisValue) != "null";
+        return ParseToString(thisValue) != string.Empty && ParseToString(thisValue) != "" && ParseToString(thisValue) != "undefined" && ParseToString(thisValue) != "null";
     }
 
     /// <summary>
-    /// 对象转浮点数
+    /// 判断是否为空或零
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static decimal ObjToDecimal(this object thisValue)
+    public static bool IsNullOrZero(this object thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
-        {
-            return reval;
-        }
-        return 0;
+        return !IsNotNullOrZero(thisValue);
     }
 
     /// <summary>
-    /// 对象转浮点数
+    /// 判断是否为空或零
     /// </summary>
     /// <param name="thisValue"></param>
-    /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static decimal ObjToDecimal(this object thisValue, decimal errorValue)
+    public static bool IsNotNullOrZero(this object thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
-        {
-            return reval;
-        }
-        return errorValue;
+        return IsNotEmptyOrNull(thisValue) && ParseToString(thisValue) != "0";
     }
+
+    #endregion
+
+    #region Date
 
     /// <summary>
     /// 对象转日期
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static DateTime ObjToDate(this object thisValue)
+    public static DateTime ParseToDate(this object thisValue)
     {
         var reval = DateTime.MinValue;
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reval))
@@ -166,7 +374,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static DateTime ObjToDate(this object thisValue, DateTime errorValue)
+    public static DateTime ParseToDate(this object thisValue, DateTime errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reval))
         {
@@ -175,29 +383,45 @@ public static class ObjectConvertHelper
         return errorValue;
     }
 
-    /// <summary>
-    /// 对象转布尔值
-    /// </summary>
-    /// <param name="thisValue"></param>
-    /// <returns></returns>
-    public static bool ObjToBool(this object thisValue)
-    {
-        var reval = false;
-        if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
-        {
-            return reval;
-        }
-        return reval;
-    }
+    #endregion
+
+    #region Guid
 
     /// <summary>
-    /// 获取当前时间的时间戳
+    /// 将string转换为Guid
+    /// 若转换失败，则返回Guid.Empty，不抛出异常。
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static string DateToTimeStamp(this DateTime thisValue)
+    public static Guid ParseToGuid(this string thisValue)
     {
-        var ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        return Convert.ToInt64(ts.TotalSeconds).ToString();
+        try
+        {
+            return new Guid(thisValue);
+        }
+        catch
+        {
+            return Guid.Empty;
+        }
     }
+
+    #endregion
+
+    #region 强制转换类型
+
+    /// <summary>
+    /// 强制转换类型
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static IEnumerable<TResult> CastSuper<TResult>(this IEnumerable source)
+    {
+        foreach (object item in source)
+        {
+            yield return (TResult)Convert.ChangeType(item, typeof(TResult));
+        }
+    }
+
+    #endregion
 }

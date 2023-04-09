@@ -29,7 +29,7 @@ namespace XiHan.Extensions.Filters;
 public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionLogSwitch = AppSettings.LogConfig.Action.Get();
+    private readonly bool ActionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
     private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
 

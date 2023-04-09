@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-
 namespace XiHan.Infrastructure.Contexts.Tables;
 
 /// <summary>
@@ -27,5 +26,5 @@ public class BaseTableDto<TEntity> where TEntity : class
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Data { get; set; }
+    public List<TEntity>? Datas { get; set; }
 }

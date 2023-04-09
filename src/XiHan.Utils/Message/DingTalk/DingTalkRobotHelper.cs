@@ -62,7 +62,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Text.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 指定目标人群
         var at = new At
         {
@@ -81,7 +81,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> LinkMessage(Link link)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Link.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Link.GetEnumDescriptionByKey();
         // 发送
         var result = await Send(new { msgtype, link });
         return result;
@@ -96,7 +96,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Markdown.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         // 指定目标人群
         var at = new At
         {
@@ -115,7 +115,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> ActionCardMessage(ActionCard actionCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.ActionCard.GetEnumDescription();
+        var msgtype = MsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
         // 发送
         var result = await Send(new { msgtype, actionCard });
         return result;
@@ -128,7 +128,7 @@ public class DingTalkRobotHelper
     public async Task<DingTalkResultInfo?> FeedCardMessage(FeedCard feedCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.FeedCard.GetEnumDescription();
+        var msgtype = MsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
         // 发送
         var result = await Send(new { msgtype, feedCard });
         return result;

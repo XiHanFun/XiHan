@@ -27,7 +27,7 @@ namespace XiHan.Extensions.Filters;
 public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationFilter
 {
     // 日志开关
-    private readonly bool AuthorizationLogSwitch = AppSettings.LogConfig.Authorization.Get();
+    private readonly bool AuthorizationLogSwitch = AppSettings.LogConfig.Authorization.GetValue();
 
     private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
 

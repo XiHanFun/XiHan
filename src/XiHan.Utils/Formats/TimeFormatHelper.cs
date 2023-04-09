@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.Runtime.CompilerServices;
+
 namespace XiHan.Utils.Formats;
 
 /// <summary>
@@ -18,6 +20,17 @@ namespace XiHan.Utils.Formats;
 /// </summary>
 public static class TimeFormatHelper
 {
+    /// <summary>
+    /// 获取当前时间的时间戳
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static string DateToTimeStamp(this DateTime thisValue)
+    {
+        var ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        return Convert.ToInt64(ts.TotalSeconds).ToString();
+    }
+
     /// <summary>
     /// 时间转换字符串
     /// </summary>
@@ -40,7 +53,7 @@ public static class TimeFormatHelper
     /// </summary>
     /// <param name="milliseconds"></param>
     /// <returns></returns>
-    public static string MillisecondsToString(long milliseconds)
+    public static string MilliSecondsToString(this long milliseconds)
     {
         var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
         return TimeSpanToString(timeSpan);
@@ -95,37 +108,88 @@ public static class TimeFormatHelper
     /// <returns></returns>
     public static string FriendlyDate(DateTime? date)
     {
+        string result = string.Empty;
         if (!date.HasValue)
         {
-            return string.Empty;
+            return result;
         }
 
         var strDate = date.Value.ToString("yyyy-MM-dd");
-        string vDate;
         if (DateTime.Now.ToString("yyyy-MM-dd") == strDate)
         {
-            vDate = "今天";
+            result = "今天";
         }
         else if (DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") == strDate)
         {
-            vDate = "明天";
+            result = "明天";
         }
         else if (DateTime.Now.AddDays(2).ToString("yyyy-MM-dd") == strDate)
         {
-            vDate = "后天";
+            result = "后天";
         }
         else if (DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") == strDate)
         {
-            vDate = "昨天";
+            result = "昨天";
         }
-        else if (DateTime.Now.AddDays(2).ToString("yyyy-MM-dd") == strDate)
+        else if (DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd") == strDate)
         {
-            vDate = "前天";
+            result = "前天";
         }
         else
         {
-            vDate = strDate;
+            result = strDate;
         }
-        return vDate;
+        return result;
+    }
+
+    /// <summary>
+    /// 字符串转日期
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static DateTime StringToDate(this string thisValue)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(thisValue))
+            {
+                return DateTime.MinValue;
+            }
+            if (thisValue.Contains("-") || thisValue.Contains("/"))
+            {
+                return DateTime.Parse(thisValue);
+            }
+            else
+            {
+                int length = thisValue.Length;
+                switch (length)
+                {
+                    case 4:
+                        return DateTime.ParseExact(thisValue, "yyyy", System.Globalization.CultureInfo.CurrentCulture);
+
+                    case 6:
+                        return DateTime.ParseExact(thisValue, "yyyyMM", System.Globalization.CultureInfo.CurrentCulture);
+
+                    case 8:
+                        return DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+
+                    case 10:
+                        return DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture);
+
+                    case 12:
+                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture);
+
+                    case 14:
+                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture);
+
+                    default:
+                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture);
+                }
+            }
+        }
+        catch
+        {
+            return DateTime.MinValue;
+        }
     }
 }

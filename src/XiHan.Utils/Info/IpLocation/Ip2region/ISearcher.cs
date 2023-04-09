@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace XiHan.Utils.IpLocation.Ip2region;
+namespace XiHan.Utils.Info.IpLocation.Ip2region;
 
 /// <summary>
 /// ²éÑ¯½Ó¿Ú

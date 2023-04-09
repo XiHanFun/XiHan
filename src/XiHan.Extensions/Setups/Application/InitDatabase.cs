@@ -33,7 +33,7 @@ public static class InitDatabaseStep
     public static void InitDatabase(this IServiceProvider service)
     {
         var db = DbScoped.SugarScope;
-        var databaseInited = AppSettings.Database.Inited.Get();
+        var databaseInited = AppSettings.Database.Inited.GetValue();
         // 若数据库已经初始化，则跳过，否则初始化数据库
         if (databaseInited)
         {

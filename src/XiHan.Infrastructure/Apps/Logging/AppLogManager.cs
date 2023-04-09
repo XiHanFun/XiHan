@@ -46,12 +46,13 @@ public static class AppLogManager
 #if DEBUG
                 // 最小记录级别
                 .MinimumLevel.Debug()
-#else
-                .MinimumLevel.Information()
 #endif
+                .MinimumLevel.Information()
                 // 记录相关上下文信息
                 .Enrich.FromLogContext()
+#if DEBUG
                 .SinkFileConfig(LogEventLevel.Debug, debugPath, infoTemplate)
+#endif
                 .SinkFileConfig(LogEventLevel.Information, infoPath, infoTemplate)
                 .SinkFileConfig(LogEventLevel.Warning, waringPath, warnTemplate)
                 .SinkFileConfig(LogEventLevel.Error, errorPath, errorTemplate)
@@ -82,8 +83,8 @@ public static class AppLogManager
                             rollingInterval: RollingInterval.Day,
                             // 文件大小：10M，默认1GB
                             fileSizeLimitBytes: 1024 * 1024 * 10,
-                            // 保留最近：10个文件，默认31个，等于null时永远保留文件
-                            retainedFileCountLimit: 10,
+                            // 保留最近：15个文件，默认31个，等于null时永远保留文件
+                            retainedFileCountLimit: 15,
                             // 超过大小自动创建新文件
                             rollOnFileSizeLimit: true,
                             // 最小写入级别

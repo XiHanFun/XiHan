@@ -33,10 +33,10 @@ public static class CorsSetup
             throw new ArgumentNullException(nameof(app));
         }
 
-        var isEnabledCors = AppSettings.Cors.IsEnabled.Get();
+        var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
         if (!isEnabledCors) return app;
         // 策略名称
-        var policyName = AppSettings.Cors.PolicyName.Get();
+        var policyName = AppSettings.Cors.PolicyName.GetValue();
         // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
         app.UseCors(policyName);
         return app;

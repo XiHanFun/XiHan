@@ -36,7 +36,7 @@ public static class CacheSetup
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 内存缓存
-        var isEnabledMemoryCache = AppSettings.Cache.MemoryCache.IsEnabled.Get();
+        var isEnabledMemoryCache = AppSettings.Cache.MemoryCache.IsEnabled.GetValue();
         if (isEnabledMemoryCache)
         {
             services.AddMemoryCache(options => new MemoryCacheOptions
@@ -47,12 +47,12 @@ public static class CacheSetup
         }
 
         // 分布式缓存
-        var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.Get();
+        var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.GetValue();
         if (isEnabledDistributedcache)
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.Get();
-            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName.Get();
+            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.GetValue();
+            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName.GetValue();
             var redisStr = $"{connectionString}, prefix = {instanceName}";
             // 用法一：基于Redis初始化IDistributedCache
             services.AddSingleton(new CSRedisClient(redisStr));
@@ -62,7 +62,7 @@ public static class CacheSetup
         }
 
         // 响应缓存
-        var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.Get();
+        var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();
         if (isEnabledResponseCache)
         {
             services.AddResponseCaching();

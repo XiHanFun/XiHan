@@ -23,10 +23,10 @@ public static class VerificationCodeHelper
     /// <summary>
     /// 随机数字
     /// </summary>
-    /// <param name="length">生成长度 默认4个字符</param>
+    /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机数字字符源</param>
     /// <returns></returns>
-    public static string Number(int length = 4, string source = "0123456789")
+    public static string CodeNumber(int length = 6, string source = "0123456789")
     {
         return RandomTo(length, source);
     }
@@ -34,10 +34,10 @@ public static class VerificationCodeHelper
     /// <summary>
     /// 随机字母
     /// </summary>
-    /// <param name="length">生成长度 默认4个字符</param>
+    /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母字符源</param>
     /// <returns></returns>
-    public static string Letter(int length = 4, string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeLetter(int length = 6, string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }
@@ -45,10 +45,10 @@ public static class VerificationCodeHelper
     /// <summary>
     /// 随机字母或数字
     /// </summary>
-    /// <param name="length">生成长度 默认4个字符</param>
+    /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母或数字字符源</param>
     /// <returns></returns>
-    public static string NumberOrLetter(int length = 4, string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeNumberOrLetter(int length = 6, string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }

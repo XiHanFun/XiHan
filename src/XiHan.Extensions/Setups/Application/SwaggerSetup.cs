@@ -45,11 +45,11 @@ public static class SwaggerSetup
             app.UseSwaggerUI(options =>
             {
                 // 站点名称
-                var siteName = AppSettings.Syses.Name.Get();
+                var siteName = AppSettings.Syses.Name.GetValue();
                 // 路由前缀
-                var routePrefix = AppSettings.Swagger.RoutePrefix.Get();
+                var routePrefix = AppSettings.Swagger.RoutePrefix.GetValue();
                 // 性能分析开关
-                var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.Get();
+                var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
                 // 需要暴露的分组
                 var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
 

@@ -41,9 +41,9 @@ public class WeChatPushService : IWeChatPushService
     {
         WeChatConnection conn = new()
         {
-            WebHookUrl = AppSettings.Message.WeChart.WebHookUrl.Get(),
-            UploadkUrl = AppSettings.Message.WeChart.UploadkUrl.Get(),
-            Key = AppSettings.Message.WeChart.Key.Get()
+            WebHookUrl = AppSettings.Message.WeChart.WebHookUrl.GetValue(),
+            UploadkUrl = AppSettings.Message.WeChart.UploadkUrl.GetValue(),
+            Key = AppSettings.Message.WeChart.Key.GetValue()
         };
         _WeChatRobot = new WeChatRobotHelper(iHttpHelper, conn);
     }

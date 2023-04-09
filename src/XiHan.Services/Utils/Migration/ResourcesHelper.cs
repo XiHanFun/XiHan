@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
-using XiHan.Utils.DirFile;
 using XiHan.Utils.Formats;
+using XiHan.Utils.Info.BaseInfos;
 
 namespace XiHan.Services.Utils.Migration;
 
@@ -32,7 +32,7 @@ public static class ResourcesHelper
         if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
 
         List<MigrationInfo> list = new();
-        string[] paths = DirFileHelper.GetFiles(resourceInfo.Path);
+        string[] paths = DiskHelper.GetFiles(resourceInfo.Path);
         foreach (var path in paths)
         {
             MigrationInfo migrationInfo = new()
@@ -44,8 +44,8 @@ public static class ResourcesHelper
             // 替换资源
             content = content.ReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写
-            DirFileHelper.ClearFile(content);
-            DirFileHelper.WriteText(path, content, Encoding.UTF8);
+            DiskHelper.ClearFile(content);
+            DiskHelper.WriteText(path, content, Encoding.UTF8);
             // 迁移成功
             migrationInfo.IsSucess = true;
             list.Add(migrationInfo);

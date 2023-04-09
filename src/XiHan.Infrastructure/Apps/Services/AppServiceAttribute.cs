@@ -17,13 +17,15 @@ namespace XiHan.Infrastructure.Apps.Services;
 
 /// <summary>
 /// 标记服务
+/// 如果服务是本身 直接在类上使用[AppService]
+/// 如果服务是接口 在类上使用 [AppService(ServiceType = typeof(实现接口))]
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class AppServiceAttribute : Attribute
 {
     /// <summary>
     /// 服务声明周期
-    /// 不给默认值的话注册的是AddSingleton
+    /// 默认值注册Singleton
     /// </summary>
     public LifeTimeEnum ServiceLifetime { get; set; } = LifeTimeEnum.Singleton;
 

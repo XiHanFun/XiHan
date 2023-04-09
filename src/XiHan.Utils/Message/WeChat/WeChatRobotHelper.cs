@@ -57,7 +57,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> TextMessage(Text text)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Text.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, text });
         return result;
@@ -71,7 +71,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> MarkdownMessage(Markdown markdown)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Markdown.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, markdown });
         return result;
@@ -85,7 +85,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> ImageMessage(Image image)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.Image.GetEnumDescription();
+        var msgtype = MsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, image });
         return result;
@@ -99,7 +99,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> NewsMessage(News news)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.News.GetEnumDescription();
+        var msgtype = MsgTypeEnum.News.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, news });
         return result;
@@ -113,7 +113,7 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> FileMessage(File file)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.File.GetEnumDescription();
+        var msgtype = MsgTypeEnum.File.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, file });
         return result;
@@ -127,8 +127,8 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> TextNoticeMessage(TemplateCardTextNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescription();
-        templateCard.CardType = TemplateCardType.TextNotice.GetEnumDescription();
+        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        templateCard.CardType = TemplateCardType.TextNotice.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;
@@ -142,8 +142,8 @@ public class WeChatRobotHelper
     public async Task<WeChatResultInfo?> NewsNoticeMessage(TemplateCardNewsNotice templateCard)
     {
         // 消息类型
-        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescription();
-        templateCard.CardType = TemplateCardType.NewsNotice.GetEnumDescription();
+        var msgtype = MsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        templateCard.CardType = TemplateCardType.NewsNotice.GetEnumDescriptionByKey();
         // 发送
         var result = await SendMessage(new { msgtype, template_card = templateCard });
         return result;

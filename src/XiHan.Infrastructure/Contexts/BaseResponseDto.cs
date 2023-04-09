@@ -34,8 +34,8 @@ public static class BaseResponseDto
         {
             Success = true,
             Code = ResponseEnum.Continue,
-            Message = ResponseEnum.Continue.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.Continue.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
@@ -49,14 +49,15 @@ public static class BaseResponseDto
         {
             Success = true,
             Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应成功 200
     /// </summary>
+    /// <param name="messageData"></param>
     /// <returns></returns>
     public static BaseResultDto Ok(string messageData)
     {
@@ -64,30 +65,31 @@ public static class BaseResponseDto
         {
             Success = true,
             Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescription(),
-            Data = messageData
+            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Datas = messageData
         };
     }
 
     /// <summary>
     /// 响应成功，返回通用数据 200
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="datas"></param>
     /// <returns></returns>
-    public static BaseResultDto Ok(dynamic data)
+    public static BaseResultDto Ok(dynamic datas)
     {
         return new BaseResultDto
         {
             Success = true,
             Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescription(),
-            Data = data
+            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Datas = datas
         };
     }
 
     /// <summary>
     /// 响应失败，访问出错 400
     /// </summary>
+    /// <param name="messageData"></param>
     /// <returns></returns>
     public static BaseResultDto BadRequest(string messageData)
     {
@@ -95,23 +97,24 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.BadRequest,
-            Message = ResponseEnum.BadRequest.GetEnumDescription(),
-            Data = messageData
+            Message = ResponseEnum.BadRequest.GetEnumDescriptionByKey(),
+            Datas = messageData
         };
     }
 
     /// <summary>
     /// 响应失败，访问出错 400
     /// </summary>
+    /// <param name="datas"></param>
     /// <returns></returns>
-    public static BaseResultDto BadRequest(dynamic data)
+    public static BaseResultDto BadRequest(dynamic datas)
     {
         return new BaseResultDto
         {
             Success = false,
             Code = ResponseEnum.BadRequest,
-            Message = ResponseEnum.BadRequest.GetEnumDescription(),
-            Data = data
+            Message = ResponseEnum.BadRequest.GetEnumDescriptionByKey(),
+            Datas = datas
         };
     }
 
@@ -125,14 +128,15 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Unauthorized,
-            Message = ResponseEnum.Unauthorized.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应失败，访问未授权 401
     /// </summary>
+    /// <param name="messageData"></param>
     /// <returns></returns>
     public static BaseResultDto Unauthorized(string messageData)
     {
@@ -140,8 +144,8 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Unauthorized,
-            Message = ResponseEnum.Unauthorized.GetEnumDescription(),
-            Data = messageData
+            Message = ResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Datas = messageData
         };
     }
 
@@ -155,8 +159,8 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.Forbidden,
-            Message = ResponseEnum.Forbidden.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.Forbidden.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
@@ -170,14 +174,15 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotFound,
-            Message = ResponseEnum.NotFound.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.NotFound.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应失败，数据未找到 404
     /// </summary>
+    /// <param name="messageData"></param>
     /// <returns></returns>
     public static BaseResultDto NotFound(string messageData)
     {
@@ -185,14 +190,15 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotFound,
-            Message = ResponseEnum.NotFound.GetEnumDescription(),
-            Data = messageData
+            Message = ResponseEnum.NotFound.GetEnumDescriptionByKey(),
+            Datas = messageData
         };
     }
 
     /// <summary>
-    /// 响应失败，参数不合法 422
+    ///  响应失败，参数不合法 422
     /// </summary>
+    /// <param name="messageData"></param>
     /// <returns></returns>
     public static BaseResultDto UnprocessableEntity(string messageData)
     {
@@ -200,14 +206,15 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.UnprocessableEntity,
-            Message = ResponseEnum.UnprocessableEntity.GetEnumDescription(),
-            Data = messageData
+            Message = ResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Datas = messageData
         };
     }
 
     /// <summary>
     /// 响应失败，参数不合法 422
     /// </summary>
+    /// <param name="context"></param>
     /// <returns></returns>
     public static BaseResultDto UnprocessableEntity(ActionExecutingContext context)
     {
@@ -215,8 +222,8 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.UnprocessableEntity,
-            Message = ResponseEnum.UnprocessableEntity.GetEnumDescription(),
-            Data = new BaseValidationDto(context)
+            Message = ResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Datas = new BaseValidationDto(context)
         };
     }
 
@@ -230,8 +237,8 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.InternalServerError,
-            Message = ResponseEnum.InternalServerError.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
@@ -245,8 +252,8 @@ public static class BaseResponseDto
         {
             Success = false,
             Code = ResponseEnum.NotImplemented,
-            Message = ResponseEnum.NotImplemented.GetEnumDescription(),
-            Data = null
+            Message = ResponseEnum.NotImplemented.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 }

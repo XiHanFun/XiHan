@@ -34,12 +34,12 @@ public class BaseResultDto
     /// <summary>
     /// 返回信息
     /// </summary>
-    public string? Message { get; set; } = ResponseEnum.Ok.GetEnumDescription();
+    public string? Message { get; set; } = ResponseEnum.Ok.GetEnumDescriptionByKey();
 
     /// <summary>
     /// 数据集合
     /// </summary>
-    public dynamic? Data { get; set; }
+    public dynamic? Datas { get; set; }
 
     /// <summary>
     /// 时间戳

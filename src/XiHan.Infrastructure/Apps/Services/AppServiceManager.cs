@@ -16,8 +16,8 @@ using Serilog;
 using System.Reflection;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Console;
-using XiHan.Utils.IpLocation;
-using XiHan.Utils.IpLocation.Ip2region;
+using XiHan.Utils.Info.IpLocation;
+using XiHan.Utils.Info.IpLocation.Ip2region;
 
 namespace XiHan.Infrastructure.Apps.Services;
 
@@ -73,40 +73,45 @@ public static class AppServiceManager
             }
         }
         // 批量注入
-        foreach (var classType in referencedTypes)
+        foreach (var type in referencedTypes)
         {
             // 服务周期
-            var serviceAttribute = classType.GetCustomAttribute<AppServiceAttribute>();
+            var serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
             if (serviceAttribute == null) continue;
             var serviceType = serviceAttribute.ServiceType;
 
-            // 适用于依赖抽象编程，这里只获取第一个
+            // 情况1 适用于依赖抽象编程，这里只获取第一个
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
             {
-                serviceType = classType.GetInterfaces().FirstOrDefault();
+                serviceType = type.GetInterfaces().FirstOrDefault();
+            }
+            // 情况2 不常见特殊情况下才会指定ServiceType，写起来麻烦
+            if (serviceType == null)
+            {
+                serviceType = type;
             }
             // 判断是否实现了该接口，若是，则注入服务
-            else if (serviceType != null && serviceType.IsAssignableFrom(classType))
+            else if (serviceType != null && serviceType.IsAssignableFrom(type))
             {
                 switch (serviceAttribute.ServiceLifetime)
                 {
                     case LifeTimeEnum.Singleton:
-                        services.AddSingleton(serviceType, classType);
+                        services.AddSingleton(serviceType, type);
                         break;
 
                     case LifeTimeEnum.Scoped:
-                        services.AddScoped(serviceType, classType);
+                        services.AddScoped(serviceType, type);
                         break;
 
                     case LifeTimeEnum.Transient:
-                        services.AddTransient(serviceType, classType);
+                        services.AddTransient(serviceType, type);
                         break;
 
                     default:
-                        services.AddTransient(serviceType, classType);
+                        services.AddTransient(serviceType, type);
                         break;
                 }
-                var infoMsg = $"服务注册：{serviceType.Name}-{classType.Name}";
+                var infoMsg = $"服务注册：{serviceType.Name}-{type.Name}";
                 Log.Information(infoMsg);
                 infoMsg.WriteLineSuccess();
             }

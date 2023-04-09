@@ -51,12 +51,12 @@ public class EmailPushService : IEmailPushService
         };
         var model = new EmailModel
         {
-            Host = AppSettings.Message.Email.Host.Get(),
-            Port = AppSettings.Message.Email.Port.Get(),
-            UseSsl = AppSettings.Message.Email.UseSsl.Get(),
-            FromMail = AppSettings.Message.Email.From.Address.Get(),
-            FromName = AppSettings.Message.Email.From.UserName.Get(),
-            FromPassword = AppSettings.Message.Email.From.Password.Get(),
+            Host = AppSettings.Message.Email.Host.GetValue(),
+            Port = AppSettings.Message.Email.Port.GetValue(),
+            UseSsl = AppSettings.Message.Email.UseSsl.GetValue(),
+            FromMail = AppSettings.Message.Email.From.Address.GetValue(),
+            FromName = AppSettings.Message.Email.From.UserName.GetValue(),
+            FromPassword = AppSettings.Message.Email.From.Password.GetValue(),
             Subject = subject,
             Body = body,
             ToMail = toMail,

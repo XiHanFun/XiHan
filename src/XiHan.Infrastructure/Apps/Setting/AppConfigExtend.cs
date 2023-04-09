@@ -23,37 +23,37 @@ public static class AppConfigExtend
     /// <summary>
     /// 获取值
     /// </summary>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TREntity Get<TREntity>(this TREntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static REntity GetValue<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.Get<TREntity>(fullName);
+        return AppConfigManager.GetValue<REntity>(fullName);
     }
 
     /// <summary>
     /// 获取对象
     /// </summary>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TREntity GetSection<TREntity>(this TREntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static REntity GetSection<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.GetSection<TREntity>(fullName);
+        return AppConfigManager.GetSection<REntity>(fullName);
     }
 
     /// <summary>
     /// 赋值
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="entity"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TEntity, TREntity>(this TREntity entity, TREntity value, [CallerArgumentExpression("entity")] string fullName = "")
+    public static void Set<TEntity, REntity>(this REntity entity, REntity value, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        AppConfigManager.Set<TEntity, TREntity>(fullName, value);
+        AppConfigManager.Set<TEntity, REntity>(fullName, value);
     }
 }

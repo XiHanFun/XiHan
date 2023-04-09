@@ -30,7 +30,7 @@ namespace XiHan.Extensions.Filters;
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 日志开关
-    private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.Get();
+    private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
     private readonly IMemoryCache _IMemoryCache;
     private readonly ILogger<ResourceFilterAsyncAttribute> _ILogger;
@@ -90,7 +90,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                 // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
                 if (resourceExecuted.Result != null)
                 {
-                    var SyncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.Get());
+                    var SyncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
                     var result = resourceExecuted.Result as ActionResult;
                     _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
                     if (ResourceLogSwitch)

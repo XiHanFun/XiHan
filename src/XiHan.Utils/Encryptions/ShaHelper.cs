@@ -29,10 +29,9 @@ public static class ShaHelper
     /// <returns>加密后字符串160位</returns>
     public static string EncryptSha1(this string inputString, Encoding encode)
     {
-        using var sha1 = SHA1.Create();
         var buffer = encode.GetBytes(inputString);
         //开始加密
-        var byteBuffer = sha1.ComputeHash(buffer);
+        var byteBuffer = SHA1.HashData(buffer);
         StringBuilder strBuild = new();
         foreach (var buff in byteBuffer)
         {

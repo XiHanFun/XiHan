@@ -12,28 +12,28 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using XiHan.Utils.ClientEquipment;
-using XiHan.Utils.IpLocation;
+using XiHan.Utils.Info.BaseInfos;
+using XiHan.Utils.Info.IpLocation;
 
 namespace XiHan.Utils.Info;
 
 /// <summary>
-/// HttpContextHelper
+/// 请求上下文信息帮助类
 /// </summary>
-public class HttpContextHelper
+public class HttpContexInfotHelper
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpContext"></param>
-    public HttpContextHelper(HttpContext httpContext)
+    public HttpContexInfotHelper(HttpContext httpContext)
     {
         if (httpContext == null)
         {
             throw new ArgumentNullException(nameof(httpContext));
         }
 
-        ClientInfo = ClientInfoHelper.GetClient(httpContext);
+        ClientInfo = ClientHelper.GetClient(httpContext);
         AddressInfo = IpSearchHelper.Search(ClientInfo.RemoteIPv4 ?? string.Empty);
     }
 

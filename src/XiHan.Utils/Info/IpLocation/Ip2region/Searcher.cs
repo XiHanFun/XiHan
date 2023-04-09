@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 
-namespace XiHan.Utils.IpLocation.Ip2region;
+namespace XiHan.Utils.Info.IpLocation.Ip2region;
 
 /// <summary>
 /// 查询器

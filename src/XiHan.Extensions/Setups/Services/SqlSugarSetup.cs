@@ -34,47 +34,47 @@ public static class SqlSugarSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        var databaseType = AppSettings.Database.Type.Get();
-        var databaseConsole = AppSettings.Database.Console.Get();
-        var databaseLogInfo = AppSettings.Database.Logging.Info.Get();
-        var databaseLogError = AppSettings.Database.Logging.Error.Get();
+        var databaseType = AppSettings.Database.Type.GetValue();
+        var databaseConsole = AppSettings.Database.Console.GetValue();
+        var databaseLogInfo = AppSettings.Database.Logging.Info.GetValue();
+        var databaseLogError = AppSettings.Database.Logging.Error.GetValue();
 
         services.AddSqlSugar(databaseType switch
         {
             "MySql" => new IocConfig
             {
                 DbType = IocDbType.MySql,
-                ConnectionString = AppSettings.Database.ConnectionString.MySql.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.MySql.GetValue(),
                 IsAutoCloseConnection = true
             },
             "SqlServer" => new IocConfig
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = AppSettings.Database.ConnectionString.SqlServer.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.SqlServer.GetValue(),
                 IsAutoCloseConnection = true
             },
             "Sqlite" => new IocConfig
             {
                 DbType = IocDbType.Sqlite,
-                ConnectionString = AppSettings.Database.ConnectionString.Sqlite.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.Sqlite.GetValue(),
                 IsAutoCloseConnection = true
             },
             "Oracle" => new IocConfig
             {
                 DbType = IocDbType.Oracle,
-                ConnectionString = AppSettings.Database.ConnectionString.Oracle.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.Oracle.GetValue(),
                 IsAutoCloseConnection = true
             },
             "PostgreSQL" => new IocConfig
             {
                 DbType = IocDbType.PostgreSQL,
-                ConnectionString = AppSettings.Database.ConnectionString.PostgreSQL.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.PostgreSQL.GetValue(),
                 IsAutoCloseConnection = true
             },
             _ => new IocConfig
             {
                 DbType = IocDbType.SqlServer,
-                ConnectionString = AppSettings.Database.ConnectionString.SqlServer.Get(),
+                ConnectionString = AppSettings.Database.ConnectionString.SqlServer.GetValue(),
                 IsAutoCloseConnection = true
             }
         });

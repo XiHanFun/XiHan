@@ -38,10 +38,10 @@ public static class AuthJwtSetup
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 读取配置
-        var issuer = AppSettings.Auth.JWT.Issuer.Get();
-        var audience = AppSettings.Auth.JWT.Audience.Get();
-        var symmetricKey = AppSettings.Auth.JWT.SymmetricKey.Get();
-        var clockSkew = AppSettings.Auth.JWT.ClockSkew.Get();
+        var issuer = AppSettings.Auth.JWT.Issuer.GetValue();
+        var audience = AppSettings.Auth.JWT.Audience.GetValue();
+        var symmetricKey = AppSettings.Auth.JWT.SymmetricKey.GetValue();
+        var clockSkew = AppSettings.Auth.JWT.ClockSkew.GetValue();
 
         // 签名密钥
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
@@ -86,7 +86,7 @@ public static class AuthJwtSetup
                 OnAuthenticationFailed = context =>
                 {
                     var jwtHandler = new JwtSecurityTokenHandler();
-                    var token = context.Request.Headers["Authorization"].ObjToString().Replace("Bearer ", "");
+                    var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", "");
 
                     // 若Token为空、伪造无法读取
                     if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))

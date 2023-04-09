@@ -71,26 +71,26 @@ public static class AppConfigManager
     /// <summary>
     /// 获取值
     /// </summary>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="key"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
-    public static TREntity Get<TREntity>(string key)
+    public static REntity GetValue<REntity>(string key)
     {
-        var result = ConfigurationRoot.GetValue<TREntity>(GetPropertyName(key));
+        var result = ConfigurationRoot.GetValue<REntity>(GetPropertyName(key));
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
     /// <summary>
     /// 获取对象
     /// </summary>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="key"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
-    public static TREntity GetSection<TREntity>(string key)
+    public static REntity GetSection<REntity>(string key)
     {
-        var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TREntity>();
+        var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<REntity>();
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
@@ -98,13 +98,13 @@ public static class AppConfigManager
     /// 设置对象
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TREntity"></typeparam>
+    /// <typeparam name="REntity"></typeparam>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public static void Set<TEntity, TREntity>(string key, TREntity value)
+    public static void Set<TEntity, REntity>(string key, REntity value)
     {
         JsonHelper jsonHelper = new(ConfigurationFile);
-        jsonHelper.Set<TEntity, TREntity>(GetPropertyName(key), value);
+        jsonHelper.Set<TEntity, REntity>(GetPropertyName(key), value);
     }
 
     /// <summary>

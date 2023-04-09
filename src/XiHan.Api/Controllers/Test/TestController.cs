@@ -22,6 +22,7 @@ using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Info;
+using XiHan.Utils.Info.BaseInfos;
 
 namespace XiHan.Api.Controllers.Test;
 
@@ -52,7 +53,7 @@ public class TestController : BaseApiController
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
-        HttpContextHelper clientInfoHelper = new(httpContext);
+        HttpContexInfotHelper clientInfoHelper = new(httpContext);
         return BaseResponseDto.Ok(clientInfoHelper);
     }
 
@@ -127,8 +128,8 @@ public class TestController : BaseApiController
         {
             return BaseResponseDto.BadRequest("请输入待加密或解密字符串");
         }
-        var aesKey = AppSettings.Encryptions.AesKey.Get();
-        var desKey = AppSettings.Encryptions.DesKey.Get();
+        var aesKey = AppSettings.Encryptions.AesKey.GetValue();
+        var desKey = AppSettings.Encryptions.DesKey.GetValue();
         var resultString = iEncryptOrDecrypt switch
         {
             "Encrypt" => "加密后结果为【" + Encrypt() + "】",
@@ -188,5 +189,15 @@ public class TestController : BaseApiController
     public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
         return BaseResponseDto.Ok(DateTime.Now);
+    }
+
+    /// <summary>
+    /// 获取磁盘文件
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("GetDirFiles")]
+    public ActionResult<BaseResultDto> GetDirFiles(string path)
+    {
+        return BaseResponseDto.Ok(DiskHelper.GetFiles(path));
     }
 }

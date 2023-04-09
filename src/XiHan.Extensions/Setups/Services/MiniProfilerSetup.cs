@@ -31,7 +31,7 @@ public static class MiniProfilerSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.Get();
+        var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
         if (!isEnabledMiniprofiler) return services;
         services.AddMiniProfiler(options =>
         {

@@ -36,7 +36,7 @@ public static class WebHostSetup
         }
 
         // 端口
-        var port = AppSettings.Port.Get();
+        var port = AppSettings.Port.GetValue();
         host.UseUrls($"http://*:{port}");
 
         "Host Started Successfully！".WriteLineSuccess();

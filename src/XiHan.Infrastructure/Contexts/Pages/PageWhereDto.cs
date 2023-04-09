@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-
 namespace XiHan.Infrastructure.Contexts.Pages;
 
 /// <summary>
@@ -30,9 +29,9 @@ public class PageWhereDto
     public string? Sort { get; set; }
 
     /// <summary>
-    /// 排序方式 默认 asc
+    /// 排序方式 默认 ASC
     /// </summary>
-    public string? Order { get; set; } = "asc";
+    public string? Order { get; set; } = "ASC";
 
     /// <summary>
     /// 分页实体
@@ -43,10 +42,10 @@ public class PageWhereDto
 /// <summary>
 /// 通用分页实体基类(包含条件)
 /// </summary>
-public class PageWhereDto<TEntity> : PageWhereDto where TEntity : class
+public class PageWhereDto<WhereEntity> : PageWhereDto where WhereEntity : class
 {
     /// <summary>
     /// 查询条件
     /// </summary>
-    public TEntity? Where { get; set; }
+    public WhereEntity? Where { get; set; }
 }

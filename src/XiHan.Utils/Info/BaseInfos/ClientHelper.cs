@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ClientInfoHelper
+// FileName:ClientHelper
 // Guid:fd74bba3-6e40-4d3f-a365-0a32fb9fb796
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,14 +13,13 @@
 
 using Microsoft.AspNetCore.Http;
 using UAParser;
-using XiHan.Utils.Info;
 
-namespace XiHan.Utils.ClientEquipment;
+namespace XiHan.Utils.Info.BaseInfos;
 
 /// <summary>
-/// ClientInfoHelper
+/// 客户端帮助类
 /// </summary>
-public static class ClientInfoHelper
+public static class ClientHelper
 {
     /// <summary>
     /// 获取客户端信息
@@ -37,11 +36,12 @@ public static class ClientInfoHelper
 
         ClientModel clientModel = new()
         {
-            RemoteIPv4 = ClientIpInfoHelper.GetClientIpV4(httpContext),
-            RemoteIPv6 = ClientIpInfoHelper.GetClientIpV6(httpContext)
+            RemoteIPv4 = ClientIpHelper.GetClientIpV4(httpContext),
+            RemoteIPv6 = ClientIpHelper.GetClientIpV6(httpContext)
         };
 
         var header = httpContext.Request.HttpContext.Request.Headers;
+
         if (header.ContainsKey("Accept-Language"))
         {
             clientModel.Language = header["Accept-Language"].ToString().Split(';')[0];
@@ -50,28 +50,31 @@ public static class ClientInfoHelper
         {
             clientModel.Referer = header["Referer"].ToString();
         }
-
-        if (!header.ContainsKey("User-Agent")) return clientModel;
-        var agent = header["User-Agent"].ToString();
-        var uaParser = Parser.GetDefault();
-        var clientInfo = uaParser.Parse(agent);
-        clientModel.Agent = agent;
-        clientModel.OsName = clientInfo.OS.Family;
-        if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
+        if (header.ContainsKey("User-Agent"))
         {
-            clientModel.OsVersion = clientInfo.OS.Major;
-            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
+            var agent = header["User-Agent"].ToString();
+            var clientInfo = Parser.GetDefault().Parse(agent);
+            clientModel.Agent = agent;
+            clientModel.OsName = clientInfo.OS.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
             {
-                clientModel.OsVersion += "." + clientInfo.OS.Minor;
+                clientModel.OsVersion = clientInfo.OS.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
+                {
+                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
+                }
+            }
+            clientModel.UaName = clientInfo.UA.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
+            {
+                clientModel.UaVersion = clientInfo.UA.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
+                {
+                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
+                }
             }
         }
-        clientModel.UaName = clientInfo.UA.Family;
-        if (string.IsNullOrWhiteSpace(clientInfo.UA.Major)) return clientModel;
-        clientModel.UaVersion = clientInfo.UA.Major;
-        if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
-        {
-            clientModel.UaVersion += "." + clientInfo.UA.Minor;
-        }
+
         return clientModel;
     }
 
@@ -241,4 +244,60 @@ public static class ClientInfoHelper
     }
 
     #endregion
+}
+
+/// <summary>
+/// ClientModel
+/// </summary>
+public class ClientModel
+{
+    /// <summary>
+    /// 设备类型
+    /// </summary>
+    public string? DeviceType { get; set; }
+
+    /// <summary>
+    /// 系统名称
+    /// </summary>
+    public string? OsName { get; set; }
+
+    /// <summary>
+    /// 系统版本
+    /// </summary>
+    public string? OsVersion { get; set; }
+
+    /// <summary>
+    /// 浏览器名称
+    /// </summary>
+    public string? UaName { get; set; }
+
+    /// <summary>
+    /// 浏览器版本
+    /// </summary>
+    public string? UaVersion { get; set; }
+
+    /// <summary>
+    /// 语言
+    /// </summary>
+    public string? Language { get; set; }
+
+    /// <summary>
+    /// 引荐
+    /// </summary>
+    public string? Referer { get; set; }
+
+    /// <summary>
+    /// 代理信息
+    /// </summary>
+    public string? Agent { get; set; }
+
+    /// <summary>
+    /// 远程IPv4
+    /// </summary>
+    public string? RemoteIPv4 { get; init; }
+
+    /// <summary>
+    /// 远程IPv6
+    /// </summary>
+    public string? RemoteIPv6 { get; init; }
 }

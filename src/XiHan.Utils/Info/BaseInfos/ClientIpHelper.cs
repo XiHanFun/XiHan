@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ClientIpInfoHelper
+// FileName:ClientIpHelper
 // Guid:41c12201-2bdf-4cdf-ba14-a49aeaf92f9a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,12 +15,12 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using XiHan.Utils.Formats;
 
-namespace XiHan.Utils.Info;
+namespace XiHan.Utils.Info.BaseInfos;
 
 /// <summary>
-/// 客户端Ip地址
+/// 客户端Ip帮助类
 /// </summary>
-public static class ClientIpInfoHelper
+public static class ClientIpHelper
 {
     /// <summary>
     /// 取得客户端IP

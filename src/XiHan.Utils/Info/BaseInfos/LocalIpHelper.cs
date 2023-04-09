@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:LocalIpInfoHelper
+// FileName:LocalIpHelper
 // Guid:dc0502e1-f675-41d3-8a67-dbd590e76260
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,12 +15,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace XiHan.Utils.Info;
+namespace XiHan.Utils.Info.BaseInfos;
 
 /// <summary>
-/// 本地Ip信息帮助类
+/// 本地Ip帮助类
 /// </summary>
-public static class LocalIpInfoHelper
+public static class LocalIpHelper
 {
     /// <summary>
     /// 获取本机IpV4地址
@@ -66,7 +66,7 @@ public static class LocalIpInfoHelper
     /// 获取本机所有可用网卡IP信息
     /// </summary>
     /// <returns></returns>
-    private static IEnumerable<UnicastIPAddressInformation>? LocalIpAddressInfo()
+    public static IEnumerable<UnicastIPAddressInformation>? LocalIpAddressInfo()
     {
         // 获取可用网卡
         var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()?.Where(network => network.OperationalStatus == OperationalStatus.Up);

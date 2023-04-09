@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Net;
-using XiHan.Utils.Info;
+using XiHan.Utils.Info.BaseInfos;
 
 namespace XiHan.Test.Common;
 
@@ -36,7 +36,7 @@ public static class TestIpAddress
     /// </summary>
     public static void LocalIp()
     {
-        Console.WriteLine("【IpV4】" + LocalIpInfoHelper.GetLocalIpV4());
-        Console.WriteLine("【IpV6】" + LocalIpInfoHelper.GetLocalIpV6());
+        Console.WriteLine("【IpV4】" + LocalIpHelper.GetLocalIpV4());
+        Console.WriteLine("【IpV6】" + LocalIpHelper.GetLocalIpV6());
     }
 }

@@ -11,12 +11,12 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.IpLocation.Ip2region;
+using XiHan.Utils.Info.IpLocation.Ip2region;
 
-namespace XiHan.Utils.IpLocation;
+namespace XiHan.Utils.Info.IpLocation;
 
 /// <summary>
-/// IpSearchHelper
+/// Ip查询帮助类
 /// </summary>
 public static class IpSearchHelper
 {
@@ -88,4 +88,57 @@ public static class IpSearchHelper
             throw new Exception(ex.Message);
         }
     }
+}
+
+/// <summary>
+/// Ip地区信息
+/// </summary>
+public class AddressModel
+{
+    /// <summary>
+    /// Ip地址
+    /// </summary>
+    public string Ip { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 国家
+    /// 中国
+    /// </summary>
+    public string? Country { get; set; }
+
+    /// <summary>
+    /// 省份/自治区/直辖市
+    /// 贵州
+    /// </summary>
+    public string? State { get; set; }
+
+    /// <summary>
+    /// 地级市
+    /// 安顺
+    /// </summary>
+    public string? PrefectureLevelCity { get; set; }
+
+    /// <summary>
+    /// 区/县
+    /// 西秀区
+    /// </summary>
+    public string? DistrictOrCounty { get; set; }
+
+    /// <summary>
+    /// 运营商
+    /// 联通
+    /// </summary>
+    public string? Operator { get; set; }
+
+    /// <summary>
+    /// 邮政编码
+    /// 561000
+    /// </summary>
+    public long? PostalCode { get; set; }
+
+    /// <summary>
+    /// 地区区号
+    /// 0851
+    /// </summary>
+    public int? AreaCode { get; set; }
 }

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DirFileHelper
+// FileName:DiskHelper
 // Guid:4e1014f7-200b-42f3-a1bf-cde1c500054a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,13 +12,14 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
+using XiHan.Utils.Formats;
 
-namespace XiHan.Utils.DirFile;
+namespace XiHan.Utils.Info.BaseInfos;
 
 /// <summary>
-/// 文件或目录信息
+/// 磁盘帮助类
 /// </summary>
-public static class DirFileHelper
+public static class DiskHelper
 {
     /// <summary>
     /// 清空指定目录下所有文件及子目录
@@ -180,7 +181,8 @@ public static class DirFileHelper
     }
 
     /// <summary>
-    /// 根据时间得到目录名yyyyMMdd
+    /// 根据时间得到目录名
+    /// yyyyMMdd
     /// </summary>
     /// <returns></returns>
     public static string GetDateDirName()
@@ -189,12 +191,13 @@ public static class DirFileHelper
     }
 
     /// <summary>
-    /// 根据时间得到文件名HHmmssff
+    /// 根据时间得到文件名
+    /// yyyyMMddHHmmssfff
     /// </summary>
     /// <returns></returns>
     public static string GetDateFileName()
     {
-        return DateTime.Now.ToString("HHmmssff");
+        return DateTime.Now.ToString("yyyyMMddHHmmssfff");
     }
 
     /// <summary>
@@ -323,26 +326,6 @@ public static class DirFileHelper
     }
 
     /// <summary>
-    /// 获取指定驱动器剩余空间大小
-    /// </summary>
-    /// <param name="hardDiskName"></param>
-    /// <returns></returns>
-    public static long GetHardDiskFreeSpace(string hardDiskName)
-    {
-        return new DriveInfo(hardDiskName).TotalFreeSpace;
-    }
-
-    /// <summary>
-    /// 获取指定驱动器总空间大小
-    /// </summary>
-    /// <param name="hardDiskName"></param>
-    /// <returns></returns>
-    public static long GetHardDiskSpace(string hardDiskName)
-    {
-        return new DriveInfo(hardDiskName).TotalSize;
-    }
-
-    /// <summary>
     /// 获取文本文件的行数
     /// </summary>
     /// <param name="filePath">文件的绝对路径</param>
@@ -468,7 +451,7 @@ public static class DirFileHelper
     /// <returns></returns>
     public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
     {
-        return Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskSpace(hardDiskName) * 100, 3) + " %";
+        return Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
     }
 
     /// <summary>
@@ -482,4 +465,99 @@ public static class DirFileHelper
         // 向文件写入内容
         File.WriteAllText(filePath, text, encoding);
     }
+
+    /// <summary>
+    /// 磁盘分区
+    /// </summary>
+    public static string GetDiskPartition()
+    {
+        return string.Join("；", Environment.GetLogicalDrives()).ToString();
+    }
+
+    /// <summary>
+    /// 获取指定驱动器剩余空间大小
+    /// </summary>
+    /// <param name="hardDiskName"></param>
+    /// <returns></returns>
+    public static long GetHardDiskFreeSpace(string hardDiskName)
+    {
+        return new DriveInfo(hardDiskName).TotalFreeSpace;
+    }
+
+    /// <summary>
+    /// 获取指定驱动器总空间大小
+    /// </summary>
+    /// <param name="hardDiskName"></param>
+    /// <returns></returns>
+    public static long GetHardDiskTotalSpace(string hardDiskName)
+    {
+        return new DriveInfo(hardDiskName).TotalSize;
+    }
+
+    /// <summary>
+    /// 获取磁盘信息
+    /// </summary>
+    /// <returns></returns>
+    public static List<DiskInfo> GetDiskInfos()
+    {
+        List<DiskInfo> diskInfos = new();
+        try
+        {
+            var driv = DriveInfo.GetDrives();
+            foreach (var item in driv)
+            {
+                var info = new DiskInfo()
+                {
+                    DiskName = item.Name,
+                    TypeName = item.DriveType.ToString(),
+                    TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
+                    FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
+                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
+                    AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
+                };
+                diskInfos.Add(info);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        return diskInfos;
+    }
+}
+
+/// <summary>
+/// 磁盘信息
+/// </summary>
+public class DiskInfo
+{
+    /// <summary>
+    /// 磁盘名称
+    /// </summary>
+    public string DiskName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 磁盘类型
+    /// </summary>
+    public string TypeName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 总大小
+    /// </summary>
+    public string TotalSpace { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 空闲大小
+    /// </summary>
+    public string FreeSpace { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 已用大小
+    /// </summary>
+    public string UsedSpace { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 可用占比
+    /// </summary>
+    public string AvailableRate { get; set; } = string.Empty;
 }

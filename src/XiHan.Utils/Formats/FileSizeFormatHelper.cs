@@ -18,14 +18,14 @@ namespace XiHan.Utils.Formats;
 /// </summary>
 public static class FileSizeFormatHelper
 {
-    private static readonly string[] Suffixes = new string[] { " B", " KB", " MB", " GB", " TB", " PB" };
+    private static readonly string[] Suffixes = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
     /// <summary>
     /// 格式化文件大小显示为字符串
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public static string FormatByteToString(long bytes)
+    public static string FormatByteToString(this long bytes)
     {
         double last = 1;
         for (var i = 0; i < Suffixes.Length; i++)
