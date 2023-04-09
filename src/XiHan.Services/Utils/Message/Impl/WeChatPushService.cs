@@ -25,7 +25,7 @@ namespace XiHan.Services.Utils.Message.Impl;
 /// <summary>
 /// WeChatMessagePushService
 /// </summary>
-[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
+[AppService(ServiceType = typeof(IWeChatPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class WeChatPushService : IWeChatPushService
 {
     /// <summary>

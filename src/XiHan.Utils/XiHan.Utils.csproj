@@ -27,6 +27,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Caching.CSRedis" Version="3.8.670" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />

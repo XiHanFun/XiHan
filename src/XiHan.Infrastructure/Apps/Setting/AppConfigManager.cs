@@ -20,7 +20,7 @@ using XiHan.Utils.Serialize;
 namespace XiHan.Infrastructure.Apps.Setting;
 
 /// <summary>
-/// AppConfigManager
+/// 配置管理器
 /// </summary>
 public static class AppConfigManager
 {

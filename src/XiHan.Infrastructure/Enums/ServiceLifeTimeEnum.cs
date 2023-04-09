@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:LifeTimeEnum
+// FileName:ServiceLifeTimeEnum
 // Guid:2a8fb64c-6038-4cde-8ebc-03976c2c23e2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,9 +16,9 @@ using System.ComponentModel;
 namespace XiHan.Infrastructure.Enums;
 
 /// <summary>
-/// 生命周期
+/// 服务生命周期
 /// </summary>
-public enum LifeTimeEnum
+public enum ServiceLifeTimeEnum
 {
     /// <summary>
     /// 单例

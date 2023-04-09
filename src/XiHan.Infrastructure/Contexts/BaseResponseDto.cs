@@ -20,7 +20,7 @@ using XiHan.Utils.Enums;
 namespace XiHan.Infrastructure.Contexts;
 
 /// <summary>
-/// 通用响应实体
+/// 通用响应实体基类
 /// </summary>
 public static class BaseResponseDto
 {

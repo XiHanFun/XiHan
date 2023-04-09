@@ -24,7 +24,7 @@ namespace XiHan.Services.Utils.Message.Impl;
 /// <summary>
 /// DingTalkMessagePush
 /// </summary>
-[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
+[AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class DingTalkPushService : IDingTalkPushService
 {
     /// <summary>

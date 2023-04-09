@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 namespace XiHan.Infrastructure.Apps.Setting;
 
 /// <summary>
-/// AppConfigExtend
+/// 配置扩展
 /// </summary>
 public static class AppConfigExtend
 {

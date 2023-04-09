@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace XiHan.Infrastructure.Contexts.Validations;
 
 /// <summary>
-/// 验证实体
+/// 验证实体基类
 /// </summary>
 public class BaseValidationDto
 {

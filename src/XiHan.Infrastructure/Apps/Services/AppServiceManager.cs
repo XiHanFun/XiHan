@@ -22,7 +22,7 @@ using XiHan.Utils.Info.IpLocation.Ip2region;
 namespace XiHan.Infrastructure.Apps.Services;
 
 /// <summary>
-/// AppServiceManager
+/// 服务管理器
 /// </summary>
 public static class AppServiceManager
 {
@@ -95,15 +95,15 @@ public static class AppServiceManager
             {
                 switch (serviceAttribute.ServiceLifetime)
                 {
-                    case LifeTimeEnum.Singleton:
+                    case ServiceLifeTimeEnum.Singleton:
                         services.AddSingleton(serviceType, type);
                         break;
 
-                    case LifeTimeEnum.Scoped:
+                    case ServiceLifeTimeEnum.Scoped:
                         services.AddScoped(serviceType, type);
                         break;
 
-                    case LifeTimeEnum.Transient:
+                    case ServiceLifeTimeEnum.Transient:
                         services.AddTransient(serviceType, type);
                         break;
 

@@ -16,7 +16,7 @@ using XiHan.Infrastructure.Enums;
 namespace XiHan.Infrastructure.Apps.Logging;
 
 /// <summary>
-/// 全局日志
+/// 日志标记
 /// </summary>
 [AttributeUsage(AttributeTargets.All, Inherited = false)]
 public class AppLogAttribute : Attribute

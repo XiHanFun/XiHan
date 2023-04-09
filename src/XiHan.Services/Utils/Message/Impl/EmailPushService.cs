@@ -24,7 +24,7 @@ namespace XiHan.Services.Utils.Message.Impl;
 /// <summary>
 /// EmailPushService
 /// </summary>
-[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = LifeTimeEnum.Scoped)]
+[AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class EmailPushService : IEmailPushService
 {
     /// <summary>

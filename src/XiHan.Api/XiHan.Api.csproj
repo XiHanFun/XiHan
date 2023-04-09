@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XiHan.Extensions\XiHan.Extensions.csproj" />
-    <ProjectReference Include="..\XiHan.Services\XiHan.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

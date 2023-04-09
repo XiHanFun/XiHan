@@ -28,9 +28,10 @@
 	<PackageReference Include="SqlSugarCore" Version="5.1.4.66" />
 	<PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
   </ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Utils\XiHan.Utils.csproj" />
-	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XiHan.Utils\XiHan.Utils.csproj" />
+  </ItemGroup>
 	<ItemGroup>
 		<None Update="LICENSE">
 			<Pack>True</Pack>

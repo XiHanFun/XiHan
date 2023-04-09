@@ -16,7 +16,7 @@ using System.ComponentModel;
 namespace XiHan.Infrastructure.Enums;
 
 /// <summary>
-/// 文件存储位置
+/// 文件存储类别
 /// </summary>
 public enum StoredTypeEnum
 {
