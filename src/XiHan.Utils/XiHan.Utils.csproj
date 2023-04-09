@@ -20,6 +20,12 @@
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Summary\**" />
+    <EmbeddedResource Remove="Summary\**" />
+    <None Remove="Summary\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
