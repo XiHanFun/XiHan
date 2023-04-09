@@ -20,7 +20,7 @@ namespace XiHan.Api.Controllers.Bases;
 /// BaseApiController
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("Api/[controller]")]
 [Produces("application/json")]
 [ApiGroup(ApiGroupNames.All)]
 public class BaseApiController : ControllerBase

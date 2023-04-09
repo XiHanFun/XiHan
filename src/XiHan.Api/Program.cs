@@ -42,7 +42,6 @@ try
 
     // 启动信息打印
     ConsoleInfo.SayHello();
-
     await app.RunAsync();
 
     return 0;

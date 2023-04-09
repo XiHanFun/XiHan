@@ -12,7 +12,12 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
+using XiHan.Utils.Console;
 using XiHan.Utils.Formats;
+using XiHan.Utils.Message.DingTalk;
+using XiHan.Utils.Object;
+using XiHan.Utils.Serialize;
+using XiHan.Utils.Shell;
 
 namespace XiHan.Utils.Info.BaseInfos;
 
@@ -451,7 +456,7 @@ public static class DiskHelper
     /// <returns></returns>
     public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
     {
-        return Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
+        return GetHardDiskTotalSpace(hardDiskName) == 0 ? "0%" : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
     }
 
     /// <summary>
@@ -495,10 +500,10 @@ public static class DiskHelper
     }
 
     /// <summary>
-    /// 获取磁盘信息
+    /// Windows系统获取磁盘信息
     /// </summary>
     /// <returns></returns>
-    public static List<DiskInfo> GetDiskInfos()
+    public static List<DiskInfo> GetWindowsDisk()
     {
         List<DiskInfo> diskInfos = new();
         try
@@ -518,11 +523,69 @@ public static class DiskHelper
                 diskInfos.Add(info);
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            ("获取磁盘信息出错，" + ex.Message).WriteLineError();
         }
         return diskInfos;
+    }
+
+    /// <summary>
+    /// Unix系统获取磁盘信息
+    /// </summary>
+    /// <returns></returns>
+    public static List<DiskInfo> GetUnixDisk()
+    {
+        List<DiskInfo> diskInfos = new();
+        try
+        {
+            string output = "df -k | awk '{print $1,$2,$3,$4,$6}'".Bash();
+            var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (lines.Any())
+            {
+                // 去掉第一行标题
+                _ = lines.Remove(lines[0]);
+                foreach (var line in lines)
+                {
+                    // 单位是 KB
+                    var rootDisk = line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+                    if (rootDisk.Length >= 5)
+                    {
+                        var info = new DiskInfo()
+                        {
+                            DiskName = rootDisk[4].Trim().ToString(),
+                            TypeName = rootDisk[0].Trim().ToString(),
+                            TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatByteToString(),
+                            UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
+                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatByteToString(),
+                            AvailableRate = rootDisk[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%",
+                        };
+                        diskInfos.Add(info);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ("获取磁盘信息出错，" + ex.Message).WriteLineError();
+        }
+        return diskInfos;
+    }
+
+    /// <summary>
+    /// 获取磁盘信息
+    /// </summary>
+    /// <returns></returns>
+    public static List<DiskInfo> GetDiskInfos()
+    {
+        if (OSPlatformHelper.GetOsIsUnix())
+        {
+            return GetUnixDisk();
+        }
+        else
+        {
+            return GetWindowsDisk();
+        }
     }
 }
 

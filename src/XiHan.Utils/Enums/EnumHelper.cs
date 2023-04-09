@@ -13,6 +13,7 @@
 
 using System.ComponentModel;
 using System.Reflection;
+using XiHan.Utils.Console;
 using XiHan.Utils.Object;
 
 namespace XiHan.Utils.Enums;
@@ -44,16 +45,17 @@ public static class EnumHelper
     /// <returns></returns>
     public static string GetEnumDescriptionByValue<T>(this object valueObj)
     {
+        var description = string.Empty;
         try
         {
             var tEnum = Enum.Parse(typeof(T), valueObj.ParseToString()) as Enum;
-            var description = tEnum!.GetEnumDescriptionByKey();
-            return description;
+            description = tEnum!.GetEnumDescriptionByKey();
         }
-        catch
+        catch (Exception ex)
         {
-            return string.Empty;
+            ("获取单个枚举的描述信息出错，" + ex.Message).WriteLineError();
         }
+        return description;
     }
 
     /// <summary>

@@ -13,6 +13,7 @@
 
 using System.Runtime.InteropServices;
 using XiHan.Utils.Formats;
+using XiHan.Utils.Object;
 
 namespace XiHan.Utils.Info.BaseInfos;
 
@@ -98,7 +99,7 @@ public static class OSPlatformHelper
     /// </summary>
     public static string GetRunningTime()
     {
-        return TimeFormatHelper.MilliSecondsToString(Environment.TickCount).ToString();
+        return Environment.TickCount.ParseToLong().MilliSecondsToString().ToString();
     }
 
     /// <summary>

@@ -35,8 +35,17 @@ public static class CpuHelper
     /// <returns></returns>
     public static string GetWindowsCpuRate()
     {
-        string output = "wmic".Cmd("cpu get LoadPercentage");
-        return output.Replace("LoadPercentage", string.Empty).Trim() + "%";
+        string result = string.Empty;
+        try
+        {
+            string output = "wmic".Cmd("cpu get LoadPercentage");
+            result = output.Replace("LoadPercentage", string.Empty).Trim() + "%";
+        }
+        catch (Exception ex)
+        {
+            ("获取处理器信息出错，" + ex.Message).WriteLineError();
+        }
+        return result;
     }
 
     /// <summary>
@@ -45,33 +54,35 @@ public static class CpuHelper
     /// <returns></returns>
     public static string GetUnixCpuRate()
     {
-        string output = @"top -b -n1 | grep ""Cpu(s)"" | awk '{print $2 + $4}'".Bash();
-        return output.Trim() + "%";
+        string result = string.Empty;
+        try
+        {
+            string output = @"top -b -n1 | grep ""Cpu(s)"" | awk '{print $2 + $4}'".Bash();
+            result = output.Trim() + "%";
+        }
+        catch (Exception ex)
+        {
+            ("获取处理器信息出错，" + ex.Message).WriteLineError();
+        }
+        return result;
     }
 
     /// <summary>
-    /// 获取磁盘信息
+    /// 获取处理器信息
     /// </summary>
     /// <returns></returns>
     public static CpuInfo GetCpuInfos()
     {
         CpuInfo cpuInfo = new();
-        try
+        if (OSPlatformHelper.GetOsIsUnix())
         {
-            if (OSPlatformHelper.GetOsIsUnix())
-            {
-                cpuInfo.CpuCount = GetCpuCount();
-                cpuInfo.CpuRate = GetUnixCpuRate();
-            }
-            else
-            {
-                cpuInfo.CpuCount = GetCpuCount();
-                cpuInfo.CpuRate = GetWindowsCpuRate();
-            }
+            cpuInfo.CpuCount = GetCpuCount();
+            cpuInfo.CpuRate = GetUnixCpuRate();
         }
-        catch (Exception ex)
+        else
         {
-            ex.Message.WriteLineError();
+            cpuInfo.CpuCount = GetCpuCount();
+            cpuInfo.CpuRate = GetWindowsCpuRate();
         }
         return cpuInfo;
     }

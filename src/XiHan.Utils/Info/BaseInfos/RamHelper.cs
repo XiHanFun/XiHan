@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Utils.Console;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Object;
 using XiHan.Utils.Shell;
@@ -28,22 +29,27 @@ public static class RamHelper
     /// <returns></returns>
     public static RamInfo GetWindowsRam()
     {
-        string output = "wmic".Cmd("OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
-
         var ramInfo = new RamInfo();
-        var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
-        if (lines.Any())
+        try
         {
-            // 单位是 KB
-            var freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-            var totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
+            string output = "wmic".Cmd("OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
+            var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Any())
+            {
+                // 单位是 KB
+                var freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
+                var totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
 
-            ramInfo.TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
-            ramInfo.UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024).FormatByteToString();
-            ramInfo.FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
-            ramInfo.AvailableRate = Math.Round((decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) + "%";
+                ramInfo.TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
+                ramInfo.UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024).FormatByteToString();
+                ramInfo.FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
+                ramInfo.AvailableRate = totalMemoryParts[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) + "%";
+            }
         }
-
+        catch (Exception ex)
+        {
+            ("获取内存信息出错，" + ex.Message).WriteLineError();
+        }
         return ramInfo;
     }
 
@@ -53,23 +59,28 @@ public static class RamHelper
     /// <returns></returns>
     public static RamInfo GetUnixRam()
     {
-        string output = "free -m | awk '{print $2,$3,$4,$5,$6}'".Bash();
-
         var ramInfo = new RamInfo();
-        var lines = output.Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
-
-        if (lines.Any())
+        try
         {
-            var memory = lines[1].Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
-            if (memory.Length >= 3)
+            string output = "free -k | awk '{print $2,$3,$4,$7}'".Bash();
+            var lines = output.Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Any())
             {
-                ramInfo.TotalSpace = memory[0].ParseToLong().FormatByteToString();
-                ramInfo.UsedSpace = memory[1].ParseToLong().FormatByteToString();
-                ramInfo.FreeSpace = memory[2].ParseToLong().FormatByteToString();
-                ramInfo.AvailableRate = Math.Round((decimal)memory[2].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%";
+                // 单位是 KB
+                var memory = lines[1].Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (memory.Length >= 4)
+                {
+                    ramInfo.TotalSpace = (memory[0].ParseToLong() * 1024).FormatByteToString();
+                    ramInfo.UsedSpace = (memory[1].ParseToLong() * 1024).FormatByteToString();
+                    ramInfo.FreeSpace = (memory[2].ParseToLong() * 1024).FormatByteToString();
+                    ramInfo.AvailableRate = memory[0].ParseToLong() == 0 ? "0%" : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%";
+                }
             }
         }
-
+        catch (Exception ex)
+        {
+            ("获取内存信息出错，" + ex.Message).WriteLineError();
+        }
         return ramInfo;
     }
 
@@ -79,23 +90,14 @@ public static class RamHelper
     /// <returns></returns>
     public static RamInfo GetRamInfos()
     {
-        RamInfo ramInfo = new();
-        try
+        if (OSPlatformHelper.GetOsIsUnix())
         {
-            if (OSPlatformHelper.GetOsIsUnix())
-            {
-                ramInfo = GetUnixRam();
-            }
-            else
-            {
-                ramInfo = GetWindowsRam();
-            }
+            return GetUnixRam();
         }
-        catch (Exception)
+        else
         {
-            throw;
+            return GetWindowsRam();
         }
-        return ramInfo;
     }
 }
 

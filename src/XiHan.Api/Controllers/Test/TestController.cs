@@ -190,14 +190,4 @@ public class TestController : BaseApiController
     {
         return BaseResponseDto.Ok(DateTime.Now);
     }
-
-    /// <summary>
-    /// 获取磁盘文件
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("GetDirFiles")]
-    public ActionResult<BaseResultDto> GetDirFiles(string path)
-    {
-        return BaseResponseDto.Ok(DiskHelper.GetFiles(path));
-    }
 }
