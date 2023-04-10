@@ -85,7 +85,7 @@ public static class SwaggerSetup
                 options.DocExpansion(DocExpansion.None);
                 // 模型的默认扩展深度，设置为 -1 完全隐藏模型
                 options.DefaultModelsExpandDepth(-1);
-                // API前缀设置为空
+                // API前缀设置
                 options.RoutePrefix = routePrefix;
             });
         }

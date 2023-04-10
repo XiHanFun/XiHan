@@ -143,7 +143,7 @@ public static class JwtTokenUtil
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public static TokenModel? TokenSerialize(string token)
+    public static TokenModel TokenSerialize(string token)
     {
         try
         {
@@ -181,7 +181,7 @@ public static class JwtTokenUtil
             var errorMsg = $"JwtToken 字符串解析失败";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
-            return null;
+            throw;
         }
     }
 
@@ -191,7 +191,6 @@ public static class JwtTokenUtil
     /// <returns></returns>
     public static AuthJwtSetting GetAuthJwtSetting()
     {
-        var settings = new AuthJwtSetting();
         try
         {
             // 读取配置
@@ -203,19 +202,20 @@ public static class JwtTokenUtil
                 ClockSkew = AppSettings.Auth.Jwt.ClockSkew.GetValue(),
                 Expires = AppSettings.Auth.Jwt.Expires.GetValue(),
             };
-            authJwtSetting.GetObjectProperty().ForEach(setting =>
+            // 判断结果
+            authJwtSetting.GetObjectPropertyInfos().ForEach(setting =>
             {
                 if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
             });
-            settings = authJwtSetting;
+            return authJwtSetting;
         }
         catch (Exception ex)
         {
             var errorMsg = $"获取 AppSettings.Auth.Jwt 配置出错！";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
+            throw;
         }
-        return settings;
     }
 }
 

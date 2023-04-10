@@ -58,26 +58,26 @@ public static class ObjectPropertyHelper
     /// <param name="tentity"></param>
     /// <param name="propertyname"></param>
     /// <returns></returns>
-    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname) where TEntity : class
+    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname)
     {
         var type = typeof(TEntity);
-        var property = type.GetProperty(propertyname);
-        if (property != null)
+        var info = type.GetProperty(propertyname);
+        if (info != null)
         {
-            var obj = property.GetValue(tentity, null);
+            var obj = info.GetValue(tentity);
             if (obj != null && obj.ToString() != null)
             {
-                return obj.ToString()!;
+                return obj.ParseToString();
             }
         }
         return string.Empty;
     }
 
     /// <summary>
-    /// 获取属性列表
+    /// 获取对象属性信息列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetObjectProperty<TEntity>(this TEntity entity)
+    public static List<CustomPropertyInfo> GetObjectPropertyInfos<TEntity>(this TEntity entity)
     {
         var type = typeof(TEntity);
         PropertyInfo[] properties = type.GetProperties();
@@ -87,8 +87,8 @@ public static class ObjectPropertyHelper
             CustomPropertyInfo customPropertyInfo = new()
             {
                 PropertyName = info.Name,
-                PropertyType = info.PropertyType,
-                PropertyValue = GetObjectPropertyValue(new object(), info.Name)
+                PropertyType = info.PropertyType.Name,
+                PropertyValue = info.GetValue(entity).ParseToString(),
             };
             customPropertyInfos.Add(customPropertyInfo);
         }
@@ -164,7 +164,7 @@ public class CustomPropertyInfo
     /// <summary>
     /// 类型
     /// </summary>
-    public Type? PropertyType { get; set; }
+    public string? PropertyType { get; set; } = string.Empty;
 
     /// <summary>
     /// 属性值
