@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Newtonsoft.Json.Linq;
 using System.Collections;
 
 namespace XiHan.Utils.Object;
@@ -28,7 +27,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static bool ParseToBool(this object thisValue)
+    public static bool ParseToBool(this object? thisValue)
     {
         var reval = false;
         if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
@@ -47,7 +46,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static int ParseToInt(this object thisValue)
+    public static int ParseToInt(this object? thisValue)
     {
         var reval = 0;
         if (thisValue == null)
@@ -67,7 +66,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static int ParseToInt(this object thisValue, int errorValue)
+    public static int ParseToInt(this object? thisValue, int errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reval))
         {
@@ -85,7 +84,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static short ParseToShort(this object thisValue)
+    public static short ParseToShort(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && short.TryParse(thisValue.ToString(), out var reval))
         {
@@ -100,7 +99,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static short ParseToShort(this object thisValue, short errorValue)
+    public static short ParseToShort(this object? thisValue, short errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && short.TryParse(thisValue.ToString(), out var reval))
         {
@@ -118,7 +117,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static long ParseToLong(this object thisValue)
+    public static long ParseToLong(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && long.TryParse(thisValue.ToString(), out var reval))
         {
@@ -133,7 +132,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static long ParseToLong(this object thisValue, long errorValue)
+    public static long ParseToLong(this object? thisValue, long errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && long.TryParse(thisValue.ToString(), out var reval))
         {
@@ -152,7 +151,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static float ParseToFloat(this object thisValue)
+    public static float ParseToFloat(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && float.TryParse(thisValue.ToString(), out var reval))
         {
@@ -168,7 +167,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static float ParseToFloat(this object thisValue, float errorValue)
+    public static float ParseToFloat(this object? thisValue, float errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && float.TryParse(thisValue.ToString(), out var reval))
         {
@@ -187,7 +186,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static double ParseToDouble(this object thisValue)
+    public static double ParseToDouble(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -203,7 +202,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static double ParseToDouble(this object thisValue, double errorValue)
+    public static double ParseToDouble(this object? thisValue, double errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -222,7 +221,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static decimal ParseToDecimal(this object thisValue)
+    public static decimal ParseToDecimal(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
         {
@@ -238,7 +237,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static decimal ParseToDecimal(this object thisValue, decimal errorValue)
+    public static decimal ParseToDecimal(this object? thisValue, decimal errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && decimal.TryParse(thisValue.ToString(), out var reval))
         {
@@ -256,7 +255,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static double ParseToMoney(this object thisValue)
+    public static double ParseToMoney(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -271,7 +270,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static double ParseToMoney(this object thisValue, double errorValue)
+    public static double ParseToMoney(this object? thisValue, double errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -289,7 +288,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static string ParseToString(this object thisValue)
+    public static string ParseToString(this object? thisValue)
     {
         if (thisValue != null)
             return thisValue.ToString()!.Trim();
@@ -302,7 +301,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static string ParseToString(this object thisValue, string errorValue)
+    public static string ParseToString(this object? thisValue, string errorValue)
     {
         if (thisValue != null)
             return thisValue.ToString()!.Trim();
@@ -314,7 +313,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static bool IsEmptyOrNull(this object thisValue)
+    public static bool IsEmptyOrNull(this object? thisValue)
     {
         return !IsNotEmptyOrNull(thisValue);
     }
@@ -324,7 +323,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static bool IsNotEmptyOrNull(this object thisValue)
+    public static bool IsNotEmptyOrNull(this object? thisValue)
     {
         return ParseToString(thisValue) != string.Empty && ParseToString(thisValue) != "" && ParseToString(thisValue) != "undefined" && ParseToString(thisValue) != "null";
     }
@@ -334,7 +333,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static bool IsNullOrZero(this object thisValue)
+    public static bool IsNullOrZero(this object? thisValue)
     {
         return !IsNotNullOrZero(thisValue);
     }
@@ -344,7 +343,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static bool IsNotNullOrZero(this object thisValue)
+    public static bool IsNotNullOrZero(this object? thisValue)
     {
         return IsNotEmptyOrNull(thisValue) && ParseToString(thisValue) != "0";
     }
@@ -358,7 +357,7 @@ public static class ObjectConvertHelper
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static DateTime ParseToDate(this object thisValue)
+    public static DateTime ParseToDate(this object? thisValue)
     {
         var reval = DateTime.MinValue;
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reval))
@@ -374,7 +373,7 @@ public static class ObjectConvertHelper
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static DateTime ParseToDate(this object thisValue, DateTime errorValue)
+    public static DateTime ParseToDate(this object? thisValue, DateTime errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reval))
         {

@@ -14,9 +14,7 @@
 using System.Text;
 using XiHan.Utils.Console;
 using XiHan.Utils.Formats;
-using XiHan.Utils.Message.DingTalk;
 using XiHan.Utils.Object;
-using XiHan.Utils.Serialize;
 using XiHan.Utils.Shell;
 
 namespace XiHan.Utils.Info.BaseInfos;

@@ -43,7 +43,7 @@ public static class ServiceSetup
         // AutoMapper
         services.AddAutoMapperSetup();
         // Auth
-        services.AddAuthJwtSetup();
+        services.AddAuthSetup();
         // Http
         services.AddHttpContextSetup();
         // Swagger

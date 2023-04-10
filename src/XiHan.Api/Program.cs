@@ -13,10 +13,11 @@
 
 using Serilog;
 using System.Reflection;
-using XiHan.Api;
+using XiHan.Api.Consoles;
 using XiHan.Extensions.Setups;
 
 var builder = WebApplication.CreateBuilder(args);
+ConsoleHello.SayHello();
 
 // 日志
 var log = builder.Logging;
@@ -40,8 +41,7 @@ try
     var app = builder.Build();
     app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.Api.index.html")!);
 
-    // 启动信息打印
-    ConsoleInfo.SayHello();
+    ConsoleInfo.ConfirmConfigInfo();
     await app.RunAsync();
 
     return 0;

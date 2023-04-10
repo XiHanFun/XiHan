@@ -138,7 +138,7 @@ public static class SwaggerSetup
         }
         catch (Exception ex)
         {
-            var errorMsg = $"Swagger 文档加载失败";
+            var errorMsg = $"Swagger 文档加载失败！";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
         }

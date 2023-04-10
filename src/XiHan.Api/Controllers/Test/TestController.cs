@@ -22,7 +22,6 @@ using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Info;
-using XiHan.Utils.Info.BaseInfos;
 
 namespace XiHan.Api.Controllers.Test;
 

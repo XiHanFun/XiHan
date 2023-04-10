@@ -19,6 +19,11 @@ namespace XiHan.Infrastructure.Apps.Setting;
 public static class AppSettings
 {
     /// <summary>
+    /// 是否演示模式
+    /// </summary>
+    public static bool IsDemoMode { get; set; }
+
+    /// <summary>
     /// 环境
     /// </summary>
     public static string EnvironmentName { get; set; } = string.Empty;
@@ -340,9 +345,9 @@ public static class AppSettings
     public static class Auth
     {
         /// <summary>
-        /// JWT
+        /// Jwt
         /// </summary>
-        public static class JWT
+        public static class Jwt
         {
             /// <summary>
             /// 颁发者

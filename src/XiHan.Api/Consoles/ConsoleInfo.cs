@@ -19,7 +19,7 @@ using XiHan.Utils.Info;
 using XiHan.Utils.Info.BaseInfos;
 using XiHan.Utils.Serialize;
 
-namespace XiHan.Api;
+namespace XiHan.Api.Consoles;
 
 /// <summary>
 /// ConsoleInfo
@@ -27,13 +27,10 @@ namespace XiHan.Api;
 public static class ConsoleInfo
 {
     /// <summary>
-    /// 欢迎使用曦寒
+    /// 确认配置信息
     /// </summary>
-    public static void SayHello()
+    public static void ConfirmConfigInfo()
     {
-        Logo.WriteLineHandle();
-        SendWord.WriteLineHandle();
-        Copyright.WriteLineHandle();
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
         $@"系统描述：{SystemInfoHelper.OsDescription}".WriteLineInfo();
@@ -86,25 +83,4 @@ public static class ConsoleInfo
         $@"异常日志：{AppSettings.LogConfig.Exception.GetValue()}".WriteLineInfo();
         "==============================启动信息==============================".WriteLineInfo();
     }
-
-    /// <summary>
-    /// Logo
-    /// </summary>
-    public static string Logo { get; set; } = $@"
-██╗  ██╗██╗██╗  ██╗ █████╗ ███╗   ██╗
-╚██╗██╔╝██║██║  ██║██╔══██╗████╗  ██║
- ╚███╔╝ ██║███████║███████║██╔██╗ ██║
- ██╔██╗ ██║██╔══██║██╔══██║██║╚██╗██║
-██╔╝ ██╗██║██║  ██║██║  ██║██║ ╚████║
-╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝";
-
-    /// <summary>
-    /// 寄语
-    /// </summary>
-    public static string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
-
-    /// <summary>
-    /// Copyright
-    /// </summary>
-    public static string Copyright { get; set; } = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 }

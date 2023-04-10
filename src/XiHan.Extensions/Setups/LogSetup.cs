@@ -23,7 +23,7 @@ namespace XiHan.Extensions.Setups;
 public static class LogSetup
 {
     /// <summary>
-    /// Log 服务扩展
+    /// 日志配置扩展
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>

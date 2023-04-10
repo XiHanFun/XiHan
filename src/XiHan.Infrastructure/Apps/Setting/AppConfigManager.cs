@@ -54,7 +54,7 @@ public static class AppConfigManager
                     var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
                     var envName = configurationFile.Split('.')[1].ToString();
                     ConfigurationFile = configurationFile;
-                    var infoMsg = $"配置注册成功，环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
+                    var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
                     Log.Information(infoMsg);
                     infoMsg.WriteLineSuccess();
                 }

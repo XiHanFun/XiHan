@@ -77,7 +77,7 @@ public static class ObjectPropertyHelper
     /// 获取属性列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetObjectProperty<TEntity>()
+    public static List<CustomPropertyInfo> GetObjectProperty<TEntity>(this TEntity entity)
     {
         var type = typeof(TEntity);
         PropertyInfo[] properties = type.GetProperties();
