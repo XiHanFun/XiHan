@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统审核类型表
 /// </summary>
+[SugarTable(TableName = "RootAuditCategory")]
 public class RootAuditCategory : BaseEntity
 {
     /// <summary>

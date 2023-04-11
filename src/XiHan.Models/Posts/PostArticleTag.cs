@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
 using XiHan.Models.Bases;
 
 namespace XiHan.Models.Posts;
@@ -18,6 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章标签关联表
 /// </summary>
+[SugarTable(TableName = "PostArticleTag")]
 public class PostArticleTag : BaseEntity
 {
     /// <summary>

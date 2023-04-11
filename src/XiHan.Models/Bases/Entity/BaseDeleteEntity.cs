@@ -30,7 +30,7 @@ public abstract class BaseDeleteEntity<TKey> : BaseModifyEntity<Guid>
     /// 删除用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "删除用户")]
-    public virtual Guid? DeleteId { get; set; }
+    public virtual Guid? DeleteBy { get; set; }
 
     /// <summary>
     /// 删除时间

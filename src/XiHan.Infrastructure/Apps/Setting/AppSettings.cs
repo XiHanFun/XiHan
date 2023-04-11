@@ -263,17 +263,6 @@ public static class AppSettings
         public static int SyncTimeout { get; set; }
 
         /// <summary>
-        /// 内存
-        /// </summary>
-        public static class MemoryCache
-        {
-            /// <summary>
-            /// 是否可用
-            /// </summary>
-            public static bool IsEnabled { get; set; }
-        }
-
-        /// <summary>
         /// 分布式
         /// </summary>
         public static class Distributedcache
@@ -505,22 +494,6 @@ public static class AppSettings
             /// </summary>
             public static string SecretKey { get; set; } = string.Empty;
         }
-    }
-
-    /// <summary>
-    /// 任务
-    /// </summary>
-    public static class Job
-    {
-        /// <summary>
-        /// 是否可用
-        /// </summary>
-        public static bool IsEnabled { get; set; }
-
-        /// <summary>
-        /// 表达式
-        /// </summary>
-        public static string Cron { get; set; } = string.Empty;
     }
 
     /// <summary>

@@ -36,7 +36,7 @@ public class ReflectionHelper
         DirectoryInfo rootDirectory = new(currentDomain);
         var files = rootDirectory.GetFiles().ToList();
         var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{Prefix}.".ToLowerInvariant()) &&
-                                       e.Name.ToLowerInvariant().Contains($".{Suffix}".ToLowerInvariant()))
+                                    e.Name.ToLowerInvariant().Contains($".{Suffix}".ToLowerInvariant()))
             .Select(e => e.FullName).ToList();
 
         dlls.ForEach(dll =>
@@ -51,7 +51,7 @@ public class ReflectionHelper
     /// 获取所有的Type
     /// </summary>
     /// <returns></returns>
-    public static List<Type> GetTypes()
+    public static List<Type> GetAllTypes()
     {
         List<Type> types = new();
 
@@ -113,7 +113,7 @@ public class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetSubClass(Type T)
     {
-        return GetTypes().Where(t => T.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetAllTypes().Where(t => T.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
     }
 
     /// <summary>

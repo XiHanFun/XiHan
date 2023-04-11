@@ -19,6 +19,7 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户第三方授权表
 /// </summary>
+[SugarTable(TableName = "UserOauth")]
 public class UserOauth : BaseEntity
 {
     /// <summary>

@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点字典类型表
 /// </summary>
+[SugarTable(TableName = "SysDictType")]
 public class SysDictType : BaseDeleteEntity<Guid>
 {
     /// <summary>

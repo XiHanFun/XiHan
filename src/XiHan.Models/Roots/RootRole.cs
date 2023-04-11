@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统角色表
 /// </summary>
+[SugarTable(TableName = "RootRole")]
 public class RootRole : BaseEntity
 {
     /// <summary>

@@ -19,6 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章评论表
 /// </summary>
+[SugarTable(TableName = "PostComment")]
 public class PostComment : BaseEntity
 {
     /// <summary>

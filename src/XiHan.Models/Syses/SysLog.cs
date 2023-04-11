@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点日志表
 /// </summary>
+[SugarTable(TableName = "SysLog")]
 public class SysLog : BaseDeleteEntity<Guid>
 {
     /// <summary>

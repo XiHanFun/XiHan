@@ -19,6 +19,7 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户关注表
 /// </summary>
+[SugarTable(TableName = "UserFollow")]
 public class UserFollow : BaseEntity
 {
     /// <summary>

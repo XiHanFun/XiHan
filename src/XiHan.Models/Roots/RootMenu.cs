@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统菜单表
 /// </summary>
+[SugarTable(TableName = "RootMenu")]
 public class RootMenu : BaseEntity
 {
     /// <summary>

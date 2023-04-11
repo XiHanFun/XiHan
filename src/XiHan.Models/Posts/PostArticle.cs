@@ -20,6 +20,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章表
 /// </summary>
+[SugarTable(TableName = "PostArticle")]
 public class PostArticle : BaseEntity
 {
     /// <summary>

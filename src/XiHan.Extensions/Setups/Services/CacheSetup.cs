@@ -38,16 +38,12 @@ public static class CacheSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 内存缓存
-        var isEnabledMemoryCache = AppSettings.Cache.MemoryCache.IsEnabled.GetValue();
-        if (isEnabledMemoryCache)
+        // 内存缓存 默认开启
+        services.AddMemoryCache(options => new MemoryCacheOptions
         {
-            services.AddMemoryCache(options => new MemoryCacheOptions
-            {
-                // 最大缓存个数限制
-                SizeLimit = 60
-            });
-        }
+            // 最大缓存个数限制
+            SizeLimit = 60
+        });
 
         // 分布式缓存
         var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.GetValue();

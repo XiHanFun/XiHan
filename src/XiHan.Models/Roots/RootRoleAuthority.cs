@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Roots;
@@ -18,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统角色权限关联表
 /// </summary>
+[SugarTable(TableName = "RootRoleAuthority")]
 public class RootRoleAuthority : BaseDeleteEntity<Guid>
 {
     /// <summary>

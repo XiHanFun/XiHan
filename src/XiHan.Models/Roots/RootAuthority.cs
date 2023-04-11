@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统权限表
 /// </summary>
+[SugarTable(TableName = "RootAuthority")]
 public class RootAuthority : BaseEntity
 {
     /// <summary>

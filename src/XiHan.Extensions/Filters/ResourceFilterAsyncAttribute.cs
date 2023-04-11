@@ -90,9 +90,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                 // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
                 if (resourceExecuted.Result != null)
                 {
-                    var SyncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
+                    var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
                     var result = resourceExecuted.Result as ActionResult;
-                    _IMemoryCache.Set(requestUrl + method, result, SyncTimeout);
+                    _IMemoryCache.Set(requestUrl + method, result, syncTimeout);
                     if (ResourceLogSwitch)
                     {
                         _ILogger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");

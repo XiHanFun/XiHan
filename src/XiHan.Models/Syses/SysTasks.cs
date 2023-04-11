@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 计划任务
 /// </summary>
+[SugarTable(TableName = "SysTasks")]
 public class SysTasks : BaseDeleteEntity<Guid>
 {
     /// <summary>

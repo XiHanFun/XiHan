@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
 using XiHan.Models.Bases;
 
 namespace XiHan.Models.Users;
@@ -18,6 +19,7 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户收藏表
 /// </summary>
+[SugarTable(TableName = "UserCollect")]
 public class UserCollect : BaseEntity
 {
     /// <summary>

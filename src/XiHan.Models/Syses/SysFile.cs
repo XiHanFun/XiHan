@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
  /// 站点文件表
  /// </summary>
+[SugarTable(TableName = "SysFile")]
 public class SysFile : BaseDeleteEntity<Guid>
 {
     /// <summary>

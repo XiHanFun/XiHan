@@ -25,7 +25,7 @@ public abstract class BaseModifyEntity<TKey> : BaseCreateEntity<Guid>
     /// 设置后出入不会有此字段
     /// </summary>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户")]
-    public virtual Guid? ModifyId { get; set; }
+    public virtual Guid? ModifyBy { get; set; }
 
     /// <summary>
     /// 修改时间

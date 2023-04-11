@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
 using XiHan.Models.Bases;
 using XiHan.Models.Posts.Enums;
 
@@ -19,6 +20,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章点赞表
 /// </summary>
+[SugarTable(TableName = "PostPoll")]
 public class PostPoll : BaseEntity
 {
     /// <summary>

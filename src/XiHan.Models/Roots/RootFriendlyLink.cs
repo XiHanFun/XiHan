@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统友情链接表
 /// </summary>
+[SugarTable(TableName = "RootFriendlyLink")]
 public class RootFriendlyLink : BaseEntity
 {
     /// <summary>

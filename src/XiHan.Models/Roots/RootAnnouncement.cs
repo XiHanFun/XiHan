@@ -19,6 +19,7 @@ namespace XiHan.Models.Roots;
 /// <summary>
 /// 系统公告表
 /// </summary>
+[SugarTable(TableName = "RootAnnouncement")]
 public class RootAnnouncement : BaseEntity
 {
     /// <summary>

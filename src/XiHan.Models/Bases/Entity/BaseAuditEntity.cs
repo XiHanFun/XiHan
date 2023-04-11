@@ -24,7 +24,7 @@ public abstract class BaseAuditEntity<TKey> : BaseDeleteEntity<Guid>
     /// 审核用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "审核用户")]
-    public virtual Guid? AuditId { get; set; }
+    public virtual Guid? AuditBy { get; set; }
 
     /// <summary>
     /// 审核时间

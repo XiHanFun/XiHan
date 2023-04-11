@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ConsoleInfo
+// FileName:ConsoleServerInfo
 // Guid:7dd7d459-6a52-4cd3-8298-161cf26b3395
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -22,14 +22,14 @@ using XiHan.Utils.Serialize;
 namespace XiHan.Api.Consoles;
 
 /// <summary>
-/// ConsoleInfo
+/// ConsoleServerInfo
 /// </summary>
-public static class ConsoleInfo
+public static class ConsoleServerInfo
 {
     /// <summary>
-    /// 确认配置信息
+    /// 确认服务端信息
     /// </summary>
-    public static void ConfirmConfigInfo()
+    public static void ConfirmServerInfo()
     {
         "==============================系统信息==============================".WriteLineInfo();
         $@"操作系统：{SystemInfoHelper.OperatingSystem}".WriteLineInfo();
@@ -81,6 +81,7 @@ public static class ConsoleInfo
         $@"请求日志：{AppSettings.LogConfig.Action.GetValue()}".WriteLineInfo();
         $@"结果日志：{AppSettings.LogConfig.Result.GetValue()}".WriteLineInfo();
         $@"异常日志：{AppSettings.LogConfig.Exception.GetValue()}".WriteLineInfo();
+        "==============================任务信息==============================".WriteLineInfo();
         "==============================启动信息==============================".WriteLineInfo();
     }
 }

@@ -12,13 +12,16 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
+using SqlSugar;
 using SqlSugar.IOC;
+using System.Reflection;
 using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Models.Posts;
 using XiHan.Models.Roots;
 using XiHan.Models.Syses;
 using XiHan.Models.Users;
 using XiHan.Utils.Console;
+using XiHan.Utils.Reflections;
 
 namespace XiHan.Extensions.Setups.Application;
 
@@ -51,47 +54,13 @@ public static class InitDatabaseStep
 
             // 创建数据表
             "创建数据表……".WriteLineInfo();
-            db.CodeFirst.SetStringDefaultLength(512).InitTables(
-                // Syses
-                typeof(SysConfig),
-                typeof(SysSkin),
-                typeof(SysLog),
-                typeof(SysLoginLog),
-                typeof(SysOperationLog),
-                typeof(SysDictType),
-                typeof(SysDictData),
-                typeof(SysFile),
-                typeof(SysTasks),
+            // 获取所有 XiHan.Models 的实体
+            var entityes = ReflectionHelper.GetAllTypes()
+                .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)
+                .ToArray();
 
-                // Users
-                typeof(UserAccount),
-                typeof(UserAccountRole),
-                typeof(UserOauth),
-                typeof(UserStatistic),
-                typeof(UserNotice),
-                typeof(UserFollow),
-                typeof(UserCollectCategory),
-                typeof(UserCollect),
+            db.CodeFirst.SetStringDefaultLength(512).InitTables(entityes);
 
-                // Roots
-                typeof(RootAuthority),
-                typeof(RootRole),
-                typeof(RootRoleAuthority),
-                typeof(RootMenu),
-                typeof(RootRoleMenu),
-                typeof(RootAnnouncement),
-                typeof(RootAuditCategory),
-                typeof(RootAudit),
-                typeof(RootFriendlyLink),
-
-                // Blogs
-                typeof(PostCategory),
-                typeof(PostTag),
-                typeof(PostArticle),
-                typeof(PostArticleTag),
-                typeof(PostComment),
-                typeof(PostPoll)
-            );
             "数据表创建成功！".WriteLineSuccess();
             "数据库初始化已完成！".WriteLineSuccess();
         }

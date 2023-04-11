@@ -25,7 +25,7 @@ public abstract class BaseCreateEntity<TKey> : BaseIdEntity<Guid>
     /// 设置后修改不会有此字段
     /// </summary>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户")]
-    public virtual Guid? CreateId { get; set; }
+    public virtual Guid? CreateBy { get; set; }
 
     /// <summary>
     /// 创建时间
