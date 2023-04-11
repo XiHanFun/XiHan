@@ -13,8 +13,6 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Hosting;
 using XiHan.Extensions.Setups.Application;
 using XiHan.Utils.Console;
 using XiHan.Utils.Message.ChatHub;
@@ -43,26 +41,9 @@ public static class ApplicationSetup
         }
 
         // 初始化数据库
-        app.ApplicationServices.InitDatabase();
-        // 环境变量，开发环境
-        if (env.IsDevelopment())
-        {
-            // 生成异常页面
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseExceptionHandler("/Error");
-            // 使用HSTS的中间件，该中间件添加了严格传输安全头
-            app.UseHsts();
-        }
-        // Nginx 反向代理获取真实IP
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        });
-        // 强制https跳转
-        app.UseHttpsRedirection();
+        app.InitDatabase();
+        // Http
+        app.UseHttpSetup(env);
         // MiniProfiler
         app.UseMiniProfilerSetup();
         // Swagger
@@ -73,9 +54,8 @@ public static class ApplicationSetup
         app.UseRouting();
         // 跨域
         app.UseCorsSetup();
-        // 鉴权
+        // 鉴权授权
         app.UseAuthentication();
-        // 授权
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

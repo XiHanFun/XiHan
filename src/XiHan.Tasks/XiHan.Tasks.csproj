@@ -21,6 +21,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.2" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\XiHan.Services\XiHan.Services.csproj" />
 	</ItemGroup>
 

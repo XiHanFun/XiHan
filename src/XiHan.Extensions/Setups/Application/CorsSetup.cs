@@ -26,6 +26,7 @@ public static class CorsSetup
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseCorsSetup(this IApplicationBuilder app)
     {
         if (app == null)

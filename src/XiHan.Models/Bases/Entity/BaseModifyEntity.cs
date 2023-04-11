@@ -22,13 +22,15 @@ public abstract class BaseModifyEntity<TKey> : BaseCreateEntity<Guid>
 {
     /// <summary>
     /// 修改用户
+    /// 设置后出入不会有此字段
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "修改用户")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户")]
     public virtual Guid? ModifyId { get; set; }
 
     /// <summary>
     /// 修改时间
+    /// 设置后出入不会有此字段
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改时间")]
     public virtual DateTime? ModifyTime { get; set; }
 }

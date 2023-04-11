@@ -58,7 +58,7 @@ public static class ObjectPropertyHelper
     /// <param name="tentity"></param>
     /// <param name="propertyname"></param>
     /// <returns></returns>
-    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname)
+    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname) where TEntity : class
     {
         var type = typeof(TEntity);
         var info = type.GetProperty(propertyname);
@@ -77,7 +77,7 @@ public static class ObjectPropertyHelper
     /// 获取对象属性信息列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetObjectPropertyInfos<TEntity>(this TEntity entity)
+    public static List<CustomPropertyInfo> GetObjectPropertyInfos<TEntity>(this TEntity entity) where TEntity : class
     {
         var type = typeof(TEntity);
         PropertyInfo[] properties = type.GetProperties();
@@ -102,7 +102,7 @@ public static class ObjectPropertyHelper
     /// <param name="val1">对象实例1</param>
     /// <param name="val2">对象实例2</param>
     /// <returns></returns>
-    public static List<CustomPropertyVariance> DetailedCompare<T>(this T val1, T val2)
+    public static List<CustomPropertyVariance> DetailedCompare<T>(this T val1, T val2) where T : class
     {
         var propertyInfo = typeof(T).GetType().GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
@@ -125,21 +125,21 @@ public static class ObjectPropertyHelper
     /// <param name="newVal">对象实例2</param>
     /// <param name="specialList">要排除某些特殊属性</param>
     /// <returns></returns>
-    public static string GetChangedNote<T>(this T oldVal, T newVal, List<string> specialList)
+    public static string GetChangedNote<T>(this T oldVal, T newVal, List<string> specialList) where T : class
     {
         // 要排除某些特殊属性
         var list = DetailedCompare<T>(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,
-            OldValue = s.ValueA,
-            NewValue = s.ValueB
+            s.ValueA,
+            s.ValueB,
         });
-        if (specialList?.Count > 0)
+        if (specialList.Any())
         {
             newList = newList.Where(s => !specialList.Contains(s.PropertyName));
         }
-        if (newList.ToList()?.Count > 0)
+        if (newList.ToList().Any())
         {
             JsonSerializerOptions options = new()
             {

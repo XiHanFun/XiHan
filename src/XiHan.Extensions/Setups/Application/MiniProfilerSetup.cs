@@ -38,6 +38,7 @@ public static class MiniProfilerSetup
         if (!isEnabledMiniprofiler) return app;
         // 性能分析
         app.UseMiniProfiler();
+
         return app;
     }
 }

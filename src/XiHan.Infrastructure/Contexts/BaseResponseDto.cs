@@ -243,6 +243,21 @@ public static class BaseResponseDto
     }
 
     /// <summary>
+    /// 响应失败，服务器内部错误 500
+    /// </summary>
+    /// <returns></returns>
+    public static BaseResultDto InternalServerError(string messageData)
+    {
+        return new BaseResultDto
+        {
+            Success = false,
+            Code = ResponseEnum.InternalServerError,
+            Message = ResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Datas = messageData
+        };
+    }
+
+    /// <summary>
     /// 响应失败，功能未实施 501
     /// </summary>
     /// <returns></returns>

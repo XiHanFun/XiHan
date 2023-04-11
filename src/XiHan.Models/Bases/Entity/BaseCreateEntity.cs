@@ -22,13 +22,15 @@ public abstract class BaseCreateEntity<TKey> : BaseIdEntity<Guid>
 {
     /// <summary>
     /// 创建用户
+    /// 设置后修改不会有此字段
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "创建用户")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户")]
     public virtual Guid? CreateId { get; set; }
 
     /// <summary>
     /// 创建时间
+    /// 设置后修改不会有此字段
     /// </summary>
-    [SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建时间")]
     public virtual DateTime? CreateTime { get; set; } = DateTime.Now;
 }

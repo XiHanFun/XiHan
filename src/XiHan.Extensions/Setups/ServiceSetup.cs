@@ -44,7 +44,7 @@ public static class ServiceSetup
         services.AddAutoMapperSetup();
         // Auth
         services.AddAuthSetup();
-        // Http
+        // Http上下文
         services.AddHttpContextSetup();
         // Swagger
         services.AddSwaggerSetup();

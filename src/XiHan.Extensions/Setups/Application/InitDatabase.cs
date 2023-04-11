@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Builder;
 using SqlSugar.IOC;
 using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Models.Posts;
@@ -29,8 +30,8 @@ public static class InitDatabaseStep
     /// <summary>
     /// 初始化数据库
     /// </summary>
-    /// <param name="service"></param>
-    public static void InitDatabase(this IServiceProvider service)
+    /// <param name="app"></param>
+    public static void InitDatabase(this IApplicationBuilder app)
     {
         var db = DbScoped.SugarScope;
         var databaseInited = AppSettings.Database.Inited.GetValue();
