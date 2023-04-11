@@ -37,7 +37,10 @@ public static class SwaggerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 配置Swagger，从路由、控制器和模型构建对象
         services.AddSwaggerGen(options =>

@@ -25,17 +25,22 @@ namespace XiHan.Extensions.Setups.Services;
 public static class TaskSetup
 {
     /// <summary>
-    /// 定时任务 服务扩展
+    /// 计划任务 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public static void AddTaskSchedulers(this IServiceCollection services)
+    public static IServiceCollection AddTaskSchedulers(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
-        //添加Quartz服务
+        // 添加Quartz服务
         services.AddSingleton<IJobFactory, JobFactory>();
-        //添加自身服务
+        // 添加自身服务
         services.AddTransient<ITaskSchedulerServer, TaskSchedulerServer>();
+
+        return services;
     }
 }

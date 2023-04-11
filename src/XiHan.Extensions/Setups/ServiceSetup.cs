@@ -58,6 +58,8 @@ public static class ServiceSetup
         services.AddSignalR();
         // 服务注册
         AppServiceManager.RegisterService(services);
+        // 计划任务
+        services.AddTaskSchedulers();
         // Route
         services.AddRouteSetup();
         // Cors

@@ -33,7 +33,10 @@ public static class CacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 内存缓存
         var isEnabledMemoryCache = AppSettings.Cache.MemoryCache.IsEnabled.GetValue();

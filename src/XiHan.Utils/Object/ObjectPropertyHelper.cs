@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -55,22 +56,66 @@ public static class ObjectPropertyHelper
     /// 获取对象属性值
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     /// <param name="tentity"></param>
     /// <param name="propertyname"></param>
     /// <returns></returns>
-    public static string GetObjectPropertyValue<TEntity>(TEntity tentity, string propertyname) where TEntity : class
+    public static TValue GetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyname)
     {
-        var type = typeof(TEntity);
-        var info = type.GetProperty(propertyname);
-        if (info != null)
+        Type type = tentity.GetType();
+        PropertyInfo p = type.GetProperty(propertyname);
+        if (p == null)
         {
-            var obj = info.GetValue(tentity);
-            if (obj != null && obj.ToString() != null)
-            {
-                return obj.ParseToString();
-            }
+            return default;
         }
-        return string.Empty;
+
+        var param_obj = Expression.Parameter(typeof(TEntity));
+        var param_val = Expression.Parameter(typeof(TValue));
+
+        //转成真实类型，防止Dynamic类型转换成object
+        var body_obj = Expression.Convert(param_obj, type);
+
+        var body = Expression.Property(body_obj, p);
+        var getValue = Expression.Lambda<Func<TEntity, TValue>>(body, param_obj).Compile();
+        return getValue(tentity);
+    }
+
+    /// <summary>
+    /// 设置对象属性值
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    /// <param name="tentity"></param>
+    /// <param name="propertyname"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static bool SetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyname, TValue value)
+    {
+        Type type = tentity.GetType();
+        PropertyInfo p = type.GetProperty(propertyname);
+        if (p == null)
+        {
+            return false;
+        }
+
+        var param_obj = Expression.Parameter(type);
+        var param_val = Expression.Parameter(typeof(TValue));
+        var body_obj = Expression.Convert(param_obj, type);
+        var body_val = Expression.Convert(param_val, p.PropertyType);
+
+        //获取设置属性的值的方法
+        var setMethod = p.GetSetMethod(true);
+
+        //如果只是只读,则setMethod==null
+        if (setMethod != null)
+        {
+            var body = Expression.Call(param_obj, p.GetSetMethod(), body_val);
+            var setValue = Expression.Lambda<Action<TEntity, TValue>>(body, param_obj, param_val).Compile();
+            setValue(tentity, value);
+
+            return true;
+        }
+        return false;
     }
 
     /// <summary>

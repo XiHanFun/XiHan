@@ -26,34 +26,49 @@ namespace XiHan.Extensions.Setups.Application;
 public static class TaskSetup
 {
     /// <summary>
-    /// 程序启动后添加任务计划
+    /// 计划任务
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static async Task<IApplicationBuilder> UseTaskSchedulersAsync(this IApplicationBuilder app)
+    /// <exception cref="ArgumentNullException"></exception>
+    public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app)
     {
-        ITaskSchedulerServer schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
-
-        var tasks = await SqlSugar.IOC.DbScoped.SugarScope.Queryable<SysTasks>()
-            .Where(m => m.IsStart)
-            .ToListAsync();
-
-        //程序启动后注册所有定时任务
-        foreach (var task in tasks)
+        if (app == null)
         {
-            var result = await schedulerServer.AddTaskScheduleAsync(task);
-            if (result.Success)
+            throw new ArgumentNullException(nameof(app));
+        }
+
+        try
+        {
+            ITaskSchedulerServer schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
+
+            var tasks = SqlSugar.IOC.DbScoped.SugarScope.Queryable<SysTasks>()
+                .Where(m => m.IsStart)
+                .ToList();
+
+            // 程序启动后注册所有定时任务
+            foreach (var task in tasks)
             {
-                var info = $"注册任务：[{task.Name}]成功！";
-                info.WriteLineSuccess();
-                Log.Information(info);
+                var result = schedulerServer.AddTaskScheduleAsync(task).Result;
+                if (result.Success)
+                {
+                    var info = $"注册任务：{task.Name}成功！";
+                    info.WriteLineSuccess();
+                    Log.Information(info);
+                }
+                else
+                {
+                    var info = $"注册任务：{task.Name}失败！";
+                    info.WriteLineError();
+                    Log.Error(info);
+                }
             }
-            else
-            {
-                var info = $"注册任务：[{task.Name}]失败！";
-                info.WriteLineError();
-                Log.Error(info);
-            }
+        }
+        catch (Exception ex)
+        {
+            var errorInfo = @$"注册定时任务出错！";
+            errorInfo.WriteLineError();
+            Log.Error(ex, errorInfo);
         }
 
         return app;

@@ -32,7 +32,10 @@ public static class SqlSugarSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         var databaseType = AppSettings.Database.Type.GetValue();
         var databaseConsole = AppSettings.Database.Console.GetValue();
@@ -101,8 +104,11 @@ public static class SqlSugarSetup
             };
             client.Aop.OnError = (exp) =>
             {
+                var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message;
+                if (databaseConsole)
+                    errorInfo.WriteLineError();
                 if (databaseLogError)
-                    Log.Error(exp, "SQL出错");
+                    Log.Error(exp, errorInfo);
             };
         });
         return services;

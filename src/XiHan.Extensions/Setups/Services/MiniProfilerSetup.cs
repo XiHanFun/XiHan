@@ -29,7 +29,10 @@ public static class MiniProfilerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddMiniProfilerSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
         if (!isEnabledMiniprofiler) return services;

@@ -43,9 +43,13 @@ public static class InitDatabaseStep
         else
         {
             "数据库正在初始化……".WriteLineInfo();
+
+            // 创建数据库
             "创建数据库……".WriteLineInfo();
             db.DbMaintenance.CreateDatabase();
             "数据库创建成功！".WriteLineSuccess();
+
+            // 创建数据表
             "创建数据表……".WriteLineInfo();
             db.CodeFirst.SetStringDefaultLength(512).InitTables(
                 // Syses
@@ -57,6 +61,7 @@ public static class InitDatabaseStep
                 typeof(SysDictType),
                 typeof(SysDictData),
                 typeof(SysFile),
+                typeof(SysTasks),
 
                 // Users
                 typeof(UserAccount),

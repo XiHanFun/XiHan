@@ -28,7 +28,10 @@ public static class RouteSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddRouteSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         services.AddRouting(route =>
         {

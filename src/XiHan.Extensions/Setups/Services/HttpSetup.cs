@@ -30,7 +30,10 @@ public static class HttpSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddHttpContextSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 注入 Http 请求
         services.AddHttpClient();

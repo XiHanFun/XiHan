@@ -19,7 +19,7 @@ namespace XiHan.Utils.Object;
 /// <summary>
 /// StringHelper
 /// </summary>
-public class StringHelper
+public static class StringHelper
 {
     /// <summary>
     /// 把字符串按照分隔符转换成 List
@@ -525,6 +525,26 @@ public class StringHelper
 
         // 如果为DBNull
         return data is DBNull;
+    }
+
+    /// <summary>
+    /// 首字母大写
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static string FirstToUpper(this string value)
+    {
+        return value.Substring(0, 1).ToUpper() + value[1..];
+    }
+
+    /// <summary>
+    /// 首字母小写
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static string FirstToLower(this string value)
+    {
+        return value.Substring(0, 1).ToLower() + value[1..];
     }
 
     #endregion

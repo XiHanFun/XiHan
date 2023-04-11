@@ -57,6 +57,8 @@ public static class ApplicationSetup
         // 鉴权授权
         app.UseAuthentication();
         app.UseAuthorization();
+        // 恢复或启动任务
+        app.UseTaskSchedulers();
 
         app.UseEndpoints(endpoints =>
         {

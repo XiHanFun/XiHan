@@ -34,7 +34,10 @@ public static class AuthSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAuthSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 身份验证（Bearer）
         services.AddAuthentication(options =>
