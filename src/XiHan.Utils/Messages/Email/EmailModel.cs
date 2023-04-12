@@ -14,7 +14,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace XiHan.Utils.Message.Email;
+namespace XiHan.Utils.Messages.Email;
 
 /// <summary>
 /// EmailModel

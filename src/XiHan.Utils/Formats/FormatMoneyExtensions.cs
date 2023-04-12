@@ -16,7 +16,7 @@ using System.Globalization;
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// 金额格式化帮助类
+/// 金额格式化拓展类
 /// </summary>
 public static class FormatMoneyExtensions
 {
@@ -25,7 +25,7 @@ public static class FormatMoneyExtensions
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
-    public static string FormatDecimalToString(this decimal money)
+    public static string FormatMoneyDecimalToString(this decimal money)
     {
         var moneyStr = money.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
         string moneyRes;

@@ -21,7 +21,7 @@ namespace XiHan.Utils.Shells;
 public static class ShellHelper
 {
     /// <summary>
-    /// Linux 系统命令
+    /// Linux系统命令
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>

@@ -14,7 +14,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Utils.Message.WeChat;
+namespace XiHan.Utils.Messages.WeChat;
 
 #region 基本类型
 
@@ -560,6 +560,8 @@ public class VerticalContent
 
 #endregion 辅助类
 
+#region 枚举
+
 /// <summary>
 /// 消息类型枚举
 /// </summary>
@@ -619,3 +621,5 @@ public enum TemplateCardType
     [Description("news_notice")]
     NewsNotice
 }
+
+#endregion

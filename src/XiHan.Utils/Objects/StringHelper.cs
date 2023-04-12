@@ -21,6 +21,8 @@ namespace XiHan.Utils.Objects;
 /// </summary>
 public static class StringHelper
 {
+    #region 分割组装
+
     /// <summary>
     /// 把字符串按照分隔符转换成 List
     /// </summary>
@@ -28,7 +30,7 @@ public static class StringHelper
     /// <param name="speater">分隔符</param>
     /// <param name="toLower">是否转换为小写</param>
     /// <returns></returns>
-    public static List<string> GetStrArray(string str, char speater, bool toLower)
+    public static List<string> GetStrList(string str, char speater, bool toLower)
     {
         List<string> list = new();
         var ss = str.Split(speater);
@@ -43,6 +45,22 @@ public static class StringHelper
             list.Add(strVal);
         }
         return list;
+    }
+
+    /// <summary>
+    /// 分割字符串
+    /// </summary>
+    /// <param name="str"></param>
+    /// <param name="splitstr"></param>
+    /// <returns></returns>
+    public static string[]? GetSplitMulti(string? str, string splitstr)
+    {
+        string[]? strArray = null;
+        if (!string.IsNullOrEmpty(str))
+        {
+            strArray = new Regex(splitstr).Split(str);
+        }
+        return strArray;
     }
 
     /// <summary>
@@ -103,7 +121,7 @@ public static class StringHelper
     }
 
     /// <summary>
-    /// 得到数组列表以逗号分隔的字符串
+    /// 得到字典以逗号分隔的字符串
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
@@ -134,7 +152,9 @@ public static class StringHelper
         return ss.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString()).ToList();
     }
 
-    #region 删除最后一个字符之后的字符
+    #endregion
+
+    #region 删除结尾字符后的字符
 
     /// <summary>
     /// 删除最后结尾的一个逗号
@@ -200,7 +220,7 @@ public static class StringHelper
 
     #endregion
 
-    #region 将字符串样式转换为纯字符串
+    #region 转换为纯字符串
 
     /// <summary>
     ///  将字符串样式转换为纯字符串
@@ -227,7 +247,7 @@ public static class StringHelper
 
     #endregion
 
-    #region 将字符串转换为新样式
+    #region 转换为新样式
 
     /// <summary>
     /// 将字符串转换为新样式
@@ -286,21 +306,7 @@ public static class StringHelper
 
     #endregion
 
-    /// <summary>
-    /// 分割字符串
-    /// </summary>
-    /// <param name="str"></param>
-    /// <param name="splitstr"></param>
-    /// <returns></returns>
-    public static string[]? SplitMulti(string? str, string splitstr)
-    {
-        string[]? strArray = null;
-        if (!string.IsNullOrEmpty(str))
-        {
-            strArray = new Regex(splitstr).Split(str);
-        }
-        return strArray;
-    }
+    #region 是否SQL安全字符串
 
     /// <summary>
     /// 是否SQL安全字符串
@@ -312,14 +318,16 @@ public static class StringHelper
     {
         if (isDel)
         {
-            str = str.Replace("'", "");
-            str = str.Replace("\"", "");
+            str = str.Replace(@"'", "");
+            str = str.Replace(@"""", "");
             return str;
         }
-        str = str.Replace("'", "&#39;");
-        str = str.Replace("\"", "&#34;");
+        str = str.Replace(@"'", "&#39;");
+        str = str.Replace(@"""", "&#34;");
         return str;
     }
+
+    #endregion
 
     #region 获取正确的Id，如果不是正整数，返回0
 
@@ -336,7 +344,7 @@ public static class StringHelper
 
     #endregion
 
-    #region 检查一个字符串是否是纯数字构成的，一般用于查询字符串参数的有效性验证
+    #region 检查验证
 
     /// <summary>
     /// 检查一个字符串是否是纯数字构成的，一般用于查询字符串参数的有效性验证(0除外)
@@ -345,20 +353,16 @@ public static class StringHelper
     /// <returns>是否合法的bool值。</returns>
     public static bool IsNumberId(string? value)
     {
-        return QuickValidate("^[1-9]*[0-9]*$", value);
+        return IsValidateStr("^[1-9]*[0-9]*$", value);
     }
 
-    #endregion
-
-    #region 快速验证一个字符串是否符合指定的正则表达式
-
     /// <summary>
-    /// 快速验证一个字符串是否符合指定的正则表达式
+    /// 验证一个字符串是否符合指定的正则表达式
     /// </summary>
     /// <param name="express"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static bool QuickValidate(string express, string? value)
+    public static bool IsValidateStr(string express, string? value)
     {
         if (value == null) return false;
         var myRegex = new Regex(express);
@@ -376,7 +380,7 @@ public static class StringHelper
     /// <returns></returns>
     public static int StrLength(string inputString)
     {
-        System.Text.ASCIIEncoding ascii = new();
+        ASCIIEncoding ascii = new();
         var tempLen = 0;
         var s = ascii.GetBytes(inputString);
         foreach (var t in s)
@@ -478,54 +482,7 @@ public static class StringHelper
 
     #endregion
 
-    #region 判断对象是否为空
-
-    /// <summary>
-    /// 判断对象是否为空，为空返回true
-    /// </summary>
-    /// <typeparam name="T">要验证的对象的类型</typeparam>
-    /// <param name="data">要验证的对象</param>
-    public static bool IsNullOrEmpty<T>(T? data)
-    {
-        // 如果为null
-        if (data == null)
-        {
-            return true;
-        }
-
-        // 如果为""
-        if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-        {
-            return true;
-        }
-
-        // 如果为DBNull
-        return data is DBNull;
-    }
-
-    /// <summary>
-    /// 判断对象是否为空，为空返回true
-    /// </summary>
-    /// <param name="data">要验证的对象</param>
-    public static bool IsNullOrEmpty(object? data)
-    {
-        // 如果为null
-        if (data == null)
-        {
-            return true;
-        }
-
-        // 如果为""
-        if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-        {
-            return true;
-        }
-
-        // 如果为DBNull
-        return data is DBNull;
-    }
+    #region 首字母处理
 
     /// <summary>
     /// 首字母大写

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DingTalkRobot
+// FileName:DingTalkRobotHelper
 // Guid:b9ebb234-1ebf-4b97-b308-0c525d2cd190
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ using XiHan.Utils.Enums;
 using XiHan.Utils.Https;
 using XiHan.Utils.Serializes;
 
-namespace XiHan.Utils.Message.DingTalk;
+namespace XiHan.Utils.Messages.DingTalk;
 
 /// <summary>
 /// 钉钉机器人消息推送
@@ -59,7 +59,7 @@ public class DingTalkRobotHelper
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
     /// <returns></returns>
-    public async Task<DingTalkResultInfo?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<DingTalkResultInfoDto?> TextMessage(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.Text.GetEnumDescriptionByKey();
@@ -78,7 +78,7 @@ public class DingTalkRobotHelper
     /// 发送链接消息
     /// </summary>
     /// <param name="link"></param>
-    public async Task<DingTalkResultInfo?> LinkMessage(Link link)
+    public async Task<DingTalkResultInfoDto?> LinkMessage(Link link)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.Link.GetEnumDescriptionByKey();
@@ -93,7 +93,7 @@ public class DingTalkRobotHelper
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<DingTalkResultInfo?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<DingTalkResultInfoDto?> MarkdownMessage(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.Markdown.GetEnumDescriptionByKey();
@@ -112,7 +112,7 @@ public class DingTalkRobotHelper
     /// 发送任务卡片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<DingTalkResultInfo?> ActionCardMessage(ActionCard actionCard)
+    public async Task<DingTalkResultInfoDto?> ActionCardMessage(ActionCard actionCard)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
@@ -125,7 +125,7 @@ public class DingTalkRobotHelper
     /// 发送卡片菜单消息
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<DingTalkResultInfo?> FeedCardMessage(FeedCard feedCard)
+    public async Task<DingTalkResultInfoDto?> FeedCardMessage(FeedCard feedCard)
     {
         // 消息类型
         var msgtype = MsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
@@ -139,7 +139,7 @@ public class DingTalkRobotHelper
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<DingTalkResultInfo?> Send(object objSend)
+    private async Task<DingTalkResultInfoDto?> Send(object objSend)
     {
         var url = _Url;
         var sendMessage = objSend.SerializeToJson();
@@ -163,7 +163,7 @@ public class DingTalkRobotHelper
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _IHttpHelper.PostAsync<DingTalkResultInfo>(HttpEnum.Util, url, sendMessage, null);
+        var result = await _IHttpHelper.PostAsync<DingTalkResultInfoDto>(HttpEnum.Util, url, sendMessage, null);
         return result;
     }
 }

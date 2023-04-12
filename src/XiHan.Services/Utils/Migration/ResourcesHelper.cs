@@ -42,7 +42,7 @@ public static class ResourcesHelper
             };
             var content = File.ReadAllText(path, Encoding.UTF8);
             // 替换资源
-            content = content.ReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
+            content = content.FormatReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写
             DiskHelper.ClearFile(content);
             DiskHelper.WriteText(path, content, Encoding.UTF8);

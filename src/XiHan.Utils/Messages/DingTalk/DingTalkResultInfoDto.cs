@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DingTalkResultInfo
+// FileName:DingTalkResultInfoDto
 // Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,12 +13,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace XiHan.Utils.Message.DingTalk;
+namespace XiHan.Utils.Messages.DingTalk;
 
 /// <summary>
 /// 结果信息
 /// </summary>
-public class DingTalkResultInfo
+public class DingTalkResultInfoDto
 {
     /// <summary>
     /// 结果代码 成功 0

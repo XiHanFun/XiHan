@@ -99,7 +99,7 @@ public static class OSPlatformHelper
     /// </summary>
     public static string GetRunningTime()
     {
-        return Environment.TickCount.ParseToLong().MilliSecondsToString().ToString();
+        return Environment.TickCount.ParseToLong().FormatMilliSecondsToString().ToString();
     }
 
     /// <summary>

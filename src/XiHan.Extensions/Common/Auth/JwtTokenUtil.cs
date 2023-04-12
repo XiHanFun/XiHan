@@ -151,7 +151,10 @@ public static class JwtTokenUtil
             token = token.ParseToString().Replace("Bearer ", "");
 
             // 开始Token校验
-            if (!token.IsNotEmptyOrNull() || !jwtHandler.CanReadToken(token)) return null;
+            if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
+            {
+                throw new ArgumentException("token为空或无法解析！", nameof(token));
+            }
 
             var jwtToken = jwtHandler.ReadJwtToken(token);
             List<Claim> claims = jwtToken.Claims.ToList();
@@ -203,7 +206,7 @@ public static class JwtTokenUtil
                 Expires = AppSettings.Auth.Jwt.Expires.GetValue(),
             };
             // 判断结果
-            authJwtSetting.GetObjectPropertyInfos().ForEach(setting =>
+            authJwtSetting.GetPropertyInfos().ForEach(setting =>
             {
                 if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
             });

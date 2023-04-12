@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ObjectPropertyHelper
+// FileName:ObjectPropertyExtensions
 // Guid:3c22cdf5-2be0-4377-9412-322dcc2ab5e3
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,18 +19,18 @@ using System.Text.Json;
 namespace XiHan.Utils.Objects;
 
 /// <summary>
-/// 对象属性的处理操作帮助类
+/// 对象属性拓展类
 /// </summary>
-public static class ObjectPropertyHelper
+public static class ObjectPropertyExtensions
 {
     /// <summary>
-    /// 获取属性全名并转化为读取方式
+    /// 获取属性全名
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="_"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static string FullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression("_")] string fullName = "")
+    public static string GetFullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression("_")] string fullName = "")
     {
         return fullName;
     }
@@ -41,7 +41,7 @@ public static class ObjectPropertyHelper
     /// <param name="instance">object</param>
     /// <param name="propertyName">需要判断的属性</param>
     /// <returns>是否包含</returns>
-    public static bool ContainProperty(this object instance, string propertyName)
+    public static bool IsContainProperty(this object instance, string propertyName)
     {
         if (instance != null && !string.IsNullOrEmpty(propertyName))
         {
@@ -58,24 +58,23 @@ public static class ObjectPropertyHelper
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="tentity"></param>
-    /// <param name="propertyname"></param>
+    /// <param name="propertyName">需要判断的属性</param>
     /// <returns></returns>
-    public static TValue GetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyname)
+    public static TValue GetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyName)
     {
-        Type type = tentity.GetType();
-        PropertyInfo p = type.GetProperty(propertyname);
-        if (p == null)
+        Type objectType = typeof(TEntity);
+        PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
+        if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
         {
-            return default;
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
         }
 
         var param_obj = Expression.Parameter(typeof(TEntity));
         var param_val = Expression.Parameter(typeof(TValue));
 
-        //转成真实类型，防止Dynamic类型转换成object
-        var body_obj = Expression.Convert(param_obj, type);
-
-        var body = Expression.Property(body_obj, p);
+        // 转成真实类型，防止Dynamic类型转换成object
+        var body_obj = Expression.Convert(param_obj, objectType);
+        var body = Expression.Property(body_obj, propertyInfo);
         var getValue = Expression.Lambda<Func<TEntity, TValue>>(body, param_obj).Compile();
         return getValue(tentity);
     }
@@ -86,30 +85,30 @@ public static class ObjectPropertyHelper
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="tentity"></param>
-    /// <param name="propertyname"></param>
+    /// <param name="propertyName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static bool SetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyname, TValue value)
+    public static bool SetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyName, TValue value)
     {
-        Type type = tentity.GetType();
-        PropertyInfo p = type.GetProperty(propertyname);
-        if (p == null)
+        Type objectType = typeof(TEntity);
+        PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
+        if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
         {
-            return false;
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
         }
 
-        var param_obj = Expression.Parameter(type);
+        var param_obj = Expression.Parameter(objectType);
         var param_val = Expression.Parameter(typeof(TValue));
-        var body_obj = Expression.Convert(param_obj, type);
-        var body_val = Expression.Convert(param_val, p.PropertyType);
+        var body_obj = Expression.Convert(param_obj, objectType);
+        var body_val = Expression.Convert(param_val, propertyInfo.PropertyType);
 
-        //获取设置属性的值的方法
-        var setMethod = p.GetSetMethod(true);
+        // 获取设置属性的值的方法
+        var setMethod = propertyInfo.GetSetMethod(true);
 
-        //如果只是只读,则setMethod==null
+        // 如果只是只读,则 setMethod==null
         if (setMethod != null)
         {
-            var body = Expression.Call(param_obj, p.GetSetMethod(), body_val);
+            var body = Expression.Call(param_obj, setMethod, body_val);
             var setValue = Expression.Lambda<Action<TEntity, TValue>>(body, param_obj, param_val).Compile();
             setValue(tentity, value);
 
@@ -122,7 +121,7 @@ public static class ObjectPropertyHelper
     /// 获取对象属性信息列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetObjectPropertyInfos<TEntity>(this TEntity entity) where TEntity : class
+    public static List<CustomPropertyInfo> GetPropertyInfos<TEntity>(this TEntity entity) where TEntity : class
     {
         var type = typeof(TEntity);
         PropertyInfo[] properties = type.GetProperties();
@@ -141,15 +140,15 @@ public static class ObjectPropertyHelper
     }
 
     /// <summary>
-    /// 对比两个属性的差异信息
+    /// 对比两个类型的相同属性的差异信息
     /// </summary>
-    /// <typeparam name="T">对象类型</typeparam>
+    /// <typeparam name="TEntity">对象类型</typeparam>
     /// <param name="val1">对象实例1</param>
     /// <param name="val2">对象实例2</param>
     /// <returns></returns>
-    public static List<CustomPropertyVariance> DetailedCompare<T>(this T val1, T val2) where T : class
+    public static List<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity val1, TEntity val2) where TEntity : class
     {
-        var propertyInfo = typeof(T).GetType().GetProperties();
+        var propertyInfo = typeof(TEntity).GetType().GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
@@ -165,15 +164,15 @@ public static class ObjectPropertyHelper
     /// <summary>
     /// 把两个对象的差异信息转换为Json 格式
     /// </summary>
-    /// <typeparam name="T">对象类型</typeparam>
+    /// <typeparam name="TEntity">对象类型</typeparam>
     /// <param name="oldVal">对象实例1</param>
     /// <param name="newVal">对象实例2</param>
     /// <param name="specialList">要排除某些特殊属性</param>
     /// <returns></returns>
-    public static string GetChangedNote<T>(this T oldVal, T newVal, List<string> specialList) where T : class
+    public static string GetPropertyChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
-        var list = DetailedCompare<T>(oldVal, newVal);
+        var list = GetPropertyDetailedCompare<TEntity>(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,

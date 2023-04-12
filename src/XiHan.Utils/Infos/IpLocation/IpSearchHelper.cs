@@ -28,7 +28,7 @@ public static class IpSearchHelper
     /// <summary>
     /// 锁
     /// </summary>
-    private static object _Lock = new();
+    private static readonly object _Lock = new();
 
     /// <summary>
     /// 数据库位置

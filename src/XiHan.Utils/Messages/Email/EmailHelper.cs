@@ -15,7 +15,7 @@ using System.Net;
 using System.Net.Mail;
 using XiHan.Utils.Consoles;
 
-namespace XiHan.Utils.Message.Email;
+namespace XiHan.Utils.Messages.Email;
 
 /// <summary>
 /// 邮件帮助类

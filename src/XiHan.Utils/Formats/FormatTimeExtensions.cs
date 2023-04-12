@@ -14,7 +14,7 @@
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// 时间格式化帮助类
+/// 时间格式化拓展类
 /// </summary>
 public static class FormatTimeExtensions
 {
@@ -23,7 +23,7 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static string DateToTimeStamp(this DateTime thisValue)
+    public static string GetDateToTimeStamp(this DateTime thisValue)
     {
         var ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return Convert.ToInt64(ts.TotalSeconds).ToString();
@@ -35,12 +35,12 @@ public static class FormatTimeExtensions
     /// <param name="dateTimeBefore"></param>
     /// <param name="dateTimeAfter"></param>
     /// <returns></returns>
-    public static string DateTimeToString(this DateTime dateTimeBefore, DateTime dateTimeAfter)
+    public static string FormatDateTimeToString(this DateTime dateTimeBefore, DateTime dateTimeAfter)
     {
         if (dateTimeBefore < dateTimeAfter)
         {
             var timeSpan = dateTimeAfter - dateTimeBefore;
-            return TimeSpanToString(timeSpan);
+            return FormatTimeSpanToString(timeSpan);
         }
 
         throw new Exception("开始日期必须小于结束日期");
@@ -51,10 +51,10 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="milliseconds"></param>
     /// <returns></returns>
-    public static string MilliSecondsToString(this long milliseconds)
+    public static string FormatMilliSecondsToString(this long milliseconds)
     {
         var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-        return TimeSpanToString(timeSpan);
+        return FormatTimeSpanToString(timeSpan);
     }
 
     /// <summary>
@@ -62,10 +62,10 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="ticks"></param>
     /// <returns></returns>
-    public static string TimeTicksToString(this long ticks)
+    public static string FormatTimeTicksToString(this long ticks)
     {
         var timeSpan = TimeSpan.FromTicks(ticks);
-        return TimeSpanToString(timeSpan);
+        return FormatTimeSpanToString(timeSpan);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="timeSpan"></param>
     /// <returns></returns>
-    public static string TimeSpanToString(this TimeSpan timeSpan)
+    public static string FormatTimeSpanToString(this TimeSpan timeSpan)
     {
         var result = string.Empty;
         if (timeSpan.Days >= 1)
@@ -104,7 +104,7 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="date"></param>
     /// <returns></returns>
-    public static string DateTimeToFriendlyString(this DateTime date)
+    public static string FormatDateTimeToFriendlyString(this DateTime date)
     {
         string result = string.Empty;
 
@@ -141,7 +141,7 @@ public static class FormatTimeExtensions
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static DateTime StringToDate(this string thisValue)
+    public static DateTime FormatStringToDate(this string thisValue)
     {
         try
         {

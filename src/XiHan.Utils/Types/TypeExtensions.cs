@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:TypeHelper
+// FileName:TypeExtensions
 // Guid:2647b4c3-1cf7-4aeb-8eea-dd070a76fd73
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,10 +21,12 @@ using System.Collections;
 namespace XiHan.Utils.Types;
 
 /// <summary>
-/// Type拓展帮助类
+/// 类型拓展类
 /// </summary>
-public static class TypeHelper
+public static class TypeExtensions
 {
+    #region 判断类型
+
     /// <summary>
     /// 判断当前类型是否可由指定类型派生
     /// </summary>
@@ -59,113 +61,6 @@ public static class TypeHelper
     public static bool IsNotNullableType(this Type type)
     {
         return !IsNullableType(type);
-    }
-
-    /// <summary>
-    /// 由类型的Nullable类型返回实际类型
-    /// </summary>
-    /// <param name="type"> 要处理的类型对象 </param>
-    /// <returns> </returns>
-    public static Type GetNonNullableType(this Type type)
-    {
-        return IsNullableType(type) ? type.GetGenericArguments()[0] : type;
-    }
-
-    /// <summary>
-    /// 通过类型转换器获取Nullable类型的基础类型
-    /// </summary>
-    /// <param name="type"> 要处理的类型对象 </param>
-    /// <returns> </returns>
-    public static Type GetUnNullableType(this Type type)
-    {
-        if (IsNullableType(type))
-        {
-            NullableConverter nullableConverter = new NullableConverter(type);
-            return nullableConverter.UnderlyingType;
-        }
-        return type;
-    }
-
-    /// <summary>
-    /// 获取类型的Description特性描述信息
-    /// </summary>
-    /// <param name="type">类型对象</param>
-    /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
-    /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
-    public static string GetDescription(this Type type, bool inherit = true)
-    {
-        var result = string.Empty;
-        if (IsNotNullableType(type))
-        {
-            DescriptionAttribute desc = type.GetAttribute<DescriptionAttribute>(inherit);
-            var fullName = type.FullName ?? result;
-            var description = desc.Description == null ? fullName : desc.Description;
-            result = description;
-        }
-        return result;
-    }
-
-    /// <summary>
-    /// 获取成员元数据的Description特性描述信息
-    /// </summary>
-    /// <param name="member">成员元数据对象</param>
-    /// <param name="inherit">是否搜索成员的继承链以查找描述特性</param>
-    /// <returns>返回Description特性描述信息，如不存在则返回成员的名称</returns>
-    public static string GetDescription(this MemberInfo member, bool inherit = true)
-    {
-        DescriptionAttribute desc = member.GetAttribute<DescriptionAttribute>(inherit);
-        if (desc != null)
-        {
-            return desc.Description;
-        }
-        DisplayNameAttribute displayName = member.GetAttribute<DisplayNameAttribute>(inherit);
-        if (displayName != null)
-        {
-            return displayName.DisplayName;
-        }
-        DisplayAttribute display = member.GetAttribute<DisplayAttribute>(inherit);
-        if (display != null)
-        {
-            return display.Name ?? string.Empty;
-        }
-        return member.Name;
-    }
-
-    /// <summary>
-    /// 检查指定指定类型成员中是否存在指定的Attribute特性
-    /// </summary>
-    /// <typeparam name="T">要检查的Attribute特性类型</typeparam>
-    /// <param name="memberInfo">要检查的类型成员</param>
-    /// <param name="inherit">是否从继承中查找</param>
-    /// <returns>是否存在</returns>
-    public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
-    {
-        return memberInfo.IsDefined(typeof(T), inherit);
-    }
-
-    /// <summary>
-    /// 从类型成员获取指定Attribute特性
-    /// </summary>
-    /// <typeparam name="T">Attribute特性类型</typeparam>
-    /// <param name="memberInfo">类型类型成员</param>
-    /// <param name="inherit">是否从继承中查找</param>
-    /// <returns>存在返回第一个，不存在返回null</returns>
-    public static T? GetAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
-    {
-        var attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
-        return attributes.FirstOrDefault() as T;
-    }
-
-    /// <summary>
-    /// 从类型成员获取指定Attribute特性
-    /// </summary>
-    /// <typeparam name="T">Attribute特性类型</typeparam>
-    /// <param name="memberInfo">类型类型成员</param>
-    /// <param name="inherit">是否从继承中查找</param>
-    /// <returns>返回所有指定Attribute特性的数组</returns>
-    public static T[] GetAttributes<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
-    {
-        return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
     }
 
     /// <summary>
@@ -284,6 +179,132 @@ public static class TypeHelper
         return accessor.IsVirtual && !accessor.IsFinal;
     }
 
+    #endregion
+
+    #region 空类型
+
+    /// <summary>
+    /// 由类型的Nullable类型返回实际类型
+    /// </summary>
+    /// <param name="type"> 要处理的类型对象 </param>
+    /// <returns> </returns>
+    public static Type GetNonNullableType(this Type type)
+    {
+        return IsNullableType(type) ? type.GetGenericArguments()[0] : type;
+    }
+
+    /// <summary>
+    /// 通过类型转换器获取Nullable类型的基础类型
+    /// </summary>
+    /// <param name="type"> 要处理的类型对象 </param>
+    /// <returns> </returns>
+    public static Type GetUnNullableType(this Type type)
+    {
+        if (IsNullableType(type))
+        {
+            NullableConverter nullableConverter = new NullableConverter(type);
+            return nullableConverter.UnderlyingType;
+        }
+        return type;
+    }
+
+    #endregion
+
+    #region 获取描述
+
+    /// <summary>
+    /// 获取类型的Description特性描述信息
+    /// </summary>
+    /// <param name="type">类型对象</param>
+    /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
+    /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
+    public static string GetDescription(this Type type, bool inherit = true)
+    {
+        var result = string.Empty;
+        if (IsNotNullableType(type))
+        {
+            DescriptionAttribute? desc = type.GetAttribute<DescriptionAttribute>(inherit);
+            if (desc != null)
+            {
+                var fullName = type.FullName ?? result;
+                var description = desc.Description == null ? result : desc.Description;
+                result = description;
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 获取成员元数据的Description特性描述信息
+    /// </summary>
+    /// <param name="member">成员元数据对象</param>
+    /// <param name="inherit">是否搜索成员的继承链以查找描述特性</param>
+    /// <returns>返回Description特性描述信息，如不存在则返回成员的名称</returns>
+    public static string GetDescription(this MemberInfo member, bool inherit = true)
+    {
+        DescriptionAttribute? desc = member.GetAttribute<DescriptionAttribute>(inherit);
+        if (desc != null)
+        {
+            return desc.Description;
+        }
+        DisplayNameAttribute? displayName = member.GetAttribute<DisplayNameAttribute>(inherit);
+        if (displayName != null)
+        {
+            return displayName.DisplayName;
+        }
+        DisplayAttribute? display = member.GetAttribute<DisplayAttribute>(inherit);
+        if (display != null)
+        {
+            return display.Name ?? string.Empty;
+        }
+        return member.Name;
+    }
+
+    #endregion
+
+    #region 特性信息
+
+    /// <summary>
+    /// 检查指定指定类型成员中是否存在指定的Attribute特性
+    /// </summary>
+    /// <typeparam name="T">要检查的Attribute特性类型</typeparam>
+    /// <param name="memberInfo">要检查的类型成员</param>
+    /// <param name="inherit">是否从继承中查找</param>
+    /// <returns>是否存在</returns>
+    public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    {
+        return memberInfo.IsDefined(typeof(T), inherit);
+    }
+
+    /// <summary>
+    /// 从类型成员获取指定Attribute特性
+    /// </summary>
+    /// <typeparam name="T">Attribute特性类型</typeparam>
+    /// <param name="memberInfo">类型类型成员</param>
+    /// <param name="inherit">是否从继承中查找</param>
+    /// <returns>存在返回第一个，不存在返回null</returns>
+    public static T? GetAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    {
+        var attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
+        return attributes.FirstOrDefault() as T;
+    }
+
+    /// <summary>
+    /// 从类型成员获取指定Attribute特性
+    /// </summary>
+    /// <typeparam name="T">Attribute特性类型</typeparam>
+    /// <param name="memberInfo">类型类型成员</param>
+    /// <param name="inherit">是否从继承中查找</param>
+    /// <returns>返回所有指定Attribute特性的数组</returns>
+    public static T[] GetAttributes<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    {
+        return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
+    }
+
+    #endregion
+
+    #region 类型名称
+
     /// <summary>
     /// 获取类型的全名，附带所在类库
     /// </summary>
@@ -309,6 +330,8 @@ public static class TypeHelper
         ProcessType(sb, type, fullName);
         return sb.ToString();
     }
+
+    #endregion
 
     #region 私有方法
 
@@ -356,31 +379,31 @@ public static class TypeHelper
     private static void ProcessArrayType(StringBuilder builder, Type type, bool fullName)
     {
         var innerType = type;
-        while (innerType.IsArray)
+        while (innerType!.IsArray)
         {
             innerType = innerType.GetElementType();
         }
 
         ProcessType(builder, innerType, fullName);
 
-        while (type.IsArray)
+        while (type!.IsArray)
         {
             builder.Append('[');
             builder.Append(',', type.GetArrayRank() - 1);
             builder.Append(']');
-            type = type.GetElementType();
+            type = type.GetElementType()!;
         }
     }
 
     private static void ProcessGenericType(StringBuilder builder, Type type, Type[] genericArguments, int length, bool fullName)
     {
-        var offset = type.IsNested ? type.DeclaringType.GetGenericArguments().Length : 0;
+        var offset = type.IsNested ? type.DeclaringType!.GetGenericArguments().Length : 0;
 
         if (fullName)
         {
             if (type.IsNested)
             {
-                ProcessGenericType(builder, type.DeclaringType, genericArguments, offset, fullName);
+                ProcessGenericType(builder, type.DeclaringType!, genericArguments, offset, fullName);
                 builder.Append('+');
             }
             else

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace XiHan.Utils.Message.ChatHub;
+namespace XiHan.Utils.Messages.ChatHubs;
 
 /// <summary>
 /// 即时通讯

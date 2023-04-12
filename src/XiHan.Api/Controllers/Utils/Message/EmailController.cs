@@ -16,9 +16,9 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Services.Utils.Message;
+using XiHan.Services.Utils.Messages;
 
-namespace XiHan.Api.Controllers.Utils.Message;
+namespace XiHan.Api.Controllers.Utils.Messages;
 
 /// <summary>
 /// 邮件推送

@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Message.DingTalk;
+namespace XiHan.Utils.Messages.DingTalk;
 
 /// <summary>
 /// DingTalkConnection

@@ -17,10 +17,10 @@ using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Https;
-using XiHan.Utils.Message.WeChat;
-using File = XiHan.Utils.Message.WeChat.File;
+using XiHan.Utils.Messages.WeChat;
+using File = XiHan.Utils.Messages.WeChat.File;
 
-namespace XiHan.Services.Utils.Message.Impl;
+namespace XiHan.Services.Utils.Messages.Impl;
 
 /// <summary>
 /// WeChatMessagePushService
@@ -141,7 +141,7 @@ public class WeChatPushService : IWeChatPushService
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    private static BaseResultDto WeChatMessageReturn(WeChatResultInfo? result)
+    private static BaseResultDto WeChatMessageReturn(WeChatResultInfoDto? result)
     {
         if (result != null)
         {
@@ -158,13 +158,13 @@ public class WeChatPushService : IWeChatPushService
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    private static BaseResultDto WeChatUploadReturn(WeChatResultInfo? result)
+    private static BaseResultDto WeChatUploadReturn(WeChatResultInfoDto? result)
     {
         if (result != null)
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
             {
-                WeChatUploadResult uploadResult = new("上传成功", result.MediaId);
+                WeChatUploadResultDto uploadResult = new("上传成功", result.MediaId);
                 return BaseResponseDto.Ok(uploadResult);
             }
             else

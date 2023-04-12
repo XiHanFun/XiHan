@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ObjectConvertHelper
+// FileName:ObjectConvertExtensions
 // Guid:53530b50-ea0a-4f9e-b05a-af39735a6bc0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,13 +12,14 @@
 #endregion <<版权版本注释>>
 
 using System.Collections;
+using XiHan.Utils.Types;
 
 namespace XiHan.Utils.Objects;
 
 /// <summary>
-/// 对象转换帮助类
+/// 对象转换拓展类
 /// </summary>
-public static class ObjectConvertHelper
+public static class ObjectConvertExtensions
 {
     #region Bool
 
@@ -407,6 +408,83 @@ public static class ObjectConvertHelper
     #endregion
 
     #region 强制转换类型
+
+    /// <summary>
+    /// 把对象类型转换为指定类型
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="conversionType"></param>
+    /// <returns></returns>
+    public static object? CastTo(this object? value, Type conversionType)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+        else
+        {
+            if (conversionType.IsNullableType())
+            {
+                conversionType = conversionType.GetUnNullableType();
+
+                if (value.ToString().IsNullOrEmpty())
+                {
+                    return default;
+                }
+                else
+                {
+                    if (conversionType.IsEnum)
+                    {
+                        return Enum.Parse(conversionType, value.ToString()!);
+                    }
+                    if (conversionType == typeof(Guid))
+                    {
+                        return value.ToString()!;
+                    }
+                }
+            }
+        }
+        return Convert.ChangeType(value, conversionType);
+    }
+
+    /// <summary>
+    /// 把对象类型转化为指定类型
+    /// </summary>
+    /// <typeparam name="T"> 动态类型 </typeparam>
+    /// <param name="value"> 要转化的源对象 </param>
+    /// <returns> 转化后的指定类型的对象，转化失败引发异常。 </returns>
+    public static T? CastTo<T>(this object? value)
+    {
+        if (value == null && default(T) == null)
+        {
+            return default;
+        }
+        if (value?.GetType() == typeof(T))
+        {
+            return (T)value;
+        }
+        object? result = CastTo(value, typeof(T));
+        return (T?)result;
+    }
+
+    /// <summary>
+    /// 把对象类型转化为指定类型，转化失败时返回指定的默认值
+    /// </summary>
+    /// <typeparam name="T"> 动态类型 </typeparam>
+    /// <param name="value"> 要转化的源对象 </param>
+    /// <param name="defaultValue"> 转化失败返回的指定默认值 </param>
+    /// <returns> 转化后的指定类型对象，转化失败时返回指定的默认值 </returns>
+    public static T? CastTo<T>(this object value, T defaultValue)
+    {
+        try
+        {
+            return CastTo<T>(value);
+        }
+        catch (Exception)
+        {
+            return defaultValue;
+        }
+    }
 
     /// <summary>
     /// 强制转换类型

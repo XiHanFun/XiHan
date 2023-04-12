@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Message.WeChat;
+namespace XiHan.Utils.Messages.WeChat;
 
 /// <summary>
 /// WeChatConnection

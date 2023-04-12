@@ -14,7 +14,7 @@
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// 文件大小格式化
+/// 文件大小格式化拓展类
 /// </summary>
 public static class FormatFileSizeExtensions
 {

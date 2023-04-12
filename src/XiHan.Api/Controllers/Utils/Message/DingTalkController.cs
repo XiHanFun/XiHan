@@ -16,10 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Services.Utils.Message;
-using XiHan.Utils.Message.DingTalk;
+using XiHan.Services.Utils.Messages;
+using XiHan.Utils.Messages.DingTalk;
 
-namespace XiHan.Api.Controllers.Utils.Message;
+namespace XiHan.Api.Controllers.Utils.Messages;
 
 /// <summary>
 /// 钉钉消息推送

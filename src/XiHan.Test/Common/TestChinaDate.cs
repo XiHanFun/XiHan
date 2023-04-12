@@ -33,7 +33,7 @@ public static class TestChinaDate
             Task.Delay(random.Next(1, 3000)).Wait();
             var dateTime2 = DateTime.Now;
             Console.WriteLine("时间2：" + dateTime2);
-            Console.WriteLine("时间差：" + FormatTimeExtensions.DateTimeToString(dateTime1, dateTime2));
+            Console.WriteLine("时间差：" + FormatTimeExtensions.FormatDateTimeToString(dateTime1, dateTime2));
         }
 
         //ChineseCalendar c = new ChineseCalendar(new DateTime(2022, 10, 1));

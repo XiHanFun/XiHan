@@ -14,7 +14,7 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Utils.Message.DingTalk;
+namespace XiHan.Utils.Messages.DingTalk;
 
 #region 基本类型
 

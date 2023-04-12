@@ -13,7 +13,7 @@
 
 using XiHan.Infrastructure.Contexts.Results;
 
-namespace XiHan.Services.Utils.Message;
+namespace XiHan.Services.Utils.Messages;
 
 /// <summary>
 /// IEmailPushService

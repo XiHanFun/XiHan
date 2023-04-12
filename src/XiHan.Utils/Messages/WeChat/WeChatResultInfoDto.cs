@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:WeChatResultInfo
+// FileName:WeChatResultInfoDto
 // Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,12 +13,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace XiHan.Utils.Message.WeChat;
+namespace XiHan.Utils.Messages.WeChat;
 
 /// <summary>
 /// 结果信息
 /// </summary>
-public class WeChatResultInfo
+public class WeChatResultInfoDto
 {
     /// <summary>
     /// 结果代码 成功 0
@@ -54,4 +54,4 @@ public class WeChatResultInfo
 /// <summary>
 /// 文件上传返回结果
 /// </summary>
-public record WeChatUploadResult(string Message, string MediaId);
+public record WeChatUploadResultDto(string Message, string MediaId);

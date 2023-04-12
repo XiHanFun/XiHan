@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:Md5Helper
+// FileName:Md5Extensions
 // Guid:c77bf375-d1f2-4a68-b4d1-bb2affcc0aa8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// MD5Helper加密帮助类
+/// MD5加密拓展类
 /// </summary>
-public static class Md5Helper
+public static class Md5Extensions
 {
     /// <summary>
     /// MD5字符串加密
@@ -27,7 +27,7 @@ public static class Md5Helper
     ///  <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
     /// <returns>加密后字符串</returns>
-    public static string EncryptMd5(this string inputString, Encoding encode)
+    public static string Md5Encrypt(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密
@@ -45,7 +45,7 @@ public static class Md5Helper
     /// </summary>
     /// <param name="inputPath">文件路径</param>
     /// <returns></returns>
-    public static string EncryptMd5(string inputPath)
+    public static string Md5Encrypt(string inputPath)
     {
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
 

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UrlHelper
+// FileName:UrlExtensions
 // Guid:521ad433-968f-49dc-84b1-5948de76eaec
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Web;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// URL编码帮助类
+/// URL编码拓展类
 /// </summary>
-public static class UrlHelper
+public static class UrlExtensions
 {
     /// <summary>
     /// Url编码

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using XiHan.Extensions.Setups.Application;
 using XiHan.Utils.Consoles;
-using XiHan.Utils.Message.ChatHub;
+using XiHan.Utils.Messages.ChatHubs;
 
 namespace XiHan.Extensions.Setups;
 

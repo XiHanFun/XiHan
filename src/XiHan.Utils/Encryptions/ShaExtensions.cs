@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ShaHelper
+// FileName:ShaExtensions
 // Guid:871e648a-233c-41fd-8531-de4ce3a3820f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// SHAHelper加密帮助类
+/// Sha加密拓展类
 /// </summary>
-public static class ShaHelper
+public static class ShaExtensions
 {
     /// <summary>
     /// SHA1字符串加密
@@ -27,7 +27,7 @@ public static class ShaHelper
     /// <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
     /// <returns>加密后字符串160位</returns>
-    public static string EncryptSha1(this string inputString, Encoding encode)
+    public static string Sha1Encrypt(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密
@@ -46,7 +46,7 @@ public static class ShaHelper
     /// <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
     /// <returns>加密后字符串256位</returns>
-    public static string EncryptSha256(this string inputString, Encoding encode)
+    public static string Sha256Encrypt(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密
@@ -65,7 +65,7 @@ public static class ShaHelper
     /// <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
     /// <returns>加密后字符串384位</returns>
-    public static string EncryptSha384(this string inputString, Encoding encode)
+    public static string Sha384Encrypt(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密
@@ -84,7 +84,7 @@ public static class ShaHelper
     /// <param name="inputString">输入</param>
     /// <param name="encode">编码</param>
     /// <returns>加密后字符串512位</returns>
-    public static string EncryptSha512(this string inputString, Encoding encode)
+    public static string Sha512Encrypt(this string inputString, Encoding encode)
     {
         var buffer = encode.GetBytes(inputString);
         //开始加密

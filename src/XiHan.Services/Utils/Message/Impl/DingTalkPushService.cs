@@ -17,9 +17,9 @@ using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Https;
-using XiHan.Utils.Message.DingTalk;
+using XiHan.Utils.Messages.DingTalk;
 
-namespace XiHan.Services.Utils.Message.Impl;
+namespace XiHan.Services.Utils.Messages.Impl;
 
 /// <summary>
 /// DingTalkMessagePush
@@ -113,7 +113,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    private static BaseResultDto DingTalkMessageReturn(DingTalkResultInfo? result)
+    private static BaseResultDto DingTalkMessageReturn(DingTalkResultInfoDto? result)
     {
         if (result != null)
         {

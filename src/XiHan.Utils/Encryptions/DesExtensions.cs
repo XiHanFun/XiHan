@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DesHelper
+// FileName:DesExtensions
 // Guid:c80cc02d-888f-4278-83ac-e6d1943633f1
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// DES加密解密帮助类
+/// DES加密解密拓展类
 /// </summary>
-public static class DesHelper
+public static class DesExtensions
 {
     // 默认密钥向量
     private static readonly byte[] Iv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
@@ -31,7 +31,7 @@ public static class DesHelper
     /// <param name="encode"></param>
     /// <param name="desKey"></param>
     /// <returns></returns>
-    public static string EncryptDes(this string inputString, Encoding encode, string desKey)
+    public static string DesEncrypt(this string inputString, Encoding encode, string desKey)
     {
         var rgbKey = encode.GetBytes(desKey[..16]);
         var rgbIv = Iv;
@@ -51,7 +51,7 @@ public static class DesHelper
     /// <param name="encode"></param>
     /// <param name="desKey"></param>
     /// <returns></returns>
-    public static string DecryptDes(this string inputString, Encoding encode, string desKey)
+    public static string DesDecrypt(this string inputString, Encoding encode, string desKey)
     {
         var rgbKey = encode.GetBytes(desKey[..16]);
         var rgbIv = Iv;

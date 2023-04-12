@@ -16,7 +16,7 @@ using System.Text;
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// 字符串格式化帮助类
+/// 字符串格式化拓展类
 /// </summary>
 public static class FormatStringExtensions
 {
@@ -27,7 +27,7 @@ public static class FormatStringExtensions
     /// <param name="oldStr"></param>
     /// <param name="newStr"></param>
     /// <returns></returns>
-    public static string ReplaceStr(this string content, string oldStr, string newStr)
+    public static string FormatReplaceStr(this string content, string oldStr, string newStr)
     {
         // 没有替换字符串直接返回源字符串
         if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;

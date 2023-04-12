@@ -16,7 +16,7 @@ using System.Net;
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// Ip地址格式化帮助类
+/// Ip地址格式化拓展类
 /// </summary>
 public static class FormatIpExtensions
 {

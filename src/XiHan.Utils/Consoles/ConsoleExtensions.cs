@@ -14,7 +14,7 @@
 namespace XiHan.Utils.Consoles;
 
 /// <summary>
-/// 控制台输出帮助类
+/// 控制台输出拓展类
 /// </summary>
 public static class ConsoleExtensions
 {

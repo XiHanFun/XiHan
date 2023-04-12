@@ -12,10 +12,10 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Utils.Message.WeChat;
-using File = XiHan.Utils.Message.WeChat.File;
+using XiHan.Utils.Messages.WeChat;
+using File = XiHan.Utils.Messages.WeChat.File;
 
-namespace XiHan.Services.Utils.Message;
+namespace XiHan.Services.Utils.Messages;
 
 /// <summary>
 /// IWeChatMessagePushService

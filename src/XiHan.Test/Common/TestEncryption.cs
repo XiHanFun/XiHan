@@ -27,9 +27,9 @@ public static class TestEncryption
     public static void Encryption()
     {
         var str = @"123456";
-        Console.WriteLine($@"字符串【{str}】MD5加密后：{str.EncryptMd5(Encoding.UTF8)}；");
+        Console.WriteLine($@"字符串【{str}】MD5加密后：{str.Md5Encrypt(Encoding.UTF8)}；");
 
         var file = @"D:\Blog\餐饮企业订单信息源数据.zip";
-        Console.WriteLine($@"文件【{file}】MD5加密后：{Md5Helper.EncryptMd5(file)}；");
+        Console.WriteLine($@"文件【{file}】MD5加密后：{Md5Extensions.Md5Encrypt(file)}；");
     }
 }

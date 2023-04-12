@@ -172,11 +172,11 @@ public class TestController : BaseApiController
         }
         var resultString = encryptType switch
         {
-            "SHA1" => iStr.EncryptSha1(Encoding.UTF8),
-            "SHA256" => iStr.EncryptSha256(Encoding.UTF8),
-            "SHA384" => iStr.EncryptSha384(Encoding.UTF8),
-            "SHA512" => iStr.EncryptSha512(Encoding.UTF8),
-            _ => iStr.EncryptSha1(Encoding.UTF8),
+            "SHA1" => iStr.Sha1Encrypt(Encoding.UTF8),
+            "SHA256" => iStr.Sha256Encrypt(Encoding.UTF8),
+            "SHA384" => iStr.Sha384Encrypt(Encoding.UTF8),
+            "SHA512" => iStr.Sha512Encrypt(Encoding.UTF8),
+            _ => iStr.Sha1Encrypt(Encoding.UTF8),
         };
         return BaseResponseDto.Ok(encryptType + "加密后结果为【" + resultString + "】");
     }
@@ -207,18 +207,18 @@ public class TestController : BaseApiController
         {
             return iType switch
             {
-                "DES" => iStr.EncryptDes(Encoding.UTF8, desKey),
-                "AES" => iStr.EncryptAes(Encoding.UTF8, aesKey),
-                _ => iStr.EncryptDes(Encoding.UTF8, desKey),
+                "DES" => iStr.DesEncrypt(Encoding.UTF8, desKey),
+                "AES" => iStr.AesEncrypt(Encoding.UTF8, aesKey),
+                _ => iStr.DesEncrypt(Encoding.UTF8, desKey),
             };
         }
         string Decrypt()
         {
             return iType switch
             {
-                "DES" => iStr.DecryptDes(Encoding.UTF8, desKey),
-                "AES" => iStr.DecryptAes(Encoding.UTF8, aesKey),
-                _ => iStr.DecryptDes(Encoding.UTF8, desKey),
+                "DES" => iStr.DesDecrypt(Encoding.UTF8, desKey),
+                "AES" => iStr.AesDecrypt(Encoding.UTF8, aesKey),
+                _ => iStr.DesDecrypt(Encoding.UTF8, desKey),
             };
         }
         return BaseResponseDto.Ok("你选择了" + iEncryptOrDecrypt + "," + resultString);

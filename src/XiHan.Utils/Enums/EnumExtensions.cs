@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:EnumHelper
+// FileName:EnumExtensions
 // Guid:23f4fdd1-650e-49f7-bdc6-7ba00110a2ac
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,19 +19,19 @@ using XiHan.Utils.Objects;
 namespace XiHan.Utils.Enums;
 
 /// <summary>
-/// 枚举帮助类
+/// 枚举拓展类
 /// </summary>
-public static class EnumHelper
+public static class EnumExtensions
 {
     /// <summary>
     /// 根据键获取单个枚举的描述信息
     /// </summary>
-    /// <param name="keyObj"></param>
+    /// <param name="keyEnum"></param>
     /// <returns></returns>
-    public static string GetEnumDescriptionByKey(this Enum keyObj)
+    public static string GetEnumDescriptionByKey(this Enum keyEnum)
     {
-        var enumName = keyObj.ToString();
-        var field = keyObj.GetType().GetField(enumName);
+        var enumName = keyEnum.ToString();
+        var field = keyEnum.GetType().GetField(enumName);
         if (field == null) return string.Empty;
         if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
             return description.Description;
@@ -41,14 +41,14 @@ public static class EnumHelper
     /// <summary>
     /// 根据值获取单个枚举的描述信息
     /// </summary>
-    /// <param name="valueObj"></param>
+    /// <param name="enumValue"></param>
     /// <returns></returns>
-    public static string GetEnumDescriptionByValue<T>(this object valueObj)
+    public static string GetEnumDescriptionByValue<T>(this object enumValue)
     {
         var description = string.Empty;
         try
         {
-            var tEnum = Enum.Parse(typeof(T), valueObj.ParseToString()) as Enum;
+            var tEnum = Enum.Parse(typeof(T), enumValue.ParseToString()) as Enum;
             description = tEnum!.GetEnumDescriptionByKey();
         }
         catch (Exception ex)
@@ -88,11 +88,11 @@ public static class EnumHelper
     }
 
     /// <summary>
-    /// 转成字典类型
+    /// 枚举的值与描述转为字典类型
     /// </summary>
     /// <param name="enumType"></param>
     /// <returns></returns>
-    public static Dictionary<int, string> EnumToDictionary(this Type enumType)
+    public static Dictionary<int, string> GetEnumValueDescriptionToDictionary(this Type enumType)
     {
         Dictionary<int, string> result = new();
         var fields = enumType.GetFields().ToList();

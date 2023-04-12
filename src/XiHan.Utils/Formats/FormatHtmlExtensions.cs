@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 namespace XiHan.Utils.Formats;
 
 /// <summary>
-/// HtmlFormatHelper
+/// Html格式化拓展类
 /// </summary>
 public static class FormatHtmlExtensions
 {
@@ -26,7 +26,7 @@ public static class FormatHtmlExtensions
     /// <param name="html"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    public static string ReplaceHtmlTag(this string html, int length = 0)
+    public static string FormatReplaceHtmlTag(this string html, int length = 0)
     {
         var strText = Regex.Replace(html, "<[^>]+>", "");
         strText = Regex.Replace(strText, "&[^;]+;", "");

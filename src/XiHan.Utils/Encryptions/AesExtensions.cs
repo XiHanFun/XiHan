@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:AesHelper
+// FileName:AesExtensions
 // Guid:14326a53-9e3d-43c6-a57a-bc13dd9b0c2a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// AES加密解密帮助类
+/// AES加密解密拓展类
 /// </summary>
-public static class AesHelper
+public static class AesExtensions
 {
     // 默认密钥向量
     private static readonly byte[] Iv = { 0x41, 0x72, 0x65, 0x79, 0x6F, 0x75, 0x6D, 0x79, 0x53, 0x6E, 0x6F, 0x77, 0x6D, 0x61, 0x6E, 0x3F };
@@ -31,7 +31,7 @@ public static class AesHelper
     /// <param name="encode"></param>
     /// <param name="aesKey"></param>
     /// <returns></returns>
-    public static string EncryptAes(this string inputString, Encoding encode, string aesKey)
+    public static string AesEncrypt(this string inputString, Encoding encode, string aesKey)
     {
         var rgbKey = encode.GetBytes(aesKey[..16]);
         var rgbIv = Iv;
@@ -51,7 +51,7 @@ public static class AesHelper
     /// <param name="encode"></param>
     /// <param name="aesKey"></param>
     /// <returns></returns>
-    public static string DecryptAes(this string inputString, Encoding encode, string aesKey)
+    public static string AesDecrypt(this string inputString, Encoding encode, string aesKey)
     {
         var rgbKey = encode.GetBytes(aesKey[..16]);
         var rgbIv = Iv;
