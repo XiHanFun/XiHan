@@ -13,11 +13,11 @@
 
 using System.Reflection;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 using XiHan.Utils.Formats;
-using XiHan.Utils.Info;
-using XiHan.Utils.Info.BaseInfos;
-using XiHan.Utils.Serialize;
+using XiHan.Utils.Infos;
+using XiHan.Utils.Infos.BaseInfos;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Api.Consoles;
 
@@ -60,7 +60,7 @@ public static class ConsoleServerInfo
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
-        $@"占用空间：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
+        $@"占用空间：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
         $@"启动环境：{AppSettings.EnvironmentName.GetValue()}".WriteLineInfo();
         $@"启动端口：{AppSettings.Port.GetValue()}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();

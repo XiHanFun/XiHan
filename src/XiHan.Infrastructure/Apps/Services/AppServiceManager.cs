@@ -15,9 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Reflection;
 using XiHan.Infrastructure.Enums;
-using XiHan.Utils.Console;
-using XiHan.Utils.Info.IpLocation;
-using XiHan.Utils.Info.IpLocation.Ip2region;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Infos.IpLocation;
+using XiHan.Utils.Infos.IpLocation.Ip2region;
 
 namespace XiHan.Infrastructure.Apps.Services;
 

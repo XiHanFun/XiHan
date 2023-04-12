@@ -16,7 +16,7 @@ using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
-using XiHan.Utils.Http;
+using XiHan.Utils.Https;
 using XiHan.Utils.Message.DingTalk;
 
 namespace XiHan.Services.Utils.Message.Impl;

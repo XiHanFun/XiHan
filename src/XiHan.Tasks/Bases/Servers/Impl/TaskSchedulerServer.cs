@@ -22,7 +22,7 @@ using System.Reflection;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Tasks.Bases.Servers.Impl;
 

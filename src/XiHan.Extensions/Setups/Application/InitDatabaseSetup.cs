@@ -20,7 +20,7 @@ using XiHan.Models.Posts;
 using XiHan.Models.Roots;
 using XiHan.Models.Syses;
 using XiHan.Models.Users;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 using XiHan.Utils.Reflections;
 
 namespace XiHan.Extensions.Setups.Application;

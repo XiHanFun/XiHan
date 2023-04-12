@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Utils.Object;
+using XiHan.Utils.Objects;
 using XiHan.Utils.Types;
 
 namespace XiHan.Utils.Reflections;
@@ -25,18 +25,18 @@ public class ReflectionHelper
     /// <summary>
     /// 获取所有符合条件的程序集
     /// </summary>
-    /// <param name="Prefix"></param>
-    /// <param name="Suffix"></param>
+    /// <param name="prefix"></param>
+    /// <param name="suffix"></param>
     /// <returns></returns>
-    public static List<Assembly> GetAssemblies(string Prefix = "XiHan", string Suffix = "dll")
+    public static List<Assembly> GetAssemblies(string prefix = "XiHan", string suffix = "dll")
     {
         List<Assembly> result = new();
 
         string currentDomain = AppDomain.CurrentDomain.BaseDirectory;
         DirectoryInfo rootDirectory = new(currentDomain);
         var files = rootDirectory.GetFiles().ToList();
-        var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{Prefix}.".ToLowerInvariant()) &&
-                                    e.Name.ToLowerInvariant().Contains($".{Suffix}".ToLowerInvariant()))
+        var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{prefix}.".ToLowerInvariant()) &&
+                                    e.Name.ToLowerInvariant().Contains($".{suffix}".ToLowerInvariant()))
             .Select(e => e.FullName).ToList();
 
         dlls.ForEach(dll =>

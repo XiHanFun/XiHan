@@ -13,8 +13,8 @@
 
 using System.ComponentModel;
 using System.Reflection;
-using XiHan.Utils.Console;
-using XiHan.Utils.Object;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Utils.Enums;
 
@@ -63,9 +63,9 @@ public static class EnumHelper
     /// </summary>
     /// <param name="enumType"></param>
     /// <returns></returns>
-    public static List<EnumDescModel> GetEnumInfos(this Type enumType)
+    public static List<EnumDescDto> GetEnumInfos(this Type enumType)
     {
-        List<EnumDescModel> result = new();
+        List<EnumDescDto> result = new();
         var fields = enumType.GetFields().ToList();
         if (fields.Any()) return result;
         fields.ForEach(field =>
@@ -76,7 +76,7 @@ public static class EnumHelper
                 var desc = string.Empty;
                 if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
                     desc = description.Description;
-                result.Add(new EnumDescModel()
+                result.Add(new EnumDescDto()
                 {
                     Key = field.Name.ToString(),
                     Value = (int)field.GetRawConstantValue()!,
@@ -113,9 +113,9 @@ public static class EnumHelper
 }
 
 /// <summary>
-/// EnumDescModel
+/// EnumDescDto
 /// </summary>
-public class EnumDescModel
+public class EnumDescDto
 {
     /// <summary>
     /// 键

@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Services.Utils.Migration;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Test.Common;
 

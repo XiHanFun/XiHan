@@ -13,7 +13,7 @@
 
 using Microsoft.Extensions.Logging;
 using XiHan.Infrastructure.Apps.Logging;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;
 

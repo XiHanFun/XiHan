@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using XiHan.Extensions.Common.Auth;
 using XiHan.Infrastructure.Contexts;
-using XiHan.Utils.Object;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Extensions.Setups.Services;
 

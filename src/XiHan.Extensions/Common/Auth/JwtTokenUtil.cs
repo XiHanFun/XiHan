@@ -18,8 +18,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Utils.Console;
-using XiHan.Utils.Object;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Extensions.Common.Auth;
 

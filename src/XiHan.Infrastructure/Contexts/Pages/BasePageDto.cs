@@ -65,7 +65,7 @@ public class BasePageInfoDto : BasePageDto
 /// <summary>
 /// 通用分页数据实体基类
 /// </summary>
-public class BasePageDataDto<DataEntity> where DataEntity : class
+public class BasePageDataDto<TEntity> where TEntity : class
 {
     /// <summary>
     /// 分页数据
@@ -75,5 +75,5 @@ public class BasePageDataDto<DataEntity> where DataEntity : class
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<DataEntity>? Datas { get; set; }
+    public List<TEntity>? Datas { get; set; }
 }

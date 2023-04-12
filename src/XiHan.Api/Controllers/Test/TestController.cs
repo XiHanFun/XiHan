@@ -21,12 +21,12 @@ using XiHan.Extensions.Filters;
 using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Formats;
-using XiHan.Utils.Info;
-using XiHan.Utils.Info.BaseInfos;
-using XiHan.Utils.Serialize;
+using XiHan.Utils.Infos;
+using XiHan.Utils.Infos.BaseInfos;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Api.Controllers.Test;
 
@@ -98,7 +98,7 @@ public class TestController : BaseApiController
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}" + Environment.NewLine +
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}" + Environment.NewLine +
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}" + Environment.NewLine +
-        $@"占用空间：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}" + Environment.NewLine +
+        $@"占用空间：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}" + Environment.NewLine +
         $@"启动环境：{AppSettings.EnvironmentName.GetValue()}" + Environment.NewLine +
         $@"启动端口：{AppSettings.Port.GetValue()}" + Environment.NewLine +
         "==============================配置信息==============================" + Environment.NewLine +

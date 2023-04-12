@@ -15,8 +15,8 @@ using System.Security.Cryptography;
 using System.Text;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Enums;
-using XiHan.Utils.Http;
-using XiHan.Utils.Serialize;
+using XiHan.Utils.Https;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Utils.Message.DingTalk;
 

@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Hosting;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;
 

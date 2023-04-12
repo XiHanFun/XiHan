@@ -13,7 +13,7 @@
 
 using System.Text;
 using XiHan.Utils.Formats;
-using XiHan.Utils.Info.BaseInfos;
+using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Services.Utils.Migration;
 

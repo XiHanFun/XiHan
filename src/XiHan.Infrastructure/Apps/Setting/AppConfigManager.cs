@@ -11,11 +11,12 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Serilog;
-using XiHan.Utils.Console;
-using XiHan.Utils.Serialize;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Infrastructure.Apps.Setting;
 
@@ -71,40 +72,40 @@ public static class AppConfigManager
     /// <summary>
     /// 获取值
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     /// <param name="key"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
-    public static REntity GetValue<REntity>(string key)
+    public static TKey GetValue<TKey>(string key)
     {
-        var result = ConfigurationRoot.GetValue<REntity>(GetPropertyName(key));
+        var result = ConfigurationRoot.GetValue<TKey>(GetPropertyName(key));
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
     /// <summary>
     /// 获取对象
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     /// <param name="key"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <returns></returns>
-    public static REntity GetSection<REntity>(string key)
+    public static TKey GetSection<TKey>(string key)
     {
-        var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<REntity>();
+        var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TKey>();
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
     }
 
     /// <summary>
     /// 设置对象
     /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public static void Set<TEntity, REntity>(string key, REntity value)
+    public static void Set<TKey, TValue>(string key, TValue value)
     {
         JsonHelper jsonHelper = new(ConfigurationFile);
-        jsonHelper.Set<TEntity, REntity>(GetPropertyName(key), value);
+        jsonHelper.Set<TKey, TValue>(GetPropertyName(key), value);
     }
 
     /// <summary>

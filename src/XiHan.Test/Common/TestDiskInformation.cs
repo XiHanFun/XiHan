@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Utils.Formats;
-using XiHan.Utils.Info.BaseInfos;
+using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Test.Common;
 
@@ -26,11 +26,11 @@ public static class TestDiskInformation
     /// </summary>
     public static void DiskInformation()
     {
-        Console.WriteLine($@"【C盘】磁盘大小：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetHardDiskTotalSpace(@"C:\"))}；");
-        Console.WriteLine($@"【C盘】磁盘空余大小：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetHardDiskFreeSpace(@"C:\"))}；");
+        Console.WriteLine($@"【C盘】磁盘大小：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetHardDiskTotalSpace(@"C:\"))}；");
+        Console.WriteLine($@"【C盘】磁盘空余大小：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetHardDiskFreeSpace(@"C:\"))}；");
         Console.WriteLine($@"【C盘】磁盘空闲占比：{DiskHelper.ProportionOfHardDiskFreeSpace(@"C:\")}；");
-        Console.WriteLine($@"【D:\DataMine\Repository】目录大小：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetDirectorySize(@"D:\DataMine\Repository"))}；");
-        Console.WriteLine($@"【D:\DataMine\Repository\XiHan.Framework\README.md】文件大小：{FileSizeFormatHelper.FormatByteToString(DiskHelper.GetFileSize(@"D:\DataMine\Repository\XiHan.Framework\README.md"))}；");
+        Console.WriteLine($@"【D:\DataMine\Repository】目录大小：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetDirectorySize(@"D:\DataMine\Repository"))}；");
+        Console.WriteLine($@"【D:\DataMine\Repository\XiHan.Framework\README.md】文件大小：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetFileSize(@"D:\DataMine\Repository\XiHan.Framework\README.md"))}；");
 
         string[]? directories = DiskHelper.GetDirectories(@"D:\");
         Console.WriteLine($@"【D:\】目录：");

@@ -14,7 +14,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Extensions.Setups.Services;
 using XiHan.Infrastructure.Apps.Services;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;
 

@@ -14,8 +14,8 @@
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
-using XiHan.Utils.Console;
-using XiHan.Utils.Info;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Infos;
 
 namespace XiHan.Infrastructure.Apps.Logging;
 

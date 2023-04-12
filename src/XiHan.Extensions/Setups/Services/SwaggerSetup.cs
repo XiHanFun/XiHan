@@ -19,8 +19,8 @@ using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Utils.Console;
-using XiHan.Utils.Info;
+using XiHan.Utils.Consoles;
+using XiHan.Utils.Infos;
 
 namespace XiHan.Extensions.Setups.Services;
 

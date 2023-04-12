@@ -23,37 +23,37 @@ public static class AppConfigExtend
     /// <summary>
     /// 获取值
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static REntity GetValue<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TKey GetValue<TKey>(this TKey entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.GetValue<REntity>(fullName);
+        return AppConfigManager.GetValue<TKey>(fullName);
     }
 
     /// <summary>
     /// 获取对象
     /// </summary>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static REntity GetSection<REntity>(this REntity entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TKey GetSection<TKey>(this TKey entity, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        return AppConfigManager.GetSection<REntity>(fullName);
+        return AppConfigManager.GetSection<TKey>(fullName);
     }
 
     /// <summary>
     /// 赋值
     /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="REntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     /// <param name="entity"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TEntity, REntity>(this REntity entity, REntity value, [CallerArgumentExpression("entity")] string fullName = "")
+    public static void Set<TKey, TValue>(this TKey entity, TValue value, [CallerArgumentExpression("entity")] string fullName = "")
     {
-        AppConfigManager.Set<TEntity, REntity>(fullName, value);
+        AppConfigManager.Set<TKey, TValue>(fullName, value);
     }
 }

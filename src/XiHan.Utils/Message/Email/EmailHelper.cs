@@ -13,7 +13,7 @@
 
 using System.Net;
 using System.Net.Mail;
-using XiHan.Utils.Console;
+using XiHan.Utils.Consoles;
 
 namespace XiHan.Utils.Message.Email;
 

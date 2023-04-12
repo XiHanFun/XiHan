@@ -33,3 +33,25 @@ public class ApiGroupAttribute : Attribute
     /// </summary>
     public ApiGroupNames[] GroupNames { get; set; }
 }
+
+/// <summary>
+/// 分组信息 Attribute
+/// </summary>
+[AttributeUsage(AttributeTargets.Field, Inherited = true)]
+public class GroupInfoAttribute : Attribute
+{
+    /// <summary>
+    /// 标题
+    /// </summary>
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 版本
+    /// </summary>
+    public string Version { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 描述
+    /// </summary>
+    public string Description { get; set; } = string.Empty;
+}

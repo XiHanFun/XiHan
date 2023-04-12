@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Net;
-using XiHan.Utils.Info.BaseInfos;
+using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Test.Common;
 
