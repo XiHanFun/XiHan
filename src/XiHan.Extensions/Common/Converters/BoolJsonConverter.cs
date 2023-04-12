@@ -22,7 +22,7 @@ namespace XiHan.Extensions.Common.Converters;
 public class BoolJsonConverter : JsonConverter<bool>
 {
     /// <summary>
-    /// 读
+    /// 请求，将布尔字符串转换为bool类型
     /// </summary>
     /// <param name="reader"></param>
     /// <param name="typeToConvert"></param>
@@ -39,7 +39,7 @@ public class BoolJsonConverter : JsonConverter<bool>
     }
 
     /// <summary>
-    /// 写
+    /// 响应，将bool类型转换成字符串
     /// </summary>
     /// <param name="writer"></param>
     /// <param name="value"></param>

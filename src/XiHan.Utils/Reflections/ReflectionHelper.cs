@@ -99,25 +99,25 @@ public class ReflectionHelper
     /// 第二种实现
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
-    /// <param name="T"></param>
+    /// <param name="type"></param>
     /// <returns></returns>
-    public static List<Type> GetSubClass<TAttribute>(Type T) where TAttribute : Attribute
+    public static List<Type> GetSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
-        return GetTypes<TAttribute>().Where(t => T.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetTypes<TAttribute>().Where(t => type.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
     }
 
     /// <summary>
-    /// 获取 T 的非抽象子类（无视属性）
+    /// 获取 type 的非抽象子类（无视属性）
     /// </summary>
-    /// <param name="T"></param>
+    /// <param name="type"></param>
     /// <returns></returns>
-    public static List<Type> GetSubClass(Type T)
+    public static List<Type> GetSubClass(Type type)
     {
-        return GetAllTypes().Where(t => T.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetAllTypes().Where(t => type.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
     }
 
     /// <summary>
-    /// 对象转换成字典
+    /// 对象转换成字典 过滤某特性
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="obj"></param>
@@ -136,21 +136,17 @@ public class ReflectionHelper
 
                 objDynamicList.ForEach(objDynamic =>
                 {
+                    // 找到所有【没有此特性】或【有此特性但忽略字段】的属性
                     var item = (objDynamic as object).GetType().GetProperties()
-                    .Where(prop => !prop.HasAttribute<TAttribute>() || (prop.HasAttribute<TAttribute>() &&
-                                   !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)
-                                   .GetPropertyValue<TAttribute, bool>("IsIgnore")))
+                    .Where(prop => !prop.HasAttribute<TAttribute>() ||
+                                   (prop.HasAttribute<TAttribute>() && !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>("IsIgnore")))
                     .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
-
                     result.Add(item);
                 });
             }
         }
-
         return result;
     }
-
-    #region 获取表所有的列
 
     /// <summary>
     /// 获取表的列
@@ -162,14 +158,12 @@ public class ReflectionHelper
         List<string> result = new();
         GetAssemblies().ForEach(assembly =>
         {
-            var _calss = assembly.GetTypes().FirstOrDefault(a => a.Name == tableName);
-            if (_calss != null)
+            var calssType = assembly.GetTypes().FirstOrDefault(a => a.Name == tableName);
+            if (calssType != null)
             {
-                result = _calss.GetProperties().Where(a => a.Name.Contains("Target")).Select(a => a.Name.FirstToLower()).ToList();
+                result = calssType.GetProperties().Where(a => a.Name.Contains("Target")).Select(a => a.Name.FirstToLower()).ToList();
             }
         });
         return result;
     }
-
-    #endregion 获取表所有的列
 }

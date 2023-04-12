@@ -41,7 +41,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     }
 
     /// <summary>
-    /// 读
+    /// 请求，将时间字符串转换为DateTime类型
     /// </summary>
     /// <param name="reader"></param>
     /// <param name="typeToConvert"></param>
@@ -58,7 +58,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     }
 
     /// <summary>
-    /// 写
+    /// 响应，将DateTime类型转换成指定格式的时间
     /// </summary>
     /// <param name="writer"></param>
     /// <param name="value"></param>
