@@ -18,13 +18,13 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 审核基类，含主键，创建，修改，删除
 /// </summary>
-public abstract class BaseAuditEntity<TKey> : BaseDeleteEntity<Guid>
+public abstract class BaseAuditEntity<TKey> : BaseDeleteEntity<TKey>
 {
     /// <summary>
     /// 审核用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "审核用户")]
-    public virtual Guid? AuditBy { get; set; }
+    public virtual TKey? AuditBy { get; set; }
 
     /// <summary>
     /// 审核时间

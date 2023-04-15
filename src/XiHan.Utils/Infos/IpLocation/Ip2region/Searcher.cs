@@ -129,6 +129,11 @@ public class Searcher : ISearcher
                 sPtr = BitConverter.ToUInt32(buff);
                 ePtr = BitConverter.ToUInt32(buff.AsSpan()[4..]);
                 break;
+
+            default:
+                sPtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx)..]);
+                ePtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx + 4)..]);
+                break;
         }
 
         var dataLen = 0;

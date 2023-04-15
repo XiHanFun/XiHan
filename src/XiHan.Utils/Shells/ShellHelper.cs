@@ -28,7 +28,7 @@ public static class ShellHelper
     public static string Bash(this string command)
     {
         var escapedArgs = command.Replace("\"", "\\\"");
-        var process = new Process()
+        var process = new Process
         {
             StartInfo = new ProcessStartInfo
             {

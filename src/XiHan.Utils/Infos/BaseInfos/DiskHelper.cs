@@ -555,7 +555,7 @@ public static class DiskHelper
             var driv = DriveInfo.GetDrives();
             foreach (var item in driv)
             {
-                var info = new DiskInfo()
+                var info = new DiskInfo
                 {
                     DiskName = item.Name,
                     TypeName = item.DriveType.ToString(),

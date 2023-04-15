@@ -197,7 +197,7 @@ public static class JwtTokenUtil
         try
         {
             // 读取配置
-            var authJwtSetting = new AuthJwtSetting()
+            var authJwtSetting = new AuthJwtSetting
             {
                 Issuer = AppSettings.Auth.Jwt.Issuer.GetValue(),
                 Audience = AppSettings.Auth.Jwt.Audience.GetValue(),

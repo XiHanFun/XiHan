@@ -18,14 +18,14 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 创建基类，含主键
 /// </summary>
-public abstract class BaseCreateEntity<TKey> : BaseIdEntity<Guid>
+public abstract class BaseCreateEntity<TKey> : BaseIdEntity<TKey>
 {
     /// <summary>
     /// 创建用户
     /// 设置后修改不会有此字段
     /// </summary>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户")]
-    public virtual Guid? CreateBy { get; set; }
+    public virtual TKey? CreateBy { get; set; }
 
     /// <summary>
     /// 创建时间

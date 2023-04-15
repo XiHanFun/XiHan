@@ -18,7 +18,7 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 状态基类，含主键，创建，修改，删除，审核
 /// </summary>
-public abstract class BaseStateEntity<TKey> : BaseAuditEntity<Guid>
+public abstract class BaseStateEntity<TKey> : BaseAuditEntity<TKey>
 {
     /// <summary>
     /// 状态项

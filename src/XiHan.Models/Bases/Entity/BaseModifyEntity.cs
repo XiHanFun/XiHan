@@ -18,14 +18,14 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 修改基类，含主键，创建
 /// </summary>
-public abstract class BaseModifyEntity<TKey> : BaseCreateEntity<Guid>
+public abstract class BaseModifyEntity<TKey> : BaseCreateEntity<TKey>
 {
     /// <summary>
     /// 修改用户
     /// 设置后出入不会有此字段
     /// </summary>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户")]
-    public virtual Guid? ModifyBy { get; set; }
+    public virtual TKey? ModifyBy { get; set; }
 
     /// <summary>
     /// 修改时间

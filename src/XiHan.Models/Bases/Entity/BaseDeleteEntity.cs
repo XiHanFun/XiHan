@@ -18,7 +18,7 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 删除基类，含主键，创建，修改
 /// </summary>
-public abstract class BaseDeleteEntity<TKey> : BaseModifyEntity<Guid>
+public abstract class BaseDeleteEntity<TKey> : BaseModifyEntity<TKey>
 {
     /// <summary>
     /// 软删除
@@ -30,7 +30,7 @@ public abstract class BaseDeleteEntity<TKey> : BaseModifyEntity<Guid>
     /// 删除用户
     /// </summary>
     [SugarColumn(IsNullable = true, ColumnDescription = "删除用户")]
-    public virtual Guid? DeleteBy { get; set; }
+    public virtual TKey? DeleteBy { get; set; }
 
     /// <summary>
     /// 删除时间

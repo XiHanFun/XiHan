@@ -19,11 +19,11 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 主键基类
 /// </summary>
-public abstract class BaseIdEntity<TKey> : IBaseEntity<Guid>
+public abstract class BaseIdEntity<TKey> : IBaseEntity<TKey>
 {
     /// <summary>
     /// 主键标识
     /// </summary>
     [SugarColumn(IsPrimaryKey = true, ColumnDescription = "主键标识")]
-    public virtual Guid BaseId { get; set; } = new Guid();
+    public virtual TKey BaseId { get; set; } = default;
 }
