@@ -31,8 +31,8 @@ namespace XiHan.Tasks.Bases.Servers.Impl;
 /// </summary>
 public class TaskSchedulerServer : ITaskSchedulerServer
 {
-    private IScheduler _Scheduler;
-    private readonly IJobFactory _JobFactory;
+    private IScheduler Scheduler;
+    private readonly IJobFactory JobFactory;
 
     /// <summary>
     /// 构造函数
@@ -40,8 +40,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="iJobFactory"></param>
     public TaskSchedulerServer(IJobFactory iJobFactory)
     {
-        _Scheduler = GetTaskSchedulerAsync();
-        _JobFactory = iJobFactory;
+        Scheduler = GetTaskSchedulerAsync();
+        JobFactory = iJobFactory;
     }
 
     /// <summary>
@@ -50,9 +50,9 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <returns></returns>
     private IScheduler GetTaskSchedulerAsync()
     {
-        if (_Scheduler != null)
+        if (Scheduler != null)
         {
-            return _Scheduler;
+            return Scheduler;
         }
         // 从Factory中获取Scheduler实例
         var collection = new NameValueCollection()
@@ -73,7 +73,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (await _Scheduler.CheckExists(jobKey))
+            if (await Scheduler.CheckExists(jobKey))
             {
                 return BaseResponseDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
@@ -87,7 +87,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
 
             // 2、开启调度器，判断任务调度是否开启
-            if (!_Scheduler.IsStarted) await StartTaskScheduleAsync();
+            if (!Scheduler.IsStarted) await StartTaskScheduleAsync();
 
             // 3、创建任务，传入反射出来的执行程序集
             Assembly assembly = Assembly.Load(new AssemblyName(sysTasks.AssemblyName));
@@ -114,9 +114,9 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             }
 
             // 5、将触发器和任务器绑定到调度器中
-            await _Scheduler.ScheduleJob(job, trigger);
+            await Scheduler.ScheduleJob(job, trigger);
             //按新的trigger重新设置job执行
-            await _Scheduler.ResumeTrigger(trigger.Key);
+            await Scheduler.ResumeTrigger(trigger.Key);
             return BaseResponseDto.Ok($"启动计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
@@ -138,10 +138,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (await _Scheduler.CheckExists(jobKey))
+            if (await Scheduler.CheckExists(jobKey))
             {
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
-                await _Scheduler.DeleteJob(jobKey);
+                await Scheduler.DeleteJob(jobKey);
             }
             return BaseResponseDto.Ok($"修改计划【{sysTasks.Name}】成功！");
         }
@@ -164,7 +164,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            await _Scheduler.DeleteJob(jobKey);
+            await Scheduler.DeleteJob(jobKey);
             return BaseResponseDto.Ok($"删除计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
@@ -184,15 +184,15 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            _Scheduler.JobFactory = _JobFactory;
+            Scheduler.JobFactory = JobFactory;
             // 计划任务已经开启
-            if (_Scheduler.IsStarted)
+            if (Scheduler.IsStarted)
             {
                 return BaseResponseDto.Continue();
             }
 
             // 等待任务运行完成
-            await _Scheduler.Start();
+            await Scheduler.Start();
             return BaseResponseDto.Ok("计划任务开启成功！");
         }
         catch (Exception ex)
@@ -212,14 +212,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            _Scheduler.JobFactory = _JobFactory;
+            Scheduler.JobFactory = JobFactory;
             // 计划任务已经停止
-            if (_Scheduler.IsShutdown)
+            if (Scheduler.IsShutdown)
             {
                 return BaseResponseDto.Continue();
             }
             // 等待任务运行停止
-            await _Scheduler.Shutdown();
+            await Scheduler.Shutdown();
             return BaseResponseDto.Ok($"计划任务已经停止。");
         }
         catch (Exception ex)
@@ -241,20 +241,20 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            var jobs = await _Scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(sysTasks.JobGroup));
+            var jobs = await Scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(sysTasks.JobGroup));
             List<JobKey> jobKeys = jobs.ToList();
             if (jobKeys.Any())
             {
                 await AddTaskScheduleAsync(sysTasks);
             }
 
-            var triggers = await _Scheduler.GetTriggersOfJob(jobKey);
+            var triggers = await Scheduler.GetTriggersOfJob(jobKey);
             if (triggers.Count <= 0)
             {
                 return BaseResponseDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
             }
 
-            await _Scheduler.TriggerJob(jobKey);
+            await Scheduler.TriggerJob(jobKey);
             return BaseResponseDto.Ok($"计划任务[{jobKey.Name}]运行成功！");
         }
         catch (Exception ex)
@@ -276,10 +276,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             JobKey jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (await _Scheduler.CheckExists(jobKey))
+            if (await Scheduler.CheckExists(jobKey))
             {
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
-                await _Scheduler.PauseJob(jobKey);
+                await Scheduler.PauseJob(jobKey);
             }
             return BaseResponseDto.Ok($"暂停计划任务:【{sysTasks.Name}】成功！");
         }
@@ -302,11 +302,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             JobKey jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (!await _Scheduler.CheckExists(jobKey))
+            if (!await Scheduler.CheckExists(jobKey))
             {
                 return BaseResponseDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
             }
-            await _Scheduler.ResumeJob(jobKey);
+            await Scheduler.ResumeJob(jobKey);
             return BaseResponseDto.Ok($"恢复计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)

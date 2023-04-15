@@ -18,6 +18,7 @@ using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Infos.IpLocation;
 using XiHan.Utils.Infos.IpLocation.Ip2region;
+using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructure.Apps.Services;
 
@@ -44,7 +45,7 @@ public static class AppServiceManager
     {
         // Ip 查询服务
         services.AddSingleton<ISearcher, Searcher>();
-        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "ConfigData", "ip2region.xdb");
+        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
     }
 
     /// <summary>

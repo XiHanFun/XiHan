@@ -24,7 +24,7 @@ public class JsonHelper
     /// <summary>
     /// 文件路径
     /// </summary>
-    private readonly string _JsonFileName;
+    private readonly string JsonFileName;
 
     /// <summary>
     /// 构造函数
@@ -32,7 +32,7 @@ public class JsonHelper
     /// <param name="jsonFileName"></param>
     public JsonHelper(string jsonFileName)
     {
-        _JsonFileName = jsonFileName;
+        JsonFileName = jsonFileName;
     }
 
     /// <summary>
@@ -42,11 +42,11 @@ public class JsonHelper
     /// <returns></returns>
     public TEntity? Get<TEntity>()
     {
-        if (!File.Exists(_JsonFileName))
+        if (!File.Exists(JsonFileName))
         {
             return default;
         }
-        var jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(JsonFileName, Encoding.UTF8);
         var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
@@ -59,11 +59,11 @@ public class JsonHelper
     /// <returns>类型为TEntity的对象</returns>
     public TEntity? Get<TEntity>(string keyLink)
     {
-        if (!File.Exists(_JsonFileName))
+        if (!File.Exists(JsonFileName))
         {
             return default;
         }
-        using StreamReader streamReader = new(_JsonFileName);
+        using StreamReader streamReader = new(JsonFileName);
         var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
@@ -90,7 +90,7 @@ public class JsonHelper
     /// <param name="value"></param>
     public void Set<TEntity, TREntity>(string keyLink, TREntity value)
     {
-        var jsonStr = File.ReadAllText(_JsonFileName, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(JsonFileName, Encoding.UTF8);
         dynamic? jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
@@ -133,6 +133,6 @@ public class JsonHelper
     private void Save<TEntity>(TEntity jsoObj)
     {
         var jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
-        File.WriteAllText(_JsonFileName, jsonStr, Encoding.UTF8);
+        File.WriteAllText(JsonFileName, jsonStr, Encoding.UTF8);
     }
 }

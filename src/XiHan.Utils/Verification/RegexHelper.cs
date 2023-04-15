@@ -67,7 +67,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Tel(string checkValue)
+    public static bool IsNumberTel(string checkValue)
     {
         const string pattern = @"^(\d{3,4}-)\d{7,8}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -82,18 +82,18 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_People(string checkValue)
+    public static bool IsNumberPeople(string checkValue)
     {
         switch (checkValue.Length)
         {
             case 18:
                 {
-                    var check = IsNumber_People_18(checkValue);
+                    var check = IsNumberPeople18(checkValue);
                     return check;
                 }
             case 15:
                 {
-                    var check = IsNumber_People_15(checkValue);
+                    var check = IsNumberPeople15(checkValue);
                     return check;
                 }
             default:
@@ -106,7 +106,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_People_18(string checkValue)
+    public static bool IsNumberPeople18(string checkValue)
     {
         // 数字验证
         if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out n) == false)
@@ -148,7 +148,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_People_15(string checkValue)
+    public static bool IsNumberPeople15(string checkValue)
     {
         // 数字验证
         if (long.TryParse(checkValue, out var n) == false || n < Math.Pow(10, 14))
@@ -182,7 +182,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsEmail(string checkValue)
     {
-        const string pattern = @"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$";
+        const string pattern = @"^[A-Za-z0-9](([\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 
@@ -225,7 +225,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_IntOrDouble(string checkValue)
+    public static bool IsNumberIntOrDouble(string checkValue)
     {
         var pattern = @"^[0-9]+\.{0,1}[0-9]{0,2}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -236,7 +236,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_N(string checkValue)
+    public static bool IsNumberSeveralN(string checkValue)
     {
         var pattern = @"^\d{n}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -247,7 +247,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_AtLeast_N(string checkValue)
+    public static bool IsNumberSeveralAtLeastN(string checkValue)
     {
         var pattern = @"^\d{n,}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -258,7 +258,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Several_M_N(string checkValue)
+    public static bool IsNumberSeveralMN(string checkValue)
     {
         var pattern = @"^\d{m,n}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -269,7 +269,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Begin_ZeroOrNotZero(string checkValue)
+    public static bool IsNumberBeginZeroOrNotZero(string checkValue)
     {
         var pattern = @"^(0|[1-9] [0-9]*)$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -280,7 +280,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Real_TwoDouble(string checkValue)
+    public static bool IsNumberPositiveRealTwoDouble(string checkValue)
     {
         var pattern = @"^[0-9]+(.[0-9]{2})?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -291,7 +291,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Real_OneOrThreeDouble(string checkValue)
+    public static bool IsNumberPositiveRealOneOrThreeDouble(string checkValue)
     {
         var pattern = @"^[0-9]+(.[0-9]{1,3})?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -302,7 +302,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Positive_Int_NotZero(string checkValue)
+    public static bool IsNumberPositiveIntNotZero(string checkValue)
     {
         var pattern = @"^\+?[1-9][0-9]*$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -313,7 +313,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumber_Negative_Int_NotZero(string checkValue)
+    public static bool IsNumberNegativeIntNotZero(string checkValue)
     {
         var pattern = @"^\-?[1-9][0-9]*$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -339,7 +339,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsLetter_Capital(string checkValue)
+    public static bool IsLetterCapital(string checkValue)
     {
         const string pattern = @"^[A-Z]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -350,7 +350,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsLetter_Lower(string checkValue)
+    public static bool IsLetterLower(string checkValue)
     {
         var pattern = @"^[a-z]+$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -393,7 +393,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsChar_Three(string checkValue)
+    public static bool IsCharThree(string checkValue)
     {
         var pattern = @"^.{3}$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -422,7 +422,7 @@ public static class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsChar_Special(string checkValue)
+    public static bool IsCharSpecial(string checkValue)
     {
         const string pattern = @"[^%&',;=?$\x22]+";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
@@ -469,7 +469,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsUrl(string checkValue)
     {
-        const string pattern = @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?$";
+        const string pattern = @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\.-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%\./-~-]*)?$";
         return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
     }
 

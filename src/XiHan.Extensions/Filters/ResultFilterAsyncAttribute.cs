@@ -30,7 +30,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     // 日志开关
     private readonly bool ResultLogSwitch = AppSettings.LogConfig.Result.GetValue();
 
-    private readonly ILogger<ResultFilterAsyncAttribute> _ILogger;
+    private readonly ILogger<ResultFilterAsyncAttribute> ILogger;
 
     /// <summary>
     /// 构造函数
@@ -38,7 +38,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <param name="logger"></param>
     public ResultFilterAsyncAttribute(ILogger<ResultFilterAsyncAttribute> logger)
     {
-        _ILogger = logger;
+        ILogger = logger;
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             var result = JsonSerializer.Serialize(resultExecuted.Result);
             if (ResultLogSwitch)
             {
-                _ILogger.LogInformation($"返回数据\n{info}\n{result}");
+                ILogger.LogInformation($"返回数据\n{info}\n{result}");
             }
         }
     }

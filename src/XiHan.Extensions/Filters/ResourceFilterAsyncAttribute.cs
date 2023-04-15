@@ -32,8 +32,8 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     // 日志开关
     private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
-    private readonly IMemoryCache _IMemoryCache;
-    private readonly ILogger<ResourceFilterAsyncAttribute> _ILogger;
+    private readonly IMemoryCache IMemoryCache;
+    private readonly ILogger<ResourceFilterAsyncAttribute> ILogger;
 
     /// <summary>
     /// 构造函数
@@ -42,8 +42,8 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <param name="iLogger"></param>
     public ResourceFilterAsyncAttribute(IMemoryCache iMemoryCache, ILogger<ResourceFilterAsyncAttribute> iLogger)
     {
-        _IMemoryCache = iMemoryCache;
-        _ILogger = iLogger;
+        IMemoryCache = iMemoryCache;
+        ILogger = iLogger;
     }
 
     /// <summary>
@@ -73,12 +73,12 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                    $"\t 请求方法：{method}\n" +
                    $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
-        if (_IMemoryCache.TryGetValue(requestUrl + method, out var value))
+        if (IMemoryCache.TryGetValue(requestUrl + method, out var value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
             if (ResourceLogSwitch)
-                _ILogger.LogInformation($"缓存数据\n{info}\n{context.Result}");
+                ILogger.LogInformation($"缓存数据\n{info}\n{context.Result}");
         }
         else
         {
@@ -92,10 +92,10 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                 {
                     var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
                     var result = resourceExecuted.Result as ActionResult;
-                    _IMemoryCache.Set(requestUrl + method, result, syncTimeout);
+                    IMemoryCache.Set(requestUrl + method, result, syncTimeout);
                     if (ResourceLogSwitch)
                     {
-                        _ILogger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
+                        ILogger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
                     }
                 }
             }

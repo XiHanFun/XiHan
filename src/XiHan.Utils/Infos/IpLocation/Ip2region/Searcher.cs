@@ -34,7 +34,7 @@ public class Searcher : ISearcher
     {
         if (string.IsNullOrEmpty(dbPath))
         {
-            dbPath = Path.Combine(AppContext.BaseDirectory, "ConfigData", "ip2region.xdb");
+            dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
         }
 
         _ContentStream = File.OpenRead(dbPath);
@@ -80,7 +80,7 @@ public class Searcher : ISearcher
     /// </summary>
     /// <param name="ipStr"></param>
     /// <returns></returns>
-    public string? Search(string ipStr)
+    public string Search(string ipStr)
     {
         var ip = Util.IpAddressToUInt32(ipStr);
         return Search(ip);
@@ -91,7 +91,7 @@ public class Searcher : ISearcher
     /// </summary>
     /// <param name="ipAddress"></param>
     /// <returns></returns>
-    public string? Search(IPAddress ipAddress)
+    public string Search(IPAddress ipAddress)
     {
         var ip = Util.IpAddressToUInt32(ipAddress);
         return Search(ip);
@@ -102,8 +102,9 @@ public class Searcher : ISearcher
     /// </summary>
     /// <param name="ip"></param>
     /// <returns></returns>
-    public string? Search(uint ip)
+    public string Search(uint ip)
     {
+        var result = string.Empty;
         var il0 = ip >> 24 & 0xFF;
         var il1 = ip >> 16 & 0xFF;
         var idx = il0 * VectorIndexCols * VectorIndexSize + il1 * VectorIndexSize;
@@ -166,12 +167,13 @@ public class Searcher : ISearcher
 
         if (dataLen == 0)
         {
-            return default;
+            return result;
         }
 
         var regionBuff = new byte[dataLen];
         Read((int)dataPtr, regionBuff);
-        return Encoding.UTF8.GetString(regionBuff);
+        result = Encoding.UTF8.GetString(regionBuff);
+        return result;
     }
 
     /// <summary>

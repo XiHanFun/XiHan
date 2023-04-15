@@ -31,7 +31,7 @@ public class WeChatPushService : IWeChatPushService
     /// <summary>
     /// 机器人实例
     /// </summary>
-    private readonly WeChatRobotHelper _WeChatRobot;
+    private readonly WeChatRobotHelper WeChatRobot;
 
     /// <summary>
     /// 构造函数
@@ -45,7 +45,7 @@ public class WeChatPushService : IWeChatPushService
             UploadkUrl = AppSettings.Message.WeChart.UploadkUrl.GetValue(),
             Key = AppSettings.Message.WeChart.Key.GetValue()
         };
-        _WeChatRobot = new WeChatRobotHelper(iHttpHelper, conn);
+        WeChatRobot = new WeChatRobotHelper(iHttpHelper, conn);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToText(Text text)
     {
-        var result = await _WeChatRobot.TextMessage(text);
+        var result = await WeChatRobot.TextMessage(text);
         return WeChatMessageReturn(result);
     }
 
@@ -66,7 +66,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToMarkdown(Markdown markdown)
     {
-        var result = await _WeChatRobot.MarkdownMessage(markdown);
+        var result = await WeChatRobot.MarkdownMessage(markdown);
         return WeChatMessageReturn(result);
     }
 
@@ -77,7 +77,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToImage(Image image)
     {
-        var result = await _WeChatRobot.ImageMessage(image);
+        var result = await WeChatRobot.ImageMessage(image);
         return WeChatMessageReturn(result);
     }
 
@@ -88,7 +88,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToNews(News news)
     {
-        var result = await _WeChatRobot.NewsMessage(news);
+        var result = await WeChatRobot.NewsMessage(news);
         return WeChatMessageReturn(result);
     }
 
@@ -99,7 +99,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToFile(File file)
     {
-        var result = await _WeChatRobot.FileMessage(file);
+        var result = await WeChatRobot.FileMessage(file);
         return WeChatMessageReturn(result);
     }
 
@@ -110,7 +110,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToTextNotice(TemplateCardTextNotice templateCard)
     {
-        var result = await _WeChatRobot.TextNoticeMessage(templateCard);
+        var result = await WeChatRobot.TextNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
 
@@ -121,7 +121,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToNewsNotice(TemplateCardNewsNotice templateCard)
     {
-        var result = await _WeChatRobot.NewsNoticeMessage(templateCard);
+        var result = await WeChatRobot.NewsNoticeMessage(templateCard);
         return WeChatMessageReturn(result);
     }
 
@@ -132,7 +132,7 @@ public class WeChatPushService : IWeChatPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeChatToUploadkFile(FileStream fileStream)
     {
-        var result = await _WeChatRobot.UploadkFile(fileStream);
+        var result = await WeChatRobot.UploadkFile(fileStream);
         return WeChatUploadReturn(result);
     }
 

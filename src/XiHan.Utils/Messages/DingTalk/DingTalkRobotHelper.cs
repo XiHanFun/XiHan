@@ -13,7 +13,7 @@
 
 using System.Security.Cryptography;
 using System.Text;
-using XiHan.Utils.Encryptions;
+using XiHan.Utils.Encodes;
 using XiHan.Utils.Enums;
 using XiHan.Utils.Https;
 using XiHan.Utils.Serializes;
@@ -28,17 +28,17 @@ public class DingTalkRobotHelper
     /// <summary>
     /// 请求接口
     /// </summary>
-    private readonly IHttpHelper _IHttpHelper;
+    private readonly IHttpHelper IHttpHelper;
 
     /// <summary>
     /// 正式访问地址
     /// </summary>
-    private readonly string _Url;
+    private readonly string Url;
 
     /// <summary>
     /// 机密
     /// </summary>
-    private readonly string? _Secret;
+    private readonly string? Secret;
 
     /// <summary>
     /// 构造函数
@@ -47,9 +47,9 @@ public class DingTalkRobotHelper
     /// <param name="dingTalkConnection"></param>
     public DingTalkRobotHelper(IHttpHelper iHttpHelper, DingTalkConnection dingTalkConnection)
     {
-        _IHttpHelper = iHttpHelper;
-        _Url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
-        _Secret = dingTalkConnection.Secret;
+        IHttpHelper = iHttpHelper;
+        Url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
+        Secret = dingTalkConnection.Secret;
     }
 
     /// <summary>
@@ -141,29 +141,29 @@ public class DingTalkRobotHelper
     /// <returns></returns>
     private async Task<DingTalkResultInfoDto?> Send(object objSend)
     {
-        var url = _Url;
+        var url = Url;
         var sendMessage = objSend.SerializeToJson();
         var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
         // 安全设置加签，需要使用UTF-8字符集
-        if (!string.IsNullOrEmpty(_Secret))
+        if (!string.IsNullOrEmpty(Secret))
         {
             // 把timestamp + "\n" + 密钥当做签名字符串
-            var sign = timeStamp + "\n" + _Secret;
+            var sign = timeStamp + "\n" + Secret;
             var encoding = new UTF8Encoding();
-            var keyByte = encoding.GetBytes(_Secret);
+            var keyByte = encoding.GetBytes(Secret);
             var messageBytes = encoding.GetBytes(sign);
             // 使用HmacSHA256算法计算签名
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
                 var hashmessage = hmacsha256.ComputeHash(messageBytes);
                 // 然后进行Base64 encode，最后再把签名参数再进行urlEncode
-                sign = Convert.ToBase64String(hashmessage).UrlEncode(Encoding.UTF8);
+                sign = Convert.ToBase64String(hashmessage).UrlEncode();
             }
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _IHttpHelper.PostAsync<DingTalkResultInfoDto>(HttpEnum.Util, url, sendMessage, null);
+        var result = await IHttpHelper.PostAsync<DingTalkResultInfoDto>(HttpEnum.Util, url, sendMessage, null);
         return result;
     }
 }

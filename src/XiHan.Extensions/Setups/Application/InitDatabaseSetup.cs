@@ -54,6 +54,7 @@ public static class InitDatabaseStep
 
             // 创建数据表
             "创建数据表……".WriteLineInfo();
+
             // 获取所有 XiHan.Models 的实体
             var entityes = ReflectionHelper.GetAllTypes()
                 .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)

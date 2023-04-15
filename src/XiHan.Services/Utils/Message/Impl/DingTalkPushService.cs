@@ -30,7 +30,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <summary>
     /// 机器人实例
     /// </summary>
-    private readonly DingTalkRobotHelper _DingTalkRobot;
+    private readonly DingTalkRobotHelper DingTalkRobot;
 
     /// <summary>
     /// 构造函数
@@ -44,7 +44,7 @@ public class DingTalkPushService : IDingTalkPushService
             AccessToken = AppSettings.Message.DingTalk.AccessToken.GetValue(),
             Secret = AppSettings.Message.DingTalk.Secret.GetValue()
         };
-        _DingTalkRobot = new DingTalkRobotHelper(iHttpHelper, conn);
+        DingTalkRobot = new DingTalkRobotHelper(iHttpHelper, conn);
     }
 
     #region DingTalk
@@ -58,7 +58,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToText(Text text, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        var result = await _DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
+        var result = await DingTalkRobot.TextMessage(text, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -69,7 +69,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToLink(Link link)
     {
-        var result = await _DingTalkRobot.LinkMessage(link);
+        var result = await DingTalkRobot.LinkMessage(link);
         return DingTalkMessageReturn(result);
     }
 
@@ -82,7 +82,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToMarkdown(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        var result = await _DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
+        var result = await DingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
         return DingTalkMessageReturn(result);
     }
 
@@ -93,7 +93,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToActionCard(ActionCard actionCard)
     {
-        var result = await _DingTalkRobot.ActionCardMessage(actionCard);
+        var result = await DingTalkRobot.ActionCardMessage(actionCard);
         return DingTalkMessageReturn(result);
     }
 
@@ -104,7 +104,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// <returns></returns>
     public async Task<BaseResultDto> DingTalkToFeedCard(FeedCard feedCard)
     {
-        var result = await _DingTalkRobot.FeedCardMessage(feedCard);
+        var result = await DingTalkRobot.FeedCardMessage(feedCard);
         return DingTalkMessageReturn(result);
     }
 

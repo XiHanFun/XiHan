@@ -29,7 +29,7 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     // 日志开关
     private readonly bool AuthorizationLogSwitch = AppSettings.LogConfig.Authorization.GetValue();
 
-    private readonly ILogger<ActionFilterAsyncAttribute> _ILogger;
+    private readonly ILogger<ActionFilterAsyncAttribute> ILogger;
 
     /// <summary>
     /// 构造函数
@@ -37,7 +37,7 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     /// <param name="iLogger"></param>
     public AuthorizationFilterAsyncAttribute(ILogger<ActionFilterAsyncAttribute> iLogger)
     {
-        _ILogger = iLogger;
+        ILogger = iLogger;
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
             if (Identities == null)
             {
                 if (AuthorizationLogSwitch)
-                    _ILogger.LogInformation($"认证参数异常\n{info}");
+                    ILogger.LogInformation($"认证参数异常\n{info}");
                 // 认证参数异常
                 throw new AuthenticationException();
             }

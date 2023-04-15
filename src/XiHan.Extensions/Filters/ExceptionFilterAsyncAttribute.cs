@@ -32,7 +32,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     // 日志开关
     private readonly bool ExceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
-    private readonly ILogger<ExceptionFilterAsyncAttribute> _ILogger;
+    private readonly ILogger<ExceptionFilterAsyncAttribute> ILogger;
 
     /// <summary>
     /// 构造函数
@@ -40,7 +40,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     /// <param name="iLogger"></param>
     public ExceptionFilterAsyncAttribute(ILogger<ExceptionFilterAsyncAttribute> iLogger)
     {
-        _ILogger = iLogger;
+        ILogger = iLogger;
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                            $"\t 请求方法：{method}\n" +
                            $"\t 操作用户：{userId}";
                 if (ExceptionLogSwitch)
-                    _ILogger.LogError($"系统异常\n{info}\n{context.Exception}");
+                    ILogger.LogError($"系统异常\n{info}\n{context.Exception}");
             }
         }
         // 标记异常已经处理过了

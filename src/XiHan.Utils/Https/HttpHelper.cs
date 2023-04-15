@@ -23,7 +23,7 @@ namespace XiHan.Utils.Https;
 /// </summary>
 public class HttpHelper : IHttpHelper
 {
-    private readonly IHttpClientFactory _IHttpClientFactory;
+    private readonly IHttpClientFactory IHttpClientFactory;
 
     /// <summary>
     /// 构造函数
@@ -31,7 +31,7 @@ public class HttpHelper : IHttpHelper
     /// <param name="httpClientFactory"></param>
     public HttpHelper(IHttpClientFactory httpClientFactory)
     {
-        _IHttpClientFactory = httpClientFactory;
+        IHttpClientFactory = httpClientFactory;
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -71,7 +71,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<string> GetAsync(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -100,7 +100,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -130,7 +130,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
         if (headers != null)
         {
@@ -162,7 +162,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -192,7 +192,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -220,7 +220,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<string> PostAsync(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -250,7 +250,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -280,7 +280,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -309,7 +309,7 @@ public class HttpHelper : IHttpHelper
     /// <returns></returns>
     public async Task<TEntity?> DeleteAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _IHttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = IHttpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))

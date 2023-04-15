@@ -335,7 +335,7 @@ public static class TypeExtensions
 
     #region 私有方法
 
-    private static readonly Dictionary<Type, string> _builtInTypeNames = new()
+    private static readonly Dictionary<Type, string> BuiltInTypeNames = new()
     {
             { typeof(bool), "bool" },
             { typeof(byte), "byte" },
@@ -366,7 +366,7 @@ public static class TypeExtensions
         {
             ProcessArrayType(builder, type, fullName);
         }
-        else if (_builtInTypeNames.TryGetValue(type, out var builtInName))
+        else if (BuiltInTypeNames.TryGetValue(type, out var builtInName))
         {
             builder.Append(builtInName);
         }

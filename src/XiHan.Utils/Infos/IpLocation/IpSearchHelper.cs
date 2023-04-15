@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Utils.Infos.IpLocation.Ip2region;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Utils.Infos.IpLocation;
 
@@ -23,12 +24,12 @@ public static class IpSearchHelper
     /// <summary>
     /// 单一实例
     /// </summary>
-    private static Searcher? _SearcherInstance = null;
+    private static Searcher? SearcherInstance = null;
 
     /// <summary>
     /// 锁
     /// </summary>
-    private static readonly object _Lock = new();
+    private static readonly object Lock = new();
 
     /// <summary>
     /// 数据库位置
@@ -42,11 +43,11 @@ public static class IpSearchHelper
     {
         get
         {
-            lock (_Lock)
+            lock (Lock)
             {
-                _SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
+                SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
             }
-            return _SearcherInstance;
+            return SearcherInstance;
         }
     }
 
@@ -61,21 +62,20 @@ public static class IpSearchHelper
         {
             // 中国|0|浙江省|杭州市|电信
             var modelStr = GetSearcher.Search(ip);
-            var addressArray = modelStr?.Split('|');
+            if (modelStr.IsEmptyOrNull()) return null;
+            string[] addressArray = modelStr.Replace('0', '-').Split('|');
             AddressModel model = new()
             {
-                // Ip
-                Ip = ip,
                 // 国家 中国
-                Country = addressArray?[0],
-                // 省份/自治区/直辖市 贵州
-                State = addressArray?[2],
+                Country = addressArray[0],
+                // 省份/自治区/直辖市 浙江省
+                State = addressArray[2],
                 // 地级市 安顺
-                PrefectureLevelCity = addressArray?[3],
+                PrefectureLevelCity = addressArray[3],
                 // 区/县 西秀区
-                DistrictOrCounty = string.Empty,
+                DistrictOrCounty = null,
                 // 运营商 联通
-                Operator = addressArray?[4],
+                Operator = addressArray[4],
                 // 邮政编码 561000
                 PostalCode = null,
                 // 地区区号 0851
@@ -95,11 +95,6 @@ public static class IpSearchHelper
 /// </summary>
 public class AddressModel
 {
-    /// <summary>
-    /// Ip地址
-    /// </summary>
-    public string Ip { get; set; } = string.Empty;
-
     /// <summary>
     /// 国家
     /// 中国

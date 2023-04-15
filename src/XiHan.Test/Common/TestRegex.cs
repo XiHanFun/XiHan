@@ -27,7 +27,7 @@ public class TestRegex
         var cardId = Console.ReadLine();
         if (cardId != null)
         {
-            var result = RegexHelper.IsNumber_People(cardId);
+            var result = RegexHelper.IsNumberPeople(cardId);
             Console.WriteLine(result);
         }
         else
