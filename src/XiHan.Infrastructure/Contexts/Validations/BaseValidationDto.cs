@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Infrastructure.Contexts.Validations;
 
@@ -28,7 +29,7 @@ public class BaseValidationDto
         TotalCount = context.ModelState.Count;
         ValidationErrorDto = context.ModelState.Keys
                 .SelectMany(key => context!.ModelState[key]!.Errors
-                .Select(x => new BaseValidationErrorDto(key, x.ErrorMessage)))
+                .Select(x => new BaseValidationErrorDto(key.GetDescription(), x.ErrorMessage)))
                 .ToList();
     }
 

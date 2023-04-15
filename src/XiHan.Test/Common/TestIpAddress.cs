@@ -30,13 +30,4 @@ public static class TestIpAddress
         IPAddress iPAddress = new(address);
         Console.WriteLine(iPAddress.ToString());
     }
-
-    /// <summary>
-    /// 本地ip
-    /// </summary>
-    public static void LocalIp()
-    {
-        Console.WriteLine("【IpV4】" + LocalIpHelper.GetLocalIpV4());
-        Console.WriteLine("【IpV6】" + LocalIpHelper.GetLocalIpV6());
-    }
 }

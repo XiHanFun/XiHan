@@ -13,8 +13,9 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using XiHan.Extensions.Common.ChatHubs;
+using XiHan.Extensions.Common.Hubs;
 using XiHan.Extensions.Setups.Application;
+using XiHan.Infrastructure.Apps.Services;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;
@@ -67,8 +68,13 @@ public static class ApplicationSetup
             // 健康检查
             endpoints.MapHealthChecks("/Health");
             // 即时通讯
-            endpoints.MapHub<ChatHubHelper>("/Chathub");
+            endpoints.MapHub<ChatHub>("/Chathub");
         });
+
+        // 注入全局服务
+        AppServiceManager.ServiceProvider = app.ApplicationServices;
+
+        var ss = AppServiceManager.ServiceProvider;
 
         "XiHan Application Started Successfully！".WriteLineSuccess();
         return app;

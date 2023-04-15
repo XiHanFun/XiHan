@@ -11,10 +11,12 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using XiHan.Utils.Types;
 
 namespace XiHan.Utils.Objects;
 
@@ -33,6 +35,26 @@ public static class ObjectPropertyExtensions
     public static string GetFullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression("_")] string fullName = "")
     {
         return fullName;
+    }
+
+    /// <summary>
+    /// 获取类型的Description特性描述信息
+    /// </summary>
+    /// <param name="tentity">类型对象</param>
+    /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
+    /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
+    public static string GetDescription<TEntity>(this TEntity tentity, bool inherit = true)
+    {
+        var result = string.Empty;
+        Type objectType = typeof(TEntity);
+        var fullName = objectType.FullName ?? result;
+        DescriptionAttribute? desc = objectType.GetAttribute<DescriptionAttribute>(inherit);
+        if (desc != null)
+        {
+            var description = desc.Description ?? result;
+            result = fullName + "(" + description + ")";
+        }
+        return result;
     }
 
     /// <summary>

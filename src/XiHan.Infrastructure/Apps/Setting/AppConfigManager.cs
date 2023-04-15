@@ -21,7 +21,7 @@ using XiHan.Utils.Serializes;
 namespace XiHan.Infrastructure.Apps.Setting;
 
 /// <summary>
-/// 配置管理器
+/// 全局配置管理器
 /// </summary>
 public static class AppConfigManager
 {

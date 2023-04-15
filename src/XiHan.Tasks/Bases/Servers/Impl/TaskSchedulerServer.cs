@@ -31,7 +31,7 @@ namespace XiHan.Tasks.Bases.Servers.Impl;
 /// </summary>
 public class TaskSchedulerServer : ITaskSchedulerServer
 {
-    private IScheduler Scheduler;
+    private readonly IScheduler Scheduler;
     private readonly IJobFactory JobFactory;
 
     /// <summary>
@@ -275,7 +275,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            JobKey jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (await Scheduler.CheckExists(jobKey))
             {
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
@@ -301,7 +301,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            JobKey jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (!await Scheduler.CheckExists(jobKey))
             {
                 return BaseResponseDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
@@ -323,7 +323,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    private ITrigger CreateSimpleTrigger(SysTasks sysTasks)
+    private static ITrigger CreateSimpleTrigger(SysTasks sysTasks)
     {
         // 触发作业立即运行，然后每10秒重复一次，无限循环
         if (sysTasks.RunTimes > 0)
@@ -353,7 +353,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    private ITrigger CreateCronTrigger(SysTasks sysTasks)
+    private static ITrigger CreateCronTrigger(SysTasks sysTasks)
     {
         // 作业触发器
         ITrigger trigger = TriggerBuilder.Create()

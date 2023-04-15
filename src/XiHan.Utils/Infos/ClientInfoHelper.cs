@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:ClientHelper
+// FileName:ClientInfoHelper
 // Guid:fd74bba3-6e40-4d3f-a365-0a32fb9fb796
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,13 +13,14 @@
 
 using Microsoft.AspNetCore.Http;
 using UAParser;
+using XiHan.Utils.Infos.BaseInfos;
 
-namespace XiHan.Utils.Infos.BaseInfos;
+namespace XiHan.Utils.Infos;
 
 /// <summary>
-/// 客户端帮助类
+/// 客户端信息帮助类
 /// </summary>
-public static class ClientHelper
+public static class ClientInfoHelper
 {
     /// <summary>
     /// 获取客户端信息
@@ -27,17 +28,17 @@ public static class ClientHelper
     /// <param name="httpContext"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static ClientModel GetClient(HttpContext httpContext)
+    public static ClientInfo GetClient(HttpContext httpContext)
     {
         if (httpContext == null)
         {
             throw new ArgumentNullException(nameof(httpContext));
         }
 
-        ClientModel clientModel = new()
+        var clientModel = new ClientInfo
         {
             RemoteIPv4 = ClientIpHelper.GetClientIpV4(httpContext),
-            RemoteIPv6 = ClientIpHelper.GetClientIpV6(httpContext)
+            RemoteIPv6 = ClientIpHelper.GetClientIpV6(httpContext),
         };
 
         var header = httpContext.Request.HttpContext.Request.Headers;
@@ -80,9 +81,9 @@ public static class ClientHelper
 }
 
 /// <summary>
-/// ClientModel
+/// ClientInfo
 /// </summary>
-public class ClientModel
+public class ClientInfo
 {
     /// <summary>
     /// 设备类型

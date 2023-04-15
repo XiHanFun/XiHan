@@ -18,15 +18,19 @@ using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Infos.IpLocation;
 using XiHan.Utils.Infos.IpLocation.Ip2region;
-using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructure.Apps.Services;
 
 /// <summary>
-/// 服务管理器
+/// 全局服务管理器
 /// </summary>
 public static class AppServiceManager
 {
+    /// <summary>
+    /// 全局应用服务
+    /// </summary>
+    public static IServiceProvider ServiceProvider = null!;
+
     /// <summary>
     /// 注册服务
     /// </summary>

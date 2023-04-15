@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Net.NetworkInformation;
 using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Utils.Infos;
@@ -77,4 +78,9 @@ public static class SystemInfoHelper
     /// </summary>
     /// <returns></returns>
     public static List<DiskInfo> DiskInfo => DiskHelper.GetDiskInfos();
+
+    /// <summary>
+    /// 网卡信息
+    /// </summary>
+    public static List<NetworkInfo> NetworkInfo => NetworkHelper.GetNetworkInfos();
 }

@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using XiHan.Utils.Infos.BaseInfos;
 using XiHan.Utils.Infos.IpLocation;
 
 namespace XiHan.Utils.Infos;
@@ -33,14 +32,14 @@ public class HttpContexInfotHelper
             throw new ArgumentNullException(nameof(httpContext));
         }
 
-        ClientInfo = ClientHelper.GetClient(httpContext);
+        ClientInfo = ClientInfoHelper.GetClient(httpContext);
         AddressInfo = IpSearchHelper.Search(ClientInfo.RemoteIPv4 ?? string.Empty);
     }
 
     /// <summary>
     /// 客户端信息
     /// </summary>
-    public ClientModel? ClientInfo { get; set; }
+    public ClientInfo? ClientInfo { get; set; }
 
     /// <summary>
     /// 地址信息

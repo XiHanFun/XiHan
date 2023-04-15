@@ -6,7 +6,7 @@
 // Guid:90f7fb47-4210-4453-8208-34fddae801b4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 09:35:56
+// AddTime:2022-05-08 下午 09:35:56
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -38,7 +38,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateAsync(TEntity entity)
+    public virtual async Task<bool> AddAsync(TEntity entity)
     {
         return await base.InsertAsync(entity);
     }
@@ -48,7 +48,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<Guid> CreateReturnGuidAsync(TEntity entity)
+    public virtual async Task<Guid> AddReturnGuidAsync(TEntity entity)
     {
         return Guid.Parse((await base.InsertReturnBigIdentityAsync(entity)).ToString());
     }
@@ -58,7 +58,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateOrUpdateAsync(TEntity entity)
+    public virtual async Task<bool> AddOrUpdateAsync(TEntity entity)
     {
         return await base.InsertOrUpdateAsync(entity);
     }
@@ -68,7 +68,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateBatchAsync(TEntity[] entities)
+    public virtual async Task<bool> AddBatchAsync(TEntity[] entities)
     {
         return await base.InsertRangeAsync(entities);
     }
@@ -78,7 +78,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> AddBatchAsync(List<TEntity> entities)
     {
         return await base.InsertRangeAsync(entities);
     }
@@ -88,7 +88,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> AddOrUpdateBatchAsync(List<TEntity> entities)
     {
         return await base.InsertOrUpdateAsync(entities);
     }
@@ -98,7 +98,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteByGuidAsync(Guid guid)
+    public virtual async Task<bool> RemoveByGuidAsync(Guid guid)
     {
         return await base.DeleteByIdAsync(guid);
     }
@@ -108,7 +108,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> DeleteAsync(TEntity entity)
+    public virtual async Task<bool> RemoveAsync(TEntity entity)
     {
         return await base.DeleteAsync(entity);
     }
@@ -118,7 +118,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteByGuidBatchAsync(Guid[] guids)
+    public virtual async Task<bool> RemoveByGuidBatchAsync(Guid[] guids)
     {
         object[] newguids = guids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newguids);
@@ -129,7 +129,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> DeleteBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> RemoveBatchAsync(List<TEntity> entities)
     {
         return await base.DeleteAsync(entities);
     }
@@ -139,7 +139,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+    public virtual async Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> func)
     {
         return await base.DeleteAsync(func);
     }

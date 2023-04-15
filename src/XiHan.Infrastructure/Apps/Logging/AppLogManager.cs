@@ -20,7 +20,7 @@ using XiHan.Utils.Infos;
 namespace XiHan.Infrastructure.Apps.Logging;
 
 /// <summary>
-/// 日志管理器
+/// 全局日志管理器
 /// </summary>
 public static class AppLogManager
 {

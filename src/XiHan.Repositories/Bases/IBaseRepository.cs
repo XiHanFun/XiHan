@@ -28,132 +28,132 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> CreateAsync(TEntity entity);
+    Task<bool> AddAsync(TEntity entity);
 
     /// <summary>
     /// 新增返回Guid
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<Guid> CreateReturnGuidAsync(TEntity entity);
+    Task<Guid> AddReturnGuidAsync(TEntity entity);
 
     /// <summary>
     /// 新增或更新
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> CreateOrUpdateAsync(TEntity entity);
+    Task<bool> AddOrUpdateAsync(TEntity entity);
 
     /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> CreateBatchAsync(TEntity[] entities);
+    Task<bool> AddBatchAsync(TEntity[] entities);
 
     /// <summary>
     /// 批量新增
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> CreateBatchAsync(List<TEntity> entities);
+    Task<bool> AddBatchAsync(List<TEntity> entities);
 
     /// <summary>
     /// 批量新增或更新
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> CreateOrUpdateBatchAsync(List<TEntity> entities);
+    Task<bool> AddOrUpdateBatchAsync(List<TEntity> entities);
 
     /// <summary>
     /// 删除
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
-    Task<bool> DeleteByGuidAsync(Guid guid);
+    Task<bool> RemoveByGuidAsync(Guid guid);
 
     /// <summary>
     /// 删除
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    new Task<bool> DeleteAsync(TEntity entity);
+    Task<bool> RemoveAsync(TEntity entity);
 
     /// <summary>
     /// 批量删除
     /// </summary>
     /// <param name="guids"></param>
     /// <returns></returns>
-    Task<bool> DeleteByGuidBatchAsync(Guid[] guids);
+    Task<bool> RemoveByGuidBatchAsync(Guid[] guids);
 
     /// <summary>
     /// 批量删除
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> DeleteBatchAsync(List<TEntity> entities);
+    Task<bool> RemoveBatchAsync(List<TEntity> entities);
 
     /// <summary>
-    /// 条件删除
+    /// 自定义条件删除
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    new Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
+    Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> func);
 
     /// <summary>
-    /// 更新
+    /// 修改
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
     new Task<bool> UpdateAsync(TEntity entity);
 
     /// <summary>
-    /// 批量更新
+    /// 批量修改
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
     Task<bool> UpdateBatchAsync(TEntity[] entities);
 
     /// <summary>
-    /// 批量更新
+    /// 批量修改
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
     Task<bool> UpdateBatchAsync(List<TEntity> entities);
 
     /// <summary>
-    /// 查找
+    /// Guid查找
     /// </summary>
     /// <param name="guid"></param>
     /// <returns></returns>
     Task<TEntity> FindByGuidAsync(Guid guid);
 
     /// <summary>
-    /// 条件查找
+    /// 自定义条件查找
     /// </summary>
-    /// <param name="func"></param>
+    /// <param name="func">自定义条件</param>
     /// <returns></returns>
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
 
     /// <summary>
-    /// 查询
+    /// 查询所有
     /// </summary>
     /// <returns></returns>
     Task<List<TEntity>> QueryListAsync();
 
     /// <summary>
-    /// 条件查询
+    /// 自定义条件查询
     /// </summary>
-    /// <param name="func"></param>
+    /// <param name="func">自定义条件</param>
     /// <returns></returns>
     Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func);
 
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="currentIndex"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="totalCount"></param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
     Task<List<TEntity>> QueryPageListAsync(int currentIndex, int pageSize, RefAsync<int> totalCount);
 
@@ -173,12 +173,12 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto);
 
     /// <summary>
-    /// 按页条件查询
+    /// 自定义条件分页查询
     /// </summary>
-    /// <param name="func"></param>
-    /// <param name="currentIndex"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="totalCount"></param>
+    /// <param name="func">自定义条件</param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
     Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount);
 

@@ -62,69 +62,6 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 服务端信息
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("ServerInfo")]
-    public ActionResult<BaseResultDto> ServerInfo()
-    {
-        var info =
-        "==============================系统信息==============================" + Environment.NewLine +
-        $@"操作系统：{SystemInfoHelper.OperatingSystem}" + Environment.NewLine +
-        $@"系统描述：{SystemInfoHelper.OsDescription}" + Environment.NewLine +
-        $@"系统版本：{SystemInfoHelper.OsVersion}" + Environment.NewLine +
-        $@"系统平台：{SystemInfoHelper.Platform}" + Environment.NewLine +
-        $@"系统架构：{SystemInfoHelper.OsArchitecture}" + Environment.NewLine +
-        $@"系统目录：{SystemInfoHelper.SystemDirectory}" + Environment.NewLine +
-        $@"运行时间：{SystemInfoHelper.RunningTime}" + Environment.NewLine +
-        $@"交互模式：{SystemInfoHelper.InteractiveMode}" + Environment.NewLine +
-        $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeToJson()}" + Environment.NewLine +
-        $@"内存信息：{SystemInfoHelper.RamInfo.SerializeToJson()}" + Environment.NewLine +
-        $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeToJson()}" + Environment.NewLine +
-        $@"IPv4地址：{LocalIpHelper.GetLocalIpV4()}" + Environment.NewLine +
-        $@"IPv6地址：{LocalIpHelper.GetLocalIpV6()}" + Environment.NewLine +
-        "==============================环境信息==============================" + Environment.NewLine +
-        $@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}" + Environment.NewLine +
-        $@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}" + Environment.NewLine +
-        $@"环境架构：{EnvironmentInfoHelper.ProcessArchitecture}" + Environment.NewLine +
-        $@"环境标识：{EnvironmentInfoHelper.RuntimeIdentifier}" + Environment.NewLine +
-        $@"机器名称：{EnvironmentInfoHelper.MachineName}" + Environment.NewLine +
-        $@"用户域名：{EnvironmentInfoHelper.UserDomainName}" + Environment.NewLine +
-        $@"关联用户：{EnvironmentInfoHelper.UserName}" + Environment.NewLine +
-        "==============================应用信息==============================" + Environment.NewLine +
-        $@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}" + Environment.NewLine +
-        $@"应用版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}" + Environment.NewLine +
-        $@"所在路径：{ApplicationInfoHelper.CurrentDirectory}" + Environment.NewLine +
-        $@"运行文件：{ApplicationInfoHelper.ProcessPath}" + Environment.NewLine +
-        $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}" + Environment.NewLine +
-        $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}" + Environment.NewLine +
-        $@"占用空间：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}" + Environment.NewLine +
-        $@"启动环境：{AppSettings.EnvironmentName.GetValue()}" + Environment.NewLine +
-        $@"启动端口：{AppSettings.Port.GetValue()}" + Environment.NewLine +
-        "==============================配置信息==============================" + Environment.NewLine +
-        "==============数据库==============" + Environment.NewLine +
-        $@"连接类型：{AppSettings.Database.Type.GetValue()}" + Environment.NewLine +
-        $@"是否初始化：{AppSettings.Database.Inited.GetValue()}" + Environment.NewLine +
-        "===============分析===============" + Environment.NewLine +
-        $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}" + Environment.NewLine +
-        "===============缓存===============" + Environment.NewLine +
-        $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.GetValue()}分钟" + Environment.NewLine +
-        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.GetValue()}" + Environment.NewLine +
-        $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}" + Environment.NewLine +
-        "===============跨域===============" + Environment.NewLine +
-        $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}" + Environment.NewLine +
-        "===============日志===============" + Environment.NewLine +
-        $@"授权日志：{AppSettings.LogConfig.Authorization.GetValue()}" + Environment.NewLine +
-        $@"资源日志：{AppSettings.LogConfig.Resource.GetValue()}" + Environment.NewLine +
-        $@"请求日志：{AppSettings.LogConfig.Action.GetValue()}" + Environment.NewLine +
-        $@"结果日志：{AppSettings.LogConfig.Result.GetValue()}" + Environment.NewLine +
-        $@"异常日志：{AppSettings.LogConfig.Exception.GetValue()}" + Environment.NewLine +
-        "==============================任务信息==============================";
-        info.WriteLineError();
-        return BaseResponseDto.Ok(info);
-    }
-
-    /// <summary>
     /// 过时
     /// </summary>
     /// <returns></returns>

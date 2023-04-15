@@ -43,8 +43,7 @@ public static class ConsoleServerInfo
         $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeToJson()}".WriteLineInfo();
         $@"内存信息：{SystemInfoHelper.RamInfo.SerializeToJson()}".WriteLineInfo();
         $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeToJson()}".WriteLineInfo();
-        $@"IPv4地址：{LocalIpHelper.GetLocalIpV4()}".WriteLineInfo();
-        $@"IPv6地址：{LocalIpHelper.GetLocalIpV6()}".WriteLineInfo();
+        $@"网卡信息：{SystemInfoHelper.NetworkInfo.SerializeToJson()}".WriteLineInfo();
         "==============================环境信息==============================".WriteLineInfo();
         $@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}".WriteLineInfo();
         $@"环境版本：{EnvironmentInfoHelper.EnvironmentVersion}".WriteLineInfo();

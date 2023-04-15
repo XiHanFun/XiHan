@@ -223,12 +223,12 @@ public static class TypeExtensions
         var result = string.Empty;
         if (IsNotNullableType(type))
         {
+            var fullName = type.FullName ?? result;
             DescriptionAttribute? desc = type.GetAttribute<DescriptionAttribute>(inherit);
             if (desc != null)
             {
-                var fullName = type.FullName ?? result;
-                var description = desc.Description == null ? result : desc.Description;
-                result = description;
+                var description = desc.Description ?? result;
+                result = fullName + "(" + description + ")";
             }
         }
         return result;
