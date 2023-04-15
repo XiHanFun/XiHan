@@ -58,8 +58,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -84,8 +86,10 @@ public class HttpHelper : IHttpHelper
         {
             return await response.Content.ReadAsStringAsync();
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -115,8 +119,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -147,8 +153,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -177,8 +185,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -206,8 +216,10 @@ public class HttpHelper : IHttpHelper
         {
             return await response.Content.ReadAsStringAsync();
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -234,8 +246,10 @@ public class HttpHelper : IHttpHelper
         {
             return await response.Content.ReadAsStringAsync();
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -265,8 +279,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -295,8 +311,10 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 
     /// <summary>
@@ -323,7 +341,9 @@ public class HttpHelper : IHttpHelper
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TEntity>(result);
         }
-
-        throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        else
+        {
+            throw new Exception($"Http Error StatusCode:{response.StatusCode}");
+        }
     }
 }

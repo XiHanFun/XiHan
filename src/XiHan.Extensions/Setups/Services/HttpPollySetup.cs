@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:HttpSetup
+// FileName:HttpPollySetup
 // Guid:2753f2f6-5e39-4e46-b3fa-ff80af47a49f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,15 +12,18 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using XiHan.Utils.Https;
+using Polly.Extensions.Http;
+using Polly.Timeout;
+using Polly;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace XiHan.Extensions.Setups.Services;
 
 /// <summary>
-/// HttpSetup
+/// HttpPollySetup
 /// </summary>
-public static class HttpSetup
+public static class HttpPollySetup
 {
     /// <summary>
     /// Http 服务扩展
@@ -28,7 +31,7 @@ public static class HttpSetup
     /// <param name="services"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddHttpContextSetup(this IServiceCollection services)
+    public static IServiceCollection AddHttpPollySetup(this IServiceCollection services)
     {
         if (services == null)
         {

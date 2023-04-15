@@ -45,7 +45,7 @@ public static class ServiceSetup
         // Auth
         services.AddAuthSetup();
         // Http上下文
-        services.AddHttpContextSetup();
+        services.AddHttpPollySetup();
         // Swagger
         services.AddSwaggerSetup();
         // RabbitMQ
