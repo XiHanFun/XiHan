@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:DesEncryptionHelper
 // Guid:f43de28f-10c4-4735-84e6-27e4f3cec000
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 下午 12:01:48
 // ----------------------------------------------------------------

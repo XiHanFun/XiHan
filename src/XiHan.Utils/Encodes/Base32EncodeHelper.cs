@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:Base32EncodeHelper
 // Guid:87047528-03ee-4970-bfbd-94c861e3f0b3
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 上午 11:15:08
 // ----------------------------------------------------------------

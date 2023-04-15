@@ -4,7 +4,7 @@
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysOperationLog
 // Guid:d7a2c392-4915-4831-9b7c-5cde51f9d618
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-11-21 下午 04:52:59
 // ----------------------------------------------------------------

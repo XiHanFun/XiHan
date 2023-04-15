@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:RsaEncryptionHelper
 // Guid:fa690f78-718e-4573-9710-aa74828385a6
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 下午 12:09:25
 // ----------------------------------------------------------------

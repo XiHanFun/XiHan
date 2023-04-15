@@ -4,7 +4,7 @@
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BoolJsonConverter
 // Guid:9e1cdf66-5e38-4760-8ecc-1481ef4054f8
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-12-05 下午 05:41:03
 // ----------------------------------------------------------------

@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:Md5EncryptionHelper
 // Guid:21e9cb49-385d-4549-ad4e-1fcfd56b3472
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 上午 11:57:17
 // ----------------------------------------------------------------

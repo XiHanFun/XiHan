@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:HttpSetup
 // Guid:720163fd-1e5b-4ae9-aa30-16727fca3fe3
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-11 下午 04:06:31
 // ----------------------------------------------------------------

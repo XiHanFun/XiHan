@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:AesEncryptionHelper
 // Guid:5ee7ecb0-0156-4152-99d5-13a4274e92b4
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 下午 12:06:07
 // ----------------------------------------------------------------
@@ -18,6 +18,7 @@ namespace XiHan.Utils.Encryptions;
 
 /// <summary>
 /// Aes加密解密类
+/// 比Des加密更加安全
 /// </summary>
 public static class AesEncryptionHelper
 {

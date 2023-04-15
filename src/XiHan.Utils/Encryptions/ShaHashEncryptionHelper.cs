@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:ShaHashEncryptionHelper
 // Guid:b6ed83a8-fa32-4248-93da-26d358d7ed54
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-15 上午 11:26:59
 // ----------------------------------------------------------------

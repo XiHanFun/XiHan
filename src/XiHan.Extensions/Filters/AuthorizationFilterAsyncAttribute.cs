@@ -4,7 +4,7 @@
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:AuthorizationFilterAsyncAttribute
 // Guid:40387d18-5714-4ff2-96aa-164a967419fb
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-07-19 下午 02:47:58
 // ----------------------------------------------------------------
