@@ -16,6 +16,6 @@ namespace XiHan.Utils.EventBus.RabbitMQ;
 /// <summary>
 /// RabbitMQ消费者
 /// </summary>
-public class RabbitMqConsumer
+public static class RabbitMqConsumer
 {
 }

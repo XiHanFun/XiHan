@@ -53,7 +53,10 @@ public static class DiskHelper
     /// <param name="filePath">文件的绝对路径</param>
     public static void ClearFile(string filePath)
     {
-        if (!File.Exists(filePath)) return;
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
         // 删除文件
         File.Delete(filePath);
         // 重新创建该文件

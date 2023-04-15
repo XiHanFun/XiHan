@@ -118,9 +118,13 @@ public class DingTalkPushService : IDingTalkPushService
         if (result != null)
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
+            {
                 return BaseResponseDto.Ok("发送成功");
+            }
             else
+            {
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
+            }
         }
         return BaseResponseDto.InternalServerError();
     }

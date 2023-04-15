@@ -146,9 +146,13 @@ public class WeChatPushService : IWeChatPushService
         if (result != null)
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
+            {
                 return BaseResponseDto.Ok("发送成功");
+            }
             else
+            {
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
+            }
         }
         return BaseResponseDto.InternalServerError();
     }
@@ -168,7 +172,9 @@ public class WeChatPushService : IWeChatPushService
                 return BaseResponseDto.Ok(uploadResult);
             }
             else
+            {
                 return BaseResponseDto.BadRequest(result?.ErrMsg ?? "上传失败");
+            }
         }
         return BaseResponseDto.InternalServerError();
     }

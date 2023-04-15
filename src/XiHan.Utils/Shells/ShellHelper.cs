@@ -65,7 +65,10 @@ public static class ShellHelper
 
         using (var process = Process.Start(info))
         {
-            if (process == null) return output;
+            if (process == null)
+            {
+                return output;
+            }
             output = process.StandardOutput.ReadToEnd();
         }
         return output;

@@ -131,9 +131,6 @@ public class ReflectionHelper
             if (objDynamics != null)
             {
                 var objDynamicList = objDynamics.ToList();
-                var objItems = objDynamicList.Select(item => (item as object).GetType().GetProperties().ToList())
-                    .ToList();
-
                 objDynamicList.ForEach(objDynamic =>
                 {
                     // 找到所有【没有此特性】或【有此特性但忽略字段】的属性

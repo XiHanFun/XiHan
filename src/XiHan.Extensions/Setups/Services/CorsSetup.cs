@@ -35,7 +35,10 @@ public static class CorsSetup
         }
 
         var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
-        if (!isEnabledCors) return services;
+        if (!isEnabledCors)
+        {
+            return services;
+        }
         services.AddCors(options =>
         {
             // 策略名称

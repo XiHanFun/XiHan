@@ -51,11 +51,17 @@ public static class FormatMoneyExtensions
     /// <returns></returns>
     private static string FormatStringComma(string moneyint)
     {
-        if (moneyint.Length <= 4) return moneyint;
+        if (moneyint.Length <= 4)
+        {
+            return moneyint;
+        }
         var moneyNoFormat = moneyint[..^4];
         var moneyFormat = moneyint.Substring(moneyint.Length - 4, 4);
         if (moneyNoFormat.Length > 4)
+        {
             return FormatStringComma(moneyNoFormat) + "," + moneyFormat;
+        }
+
         return moneyNoFormat + "," + moneyFormat;
     }
 }

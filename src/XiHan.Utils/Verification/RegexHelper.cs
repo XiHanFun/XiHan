@@ -135,7 +135,7 @@ public static class RegexHelper
             sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
         }
         Math.DivRem(sum, 11, out var y);
-        if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLower())
+        if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLowerInvariant())
         {
             return false;
         }

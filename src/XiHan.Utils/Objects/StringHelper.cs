@@ -406,7 +406,7 @@ public static class StringHelper
     public static string ClipString(string inputString, int len)
     {
         var isShowFix = false;
-        if (len % 2 == 1)
+        if (len > 0 && len % 2 == 1)
         {
             isShowFix = true;
             len--;

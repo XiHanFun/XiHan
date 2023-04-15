@@ -19,7 +19,7 @@ namespace XiHan.Utils.EventBus.RabbitMQ;
 /// <summary>
 /// RabbitMQ生产者
 /// </summary>
-public class RabbitMqProducer
+public static class RabbitMqProducer
 {
     /// <summary>
     ///

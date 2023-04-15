@@ -35,7 +35,10 @@ public static class MiniProfilerSetup
         }
 
         var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
-        if (!isEnabledMiniprofiler) return services;
+        if (!isEnabledMiniprofiler)
+        {
+            return services;
+        }
         services.AddMiniProfiler(options =>
         {
             options.RouteBasePath = @"/profiler";
