@@ -19,7 +19,7 @@ namespace XiHan.Utils.Encryptions;
 /// <summary>
 /// Aes加密解密类
 /// </summary>
-public class AesEncryptionHelper
+public static class AesEncryptionHelper
 {
     // AES KEY 的位数
     private const int KEY_SIZE = 256;

@@ -62,7 +62,10 @@ public static class IpSearchHelper
         {
             // 中国|0|浙江省|杭州市|电信
             var modelStr = GetSearcher.Search(ip);
-            if (modelStr.IsEmptyOrNull()) return null;
+            if (modelStr.IsEmptyOrNull())
+            {
+                return null;
+            }
             string[] addressArray = modelStr.Replace('0', '-').Split('|');
             AddressModel model = new()
             {

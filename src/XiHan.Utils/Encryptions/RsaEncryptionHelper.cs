@@ -19,7 +19,7 @@ namespace XiHan.Utils.Encryptions;
 /// <summary>
 /// RSA加密解密类
 /// </summary>
-public class RsaEncryptionHelper
+public static class RsaEncryptionHelper
 {
     // Rsa容器
     private static readonly RSACryptoServiceProvider RsaProvider;
@@ -59,20 +59,13 @@ public class RsaEncryptionHelper
     /// <param name="privateKeyFile"></param>
     public static void LoadKeys(string publicKeyFile, string privateKeyFile)
     {
-        try
-        {
-            // 加载公钥
-            string publicKey = File.ReadAllText(publicKeyFile);
-            RsaProvider.FromXmlString(publicKey);
+        // 加载公钥
+        string publicKey = File.ReadAllText(publicKeyFile);
+        RsaProvider.FromXmlString(publicKey);
 
-            // 加载私钥
-            string privateKey = File.ReadAllText(privateKeyFile);
-            RsaProvider.FromXmlString(privateKey);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        // 加载私钥
+        string privateKey = File.ReadAllText(privateKeyFile);
+        RsaProvider.FromXmlString(privateKey);
     }
 
     /// <summary>
