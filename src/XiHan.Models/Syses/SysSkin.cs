@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysSkin
-// Guid:76cb14e8-a1a1-4f0b-a2b1-246d39879ade
+// long:76cb14e8-a1a1-4f0b-a2b1-246d39879ade
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:40:24
@@ -20,7 +20,7 @@ namespace XiHan.Models.Syses;
 /// 站点皮肤表
 /// </summary>
 [SugarTable(TableName = "SysSkin")]
-public class SysSkin : BaseDeleteEntity<Guid>
+public class SysSkin : BaseDeleteEntity
 {
     /// <summary>
     /// 皮肤名称

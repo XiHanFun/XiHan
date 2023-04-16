@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysConfig
-// Guid:826c51d5-2ef4-43cb-baf3-fc08fd843c19
+// long:826c51d5-2ef4-43cb-baf3-fc08fd843c19
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:35:58
@@ -20,7 +20,7 @@ namespace XiHan.Models.Syses;
 /// 站点配置表
 /// </summary>
 [SugarTable(TableName = "SysConfig")]
-public class SysConfig : BaseDeleteEntity<Guid>
+public class SysConfig : BaseDeleteEntity
 {
     /// <summary>
     /// 网站名称

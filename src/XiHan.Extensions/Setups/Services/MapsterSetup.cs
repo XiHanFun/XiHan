@@ -11,15 +11,16 @@
 
 #endregion <<版权版本注释>>
 
+using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Extensions.Common.AutoMapper;
+using XiHan.Extensions.Common.Mapsters;
 
 namespace XiHan.Extensions.Setups.Services;
 
 /// <summary>
-/// AutoMapperSetup
+/// MapsterSetup
 /// </summary>
-public static class AutoMapperSetup
+public static class MapsterSetup
 {
     /// <summary>
     /// AutoMapper 服务扩展
@@ -27,7 +28,7 @@ public static class AutoMapperSetup
     /// <param name="services"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddAutoMapperSetup(this IServiceCollection services)
+    public static IServiceCollection AddMapsterSetup(this IServiceCollection services)
     {
         if (services == null)
         {
@@ -35,9 +36,9 @@ public static class AutoMapperSetup
         }
 
         // 创建具体的映射对象
-        services.AddAutoMapper(typeof(AutoMapperConfig));
-        // 注册配置
-        AutoMapperConfig.RegisterMappings();
+        services.AddSingleton(MapsterAdaptConifg.InitMapperConfig());
+        services.AddScoped<IMapper, ServiceMapper>();
+
         return services;
     }
 }

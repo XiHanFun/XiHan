@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Polly;
 using Serilog;
 using System.Reflection;
 using XiHan.Api.Consoles;

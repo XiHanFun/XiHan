@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootAudit
-// Guid:80aaad90-961a-4c97-aca3-12f12d26e056
+// long:80aaad90-961a-4c97-aca3-12f12d26e056
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:44:51
@@ -25,7 +25,7 @@ public class RootAudit : BaseEntity
     /// <summary>
     /// 审核分类
     /// </summary>
-    public Guid CategoryId { get; set; }
+    public long CategoryId { get; set; }
 
     /// <summary>
     /// 审核内容

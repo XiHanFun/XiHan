@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysDictData
-// Guid:15fc58cc-facc-4767-bc32-0561127a7194
+// long:15fc58cc-facc-4767-bc32-0561127a7194
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-10-24 上午 11:11:50
@@ -20,7 +20,7 @@ namespace XiHan.Models.Syses;
 /// 站点字典数据表
 /// </summary>
 [SugarTable(TableName = "SysDictData")]
-public class SysDictData : BaseDeleteEntity<Guid>
+public class SysDictData : BaseDeleteEntity
 {
     /// <summary>
     /// 字典类型

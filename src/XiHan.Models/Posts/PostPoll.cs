@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PostPoll
-// Guid:2fcf240c-8218-497c-aae9-83f9c5791dfe
+// long:2fcf240c-8218-497c-aae9-83f9c5791dfe
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:29:20
@@ -26,7 +26,7 @@ public class PostPoll : BaseEntity
     /// <summary>
     /// 所属文章或评论
     /// </summary>
-    public Guid ParentId { get; set; }
+    public long ParentId { get; set; }
 
     /// <summary>
     /// 点赞类型(文章或评论)

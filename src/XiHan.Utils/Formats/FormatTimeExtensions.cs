@@ -106,9 +106,8 @@ public static class FormatTimeExtensions
     /// <returns></returns>
     public static string FormatDateTimeToFriendlyString(this DateTime date)
     {
-        string result = string.Empty;
-
         var strDate = date.ToString("yyyy-MM-dd");
+        string result;
         if (DateTime.Now.ToString("yyyy-MM-dd") == strDate)
         {
             result = "今天";
@@ -156,29 +155,16 @@ public static class FormatTimeExtensions
             else
             {
                 int length = thisValue.Length;
-                switch (length)
+                return length switch
                 {
-                    case 4:
-                        return DateTime.ParseExact(thisValue, "yyyy", System.Globalization.CultureInfo.CurrentCulture);
-
-                    case 6:
-                        return DateTime.ParseExact(thisValue, "yyyyMM", System.Globalization.CultureInfo.CurrentCulture);
-
-                    case 8:
-                        return DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
-
-                    case 10:
-                        return DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture);
-
-                    case 12:
-                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture);
-
-                    case 14:
-                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture);
-
-                    default:
-                        return DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture);
-                }
+                    4 => DateTime.ParseExact(thisValue, "yyyy", System.Globalization.CultureInfo.CurrentCulture),
+                    6 => DateTime.ParseExact(thisValue, "yyyyMM", System.Globalization.CultureInfo.CurrentCulture),
+                    8 => DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture),
+                    10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture),
+                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture),
+                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture),
+                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture),
+                };
             }
         }
         catch

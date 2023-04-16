@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Objects;
 using XiHan.Utils.Shells;
@@ -426,10 +426,18 @@ public static class DiskHelper
     /// <exception cref="Exception"></exception>
     public static bool IsContainsFiles(string directoryPath, string searchPattern)
     {
-        // 获取指定的文件列表
-        var fileNames = GetFiles(directoryPath, searchPattern, false);
-        // 判断指定文件是否存在
-        return fileNames.Length != 0;
+        try
+        {
+            // 获取指定的文件列表
+            var fileNames = GetFiles(directoryPath, searchPattern, false);
+            // 判断指定文件是否存在
+            return fileNames.Length != 0;
+        }
+        catch (Exception ex)
+        {
+            ex.ThrowAndConsoleError("获取文件信息出错!");
+        }
+        return false;
     }
 
     /// <summary>
@@ -442,15 +450,16 @@ public static class DiskHelper
     {
         try
         {
-            //获取指定的文件列表
-            var fileNames = GetFiles(directoryPath, searchPattern, true);
-            //判断指定文件是否存在
+            // 获取指定的文件列表
+            var fileNames = GetFiles(directoryPath, searchPattern, isSearchChild);
+            // 判断指定文件是否存在
             return fileNames.Length != 0;
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            ex.ThrowAndConsoleError("获取文件信息出错!");
         }
+        return false;
     }
 
     /// <summary>
@@ -572,7 +581,7 @@ public static class DiskHelper
         }
         catch (Exception ex)
         {
-            ("获取磁盘信息出错，" + ex.Message).WriteLineError();
+            ex.ThrowAndConsoleError("获取磁盘信息出错!");
         }
         return diskInfos;
     }
@@ -614,7 +623,7 @@ public static class DiskHelper
         }
         catch (Exception ex)
         {
-            ("获取磁盘信息出错，" + ex.Message).WriteLineError();
+            ex.ThrowAndConsoleError("获取磁盘信息出错!");
         }
         return diskInfos;
     }

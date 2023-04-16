@@ -15,7 +15,7 @@ using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Messages.WeChat;
 using File = XiHan.Utils.Messages.WeChat.File;
 
-namespace XiHan.Services.Utils.Messages;
+namespace XiHan.Services.Commons.Messages;
 
 /// <summary>
 /// IWeChatMessagePushService

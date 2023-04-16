@@ -30,7 +30,7 @@ public static partial class UnicodeEncodeHelper
         StringBuilder sb = new();
         for (int i = 0; i < data.Length; i++)
         {
-            sb.AppendFormat("\\u{0:x4}", (int)data[i]);
+            sb.AppendFormat(@"\u{0:x4}", (int)data[i]);
         }
         return sb.ToString();
     }
@@ -42,9 +42,9 @@ public static partial class UnicodeEncodeHelper
     /// <returns>解码后的字符串</returns>
     public static string FromUnicode(this string data)
     {
-        return MyRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
+        return UnicodeRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
     }
 
-    [System.Text.RegularExpressions.GeneratedRegex("\\\\u([0-9A-Za-z]{4})")]
-    private static partial System.Text.RegularExpressions.Regex MyRegex();
+    [System.Text.RegularExpressions.GeneratedRegex(@"\\u([0-9A-Za-z]{4})")]
+    private static partial System.Text.RegularExpressions.Regex UnicodeRegex();
 }

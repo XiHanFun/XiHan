@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootRole
-// Guid:26b82e42-87a7-477b-af80-59456336a22b
+// long:26b82e42-87a7-477b-af80-59456336a22b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 04:42:51
@@ -26,7 +26,7 @@ public class RootRole : BaseEntity
     /// 父级角色
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 角色名称

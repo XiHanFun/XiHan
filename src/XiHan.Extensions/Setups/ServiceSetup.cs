@@ -40,8 +40,8 @@ public static class ServiceSetup
         services.AddCacheSetup();
         // SqlSugar
         services.AddSqlSugarSetup();
-        // AutoMapper
-        services.AddAutoMapperSetup();
+        // Mapster
+        services.AddMapsterSetup();
         // Auth
         services.AddAuthSetup();
         // Http上下文

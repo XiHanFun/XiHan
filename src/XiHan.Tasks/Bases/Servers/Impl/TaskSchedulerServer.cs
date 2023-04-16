@@ -37,11 +37,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iJobFactory"></param>
-    public TaskSchedulerServer(IJobFactory iJobFactory)
+    /// <param name="jobFactory"></param>
+    public TaskSchedulerServer(IJobFactory jobFactory)
     {
         Scheduler = GetTaskSchedulerAsync();
-        JobFactory = iJobFactory;
+        JobFactory = jobFactory;
     }
 
     /// <summary>

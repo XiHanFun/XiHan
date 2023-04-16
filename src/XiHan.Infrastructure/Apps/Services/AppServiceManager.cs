@@ -29,7 +29,7 @@ public static class AppServiceManager
     /// <summary>
     /// 全局应用服务
     /// </summary>
-    public static IServiceProvider ServiceProvider = null!;
+    public static IServiceProvider ServiceProvider { get; set; } = null!;
 
     /// <summary>
     /// 注册服务

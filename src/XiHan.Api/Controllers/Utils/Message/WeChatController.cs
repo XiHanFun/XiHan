@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Services.Utils.Messages;
+using XiHan.Services.Commons.Messages;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Messages.WeChat;
 using File = XiHan.Utils.Messages.WeChat.File;
@@ -31,15 +31,15 @@ namespace XiHan.Api.Controllers.Utils.Messages;
 [ApiGroup(ApiGroupNames.Common)]
 public class WeChatController : BaseApiController
 {
-    private readonly IWeChatPushService _IWeChatMessagePushService;
+    private readonly IWeChatPushService WeChatPush;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iWeChatMessagePushService"></param>
-    public WeChatController(IWeChatPushService iWeChatMessagePushService)
+    /// <param name="weChatPush"></param>
+    public WeChatController(IWeChatPushService weChatPush)
     {
-        _IWeChatMessagePushService = iWeChatMessagePushService;
+        WeChatPush = weChatPush;
     }
 
     #region 发送消息
@@ -57,7 +57,7 @@ public class WeChatController : BaseApiController
             Content = "看万山红遍，层林尽染；漫江碧透，百舸争流。",
             MentionedMobiles = atMobiles
         };
-        return await _IWeChatMessagePushService.WeChatToText(text);
+        return await WeChatPush.WeChatToText(text);
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class WeChatController : BaseApiController
                    "> [screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
                    "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n",
         };
-        return await _IWeChatMessagePushService.WeChatToMarkdown(markdown);
+        return await WeChatPush.WeChatToMarkdown(markdown);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class WeChatController : BaseApiController
             Md5 = md5,
             Base64 = base64
         };
-        return await _IWeChatMessagePushService.WeChatToImage(image);
+        return await WeChatPush.WeChatToImage(image);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class WeChatController : BaseApiController
         {
             Articles = articles
         };
-        return await _IWeChatMessagePushService.WeChatToNews(news);
+        return await WeChatPush.WeChatToNews(news);
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class WeChatController : BaseApiController
         {
             MediaId = "3a8asd892asd8asd"
         };
-        return await _IWeChatMessagePushService.WeChatToFile(file);
+        return await WeChatPush.WeChatToFile(file);
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public class WeChatController : BaseApiController
             Jumps = jumps,
             CardAction = cardAction
         };
-        return await _IWeChatMessagePushService.WeChatToTextNotice(templateCard);
+        return await WeChatPush.WeChatToTextNotice(templateCard);
     }
 
     /// <summary>
@@ -322,7 +322,7 @@ public class WeChatController : BaseApiController
             CardAction = cardAction
         };
 
-        return await _IWeChatMessagePushService.WeChatToNewsNotice(templateCard);
+        return await WeChatPush.WeChatToNewsNotice(templateCard);
     }
 
     #endregion 发送消息
@@ -349,7 +349,7 @@ public class WeChatController : BaseApiController
         fileStream.Close();
         binaryWriter.Close();
         FileStream fileStream1 = new(@"Upload/" + formFile.FileName, FileMode.Open);
-        return await _IWeChatMessagePushService.WeChatToUploadkFile(fileStream1);
+        return await WeChatPush.WeChatToUploadkFile(fileStream1);
     }
 
     #endregion 上传文件

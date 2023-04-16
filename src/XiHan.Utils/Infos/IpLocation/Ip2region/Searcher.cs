@@ -108,9 +108,8 @@ public class Searcher : ISearcher
         var il0 = ip >> 24 & 0xFF;
         var il1 = ip >> 16 & 0xFF;
         var idx = il0 * VectorIndexCols * VectorIndexSize + il1 * VectorIndexSize;
-
-        uint sPtr = 0, ePtr = 0;
-
+        uint sPtr;
+        uint ePtr;
         switch (_CachePolicy)
         {
             case CachePolicyEnum.VectorIndex:

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PostCategory
-// Guid:73eb779d-74f7-40ad-a7bd-79617d20c4f2
+// long:73eb779d-74f7-40ad-a7bd-79617d20c4f2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:22:23
@@ -26,7 +26,7 @@ public class PostCategory : BaseEntity
     /// 父级分类
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 分类名称

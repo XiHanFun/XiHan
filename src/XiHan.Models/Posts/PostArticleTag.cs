@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PostArticleTag
-// Guid:7f74e0d5-2c12-492c-b849-9651624ef6ae
+// long:7f74e0d5-2c12-492c-b849-9651624ef6ae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:33:08
@@ -25,10 +25,10 @@ public class PostArticleTag : BaseEntity
     /// <summary>
     /// 关联文章
     /// </summary>
-    public Guid ArticleId { get; set; }
+    public long ArticleId { get; set; }
 
     /// <summary>
     /// 关联标签
     /// </summary>
-    public Guid TagId { get; set; }
+    public long TagId { get; set; }
 }

@@ -44,13 +44,13 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// 新增返回Guid
+    /// 新增返回Id
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<Guid> AddReturnGuidAsync(TEntity entity)
+    public virtual async Task<long> AddReturnIdAsync(TEntity entity)
     {
-        return Guid.Parse((await base.InsertReturnBigIdentityAsync(entity)).ToString());
+        return await base.InsertReturnBigIdentityAsync(entity);
     }
 
     /// <summary>
@@ -94,13 +94,13 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// 删除
+    /// 根据Id删除
     /// </summary>
-    /// <param name="guid"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveByGuidAsync(Guid guid)
+    public virtual async Task<bool> RemoveByIdAsync(long id)
     {
-        return await base.DeleteByIdAsync(guid);
+        return await base.DeleteByIdAsync(id);
     }
 
     /// <summary>
@@ -114,14 +114,14 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// 批量删除
+    /// 根据Id批量删除
     /// </summary>
-    /// <param name="guids"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveByGuidBatchAsync(Guid[] guids)
+    public virtual async Task<bool> RemoveByIdBatchAsync(long[] ids)
     {
-        object[] newguids = guids.Select(x => x as dynamic).ToArray();
-        return await base.DeleteByIdsAsync(newguids);
+        object[] newIds = ids.Select(x => x as dynamic).ToArray();
+        return await base.DeleteByIdsAsync(newIds);
     }
 
     /// <summary>
@@ -175,13 +175,13 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// Guid查找
+    /// 根据Id查找
     /// </summary>
-    /// <param name="guid"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindByGuidAsync(Guid guid)
+    public virtual async Task<TEntity> FindByGuidAsync(long id)
     {
-        return await base.GetByIdAsync(guid);
+        return await base.GetByIdAsync(id);
     }
 
     /// <summary>

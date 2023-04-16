@@ -24,10 +24,10 @@ public static class AppConfigExtend
     /// 获取值
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    /// <param name="entity"></param>
+    /// <param name="_"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TKey GetValue<TKey>(this TKey entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TKey GetValue<TKey>(this TKey _, [CallerArgumentExpression(nameof(_))] string fullName = "")
     {
         return AppConfigManager.GetValue<TKey>(fullName);
     }
@@ -36,10 +36,10 @@ public static class AppConfigExtend
     /// 获取对象
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    /// <param name="entity"></param>
+    /// <param name="_"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TKey GetSection<TKey>(this TKey entity, [CallerArgumentExpression("entity")] string fullName = "")
+    public static TKey GetSection<TKey>(this TKey _, [CallerArgumentExpression(nameof(_))] string fullName = "")
     {
         return AppConfigManager.GetSection<TKey>(fullName);
     }
@@ -49,10 +49,10 @@ public static class AppConfigExtend
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="entity"></param>
+    /// <param name="_"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TKey, TValue>(this TKey entity, TValue value, [CallerArgumentExpression("entity")] string fullName = "")
+    public static void Set<TKey, TValue>(this TKey _, TValue value, [CallerArgumentExpression(nameof(_))] string fullName = "")
     {
         AppConfigManager.Set<TKey, TValue>(fullName, value);
     }

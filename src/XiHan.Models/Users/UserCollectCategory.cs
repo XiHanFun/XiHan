@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserCollectCategory
-// Guid:8d28b4f1-d0cc-4857-9150-353deffa880d
+// long:8d28b4f1-d0cc-4857-9150-353deffa880d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:03:34
@@ -26,7 +26,7 @@ public class UserCollectCategory : BaseEntity
     /// 父级收藏分类
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 收藏分类名称

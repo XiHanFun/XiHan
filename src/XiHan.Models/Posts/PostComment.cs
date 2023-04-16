@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PostComment
-// Guid:60383ed1-8cd3-43d1-85e8-8b3dc45cdc7e
+// long:60383ed1-8cd3-43d1-85e8-8b3dc45cdc7e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:25:47
@@ -26,12 +26,12 @@ public class PostComment : BaseEntity
     /// 父级评论
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 所属文章
     /// </summary>
-    public Guid ArticleId { get; set; }
+    public long ArticleId { get; set; }
 
     /// <summary>
     /// 评论内容

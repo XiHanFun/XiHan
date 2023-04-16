@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserNotice
-// Guid:ee3e1bfb-ce5a-4642-84c8-4bef82afb198
+// long:ee3e1bfb-ce5a-4642-84c8-4bef82afb198
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:13:44

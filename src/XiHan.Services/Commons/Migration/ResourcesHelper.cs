@@ -15,7 +15,7 @@ using System.Text;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Infos.BaseInfos;
 
-namespace XiHan.Services.Utils.Migration;
+namespace XiHan.Services.Commons.Migration;
 
 /// <summary>
 /// 资源迁移帮助类

@@ -202,7 +202,7 @@ public static class TypeExtensions
     {
         if (IsNullableType(type))
         {
-            NullableConverter nullableConverter = new NullableConverter(type);
+            NullableConverter nullableConverter = new(type);
             return nullableConverter.UnderlyingType;
         }
         return type;

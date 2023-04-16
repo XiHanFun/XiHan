@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootAuthority
-// Guid:8b190341-c474-4974-961f-895c2c6a831d
+// long:8b190341-c474-4974-961f-895c2c6a831d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 04:45:01
@@ -26,7 +26,7 @@ public class RootAuthority : BaseEntity
     /// 父级权限
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 权限名称

@@ -12,9 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.SignalR;
-using XiHan.Infrastructure.Apps;
 
-namespace XiHan.Extensions.Common.Hubs;
+namespace XiHan.Extensions.Hubs;
 
 /// <summary>
 /// 即时通讯

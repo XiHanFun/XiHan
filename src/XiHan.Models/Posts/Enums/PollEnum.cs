@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:PollEnum
-// Guid:f199f9e2-a3de-42f0-b253-9167210fc0fc
+// long:f199f9e2-a3de-42f0-b253-9167210fc0fc
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-12-05 上午 03:07:12

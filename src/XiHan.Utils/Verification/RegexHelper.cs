@@ -109,7 +109,7 @@ public static class RegexHelper
     public static bool IsNumberPeople18(string checkValue)
     {
         // 数字验证
-        if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out n) == false)
+        if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out _) == false)
         {
             return false;
         }

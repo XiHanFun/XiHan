@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:ArticleEnum
-// Guid:c2955383-6546-43ac-ac2e-2dc3096e1bf6
+// long:c2955383-6546-43ac-ac2e-2dc3096e1bf6
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-12-01 上午 01:04:31

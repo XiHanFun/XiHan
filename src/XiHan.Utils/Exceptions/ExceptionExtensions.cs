@@ -11,17 +11,22 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Utils.Consoles;
+
 namespace XiHan.Utils.Exceptions;
 
 /// <summary>
-/// 异常拓展类(polly拓展)
+/// 异常拓展类
 /// </summary>
 public static class ExceptionExtensions
 {
     /// <summary>
-    /// 熔断策略
+    /// 抛出异常并打印信息
     /// </summary>
-    public static void GetBreakPolicy<TResult>() where TResult : Exception
+    public static void ThrowAndConsoleError(this Exception ex, string info)
     {
+        var errorInfo = info + Environment.NewLine + ex.Message;
+        errorInfo.WriteLineError();
+        throw new Exception(errorInfo);
     }
 }

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootMenu
-// Guid:9add3fb4-8c8d-4f8c-92d2-ec35ee45fc20
+// long:9add3fb4-8c8d-4f8c-92d2-ec35ee45fc20
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-08-04 下午 01:23:15
@@ -26,7 +26,7 @@ public class RootMenu : BaseEntity
     /// 父级菜单
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 菜单名称

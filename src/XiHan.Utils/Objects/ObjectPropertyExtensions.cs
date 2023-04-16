@@ -32,7 +32,7 @@ public static class ObjectPropertyExtensions
     /// <param name="_"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static string GetFullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression("_")] string fullName = "")
+    public static string GetFullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression(nameof(_))] string fullName = "")
     {
         return fullName;
     }
@@ -40,10 +40,10 @@ public static class ObjectPropertyExtensions
     /// <summary>
     /// 获取类型的Description特性描述信息
     /// </summary>
-    /// <param name="tentity">类型对象</param>
+    /// <param name="_">类型对象</param>
     /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
     /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
-    public static string GetDescription<TEntity>(this TEntity tentity, bool inherit = true)
+    public static string GetDescription<TEntity>(this TEntity _, bool inherit = true)
     {
         var result = string.Empty;
         Type objectType = typeof(TEntity);
@@ -79,10 +79,10 @@ public static class ObjectPropertyExtensions
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="tentity"></param>
+    /// <param name="entity"></param>
     /// <param name="propertyName">需要判断的属性</param>
     /// <returns></returns>
-    public static TValue GetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyName)
+    public static TValue GetPropertyValue<TEntity, TValue>(this TEntity entity, string propertyName)
     {
         Type objectType = typeof(TEntity);
         PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
@@ -98,7 +98,7 @@ public static class ObjectPropertyExtensions
         var body_obj = Expression.Convert(param_obj, objectType);
         var body = Expression.Property(body_obj, propertyInfo);
         var getValue = Expression.Lambda<Func<TEntity, TValue>>(body, param_obj).Compile();
-        return getValue(tentity);
+        return getValue(entity);
     }
 
     /// <summary>
@@ -106,11 +106,11 @@ public static class ObjectPropertyExtensions
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="tentity"></param>
+    /// <param name="entity"></param>
     /// <param name="propertyName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static bool SetPropertyValue<TEntity, TValue>(this TEntity tentity, string propertyName, TValue value)
+    public static bool SetPropertyValue<TEntity, TValue>(this TEntity entity, string propertyName, TValue value)
     {
         Type objectType = typeof(TEntity);
         PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
@@ -132,7 +132,7 @@ public static class ObjectPropertyExtensions
         {
             var body = Expression.Call(param_obj, setMethod, body_val);
             var setValue = Expression.Lambda<Action<TEntity, TValue>>(body, param_obj, param_val).Compile();
-            setValue(tentity, value);
+            setValue(entity, value);
 
             return true;
         }
@@ -162,21 +162,21 @@ public static class ObjectPropertyExtensions
     }
 
     /// <summary>
-    /// 对比两个类型的相同属性的差异信息
+    /// 对比两个相同类型的相同属性之间的差异信息
     /// </summary>
     /// <typeparam name="TEntity">对象类型</typeparam>
-    /// <param name="val1">对象实例1</param>
-    /// <param name="val2">对象实例2</param>
+    /// <param name="entity1">对象实例1</param>
+    /// <param name="entity2">对象实例2</param>
     /// <returns></returns>
-    public static List<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity val1, TEntity val2) where TEntity : class
+    public static List<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
     {
         var propertyInfo = typeof(TEntity).GetType().GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
             //确保不为null
-            ValueA = variance.GetValue(val1, null)?.ToString() ?? string.Empty,
-            ValueB = variance.GetValue(val2, null)?.ToString() ?? string.Empty
+            ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
+            ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
         })
         //调用内置判断
         .Where(variance => !variance.ValueA.Equals(variance.ValueB))

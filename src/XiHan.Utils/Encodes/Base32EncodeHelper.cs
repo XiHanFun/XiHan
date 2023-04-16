@@ -108,7 +108,7 @@ public static class Base32
     {
         if (base32String == null)
         {
-            throw new ArgumentNullException("base32String");
+            throw new ArgumentNullException(nameof(base32String));
         }
 
         if (base32String.Length == 0)

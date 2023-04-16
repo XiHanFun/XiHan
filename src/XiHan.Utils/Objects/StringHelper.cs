@@ -491,7 +491,7 @@ public static class StringHelper
     /// <returns></returns>
     public static string FirstToUpper(this string value)
     {
-        return value.Substring(0, 1).ToUpper() + value[1..];
+        return value[..1].ToUpper() + value[1..];
     }
 
     /// <summary>
@@ -501,7 +501,7 @@ public static class StringHelper
     /// <returns></returns>
     public static string FirstToLower(this string value)
     {
-        return value.Substring(0, 1).ToLower() + value[1..];
+        return value[..1].ToLower() + value[1..];
     }
 
     #endregion

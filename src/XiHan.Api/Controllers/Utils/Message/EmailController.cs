@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Services.Utils.Messages;
+using XiHan.Services.Commons.Messages;
 
 namespace XiHan.Api.Controllers.Utils.Messages;
 
@@ -28,15 +28,15 @@ namespace XiHan.Api.Controllers.Utils.Messages;
 [ApiGroup(ApiGroupNames.Common)]
 public class EmailController : BaseApiController
 {
-    private readonly IEmailPushService _IEmailPushService;
+    private readonly IEmailPushService EmailPush;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iEmailPushService"></param>
-    public EmailController(IEmailPushService iEmailPushService)
+    /// <param name="emailPush"></param>
+    public EmailController(IEmailPushService emailPush)
     {
-        _IEmailPushService = iEmailPushService;
+        EmailPush = emailPush;
     }
 
     /// <summary>
@@ -46,6 +46,6 @@ public class EmailController : BaseApiController
     [HttpPost("Send")]
     public async Task<BaseResultDto> SendEmail()
     {
-        return await _IEmailPushService.SendEmail();
+        return await EmailPush.SendEmail();
     }
 }

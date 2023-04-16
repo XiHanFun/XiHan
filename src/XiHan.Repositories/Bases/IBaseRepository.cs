@@ -31,11 +31,11 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<bool> AddAsync(TEntity entity);
 
     /// <summary>
-    /// 新增返回Guid
+    /// 新增返回Id
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<Guid> AddReturnGuidAsync(TEntity entity);
+    Task<long> AddReturnIdAsync(TEntity entity);
 
     /// <summary>
     /// 新增或更新
@@ -66,11 +66,11 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<bool> AddOrUpdateBatchAsync(List<TEntity> entities);
 
     /// <summary>
-    /// 删除
+    /// 根据Id删除
     /// </summary>
-    /// <param name="guid"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> RemoveByGuidAsync(Guid guid);
+    Task<bool> RemoveByIdAsync(long id);
 
     /// <summary>
     /// 删除
@@ -80,11 +80,11 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<bool> RemoveAsync(TEntity entity);
 
     /// <summary>
-    /// 批量删除
+    /// 根据Id批量删除
     /// </summary>
-    /// <param name="guids"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    Task<bool> RemoveByGuidBatchAsync(Guid[] guids);
+    Task<bool> RemoveByIdBatchAsync(long[] ids);
 
     /// <summary>
     /// 批量删除
@@ -122,11 +122,11 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<bool> UpdateBatchAsync(List<TEntity> entities);
 
     /// <summary>
-    /// Guid查找
+    /// 根据Id查找
     /// </summary>
-    /// <param name="guid"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<TEntity> FindByGuidAsync(Guid guid);
+    Task<TEntity> FindByGuidAsync(long id);
 
     /// <summary>
     /// 自定义条件查找

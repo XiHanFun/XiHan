@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:IHttpHelper
+// FileName:IHttpPollyHelper
 // Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,9 +14,9 @@
 namespace XiHan.Utils.Https;
 
 /// <summary>
-/// IHttpHelper
+/// IHttpPollyHelper
 /// </summary>
-public interface IHttpHelper
+public interface IHttpPollyHelper
 {
     /// <summary>
     /// Get请求

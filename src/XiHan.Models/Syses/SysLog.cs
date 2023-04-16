@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysLog
-// Guid:0b64e03b-c87c-4c6e-9262-7e4f5e507ce2
+// long:0b64e03b-c87c-4c6e-9262-7e4f5e507ce2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:37:47
@@ -20,7 +20,7 @@ namespace XiHan.Models.Syses;
 /// 站点日志表
 /// </summary>
 [SugarTable(TableName = "SysLog")]
-public class SysLog : BaseDeleteEntity<Guid>
+public class SysLog : BaseDeleteEntity
 {
     /// <summary>
     /// 日志级别

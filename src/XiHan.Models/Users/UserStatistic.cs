@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserStatistic
-// Guid:23d7c499-56e3-4d23-835b-80aab213bb38
+// long:23d7c499-56e3-4d23-835b-80aab213bb38
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:16:33
@@ -25,7 +25,7 @@ public class UserStatistic : BaseEntity
     /// <summary>
     /// 所属用户
     /// </summary>
-    public Guid AccountId { get; set; }
+    public long AccountId { get; set; }
 
     /// <summary>
     /// 关注数量

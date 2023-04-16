@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Infos.IpLocation.Ip2region;
 using XiHan.Utils.Objects;
 
@@ -88,7 +89,8 @@ public static class IpSearchHelper
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            ex.ThrowAndConsoleError("Ip地址信息查询出错");
+            return null;
         }
     }
 }

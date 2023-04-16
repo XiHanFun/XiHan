@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:BaseCreateEntity
-// Guid:fdd5de1e-1868-40f7-8014-b2f6921db6e0
+// long:fdd5de1e-1868-40f7-8014-b2f6921db6e0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 04:02:26
@@ -18,19 +18,19 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 创建基类，含主键
 /// </summary>
-public abstract class BaseCreateEntity<TKey> : BaseIdEntity<TKey>
+public abstract class BaseCreateEntity : BaseIdEntity
 {
     /// <summary>
     /// 创建用户
-    /// 设置后修改不会有此字段
     /// </summary>
+    /// <remarks>修改不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户")]
-    public virtual TKey? CreateBy { get; set; }
+    public virtual long? CreatedBy { get; set; }
 
     /// <summary>
     /// 创建时间
-    /// 设置后修改不会有此字段
     /// </summary>
+    /// <remarks>修改不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建时间")]
-    public virtual DateTime? CreateTime { get; set; } = DateTime.Now;
+    public virtual DateTime? CreatedTime { get; set; } = DateTime.Now;
 }

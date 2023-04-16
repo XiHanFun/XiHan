@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:SysLoginLog
-// Guid:30e63ed1-9f89-4676-8aa6-9521f6ab3d6d
+// long:30e63ed1-9f89-4676-8aa6-9521f6ab3d6d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:11:05
@@ -20,7 +20,7 @@ namespace XiHan.Models.Syses;
 /// 系统登录表
 /// </summary>
 [SugarTable(TableName = "SysLoginLog")]
-public class SysLoginLog : BaseDeleteEntity<Guid>
+public class SysLoginLog : BaseDeleteEntity
 {
     /// <summary>
     /// 登录状态

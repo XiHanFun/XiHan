@@ -19,7 +19,7 @@ using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Messages.Email;
 
-namespace XiHan.Services.Utils.Messages.Impl;
+namespace XiHan.Services.Commons.Messages.Impl;
 
 /// <summary>
 /// EmailPushService

@@ -14,7 +14,7 @@
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Messages.DingTalk;
 
-namespace XiHan.Services.Utils.Messages;
+namespace XiHan.Services.Commons.Messages;
 
 /// <summary>
 /// IDingTalkMessagePushService

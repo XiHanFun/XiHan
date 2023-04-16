@@ -12,8 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using RabbitMQ.Client;
-using XiHan.Infrastructure.Apps.Setting;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -34,24 +32,24 @@ public static class RabbitMQSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        var isEnabledRabbitMQ = AppSettings.RabbitMQ.Enabled.GetValue();
-        if (isEnabledRabbitMQ)
-        {
-            var hostName = AppSettings.RabbitMQ.HostName.GetValue();
-            var userName = AppSettings.RabbitMQ.UserName.GetValue();
-            var password = AppSettings.RabbitMQ.Password.GetValue();
-            var port = AppSettings.RabbitMQ.Port.GetValue();
-            var retryCount = AppSettings.RabbitMQ.RetryCount.GetValue();
+        //var isEnabledRabbitMQ = AppSettings.RabbitMQ.Enabled.GetValue();
+        //if (isEnabledRabbitMQ)
+        //{
+        //    var hostName = AppSettings.RabbitMQ.HostName.GetValue();
+        //    var userName = AppSettings.RabbitMQ.UserName.GetValue();
+        //    var password = AppSettings.RabbitMQ.Password.GetValue();
+        //    var port = AppSettings.RabbitMQ.Port.GetValue();
+        //    var retryCount = AppSettings.RabbitMQ.RetryCount.GetValue();
 
-            var factory = new ConnectionFactory()
-            {
-                HostName = hostName,
-                DispatchConsumersAsync = true,
-                UserName = userName,
-                Password = password,
-                Port = port
-            };
-        }
+        //    var factory = new ConnectionFactory()
+        //    {
+        //        HostName = hostName,
+        //        DispatchConsumersAsync = true,
+        //        UserName = userName,
+        //        Password = password,
+        //        Port = port
+        //    };
+        //}
 
         return services;
     }

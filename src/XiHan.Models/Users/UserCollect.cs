@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:UserCollect
-// Guid:9a936a6b-f0bf-4fe9-9c43-868982a69e01
+// long:9a936a6b-f0bf-4fe9-9c43-868982a69e01
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:02:22
@@ -25,10 +25,10 @@ public class UserCollect : BaseEntity
     /// <summary>
     /// 收藏分类
     /// </summary>
-    public Guid CategoryId { get; set; }
+    public long CategoryId { get; set; }
 
     /// <summary>
     /// 收藏文章
     /// </summary>
-    public Guid ArticleId { get; set; }
+    public long ArticleId { get; set; }
 }

@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Services.Utils.Messages;
+using XiHan.Services.Commons.Messages;
 using XiHan.Utils.Messages.DingTalk;
 
 namespace XiHan.Api.Controllers.Utils.Messages;
@@ -29,15 +29,15 @@ namespace XiHan.Api.Controllers.Utils.Messages;
 [ApiGroup(ApiGroupNames.Common)]
 public class DingTalkController : BaseApiController
 {
-    private readonly IDingTalkPushService _IDingTalkMessagePushService;
+    private readonly IDingTalkPushService DingTalkPush;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iDingTalkMessagePushService"></param>
-    public DingTalkController(IDingTalkPushService iDingTalkMessagePushService)
+    /// <param name="dingTalkPush"></param>
+    public DingTalkController(IDingTalkPushService dingTalkPush)
     {
-        _IDingTalkMessagePushService = iDingTalkMessagePushService;
+        DingTalkPush = dingTalkPush;
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class DingTalkController : BaseApiController
         };
         List<string> atMobiles = new() { "1302873****" };
         var isAtAll = false;
-        return await _IDingTalkMessagePushService.DingTalkToText(text, atMobiles, isAtAll);
+        return await DingTalkPush.DingTalkToText(text, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class DingTalkController : BaseApiController
             MessageUrl = "https://www.dingtalk.com/"
         };
 
-        return await _IDingTalkMessagePushService.DingTalkToLink(link);
+        return await DingTalkPush.DingTalkToLink(link);
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class DingTalkController : BaseApiController
         };
         List<string> atMobiles = new() { "1302873****" };
         var isAtAll = false;
-        return await _IDingTalkMessagePushService.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
+        return await DingTalkPush.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public class DingTalkController : BaseApiController
             SingleTitle = "阅读全文",
             SingleUrl = "https://www.dingtalk.com/"
         };
-        return await _IDingTalkMessagePushService.DingTalkToActionCard(actionCard);
+        return await DingTalkPush.DingTalkToActionCard(actionCard);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class DingTalkController : BaseApiController
                 }
             }
         };
-        return await _IDingTalkMessagePushService.DingTalkToActionCard(actionCard);
+        return await DingTalkPush.DingTalkToActionCard(actionCard);
     }
 
     /// <summary>
@@ -175,6 +175,6 @@ public class DingTalkController : BaseApiController
                 }
             }
         };
-        return await _IDingTalkMessagePushService.DingTalkToFeedCard(feedCard);
+        return await DingTalkPush.DingTalkToFeedCard(feedCard);
     }
 }

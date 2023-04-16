@@ -19,7 +19,7 @@ using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Https;
 using XiHan.Utils.Messages.DingTalk;
 
-namespace XiHan.Services.Utils.Messages.Impl;
+namespace XiHan.Services.Commons.Messages.Impl;
 
 /// <summary>
 /// DingTalkMessagePush
@@ -36,7 +36,7 @@ public class DingTalkPushService : IDingTalkPushService
     /// 构造函数
     /// </summary>
     /// <param name="iHttpHelper"></param>
-    public DingTalkPushService(IHttpHelper iHttpHelper)
+    public DingTalkPushService(IHttpPollyHelper iHttpHelper)
     {
         DingTalkConnection conn = new()
         {

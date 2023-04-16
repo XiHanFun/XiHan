@@ -20,7 +20,7 @@ using XiHan.Utils.Https;
 using XiHan.Utils.Messages.WeChat;
 using File = XiHan.Utils.Messages.WeChat.File;
 
-namespace XiHan.Services.Utils.Messages.Impl;
+namespace XiHan.Services.Commons.Messages.Impl;
 
 /// <summary>
 /// WeChatMessagePushService
@@ -37,7 +37,7 @@ public class WeChatPushService : IWeChatPushService
     /// 构造函数
     /// </summary>
     /// <param name="iHttpHelper"></param>
-    public WeChatPushService(IHttpHelper iHttpHelper)
+    public WeChatPushService(IHttpPollyHelper iHttpHelper)
     {
         WeChatConnection conn = new()
         {

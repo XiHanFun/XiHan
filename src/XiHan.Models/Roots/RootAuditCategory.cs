@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // FileName:RootAuditCategory
-// Guid:52830965-a1e7-4d56-b98e-2582f19d22d8
+// long:52830965-a1e7-4d56-b98e-2582f19d22d8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2022-05-08 下午 06:48:09
@@ -26,7 +26,7 @@ public class RootAuditCategory : BaseEntity
     /// 父级审核分类
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public Guid? ParentId { get; set; }
+    public long? ParentId { get; set; }
 
     /// <summary>
     /// 分类名称
