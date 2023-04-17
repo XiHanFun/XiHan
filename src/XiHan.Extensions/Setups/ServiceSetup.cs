@@ -55,7 +55,11 @@ public static class ServiceSetup
         // 健康检查
         services.AddHealthChecks();
         // 即时通讯
-        services.AddSignalR();
+        services.AddSignalR(hubOptions =>
+        {
+            //要求30s内必须收到客户端发的一条消息，如果没有收到，那么服务器端则认为客户端掉了
+            hubOptions.ClientTimeoutInterval = TimeSpan.FromSeconds(30);
+        });
         // 服务注册
         AppServiceManager.RegisterService(services);
         // 计划任务

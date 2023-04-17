@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script src="./jquery-3.6.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./signalr.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            //苹果的手机的写法 （需要跳过协商）               
+            var connection = new signalR.HubConnectionBuilder().withUrl("http://127.0.0.1:9708/ChatHub", {
+                skipNegotiation: true, //针对webSocket为默认协议的时候，可以跳过协商
+                transport: signalR.HttpTransportType.WebSockets
+            })
+                .withAutomaticReconnect([3000, 4000, 10000, 10000])
+                .build();
+            //建立连接
+            $('#j_btn1').click(function () {
+                connection.start().then(function () {
+                    console.log("连接成功");
+                    $('#j_hb').append('<div>连接成功</div>')
+                }).catch(function (err) {
+                    $('#j_hb').append('<div>' + err.toString() + '</div>')
+                    return console.error(err.toString());
+                });
+            });
+            //发送消息
+            $("#j_send").click(function () {
+                connection.invoke("SendMessage", $("#j_content").val(), "1234").catch(function (err) {
+                    $('#j_hb').append('<div>' + err.toString() + '</div>');
+                    return console.error(err.toString());
+                });
+
+            });
+            //接收消息
+            connection.on("ReceiveMessage", function (msg) {
+                console.log(msg);
+                $('#j_hb').append('<div>' + msg + '</div>')
+            });
+
+            //下面测试断线重连机制 ，
+            //重连之前调用 （只有在掉线的一瞬间，只进入一次）
+            connection.onreconnecting((error) => {
+                console.log(1);
+                $('#j_hb').append('<div>1</div>');
+                console.log(connection.state);
+                console.log(connection.state === signalR.HubConnectionState.Reconnecting);
+
+            });
+            //(默认4次重连)，任何一次只要回调成功，调用
+            connection.onreconnected((connectionId) => {
+                console.log(2);
+                $('#j_hb').append('<div>2</div>');
+                console.log(connection.state);
+                console.log(connection.state === signalR.HubConnectionState.Connected);
+
+            });
+            //(默认4次重连) 全部都失败后，调用
+            connection.onclose((error) => {
+                console.log('3');
+                $('#j_hb').append('<div>3</div>');
+                console.log(connection.state);
+                console.assert(connection.state === signalR.HubConnectionState.Disconnected);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <br /> <br /> <br /> <br /> <br />
+    <input type="text" id="j_content" value="" />
+    <button id="j_btn1">建立连接</button>
+    <button id="j_send">发送消息</button>
+    <br /> <br /> <br /> <br /> <br />
+    <div id="j_hb">
+
+    </div>
+</body>
+
+</html>
