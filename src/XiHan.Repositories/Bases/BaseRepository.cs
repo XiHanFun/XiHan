@@ -179,7 +179,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindByGuidAsync(long id)
+    public virtual async Task<TEntity> FindByIdAsync(long id)
     {
         return await base.GetByIdAsync(id);
     }

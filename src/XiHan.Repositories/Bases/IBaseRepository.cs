@@ -126,7 +126,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<TEntity> FindByGuidAsync(long id);
+    Task<TEntity> FindByIdAsync(long id);
 
     /// <summary>
     /// 自定义条件查找
