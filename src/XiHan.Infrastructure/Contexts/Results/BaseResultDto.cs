@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Enums;
+using XiHan.Infrastructure.Enums.Https;
 using XiHan.Utils.Enums;
 
 namespace XiHan.Infrastructure.Contexts.Results;
@@ -29,12 +29,12 @@ public class BaseResultDto
     /// <summary>
     /// 状态码
     /// </summary>
-    public ResponseEnum Code { get; set; } = ResponseEnum.Ok;
+    public HttpResponseEnum Code { get; set; } = HttpResponseEnum.Ok;
 
     /// <summary>
     /// 返回信息
     /// </summary>
-    public string? Message { get; set; } = ResponseEnum.Ok.GetEnumDescriptionByKey();
+    public string? Message { get; set; } = HttpResponseEnum.Ok.GetEnumDescriptionByKey();
 
     /// <summary>
     /// 数据集合

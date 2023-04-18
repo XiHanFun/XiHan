@@ -12,21 +12,15 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
-using System.Text;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Extensions.Filters;
-using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Encryptions;
-using XiHan.Utils.Formats;
 using XiHan.Utils.Infos;
-using XiHan.Utils.Infos.BaseInfos;
-using XiHan.Utils.Serializes;
 
 namespace XiHan.Api.Controllers.Test;
 
@@ -34,6 +28,7 @@ namespace XiHan.Api.Controllers.Test;
 /// 系统测试
 /// <code>包含：工具/客户端信息/IP信息/授权信息</code>
 /// </summary>
+[EnableCors("AllowAll")]
 [ApiGroup(ApiGroupNames.Test)]
 public class TestController : BaseApiController
 {

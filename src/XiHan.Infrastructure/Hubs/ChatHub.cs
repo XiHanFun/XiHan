@@ -50,18 +50,18 @@ public class ChatHub : Hub
     /// <param name="user"></param>
     /// <param name="message"></param>
     /// <returns></returns>
+    [HubMethodName("SendMessageToCaller")]
     public async Task SendMessageToCaller(string user, string message)
     {
         await Clients.Caller.SendAsync("ReceiveMessage", user, message);
     }
-
-    #region 群组
 
     /// <summary>
     /// 加入指定组
     /// </summary>
     /// <param name="groupName">组名</param>
     /// <returns></returns>
+    [HubMethodName("AddToGroup")]
     public async Task AddToGroup(string groupName)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -72,6 +72,7 @@ public class ChatHub : Hub
     /// </summary>
     /// <param name="groupName">组名</param>
     /// <returns></returns>
+    [HubMethodName("RemoveFromGroup")]
     public async Task RemoveFromGroup(string groupName)
     {
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
@@ -83,6 +84,7 @@ public class ChatHub : Hub
     /// <param name="user"></param>
     /// <param name="message"></param>
     /// <returns></returns>
+    [HubMethodName("SendMessageToTopGroup")]
     public async Task SendMessageToTopGroup(string user, string message)
     {
         await Clients.Group("Top").SendAsync("ReceiveMessage", user, message);
@@ -95,43 +97,18 @@ public class ChatHub : Hub
     /// <param name="user"></param>
     /// <param name="message"></param>
     /// <returns></returns>
+    [HubMethodName("SendMessageToDesignatedGroup")]
     public async Task SendMessageToDesignatedGroup(string group, string user, string message)
     {
         await Clients.Group(group).SendAsync("ReceiveMessage", user, message);
     }
-
-    #endregion
-
-    /// <summary>
-    /// SignalR接收信息
-    /// </summary>
-    /// <param name="message">信息内容</param>
-    /// <returns></returns>
-    public async Task ReceiveMessage(string message)
-    { }
-
-    /// <summary>
-    /// SignalR接收信息
-    /// </summary>
-    /// <param name="user">指定接收客户端</param>
-    /// <param name="message">信息内容</param>
-    /// <returns></returns>
-    public async Task ReceiveMessage(string user, string message)
-    { }
-
-    /// <summary>
-    /// 消息更新
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    public async Task ReceiveUpdate(object message)
-    { }
 
     /// <summary>
     /// 错误信息发送到客户端
     /// </summary>
     /// <returns></returns>
     /// <exception cref="HubException"></exception>
+    [HubMethodName("ThrowException")]
     public Task ThrowException()
     {
         throw new HubException("This error will be sent to the client!");

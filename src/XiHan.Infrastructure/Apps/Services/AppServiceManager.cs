@@ -14,10 +14,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Reflection;
-using XiHan.Infrastructure.Enums;
+using XiHan.Infrastructure.Enums.Services;
 using XiHan.Utils.Consoles;
+using XiHan.Utils.Enums;
 using XiHan.Utils.Infos.IpLocation;
 using XiHan.Utils.Infos.IpLocation.Ip2region;
+using XiHan.Utils.Objects;
 
 namespace XiHan.Infrastructure.Apps.Services;
 
@@ -111,7 +113,7 @@ public static class AppServiceManager
                         services.AddTransient(serviceType, type);
                         break;
                 }
-                var infoMsg = $"服务注册：{serviceType.Name}-{type.Name}";
+                var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
                 Log.Information(infoMsg);
                 infoMsg.WriteLineSuccess();
             }

@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Infrastructure.Contexts.Validations;
-using XiHan.Infrastructure.Enums;
+using XiHan.Infrastructure.Enums.Https;
 using XiHan.Utils.Enums;
 
 namespace XiHan.Infrastructure.Contexts;
@@ -33,8 +33,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.Continue,
-            Message = ResponseEnum.Continue.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Continue,
+            Message = HttpResponseEnum.Continue.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -48,8 +48,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Ok,
+            Message = HttpResponseEnum.Ok.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -64,8 +64,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Ok,
+            Message = HttpResponseEnum.Ok.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -80,8 +80,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = true,
-            Code = ResponseEnum.Ok,
-            Message = ResponseEnum.Ok.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Ok,
+            Message = HttpResponseEnum.Ok.GetEnumDescriptionByKey(),
             Datas = datas
         };
     }
@@ -96,8 +96,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.BadRequest,
-            Message = ResponseEnum.BadRequest.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.BadRequest,
+            Message = HttpResponseEnum.BadRequest.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -112,8 +112,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.BadRequest,
-            Message = ResponseEnum.BadRequest.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.BadRequest,
+            Message = HttpResponseEnum.BadRequest.GetEnumDescriptionByKey(),
             Datas = datas
         };
     }
@@ -127,8 +127,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.Unauthorized,
-            Message = ResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Unauthorized,
+            Message = HttpResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -143,8 +143,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.Unauthorized,
-            Message = ResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Unauthorized,
+            Message = HttpResponseEnum.Unauthorized.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -158,8 +158,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.Forbidden,
-            Message = ResponseEnum.Forbidden.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.Forbidden,
+            Message = HttpResponseEnum.Forbidden.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -173,8 +173,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.NotFound,
-            Message = ResponseEnum.NotFound.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.NotFound,
+            Message = HttpResponseEnum.NotFound.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -189,8 +189,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.NotFound,
-            Message = ResponseEnum.NotFound.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.NotFound,
+            Message = HttpResponseEnum.NotFound.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -205,8 +205,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.UnprocessableEntity,
-            Message = ResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.UnprocessableEntity,
+            Message = HttpResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -221,8 +221,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.UnprocessableEntity,
-            Message = ResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.UnprocessableEntity,
+            Message = HttpResponseEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
             Datas = new BaseValidationDto(context)
         };
     }
@@ -236,8 +236,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.InternalServerError,
-            Message = ResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.InternalServerError,
+            Message = HttpResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -251,8 +251,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.InternalServerError,
-            Message = ResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.InternalServerError,
+            Message = HttpResponseEnum.InternalServerError.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -266,8 +266,8 @@ public static class BaseResponseDto
         return new BaseResultDto
         {
             Success = false,
-            Code = ResponseEnum.NotImplemented,
-            Message = ResponseEnum.NotImplemented.GetEnumDescriptionByKey(),
+            Code = HttpResponseEnum.NotImplemented,
+            Message = HttpResponseEnum.NotImplemented.GetEnumDescriptionByKey(),
             Datas = null
         };
     }

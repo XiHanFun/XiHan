@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:CDNResourcesHelper
+// FileName:ResourcesService
 // Guid:11b53a79-9ca9-4044-92bc-24061ec75715
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,30 +12,34 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
+using XiHan.Services.Commons.Migration.Dtos;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Services.Commons.Migration;
 
 /// <summary>
-/// 资源迁移帮助类
+/// 资源迁移服务
 /// </summary>
-public static class ResourcesHelper
+public class ResourcesService
 {
     /// <summary>
     /// 迁移资源url
     /// </summary>
     /// <param name="resourceInfo"></param>
     /// <returns></returns>
-    public static List<MigrationInfo> Migration(ResourceInfo resourceInfo)
+    public async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
     {
-        if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
+        if (resourceInfo == null)
+        {
+            throw new ArgumentNullException(nameof(resourceInfo));
+        }
 
-        List<MigrationInfo> list = new();
+        List<MigrationInfoDto> list = new();
         string[] paths = DiskHelper.GetFiles(resourceInfo.Path);
         foreach (var path in paths)
         {
-            MigrationInfo migrationInfo = new()
+            MigrationInfoDto migrationInfo = new()
             {
                 // 路径
                 Path = path
@@ -50,6 +54,6 @@ public static class ResourcesHelper
             migrationInfo.IsSucess = true;
             list.Add(migrationInfo);
         }
-        return list;
+        return await Task.FromResult(list);
     }
 }
