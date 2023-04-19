@@ -19,7 +19,7 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户通知表
 /// </summary>
-[SugarTable(TableName = "UserNotice")]
+[SugarTable(TableName = "User_Notice")]
 public class UserNotice : BaseEntity
 {
     /// <summary>

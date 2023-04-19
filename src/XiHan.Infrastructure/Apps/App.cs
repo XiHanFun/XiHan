@@ -12,10 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 using XiHan.Infrastructure.Apps.HttpContexts;
 using XiHan.Infrastructure.Apps.Services;
+using XiHan.Infrastructure.Apps.Setting;
 
 namespace XiHan.Infrastructure.Apps;
 

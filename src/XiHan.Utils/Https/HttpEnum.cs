@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel;
+
 namespace XiHan.Utils.Https;
 
 /// <summary>
@@ -21,10 +23,42 @@ public enum HttpEnum
     /// <summary>
     /// 公共
     /// </summary>
+    [Description("公共")]
     Common,
 
     /// <summary>
     /// 本地
     /// </summary>
+    [Description("本地")]
     LocalHost
+}
+
+/// <summary>
+/// 网络请求方式
+/// </summary>
+public enum HttpMethodEnum
+{
+    /// <summary>
+    /// 获取数据
+    /// </summary>
+    [Description("获取数据")]
+    Get,
+
+    /// <summary>
+    /// 提交数据
+    /// </summary>
+    [Description("提交数据")]
+    Post,
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    [Description("删除数据")]
+    Delete,
+
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    [Description("更新数据")]
+    Put,
 }

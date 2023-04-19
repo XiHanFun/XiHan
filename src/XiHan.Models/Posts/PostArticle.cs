@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases;
-using XiHan.Models.Blogs.Enums;
 
 namespace XiHan.Models.Posts;
 
@@ -67,14 +67,16 @@ public class PostArticle : BaseEntity
     public long CategoryId { get; set; }
 
     /// <summary>
-    /// 发布状态 (已发布、草稿箱、回收站)
+    /// 发布状态
+    /// PubStatusEnum
     /// </summary>
-    public PubStatusEnum PubStatus { get; set; }
+    public int PubStatus { get; set; }
 
     /// <summary>
-    /// 公开类型 (公开、私密、保留)
+    /// 公开类型
+    /// ExposedTypeEnum
     /// </summary>
-    public ExposedTypeEnum ExposedType { get; set; }
+    public int ExposedType { get; set; }
 
     /// <summary>
     /// 私密密码（MD5加密）
@@ -83,9 +85,10 @@ public class PostArticle : BaseEntity
     public string? Password { get; set; }
 
     /// <summary>
-    /// 文章来源 (原创、转载、衍生)
+    /// 文章来源类型
+    /// SourceTypeEnum
     /// </summary>
-    public SourceEnum Source { get; set; }
+    public int SourceType { get; set; }
 
     /// <summary>
     /// 转载链接
@@ -128,4 +131,76 @@ public class PostArticle : BaseEntity
     public int CommentCount { get; set; }
 
     #endregion 文章统计
+}
+
+/// <summary>
+/// 发布状态
+/// </summary>
+public enum PubStatusEnum
+{
+    /// <summary>
+    /// 回收站
+    /// </summary>
+    [Description("回收站")]
+    Recycle = 0,
+
+    /// <summary>
+    /// 已发布
+    /// </summary>
+    [Description("已发布")]
+    Published = 1,
+
+    /// <summary>
+    /// 草稿箱
+    /// </summary>
+    [Description("草稿箱")]
+    Drafts = 2
+}
+
+/// <summary>
+/// 文章来源类型
+/// </summary>
+public enum SourceTypeEnum
+{
+    /// <summary>
+    /// 转载
+    /// </summary>
+    [Description("转载")]
+    Reprint = 0,
+
+    /// <summary>
+    /// 原创
+    /// </summary>
+    [Description("原创")]
+    Original = 1,
+
+    /// <summary>
+    /// 衍生
+    /// </summary>
+    [Description("衍生")]
+    Hybrid = 2
+}
+
+/// <summary>
+/// 公开类型
+/// </summary>
+public enum ExposedTypeEnum
+{
+    /// <summary>
+    /// 保留
+    /// </summary>
+    [Description("保留")]
+    Reserve = 0,
+
+    /// <summary>
+    /// 公开
+    /// </summary>
+    [Description("公开")]
+    Public = 1,
+
+    /// <summary>
+    /// 私密
+    /// </summary>
+    [Description("私密")]
+    Secret = 2,
 }

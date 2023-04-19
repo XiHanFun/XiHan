@@ -55,7 +55,7 @@ public static class ServiceSetup
         // 健康检查
         services.AddHealthChecks();
         // 即时通讯
-        services.AddSignalR();
+        services.AddSignalRSetup();
         // 服务注册
         AppServiceManager.RegisterService(services);
         // 计划任务

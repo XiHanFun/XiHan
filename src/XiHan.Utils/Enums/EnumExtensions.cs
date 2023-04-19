@@ -24,6 +24,18 @@ namespace XiHan.Utils.Enums;
 public static class EnumExtensions
 {
     /// <summary>
+    /// 根据键获取单个枚举的值
+    /// </summary>
+    /// <param name="keyEnum"></param>
+    /// <returns></returns>
+    public static int GetEnumValueByKey(this Enum keyEnum)
+    {
+        var enumName = keyEnum.ToString();
+        var field = keyEnum.GetType().GetField(enumName);
+        return field == null ? throw new ArgumentException(null, nameof(keyEnum)) : (int)field.GetRawConstantValue()!;
+    }
+
+    /// <summary>
     /// 根据键获取单个枚举的描述信息
     /// </summary>
     /// <param name="keyEnum"></param>

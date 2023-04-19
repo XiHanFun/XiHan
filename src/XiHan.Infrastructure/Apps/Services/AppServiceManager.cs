@@ -13,9 +13,10 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using System.ComponentModel;
 using System.Reflection;
-using XiHan.Infrastructure.Enums;
 using XiHan.Utils.Consoles;
+using XiHan.Utils.Enums;
 using XiHan.Utils.Infos.IpLocation;
 using XiHan.Utils.Infos.IpLocation.Ip2region;
 
@@ -111,10 +112,34 @@ public static class AppServiceManager
                         services.AddTransient(serviceType, type);
                         break;
                 }
-                var infoMsg = $"服务注册：{serviceType.Name}-{type.Name}";
+                var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
                 Log.Information(infoMsg);
                 infoMsg.WriteLineSuccess();
             }
         }
     }
+}
+
+/// <summary>
+/// 服务生命周期
+/// </summary>
+public enum ServiceLifeTimeEnum
+{
+    /// <summary>
+    /// 单例
+    /// </summary>
+    [Description("单例")]
+    Singleton,
+
+    /// <summary>
+    /// 作用域
+    /// </summary>
+    [Description("作用域")]
+    Scoped,
+
+    /// <summary>
+    /// 瞬时
+    /// </summary>
+    [Description("瞬时")]
+    Transient
 }

@@ -19,13 +19,13 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户统计表
 /// </summary>
-[SugarTable(TableName = "UserStatistic")]
+[SugarTable(TableName = "User_Statistic")]
 public class UserStatistic : BaseEntity
 {
     /// <summary>
     /// 所属用户
     /// </summary>
-    public long AccountId { get; set; }
+    public long UserId { get; set; }
 
     /// <summary>
     /// 关注数量

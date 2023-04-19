@@ -21,10 +21,10 @@ namespace XiHan.Models.Bases.Entity;
 public abstract class BaseDeleteEntity : BaseModifyEntity
 {
     /// <summary>
-    /// 软删除
+    /// 是否已经软删除
     /// </summary>
-    [SugarColumn(ColumnDescription = "软删除")]
-    public virtual bool SoftDeleted { get; set; }
+    [SugarColumn(ColumnDescription = "是否已经软删除")]
+    public virtual bool IsSoftDeleted { get; set; } = false;
 
     /// <summary>
     /// 删除用户

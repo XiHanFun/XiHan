@@ -47,8 +47,8 @@ public static class JwtTokenUtil
                 new Claim("Audience", authJwtSetting.Audience),
             };
         // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-        List<string> rootRolesClaim = new(tokenModel.RootRoles.Split(','));
-        claims.AddRange(rootRolesClaim.Select(role => new Claim("RootRole", role)));
+        List<string> sysRolesClaim = new(tokenModel.SysRoles.Split(','));
+        claims.AddRange(sysRolesClaim.Select(role => new Claim("SysRole", role)));
 
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
@@ -163,19 +163,19 @@ public static class JwtTokenUtil
             var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId");
             var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName");
             var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName");
-            var rootRolesClaim = claims.Where(claim => claim.Type == "RootRole").ToList();
+            var sysRolesClaim = claims.Where(claim => claim.Type == "SysRole").ToList();
 
             var userId = userIdClaim!.Value.ParseToGuid();
             var userName = userNameClaim!.Value;
             var nickName = nickNameClaim!.Value;
-            var rootRoles = rootRolesClaim.Select(c => c.Value).ToList();
+            var sysRoles = sysRolesClaim.Select(c => c.Value).ToList();
 
             var tokenModel = new TokenModel
             {
                 UserId = userId,
                 UserName = userName,
                 NickName = nickName,
-                RootRoles = string.Join(',', rootRoles),
+                SysRoles = string.Join(',', sysRoles),
             };
             return tokenModel;
         }
@@ -276,5 +276,5 @@ public class TokenModel
     /// <summary>
     /// 用户角色
     /// </summary>
-    public string RootRoles { get; init; } = string.Empty;
+    public string SysRoles { get; init; } = string.Empty;
 }

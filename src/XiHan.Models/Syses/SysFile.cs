@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
  /// 站点文件表
  /// </summary>
-[SugarTable(TableName = "SysFile")]
+[SugarTable(TableName = "Sys_File")]
 public class SysFile : BaseDeleteEntity
 {
     /// <summary>
@@ -61,9 +61,9 @@ public class SysFile : BaseDeleteEntity
 
     /// <summary>
     /// 存储类型
+    /// StoredTypeEnum
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string StoreType { get; set; } = string.Empty;
+    public int StoredType { get; set; }
 
     /// <summary>
     /// 存储位置

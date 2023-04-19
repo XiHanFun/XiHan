@@ -24,8 +24,8 @@ namespace XiHan.Tasks.Bases;
 /// </summary>
 public class JobFactory : IJobFactory
 {
-    private readonly ILogger<JobFactory> Logger;
-    private readonly IServiceProvider ServiceProvider;
+    private readonly ILogger<JobFactory> _logger;
+    private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
     /// 构造函数
@@ -35,8 +35,8 @@ public class JobFactory : IJobFactory
     /// <param name="serviceProvider"></param>
     public JobFactory(ILogger<JobFactory> logger, IServiceProvider serviceProvider)
     {
-        Logger = logger;
-        ServiceProvider = serviceProvider;
+        _logger = logger;
+        _serviceProvider = serviceProvider;
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class JobFactory : IJobFactory
     {
         try
         {
-            var serviceScope = ServiceProvider.CreateScope();
+            var serviceScope = _serviceProvider.CreateScope();
             var job = serviceScope.ServiceProvider.GetService(bundle.JobDetail.JobType) as IJob;
             if (job == null)
             {
@@ -65,7 +65,7 @@ public class JobFactory : IJobFactory
         {
             var errorInfo = "Job创建失败！";
             errorInfo.WriteLineError();
-            Logger.LogError(ex, errorInfo);
+            _logger.LogError(ex, errorInfo);
             throw;
         }
     }

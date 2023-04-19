@@ -17,9 +17,9 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
- /// 站点操作日志表
+ /// 系统操作日志表
  /// </summary>
-[SugarTable(TableName = "SysOperationLog")]
+[SugarTable(TableName = "Sys_Operation_Log")]
 public class SysOperationLog : BaseDeleteEntity
 {
     /// <summary>
@@ -29,10 +29,17 @@ public class SysOperationLog : BaseDeleteEntity
     public string? Module { get; set; }
 
     /// <summary>
+    /// 业务类型
+    /// LogTypeEnum
+    /// 0其它 1新增 2修改 3删除 4授权 5导出 6导入 7强退 8生成代码 9清空数据
+    /// </summary>
+    public int LogType { get; set; }
+
+    /// <summary>
     /// 操作类型
     ///</summary>
     [SugarColumn(IsNullable = true)]
-    public int? Type { get; set; }
+    public int? OperatorType { get; set; }
 
     /// <summary>
     /// 请求类型 GET、POST等

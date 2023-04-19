@@ -29,10 +29,10 @@ public static class ConsoleExtensions
     {
         lock (ObjLock)
         {
-            var currentForeColor = System.Console.ForegroundColor;
-            System.Console.ForegroundColor = frontColor;
-            System.Console.WriteLine(inputStr);
-            System.Console.ForegroundColor = currentForeColor;
+            var currentForeColor = Console.ForegroundColor;
+            Console.ForegroundColor = frontColor;
+            Console.WriteLine(inputStr);
+            Console.ForegroundColor = currentForeColor;
         }
     }
 
