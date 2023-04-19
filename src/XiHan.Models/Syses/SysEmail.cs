@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统邮件配置
 /// </summary>
-[SugarTable(TableName = "SysEmail")]
+[SugarTable(TableName = "Sys_Email")]
 public class SysEmail : BaseDeleteEntity
 {
     /// <summary>

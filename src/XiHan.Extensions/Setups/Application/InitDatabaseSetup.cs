@@ -16,10 +16,6 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Reflection;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Models.Posts;
-using XiHan.Models.Roots;
-using XiHan.Models.Syses;
-using XiHan.Models.Users;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Reflections;
 

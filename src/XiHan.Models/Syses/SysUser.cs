@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserAccount
+// FileName:SysUser
 // long:5c92c656-8955-4343-8e6f-7ba028f1eab4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,10 +17,10 @@ using XiHan.Models.Bases;
 namespace XiHan.Models.Users;
 
 /// <summary>
-/// 用户账户表
+/// 系统用户表
 /// </summary>
-[SugarTable(TableName = "UserAccount")]
-public class UserAccount : BaseEntity
+[SugarTable(TableName = "Sys_User")]
+public class SysUser : BaseEntity
 {
     /// <summary>
     /// 用户名称

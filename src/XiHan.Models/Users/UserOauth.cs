@@ -19,11 +19,12 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户第三方授权表
 /// </summary>
-[SugarTable(TableName = "UserOauth")]
+[SugarTable(TableName = "User_Oauth")]
 public class UserOauth : BaseEntity
 {
     /// <summary>
     /// 第三方登陆类型 weibo、qq、wechat 等
+    /// OauthTypeEnum
     /// </summary>
     [SugarColumn(Length = 20)]
     public string OauthType { get; set; } = string.Empty;

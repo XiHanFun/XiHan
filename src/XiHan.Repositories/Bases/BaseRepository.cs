@@ -120,7 +120,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveByIdBatchAsync(long[] ids)
     {
-        object[] newIds = ids.Select(x => x as dynamic).ToArray();
+        dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newIds);
     }
 

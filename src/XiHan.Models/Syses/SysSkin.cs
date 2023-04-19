@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点皮肤表
 /// </summary>
-[SugarTable(TableName = "SysSkin")]
+[SugarTable(TableName = "Sys_Skin")]
 public class SysSkin : BaseDeleteEntity
 {
     /// <summary>

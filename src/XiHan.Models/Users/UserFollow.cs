@@ -19,13 +19,13 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户关注表
 /// </summary>
-[SugarTable(TableName = "UserFollow")]
+[SugarTable(TableName = "User_Follow")]
 public class UserFollow : BaseEntity
 {
     /// <summary>
     /// 关注用户
     /// </summary>
-    public long FollowedAccountId { get; set; }
+    public long FollowedUserId { get; set; }
 
     /// <summary>
     /// 备注名称

@@ -12,28 +12,17 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 计划任务
+/// 系统计划任务表
 /// </summary>
-[SugarTable(TableName = "SysTasks")]
+[SugarTable(TableName = "Sys_Tasks")]
 public class SysTasks : BaseDeleteEntity
 {
-    /// <summary>
-    /// 程序集名称
-    /// </summary>
-    [SugarColumn(Length = 100)]
-    public string AssemblyName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 任务所在类
-    /// </summary>
-    [SugarColumn(Length = 100)]
-    public string ClassName { get; set; } = string.Empty;
-
     /// <summary>
     /// 任务名称
     /// </summary>
@@ -49,24 +38,76 @@ public class SysTasks : BaseDeleteEntity
     /// <summary>
     /// 任务描述
     /// </summary>
-    [SugarColumn(Length = 100)]
-    public string Remark { get; set; } = string.Empty;
+    [SugarColumn(Length = 100, IsNullable = true)]
+    public string? Remark { get; set; }
+
+    #region 任务类型
 
     /// <summary>
-    /// 任务类型 1、程序集 2、网络请求 3、SQL语句
+    /// 任务类型
+    /// JobTypeEnum
     /// </summary>
-    public int TaskType { get; set; }
+    public int JobType { get; set; }
+
+    #region 程序集
 
     /// <summary>
-    /// 触发器类型 0、Interval 定时任务 1、Cron 时间点或者周期性任务
+    /// 程序集名称
+    /// </summary>
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? AssemblyName { get; set; }
+
+    /// <summary>
+    /// 任务所在类
+    /// </summary>
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? ClassName { get; set; }
+
+    /// <summary>
+    /// 传入参数
+    /// </summary>
+    [SugarColumn(Length = 500, IsNullable = true)]
+    public string? JobParams { get; set; }
+
+    #endregion
+
+    #region 网络请求
+
+    /// <summary>
+    /// 网络请求方式
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public int? RequestMethod { get; set; }
+
+    /// <summary>
+    /// Api执行地址
+    /// </summary>
+    [SugarColumn(Length = 500, IsNullable = true)]
+    public string? ApiUrl { get; set; } = string.Empty;
+
+    #endregion
+
+    #region SQL语句
+
+    /// <summary>
+    /// SQL语句
+    /// </summary>
+    [SugarColumn(Length = 2000, IsNullable = true)]
+    public string? SqlText { get; set; } = string.Empty;
+
+    #endregion
+
+    #endregion
+
+    #region 触发器类型
+
+    /// <summary>
+    /// 触发器类型
+    /// TriggerTypeEnum
     /// </summary>
     public int TriggerType { get; set; }
 
-    /// <summary>
-    /// 运行时间表达式
-    /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
-    public string Cron { get; set; } = string.Empty;
+    #region 定时任务
 
     /// <summary>
     /// 执行间隔时间 单位秒
@@ -79,46 +120,91 @@ public class SysTasks : BaseDeleteEntity
     public int RunTimes { get; set; }
 
     /// <summary>
-    /// 是否启动
+    /// 循环执行次数
     /// </summary>
-    public bool IsStart { get; set; }
+    public int CycleRunTimes { get; set; }
+
+    /// <summary>
+    /// 已循环次数
+    /// </summary>
+    public int CycleHasRunTimes { get; set; }
 
     /// <summary>
     /// 开始时间
     /// </summary>
-    public DateTime BeginTime { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public DateTime? BeginTime { get; set; }
 
     /// <summary>
     /// 结束时间
     /// </summary>
-    public DateTime EndTime { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public DateTime? EndTime { get; set; }
 
     /// <summary>
     /// 最后运行时间
     /// </summary>
+    [SugarColumn(IsNullable = true)]
     public DateTime? LastRunTime { get; set; }
 
     /// <summary>
-    /// 传入参数
+    /// 是否启动
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
-    public string? JobParams { get; set; } = string.Empty;
+    public bool IsStart { get; set; }
+
+    #endregion
+
+    #region 时间点或者周期性任务
 
     /// <summary>
-    /// Api执行地址
+    /// 运行时间表达式
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
-    public string? ApiUrl { get; set; } = string.Empty;
+    [SugarColumn(Length = 100, IsNullable = true)]
+    public string? Cron { get; set; }
+
+    #endregion
+
+    #endregion
+}
+
+/// <summary>
+/// 触发器类型
+/// </summary>
+public enum TriggerTypeEnum
+{
+    /// <summary>
+    /// 定时任务
+    /// </summary>
+    [Description("定时任务")]
+    Interval = 1,
+
+    /// <summary>
+    /// 时间点或者周期性任务
+    /// </summary>
+    [Description("时间点或者周期性任务")]
+    Cron = 2,
+}
+
+/// <summary>
+/// 任务类型
+/// </summary>
+public enum JobTypeEnum
+{
+    /// <summary>
+    /// 程序集
+    /// </summary>
+    [Description("程序集")]
+    Assembly = 1,
+
+    /// <summary>
+    /// 网络请求
+    /// </summary>
+    [Description("网络请求")]
+    NetworkRequest = 2,
 
     /// <summary>
     /// SQL语句
     /// </summary>
-    [SugarColumn(Length = 2000, IsNullable = true)]
-    public string? SqlText { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 网络请求方式
-    /// </summary>
-    [SugarColumn(Length = 10, IsNullable = true)]
-    public string? RequestMethod { get; set; } = string.Empty;
+    [Description("SQL语句")]
+    SqlStatement = 3,
 }

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootRole
+// FileName:SysRole
 // long:26b82e42-87a7-477b-af80-59456336a22b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,15 +12,15 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Roots;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统角色表
 /// </summary>
-[SugarTable(TableName = "RootRole")]
-public class RootRole : BaseEntity
+[SugarTable(TableName = "Sys_Role")]
+public class SysRole : BaseDeleteEntity
 {
     /// <summary>
     /// 父级角色

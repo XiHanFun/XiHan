@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点字典类型表
 /// </summary>
-[SugarTable(TableName = "SysDictType")]
+[SugarTable(TableName = "Sys_Dict_Type")]
 public class SysDictType : BaseDeleteEntity
 {
     /// <summary>
@@ -35,9 +35,9 @@ public class SysDictType : BaseDeleteEntity
     public string DictType { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字典状态
+    /// 是否启用
     /// </summary>
-    public bool Status { get; set; } = true;
+    public bool IsEnable { get; set; } = true;
 
     /// <summary>
     /// 是否系统内置

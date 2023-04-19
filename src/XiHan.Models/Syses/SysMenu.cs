@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootMenu
+// FileName:SysMenu
 // long:9add3fb4-8c8d-4f8c-92d2-ec35ee45fc20
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,15 +12,15 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Roots;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统菜单表
 /// </summary>
-[SugarTable(TableName = "RootMenu")]
-public class RootMenu : BaseEntity
+[SugarTable(TableName = "Sys_Menu")]
+public class SysMenu : BaseDeleteEntity
 {
     /// <summary>
     /// 父级菜单

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootAudit
+// FileName:SysAudit
 // long:80aaad90-961a-4c97-aca3-12f12d26e056
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,15 +12,15 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Roots;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统审核表
 /// </summary>
-[SugarTable(TableName = "RootAudit")]
-public class RootAudit : BaseEntity
+[SugarTable(TableName = "Sys_Audit")]
+public class SysAudit : BaseDeleteEntity
 {
     /// <summary>
     /// 审核分类

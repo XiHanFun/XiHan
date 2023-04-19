@@ -2,33 +2,33 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:PollEnum
-// long:f199f9e2-a3de-42f0-b253-9167210fc0fc
+// FileName:SysUserRole
+// long:4bd03482-a95a-4c4e-a544-6e89ecf7c275
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-12-05 上午 03:07:12
+// CreateTime:2022-05-09 下午 05:14:15
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel;
+using SqlSugar;
+using XiHan.Models.Bases;
 
-namespace XiHan.Models.Posts.Enums;
+namespace XiHan.Models.Users;
 
 /// <summary>
-/// 点赞类型
+/// 系统用户角色关联表
 /// </summary>
-public enum PollTypeEnum
+[SugarTable(TableName = "Sys_User_Role")]
+public class SysUserRole : BaseEntity
 {
     /// <summary>
-    /// 文章
+    /// 用户账户
     /// </summary>
-    [Description("文章")]
-    Article = 1,
+    public long UserId { get; set; }
 
     /// <summary>
-    /// 评论
+    /// 系统角色
     /// </summary>
-    [Description("评论")]
-    Comment = 2
+    public long RoleId { get; set; }
 }

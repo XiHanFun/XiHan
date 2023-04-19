@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点字典数据表
 /// </summary>
-[SugarTable(TableName = "SysDictData")]
+[SugarTable(TableName = "Sys_Dict_Data")]
 public class SysDictData : BaseDeleteEntity
 {
     /// <summary>
@@ -54,8 +54,7 @@ public class SysDictData : BaseDeleteEntity
     /// <summary>
     /// 是否默认值
     /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public bool IsDefault { get; set; }
+    public bool IsDefault { get; set; } = false;
 
     /// <summary>
     /// 是否启用

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootAnnouncement
+// FileName:SysAnnouncement
 // long:0eeca4e2-11de-44f3-9c56-9205e87a9890
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,15 +12,15 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Roots;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统公告表
 /// </summary>
-[SugarTable(TableName = "RootAnnouncement")]
-public class RootAnnouncement : BaseEntity
+[SugarTable(TableName = "Sys_Announcement")]
+public class SysAnnouncement : BaseDeleteEntity
 {
     /// <summary>
     /// 公告标题

@@ -19,7 +19,7 @@ namespace XiHan.Models.Users;
 /// <summary>
 /// 用户收藏表
 /// </summary>
-[SugarTable(TableName = "UserCollect")]
+[SugarTable(TableName = "User_Collect")]
 public class UserCollect : BaseEntity
 {
     /// <summary>

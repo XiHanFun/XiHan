@@ -1,24 +1,58 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:FileStoredTypeEnum
-// Guid:39768536-06f6-41b1-ac7e-3e2932c456b8
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// FileName:SysFileOSS
+// Guid:b19f2f8c-3940-4e6d-b57d-4c63bd8a1759
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-12-24 上午 01:06:02
+// CreateTime:2023-04-19 上午 03:07:02
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
 using System.ComponentModel;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Infrastructure.Enums.Files;
+namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 文件存储类别
+/// 系统文件对象存储配置
+/// Operation Support Systems
 /// </summary>
-public enum FileStoredTypeEnum
+[SugarTable(TableName = "Sys_OSS")]
+public class SysFileOSS : BaseDeleteEntity
+{
+    /// <summary>
+    /// 存储类型
+    /// StoredTypeEnum
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string StoredType { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 机密Id
+    /// </summary>
+    [SugarColumn(Length = 100)]
+    public string SecretId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 机密密匙
+    /// </summary>
+    [SugarColumn(Length = 100)]
+    public string SecretKey { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否可用
+    /// </summary>
+    public bool IsEnabled { get; set; }
+}
+
+/// <summary>
+/// 存储类别
+/// </summary>
+public enum StoredTypeEnum
 {
     /// <summary>
     /// 本地

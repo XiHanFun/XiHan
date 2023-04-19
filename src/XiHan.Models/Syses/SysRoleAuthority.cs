@@ -2,33 +2,33 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserAccountRole
-// long:4bd03482-a95a-4c4e-a544-6e89ecf7c275
+// FileName:SysRoleAuthority
+// long:73293770-9bdc-4646-a03f-fba5cd908868
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-09 下午 05:14:15
+// CreateTime:2022-05-08 下午 04:51:28
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 用户账户角色关联表
+/// 系统角色权限关联表
 /// </summary>
-[SugarTable(TableName = "UserAccountRole")]
-public class UserAccountRole : BaseEntity
+[SugarTable(TableName = "Sys_Role_Authority")]
+public class SysRoleAuthority : BaseDeleteEntity
 {
-    /// <summary>
-    /// 用户账户
-    /// </summary>
-    public long AccountId { get; set; }
-
     /// <summary>
     /// 系统角色
     /// </summary>
     public long RoleId { get; set; }
+
+    /// <summary>
+    /// 系统权限
+    /// </summary>
+    public long AuthorityId { get; set; }
 }

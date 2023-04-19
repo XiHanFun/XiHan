@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:RootFriendlyLink
+// FileName:SysFriendlyLink
 // long:6580a424-f371-43eb-aafb-5ed17facb1aa
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Roots;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统友情链接表
 /// </summary>
-[SugarTable(TableName = "RootFriendlyLink")]
-public class RootFriendlyLink : BaseEntity
+[SugarTable(TableName = "Sys_Friendly_Link")]
+public class SysFriendlyLink : BaseEntity
 {
     /// <summary>
     /// 友链名称
@@ -32,7 +32,7 @@ public class RootFriendlyLink : BaseEntity
     /// 头像路径
     /// </summary>
     [SugarColumn(Length = 200)]
-    public string AvatarPath { get; set; } = "/Images/RootFriendlyLink/Avatar/defult.png";
+    public string AvatarPath { get; set; } = "/Images/SysFriendlyLink/Avatar/defult.png";
 
     /// <summary>
     /// 友链地址

@@ -12,14 +12,15 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统网络挂钩配置
+/// 系统网络挂钩配置表
 /// </summary>
-[SugarTable(TableName = "SysWebHook")]
+[SugarTable(TableName = "Sys_WebHook")]
 public class SysWebHook : BaseDeleteEntity
 {
     /// <summary>
@@ -29,6 +30,7 @@ public class SysWebHook : BaseDeleteEntity
 
     /// <summary>
     /// 机器人类型
+    /// WebHookTypeEnum
     /// </summary>
     [SugarColumn(Length = 10)]
     public string WebHookType { get; set; } = string.Empty;
@@ -62,4 +64,22 @@ public class SysWebHook : BaseDeleteEntity
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
     public string UploadkUri { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 网络挂钩类型
+/// </summary>
+public enum WebHookTypeEnum
+{
+    /// <summary>
+    /// 钉钉
+    /// </summary>
+    [Description("钉钉")]
+    DingTalk = 1,
+
+    /// <summary>
+    /// 企业微信
+    /// </summary>
+    [Description("企业微信")]
+    WeCom,
 }

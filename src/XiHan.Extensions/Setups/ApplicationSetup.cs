@@ -74,8 +74,6 @@ public static class ApplicationSetup
         // 注入全局服务
         AppServiceManager.ServiceProvider = app.ApplicationServices;
 
-        var ss = AppServiceManager.ServiceProvider;
-
         "XiHan Application Started Successfully！".WriteLineSuccess();
         return app;
     }

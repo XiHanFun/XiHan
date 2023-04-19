@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 站点配置表
 /// </summary>
-[SugarTable(TableName = "SysConfig")]
+[SugarTable(TableName = "Sys_Config")]
 public class SysConfig : BaseDeleteEntity
 {
     /// <summary>
