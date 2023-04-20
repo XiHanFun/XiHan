@@ -17,7 +17,7 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
- /// 站点文件表
+ /// 系统文件表
  /// </summary>
 [SugarTable(TableName = "Sys_File")]
 public class SysFile : BaseDeleteEntity

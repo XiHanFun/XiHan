@@ -17,12 +17,12 @@ using XiHan.Utils.Shells;
 namespace XiHan.Utils.Infos.BaseInfos;
 
 /// <summary>
-/// CPU帮助类
+/// 处理器帮助类
 /// </summary>
 public static class CpuHelper
 {
     /// <summary>
-    /// 获取CPU个数
+    /// 获取处理器个数
     /// </summary>
     public static string GetCpuCount()
     {
@@ -30,7 +30,7 @@ public static class CpuHelper
     }
 
     /// <summary>
-    /// Windows系统获取CPU使用率
+    /// Windows 系统获取处理器使用率
     /// </summary>
     /// <returns></returns>
     public static string GetWindowsCpuRate()
@@ -49,7 +49,7 @@ public static class CpuHelper
     }
 
     /// <summary>
-    /// Unix系统获取CPU使用率
+    /// Unix 系统获取处理器使用率
     /// </summary>
     /// <returns></returns>
     public static string GetUnixCpuRate()

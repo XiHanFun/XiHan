@@ -81,7 +81,7 @@ public static class ClientInfoHelper
 }
 
 /// <summary>
-/// ClientInfo
+/// 客户端信息
 /// </summary>
 public class ClientInfo
 {

@@ -19,7 +19,7 @@ namespace XiHan.Utils.Https;
 public interface IHttpPollyHelper
 {
     /// <summary>
-    /// Get请求
+    /// Get 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -29,7 +29,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Get请求
+    /// Get 请求
     /// </summary>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
@@ -38,7 +38,7 @@ public interface IHttpPollyHelper
     Task<string> GetAsync(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
@@ -50,7 +50,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Post请求上传文件
+    /// Post 请求 上传文件
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -61,7 +61,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -72,7 +72,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -83,7 +83,7 @@ public interface IHttpPollyHelper
     Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
@@ -93,7 +93,7 @@ public interface IHttpPollyHelper
     Task<string> PostAsync(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Put请求
+    /// Put 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
@@ -105,7 +105,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Put请求
+    /// Put 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -116,7 +116,7 @@ public interface IHttpPollyHelper
     Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null);
 
     /// <summary>
-    /// Delete请求
+    /// Delete 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>

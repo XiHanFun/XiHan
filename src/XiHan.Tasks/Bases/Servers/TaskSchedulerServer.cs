@@ -24,6 +24,7 @@ using XiHan.Infrastructure.Apps.Services;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
+using XiHan.Models.Syses.Enums;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Enums;
 
@@ -61,7 +62,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         // 从Factory中获取_scheduler实例
         var collection = new NameValueCollection()
         {
-            { "quartz.serializer.type","binary" },
+            {"quartz.serializer.type","binary"}
         };
         var factory = new StdSchedulerFactory(collection);
         return factory.GetScheduler().Result;
@@ -372,7 +373,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
 
     /// <summary>
     /// 创建任务
-    /// SQL语句类型
+    /// SQL 语句类型
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
@@ -389,7 +390,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
-    /// 创建Interval类型的触发器
+    /// 创建 Interval 类型的触发器
     /// 定时任务
     /// </summary>
     /// <param name="sysTasks"></param>
@@ -398,6 +399,12 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.TriggerType == TriggerTypeEnum.Interval.GetEnumValueByKey())
         {
+            // 设置开始时间和结束时间
+            sysTasks.BeginTime ??= DateTime.Now;
+            sysTasks.EndTime ??= DateTime.MaxValue.AddDays(-1);
+            DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
+            DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
+
             if (sysTasks.EndTime <= DateTime.Now)
             {
                 throw new Exception($"结束时间小于当前时间计划将不会被执行！");
@@ -407,19 +414,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 throw new Exception($"该任务计划已完成:【{sysTasks.Name}】,无需重复启动,如需启动请修改已循环次数再提交");
             }
 
-            // 设置开始时间和结束时间
-            if (sysTasks.BeginTime == null)
-            {
-                sysTasks.BeginTime = DateTime.Now;
-            }
-            if (sysTasks.EndTime == null)
-            {
-                sysTasks.EndTime = DateTime.MaxValue.AddDays(-1);
-            }
-            DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
-            DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
-
-            // 触发作业立即运行，然后每10秒重复一次，无限循环
+            // 触发作业立即运行，然后每N秒重复一次，无限循环
             if (sysTasks.RunTimes > 0)
             {
                 ITrigger trigger = TriggerBuilder.Create()
@@ -430,7 +425,6 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .WithRepeatCount(sysTasks.RunTimes))
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }
             else
@@ -443,7 +437,6 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .RepeatForever())
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }
         }
@@ -451,7 +444,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
-    /// 创建Cron类型的触发器
+    /// 创建 Cron 类型的触发器
     /// 时间点或者周期性任务
     /// </summary>
     /// <param name="sysTasks"></param>
@@ -461,14 +454,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         if (sysTasks.TriggerType == TriggerTypeEnum.Cron.GetEnumValueByKey())
         {
             // 设置开始时间和结束时间
-            if (sysTasks.BeginTime == null)
-            {
-                sysTasks.BeginTime = DateTime.Now;
-            }
-            if (sysTasks.EndTime == null)
-            {
-                sysTasks.EndTime = DateTime.MaxValue.AddDays(-1);
-            }
+            sysTasks.BeginTime ??= DateTime.Now;
+            sysTasks.EndTime ??= DateTime.MaxValue.AddDays(-1);
             DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
             DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
 
@@ -482,7 +469,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .WithCronSchedule(sysTasks.Cron)
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                // 解决Quartz启动后第一次会立即执行问题解决办法
+                // 解决 Quartz 启动后第一次会立即执行的办法
                 ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }

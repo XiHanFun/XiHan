@@ -18,7 +18,7 @@ using XiHan.Utils.Objects;
 namespace XiHan.Utils.Infos.IpLocation;
 
 /// <summary>
-/// Ip查询帮助类
+/// Ip 查询帮助类
 /// </summary>
 public static class IpSearchHelper
 {
@@ -53,7 +53,7 @@ public static class IpSearchHelper
     }
 
     /// <summary>
-    /// 查询Ip
+    /// 查询 Ip
     /// </summary>
     /// <param name="ip"></param>
     /// <returns></returns>
@@ -96,7 +96,7 @@ public static class IpSearchHelper
 }
 
 /// <summary>
-/// Ip地区信息
+/// Ip 地区信息
 /// </summary>
 public class AddressModel
 {

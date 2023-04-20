@@ -17,7 +17,7 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 站点字典数据表
+/// 系统字典数据表
 /// </summary>
 [SugarTable(TableName = "Sys_Dict_Data")]
 public class SysDictData : BaseDeleteEntity

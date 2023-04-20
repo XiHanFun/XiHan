@@ -24,7 +24,7 @@ namespace XiHan.Utils.Infos.BaseInfos;
 public static class RamHelper
 {
     /// <summary>
-    /// Windows系统获取内存信息
+    /// Windows 系统获取内存信息
     /// </summary>
     /// <returns></returns>
     public static RamInfo GetWindowsRam()
@@ -54,7 +54,7 @@ public static class RamHelper
     }
 
     /// <summary>
-    /// Unix系统获取内存信息
+    /// Unix 系统获取内存信息
     /// </summary>
     /// <returns></returns>
     public static RamInfo GetUnixRam()

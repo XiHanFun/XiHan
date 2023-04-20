@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserOauth
+// FileName:SysUserOauth
 // long:869f7f82-aef4-4c83-a012-d206c6854ae3
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户第三方授权表
 /// </summary>
-[SugarTable(TableName = "User_Oauth")]
-public class UserOauth : BaseEntity
+[SugarTable(TableName = "Sys_User_Oauth")]
+public class SysUserOauth : BaseEntity
 {
     /// <summary>
     /// 第三方登陆类型 weibo、qq、wechat 等

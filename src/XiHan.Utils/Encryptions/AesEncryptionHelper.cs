@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Aes加密解密类
-/// 比Des加密更加安全
+/// Aes 加密解密类
 /// </summary>
+/// <remarks>比 Des 加密更加安全</remarks>
 public static class AesEncryptionHelper
 {
     // AES KEY 的位数

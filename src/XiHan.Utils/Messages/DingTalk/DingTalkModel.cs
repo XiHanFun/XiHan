@@ -204,6 +204,8 @@ public class BtnInfo
 
 #endregion 辅助类
 
+#region 枚举
+
 /// <summary>
 /// 消息类型枚举
 /// </summary>
@@ -239,3 +241,5 @@ public enum MsgTypeEnum
     [Description("feedCard")]
     FeedCard
 }
+
+#endregion

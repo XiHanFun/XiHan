@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserCollectCategory
+// FileName:SysUserCollectType
 // long:8d28b4f1-d0cc-4857-9150-353deffa880d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户收藏分类表
 /// </summary>
-[SugarTable(TableName = "User_Collect_Category")]
-public class UserCollectCategory : BaseEntity
+[SugarTable(TableName = "Sys_User_Collect_Type")]
+public class SysUserCollectType : BaseEntity
 {
     /// <summary>
     /// 父级收藏分类

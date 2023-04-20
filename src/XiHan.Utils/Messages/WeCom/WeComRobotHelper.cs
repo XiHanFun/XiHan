@@ -22,31 +22,22 @@ namespace XiHan.Utils.Messages.WeCom;
 /// </summary>
 public class WeComRobotHelper
 {
-    /// <summary>
-    /// 请求接口
-    /// </summary>
-    private readonly IHttpPollyHelper HttpPollyHelper;
+    private readonly IHttpPollyHelper _httpPolly;
+    private readonly string _messageUrl;
 
-    /// <summary>
-    /// 正式访问地址
-    /// </summary>
-    private readonly string MessageUrl;
-
-    /// <summary>
-    /// 正式文件上传地址
-    /// </summary>
-    private readonly string FileUrl;
+    // 正式文件上传地址，调用接口凭证, 机器人 webhookurl 中的 key 参数
+    private readonly string _fileUrl;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPollyHelper"></param>
+    /// <param name="httpPolly"></param>
     /// <param name="weChatConnection"></param>
-    public WeComRobotHelper(IHttpPollyHelper httpPollyHelper, WeComConnection weChatConnection)
+    public WeComRobotHelper(IHttpPollyHelper httpPolly, WeComConnection weChatConnection)
     {
-        HttpPollyHelper = httpPollyHelper;
-        MessageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
-        FileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=file";
+        _httpPolly = httpPolly;
+        _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
+        _fileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=file";
     }
 
     /// <summary>
@@ -151,9 +142,9 @@ public class WeComRobotHelper
 
     /// <summary>
     /// 微信执行上传文件
-    /// 素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用
-    /// 文件大小在5B~20M之间
     /// </summary>
+    /// <remarks>素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用</remarks>
+    /// <remarks>文件大小在5B~20M之间</remarks>
     /// <returns></returns>
     public async Task<WeComResultInfoDto?> UploadkFile(FileStream fileStream)
     {
@@ -162,8 +153,8 @@ public class WeComRobotHelper
             { "filename",fileStream.Name },
             { "filelength",fileStream.Length.ToString() },
         };
-        // 发起请求，上传地址，调用接口凭证, 机器人webhookurl中的key参数
-        var result = await HttpPollyHelper.PostAsync<WeComResultInfoDto>(HttpEnum.Common, FileUrl, fileStream, headers);
+        // 发起请求，上传地址
+        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpEnum.Common, _fileUrl, fileStream, headers);
         return result;
     }
 
@@ -177,7 +168,7 @@ public class WeComRobotHelper
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        var result = await HttpPollyHelper.PostAsync<WeComResultInfoDto>(HttpEnum.Common, MessageUrl, sendMessage);
+        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpEnum.Common, _messageUrl, sendMessage);
         return result;
     }
 }

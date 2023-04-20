@@ -25,7 +25,7 @@
 
 - [x] 全面异步 async/await 开发；
 
-- [x] 国产数据库 ORM 组件 SqlSugar ；
+- [x] 国产数据库 ORM 组件 SqlSugar,使用 CodeFirst 开发模式；
 
 - [x] 支持自由切换多种数据库，MySql/SqlServer/Sqlite/Oracle/Postgresql/达梦/人大金仓；
 
@@ -41,25 +41,25 @@
 
   - 文档：XiHan.Docs
 
-- [ ] 统一集成 IdentityServer4 认证 ✨;
+- [ ] 统一集成 IdentityServer4 认证;
 
 ### 组件模块：
 
 - [x] 提供 Redis 做缓存处理；
 - [x] 使用 Swagger 做API文档；
-- [x] 使用 MiniProfiler 做接口性能分析 ✨；
-- [x] 使用 Automapper 处理对象映射；
-- [x] 使用自带高性能依赖注入容器，并提供批量服务注入 ✨；
+- [x] 使用 MiniProfiler 做接口性能分析 ；
+- [x] 使用 ~~Automapper~~ Mapster 处理对象映射；
+- [x] 使用 ~~AotuFac~~ 自带高性能轻量级的 Microsoft.Extensions.DependencyInjection 依赖注入容器，并扩展支持批量注入服务（自定义生命周期）；
 - [x] 支持 CORS 跨域；
 - [x] 封装 JWT 自定义策略授权；
-- [x] 使用 Serilog日志框架，高性能日志记录；
-- [ ] 使用 SignalR 双工通讯 ✨；
+- [x] 使用 Serilog 高性能日志记录框架，异步写入，支持注入，支持全局；
+- [x] 使用 SignalR 双工通讯；
 - [ ] 添加 IpRateLimiting 做 API 限流处理;
-- [ ] 使用 Quartz 做任务调度;
-- [x] 支持 数据库`读写分离`和多库操作 ✨;
-- [ ] 新增 Redis 消息队列 ✨;
-- [ ] 新增 RabbitMQ 消息队列 ✨;
-- [ ] 新增 EventBus 事件总线 ✨;
+- [x] 使用 Quartz.Net 做任务调度;
+- [x] 支持 数据库`读写分离`和多库操作;
+- [ ] 新增 Redis 消息队列;
+- [ ] 新增 RabbitMQ 消息队列;
+- [ ] 新增 EventBus 事件总线;
 - [ ] 新增 ES 搜索配置;
 
 ### 微服务模块：

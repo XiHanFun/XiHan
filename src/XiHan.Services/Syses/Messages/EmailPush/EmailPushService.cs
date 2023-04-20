@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using XiHan.Infrastructure.Apps.Services;
@@ -34,10 +35,10 @@ public class EmailPushService : IEmailPushService
     /// <summary>
     /// 构造函数
     /// </summary>
-    public EmailPushService(ILogger<EmailPushService> logger, IBaseRepository<SysEmail> emailRepository)
+    public EmailPushService(ILogger<EmailPushService> logger, IBaseRepository<SysEmail> baseRepository)
     {
         _logger = logger;
-        _emailRepository = emailRepository;
+        _emailRepository = baseRepository;
     }
 
     /// <summary>
@@ -46,8 +47,8 @@ public class EmailPushService : IEmailPushService
     /// <returns></returns>
     public async Task<BaseResultDto> SendEmail()
     {
-        // var emailFromModel = await _emailRepository.GetFirstAsync<SysEmail>();
-
+        var sysEmail = await _emailRepository.GetFirstAsync(e => !e.IsSoftDeleted);
+        EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
         var subject = "测试";
         var body = "测试";
         List<string> toMail = new() { "" };
@@ -57,14 +58,8 @@ public class EmailPushService : IEmailPushService
         {
             new Attachment(@"")
         };
-        var model = new EmailModel
+        EmailToModel emailTo = new EmailToModel
         {
-            //Host = AppSettings.Message.Email.Host.GetValue(),
-            //Port = AppSettings.Message.Email.Port.GetValue(),
-            //UseSsl = AppSettings.Message.Email.UseSsl.GetValue(),
-            //FromMail = AppSettings.Message.Email.From.Address.GetValue(),
-            //FromName = AppSettings.Message.Email.From.UserName.GetValue(),
-            //FromPassword = AppSettings.Message.Email.From.Password.GetValue(),
             Subject = subject,
             Body = body,
             ToMail = toMail,
@@ -72,7 +67,8 @@ public class EmailPushService : IEmailPushService
             BccMail = bccMail,
             AttachmentsPath = attachmentsPath,
         };
-        if (await EmailHelper.Send(model))
+        EmailHelper emailHelper = new(emailFrom, emailTo);
+        if (await emailHelper.Send())
         {
             return BaseResponseDto.Ok("邮件发送成功");
         }

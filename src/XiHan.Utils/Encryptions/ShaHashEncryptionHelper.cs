@@ -17,8 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// ShaHashEncryptionHelper
+/// Sha 生成哈希类
 /// </summary>
+/// <remarks>用于数据的完整性校验、数字签名等</remarks>
 public static class ShaHashEncryptionHelper
 {
     /// <summary>

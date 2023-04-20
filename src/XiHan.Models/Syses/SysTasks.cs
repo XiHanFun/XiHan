@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -165,46 +164,4 @@ public class SysTasks : BaseDeleteEntity
     #endregion
 
     #endregion
-}
-
-/// <summary>
-/// 触发器类型
-/// </summary>
-public enum TriggerTypeEnum
-{
-    /// <summary>
-    /// 定时任务
-    /// </summary>
-    [Description("定时任务")]
-    Interval = 1,
-
-    /// <summary>
-    /// 时间点或者周期性任务
-    /// </summary>
-    [Description("时间点或者周期性任务")]
-    Cron = 2,
-}
-
-/// <summary>
-/// 任务类型
-/// </summary>
-public enum JobTypeEnum
-{
-    /// <summary>
-    /// 程序集
-    /// </summary>
-    [Description("程序集")]
-    Assembly = 1,
-
-    /// <summary>
-    /// 网络请求
-    /// </summary>
-    [Description("网络请求")]
-    NetworkRequest = 2,
-
-    /// <summary>
-    /// SQL语句
-    /// </summary>
-    [Description("SQL语句")]
-    SqlStatement = 3,
 }

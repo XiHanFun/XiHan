@@ -16,12 +16,12 @@ using System.Net.NetworkInformation;
 namespace XiHan.Utils.Infos.BaseInfos;
 
 /// <summary>
-/// Network帮助类
+/// 网卡信息帮助类
 /// </summary>
 public static class NetworkHelper
 {
     /// <summary>
-    /// 获取本机所有可用网卡IP信息
+    /// 获取本机所有可用网卡信息
     /// </summary>
     /// <returns></returns>
     public static List<NetworkInfo> GetNetworkInfos()

@@ -46,7 +46,7 @@ public static class OSPlatformHelper
     }
 
     /// <summary>
-    /// 是否Unix系统
+    /// 是否 Unix 系统
     /// </summary>
     /// <returns></returns>
     public static bool GetOsIsUnix()

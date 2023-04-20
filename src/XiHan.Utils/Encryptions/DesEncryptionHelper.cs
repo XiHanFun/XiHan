@@ -17,7 +17,7 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Des加密解密类
+/// Des 加密解密类
 /// </summary>
 public static class DesEncryptionHelper
 {

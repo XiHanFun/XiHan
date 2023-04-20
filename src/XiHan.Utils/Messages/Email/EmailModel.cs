@@ -17,9 +17,9 @@ using System.Text;
 namespace XiHan.Utils.Messages.Email;
 
 /// <summary>
-/// EmailModel
+/// EmailFromModel
 /// </summary>
-public class EmailModel
+public class EmailFromModel
 {
     /// <summary>
     /// 服务器
@@ -47,16 +47,6 @@ public class EmailModel
     public string FromPassword { get; set; } = string.Empty;
 
     /// <summary>
-    /// 发送主题
-    /// </summary>
-    public string Subject { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 发送内容
-    /// </summary>
-    public string Body { get; set; } = string.Empty;
-
-    /// <summary>
     /// 内容编码
     /// </summary>
     public Encoding Coding { get; set; } = Encoding.UTF8;
@@ -65,6 +55,22 @@ public class EmailModel
     /// SSL
     /// </summary>
     public bool UseSsl { get; set; } = true;
+}
+
+/// <summary>
+/// EmailToModel
+/// </summary>
+public class EmailToModel
+{
+    /// <summary>
+    /// 发送主题
+    /// </summary>
+    public string Subject { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 发送内容
+    /// </summary>
+    public string Body { get; set; } = string.Empty;
 
     /// <summary>
     /// 接收者邮箱

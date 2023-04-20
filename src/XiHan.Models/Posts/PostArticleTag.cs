@@ -19,7 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章标签关联表
 /// </summary>
-[SugarTable(TableName = "PostArticleTag")]
+[SugarTable(TableName = "Post_Article_Tag")]
 public class PostArticleTag : BaseEntity
 {
     /// <summary>

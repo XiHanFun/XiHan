@@ -18,12 +18,12 @@ namespace XiHan.Utils.Verification;
 /// <summary>
 /// 字符验证帮助类
 /// </summary>
-public static class RegexHelper
+public static partial class RegexHelper
 {
     #region 验证输入字符串是否与模式字符串匹配
 
     /// <summary>
-    /// 验证输入字符串是否与模式字符串匹配，匹配返回true
+    /// 验证输入字符串是否与模式字符串匹配，匹配返回 true
     /// </summary>
     /// <param name="input">输入字符串</param>
     /// <param name="pattern">模式字符串</param>
@@ -33,7 +33,7 @@ public static class RegexHelper
     }
 
     /// <summary>
-    /// 验证输入字符串是否与模式字符串匹配，匹配返回true
+    /// 验证输入字符串是否与模式字符串匹配，匹配返回 true
     /// </summary>
     /// <param name="input">输入的字符串</param>
     /// <param name="pattern">模式字符串</param>
@@ -54,8 +54,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsGuid(string checkValue)
     {
-        const string pattern = @"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return GuidRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -69,8 +68,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberTel(string checkValue)
     {
-        const string pattern = @"^(\d{3,4}-)\d{7,8}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberTelRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -126,8 +124,8 @@ public static class RegexHelper
             return false;
         }
         // 校验码验证
-        string[] arrVarifyCode = ("1,0,x,9,8,7,6,5,4,3,2").Split(',');
-        string[] wi = ("7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2").Split(',');
+        string[] arrVarifyCode = "1,0,x,9,8,7,6,5,4,3,2".Split(',');
+        string[] wi = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(',');
         var ai = checkValue.Remove(17).ToCharArray();
         var sum = 0;
         for (var i = 0; i < 17; i++)
@@ -182,8 +180,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsEmail(string checkValue)
     {
-        const string pattern = @"^[A-Za-z0-9](([\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return EmailRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -197,8 +194,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumber(string checkValue)
     {
-        var pattern = @"^[0-9]*$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -208,10 +204,9 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsInt(string source)
     {
-        Regex regex = new(@"^(-){0,1}\d+$");
-        if (regex.Match(source).Success)
+        if (IntRegex().Match(source).Success)
         {
-            if ((long.Parse(source) > 0x7fffffffL) || (long.Parse(source) < -2147483648L))
+            if (long.Parse(source) > 0x7fffffffL || long.Parse(source) < -2147483648L)
             {
                 return false;
             }
@@ -227,8 +222,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberIntOrDouble(string checkValue)
     {
-        var pattern = @"^[0-9]+\.{0,1}[0-9]{0,2}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberIntOrDoubleRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -238,8 +232,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberSeveralN(string checkValue)
     {
-        var pattern = @"^\d{n}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberSeveralNRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -249,8 +242,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberSeveralAtLeastN(string checkValue)
     {
-        var pattern = @"^\d{n,}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberSeveralAtLeastNRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -260,8 +252,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberSeveralMN(string checkValue)
     {
-        var pattern = @"^\d{m,n}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberSeveralMNRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -271,8 +262,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberBeginZeroOrNotZero(string checkValue)
     {
-        var pattern = @"^(0|[1-9] [0-9]*)$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberBeginZeroOrNotZeroRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -282,8 +272,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberPositiveRealTwoDouble(string checkValue)
     {
-        var pattern = @"^[0-9]+(.[0-9]{2})?$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberPositiveRealTwoDoubleRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -293,8 +282,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberPositiveRealOneOrThreeDouble(string checkValue)
     {
-        var pattern = @"^[0-9]+(.[0-9]{1,3})?$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberPositiveRealOneOrThreeDoubleRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -304,8 +292,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberPositiveIntNotZero(string checkValue)
     {
-        var pattern = @"^\+?[1-9][0-9]*$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberPositiveIntNotZeroRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -315,8 +302,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberNegativeIntNotZero(string checkValue)
     {
-        var pattern = @"^\-?[1-9][0-9]*$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberNegativeIntNotZeroRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -330,8 +316,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetter(string checkValue)
     {
-        const string pattern = @"^[A-Za-z]+$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return LetterRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -341,8 +326,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetterCapital(string checkValue)
     {
-        const string pattern = @"^[A-Z]+$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return LetterCapitalRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -352,8 +336,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLetterLower(string checkValue)
     {
-        var pattern = @"^[a-z]+$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return LetterLowerRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -367,8 +350,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsNumberOrLetter(string checkValue)
     {
-        const string pattern = @"^[A-Za-z0-9]+$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return NumberOrLetterRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -384,8 +366,8 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsLengthStr(string source, int begin, int end)
     {
-        var length = Regex.Replace(source, @"[^\x00-\xff]", "OK").Length;
-        return (length > begin) || (length < end);
+        var length = LengthStrRegex().Replace(source, "OK").Length;
+        return length > begin || length < end;
     }
 
     /// <summary>
@@ -395,8 +377,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsCharThree(string checkValue)
     {
-        var pattern = @"^.{3}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return CharThreeRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -410,7 +391,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsPostCode(string source)
     {
-        return Regex.IsMatch(source, @"^\d{6}$", RegexOptions.IgnoreCase);
+        return PostCodeRegex().IsMatch(source);
     }
 
     #endregion
@@ -424,8 +405,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsCharSpecial(string checkValue)
     {
-        const string pattern = @"[^%&',;=?$\x22]+";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return CharSpecialRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -439,8 +419,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsContainChinese(string checkValue)
     {
-        const string pattern = @"^[\u4e00-\u9fa5]{0,}$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return ContainChineseRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -450,8 +429,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsChinese(string checkValue)
     {
-        Regex regex = new("[\u4e00-\u9fa5]");
-        if (regex.Matches(checkValue).Count == checkValue.Length)
+        if (ChineseRegex().Matches(checkValue).Count == checkValue.Length)
         {
             return true;
         }
@@ -469,8 +447,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsUrl(string checkValue)
     {
-        const string pattern = @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\.-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%\./-~-]*)?$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return UrlRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -501,8 +478,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsMonth(string checkValue)
     {
-        const string pattern = @"^^(0?[1-9]|1[0-2])$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return MonthRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -512,8 +488,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsDay(string checkValue)
     {
-        const string pattern = @"^((0?[1-9])|((1|2)[0-9])|30|31)$";
-        return Regex.IsMatch(checkValue, pattern, RegexOptions.IgnoreCase);
+        return DayRegex().IsMatch(checkValue);
     }
 
     #endregion
@@ -527,7 +502,7 @@ public static class RegexHelper
     /// <returns></returns>
     public static bool IsIpRegex(string checkValue)
     {
-        return Regex.IsMatch(checkValue, @"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$", RegexOptions.IgnoreCase);
+        return IpRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -561,4 +536,88 @@ public static class RegexHelper
     }
 
     #endregion
+
+    [GeneratedRegex("^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex GuidRegex();
+
+    [GeneratedRegex("^(\\d{3,4}-)\\d{7,8}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberTelRegex();
+
+    [GeneratedRegex("^[A-Za-z0-9](([\\.\\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\\.\\-]?[a-zA-Z0-9]+)*)\\.([A-Za-z]{2,})$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex EmailRegex();
+
+    [GeneratedRegex("^(-){0,1}\\d+$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex IntRegex();
+
+    [GeneratedRegex(@"^[0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberRegex();
+
+    [GeneratedRegex("^[0-9]+\\.{0,1}[0-9]{0,2}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberIntOrDoubleRegex();
+
+    [GeneratedRegex("^\\d{n}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberSeveralNRegex();
+
+    [GeneratedRegex("^\\d{n,}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberSeveralAtLeastNRegex();
+
+    [GeneratedRegex("^\\d{m,n}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberSeveralMNRegex();
+
+    [GeneratedRegex("^(0|[1-9] [0-9]*)$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberBeginZeroOrNotZeroRegex();
+
+    [GeneratedRegex("^[0-9]+(.[0-9]{2})?$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberPositiveRealTwoDoubleRegex();
+
+    [GeneratedRegex("^[0-9]+(.[0-9]{1,3})?$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberPositiveRealOneOrThreeDoubleRegex();
+
+    [GeneratedRegex("^\\+?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberPositiveIntNotZeroRegex();
+
+    [GeneratedRegex("^\\-?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberNegativeIntNotZeroRegex();
+
+    [GeneratedRegex("^[A-Za-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex LetterRegex();
+
+    [GeneratedRegex("^[A-Z]+$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex LetterCapitalRegex();
+
+    [GeneratedRegex("^[a-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex LetterLowerRegex();
+
+    [GeneratedRegex("^[A-Za-z0-9]+$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex NumberOrLetterRegex();
+
+    [GeneratedRegex("[^\\x00-\\xff]", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex LengthStrRegex();
+
+    [GeneratedRegex("^.{3}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex CharThreeRegex();
+
+    [GeneratedRegex("^\\d{6}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex PostCodeRegex();
+
+    [GeneratedRegex("[^%&',;=?$\\x22]+", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex CharSpecialRegex();
+
+    [GeneratedRegex("^[\\u4e00-\\u9fa5]{0,}$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex ContainChineseRegex();
+
+    [GeneratedRegex("[一-龥]", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex ChineseRegex();
+
+    [GeneratedRegex("^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\\.))+(([a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/[a-zA-Z0-9\\&amp;%\\./-~-]*)?$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex UrlRegex();
+
+    [GeneratedRegex("^^(0?[1-9]|1[0-2])$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex MonthRegex();
+
+    [GeneratedRegex("^((0?[1-9])|((1|2)[0-9])|30|31)$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex DayRegex();
+
+    [GeneratedRegex("^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex IpRegex();
 }

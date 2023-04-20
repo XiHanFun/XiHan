@@ -44,7 +44,7 @@ public static class SwaggerSetup
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                // 站点名称
+                // 系统名称
                 var siteName = AppSettings.Syses.Name.GetValue();
                 // 路由前缀
                 var routePrefix = AppSettings.Swagger.RoutePrefix.GetValue();

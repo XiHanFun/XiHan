@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-// Microsoft.AspNetCore.Http.Abstractions
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using XiHan.Utils.Formats;
@@ -19,12 +18,13 @@ using XiHan.Utils.Formats;
 namespace XiHan.Utils.Infos.BaseInfos;
 
 /// <summary>
-/// 客户端Ip帮助类
+/// 客户端 Ip 帮助类
 /// </summary>
+/// <remarks>需要安装 Microsoft.AspNetCore.Http.Abstractions</remarks>
 public static class ClientIpHelper
 {
     /// <summary>
-    /// 取得客户端IP
+    /// 取得客户端 IP
     /// </summary>
     /// <returns></returns>
     public static string GetClientIpV4(HttpContext httpContext)
@@ -33,7 +33,7 @@ public static class ClientIpHelper
     }
 
     /// <summary>
-    /// 取得客户端IP
+    /// 取得客户端 IP
     /// </summary>
     /// <returns></returns>
     public static string GetClientIpV6(HttpContext httpContext)
@@ -42,7 +42,7 @@ public static class ClientIpHelper
     }
 
     /// <summary>
-    /// 取得客户端IP
+    /// 取得客户端 IP
     /// </summary>
     /// <returns></returns>
     public static IPAddress ClientIpAddressInfo(HttpContext httpContext)
@@ -63,7 +63,7 @@ public static class ClientIpHelper
         }
         else
         {
-            // 取代理IP
+            // 取代理 IP
             if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
             {
                 result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();

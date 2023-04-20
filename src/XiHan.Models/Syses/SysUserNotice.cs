@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserNotice
+// FileName:SysUserNotice
 // long:ee3e1bfb-ce5a-4642-84c8-4bef82afb198
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户通知表
 /// </summary>
-[SugarTable(TableName = "User_Notice")]
-public class UserNotice : BaseEntity
+[SugarTable(TableName = "Sys_User_Notice")]
+public class SysUserNotice : BaseEntity
 {
     /// <summary>
     /// 通知标题

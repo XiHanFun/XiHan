@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SysAuditCategory
+// FileName:SysAuditType
 // long:52830965-a1e7-4d56-b98e-2582f19d22d8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,8 +19,8 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统审核类型表
 /// </summary>
-[SugarTable(TableName = "Sys_Audit_Category")]
-public class SysAuditCategory : BaseDeleteEntity
+[SugarTable(TableName = "Sys_Audit_Type")]
+public class SysAuditType : BaseDeleteEntity
 {
     /// <summary>
     /// 父级审核分类

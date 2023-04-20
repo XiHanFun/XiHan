@@ -65,7 +65,7 @@ public static class AppSettings
     }
 
     /// <summary>
-    /// 站点
+    /// 系统
     /// </summary>
     public static class Syses
     {

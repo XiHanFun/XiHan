@@ -13,7 +13,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System.ComponentModel;
 using System.Reflection;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Enums;
@@ -118,28 +117,4 @@ public static class AppServiceManager
             }
         }
     }
-}
-
-/// <summary>
-/// 服务生命周期
-/// </summary>
-public enum ServiceLifeTimeEnum
-{
-    /// <summary>
-    /// 单例
-    /// </summary>
-    [Description("单例")]
-    Singleton,
-
-    /// <summary>
-    /// 作用域
-    /// </summary>
-    [Description("作用域")]
-    Scoped,
-
-    /// <summary>
-    /// 瞬时
-    /// </summary>
-    [Description("瞬时")]
-    Transient
 }

@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -32,8 +31,7 @@ public class SysWebHook : BaseDeleteEntity
     /// 机器人类型
     /// WebHookTypeEnum
     /// </summary>
-    [SugarColumn(Length = 10)]
-    public string WebHookType { get; set; } = string.Empty;
+    public int WebHookType { get; set; }
 
     /// <summary>
     /// 网络挂钩地址
@@ -41,7 +39,7 @@ public class SysWebHook : BaseDeleteEntity
     /// 企业微信 https://qyapi.weixin.qq.com/cgi-bin/webhook/send
     /// </summary>
     [SugarColumn(Length = 100)]
-    public string WebHookUri { get; set; } = string.Empty;
+    public string WebHookUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 访问令牌
@@ -56,30 +54,12 @@ public class SysWebHook : BaseDeleteEntity
     /// 钉钉
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string Secret { get; set; } = string.Empty;
+    public string? Secret { get; set; } = string.Empty;
 
     /// <summary>
     /// 上传地址
     /// 企业微信 https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string UploadkUri { get; set; } = string.Empty;
-}
-
-/// <summary>
-/// 网络挂钩类型
-/// </summary>
-public enum WebHookTypeEnum
-{
-    /// <summary>
-    /// 钉钉
-    /// </summary>
-    [Description("钉钉")]
-    DingTalk = 1,
-
-    /// <summary>
-    /// 企业微信
-    /// </summary>
-    [Description("企业微信")]
-    WeCom,
+    public string? UploadkUrl { get; set; } = string.Empty;
 }

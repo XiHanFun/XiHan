@@ -54,4 +54,15 @@ public class WeComResultInfoDto
 /// <summary>
 /// 文件上传返回结果
 /// </summary>
-public record WeComUploadResultDto(string Message, string MediaId);
+public class WeComUploadResultDto
+{
+    /// <summary>
+    /// 返回消息
+    /// </summary>
+    public string Message { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 介质ID
+    /// </summary>
+    public string MediaId { get; set; } = string.Empty;
+}

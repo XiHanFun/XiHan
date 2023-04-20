@@ -18,7 +18,7 @@ namespace XiHan.Utils.Consoles;
 /// </summary>
 public static class ConsoleExtensions
 {
-    private static readonly object ObjLock = new();
+    private static readonly object _objLock = new();
 
     /// <summary>
     /// 在控制台输出
@@ -27,7 +27,7 @@ public static class ConsoleExtensions
     /// <param name="frontColor">前置颜色</param>
     private static void WriteColorLine(string inputStr, ConsoleColor frontColor)
     {
-        lock (ObjLock)
+        lock (_objLock)
         {
             var currentForeColor = Console.ForegroundColor;
             Console.ForegroundColor = frontColor;

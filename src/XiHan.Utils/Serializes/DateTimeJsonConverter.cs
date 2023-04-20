@@ -21,14 +21,14 @@ namespace XiHan.Utils.Serializes;
 /// </summary>
 public class DateTimeJsonConverter : JsonConverter<DateTime>
 {
-    private readonly string DateFormatString;
+    private readonly string _dateFormatString;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public DateTimeJsonConverter()
     {
-        DateFormatString = "yyyy-MM-dd HH:mm:ss";
+        _dateFormatString = "yyyy-MM-dd HH:mm:ss";
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="dateFormatString"></param>
     public DateTimeJsonConverter(string dateFormatString)
     {
-        DateFormatString = dateFormatString;
+        _dateFormatString = dateFormatString;
     }
 
     /// <summary>
@@ -62,6 +62,6 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <param name="options"></param>
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString(DateFormatString));
+        writer.WriteStringValue(value.ToString(_dateFormatString));
     }
 }

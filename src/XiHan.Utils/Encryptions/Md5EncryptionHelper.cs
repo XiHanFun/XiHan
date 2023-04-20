@@ -17,12 +17,12 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Md5加密类
+/// Md5 加密类
 /// </summary>
 public static class Md5EncryptionHelper
 {
     /// <summary>
-    /// 对字符串进行MD5加密
+    /// 对字符串进行 MD5 加密
     /// </summary>
     /// <param name="input">待加密的明文字符串</param>
     /// <returns>加密后的字符串（32位或64位）</returns>
@@ -56,12 +56,12 @@ public static class Md5EncryptionHelper
 }
 
 /// <summary>
-/// MD5数据流加密类
+/// MD5 数据流加密类
 /// </summary>
 public static class Md5StreamEncryptionHelper
 {
     /// <summary>
-    /// 对数据流进行MD5加密，返回32位MD5值
+    /// 对数据流进行 MD5 加密，返回32位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流路径</param>
     /// <returns></returns>
@@ -74,7 +74,7 @@ public static class Md5StreamEncryptionHelper
     }
 
     /// <summary>
-    /// 对数据流进行MD5加密，返回64位MD5值
+    /// 对数据流进行 MD5 加密，返回64位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流</param>
     /// <returns></returns>

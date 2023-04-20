@@ -35,7 +35,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Get请求
+    /// Get 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -65,7 +65,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Get请求
+    /// Get 请求
     /// </summary>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
@@ -93,7 +93,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
@@ -126,7 +126,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Post请求上传文件
+    /// Post 请求 上传文件
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -160,7 +160,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -192,7 +192,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <typeparam name="TREntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -223,7 +223,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Post请求
+    /// Post 请求
     /// </summary>
     /// <param name="httpEnum"></param>
     /// <param name="url"></param>
@@ -253,7 +253,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Put请求
+    /// Put 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
@@ -286,7 +286,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Put请求
+    /// Put 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>
@@ -318,7 +318,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     }
 
     /// <summary>
-    /// Delete请求
+    /// Delete 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="httpEnum"></param>

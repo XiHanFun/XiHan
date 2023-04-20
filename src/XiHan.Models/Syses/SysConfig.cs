@@ -17,7 +17,7 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 站点配置表
+/// 系统配置表
 /// </summary>
 [SugarTable(TableName = "Sys_Config")]
 public class SysConfig : BaseDeleteEntity

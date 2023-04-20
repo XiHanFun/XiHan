@@ -20,46 +20,59 @@ namespace XiHan.Utils.Messages.Email;
 /// <summary>
 /// 邮件帮助类
 /// </summary>
-public static class EmailHelper
+public class EmailHelper
 {
+    private readonly EmailFromModel _fromModel;
+    private readonly EmailToModel _toModel;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="fromModel"></param>
+    /// <param name="toModel"></param>
+    public EmailHelper(EmailFromModel fromModel, EmailToModel toModel)
+    {
+        _fromModel = fromModel;
+        _toModel = toModel;
+    }
+
     /// <summary>
     /// 发送邮件
     /// </summary>
-    /// <param name="model">发送参数</param>
-    public static async Task<bool> Send(EmailModel model)
+    public async Task<bool> Send()
     {
         // 初始化邮件实例
         using MailMessage message = new()
         {
             // 来源或发送者
-            From = new MailAddress(model.FromMail, model.FromName, model.Coding),
-            Sender = new MailAddress(model.FromMail, model.FromName, model.Coding),
+            From = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
+            Sender = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
             // 邮件主题
-            Subject = model.Subject,
-            SubjectEncoding = model.Coding,
+            Subject = _toModel.Subject,
+            SubjectEncoding = _fromModel.Coding,
             // 邮件正文
-            Body = model.Body,
-            BodyEncoding = model.Coding,
+            Body = _toModel.Body,
+            BodyEncoding = _fromModel.Coding,
             // 优先级（高）
             Priority = MailPriority.High,
             // 网页形式
             IsBodyHtml = true,
         };
         // 收件人地址集合
-        model.ToMail.ForEach(to => message.To.Add(to));
+        _toModel.ToMail.ForEach(to => message.To.Add(to));
         // 抄送人地址集合
-        model.CcMail.ForEach(cc => message.CC.Add(cc));
+        _toModel.CcMail.ForEach(cc => message.CC.Add(cc));
         // 密送人地址集合
-        model.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
+        _toModel.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
         // 在有附件的情况下添加附件
-        model.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
+        _toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
 
         // 初始化连接实例
-        using SmtpClient client = new(model.Host, model.Port)
+        using SmtpClient client = new(_fromModel.Host, _fromModel.Port)
         {
-            Credentials = new NetworkCredential(model.FromMail, model.FromPassword),
+            Credentials = new NetworkCredential(_fromModel.FromMail, _fromModel.FromPassword),
             DeliveryMethod = SmtpDeliveryMethod.Network,
-            EnableSsl = model.UseSsl,
+            EnableSsl = _fromModel.UseSsl,
             Timeout = 5 * 1000
         };
         try

@@ -249,14 +249,14 @@ public static class ObjectConvertExtensions
 
     #endregion
 
-    #region Money
+    #region num
 
     /// <summary>
     /// 对象转金额
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static double ParseToMoney(this object? thisValue)
+    public static double ParseTonum(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {
@@ -271,7 +271,7 @@ public static class ObjectConvertExtensions
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static double ParseToMoney(this object? thisValue, double errorValue)
+    public static double ParseTonum(this object? thisValue, double errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && double.TryParse(thisValue.ToString(), out var reval))
         {

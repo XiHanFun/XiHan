@@ -17,7 +17,7 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 站点日志表
+/// 系统日志表
 /// </summary>
 [SugarTable(TableName = "Sys_Log")]
 public class SysLog : BaseDeleteEntity

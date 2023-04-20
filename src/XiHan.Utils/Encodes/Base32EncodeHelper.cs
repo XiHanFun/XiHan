@@ -44,14 +44,14 @@ public static class Base32EncodeHelper
 }
 
 /// <summary>
-/// 手写Base32转换
+/// 手写 Base32 转换
 /// </summary>
 public static class Base32
 {
     private const string Base32Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
     /// <summary>
-    /// byte转换为Base32
+    /// 二进制转换为 Base32
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
@@ -98,7 +98,7 @@ public static class Base32
     }
 
     /// <summary>
-    /// Base32转换为byte
+    /// Base32 转换为二进制
     /// </summary>
     /// <param name="base32String"></param>
     /// <returns></returns>

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserStatistic
+// FileName:SysUserStatistic
 // long:23d7c499-56e3-4d23-835b-80aab213bb38
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户统计表
 /// </summary>
-[SugarTable(TableName = "User_Statistic")]
-public class UserStatistic : BaseEntity
+[SugarTable(TableName = "Sys_User_Statistic")]
+public class SysUserStatistic : BaseEntity
 {
     /// <summary>
     /// 所属用户

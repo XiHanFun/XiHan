@@ -4,8 +4,8 @@ namespace XiHan.Utils.Infos.IpLocation.Ip2region;
 
 /// <summary>
 /// ²éÑ¯½Ó¿Ú
-/// powerd by https://github.com/lionsoul2014/ip2region
 /// </summary>
+/// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
 public interface ISearcher
 {
     /// <summary>

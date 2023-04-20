@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:UserFollow
+// FileName:SysUserFollow
 // long:196d9961-eb5f-4e8d-807d-a29b87a0a4f9
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,13 +14,13 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户关注表
 /// </summary>
-[SugarTable(TableName = "User_Follow")]
-public class UserFollow : BaseEntity
+[SugarTable(TableName = "Sys_User_Follow")]
+public class SysUserFollow : BaseEntity
 {
     /// <summary>
     /// 关注用户

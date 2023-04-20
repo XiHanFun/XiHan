@@ -19,7 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章分类表
 /// </summary>
-[SugarTable(TableName = "PostCategory")]
+[SugarTable(TableName = "Post_Category")]
 public class PostCategory : BaseEntity
 {
     /// <summary>

@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -46,28 +45,4 @@ public class SysAuthority : BaseDeleteEntity
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
     public string? Remark { get; set; }
-}
-
-/// <summary>
-/// 权限类型
-/// </summary>
-public enum AuthorityTypeEnum
-{
-    /// <summary>
-    /// 页面权限(菜单级)
-    /// </summary>
-    [Description("页面权限(菜单级)")]
-    Page = 1,
-
-    /// <summary>
-    /// 操作权限(按钮级)
-    /// </summary>
-    [Description("操作权限(按钮级)")]
-    Operation = 2,
-
-    /// <summary>
-    /// 数据权限(访问响应级）
-    /// </summary>
-    [Description("数据权限(访问响应级)")]
-    Data = 3,
 }
