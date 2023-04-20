@@ -29,10 +29,10 @@ public static class ObjectPropertyExtensions
     /// 获取属性全名
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="_"></param>
+    /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static string GetFullNameOf<TEntity>(this TEntity _, [CallerArgumentExpression(nameof(_))] string fullName = "")
+    public static string GetFullNameOf<TEntity>(this TEntity entity, [CallerArgumentExpression(nameof(entity))] string fullName = "")
     {
         return fullName;
     }
@@ -40,10 +40,10 @@ public static class ObjectPropertyExtensions
     /// <summary>
     /// 获取类型的Description特性描述信息
     /// </summary>
-    /// <param name="_">类型对象</param>
+    /// <param name="entity">类型对象</param>
     /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
     /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
-    public static string GetDescription<TEntity>(this TEntity _, bool inherit = true)
+    public static string GetDescription<TEntity>(this TEntity entity, bool inherit = true)
     {
         var result = string.Empty;
         Type objectType = typeof(TEntity);

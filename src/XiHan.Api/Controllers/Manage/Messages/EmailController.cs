@@ -17,6 +17,7 @@ using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Services.Syses.Messages.EmailPush;
+using XiHan.Utils.Messages.Email;
 
 namespace XiHan.Api.Controllers.Manage.Messages;
 
@@ -44,8 +45,8 @@ public class EmailController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Send")]
-    public async Task<BaseResultDto> SendEmail()
+    public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
     {
-        return await _emailPushService.SendEmail();
+        return await _emailPushService.SendEmail(emailTo);
     }
 }

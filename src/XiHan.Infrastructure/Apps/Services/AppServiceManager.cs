@@ -85,36 +85,38 @@ public static class AppServiceManager
             if (serviceAttribute == null) continue;
             var serviceType = serviceAttribute.ServiceType;
 
-            // 适用于依赖抽象编程，这里只获取第一个
+            // 情况1 适用于依赖抽象编程，这里只获取第一个
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
             {
                 serviceType = type.GetInterfaces().FirstOrDefault();
             }
-            // 判断是否实现了该接口，若是，则注入服务
-            else if (serviceType != null && serviceType.IsAssignableFrom(type))
+            // 情况2 不常见特殊情况下才会指定ServiceType，写起来麻烦
+            if (serviceType == null)
             {
-                switch (serviceAttribute.ServiceLifetime)
-                {
-                    case ServiceLifeTimeEnum.Singleton:
-                        services.AddSingleton(serviceType, type);
-                        break;
-
-                    case ServiceLifeTimeEnum.Scoped:
-                        services.AddScoped(serviceType, type);
-                        break;
-
-                    case ServiceLifeTimeEnum.Transient:
-                        services.AddTransient(serviceType, type);
-                        break;
-
-                    default:
-                        services.AddTransient(serviceType, type);
-                        break;
-                }
-                var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
-                Log.Information(infoMsg);
-                infoMsg.WriteLineSuccess();
+                serviceType = type;
             }
+
+            switch (serviceAttribute.ServiceLifetime)
+            {
+                case ServiceLifeTimeEnum.Singleton:
+                    services.AddSingleton(serviceType, type);
+                    break;
+
+                case ServiceLifeTimeEnum.Scoped:
+                    services.AddScoped(serviceType, type);
+                    break;
+
+                case ServiceLifeTimeEnum.Transient:
+                    services.AddTransient(serviceType, type);
+                    break;
+
+                default:
+                    services.AddTransient(serviceType, type);
+                    break;
+            }
+            var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
+            Log.Information(infoMsg);
+            infoMsg.WriteLineSuccess();
         }
     }
 }

@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Utils.Messages.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 
@@ -24,5 +25,5 @@ public interface IEmailPushService
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    Task<BaseResultDto> SendEmail();
+    Task<BaseResultDto> SendEmail(EmailToModel emailTo);
 }

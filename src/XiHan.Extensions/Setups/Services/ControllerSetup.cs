@@ -42,12 +42,12 @@ public static class ControllerSetup
             // 全局注入过滤器
             options.Filters.Add<AuthorizationFilterAsyncAttribute>();
             options.Filters.Add<ExceptionFilterAsyncAttribute>();
-            //options.Filters.Add<ResourceFilterAsyncAttribute>();
+            options.Filters.Add<ResourceFilterAsyncAttribute>();
             options.Filters.Add<ActionFilterAsyncAttribute>();
             options.Filters.Add<ResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(options =>
         {
-            //关闭默认模型验证，通过ActionFilterAsyncAttribute自定义验证
+            //关闭默认模型验证，通过 ActionFilterAsyncAttribute 自定义验证
             options.SuppressModelStateInvalidFilter = true;
         })
         .AddJsonOptions(options =>

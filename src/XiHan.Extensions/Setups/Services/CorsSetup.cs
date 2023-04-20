@@ -34,6 +34,8 @@ public static class CorsSetup
             throw new ArgumentNullException(nameof(services));
         }
 
+        var sss = AppSettings.Cors.IsEnabled;
+
         var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
         if (!isEnabledCors)
         {

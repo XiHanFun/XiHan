@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Net.NetworkInformation;
 using XiHan.Utils.Infos.BaseInfos;
 
 namespace XiHan.Utils.Infos;

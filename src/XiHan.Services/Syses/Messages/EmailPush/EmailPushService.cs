@@ -18,7 +18,7 @@ using XiHan.Infrastructure.Apps.Services;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Bases;
+using XiHan.Services.Bases;
 using XiHan.Utils.Messages.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
@@ -27,27 +27,25 @@ namespace XiHan.Services.Syses.Messages.EmailPush;
 /// EmailPushService
 /// </summary>
 [AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class EmailPushService : IEmailPushService
+public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 {
     private readonly ILogger<EmailPushService> _logger;
-    private readonly IBaseRepository<SysEmail> _emailRepository;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public EmailPushService(ILogger<EmailPushService> logger, IBaseRepository<SysEmail> baseRepository)
+    public EmailPushService(ILogger<EmailPushService> logger)
     {
         _logger = logger;
-        _emailRepository = baseRepository;
     }
 
     /// <summary>
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    public async Task<BaseResultDto> SendEmail()
+    public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
     {
-        var sysEmail = await _emailRepository.GetFirstAsync(e => !e.IsSoftDeleted);
+        var sysEmail = await GetFirstAsync(e => !e.IsSoftDeleted);
         EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
         var subject = "测试";
         var body = "测试";
@@ -58,15 +56,15 @@ public class EmailPushService : IEmailPushService
         {
             new Attachment(@"")
         };
-        EmailToModel emailTo = new EmailToModel
-        {
-            Subject = subject,
-            Body = body,
-            ToMail = toMail,
-            CcMail = ccMail,
-            BccMail = bccMail,
-            AttachmentsPath = attachmentsPath,
-        };
+        //EmailToModel emailTo = new()
+        //{
+        //    Subject = subject,
+        //    Body = body,
+        //    ToMail = toMail,
+        //    CcMail = ccMail,
+        //    BccMail = bccMail,
+        //    AttachmentsPath = attachmentsPath,
+        //};
         EmailHelper emailHelper = new(emailFrom, emailTo);
         if (await emailHelper.Send())
         {

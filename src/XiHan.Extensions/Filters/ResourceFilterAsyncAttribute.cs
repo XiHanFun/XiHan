@@ -32,18 +32,18 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     // 日志开关
     private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
-    private readonly IMemoryCache IMemoryCache;
-    private readonly ILogger<ResourceFilterAsyncAttribute> ILogger;
+    private readonly IMemoryCache _memoryCache;
+    private readonly ILogger<ResourceFilterAsyncAttribute> _logger;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iMemoryCache"></param>
-    /// <param name="iLogger"></param>
-    public ResourceFilterAsyncAttribute(IMemoryCache iMemoryCache, ILogger<ResourceFilterAsyncAttribute> iLogger)
+    /// <param name="memoryCache"></param>
+    /// <param name="logger"></param>
+    public ResourceFilterAsyncAttribute(IMemoryCache memoryCache, ILogger<ResourceFilterAsyncAttribute> logger)
     {
-        IMemoryCache = iMemoryCache;
-        ILogger = iLogger;
+        _memoryCache = memoryCache;
+        _logger = logger;
     }
 
     /// <summary>
@@ -73,12 +73,12 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                    $"\t 请求方法：{method}\n" +
                    $"\t 操作用户：{userId}";
         // 若存在此资源，直接返回缓存资源
-        if (IMemoryCache.TryGetValue(requestUrl + method, out var value))
+        if (_memoryCache.TryGetValue(requestUrl + method, out var value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
             if (ResourceLogSwitch)
-                ILogger.LogInformation($"缓存数据\n{info}\n{context.Result}");
+                _logger.LogInformation($"缓存数据\n{info}\n{context.Result}");
         }
         else
         {
@@ -92,10 +92,10 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                 {
                     var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
                     var result = resourceExecuted.Result as ActionResult;
-                    IMemoryCache.Set(requestUrl + method, result, syncTimeout);
+                    _memoryCache.Set(requestUrl + method, result, syncTimeout);
                     if (ResourceLogSwitch)
                     {
-                        ILogger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
+                        _logger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
                     }
                 }
             }

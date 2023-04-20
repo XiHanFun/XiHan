@@ -17,7 +17,6 @@ using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
-using XiHan.Repositories.Bases;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
 using XiHan.Utils.Https;
@@ -31,17 +30,14 @@ namespace XiHan.Services.Syses.Messages.DingTalkPush;
 [AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
 {
-    private readonly IBaseService<SysWebHook> _sysWebHookRepository;
     private readonly DingTalkRobotHelper _dingTalkRobot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    /// <param name="baseRepository"></param>
-    public DingTalkPushService(IHttpPollyHelper httpPolly, IBaseService<SysWebHook> baseRepository)
+    public DingTalkPushService(IHttpPollyHelper httpPolly)
     {
-        _sysWebHookRepository = baseRepository;
         DingTalkConnection dingTalkConnection = GetDingTalkConn().Result;
         _dingTalkRobot = new DingTalkRobotHelper(httpPolly, dingTalkConnection);
     }
@@ -52,7 +48,7 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysWebHook = await _sysWebHookRepository.GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.DingTalk.GetEnumValueByKey());
+        var sysWebHook = await GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.DingTalk.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
             .ForType<SysWebHook, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)

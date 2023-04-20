@@ -31,15 +31,15 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     // 日志开关
     private readonly bool ActionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
-    private readonly ILogger<ActionFilterAsyncAttribute> ILogger;
+    private readonly ILogger<ActionFilterAsyncAttribute> _logger;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iLogger"></param>
-    public ActionFilterAsyncAttribute(ILogger<ActionFilterAsyncAttribute> iLogger)
+    /// <param name="logger"></param>
+    public ActionFilterAsyncAttribute(ILogger<ActionFilterAsyncAttribute> logger)
     {
-        ILogger = iLogger;
+        _logger = logger;
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                        $"\t 请求参数：{parameters}\n" +
                        $"\t 操作用户：{userId}";
             if (ActionLogSwitch)
-                ILogger.LogInformation($"发起请求\n{info}");
+                _logger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             var actionExecuted = await next();
             if (actionExecuted.Result != null)
@@ -90,7 +90,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 var isRequestSucceed = actionExecuted.Exception == null;
                 // 请求成功就写入日志
                 if (isRequestSucceed && ActionLogSwitch)
-                    ILogger.LogInformation($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
+                    _logger.LogInformation($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
             }
         }
     }

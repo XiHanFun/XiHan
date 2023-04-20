@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Text;
 using XiHan.Utils.Encryptions;
 
 namespace XiHan.Test.Common;

@@ -18,6 +18,7 @@ using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Repositories.Bases;
+using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
 using XiHan.Utils.Https;
 using XiHan.Utils.Messages.WeCom;
@@ -29,19 +30,16 @@ namespace XiHan.Services.Syses.Messages.WeComPush;
 /// WeComMessagePushService
 /// </summary>
 [AppService(ServiceType = typeof(IWeComPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class WeComPushService : IWeComPushService
+public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
 {
-    private readonly IBaseRepository<SysWebHook> _sysWebHookRepository;
     private readonly WeComRobotHelper _weComRobot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    /// <param name="baseRepository"></param>
-    public WeComPushService(IHttpPollyHelper httpPolly, IBaseRepository<SysWebHook> baseRepository)
+    public WeComPushService(IHttpPollyHelper httpPolly)
     {
-        _sysWebHookRepository = baseRepository;
         WeComConnection weComConnection = GetWeComConn().Result;
         _weComRobot = new WeComRobotHelper(httpPolly, weComConnection);
     }
@@ -52,7 +50,7 @@ public class WeComPushService : IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        var sysWebHook = await _sysWebHookRepository.GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.WeCom.GetEnumValueByKey());
+        var sysWebHook = await GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.WeCom.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
             .ForType<SysWebHook, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
