@@ -27,12 +27,12 @@ public static class AppConfigManager
     /// <summary>
     /// 配置文件的根节点
     /// </summary>
-    private static IConfiguration ConfigurationRoot { get; set; } = null!;
+    public static IConfiguration ConfigurationRoot { get; set; } = null!;
 
     /// <summary>
     /// 自定义配置文件位置
     /// </summary>
-    private static string ConfigurationFile { get; set; } = string.Empty;
+    public static string ConfigurationFile { get; set; } = string.Empty;
 
     /// <summary>
     /// 注册配置
@@ -40,7 +40,6 @@ public static class AppConfigManager
     /// <param name="config"></param>
     public static void RegisterConfig(IConfigurationBuilder config)
     {
-        ConfigurationRoot = config.Build();
         if (config is ConfigurationManager configurationManager)
         {
             var jsonFilePath = configurationManager.Sources
@@ -53,6 +52,7 @@ public static class AppConfigManager
                 {
                     var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
                     var envName = configurationFile.Split('.')[1].ToString();
+                    ConfigurationRoot = config.Build();
                     ConfigurationFile = configurationFile;
                     var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
                     Log.Information(infoMsg);

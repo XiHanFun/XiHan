@@ -56,10 +56,13 @@ public static class AppServiceManager
     /// 注册自身服务
     /// </summary>
     /// <param name="services"></param>
+    /// <remarks>
+    /// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
+    /// </remarks>
     public static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库
-        string[] libraries = new string[] { "XiHan.Repositories", "XiHan.Services", "XiHan.Tasks" };
+        string[] libraries = new string[] { "XiHan.Infrastructure", "XiHan.Repositories", "XiHan.Services", "XiHan.Tasks" };
         // 根据程序路径反射出所有引用的程序集
         var referencedTypes = new List<Type>();
         foreach (var library in libraries)
@@ -83,14 +86,15 @@ public static class AppServiceManager
             // 服务周期
             var serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
             if (serviceAttribute == null) continue;
+            // 如果有值的话，它就是注册服务的类型；如果没有的话，看是否允许从接口中获取服务类型；
             var serviceType = serviceAttribute.ServiceType;
 
-            // 情况1 适用于依赖抽象编程，这里只获取第一个
+            // 情况1 适用于依赖抽象编程（如果允许，便尝试获取第一个作为服务类型）
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
             {
                 serviceType = type.GetInterfaces().FirstOrDefault();
             }
-            // 情况2 不常见特殊情况下才会指定ServiceType，写起来麻烦
+            // 情况2 特殊情况下才会指定（如果还没获取到，就把自身的类型作为服务类型）
             if (serviceType == null)
             {
                 serviceType = type;

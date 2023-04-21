@@ -14,6 +14,7 @@
 using Mapster;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
+using XiHan.Infrastructure.Apps.Logging;
 using XiHan.Infrastructure.Apps.Services;
 using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
@@ -43,6 +44,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
+    [AppLog(Title = "发送邮件", LogType = LogTypeEnum.Other)]
     public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
     {
         var sysEmail = await GetFirstAsync(e => !e.IsSoftDeleted);
@@ -66,10 +68,15 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         //    AttachmentsPath = attachmentsPath,
         //};
         EmailHelper emailHelper = new(emailFrom, emailTo);
+        var logoInfo = string.Empty;
         if (await emailHelper.Send())
         {
-            return BaseResponseDto.Ok("邮件发送成功");
+            logoInfo = "邮件发送成功";
+            _logger.LogInformation(logoInfo);
+            return BaseResponseDto.Ok(logoInfo);
         }
+        logoInfo = "邮件发送失败";
+        _logger.LogError(logoInfo);
         return BaseResponseDto.BadRequest("邮件发送失败");
     }
 }
