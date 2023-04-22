@@ -2,11 +2,11 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SysRoleMenu
-// long:47b72b2e-41ff-4c0a-be2f-35c1c48641cf
+// FileName:SysRolePermission
+// long:73293770-9bdc-4646-a03f-fba5cd908868
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-08-04 下午 01:36:37
+// CreateTime:2022-05-08 下午 04:51:28
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -17,18 +17,19 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统角色菜单关联表
+/// 系统角色权限关联表(为某角色分配权限)
 /// </summary>
-[SugarTable(TableName = "Sys_Role_Menu")]
-public class SysRoleMenu : BaseDeleteEntity
+/// <remarks>记录创建，修改信息</remarks>
+[SugarTable(TableName = "Sys_Role_Permission")]
+public class SysRolePermission : BaseModifyEntity
 {
-    /// <summary>
-    /// 系统菜单
-    /// </summary>
-    public long MenuId { get; set; }
-
     /// <summary>
     /// 系统角色
     /// </summary>
     public long RoleId { get; set; }
+
+    /// <summary>
+    /// 系统权限
+    /// </summary>
+    public long PermissionId { get; set; }
 }

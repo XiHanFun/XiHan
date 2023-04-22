@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户通知表
 /// </summary>
+/// <remarks>记录创建，修改，删除信息</remarks>
 [SugarTable(TableName = "Sys_User_Notice")]
-public class SysUserNotice : BaseEntity
+public class SysUserNotice : BaseDeleteEntity
 {
     /// <summary>
     /// 通知标题

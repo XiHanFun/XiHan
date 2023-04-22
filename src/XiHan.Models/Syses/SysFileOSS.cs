@@ -18,10 +18,10 @@ namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 系统文件对象存储配置
-/// Operation Support Systems
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_File_OSS")]
-public class SysFileOSS : BaseDeleteEntity
+public class SysFileOSS : BaseModifyEntity
 {
     /// <summary>
     /// 存储类型

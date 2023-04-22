@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统日志表
 /// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable(TableName = "Sys_Log")]
-public class SysLog : BaseDeleteEntity
+public class SysLog : BaseCreateEntity
 {
     /// <summary>
     /// 日志级别

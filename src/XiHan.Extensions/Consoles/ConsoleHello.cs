@@ -13,7 +13,7 @@
 
 using XiHan.Utils.Consoles;
 
-namespace XiHan.Api.Consoles;
+namespace XiHan.Extensions.Consoles;
 
 /// <summary>
 /// ConsoleHello

@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统皮肤表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Skin")]
-public class SysSkin : BaseDeleteEntity
+public class SysSkin : BaseModifyEntity
 {
     /// <summary>
     /// 皮肤名称

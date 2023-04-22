@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:OSPlatformHelper
+// FileName:OsPlatformHelper
 // Guid:d404f006-9a93-45b2-b33b-8ec201355621
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -20,7 +20,7 @@ namespace XiHan.Utils.Infos.BaseInfos;
 /// <summary>
 /// 操作系统帮助类
 /// </summary>
-public static class OSPlatformHelper
+public static class OsPlatformHelper
 {
     /// <summary>
     /// 操作系统

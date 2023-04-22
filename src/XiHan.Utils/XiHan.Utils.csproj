@@ -33,6 +33,9 @@
 		<PackageReference Include="UAParser" Version="3.1.47" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Update="IpDatabases\ip2region.xdb">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>

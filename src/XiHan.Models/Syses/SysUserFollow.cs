@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户关注表
 /// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable(TableName = "Sys_User_Follow")]
-public class SysUserFollow : BaseEntity
+public class SysUserFollow : BaseCreateEntity
 {
     /// <summary>
     /// 关注用户

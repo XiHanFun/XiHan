@@ -90,7 +90,7 @@ public static class RamHelper
     /// <returns></returns>
     public static RamInfo GetRamInfos()
     {
-        if (OSPlatformHelper.GetOsIsUnix())
+        if (OsPlatformHelper.GetOsIsUnix())
         {
             return GetUnixRam();
         }

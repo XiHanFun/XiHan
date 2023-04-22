@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统网络挂钩配置表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_WebHook")]
-public class SysWebHook : BaseDeleteEntity
+public class SysWebHook : BaseModifyEntity
 {
     /// <summary>
     /// 是否可用

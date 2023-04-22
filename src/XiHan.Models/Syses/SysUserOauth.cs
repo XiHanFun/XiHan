@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
 /// 用户第三方授权表
 /// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable(TableName = "Sys_User_Oauth")]
-public class SysUserOauth : BaseEntity
+public class SysUserOauth : BaseCreateEntity
 {
     /// <summary>
     /// 第三方登陆类型 weibo、qq、wechat 等

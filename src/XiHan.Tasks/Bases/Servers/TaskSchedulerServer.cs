@@ -82,7 +82,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
             {
-                return BaseResponseDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
+                return BaseResultDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
 
             // 判断触发器类型，并创建一个触发器
@@ -125,14 +125,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的trigger重新设置job执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return BaseResponseDto.Ok($"启动计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"启动计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"启动计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -151,14 +151,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.DeleteJob(jobKey);
             }
-            return BaseResponseDto.Ok($"修改计划【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"修改计划【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"修改计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -173,14 +173,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             await _scheduler.DeleteJob(jobKey);
-            return BaseResponseDto.Ok($"删除计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"删除计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"删除计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -196,19 +196,19 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经开启
             if (_scheduler.IsStarted)
             {
-                return BaseResponseDto.Continue();
+                return BaseResultDto.Continue();
             }
 
             // 等待任务运行完成
             await _scheduler.Start();
-            return BaseResponseDto.Ok("计划任务开启成功！");
+            return BaseResultDto.Success("计划任务开启成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"开启计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -224,18 +224,18 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经停止
             if (_scheduler.IsShutdown)
             {
-                return BaseResponseDto.Continue();
+                return BaseResultDto.Continue();
             }
             // 等待任务运行停止
             await _scheduler.Shutdown();
-            return BaseResponseDto.Ok($"计划任务已经停止。");
+            return BaseResultDto.Success($"计划任务已经停止。");
         }
         catch (Exception ex)
         {
             var errorInfo = $"停止计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -259,18 +259,18 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);
             if (triggers.Count <= 0)
             {
-                return BaseResponseDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
+                return BaseResultDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
             }
 
             await _scheduler.TriggerJob(jobKey);
-            return BaseResponseDto.Ok($"计划任务[{jobKey.Name}]运行成功！");
+            return BaseResultDto.Success($"计划任务[{jobKey.Name}]运行成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"执行计划任务【{sysTasks.Name}】失败";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -289,14 +289,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.PauseJob(jobKey);
             }
-            return BaseResponseDto.Ok($"暂停计划任务:【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"暂停计划任务:【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"暂停计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -312,17 +312,17 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (!await _scheduler.CheckExists(jobKey))
             {
-                return BaseResponseDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
+                return BaseResultDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
             }
             await _scheduler.ResumeJob(jobKey);
-            return BaseResponseDto.Ok($"恢复计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"恢复计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"恢复计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 

@@ -19,7 +19,7 @@ using XiHan.Utils.Infos;
 using XiHan.Utils.Infos.BaseInfos;
 using XiHan.Utils.Serializes;
 
-namespace XiHan.Api.Consoles;
+namespace XiHan.Extensions.Consoles;
 
 /// <summary>
 /// ConsoleServerInfo

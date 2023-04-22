@@ -23,42 +23,42 @@ public static class SystemInfoHelper
     /// <summary>
     /// 操作系统
     /// </summary>
-    public static string OperatingSystem => OSPlatformHelper.GetOperatingSystem().ToString();
+    public static string OperatingSystem => OsPlatformHelper.GetOperatingSystem().ToString();
 
     /// <summary>
     /// 系统描述
     /// </summary>
-    public static string OsDescription => OSPlatformHelper.GetOsDescription();
+    public static string OsDescription => OsPlatformHelper.GetOsDescription();
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public static string OsVersion => OSPlatformHelper.GetOsVersion();
+    public static string OsVersion => OsPlatformHelper.GetOsVersion();
 
     /// <summary>
     /// 系统平台
     /// </summary>
-    public static string Platform => OSPlatformHelper.GetPlatform();
+    public static string Platform => OsPlatformHelper.GetPlatform();
 
     /// <summary>
     /// 系统架构
     /// </summary>
-    public static string OsArchitecture => OSPlatformHelper.GetOsArchitecture();
+    public static string OsArchitecture => OsPlatformHelper.GetOsArchitecture();
 
     /// <summary>
     /// 系统目录
     /// </summary>
-    public static string SystemDirectory => OSPlatformHelper.GetSystemDirectory();
+    public static string SystemDirectory => OsPlatformHelper.GetSystemDirectory();
 
     /// <summary>
     /// 运行时间
     /// </summary>
-    public static string RunningTime => OSPlatformHelper.GetRunningTime();
+    public static string RunningTime => OsPlatformHelper.GetRunningTime();
 
     /// <summary>
     /// 交互模式
     /// </summary>
-    public static string InteractiveMode => OSPlatformHelper.GetInteractiveMode();
+    public static string InteractiveMode => OsPlatformHelper.GetInteractiveMode();
 
     /// <summary>
     /// 处理器信息

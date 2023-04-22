@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统邮件配置
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Email")]
-public class SysEmail : BaseDeleteEntity
+public class SysEmail : BaseModifyEntity
 {
     /// <summary>
     /// 主机服务器

@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using System.Security.Claims;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts;
+using XiHan.Infrastructure.Contexts.Results;
 
 namespace XiHan.Extensions.Filters;
 
@@ -57,22 +57,22 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
             // 未实现异常
             if (context.Exception is NotImplementedException)
             {
-                context.Result = new JsonResult(BaseResponseDto.NotImplemented());
+                context.Result = new JsonResult(BaseResultDto.NotImplemented());
             }
             // 认证授权异常
             else if (context.Exception is AuthenticationException)
             {
-                context.Result = new JsonResult(BaseResponseDto.Unauthorized(context.Exception.Message));
+                context.Result = new JsonResult(BaseResultDto.Unauthorized(context.Exception.Message));
             }
             // 应用级异常
             else if (context.Exception is ApplicationException)
             {
-                context.Result = new JsonResult(BaseResponseDto.BadRequest(context.Exception.Message));
+                context.Result = new JsonResult(BaseResultDto.BadRequest(context.Exception.Message));
             }
             else
             {
                 // 其他异常，返回服务器错误，不直接明文显示
-                context.Result = new JsonResult(BaseResponseDto.InternalServerError());
+                context.Result = new JsonResult(BaseResultDto.InternalServerError());
                 // 获取控制器、路由信息
                 var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
                 // 获取请求的方法

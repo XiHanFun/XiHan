@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BasePageInfoDto
+// FileName:BasePageDto
 // Guid:ac953e11-5c32-44d5-a450-d377ef3a0453
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

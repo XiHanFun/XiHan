@@ -18,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts;
+using XiHan.Infrastructure.Contexts.Results;
 
 namespace XiHan.Extensions.Filters;
 
@@ -53,7 +53,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         // 模型验证
         if (!context.ModelState.IsValid)
         {
-            context.Result = new JsonResult(BaseResponseDto.UnprocessableEntity(context));
+            context.Result = new JsonResult(BaseResultDto.UnprocessableEntity(context));
         }
         else
         {

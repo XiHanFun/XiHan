@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统配置表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Config")]
-public class SysConfig : BaseDeleteEntity
+public class SysConfig : BaseModifyEntity
 {
     /// <summary>
     /// 网站名称
@@ -32,7 +33,7 @@ public class SysConfig : BaseDeleteEntity
     /// 网站描述
     /// </summary>
     [SugarColumn(Length = 200, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// 网站关键字

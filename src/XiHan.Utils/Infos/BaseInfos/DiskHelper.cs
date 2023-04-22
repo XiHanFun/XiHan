@@ -634,7 +634,7 @@ public static class DiskHelper
     /// <returns></returns>
     public static List<DiskInfo> GetDiskInfos()
     {
-        if (OSPlatformHelper.GetOsIsUnix())
+        if (OsPlatformHelper.GetOsIsUnix())
         {
             return GetUnixDisk();
         }

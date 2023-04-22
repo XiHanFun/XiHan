@@ -19,14 +19,21 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统菜单表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Menu")]
-public class SysMenu : BaseDeleteEntity
+public class SysMenu : BaseModifyEntity
 {
     /// <summary>
     /// 父级菜单
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public long? ParentId { get; set; }
+
+    /// <summary>
+    /// 菜单代码
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单名称
@@ -82,5 +89,5 @@ public class SysMenu : BaseDeleteEntity
     /// 菜单描述
     /// </summary>
     [SugarColumn(IsNullable = true, Length = 50)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 }

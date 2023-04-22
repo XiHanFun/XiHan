@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Posts;
 
 /// <summary>
 /// 文章标签关联表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Post_Article_Tag")]
-public class PostArticleTag : BaseEntity
+public class PostArticleTag : BaseModifyEntity
 {
     /// <summary>
     /// 关联文章

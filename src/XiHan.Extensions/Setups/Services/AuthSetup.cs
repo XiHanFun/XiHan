@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using XiHan.Extensions.Common.Auth;
-using XiHan.Infrastructure.Contexts;
+using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Objects;
 
 namespace XiHan.Extensions.Setups.Services;
@@ -75,7 +75,7 @@ public static class AuthSetup
                             context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                         }
                         // 返回自定义的未授权模型数据
-                        return Task.FromResult(BaseResponseDto.Unauthorized("授权为空或因伪造无法读取"));
+                        return Task.FromResult(BaseResultDto.Unauthorized("授权为空或因伪造无法读取"));
                     }
 
                     // 如果过期，则把是否过期添加到返回头信息中
@@ -83,9 +83,9 @@ public static class AuthSetup
                     {
                         context.Response.Headers.Add("Token-Expired", "true");
                         // 返回自定义的未授权模型数据
-                        return Task.FromResult(BaseResponseDto.Unauthorized("授权已过期"));
+                        return Task.FromResult(BaseResultDto.Unauthorized("授权已过期"));
                     }
-                    return Task.FromResult(BaseResponseDto.Unauthorized());
+                    return Task.FromResult(BaseResultDto.Unauthorized());
                 },
                 // 未授权时
                 OnChallenge = context =>
@@ -93,7 +93,7 @@ public static class AuthSetup
                     // 将Token错误添加到返回头信息中
                     context.Response.Headers.Add("Token-Error", context.ErrorDescription);
                     // 返回自定义的未授权模型数据
-                    return Task.FromResult(BaseResponseDto.Unauthorized("未授权"));
+                    return Task.FromResult(BaseResultDto.Unauthorized("未授权"));
                 }
             };
         });

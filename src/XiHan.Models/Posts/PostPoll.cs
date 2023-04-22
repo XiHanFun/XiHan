@@ -13,28 +13,30 @@
 
 using SqlSugar;
 using System.ComponentModel;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Posts;
 
 /// <summary>
 /// 文章点赞表
 /// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable(TableName = "Post_Poll")]
-public class PostPoll : BaseEntity
+public class PostPoll : BaseCreateEntity
 {
+    /// <summary>
+    /// 点赞类型(文章或评论)
+    /// PollTypeEnum
+    /// </summary>
+    public int PollType { get; set; }
+
     /// <summary>
     /// 所属文章或评论
     /// </summary>
     public long ParentId { get; set; }
 
     /// <summary>
-    /// 点赞类型(文章或评论)
-    /// </summary>
-    public int PollType { get; set; }
-
-    /// <summary>
-    /// 赞(true)或踩(false)
+    /// 赞或踩 赞(true)踩(false)
     /// </summary>
     public bool IsPositive { get; set; } = true;
 }

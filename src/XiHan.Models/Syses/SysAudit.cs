@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统审核表
 /// </summary>
+/// <remarks>记录创建，修改，删除信息</remarks>
 [SugarTable(TableName = "Sys_Audit")]
 public class SysAudit : BaseDeleteEntity
 {

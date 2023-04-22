@@ -53,7 +53,7 @@ public class TestController : BaseApiController
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = _IHttpContextAccessor.HttpContext!;
         HttpContexInfotHelper clientInfoHelper = new(httpContext);
-        return BaseResponseDto.Ok(clientInfoHelper);
+        return BaseResultDto.Success(clientInfoHelper);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> LogInfo(string log)
     {
-        return BaseResponseDto.Ok($"测试日志写入:{log}");
+        return BaseResultDto.Success($"测试日志写入:{log}");
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAttribute()
     {
-        return BaseResponseDto.Ok(DateTime.Now);
+        return BaseResultDto.Success(DateTime.Now);
     }
 
     /// <summary>
@@ -120,6 +120,6 @@ public class TestController : BaseApiController
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
     public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
     {
-        return BaseResponseDto.Ok(DateTime.Now);
+        return BaseResultDto.Success(DateTime.Now);
     }
 }

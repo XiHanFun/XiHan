@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Users;
+namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统用户角色关联表
+/// 系统用户角色关联表(为某用户分配角色)
 /// </summary>
+/// <remarks>记录创建，修改息</remarks>
 [SugarTable(TableName = "Sys_User_Role")]
-public class SysUserRole : BaseEntity
+public class SysUserRole : BaseModifyEntity
 {
     /// <summary>
     /// 用户账户

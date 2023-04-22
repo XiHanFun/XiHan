@@ -50,7 +50,7 @@ public static class TaskSetup
             foreach (var task in tasks)
             {
                 var result = schedulerServer.AddTaskScheduleAsync(task).Result;
-                if (result.Success)
+                if (result.IsSuccess)
                 {
                     var info = $"注册任务：{task.Name}成功！";
                     info.WriteLineSuccess();

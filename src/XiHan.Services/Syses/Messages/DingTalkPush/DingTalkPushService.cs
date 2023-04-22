@@ -13,7 +13,6 @@
 
 using Mapster;
 using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
@@ -48,7 +47,7 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysWebHook = await GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.DingTalk.GetEnumValueByKey());
+        var sysWebHook = await GetFirstAsync(e => e.IsEnabled && e.WebHookType == WebHookTypeEnum.DingTalk.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
             .ForType<SysWebHook, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
@@ -129,14 +128,14 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
             {
-                return BaseResponseDto.Ok("发送成功");
+                return BaseResultDto.Success("发送成功");
             }
             else
             {
-                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
+                return BaseResultDto.BadRequest(result?.ErrMsg ?? "发送失败");
             }
         }
-        return BaseResponseDto.InternalServerError();
+        return BaseResultDto.InternalServerError();
     }
 
     #endregion DingTalk

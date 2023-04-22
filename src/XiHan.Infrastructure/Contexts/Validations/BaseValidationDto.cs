@@ -43,30 +43,3 @@ public class BaseValidationDto
     /// </summary>
     public List<BaseValidationErrorDto>? ValidationErrorDto { get; }
 }
-
-/// <summary>
-/// 验证出错字段实体基类
-/// </summary>
-public class BaseValidationErrorDto
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="field"></param>
-    /// <param name="message"></param>
-    public BaseValidationErrorDto(string? field, string? message)
-    {
-        Field = field != string.Empty ? field : null;
-        Message = message;
-    }
-
-    /// <summary>
-    /// 字段
-    /// </summary>
-    public string? Field { get; }
-
-    /// <summary>
-    /// 信息
-    /// </summary>
-    public string? Message { get; }
-}

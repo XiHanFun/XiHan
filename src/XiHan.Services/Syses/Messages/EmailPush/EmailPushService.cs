@@ -47,7 +47,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     [AppLog(Title = "发送邮件", LogType = LogTypeEnum.Other)]
     public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
     {
-        var sysEmail = await GetFirstAsync(e => !e.IsSoftDeleted);
+        var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);
         EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
         var subject = "测试";
         var body = "测试";
@@ -73,10 +73,10 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             logoInfo = "邮件发送成功";
             _logger.LogInformation(logoInfo);
-            return BaseResponseDto.Ok(logoInfo);
+            return BaseResultDto.Success(logoInfo);
         }
         logoInfo = "邮件发送失败";
         _logger.LogError(logoInfo);
-        return BaseResponseDto.BadRequest("邮件发送失败");
+        return BaseResultDto.BadRequest("邮件发送失败");
     }
 }

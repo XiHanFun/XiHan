@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SysAuthority
+// FileName:SysPermission
 // long:8b190341-c474-4974-961f-895c2c6a831d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,14 +19,21 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统权限表
 /// </summary>
-[SugarTable(TableName = "Sys_Authority")]
-public class SysAuthority : BaseDeleteEntity
+/// <remarks>记录创建，修改信息</remarks>
+[SugarTable(TableName = "Sys_Permission")]
+public class SysPermission : BaseModifyEntity
 {
     /// <summary>
     /// 父级权限
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public long? ParentId { get; set; }
+
+    /// <summary>
+    /// 权限代码
+    /// </summary>
+    [SugarColumn(Length = 10)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限名称
@@ -36,13 +43,13 @@ public class SysAuthority : BaseDeleteEntity
 
     /// <summary>
     /// 权限类型
-    /// AuthorityTypeEnum
+    /// PermissionTypeEnum
     /// </summary>
-    public int AuthorityType { get; set; }
+    public int PermissionType { get; set; }
 
     /// <summary>
     /// 权限描述
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 }

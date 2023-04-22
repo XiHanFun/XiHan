@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:HttpResponseEnum
+// FileName:BaseHttpEnum
 // Guid:1c4a433e-7804-4d50-8947-a001d4b9ee2f
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ namespace XiHan.Infrastructure.Contexts.Results;
 /// <summary>
 /// 通用响应标识
 /// </summary>
-public enum HttpResponseEnum
+public enum BaseHttpCodeEnum
 {
     /// <summary>
     /// 继续请求
@@ -36,7 +36,7 @@ public enum HttpResponseEnum
     /// 请求成功
     /// </summary>
     [Description("请求成功")]
-    Ok = 200,
+    Success = 200,
 
     /// <summary>
     /// 请求已被接受，等待资源响应

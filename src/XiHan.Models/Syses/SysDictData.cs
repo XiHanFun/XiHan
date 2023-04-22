@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统字典数据表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Dict_Data")]
-public class SysDictData : BaseDeleteEntity
+public class SysDictData : BaseModifyEntity
 {
     /// <summary>
     /// 字典类型
@@ -65,5 +66,5 @@ public class SysDictData : BaseDeleteEntity
     /// 字典项描述
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 }

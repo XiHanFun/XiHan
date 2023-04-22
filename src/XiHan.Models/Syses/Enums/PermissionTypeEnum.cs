@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:AuthorityTypeEnum
+// FileName:PermissionTypeEnum
 // Guid:eebcea93-eefa-4f1d-90be-bda29b508009
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ namespace XiHan.Models.Syses.Enums;
 /// <summary>
 /// 权限类型
 /// </summary>
-public enum AuthorityTypeEnum
+public enum PermissionTypeEnum
 {
     /// <summary>
     /// 页面权限(菜单级)

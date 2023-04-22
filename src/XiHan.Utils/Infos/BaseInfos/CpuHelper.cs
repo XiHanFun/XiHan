@@ -74,7 +74,7 @@ public static class CpuHelper
     public static CpuInfo GetCpuInfos()
     {
         CpuInfo cpuInfo = new();
-        if (OSPlatformHelper.GetOsIsUnix())
+        if (OsPlatformHelper.GetOsIsUnix())
         {
             cpuInfo.CpuCount = GetCpuCount();
             cpuInfo.CpuRate = GetUnixCpuRate();

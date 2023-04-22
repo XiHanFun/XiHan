@@ -13,11 +13,9 @@
 
 using Mapster;
 using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
-using XiHan.Repositories.Bases;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
 using XiHan.Utils.Https;
@@ -50,7 +48,7 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        var sysWebHook = await GetFirstAsync(e => !e.IsSoftDeleted && e.IsEnabled && e.WebHookType == WebHookTypeEnum.WeCom.GetEnumValueByKey());
+        var sysWebHook = await GetFirstAsync(e => e.IsEnabled && e.WebHookType == WebHookTypeEnum.WeCom.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
             .ForType<SysWebHook, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
@@ -160,14 +158,14 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
         {
             if (result.ErrCode == 0 || result?.ErrMsg == "ok")
             {
-                return BaseResponseDto.Ok("发送成功");
+                return BaseResultDto.Success("发送成功");
             }
             else
             {
-                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
+                return BaseResultDto.BadRequest(result?.ErrMsg ?? "发送失败");
             }
         }
-        return BaseResponseDto.InternalServerError();
+        return BaseResultDto.InternalServerError();
     }
 
     /// <summary>
@@ -186,14 +184,14 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
                     Message = "上传成功",
                     MediaId = result.MediaId
                 };
-                return BaseResponseDto.Ok(uploadResult);
+                return BaseResultDto.Success(uploadResult);
             }
             else
             {
-                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "上传失败");
+                return BaseResultDto.BadRequest(result?.ErrMsg ?? "上传失败");
             }
         }
-        return BaseResponseDto.InternalServerError();
+        return BaseResultDto.InternalServerError();
     }
 
     #endregion

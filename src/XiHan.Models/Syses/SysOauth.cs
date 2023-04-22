@@ -19,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统开放授权协议表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Oauth")]
-public class SysOauth : BaseDeleteEntity
+public class SysOauth : BaseModifyEntity
 {
     /// <summary>
     /// 开放授权协议类型

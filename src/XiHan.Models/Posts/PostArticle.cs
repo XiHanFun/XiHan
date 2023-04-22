@@ -19,6 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章表
 /// </summary>
+/// <remarks>记录创建，修改，删除，审核，状态信息</remarks>
 [SugarTable(TableName = "Post_Article")]
 public class PostArticle : BaseEntity
 {

@@ -19,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统计划任务表
 /// </summary>
+/// <remarks>记录创建，修改，删除信息</remarks>
 [SugarTable(TableName = "Sys_Tasks")]
 public class SysTasks : BaseDeleteEntity
 {
@@ -38,7 +39,7 @@ public class SysTasks : BaseDeleteEntity
     /// 任务描述
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 
     #region 任务类型
 

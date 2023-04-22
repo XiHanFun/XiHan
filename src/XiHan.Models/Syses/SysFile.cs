@@ -17,8 +17,9 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
- /// 系统文件表
- /// </summary>
+/// 系统文件表
+/// </summary>
+/// <remarks>记录创建，修改，删除信息</remarks>
 [SugarTable(TableName = "Sys_File")]
 public class SysFile : BaseDeleteEntity
 {
@@ -82,5 +83,5 @@ public class SysFile : BaseDeleteEntity
     /// 字典描述
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 }

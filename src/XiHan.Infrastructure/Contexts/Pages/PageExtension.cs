@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BasePageDto
+// FileName:PageExtension
 // Guid:a345ade2-5c23-474d-b6b5-ea29490d57b0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ namespace XiHan.Infrastructure.Contexts.Pages;
 /// <summary>
 /// 分页拓展
 /// </summary>
-public static class PageExpand
+public static class PageExtension
 {
     /// <summary>
     /// 获取List的分页后的数据

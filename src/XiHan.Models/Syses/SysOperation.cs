@@ -1,12 +1,12 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:SysAuditType
-// long:52830965-a1e7-4d56-b98e-2582f19d22d8
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// FileName:SysOperation
+// Guid:8177143f-3289-4de2-a4e7-160edc346292
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 06:48:09
+// CreateTime:2023-04-22 上午 02:26:47
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -17,31 +17,26 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统审核类型表
+/// 系统操作表
 /// </summary>
-/// <remarks>记录创建，修改，删除信息</remarks>
-[SugarTable(TableName = "Sys_Audit_Type")]
-public class SysAuditType : BaseDeleteEntity
+/// <remarks>记录创建，修改信息</remarks>
+[SugarTable(TableName = "Sys_Operation")]
+public class SysOperation : BaseModifyEntity
 {
     /// <summary>
-    /// 父级审核分类
+    /// 操作代码
     /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public long? ParentId { get; set; }
+    [SugarColumn(Length = 10)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
-    /// 分类名称
+    /// 操作名称
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 10)]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// 审核等级
-    /// </summary>
-    public int Tier { get; set; } = 1;
-
-    /// <summary>
-    /// 分类描述
+    /// 操作描述
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
     public string? Description { get; set; }
