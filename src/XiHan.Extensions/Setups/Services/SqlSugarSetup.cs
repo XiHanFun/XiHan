@@ -13,6 +13,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using SqlSugar;
 using SqlSugar.IOC;
 using XiHan.Infrastructure.Apps.Setting;
 using XiHan.Utils.Consoles;
@@ -84,31 +85,44 @@ public static class SqlSugarSetup
 
         services.ConfigurationSugar(client =>
         {
+            var config = client.CurrentConnectionConfig;
             // SQL语句输出方便排查问题
             client.Aop.OnLogExecuting = (sql, pars) =>
             {
                 var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
-                var info = $"SQL语句:" + Environment.NewLine + $"{sql}，{param}";
+                var info = $"SQL语句:" + Environment.NewLine + UtilMethods.GetSqlString(config.DbType, sql, pars);
                 if (databaseConsole)
+                {
                     info.WriteLineHandle();
+                }
                 if (databaseLogInfo)
+                {
                     Log.Information(info);
+                }
             };
             client.Aop.OnLogExecuted = (sql, pars) =>
             {
                 var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime;
                 if (databaseConsole)
+                {
                     handle.WriteLineHandle();
+                }
                 if (databaseLogInfo)
+                {
                     Log.Information(handle);
+                }
             };
             client.Aop.OnError = (exp) =>
             {
-                var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message;
+                var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message + Environment.NewLine + UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
                 if (databaseConsole)
+                {
                     errorInfo.WriteLineError();
+                }
                 if (databaseLogError)
+                {
                     Log.Error(exp, errorInfo);
+                }
             };
         });
         return services;
