@@ -18,14 +18,14 @@ namespace XiHan.Extensions.Setups.Services;
 /// <summary>
 /// RabbitMQSetup
 /// </summary>
-public static class RabbitMQSetup
+public static class RabbitMqSetup
 {
     /// <summary>
     /// RabbitMQ 服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddRabbitMQSetup(this IServiceCollection services)
+    public static IServiceCollection AddRabbitMqSetup(this IServiceCollection services)
     {
         if (services == null)
         {

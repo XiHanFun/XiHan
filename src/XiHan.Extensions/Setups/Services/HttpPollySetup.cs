@@ -13,7 +13,6 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Infrastructure.Apps.HttpContexts;
 using XiHan.Utils.Https;
 
 namespace XiHan.Extensions.Setups.Services;
@@ -42,9 +41,6 @@ public static class HttpPollySetup
         // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IHttpPollyHelper, HttpPollyHelper>();
-
-        // 注册全局的 AppHttpContextManager
-        services.AddSingleton(AppHttpContextManager.Configure);
 
         return services;
     }

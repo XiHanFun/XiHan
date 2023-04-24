@@ -28,7 +28,7 @@ namespace XiHan.Extensions.Filters;
 public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
     // 日志开关
-    private readonly bool ResultLogSwitch = AppSettings.LogConfig.Result.GetValue();
+    private readonly bool _resultLogSwitch = AppSettings.LogConfig.Result.GetValue();
 
     private readonly ILogger<ResultFilterAsyncAttribute> _logger;
 
@@ -51,59 +51,53 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         // 不为空就做处理
-        if (context.Result != null)
+        if (context.Result is BaseResultDto resultModel)
         {
-            if (context.Result is BaseResultDto resultModel)
-            {
-                // 如果是通用数据类返回结果，则转换为json结果
-                context.Result = new JsonResult(resultModel);
-            }
-            else if (context.Result is ObjectResult objectResult)
-            {
-                // 如果是对象结果，则转换为json结果
-                context.Result = new JsonResult(objectResult.Value);
-            }
-            else if (context.Result is ContentResult contentResult)
-            {
-                // 如果是内容结果，则转换为json结果
-                context.Result = new JsonResult(contentResult.Content);
-            }
-            else if (context.Result is JsonResult jsonResult)
-            {
-                // 如果是json结果，则转换为json结果
-                context.Result = new JsonResult(jsonResult.Value);
-            }
-            else
-            {
-                // 其他结果，则转换为json结果
-                throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
-            }
+            // 如果是通用数据类返回结果，则转换为json结果
+            context.Result = new JsonResult(resultModel);
+        }
+        else if (context.Result is ObjectResult objectResult)
+        {
+            // 如果是对象结果，则转换为json结果
+            context.Result = new JsonResult(objectResult.Value);
+        }
+        else if (context.Result is ContentResult contentResult)
+        {
+            // 如果是内容结果，则转换为json结果
+            context.Result = new JsonResult(contentResult.Content);
+        }
+        else if (context.Result is JsonResult jsonResult)
+        {
+            // 如果是json结果，则转换为json结果
+            context.Result = new JsonResult(jsonResult.Value);
+        }
+        else
+        {
+            // 其他结果，则转换为json结果
+            throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
         }
         // 请求构造函数和方法,调用下一个过滤器
         var resultExecuted = await next();
         // 执行结果
-        if (resultExecuted.Result != null)
+        // 获取控制器、路由信息
+        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+        // 获取请求的方法
+        var method = actionDescriptor!.MethodInfo;
+        // 获取 HttpContext 和 HttpRequest 对象
+        var httpContext = context.HttpContext;
+        var httpRequest = httpContext.Request;
+        // 获取客户端 Ip 地址
+        var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+        // 获取请求的 Url 地址(域名、路径、参数)
+        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
+        // 写入日志
+        var info = $"\t 请求Ip：{remoteIp}\n" +
+                   $"\t 请求地址：{requestUrl}\n" +
+                   $"\t 请求方法：{method}";
+        var result = JsonSerializer.Serialize(resultExecuted.Result);
+        if (_resultLogSwitch)
         {
-            // 获取控制器、路由信息
-            var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-            // 获取请求的方法
-            var method = actionDescriptor!.MethodInfo;
-            // 获取 HttpContext 和 HttpRequest 对象
-            var httpContext = context.HttpContext;
-            var httpRequest = httpContext.Request;
-            // 获取客户端 Ip 地址
-            var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-            // 获取请求的 Url 地址(域名、路径、参数)
-            var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
-            // 写入日志
-            var info = $"\t 请求Ip：{remoteIp}\n" +
-                       $"\t 请求地址：{requestUrl}\n" +
-                       $"\t 请求方法：{method}";
-            var result = JsonSerializer.Serialize(resultExecuted.Result);
-            if (ResultLogSwitch)
-            {
-                _logger.LogInformation($"返回数据\n{info}\n{result}");
-            }
+            _logger.LogInformation($"返回数据\n{info}\n{result}");
         }
     }
 }

@@ -21,7 +21,6 @@ using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
 using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
@@ -341,7 +340,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         if (sysTasks.JobType == JobTypeEnum.Assembly.GetEnumValueByKey() && sysTasks.AssemblyName != null && sysTasks.ClassName != null)
         {
             Assembly assembly = Assembly.Load(new AssemblyName(sysTasks.AssemblyName));
-            Type? jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
+            Type jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             if (sysTasks.JobParams != null)
@@ -363,7 +362,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.JobType == JobTypeEnum.NetworkRequest.GetEnumValueByKey() && sysTasks.RequestMethod != null && sysTasks.ApiUrl != null)
         {
-            Type? jobType = typeof(HttpClient);
+            Type jobType = typeof(HttpClient);
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             return job;
@@ -381,7 +380,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.JobType == JobTypeEnum.SqlStatement.GetEnumValueByKey() && sysTasks.SqlText != null)
         {
-            Type? jobType = typeof(SqlSugarClient);
+            Type jobType = typeof(SqlSugarClient);
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             return job;

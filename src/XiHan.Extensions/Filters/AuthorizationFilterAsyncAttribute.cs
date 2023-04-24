@@ -27,7 +27,7 @@ namespace XiHan.Extensions.Filters;
 public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationFilter
 {
     // 日志开关
-    private readonly bool AuthorizationLogSwitch = AppSettings.LogConfig.Authorization.GetValue();
+    private readonly bool _authorizationLogSwitch = AppSettings.LogConfig.Authorization.GetValue();
 
     private readonly ILogger<AuthorizationFilterAsyncAttribute> _logger;
 
@@ -58,11 +58,11 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
         var httpContext = context.HttpContext;
         var httpRequest = httpContext.Request;
         // 获取控制器类型
-        var controllerType = actionDescriptor!.ControllerTypeInfo;
+        var controllerType = actionDescriptor.ControllerTypeInfo;
         // 获取客户端 Ip 地址
         var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
-        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
         // 是否授权访问
         var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
                             || controllerType.IsDefined(typeof(AuthorizeAttribute), true)
@@ -74,11 +74,11 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
         // 授权访问就进行权限检查
         if (isAuthorize)
         {
-            var Identities = httpContext.User.Identities;
+            var identities = httpContext.User.Identities;
             // 验证权限
-            if (Identities == null)
+            if (identities == null)
             {
-                if (AuthorizationLogSwitch)
+                if (_authorizationLogSwitch)
                     _logger.LogInformation($"认证参数异常\n{info}");
                 // 认证参数异常
                 throw new AuthenticationException();

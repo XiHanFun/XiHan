@@ -30,7 +30,7 @@ namespace XiHan.Extensions.Filters;
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
     // 日志开关
-    private readonly bool ExceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
+    private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
     private readonly ILogger<ExceptionFilterAsyncAttribute> _logger;
 
@@ -83,15 +83,15 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 // 获取客户端 Ip 地址
                 var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
                 // 获取请求的 Url 地址(域名、路径、参数)
-                var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+                var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
                 // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-                var userId = httpContext.User?.FindFirstValue("UserId");
+                var userId = httpContext.User.FindFirstValue("UserId");
                 // 写入日志
                 var info = $"\t 请求Ip：{remoteIp}\n" +
                            $"\t 请求地址：{requestUrl}\n" +
                            $"\t 请求方法：{method}\n" +
                            $"\t 操作用户：{userId}";
-                if (ExceptionLogSwitch)
+                if (_exceptionLogSwitch)
                     _logger.LogError($"系统异常\n{info}\n{context.Exception}");
             }
         }
@@ -105,7 +105,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    private bool IsAjaxRequest(HttpRequest request)
+    private static bool IsAjaxRequest(HttpRequest request)
     {
         var header = request.Headers["X-Request-With"];
         return "XMLHttpRequest".Equals(header.FirstOrDefault());

@@ -76,8 +76,7 @@ public class JobFactory : IJobFactory
     /// <param name="job"></param>
     public void ReturnJob(IJob job)
     {
-        var disposable = job as IDisposable;
-        if (disposable != null)
+        if (job is IDisposable disposable)
         {
             disposable.Dispose();
         }

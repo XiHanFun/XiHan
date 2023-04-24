@@ -29,7 +29,7 @@ namespace XiHan.Extensions.Filters;
 public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
     // 日志开关
-    private readonly bool ActionLogSwitch = AppSettings.LogConfig.Action.GetValue();
+    private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
     private readonly ILogger<ActionFilterAsyncAttribute> _logger;
 
@@ -67,18 +67,18 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             // 获取客户端 Ip 地址
             var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
             // 获取请求的 Url 地址(域名、路径、参数)
-            var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+            var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
             // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
             var parameters = context.ActionArguments;
             // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-            var userId = httpContext.User?.FindFirstValue("UserId");
+            var userId = httpContext.User.FindFirstValue("UserId");
             // 写入日志
             var info = $"\t 请求Ip：{remoteIp}\n" +
                        $"\t 请求地址：{requestUrl}\n" +
                        $"\t 请求方法：{method}\n" +
                        $"\t 请求参数：{parameters}\n" +
                        $"\t 操作用户：{userId}";
-            if (ActionLogSwitch)
+            if (_actionLogSwitch)
                 _logger.LogInformation($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             var actionExecuted = await next();
@@ -89,7 +89,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 // 判断是否请求成功，没有异常就是请求成功
                 var isRequestSucceed = actionExecuted.Exception == null;
                 // 请求成功就写入日志
-                if (isRequestSucceed && ActionLogSwitch)
+                if (isRequestSucceed && _actionLogSwitch)
                     _logger.LogInformation($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
             }
         }

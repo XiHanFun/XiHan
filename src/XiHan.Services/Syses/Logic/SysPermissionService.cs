@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Apps.Constants;
 using XiHan.Infrastructure.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;

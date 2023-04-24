@@ -49,7 +49,7 @@ public static class ServiceSetup
         // Swagger
         services.AddSwaggerSetup();
         // RabbitMQ
-        services.AddRabbitMQSetup();
+        services.AddRabbitMqSetup();
         // 性能分析
         services.AddMiniProfilerSetup();
         // 健康检查

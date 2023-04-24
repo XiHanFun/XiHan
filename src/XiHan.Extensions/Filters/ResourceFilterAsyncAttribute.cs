@@ -14,7 +14,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -30,7 +29,7 @@ namespace XiHan.Extensions.Filters;
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
     // 日志开关
-    private readonly bool ResourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
+    private readonly bool _resourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
     private readonly IMemoryCache _memoryCache;
     private readonly ILogger<ResourceFilterAsyncAttribute> _logger;
@@ -64,9 +63,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         // 获取客户端 Ip 地址
         var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
-        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value ?? string.Empty;
+        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
         // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-        var userId = httpContext.User?.FindFirstValue("UserId");
+        var userId = httpContext.User.FindFirstValue("UserId");
         // 写入日志
         var info = $"\t 请求Ip：{remoteIp}\n" +
                    $"\t 请求地址：{requestUrl}\n" +
@@ -77,7 +76,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
-            if (ResourceLogSwitch)
+            if (_resourceLogSwitch)
                 _logger.LogInformation($"缓存数据\n{info}\n{context.Result}");
         }
         else
@@ -85,23 +84,16 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             // 请求构造函数和方法,调用下一个过滤器
             var resourceExecuted = await next();
             // 执行结果
-            try
+            // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
+            if (resourceExecuted.Result != null)
             {
-                // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
-                if (resourceExecuted.Result != null)
+                var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
+                var result = resourceExecuted.Result as ActionResult;
+                _memoryCache.Set(requestUrl + method, result, syncTimeout);
+                if (_resourceLogSwitch)
                 {
-                    var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
-                    var result = resourceExecuted.Result as ActionResult;
-                    _memoryCache.Set(requestUrl + method, result, syncTimeout);
-                    if (ResourceLogSwitch)
-                    {
-                        _logger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
-                    }
+                    _logger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
                 }
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
     }

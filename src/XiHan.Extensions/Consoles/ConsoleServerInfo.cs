@@ -59,7 +59,7 @@ public static class ConsoleServerInfo
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
-        $@"占用空间：{FormatFileSizeExtensions.FormatByteToString(DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory))}".WriteLineInfo();
+        $@"占用空间：{DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory).FormatByteToString()}".WriteLineInfo();
         $@"启动环境：{AppSettings.EnvironmentName.GetValue()}".WriteLineInfo();
         $@"启动端口：{AppSettings.Port.GetValue()}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();

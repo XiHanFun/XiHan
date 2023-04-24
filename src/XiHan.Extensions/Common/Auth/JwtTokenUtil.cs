@@ -230,27 +230,27 @@ public class AuthJwtSetting
     /// <summary>
     /// 颁发者
     /// </summary>
-    public string Issuer { get; set; } = string.Empty;
+    public string Issuer { get; init; } = string.Empty;
 
     /// <summary>
     /// 签收者
     /// </summary>
-    public string Audience { get; set; } = string.Empty;
+    public string Audience { get; init; } = string.Empty;
 
     /// <summary>
     /// 秘钥
     /// </summary>
-    public string SymmetricKey { get; set; } = string.Empty;
+    public string SymmetricKey { get; init; } = string.Empty;
 
     /// <summary>
     /// 过期时间容错值
     /// </summary>
-    public int ClockSkew { get; set; }
+    public int ClockSkew { get; init; }
 
     /// <summary>
     /// 过期时间
     /// </summary>
-    public int Expires { get; set; }
+    public int Expires { get; init; }
 }
 
 /// <summary>

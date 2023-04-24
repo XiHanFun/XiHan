@@ -14,11 +14,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Extensions.Filters;
-using XiHan.Infrastructure.Contexts;
+using XiHan.Infrastructure.Apps;
 using XiHan.Infrastructure.Contexts.Results;
 using XiHan.Utils.Infos;
 
@@ -32,15 +31,11 @@ namespace XiHan.Api.Controllers.Test;
 [ApiGroup(ApiGroupNames.Test)]
 public class TestController : BaseApiController
 {
-    private readonly IHttpContextAccessor _IHttpContextAccessor;
-
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iHttpContextAccessor"></param>
-    public TestController(IHttpContextAccessor iHttpContextAccessor)
+    public TestController()
     {
-        _IHttpContextAccessor = iHttpContextAccessor;
     }
 
     /// <summary>
@@ -51,7 +46,7 @@ public class TestController : BaseApiController
     public ActionResult<BaseResultDto> ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
-        var httpContext = _IHttpContextAccessor.HttpContext!;
+        var httpContext = App.HttpContext!;
         HttpContexInfotHelper clientInfoHelper = new(httpContext);
         return BaseResultDto.Success(clientInfoHelper);
     }

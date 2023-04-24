@@ -37,7 +37,6 @@ public static class InitDatabaseStep
         // 若数据库已经初始化，则跳过，否则初始化数据库
         if (databaseInited)
         {
-            return;
         }
         else
         {

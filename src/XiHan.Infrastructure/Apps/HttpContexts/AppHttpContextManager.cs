@@ -12,6 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace XiHan.Infrastructure.Apps.HttpContexts;
 
@@ -20,20 +22,55 @@ namespace XiHan.Infrastructure.Apps.HttpContexts;
 /// </summary>
 public static class AppHttpContextManager
 {
-    // 上下文访问器
-    private static IHttpContextAccessor? _httpContextAccessor;
+    private static Func<object>? _asyncLocalAccessor;
+    private static Func<object, object>? _holderAccessor;
+    private static Func<object, HttpContext>? _httpContextAccessor;
 
     /// <summary>
-    /// 配置全局请求上下文信息
+    /// 获取当前 HttpContext 对象
     /// </summary>
-    /// <param name="httpContextAccessor"></param>
-    public static void Configure(IHttpContextAccessor httpContextAccessor)
+    public static HttpContext? GetHttpContextCurrent()
     {
-        _httpContextAccessor = httpContextAccessor;
+        var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
+        if (asyncLocal == null) return null;
+
+        var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
+        if (holder == null) return null;
+
+        return (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
+
+        // 创建异步本地访问器
+        static Func<object> CreateAsyncLocalAccessor()
+        {
+            var fieldInfo = typeof(HttpContextAccessor).GetField("_httpContextCurrent", BindingFlags.Static | BindingFlags.NonPublic)!;
+            var field = Expression.Field(null, fieldInfo);
+            return Expression.Lambda<Func<object>>(field).Compile();
+        }
+
+        // 创建常驻 HttpContext 访问器
+        static Func<object, object> CreateHolderAccessor(object asyncLocal)
+        {
+            var holderType = asyncLocal.GetType().GetGenericArguments()[0];
+            var method = typeof(AsyncLocal<>).MakeGenericType(holderType).GetProperty("Value")!.GetGetMethod()!;
+            var target = Expression.Parameter(typeof(object));
+            var convert = Expression.Convert(target, asyncLocal.GetType());
+            var getValue = Expression.Call(convert, method);
+            return Expression.Lambda<Func<object, object>>(getValue, target).Compile();
+        }
+
+        // 获取 HttpContext 访问器
+        static Func<object, HttpContext> CreateHttpContextAccessor(object holder)
+        {
+            var target = Expression.Parameter(typeof(object));
+            var convert = Expression.Convert(target, holder.GetType());
+            var field = Expression.Field(convert, "Context");
+            var convertAsResult = Expression.Convert(field, typeof(HttpContext));
+            return Expression.Lambda<Func<object, HttpContext>>(convertAsResult, target).Compile();
+        }
     }
 
     /// <summary>
     /// 当前上下文
     /// </summary>
-    public static HttpContext? Current => _httpContextAccessor?.HttpContext;
+    public static HttpContext? Current => GetHttpContextCurrent();
 }
