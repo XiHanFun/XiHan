@@ -99,7 +99,7 @@ public static class OsPlatformHelper
     /// </summary>
     public static string GetRunningTime()
     {
-        return Environment.TickCount.ParseToLong().FormatMilliSecondsToString().ToString();
+        return Environment.TickCount.ParseToLong().FormatMilliSecondsToString();
     }
 
     /// <summary>
@@ -107,6 +107,6 @@ public static class OsPlatformHelper
     /// </summary>
     public static string GetInteractiveMode()
     {
-        return Environment.UserInteractive == true ? "交互运行" : "非交互运行";
+        return Environment.UserInteractive ? "交互运行" : "非交互运行";
     }
 }

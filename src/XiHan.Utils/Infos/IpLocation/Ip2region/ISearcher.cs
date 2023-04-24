@@ -3,34 +3,34 @@ using System.Net;
 namespace XiHan.Utils.Infos.IpLocation.Ip2region;
 
 /// <summary>
-/// 查询接口
+/// ISearcher
 /// </summary>
 /// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
 public interface ISearcher
 {
     /// <summary>
-    /// 查询
+    /// 鏌ヨ
     /// </summary>
     /// <param name="ipStr"></param>
     /// <returns></returns>
     string? Search(string ipStr);
 
     /// <summary>
-    /// 查询
+    /// 鏌ヨ
     /// </summary>
     /// <param name="ipAddress"></param>
     /// <returns></returns>
     string? Search(IPAddress ipAddress);
 
     /// <summary>
-    /// 查询
+    /// 鏌ヨ
     /// </summary>
     /// <param name="ipAddress"></param>
     /// <returns></returns>
     string? Search(uint ipAddress);
 
     /// <summary>
-    /// IO数量
+    /// IO鎬绘暟
     /// </summary>
     int IoCount { get; }
 }

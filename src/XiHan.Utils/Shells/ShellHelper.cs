@@ -63,14 +63,12 @@ public static class ShellHelper
             RedirectStandardOutput = true
         };
 
-        using (var process = Process.Start(info))
+        using var process = Process.Start(info);
+        if (process == null)
         {
-            if (process == null)
-            {
-                return output;
-            }
-            output = process.StandardOutput.ReadToEnd();
+            return output;
         }
+        output = process.StandardOutput.ReadToEnd();
         return output;
     }
 }

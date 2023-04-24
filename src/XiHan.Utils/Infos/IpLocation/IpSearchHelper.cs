@@ -25,7 +25,7 @@ public static class IpSearchHelper
     /// <summary>
     /// 单一实例
     /// </summary>
-    private static Searcher? SearcherInstance = null;
+    private static Searcher? _searcherInstance;
 
     /// <summary>
     /// 锁
@@ -46,9 +46,9 @@ public static class IpSearchHelper
         {
             lock (Lock)
             {
-                SearcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
+                _searcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
             }
-            return SearcherInstance;
+            return _searcherInstance;
         }
     }
 

@@ -1,7 +1,7 @@
 namespace XiHan.Utils.Infos.IpLocation.Ip2region;
 
 /// <summary>
-/// »º´æ²ßÂÔ
+/// CachePolicyEnum
 /// </summary>
 /// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
 public enum CachePolicyEnum

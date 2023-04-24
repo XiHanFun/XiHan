@@ -152,7 +152,7 @@ public class DingTalkRobotHelper
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpEnum.Common, url, sendMessage, null);
+        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpEnum.Common, url, sendMessage);
         return result;
     }
 }

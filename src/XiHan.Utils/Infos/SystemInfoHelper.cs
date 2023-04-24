@@ -23,7 +23,7 @@ public static class SystemInfoHelper
     /// <summary>
     /// 操作系统
     /// </summary>
-    public static string OperatingSystem => OsPlatformHelper.GetOperatingSystem().ToString();
+    public static string OperatingSystem => OsPlatformHelper.GetOperatingSystem();
 
     /// <summary>
     /// 系统描述

@@ -14,7 +14,6 @@
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
 
@@ -50,7 +49,7 @@ public static class TypeExtensions
     /// <returns> 是返回True，不是返回False </returns>
     public static bool IsNullableType(this Type type)
     {
-        return type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
     }
 
     /// <summary>
@@ -227,7 +226,7 @@ public static class TypeExtensions
             DescriptionAttribute? desc = type.GetAttribute<DescriptionAttribute>(inherit);
             if (desc != null)
             {
-                var description = desc.Description ?? result;
+                var description = desc.Description;
                 result = fullName + "(" + description + ")";
             }
         }
@@ -324,7 +323,7 @@ public static class TypeExtensions
     /// <summary>
     /// 获取类型的显示名称
     /// </summary>
-    public static string DisplayName([NotNull] this Type type, bool fullName = true)
+    public static string DisplayName(this Type type, bool fullName = true)
     {
         StringBuilder sb = new();
         ProcessType(sb, type, fullName);
@@ -386,7 +385,7 @@ public static class TypeExtensions
 
         ProcessType(builder, innerType, fullName);
 
-        while (type!.IsArray)
+        while (type.IsArray)
         {
             builder.Append('[');
             builder.Append(',', type.GetArrayRank() - 1);

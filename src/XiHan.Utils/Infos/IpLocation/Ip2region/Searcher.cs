@@ -15,10 +15,10 @@ public class Searcher : ISearcher
     private const int VectorIndexSize = 8;
     private const int SegmentIndexSize = 14;
 
-    private readonly byte[]? _VectorIndex;
-    private readonly byte[]? _ContentBuff;
-    private readonly FileStream _ContentStream;
-    private readonly CachePolicyEnum _CachePolicy;
+    private readonly byte[]? _vectorIndex;
+    private readonly byte[]? _contentBuff;
+    private readonly FileStream _contentStream;
+    private readonly CachePolicyEnum _cachePolicy;
 
     /// <summary>
     /// IO数量
@@ -37,30 +37,30 @@ public class Searcher : ISearcher
             dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
         }
 
-        _ContentStream = File.OpenRead(dbPath);
-        _CachePolicy = cachePolicy;
+        _contentStream = File.OpenRead(dbPath);
+        _cachePolicy = cachePolicy;
 
-        switch (_CachePolicy)
+        switch (_cachePolicy)
         {
             case CachePolicyEnum.Content:
                 using (var stream = new MemoryStream())
                 {
-                    _ContentStream.CopyTo(stream);
-                    _ContentBuff = stream.ToArray();
+                    _contentStream.CopyTo(stream);
+                    _contentBuff = stream.ToArray();
                 }
                 break;
 
             case CachePolicyEnum.VectorIndex:
                 var vectorLength = VectorIndexRows * VectorIndexCols * VectorIndexSize;
-                _VectorIndex = new byte[vectorLength];
-                Read(HeaderInfoLength, _VectorIndex);
+                _vectorIndex = new byte[vectorLength];
+                Read(HeaderInfoLength, _vectorIndex);
                 break;
 
             default:
                 using (var stream = new MemoryStream())
                 {
-                    _ContentStream.CopyTo(stream);
-                    _ContentBuff = stream.ToArray();
+                    _contentStream.CopyTo(stream);
+                    _contentBuff = stream.ToArray();
                 }
                 break;
         }
@@ -71,8 +71,8 @@ public class Searcher : ISearcher
     /// </summary>
     ~Searcher()
     {
-        _ContentStream.Close();
-        _ContentStream.Dispose();
+        _contentStream.Close();
+        _contentStream.Dispose();
     }
 
     /// <summary>
@@ -110,16 +110,16 @@ public class Searcher : ISearcher
         var idx = il0 * VectorIndexCols * VectorIndexSize + il1 * VectorIndexSize;
         uint sPtr;
         uint ePtr;
-        switch (_CachePolicy)
+        switch (_cachePolicy)
         {
             case CachePolicyEnum.VectorIndex:
-                sPtr = BitConverter.ToUInt32(_VectorIndex.AsSpan()[(int)idx..]);
-                ePtr = BitConverter.ToUInt32(_VectorIndex.AsSpan()[((int)idx + 4)..]);
+                sPtr = BitConverter.ToUInt32(_vectorIndex.AsSpan()[(int)idx..]);
+                ePtr = BitConverter.ToUInt32(_vectorIndex.AsSpan()[((int)idx + 4)..]);
                 break;
 
             case CachePolicyEnum.Content:
-                sPtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx)..]);
-                ePtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx + 4)..]);
+                sPtr = BitConverter.ToUInt32(_contentBuff.AsSpan()[(HeaderInfoLength + (int)idx)..]);
+                ePtr = BitConverter.ToUInt32(_contentBuff.AsSpan()[(HeaderInfoLength + (int)idx + 4)..]);
                 break;
 
             case CachePolicyEnum.File:
@@ -130,8 +130,8 @@ public class Searcher : ISearcher
                 break;
 
             default:
-                sPtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx)..]);
-                ePtr = BitConverter.ToUInt32(_ContentBuff.AsSpan()[(HeaderInfoLength + (int)idx + 4)..]);
+                sPtr = BitConverter.ToUInt32(_contentBuff.AsSpan()[(HeaderInfoLength + (int)idx)..]);
+                ePtr = BitConverter.ToUInt32(_contentBuff.AsSpan()[(HeaderInfoLength + (int)idx + 4)..]);
                 break;
         }
 
@@ -188,17 +188,17 @@ public class Searcher : ISearcher
     /// <exception cref="IOException"></exception>
     private void Read(int offset, byte[] buff)
     {
-        switch (_CachePolicy)
+        switch (_cachePolicy)
         {
             case CachePolicyEnum.Content:
-                _ContentBuff.AsSpan()[offset..(offset + buff.Length)].CopyTo(buff);
+                _contentBuff.AsSpan()[offset..(offset + buff.Length)].CopyTo(buff);
                 break;
 
             default:
-                _ContentStream.Seek(offset, SeekOrigin.Begin);
+                _contentStream.Seek(offset, SeekOrigin.Begin);
                 IoCount++;
 
-                var rLen = _ContentStream.Read(buff);
+                var rLen = _contentStream.Read(buff);
                 if (rLen != buff.Length)
                 {
                     throw new IOException($"incomplete read: readed bytes should be {buff.Length}");

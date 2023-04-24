@@ -42,7 +42,7 @@ public static class NetworkHelper
                 Speed = ni.Speed.ToString("#,##0") + " bps",
                 PhysicalAddress = ni.GetPhysicalAddress().ToString(),
                 DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
-                IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address.ToString() + " / " + ip.IPv4Mask.ToString()).ToList(),
+                IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList(),
             };
             networkInfos.Add(networkInfo);
         }

@@ -28,7 +28,7 @@ public class BaseValidationDto
     {
         TotalCount = context.ModelState.Count;
         ValidationErrorDto = context.ModelState.Keys
-                .SelectMany(key => context!.ModelState[key]!.Errors
+                .SelectMany(key => context.ModelState[key]!.Errors
                 .Select(x => new BaseValidationErrorDto(key.GetDescription(), x.ErrorMessage)))
                 .ToList();
     }

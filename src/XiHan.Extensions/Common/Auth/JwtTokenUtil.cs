@@ -41,8 +41,8 @@ public static class JwtTokenUtil
         var claims = new List<Claim>
             {
                 new Claim("UserId", tokenModel.UserId.ToString()),
-                new Claim("UserName", tokenModel.UserName??string.Empty),
-                new Claim("NickName", tokenModel.NickName ?? string.Empty),
+                new Claim("UserName", tokenModel.UserName),
+                new Claim("NickName", tokenModel.NickName),
                 new Claim("Issuer", authJwtSetting.Issuer),
                 new Claim("Audience", authJwtSetting.Audience),
             };

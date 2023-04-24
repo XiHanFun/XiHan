@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System.Runtime.CompilerServices;
 
 namespace XiHan.Infrastructure.Apps.Setting;

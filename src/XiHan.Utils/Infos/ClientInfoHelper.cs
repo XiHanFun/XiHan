@@ -43,17 +43,17 @@ public static class ClientInfoHelper
 
         var header = httpContext.Request.HttpContext.Request.Headers;
 
-        if (header.ContainsKey("Accept-Language"))
+        if (header.TryGetValue("Accept-Language", out var value))
         {
-            clientModel.Language = header["Accept-Language"].ToString().Split(';')[0];
+            clientModel.Language = value.ToString().Split(';')[0];
         }
-        if (header.ContainsKey("Referer"))
+        if (header.TryGetValue("Referer", out var value1))
         {
-            clientModel.Referer = header["Referer"].ToString();
+            clientModel.Referer = value1.ToString();
         }
-        if (header.ContainsKey("User-Agent"))
+        if (header.TryGetValue("User-Agent", out var value2))
         {
-            var agent = header["User-Agent"].ToString();
+            var agent = value2.ToString();
             var clientInfo = Parser.GetDefault().Parse(agent);
             clientModel.Agent = agent;
             clientModel.OsName = clientInfo.OS.Family;

@@ -51,7 +51,7 @@ public static class ObjectPropertyExtensions
         DescriptionAttribute? desc = objectType.GetAttribute<DescriptionAttribute>(inherit);
         if (desc != null)
         {
-            var description = desc.Description ?? result;
+            var description = desc.Description;
             result = fullName + "(" + description + ")";
         }
         return result;
@@ -63,7 +63,7 @@ public static class ObjectPropertyExtensions
     /// <param name="instance">object</param>
     /// <param name="propertyName">需要判断的属性</param>
     /// <returns>是否包含</returns>
-    public static bool IsContainProperty(this object instance, string propertyName)
+    public static bool IsContainProperty(this object? instance, string propertyName)
     {
         if (instance != null && !string.IsNullOrEmpty(propertyName))
         {
@@ -170,7 +170,7 @@ public static class ObjectPropertyExtensions
     /// <returns></returns>
     public static List<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
     {
-        var propertyInfo = typeof(TEntity).GetType().GetProperties();
+        var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
@@ -194,7 +194,7 @@ public static class ObjectPropertyExtensions
     public static string GetPropertyChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
-        var list = GetPropertyDetailedCompare<TEntity>(oldVal, newVal);
+        var list = GetPropertyDetailedCompare(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,
@@ -205,13 +205,15 @@ public static class ObjectPropertyExtensions
         {
             newList = newList.Where(s => !specialList.Contains(s.PropertyName));
         }
-        if (newList.ToList().Any())
+
+        var enumerable = newList.ToList();
+        if (enumerable.ToList().Any())
         {
             JsonSerializerOptions options = new()
             {
                 WriteIndented = true
             };
-            return JsonSerializer.Serialize(newList, options);
+            return JsonSerializer.Serialize(enumerable, options);
         }
         return string.Empty;
     }

@@ -74,7 +74,7 @@ public static class App
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static object? GetRequiredService(Type type)
+    public static object GetRequiredService(Type type)
     {
         return ServiceProvider.GetRequiredService(type);
     }

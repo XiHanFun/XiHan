@@ -44,14 +44,14 @@ public static class AppConfigManager
         {
             var jsonFilePath = configurationManager.Sources
                 .OfType<JsonConfigurationSource>()
-                .Select(file => file?.Path!)
+                .Select(file => file.Path!)
                 .ToList();
             if (jsonFilePath.Any() && jsonFilePath.Remove("appsettings.json"))
             {
                 try
                 {
                     var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
-                    var envName = configurationFile.Split('.')[1].ToString();
+                    var envName = configurationFile.Split('.')[1];
                     ConfigurationRoot = config.Build();
                     ConfigurationFile = configurationFile;
                     var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";

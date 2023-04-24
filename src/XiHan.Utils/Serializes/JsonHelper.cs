@@ -116,7 +116,6 @@ public class JsonHelper
                 var obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
                 oldObject[keys[i]] = obj;
                 currentObject = oldObject[keys[i]];
-                continue;
             }
         }
         Save<dynamic>(jsoObj);

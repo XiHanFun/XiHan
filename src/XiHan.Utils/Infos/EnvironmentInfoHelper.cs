@@ -23,7 +23,7 @@ public static class EnvironmentInfoHelper
     /// <summary>
     /// 环境框架
     /// </summary>
-    public static string FrameworkDescription => RuntimeInformation.FrameworkDescription.ToString();
+    public static string FrameworkDescription => RuntimeInformation.FrameworkDescription;
 
     /// <summary>
     /// 环境版本
@@ -38,20 +38,20 @@ public static class EnvironmentInfoHelper
     /// <summary>
     /// 运行时标识符
     /// </summary>
-    public static string RuntimeIdentifier => RuntimeInformation.RuntimeIdentifier.ToString();
+    public static string RuntimeIdentifier => RuntimeInformation.RuntimeIdentifier;
 
     /// <summary>
     /// 机器名称
     /// </summary>
-    public static string MachineName => Environment.MachineName.ToString();
+    public static string MachineName => Environment.MachineName;
 
     /// <summary>
     /// 用户域名
     /// </summary>
-    public static string UserDomainName => Environment.UserDomainName.ToString();
+    public static string UserDomainName => Environment.UserDomainName;
 
     /// <summary>
     /// 关联用户
     /// </summary>
-    public static string UserName => Environment.UserName.ToString();
+    public static string UserName => Environment.UserName;
 }

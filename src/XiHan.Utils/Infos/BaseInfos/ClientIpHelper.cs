@@ -69,10 +69,10 @@ public static class ClientIpHelper
                 result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
             }
         }
-        if (result == null || result == string.Empty)
+        if (string.IsNullOrEmpty(result))
         {
             result = "0.0.0.0";
         }
-        return FormatIpExtensions.FormatStringToIpAddress(result);
+        return result.FormatStringToIpAddress();
     }
 }

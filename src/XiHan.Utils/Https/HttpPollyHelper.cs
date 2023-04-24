@@ -23,7 +23,7 @@ namespace XiHan.Utils.Https;
 /// </summary>
 public class HttpPollyHelper : IHttpPollyHelper
 {
-    private readonly IHttpClientFactory HttpClientFactory;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     /// <summary>
     /// 构造函数
@@ -31,7 +31,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="httpClientFactory"></param>
     public HttpPollyHelper(IHttpClientFactory httpClientFactory)
     {
-        HttpClientFactory = httpClientFactory;
+        _httpClientFactory = httpClientFactory;
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -73,7 +73,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<string> GetAsync(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -104,7 +104,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -136,7 +136,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
         if (headers != null)
         {
@@ -170,7 +170,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -202,7 +202,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -232,7 +232,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<string> PostAsync(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -264,7 +264,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -296,7 +296,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -327,7 +327,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <returns></returns>
     public async Task<TEntity?> DeleteAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = HttpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))

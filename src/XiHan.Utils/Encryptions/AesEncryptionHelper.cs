@@ -23,13 +23,13 @@ namespace XiHan.Utils.Encryptions;
 public static class AesEncryptionHelper
 {
     // AES KEY 的位数
-    private const int KEY_SIZE = 256;
+    private const int KeySize = 256;
 
     // 加密块大小
-    private const int BLOCK_SIZE = 128;
+    private const int BlockSize = 128;
 
     // 迭代次数
-    private const int ITERATIONS = 10000;
+    private const int Iterations = 10000;
 
     /// <summary>
     /// 加密方法
@@ -40,15 +40,15 @@ public static class AesEncryptionHelper
     public static string Encrypt(string plainText, string password)
     {
         // 生成盐
-        byte[] salt = new byte[BLOCK_SIZE / 8];
+        byte[] salt = new byte[BlockSize / 8];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
 
         // 扩展密码为 IV 和 KEY
-        byte[] key = DeriveKey(password, salt, KEY_SIZE / 8);
-        byte[] iv = DeriveKey(password, salt, BLOCK_SIZE / 8);
+        byte[] key = DeriveKey(password, salt, KeySize / 8);
+        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
 
         using var aes = Aes.Create();
         aes.Key = key;
@@ -97,8 +97,8 @@ public static class AesEncryptionHelper
         byte[] cipherBytes = Convert.FromBase64String(parts[1]);
 
         // 扩展密码为 IV 和 KEY
-        byte[] key = DeriveKey(password, salt, KEY_SIZE / 8);
-        byte[] iv = DeriveKey(password, salt, BLOCK_SIZE / 8);
+        byte[] key = DeriveKey(password, salt, KeySize / 8);
+        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
 
         using var aes = Aes.Create();
         aes.Key = key;
@@ -129,7 +129,7 @@ public static class AesEncryptionHelper
     /// <returns></returns>
     private static byte[] DeriveKey(string password, byte[] salt, int bytes)
     {
-        using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, ITERATIONS, HashAlgorithmName.SHA256);
+        using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations, HashAlgorithmName.SHA256);
         return pbkdf2.GetBytes(bytes);
     }
 }

@@ -532,7 +532,7 @@ public static class DiskHelper
     /// </summary>
     public static string GetDiskPartition()
     {
-        return string.Join("；", Environment.GetLogicalDrives()).ToString();
+        return string.Join("；", Environment.GetLogicalDrives());
     }
 
     /// <summary>
@@ -609,8 +609,8 @@ public static class DiskHelper
                     {
                         var info = new DiskInfo()
                         {
-                            DiskName = rootDisk[4].Trim().ToString(),
-                            TypeName = rootDisk[0].Trim().ToString(),
+                            DiskName = rootDisk[4].Trim(),
+                            TypeName = rootDisk[0].Trim(),
                             TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatByteToString(),
                             UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
                             FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatByteToString(),
@@ -634,14 +634,7 @@ public static class DiskHelper
     /// <returns></returns>
     public static List<DiskInfo> GetDiskInfos()
     {
-        if (OsPlatformHelper.GetOsIsUnix())
-        {
-            return GetUnixDisk();
-        }
-        else
-        {
-            return GetWindowsDisk();
-        }
+        return OsPlatformHelper.GetOsIsUnix() ? GetUnixDisk() : GetWindowsDisk();
     }
 
     #endregion

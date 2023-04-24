@@ -33,9 +33,9 @@ public static class ShaHashEncryptionHelper
         byte[] hashData = SHA1.HashData(Encoding.UTF8.GetBytes(data));
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        for (int i = 0; i < hashData.Length; i++)
+        foreach (var t in hashData)
         {
-            sb.Append(hashData[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         // 返回生成的哈希值
         return sb.ToString();
@@ -52,9 +52,9 @@ public static class ShaHashEncryptionHelper
         byte[] hashData = SHA256.HashData(Encoding.UTF8.GetBytes(data));
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        for (int i = 0; i < hashData.Length; i++)
+        foreach (var t in hashData)
         {
-            sb.Append(hashData[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         // 返回生成的哈希值
         return sb.ToString();
@@ -71,9 +71,9 @@ public static class ShaHashEncryptionHelper
         byte[] hashData = SHA384.HashData(Encoding.UTF8.GetBytes(data));
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        for (int i = 0; i < hashData.Length; i++)
+        foreach (var t in hashData)
         {
-            sb.Append(hashData[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         // 返回生成的哈希值
         return sb.ToString();
@@ -90,9 +90,9 @@ public static class ShaHashEncryptionHelper
         byte[] hashData = SHA512.HashData(Encoding.UTF8.GetBytes(data));
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        for (int i = 0; i < hashData.Length; i++)
+        foreach (var t in hashData)
         {
-            sb.Append(hashData[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         // 返回生成的哈希值
         return sb.ToString();

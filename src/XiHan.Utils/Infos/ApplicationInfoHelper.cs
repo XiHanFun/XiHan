@@ -39,7 +39,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Environment.ProcessPath == null ? string.Empty : Environment.ProcessPath!;
+    public static string ProcessPath => Environment.ProcessPath == null ? string.Empty : Environment.ProcessPath;
 
     /// <summary>
     /// 当前进程

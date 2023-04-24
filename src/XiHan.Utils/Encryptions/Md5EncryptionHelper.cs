@@ -32,9 +32,9 @@ public static class Md5EncryptionHelper
         byte[] inputBytes = Encoding.UTF8.GetBytes(input);
         byte[] hashBytes = MD5.HashData(inputBytes);
         StringBuilder sb = new();
-        for (int i = 0; i < hashBytes.Length; i++)
+        foreach (var t in hashBytes)
         {
-            sb.Append(hashBytes[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         string md5Str = sb.ToString();
         if (md5Str.Length == 32)
@@ -42,9 +42,9 @@ public static class Md5EncryptionHelper
             // 转换为64位MD5值
             byte[] bytes = Encoding.UTF8.GetBytes(md5Str);
             StringBuilder sb2 = new();
-            for (int i = 0; i < bytes.Length; i++)
+            foreach (var t in bytes)
             {
-                sb2.Append(bytes[i].ToString("x2"));
+                sb2.Append(t.ToString("x2"));
             }
             return sb2.ToString();
         }
@@ -84,9 +84,9 @@ public static class Md5StreamEncryptionHelper
         using var md5 = MD5.Create();
         byte[] hashBytes = md5.ComputeHash(stream);
         var sb = new StringBuilder();
-        for (int i = 0; i < hashBytes.Length; i++)
+        foreach (var t in hashBytes)
         {
-            sb.Append(hashBytes[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         return sb.ToString();
     }

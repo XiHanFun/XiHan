@@ -85,9 +85,9 @@ public class EmailHelper
         }
         catch (SmtpFailedRecipientsException ex)
         {
-            for (var i = 0; i < ex.InnerExceptions.Length; i++)
+            foreach (var t in ex.InnerExceptions)
             {
-                var status = ex.InnerExceptions[i].StatusCode;
+                var status = t.StatusCode;
                 if (status == SmtpStatusCode.MailboxBusy || status == SmtpStatusCode.MailboxUnavailable)
                 {
                     "Delivery failed - retrying in 5 seconds.".WriteLineError();
@@ -96,7 +96,7 @@ public class EmailHelper
                 }
                 else
                 {
-                    $"Failed to deliver message to {ex.InnerExceptions[i].FailedRecipient}".WriteLineError();
+                    $"Failed to deliver message to {t.FailedRecipient}".WriteLineError();
                 }
             }
         }

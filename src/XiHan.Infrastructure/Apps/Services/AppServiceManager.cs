@@ -95,10 +95,7 @@ public static class AppServiceManager
                 serviceType = type.GetInterfaces().FirstOrDefault();
             }
             // 情况2 特殊情况下才会指定（如果还没获取到，就把自身的类型作为服务类型）
-            if (serviceType == null)
-            {
-                serviceType = type;
-            }
+            serviceType ??= type;
 
             switch (serviceAttribute.ServiceLifetime)
             {
