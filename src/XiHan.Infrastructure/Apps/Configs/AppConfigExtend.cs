@@ -13,7 +13,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace XiHan.Infrastructure.Apps.Setting;
+namespace XiHan.Infrastructure.Apps.Configs;
 
 /// <summary>
 /// 配置扩展

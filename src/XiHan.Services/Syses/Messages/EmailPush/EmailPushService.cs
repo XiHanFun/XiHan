@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using XiHan.Infrastructure.Apps.Logging;
 using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructure.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Utils.Messages.Email;

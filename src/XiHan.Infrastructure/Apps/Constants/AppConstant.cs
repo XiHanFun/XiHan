@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:AppGlobalConstant
+// FileName:AppConstant
 // Guid:3a3f9b90-910b-4758-b291-fa8d23ad0fb4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,7 +16,7 @@ namespace XiHan.Infrastructure.Apps.Constants;
 /// <summary>
 /// 全局静态常量
 /// </summary>
-public static class AppGlobalConstant
+public static class AppConstant
 {
     /// <summary>
     /// 管理员权限

@@ -16,7 +16,9 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Infrastructure.Apps.Setting;
+using SqlSugar;
+using XiHan.Infrastructure.Apps.Configs;
+using XiHan.Infrastructure.Caches;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -38,13 +40,6 @@ public static class CacheSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 内存缓存 默认开启
-        services.AddMemoryCache(options => new MemoryCacheOptions
-        {
-            // 最大缓存个数限制
-            SizeLimit = 60
-        });
-
         // 分布式缓存
         var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.GetValue();
         if (isEnabledDistributedcache)
@@ -58,7 +53,17 @@ public static class CacheSetup
             services.AddSingleton<IDistributedCache>(new CSRedisCache(new CSRedisClient(redisStr)));
             // 用法二：帮助类直接调用
             RedisHelper.Initialization(new CSRedisClient(redisStr));
+            services.AddDistributedMemoryCache();
         }
+
+        // 内存缓存(默认开启)
+        services.AddSingleton<IMemoryCache>(factory =>
+        {
+            var cache = new MemoryCache(new MemoryCacheOptions());
+            return cache;
+        });
+        services.AddSingleton<IAppCacheService, AppMemoryCacheService>();
+        services.AddMemoryCache();
 
         // 响应缓存
         var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();

@@ -12,10 +12,10 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Infrastructure.Contexts.Validations;
+using XiHan.Infrastructure.Responses.Validations;
 using XiHan.Utils.Enums;
 
-namespace XiHan.Infrastructure.Contexts.Results;
+namespace XiHan.Infrastructure.Responses.Results;
 
 /// <summary>
 /// 通用结果实体

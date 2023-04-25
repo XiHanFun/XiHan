@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BoolJsonConverter
+// FileName:BooleanJsonConverter
 // Guid:9e1cdf66-5e38-4760-8ecc-1481ef4054f8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Utils.Serializes;
+namespace XiHan.Utils.Serializes.Converters;
 
 /// <summary>
-/// BoolJsonConverter
+/// BooleanJsonConverter
 /// </summary>
-public class BoolJsonConverter : JsonConverter<bool>
+public class BooleanJsonConverter : JsonConverter<bool>
 {
     /// <summary>
     /// 读

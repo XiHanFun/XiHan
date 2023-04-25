@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
-using XiHan.Infrastructure.Apps.Setting;
+using XiHan.Infrastructure.Apps.Configs;
 
 namespace XiHan.Extensions.Filters;
 

@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Infrastructure.Apps.Setting;
+using XiHan.Infrastructure.Apps.Configs;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -33,8 +33,6 @@ public static class CorsSetup
         {
             throw new ArgumentNullException(nameof(services));
         }
-
-        var sss = AppSettings.Cors.IsEnabled;
 
         var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
         if (!isEnabledCors)
@@ -59,9 +57,9 @@ public static class CorsSetup
                     // 允许任何方法
                     .AllowAnyMethod()
                     // 允许凭据（cookie）
-                    .AllowCredentials();
-                //// 允许请求头
-                //.WithExposedHeaders("X-Pagination");
+                    .AllowCredentials()
+                    // 允许请求头
+                    .WithExposedHeaders("X-Pagination");
             });
         });
         return services;

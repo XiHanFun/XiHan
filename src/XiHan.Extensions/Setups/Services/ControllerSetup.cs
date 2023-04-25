@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using XiHan.Extensions.Filters;
-using XiHan.Utils.Serializes;
+using XiHan.Utils.Serializes.Converters;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -57,11 +57,11 @@ public static class ControllerSetup
             // 忽略循环引用
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             // 布尔类型
-            options.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new BooleanJsonConverter());
             // 数字类型
-            options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals |
-                                                           JsonNumberHandling.AllowReadingFromString |
-                                                           JsonNumberHandling.WriteAsString;
+            options.JsonSerializerOptions.Converters.Add(new IntJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new LongJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new DecimalJsonConverter());
             // 日期类型
             options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
             // 允许额外符号

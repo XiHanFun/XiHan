@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using XiHan.Utils.Objects;
 
-namespace XiHan.Infrastructure.Contexts.Validations;
+namespace XiHan.Infrastructure.Responses.Validations;
 
 /// <summary>
 /// 验证实体基类

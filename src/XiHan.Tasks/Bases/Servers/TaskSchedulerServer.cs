@@ -20,8 +20,7 @@ using Serilog;
 using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructure.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Utils.Consoles;
@@ -32,7 +31,6 @@ namespace XiHan.Tasks.Bases.Servers;
 /// <summary>
 /// 任务调度管理中心
 /// </summary>
-[AppService(ServiceType = typeof(ITaskSchedulerServer), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class TaskSchedulerServer : ITaskSchedulerServer
 {
     private readonly IScheduler _scheduler;

@@ -18,8 +18,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using System.Security.Claims;
-using XiHan.Infrastructure.Apps.Setting;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructure.Apps.Configs;
+using XiHan.Infrastructure.Responses.Results;
 
 namespace XiHan.Extensions.Filters;
 

@@ -17,7 +17,7 @@ using Serilog;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Serializes;
 
-namespace XiHan.Infrastructure.Apps.Setting;
+namespace XiHan.Infrastructure.Apps.Configs;
 
 /// <summary>
 /// 全局配置管理器

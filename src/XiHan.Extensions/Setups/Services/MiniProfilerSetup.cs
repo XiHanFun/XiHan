@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Infrastructure.Apps.Setting;
+using XiHan.Infrastructure.Apps.Configs;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -35,19 +35,19 @@ public static class MiniProfilerSetup
         }
 
         var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
-        if (!isEnabledMiniprofiler)
+        if (isEnabledMiniprofiler)
         {
-            return services;
+            services.AddMiniProfiler(options =>
+            {
+                options.RouteBasePath = @"/Profiler";
+                options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
+                options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
+                options.PopupShowTimeWithChildren = true;
+                options.PopupShowTrivial = true;
+                options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+            });
         }
-        services.AddMiniProfiler(options =>
-        {
-            options.RouteBasePath = @"/profiler";
-            options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
-            options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
-            options.PopupShowTimeWithChildren = true;
-            options.PopupShowTrivial = true;
-            options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
-        });
+
         return services;
     }
 }

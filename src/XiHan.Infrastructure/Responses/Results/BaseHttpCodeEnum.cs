@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructure.Contexts.Results;
+namespace XiHan.Infrastructure.Responses.Results;
 
 /// <summary>
 /// 通用响应标识

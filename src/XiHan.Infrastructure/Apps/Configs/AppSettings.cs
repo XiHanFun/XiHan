@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Apps.Setting;
+namespace XiHan.Infrastructure.Apps.Configs;
 
 /// <summary>
 /// AppSettings

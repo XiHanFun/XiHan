@@ -18,7 +18,7 @@ using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Extensions.Filters;
 using XiHan.Infrastructure.Apps;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructure.Responses.Results;
 using XiHan.Utils.Infos;
 
 namespace XiHan.Api.Controllers.Test;

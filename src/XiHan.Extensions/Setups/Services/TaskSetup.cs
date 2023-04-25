@@ -14,6 +14,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Quartz.Spi;
 using XiHan.Tasks.Bases;
+using XiHan.Tasks.Bases.Servers;
 
 namespace XiHan.Extensions.Setups.Services;
 
@@ -36,6 +37,7 @@ public static class TaskSetup
 
         // 添加Quartz服务
         services.AddSingleton<IJobFactory, JobFactory>();
+        services.AddSingleton<ITaskSchedulerServer, TaskSchedulerServer>();
 
         return services;
     }

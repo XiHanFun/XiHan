@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Utils.Objects;
+
 namespace XiHan.Utils.Formats;
 
 /// <summary>
@@ -102,37 +104,41 @@ public static class FormatTimeExtensions
     /// <summary>
     /// 时间按天转换字符串
     /// </summary>
-    /// <param name="date"></param>
+    /// <param name="value"></param>
     /// <returns></returns>
-    public static string FormatDateTimeToFriendlyString(this DateTime date)
+    public static string FormatDateTimeToEasyString(this DateTime value)
     {
-        var strDate = date.ToString("yyyy-MM-dd");
-        string result;
-        if (DateTime.Now.ToString("yyyy-MM-dd") == strDate)
+        DateTime now = DateTime.Now;
+        var strDate = value.ToString("yyyy-MM-dd");
+        if (now < value) return strDate;
+        TimeSpan dep = now - value;
+
+        if (dep.TotalMinutes < 1)
         {
-            result = "今天";
+            return "刚刚";
         }
-        else if (DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") == strDate)
+        else if (dep.TotalMinutes >= 1 && dep.TotalMinutes < 60)
         {
-            result = "明天";
+            return dep.TotalMinutes.ParseToInt() + "分钟前";
         }
-        else if (DateTime.Now.AddDays(2).ToString("yyyy-MM-dd") == strDate)
+        else if (dep.TotalHours < 24)
         {
-            result = "后天";
+            return dep.TotalHours.ParseToInt() + "小时前";
         }
-        else if (DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") == strDate)
+        else if (dep.TotalDays < 7)
         {
-            result = "昨天";
+            return dep.TotalDays.ParseToInt() + "天前";
         }
-        else if (DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd") == strDate)
+        else if (dep.TotalDays >= 7 && dep.TotalDays < 30)
         {
-            result = "前天";
+            int defautlWeek = dep.TotalDays.ParseToInt() / 7;
+            return defautlWeek + "周前";
         }
-        else
+        else if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
         {
-            result = strDate;
+            return value.Month.ParseToInt() + "个月前";
         }
-        return result;
+        else return (now.Year - value.Year) + "年前";
     }
 
     /// <summary>
