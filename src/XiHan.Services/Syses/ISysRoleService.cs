@@ -26,12 +26,12 @@ public interface ISysRoleService : IBaseService<SysRole>
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    List<SysRole> GetRoleListByUserId(long userId);
+    Task<List<SysRole>> GetUserRolesByUserId(long userId);
 
     /// <summary>
-    /// 获取用户键集合
+    /// 获取用户角色主键列表
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    List<string> GetRoleCodeListByUserId(long userId);
+    Task<List<long>> GetUserRoleIdsByUserId(long userId);
 }

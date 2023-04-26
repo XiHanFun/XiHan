@@ -26,27 +26,36 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     private ISysUserRoleService _sysUserRoleService;
 
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="sysUserRoleService"></param>
+    public SysRoleService(ISysUserRoleService sysUserRoleService)
+    {
+        _sysUserRoleService = sysUserRoleService;
+    }
+
+    /// <summary>
     /// 获取用户角色列表
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public List<SysRole> GetRoleListByUserId(long userId)
+    public async Task<List<SysRole>> GetUserRolesByUserId(long userId)
     {
-        return Context.Queryable<SysUserRole>()
+        return await Context.Queryable<SysUserRole>()
             .LeftJoin<SysRole>((ur, r) => ur.RoleId == r.BaseId)
             .Where((ur, r) => ur.UserId == userId && !r.IsSoftDeleted)
             .Select((ur, r) => r)
-            .ToList();
+            .ToListAsync();
     }
 
     /// <summary>
-    /// 获取用户键集合
+    /// 获取用户角色主键列表
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public List<string> GetRoleCodeListByUserId(long userId)
+    public async Task<List<long>> GetUserRoleIdsByUserId(long userId)
     {
-        var list = GetRoleListByUserId(userId);
-        return list.Select(r => r.Code).ToList();
+        var list = await GetUserRolesByUserId(userId);
+        return list.Select(r => r.BaseId).ToList();
     }
 }

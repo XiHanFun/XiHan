@@ -39,12 +39,13 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public List<SysUser> GetSysUsersByRoleId(long roleId)
+    public async Task<List<SysUser>> GetSysUsersByRoleId(long roleId)
     {
-        return Context.Queryable<SysUserRole, SysUser>((ur, u) => new JoinQueryInfos(JoinType.Left, ur.UserId == u.BaseId))
+        return await Context.Queryable<SysUserRole>()
+            .LeftJoin<SysUser>((ur, u) => ur.UserId == u.BaseId)
             .Where((ur, u) => ur.RoleId == roleId && !u.IsSoftDeleted)
             .Select((ur, u) => u)
-            .ToList();
+            .ToListAsync();
     }
 
     /// <summary>
@@ -52,7 +53,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteUserRoleByUserId(int userId)
+    public async Task<bool> DeleteUserRoleByUserId(long userId)
     {
         return await DeleteAsync(it => it.UserId == userId);
     }
@@ -69,12 +70,42 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     }
 
     /// <summary>
-    /// 添加用户角色
+    /// 新增用户角色信息
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> CreateUserRole(SysUser sysUser)
+    {
+        List<SysUserRole> sysUserRoles = new();
+        foreach (var item in sysUser.SysRoleIds)
+        {
+            sysUserRoles.Add(new SysUserRole
+            {
+                RoleId = item,
+                UserId = sysUser.BaseId
+            });
+        }
+
+        return sysUserRoles.Any() ? await CreateUserRoles(sysUserRoles) : false;
+    }
+
+    /// <summary>
+    /// 批量新增用户角色
     /// </summary>
     /// <param name="sysUserRoles"></param>
     /// <returns></returns>
     public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
     {
         return await AddBatchAsync(sysUserRoles);
+    }
+
+    /// <summary>
+    /// 新增用户角色
+    /// </summary>
+    /// <param name="sysUserRole"></param>
+    /// <returns></returns>
+    public async Task<bool> CreateUserRole(SysUserRole sysUserRole)
+    {
+        return await AddAsync(sysUserRole);
     }
 }

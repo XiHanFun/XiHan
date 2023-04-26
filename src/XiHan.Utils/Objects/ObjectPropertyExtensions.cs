@@ -174,7 +174,7 @@ public static class ObjectPropertyExtensions
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
-            //确保不为null
+            // 确保不为null
             ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
             ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
         })

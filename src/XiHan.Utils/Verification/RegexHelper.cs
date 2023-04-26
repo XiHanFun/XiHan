@@ -62,7 +62,7 @@ public static partial class RegexHelper
     #region 是否中国电话
 
     /// <summary>
-    /// 电话号码（正确格式为：xxx-xxxxxxx或xxxx-xxxxxxxx）
+    /// 电话号码（正确格式为：xxxxxxxxxx或xxxxxxxxxxxx）
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -538,86 +538,86 @@ public static partial class RegexHelper
     #endregion
 
     [GeneratedRegex("^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex GuidRegex();
+    public static partial Regex GuidRegex();
 
-    [GeneratedRegex("^(\\d{3,4}-)\\d{7,8}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberTelRegex();
+    [GeneratedRegex("^(\\d{3,4})\\d{7,8}$", RegexOptions.IgnoreCase, "zh-CN")]
+    public static partial Regex NumberTelRegex();
 
     [GeneratedRegex("^[A-Za-z0-9](([\\.\\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\\.\\-]?[a-zA-Z0-9]+)*)\\.([A-Za-z]{2,})$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex EmailRegex();
+    public static partial Regex EmailRegex();
 
     [GeneratedRegex("^(-){0,1}\\d+$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex IntRegex();
+    public static partial Regex IntRegex();
 
     [GeneratedRegex(@"^[0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberRegex();
+    public static partial Regex NumberRegex();
 
     [GeneratedRegex("^[0-9]+\\.{0,1}[0-9]{0,2}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberIntOrDoubleRegex();
+    public static partial Regex NumberIntOrDoubleRegex();
 
     [GeneratedRegex("^\\d{n}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberSeveralNRegex();
+    public static partial Regex NumberSeveralNRegex();
 
     [GeneratedRegex("^\\d{n,}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberSeveralAtLeastNRegex();
+    public static partial Regex NumberSeveralAtLeastNRegex();
 
     [GeneratedRegex("^\\d{m,n}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberSeveralMNRegex();
+    public static partial Regex NumberSeveralMNRegex();
 
     [GeneratedRegex("^(0|[1-9] [0-9]*)$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberBeginZeroOrNotZeroRegex();
+    public static partial Regex NumberBeginZeroOrNotZeroRegex();
 
     [GeneratedRegex("^[0-9]+(.[0-9]{2})?$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberPositiveRealTwoDoubleRegex();
+    public static partial Regex NumberPositiveRealTwoDoubleRegex();
 
     [GeneratedRegex("^[0-9]+(.[0-9]{1,3})?$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberPositiveRealOneOrThreeDoubleRegex();
+    public static partial Regex NumberPositiveRealOneOrThreeDoubleRegex();
 
     [GeneratedRegex("^\\+?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberPositiveIntNotZeroRegex();
+    public static partial Regex NumberPositiveIntNotZeroRegex();
 
     [GeneratedRegex("^\\-?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberNegativeIntNotZeroRegex();
+    public static partial Regex NumberNegativeIntNotZeroRegex();
 
     [GeneratedRegex("^[A-Za-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex LetterRegex();
+    public static partial Regex LetterRegex();
 
     [GeneratedRegex("^[A-Z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex LetterCapitalRegex();
+    public static partial Regex LetterCapitalRegex();
 
     [GeneratedRegex("^[a-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex LetterLowerRegex();
+    public static partial Regex LetterLowerRegex();
 
     [GeneratedRegex("^[A-Za-z0-9]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex NumberOrLetterRegex();
+    public static partial Regex NumberOrLetterRegex();
 
     [GeneratedRegex("[^\\x00-\\xff]", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex LengthStrRegex();
+    public static partial Regex LengthStrRegex();
 
     [GeneratedRegex("^.{3}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex CharThreeRegex();
+    public static partial Regex CharThreeRegex();
 
     [GeneratedRegex("^\\d{6}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex PostCodeRegex();
+    public static partial Regex PostCodeRegex();
 
     [GeneratedRegex("[^%&',;=?$\\x22]+", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex CharSpecialRegex();
+    public static partial Regex CharSpecialRegex();
 
     [GeneratedRegex("^[\\u4e00-\\u9fa5]{0,}$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex ContainChineseRegex();
+    public static partial Regex ContainChineseRegex();
 
     [GeneratedRegex("[一-龥]", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex ChineseRegex();
+    public static partial Regex ChineseRegex();
 
     [GeneratedRegex("^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\\.))+(([a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/[a-zA-Z0-9\\&amp;%\\./-~-]*)?$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex UrlRegex();
+    public static partial Regex UrlRegex();
 
     [GeneratedRegex("^^(0?[1-9]|1[0-2])$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex MonthRegex();
+    public static partial Regex MonthRegex();
 
     [GeneratedRegex("^((0?[1-9])|((1|2)[0-9])|30|31)$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex DayRegex();
+    public static partial Regex DayRegex();
 
     [GeneratedRegex("^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$", RegexOptions.IgnoreCase, "zh-CN")]
-    private static partial Regex IpRegex();
+    public static partial Regex IpRegex();
 }

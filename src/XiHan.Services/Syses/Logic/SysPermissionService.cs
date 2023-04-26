@@ -52,7 +52,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
         }
         else
         {
-            roles.AddRange(_sysRoleService.GetRoleCodeListByUserId(user.BaseId));
+            // roles.AddRange(_sysRoleService.GetRoleIdsByUserId(user.BaseId));
         }
         return roles;
     }

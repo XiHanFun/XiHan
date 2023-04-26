@@ -326,7 +326,7 @@ public static class ObjectConvertExtensions
     /// <returns></returns>
     public static bool IsNotEmptyOrNull(this object? thisValue)
     {
-        return ParseToString(thisValue) != string.Empty && ParseToString(thisValue) != "" && ParseToString(thisValue) != "undefined" && ParseToString(thisValue) != "null";
+        return thisValue != null && ParseToString(thisValue) != string.Empty && ParseToString(thisValue) != "" && ParseToString(thisValue) != "undefined" && ParseToString(thisValue) != "null";
     }
 
     /// <summary>
