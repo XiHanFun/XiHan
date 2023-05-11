@@ -153,7 +153,7 @@ public static class JwtTokenUtil
             // 开始Token校验
             if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
             {
-                throw new ArgumentException("token为空或无法解析！", nameof(token));
+                throw new ArgumentException("token 为空或无法解析！", nameof(token));
             }
 
             var jwtToken = jwtHandler.ReadJwtToken(token);
