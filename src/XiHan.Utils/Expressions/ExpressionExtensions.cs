@@ -223,11 +223,9 @@ public static class ExpressionExtensions
     /// <summary>
     /// 生成判断字段是否等于指定值的表达式树
     /// </summary>
-    public static Expression<Func<T, bool>> IsEqual<T, TValue>(
-      Expression<Func<T, TValue>> valueSelector, TValue value)
+    public static Expression<Func<T, bool>> IsEqual<T, TValue>(Expression<Func<T, TValue>> valueSelector, TValue value)
     {
         var parameter = valueSelector.Parameters.Single();
-
         var equality = Expression.Equal(valueSelector.Body, Expression.Constant(value, typeof(TValue)));
 
         return Expression.Lambda<Func<T, bool>>(equality, parameter);

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:FormatnumExtensions
+// FileName:FormatNumberExtensions
 // Guid:09739585-bfe3-4b22-81a4-45b135d3466d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
