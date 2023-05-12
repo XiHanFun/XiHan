@@ -70,7 +70,7 @@ public static class SwaggerSetup
                 {
                     if (streamHtml.Invoke() == null)
                     {
-                        var errorMsg = "文件index.html的属性，必须设置为嵌入的资源";
+                        var errorMsg = "文件index.html的属性，必须设置为嵌入的资源！";
 
                         throw new Exception(errorMsg);
                     }

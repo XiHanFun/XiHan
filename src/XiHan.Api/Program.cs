@@ -17,16 +17,17 @@ using XiHan.Extensions.Consoles;
 using XiHan.Extensions.Setups;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // 打印欢迎语
 ConsoleHello.SayHello();
 
-// 日志
+// 配置日志
 var log = builder.Logging;
 log.AddLogSetup();
 
 try
 {
-    // 配置
+    // 创建配置
     var config = builder.Configuration;
     config.AddConfigSetup();
 

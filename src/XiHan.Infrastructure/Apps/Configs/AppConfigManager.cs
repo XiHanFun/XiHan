@@ -108,7 +108,8 @@ public static class AppConfigManager
     }
 
     /// <summary>
-    /// 获取属性名称 例如 AppSettings.Database.Inited => Database:Inited
+    /// 获取属性名称
+    /// 例如 AppSettings.Database.Inited => Database:Inited
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>

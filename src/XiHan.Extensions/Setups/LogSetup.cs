@@ -36,7 +36,7 @@ public static class LogSetup
             throw new ArgumentNullException(nameof(builder));
         }
 
-        // 配置日志
+        // 注册日志
         AppLogManager.RegisterLog(builder);
 
         "Log Started Successfully！".WriteLineSuccess();
