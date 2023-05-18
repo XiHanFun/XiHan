@@ -20,7 +20,7 @@ using Serilog;
 using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
-using XiHan.Common.Responses.Results;
+using XiHan.Commons.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Utils.Consoles;

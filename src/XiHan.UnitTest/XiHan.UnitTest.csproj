@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XiHan.Api\XiHan.Api.csproj" />
+    <ProjectReference Include="..\XiHan.Main\XiHan.Main.csproj" />
   </ItemGroup>
 
 </Project>

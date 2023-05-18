@@ -14,9 +14,9 @@
 using Mapster;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
-using XiHan.Common.Apps.Logging;
-using XiHan.Common.Apps.Services;
-using XiHan.Common.Responses.Results;
+using XiHan.Commons.Apps.Logging;
+using XiHan.Commons.Apps.Services;
+using XiHan.Commons.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Utils.Messages.Email;
