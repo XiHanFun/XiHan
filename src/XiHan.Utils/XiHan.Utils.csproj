@@ -20,22 +20,7 @@
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Summary\**" />
-    <EmbeddedResource Remove="Summary\**" />
-    <None Remove="Summary\**" />
-  </ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
-		<PackageReference Include="UAParser" Version="3.1.47" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="IpDatabases\ip2region.xdb">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	  <None Update="LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>

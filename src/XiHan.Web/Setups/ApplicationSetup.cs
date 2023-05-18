@@ -13,10 +13,10 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using XiHan.Web.Setups.Application;
 using XiHan.Commons.Apps.Services;
-using XiHan.Commons.Hubs;
+using XiHan.Subscriptions.Hubs;
 using XiHan.Utils.Consoles;
+using XiHan.Web.Setups.Application;
 
 namespace XiHan.Web.Setups;
 

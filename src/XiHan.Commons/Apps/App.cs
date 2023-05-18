@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
-using XiHan.Commons.Apps.HttpContexts;
+using XiHan.Commons.Apps.Https;
 using XiHan.Commons.Apps.Services;
 
 namespace XiHan.Commons.Apps;

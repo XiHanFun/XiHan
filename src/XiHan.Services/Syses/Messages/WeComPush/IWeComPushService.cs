@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Commons.Responses.Results;
-using XiHan.Utils.Messages.WeCom;
-using File = XiHan.Utils.Messages.WeCom.File;
+using XiHan.Subscriptions.Messages.WeCom;
+using File = XiHan.Subscriptions.Messages.WeCom.File;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 

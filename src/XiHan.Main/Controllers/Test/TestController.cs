@@ -19,7 +19,7 @@ using XiHan.Web.Common.Swagger;
 using XiHan.Web.Filters;
 using XiHan.Commons.Apps;
 using XiHan.Commons.Responses.Results;
-using XiHan.Utils.Infos;
+using XiHan.Commons.Infos;
 
 namespace XiHan.Main.Controllers.Test;
 

@@ -86,6 +86,3 @@ dotnet /home/web/zhaifanhua.com/blog/XiHan.WebApi.dll --environment=Production -
 
 ![Status](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg)
 
-## Star History
-
-![Star History](https://api.star-history.com/svg?repos=XiHanBlog/XiHan.Framework&type=Date)

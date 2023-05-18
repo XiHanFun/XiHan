@@ -17,7 +17,7 @@ using XiHan.Main.Controllers.Bases;
 using XiHan.Web.Common.Swagger;
 using XiHan.Commons.Responses.Results;
 using XiHan.Services.Syses.Messages.EmailPush;
-using XiHan.Utils.Messages.Email;
+using XiHan.Subscriptions.Messages.Email;
 
 namespace XiHan.Main.Controllers.Manage.Messages;
 

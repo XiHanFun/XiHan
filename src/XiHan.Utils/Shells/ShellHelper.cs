@@ -25,7 +25,7 @@ public static class ShellHelper
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public static string Bash(this string command)
+    public static string Bash(string command)
     {
         var escapedArgs = command.Replace("\"", "\\\"");
         var process = new Process
@@ -52,7 +52,7 @@ public static class ShellHelper
     /// <param name="fileName"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public static string Cmd(this string fileName, string args)
+    public static string Cmd(string fileName, string args)
     {
         string output = string.Empty;
 

@@ -18,8 +18,8 @@ using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
-using XiHan.Utils.Https;
-using XiHan.Utils.Messages.DingTalk;
+using XiHan.Commons.Apps.Https;
+using XiHan.Subscriptions.Messages.DingTalk;
 
 namespace XiHan.Services.Syses.Messages.DingTalkPush;
 

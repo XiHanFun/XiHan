@@ -19,7 +19,7 @@ using XiHan.Commons.Apps.Services;
 using XiHan.Commons.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Utils.Messages.Email;
+using XiHan.Subscriptions.Messages.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 

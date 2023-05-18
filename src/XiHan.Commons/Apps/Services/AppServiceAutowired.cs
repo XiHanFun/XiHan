@@ -22,7 +22,6 @@ namespace XiHan.Commons.Apps.Services;
 /// <remarks>
 /// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
 /// </remarks>
-[AppService(IsInterfaceServiceType = false)]
 public class AppServiceAutowired
 {
     private readonly IServiceProvider _serviceProvider;

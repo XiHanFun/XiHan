@@ -20,7 +20,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using XiHan.Web.Common.Swagger;
 using XiHan.Commons.Apps.Configs;
 using XiHan.Utils.Consoles;
-using XiHan.Utils.Infos;
+using XiHan.Commons.Infos;
 
 namespace XiHan.Web.Setups.Services;
 

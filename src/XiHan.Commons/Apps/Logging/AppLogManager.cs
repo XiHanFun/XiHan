@@ -16,7 +16,7 @@ using Serilog;
 using Serilog.Events;
 using System.Text;
 using XiHan.Utils.Consoles;
-using XiHan.Utils.Infos;
+using XiHan.Commons.Infos;
 
 namespace XiHan.Commons.Apps.Logging;
 
@@ -81,7 +81,7 @@ public static class AppLogManager
                             // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
                             path: filePath.ToLowerInvariant(),
                             // 生成周期：天
-                            rollingInterval: RollingInterval.Hour,
+                            rollingInterval: RollingInterval.Day,
                             // 文件大小：10M，默认1GB
                             fileSizeLimitBytes: 1024 * 1024 * 10,
                             // 保留最近：15个文件，默认31个，等于null时永远保留文件

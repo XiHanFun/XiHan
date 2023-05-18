@@ -18,9 +18,9 @@ using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
-using XiHan.Utils.Https;
-using XiHan.Utils.Messages.WeCom;
-using File = XiHan.Utils.Messages.WeCom.File;
+using XiHan.Commons.Apps.Https;
+using XiHan.Subscriptions.Messages.WeCom;
+using File = XiHan.Subscriptions.Messages.WeCom.File;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XiHan.Repositories\XiHan.Repositories.csproj" />
+    <ProjectReference Include="..\XiHan.Subscriptions\XiHan.Subscriptions.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

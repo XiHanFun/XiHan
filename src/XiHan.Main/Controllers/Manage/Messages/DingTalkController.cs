@@ -17,7 +17,7 @@ using XiHan.Main.Controllers.Bases;
 using XiHan.Web.Common.Swagger;
 using XiHan.Commons.Responses.Results;
 using XiHan.Services.Syses.Messages.DingTalkPush;
-using XiHan.Utils.Messages.DingTalk;
+using XiHan.Subscriptions.Messages.DingTalk;
 
 namespace XiHan.Main.Controllers.Manage.Messages;
 

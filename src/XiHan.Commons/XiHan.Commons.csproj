@@ -20,20 +20,24 @@
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Caching.CSRedis" Version="3.8.670" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
-	<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
-	<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-	<PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
-	<PackageReference Include="SqlSugarCore" Version="5.1.4.67" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="UAParser" Version="3.1.47" />
+		<PackageReference Include="Caching.CSRedis" Version="3.8.670" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+		<PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.4.73" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\XiHan.Utils\XiHan.Utils.csproj" />
   </ItemGroup>
 	<ItemGroup>
+		<None Update="IpDatabases\ip2region.xdb">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

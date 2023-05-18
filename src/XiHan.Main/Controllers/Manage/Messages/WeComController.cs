@@ -18,8 +18,8 @@ using XiHan.Web.Common.Swagger;
 using XiHan.Commons.Responses.Results;
 using XiHan.Services.Syses.Messages.WeComPush;
 using XiHan.Utils.Encryptions;
-using XiHan.Utils.Messages.WeCom;
-using File = XiHan.Utils.Messages.WeCom.File;
+using XiHan.Subscriptions.Messages.WeCom;
+using File = XiHan.Subscriptions.Messages.WeCom.File;
 
 namespace XiHan.Main.Controllers.Manage.Messages;
 

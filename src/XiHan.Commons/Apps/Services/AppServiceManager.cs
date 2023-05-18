@@ -16,8 +16,8 @@ using Serilog;
 using System.Reflection;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Enums;
-using XiHan.Utils.Infos.IpLocation;
-using XiHan.Utils.Infos.IpLocation.Ip2region;
+using XiHan.Commons.Infos.IpLocation;
+using XiHan.Commons.Infos.IpLocation.Ip2region;
 
 namespace XiHan.Commons.Apps.Services;
 
@@ -47,6 +47,8 @@ public static class AppServiceManager
     /// <param name="services"></param>
     public static void RegisterBaseService(IServiceCollection services)
     {
+        // 属性或字段自动注入服务
+        services.AddSingleton<AppServiceAutowired>();
         // Ip 查询服务
         services.AddSingleton<ISearcher, Searcher>();
         IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");

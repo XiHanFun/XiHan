@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Commons.Responses.Results;
-using XiHan.Utils.Messages.Email;
+using XiHan.Subscriptions.Messages.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 
