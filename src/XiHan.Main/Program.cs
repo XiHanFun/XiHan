@@ -13,7 +13,7 @@
 
 using Serilog;
 using System.Reflection;
-using XiHan.Web.Consoles;
+using XiHan.Main.Consoles;
 using XiHan.Web.Setups;
 
 var builder = WebApplication.CreateBuilder(args);

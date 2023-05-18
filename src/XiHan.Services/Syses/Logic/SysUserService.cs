@@ -53,7 +53,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         exp.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
         exp.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.NickName!));
         exp.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
-        exp.And(u => !u.IsSoftDeleted);
+        exp.And(u => !u.IsDeleted);
 
         var result = await QueryPageDataDtoAsync(exp.ToExpression(), basePageDto);
 
@@ -68,7 +68,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<SysUser?> GetUserById(long userId)
     {
         var exp = Expressionable.Create<SysUser>();
-        exp.And(u => !u.IsSoftDeleted);
+        exp.And(u => !u.IsDeleted);
 
         var sysUser = await FindAsync(exp.ToExpression());
         if (sysUser != null)
@@ -87,7 +87,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> GetUserNameUnique(string userName)
     {
-        int count = await CountAsync(u => u.UserName == userName && !u.IsSoftDeleted);
+        int count = await CountAsync(u => u.UserName == userName && !u.IsDeleted);
         if (count > 0)
         {
             return false;

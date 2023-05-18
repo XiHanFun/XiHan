@@ -43,7 +43,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     {
         return await Context.Queryable<SysUserRole>()
             .LeftJoin<SysUser>((ur, u) => ur.UserId == u.BaseId)
-            .Where((ur, u) => ur.RoleId == roleId && !u.IsSoftDeleted)
+            .Where((ur, u) => ur.RoleId == roleId && !u.IsDeleted)
             .Select((ur, u) => u)
             .ToListAsync();
     }

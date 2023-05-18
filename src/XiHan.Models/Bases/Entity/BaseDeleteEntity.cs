@@ -12,19 +12,20 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Models.Bases.Interface;
 
 namespace XiHan.Models.Bases.Entity;
 
 /// <summary>
 /// 删除基类，含主键，创建，修改
 /// </summary>
-public abstract class BaseDeleteEntity : BaseModifyEntity
+public abstract class BaseDeleteEntity : BaseModifyEntity, ISoftDelete
 {
     /// <summary>
-    /// 是否已经软删除
+    /// 是否已删除
     /// </summary>
-    [SugarColumn(ColumnDescription = "是否已经软删除")]
-    public virtual bool IsSoftDeleted { get; set; } = false;
+    [SugarColumn(ColumnDescription = "是否已删除")]
+    public virtual bool IsDeleted { get; set; } = false;
 
     /// <summary>
     /// 删除用户
