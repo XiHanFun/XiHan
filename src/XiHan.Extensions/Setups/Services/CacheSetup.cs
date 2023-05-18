@@ -17,8 +17,8 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
-using XiHan.Infrastructure.Apps.Configs;
-using XiHan.Infrastructure.Caches;
+using XiHan.Common.Apps.Configs;
+using XiHan.Common.Caches;
 
 namespace XiHan.Extensions.Setups.Services;
 

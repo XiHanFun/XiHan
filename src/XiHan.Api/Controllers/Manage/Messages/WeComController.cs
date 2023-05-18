@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
-using XiHan.Infrastructure.Responses.Results;
+using XiHan.Common.Responses.Results;
 using XiHan.Services.Syses.Messages.WeComPush;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Messages.WeCom;

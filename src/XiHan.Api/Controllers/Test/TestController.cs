@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Api.Controllers.Bases;
 using XiHan.Extensions.Common.Swagger;
 using XiHan.Extensions.Filters;
-using XiHan.Infrastructure.Apps;
-using XiHan.Infrastructure.Responses.Results;
+using XiHan.Common.Apps;
+using XiHan.Common.Responses.Results;
 using XiHan.Utils.Infos;
 
 namespace XiHan.Api.Controllers.Test;

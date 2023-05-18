@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Logging;
-using XiHan.Infrastructure.Apps.Logging;
+using XiHan.Common.Apps.Logging;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;

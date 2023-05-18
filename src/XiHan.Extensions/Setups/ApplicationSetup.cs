@@ -14,8 +14,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using XiHan.Extensions.Setups.Application;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Hubs;
+using XiHan.Common.Apps.Services;
+using XiHan.Common.Hubs;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;

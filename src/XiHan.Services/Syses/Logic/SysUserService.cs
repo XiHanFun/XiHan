@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Responses.Pages;
+using XiHan.Common.Apps.Services;
+using XiHan.Common.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Dtos;

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Common", "1.Common", "{1C83147B-ACA5-4E68-AC1A-BAE3059EA727}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructure", "1.Infrastructure", "{1C83147B-ACA5-4E68-AC1A-BAE3059EA727}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{75412D84-EA8F-4254-BF69-B291F326AA0B}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Web", "4.Web", "{FDE1B755
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Utils", "XiHan.Utils\XiHan.Utils.csproj", "{3977EE38-D759-4BD4-946D-B0942F385BC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure", "XiHan.Infrastructure\XiHan.Infrastructure.csproj", "{1B1A5F20-1960-4885-B769-FD391A0E1FF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common", "XiHan.Common\XiHan.Common.csproj", "{1B1A5F20-1960-4885-B769-FD391A0E1FF5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Models", "XiHan.Models\XiHan.Models.csproj", "{3CED79FD-74AE-4FF4-B201-F738D5E429C1}"
 EndProject
@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Extensions", "3.Extension
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tasks", "4.Tasks", "{FEEC732D-C00C-4BCF-A62A-056D65FEF412}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Tasks", "XiHan.Tasks\XiHan.Tasks.csproj", "{DE7A9141-1CA5-4CCD-9826-8D531C7FFF87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Tasks", "XiHan.Tasks\XiHan.Tasks.csproj", "{DE7A9141-1CA5-4CCD-9826-8D531C7FFF87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -23,11 +23,6 @@ namespace XiHan.Utils.Infos.IpLocation;
 public static class IpSearchHelper
 {
     /// <summary>
-    /// 单一实例
-    /// </summary>
-    private static Searcher? _searcherInstance;
-
-    /// <summary>
     /// 锁
     /// </summary>
     private static readonly object Lock = new();
@@ -36,6 +31,11 @@ public static class IpSearchHelper
     /// 数据库位置
     /// </summary>
     public static string IpDbPath { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 单一实例
+    /// </summary>
+    private static Searcher? _searcherInstance;
 
     /// <summary>
     /// 访问器

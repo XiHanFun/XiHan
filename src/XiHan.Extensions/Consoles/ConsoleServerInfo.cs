@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Infrastructure.Apps.Configs;
+using XiHan.Common.Apps.Configs;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Formats;
 using XiHan.Utils.Infos;

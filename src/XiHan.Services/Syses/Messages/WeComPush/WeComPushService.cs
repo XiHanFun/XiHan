@@ -12,8 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Mapster;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Responses.Results;
+using XiHan.Common.Apps.Services;
+using XiHan.Common.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;

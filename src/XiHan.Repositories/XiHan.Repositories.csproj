@@ -19,10 +19,11 @@
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Infrastructure\XiHan.Infrastructure.csproj" />
-	  <ProjectReference Include="..\XiHan.Models\XiHan.Models.csproj" />
-	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XiHan.Common\XiHan.Common.csproj" />
+    <ProjectReference Include="..\XiHan.Models\XiHan.Models.csproj" />
+  </ItemGroup>
 	
 	<ItemGroup>
 		<None Update="LICENSE">

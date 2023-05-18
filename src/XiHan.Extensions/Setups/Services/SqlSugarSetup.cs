@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar;
 using SqlSugar.IOC;
-using XiHan.Infrastructure.Apps.Configs;
+using XiHan.Common.Apps.Configs;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups.Services;

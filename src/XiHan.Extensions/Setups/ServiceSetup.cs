@@ -13,7 +13,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Extensions.Setups.Services;
-using XiHan.Infrastructure.Apps.Services;
+using XiHan.Common.Apps.Services;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Extensions.Setups;
