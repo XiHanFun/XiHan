@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Commons.Responses.Results;
-using XiHan.Subscriptions.Messages.Email;
+using XiHan.Infrastructures.Responses.Results;
+using XiHan.Subscriptions.Robots.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 

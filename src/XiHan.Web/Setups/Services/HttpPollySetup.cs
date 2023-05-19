@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Commons.Apps.Https;
+using XiHan.Infrastructures.Requests;
 
 namespace XiHan.Web.Setups.Services;
 

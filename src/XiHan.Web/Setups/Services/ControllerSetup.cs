@@ -42,7 +42,7 @@ public static class ControllerSetup
             // 全局注入过滤器
             options.Filters.Add<AuthorizationFilterAsyncAttribute>();
             options.Filters.Add<ExceptionFilterAsyncAttribute>();
-            options.Filters.Add<ResourceFilterAsyncAttribute>();
+            //options.Filters.Add<ResourceFilterAsyncAttribute>();
             options.Filters.Add<ActionFilterAsyncAttribute>();
             options.Filters.Add<ResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(options =>

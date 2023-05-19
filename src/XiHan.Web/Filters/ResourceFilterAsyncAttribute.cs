@@ -18,7 +18,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
-using XiHan.Commons.Apps.Configs;
+using XiHan.Infrastructures.Apps.Configs;
 
 namespace XiHan.Web.Filters;
 

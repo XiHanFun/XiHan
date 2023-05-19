@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Utils.Formats;
-using XiHan.Commons.Infos.BaseInfos;
+using XiHan.Infrastructures.Infos.BaseInfos;
 
 namespace XiHan.Test.Common;
 

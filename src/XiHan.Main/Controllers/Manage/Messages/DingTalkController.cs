@@ -15,9 +15,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Main.Controllers.Bases;
 using XiHan.Web.Common.Swagger;
-using XiHan.Commons.Responses.Results;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Syses.Messages.DingTalkPush;
-using XiHan.Subscriptions.Messages.DingTalk;
+using XiHan.Subscriptions.Robots.DingTalk;
 
 namespace XiHan.Main.Controllers.Manage.Messages;
 
@@ -48,7 +48,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToText()
     {
         const string keyWord = "消息提醒";
-        var text = new Text
+        var text = new DingTalkText
         {
             Content = keyWord + "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
@@ -65,7 +65,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToLink()
     {
         const string keyWord = "消息提醒";
-        var link = new Link
+        var link = new DingTalkLink
         {
             Title = keyWord + "时代在召唤",
             Text = "这个即将发布的新版本，创始人陈航（花名“无招”）称它为“红树林”。而在此之前，每当面临重大升级，产品经理们都会取一个应景的代号，这一次，为什么是“红树林”？",
@@ -84,7 +84,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToMarkdown()
     {
         const string keyWord = "消息提醒";
-        var markdown = new Markdown
+        var markdown = new DingTalkMarkdown
         {
             Title = keyWord + "长沙天气",
             Text = "#### 长沙天气 \n" +
@@ -105,7 +105,7 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToWholeActionCard()
     {
         const string keyWord = "消息提醒";
-        var actionCard = new ActionCard
+        var actionCard = new DingTalkActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
@@ -125,21 +125,21 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToPartActionCard()
     {
         const string keyWord = "消息提醒";
-        var actionCard = new ActionCard
+        var actionCard = new DingTalkActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
                     "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
                     "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
             BtnOrientation = "1",
-            Btns = new List<BtnInfo>
+            Btns = new List<DingTalkBtnInfo>
             {
-                new BtnInfo
+                new DingTalkBtnInfo
                 {
                     Title = keyWord +"不错",
                     ActionUrl = "https://www.dingtalk.com/"
                 },
-                new BtnInfo
+                new DingTalkBtnInfo
                 {
                     Title = keyWord +"不感兴趣",
                     ActionUrl = "https://www.dingtalk.com/"
@@ -157,17 +157,17 @@ public class DingTalkController : BaseApiController
     public async Task<BaseResultDto> DingTalkToFeedCard()
     {
         const string keyWord = "消息提醒";
-        var feedCard = new FeedCard
+        var feedCard = new DingTalkFeedCard
         {
-            Links = new List<FeedCardLink>
+            Links = new List<DingTalkFeedCardLink>
             {
-                new FeedCardLink
+                new DingTalkFeedCardLink
                 {
                     Title = keyWord + "时代的火车向前开",
                     MessageUrl="https://www.dingtalk.com/",
                     PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 },
-                new FeedCardLink
+                new DingTalkFeedCardLink
                 {
                     Title = keyWord + "时代在召唤",
                     MessageUrl="https://www.dingtalk.com/",

@@ -14,7 +14,7 @@
 using System.Text;
 using XiHan.Services.Commons.Migration.Dtos;
 using XiHan.Utils.Formats;
-using XiHan.Commons.Infos.BaseInfos;
+using XiHan.Infrastructures.Infos.BaseInfos;
 
 namespace XiHan.Services.Commons.Migration;
 

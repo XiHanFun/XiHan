@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using XiHan.Commons.Apps.Services;
+using XiHan.Infrastructures.Apps.Services;
 using XiHan.Subscriptions.Hubs;
 using XiHan.Utils.Consoles;
 using XiHan.Web.Setups.Application;

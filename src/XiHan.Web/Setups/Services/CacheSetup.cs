@@ -16,9 +16,8 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
-using SqlSugar;
-using XiHan.Commons.Apps.Configs;
-using XiHan.Commons.Caches;
+using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Caches;
 
 namespace XiHan.Web.Setups.Services;
 
@@ -48,20 +47,17 @@ public static class CacheSetup
             var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.GetValue();
             var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName.GetValue();
             var redisStr = $"{connectionString}, prefix = {instanceName}";
-            // 用法一：基于Redis初始化IDistributedCache
-            services.AddSingleton(new CSRedisClient(redisStr));
-            services.AddSingleton<IDistributedCache>(new CSRedisCache(new CSRedisClient(redisStr)));
+            var redisClient = new CSRedisClient(redisStr);
+            // 用法一：基于 Redis 初始化 IDistributedCache
+            services.AddSingleton(redisClient);
+            services.AddSingleton<IDistributedCache>(new CSRedisCache(redisClient));
             // 用法二：帮助类直接调用
-            RedisHelper.Initialization(new CSRedisClient(redisStr));
+            RedisHelper.Initialization(redisClient);
             services.AddDistributedMemoryCache();
         }
 
         // 内存缓存(默认开启)
-        services.AddSingleton<IMemoryCache>(factory =>
-        {
-            var cache = new MemoryCache(new MemoryCacheOptions());
-            return cache;
-        });
+        services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions()));
         services.AddSingleton<IAppCacheService, AppMemoryCacheService>();
         services.AddMemoryCache();
 
@@ -71,6 +67,7 @@ public static class CacheSetup
         {
             services.AddResponseCaching();
         }
+
         return services;
     }
 }

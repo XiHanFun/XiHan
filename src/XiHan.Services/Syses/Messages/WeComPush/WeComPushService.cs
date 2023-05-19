@@ -12,15 +12,14 @@
 #endregion <<版权版本注释>>
 
 using Mapster;
-using XiHan.Commons.Apps.Services;
-using XiHan.Commons.Responses.Results;
+using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
-using XiHan.Commons.Apps.Https;
-using XiHan.Subscriptions.Messages.WeCom;
-using File = XiHan.Subscriptions.Messages.WeCom.File;
+using XiHan.Subscriptions.Robots.WeCom;
+using XiHan.Infrastructures.Requests;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 
@@ -28,9 +27,9 @@ namespace XiHan.Services.Syses.Messages.WeComPush;
 /// WeComMessagePushService
 /// </summary>
 [AppService(ServiceType = typeof(IWeComPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
+public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
 {
-    private readonly WeComRobotHelper _weComRobot;
+    private readonly WeComCustomRobot _weComRobot;
 
     /// <summary>
     /// 构造函数
@@ -39,7 +38,7 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     public WeComPushService(IHttpPollyHelper httpPolly)
     {
         WeComConnection weComConnection = GetWeComConn().Result;
-        _weComRobot = new WeComRobotHelper(httpPolly, weComConnection);
+        _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);
     }
 
     /// <summary>
@@ -48,12 +47,12 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        var sysWebHook = await GetFirstAsync(e => e.IsEnabled && e.WebHookType == WebHookTypeEnum.WeCom.GetEnumValueByKey());
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.WeCom.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
-            .ForType<SysWebHook, WeComConnection>()
+            .ForType<SysCustomRobot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
-        WeComConnection weComConnection = sysWebHook.Adapt<WeComConnection>(config);
+        WeComConnection weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
         return weComConnection;
     }
 
@@ -64,10 +63,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToText(Text text)
+    public async Task<BaseResultDto> WeComToText(WeComText text)
     {
-        var result = await _weComRobot.TextMessage(text);
-        return WeComMessageReturn(result);
+        return await _weComRobot.TextMessage(text);
     }
 
     /// <summary>
@@ -75,10 +73,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToMarkdown(Markdown markdown)
+    public async Task<BaseResultDto> WeComToMarkdown(WeComMarkdown markdown)
     {
-        var result = await _weComRobot.MarkdownMessage(markdown);
-        return WeComMessageReturn(result);
+        return await _weComRobot.MarkdownMessage(markdown);
     }
 
     /// <summary>
@@ -86,10 +83,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToImage(Image image)
+    public async Task<BaseResultDto> WeComToImage(WeComImage image)
     {
-        var result = await _weComRobot.ImageMessage(image);
-        return WeComMessageReturn(result);
+        return await _weComRobot.ImageMessage(image);
     }
 
     /// <summary>
@@ -97,10 +93,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNews(News news)
+    public async Task<BaseResultDto> WeComToNews(WeComNews news)
     {
-        var result = await _weComRobot.NewsMessage(news);
-        return WeComMessageReturn(result);
+        return await _weComRobot.NewsMessage(news);
     }
 
     /// <summary>
@@ -108,10 +103,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToFile(File file)
+    public async Task<BaseResultDto> WeComToFile(WeComFile file)
     {
-        var result = await _weComRobot.FileMessage(file);
-        return WeComMessageReturn(result);
+        return await _weComRobot.FileMessage(file);
     }
 
     /// <summary>
@@ -119,10 +113,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToTextNotice(TemplateCardTextNotice templateCard)
+    public async Task<BaseResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
     {
-        var result = await _weComRobot.TextNoticeMessage(templateCard);
-        return WeComMessageReturn(result);
+        return await _weComRobot.TextNoticeMessage(templateCard);
     }
 
     /// <summary>
@@ -130,10 +123,9 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNewsNotice(TemplateCardNewsNotice templateCard)
+    public async Task<BaseResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
     {
-        var result = await _weComRobot.NewsNoticeMessage(templateCard);
-        return WeComMessageReturn(result);
+        return await _weComRobot.NewsNoticeMessage(templateCard);
     }
 
     /// <summary>
@@ -143,55 +135,7 @@ public class WeComPushService : BaseService<SysWebHook>, IWeComPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeComToUploadkFile(FileStream fileStream)
     {
-        var result = await _weComRobot.UploadkFile(fileStream);
-        return WeComUploadReturn(result);
-    }
-
-    /// <summary>
-    /// 消息统一格式返回
-    /// </summary>
-    /// <param name="result"></param>
-    /// <returns></returns>
-    private static BaseResultDto WeComMessageReturn(WeComResultInfoDto? result)
-    {
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-            {
-                return BaseResultDto.Success("发送成功");
-            }
-            else
-            {
-                return BaseResultDto.BadRequest(result?.ErrMsg ?? "发送失败");
-            }
-        }
-        return BaseResultDto.InternalServerError();
-    }
-
-    /// <summary>
-    /// 上传文件统一格式返回
-    /// </summary>
-    /// <param name="result"></param>
-    /// <returns></returns>
-    private static BaseResultDto WeComUploadReturn(WeComResultInfoDto? result)
-    {
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-            {
-                var uploadResult = new WeComUploadResultDto
-                {
-                    Message = "上传成功",
-                    MediaId = result.MediaId
-                };
-                return BaseResultDto.Success(uploadResult);
-            }
-            else
-            {
-                return BaseResultDto.BadRequest(result?.ErrMsg ?? "上传失败");
-            }
-        }
-        return BaseResultDto.InternalServerError();
+        return await _weComRobot.UploadkFile(fileStream);
     }
 
     #endregion

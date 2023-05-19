@@ -18,9 +18,9 @@ using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using XiHan.Web.Common.Swagger;
-using XiHan.Commons.Apps.Configs;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Consoles;
-using XiHan.Commons.Infos;
+using XiHan.Infrastructures.Infos;
 
 namespace XiHan.Web.Setups.Services;
 

@@ -12,11 +12,11 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Commons.Apps.Configs;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Formats;
-using XiHan.Commons.Infos;
-using XiHan.Commons.Infos.BaseInfos;
+using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Infos.BaseInfos;
 using XiHan.Utils.Serializes;
 
 namespace XiHan.Main.Consoles;

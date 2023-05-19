@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Commons.Apps.Services;
+using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 

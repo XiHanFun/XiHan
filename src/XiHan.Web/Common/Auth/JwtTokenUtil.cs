@@ -17,7 +17,7 @@ using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using XiHan.Commons.Apps.Configs;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Consoles;
 using XiHan.Utils.Objects;
 

@@ -21,7 +21,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Commons\XiHan.Commons.csproj" />
+	  <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

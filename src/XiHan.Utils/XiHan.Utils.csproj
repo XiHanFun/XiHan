@@ -18,6 +18,7 @@
 	<PackageIcon>readme.png</PackageIcon>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
 	<ItemGroup>

@@ -12,14 +12,14 @@
 #endregion <<版权版本注释>>
 
 using Mapster;
-using XiHan.Commons.Apps.Services;
-using XiHan.Commons.Responses.Results;
+using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Requests;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
+using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.Utils.Enums;
-using XiHan.Commons.Apps.Https;
-using XiHan.Subscriptions.Messages.DingTalk;
 
 namespace XiHan.Services.Syses.Messages.DingTalkPush;
 
@@ -27,9 +27,9 @@ namespace XiHan.Services.Syses.Messages.DingTalkPush;
 /// DingTalkMessagePush
 /// </summary>
 [AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
+public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushService
 {
-    private readonly DingTalkRobotHelper _dingTalkRobot;
+    private readonly DingTalkCustomRobot _dingTalkRobot;
 
     /// <summary>
     /// 构造函数
@@ -38,7 +38,7 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     public DingTalkPushService(IHttpPollyHelper httpPolly)
     {
         DingTalkConnection dingTalkConnection = GetDingTalkConn().Result;
-        _dingTalkRobot = new DingTalkRobotHelper(httpPolly, dingTalkConnection);
+        _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);
     }
 
     /// <summary>
@@ -47,12 +47,12 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysWebHook = await GetFirstAsync(e => e.IsEnabled && e.WebHookType == WebHookTypeEnum.DingTalk.GetEnumValueByKey());
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.DingTalk.GetEnumValueByKey());
         var config = new TypeAdapterConfig()
-            .ForType<SysWebHook, DingTalkConnection>()
+            .ForType<SysCustomRobot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        DingTalkConnection dingTalkConnection = sysWebHook.Adapt<DingTalkConnection>(config);
+        DingTalkConnection dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
         return dingTalkConnection;
     }
 
@@ -65,10 +65,9 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToText(Text text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<BaseResultDto> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        var result = await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
-        return DingTalkMessageReturn(result);
+        return await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -76,10 +75,9 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToLink(Link link)
+    public async Task<BaseResultDto> DingTalkToLink(DingTalkLink link)
     {
-        var result = await _dingTalkRobot.LinkMessage(link);
-        return DingTalkMessageReturn(result);
+        return await _dingTalkRobot.LinkMessage(link);
     }
 
     /// <summary>
@@ -89,10 +87,9 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToMarkdown(Markdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<BaseResultDto> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
-        var result = await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
-        return DingTalkMessageReturn(result);
+        return await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
     }
 
     /// <summary>
@@ -100,10 +97,9 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// </summary>
     /// <param name="actionCard"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToActionCard(ActionCard actionCard)
+    public async Task<BaseResultDto> DingTalkToActionCard(DingTalkActionCard actionCard)
     {
-        var result = await _dingTalkRobot.ActionCardMessage(actionCard);
-        return DingTalkMessageReturn(result);
+        return await _dingTalkRobot.ActionCardMessage(actionCard);
     }
 
     /// <summary>
@@ -111,31 +107,9 @@ public class DingTalkPushService : BaseService<SysWebHook>, IDingTalkPushService
     /// </summary>
     /// <param name="feedCard"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DingTalkToFeedCard(FeedCard feedCard)
+    public async Task<BaseResultDto> DingTalkToFeedCard(DingTalkFeedCard feedCard)
     {
-        var result = await _dingTalkRobot.FeedCardMessage(feedCard);
-        return DingTalkMessageReturn(result);
-    }
-
-    /// <summary>
-    /// 统一格式返回
-    /// </summary>
-    /// <param name="result"></param>
-    /// <returns></returns>
-    private static BaseResultDto DingTalkMessageReturn(DingTalkResultInfoDto? result)
-    {
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-            {
-                return BaseResultDto.Success("发送成功");
-            }
-            else
-            {
-                return BaseResultDto.BadRequest(result?.ErrMsg ?? "发送失败");
-            }
-        }
-        return BaseResultDto.InternalServerError();
+        return await _dingTalkRobot.FeedCardMessage(feedCard);
     }
 
     #endregion DingTalk

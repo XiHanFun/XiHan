@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Hosting;
-using XiHan.Commons.Apps.Configs;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Consoles;
 
 namespace XiHan.Web.Setups;

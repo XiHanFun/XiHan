@@ -14,12 +14,12 @@
 using Mapster;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
-using XiHan.Commons.Apps.Logging;
-using XiHan.Commons.Apps.Services;
-using XiHan.Commons.Responses.Results;
+using XiHan.Infrastructures.Apps.Logging;
+using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Subscriptions.Messages.Email;
+using XiHan.Subscriptions.Robots.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 
@@ -66,7 +66,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         //    BccMail = bccMail,
         //    AttachmentsPath = attachmentsPath,
         //};
-        EmailHelper emailHelper = new(emailFrom, emailTo);
+        EmailRobot emailHelper = new(emailFrom, emailTo);
         var logoInfo = string.Empty;
         if (await emailHelper.Send())
         {
