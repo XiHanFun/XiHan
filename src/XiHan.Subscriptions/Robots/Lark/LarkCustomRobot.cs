@@ -61,13 +61,13 @@ public class LarkCustomRobot
     /// <summary>
     /// 发送富文本消息
     /// </summary>
-    /// <param name="link"></param>
-    public async Task<BaseResultDto> PostMessage(LarkLink link)
+    /// <param name="post"></param>
+    public async Task<BaseResultDto> PostMessage(LarkPost post)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type, link });
+        var result = await Send(new { msg_type, post });
         return result;
     }
 
