@@ -13,7 +13,7 @@
 
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Requests;
+using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;

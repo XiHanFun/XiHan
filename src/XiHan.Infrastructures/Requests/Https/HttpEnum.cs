@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructures.Requests;
+namespace XiHan.Infrastructures.Requests.Https;
 
 /// <summary>
 /// HttpEnum

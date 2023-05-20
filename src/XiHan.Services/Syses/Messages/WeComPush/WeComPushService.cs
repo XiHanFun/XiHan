@@ -19,7 +19,7 @@ using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Utils.Enums;
 using XiHan.Subscriptions.Robots.WeCom;
-using XiHan.Infrastructures.Requests;
+using XiHan.Infrastructures.Requests.Https;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 

@@ -13,13 +13,14 @@
 
 using XiHan.Utils.Enums;
 using XiHan.Utils.Serializes;
-using XiHan.Infrastructures.Requests;
 using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Requests.Https;
 
 namespace XiHan.Subscriptions.Robots.WeCom;
 
 /// <summary>
 /// 企业微信自定义机器人消息推送
+/// https://developer.work.weixin.qq.com/document/path/91770
 /// </summary>
 public class WeComCustomRobot
 {

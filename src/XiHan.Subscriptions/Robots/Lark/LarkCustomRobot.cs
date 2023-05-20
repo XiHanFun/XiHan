@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DingTalkCustomRobot
+// FileName:LarkCustomRobot
 // Guid:b9ebb234-1ebf-4b97-b308-0c525d2cd190
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -20,13 +20,13 @@ using XiHan.Infrastructures.Responses.Results;
 using SqlSugar;
 using XiHan.Infrastructures.Requests.Https;
 
-namespace XiHan.Subscriptions.Robots.DingTalk;
+namespace XiHan.Subscriptions.Robots.Lark;
 
 /// <summary>
-/// 钉钉自定义机器人消息推送
-/// https://open.dingtalk.com/document/orgapp/custom-robot-access
+/// 飞书自定义机器人消息推送
+/// https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN
 /// </summary>
-public class DingTalkCustomRobot
+public class LarkCustomRobot
 {
     private readonly IHttpPollyHelper _httpPolly;
     private readonly string _url;
@@ -36,98 +36,90 @@ public class DingTalkCustomRobot
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    /// <param name="dingTalkConnection"></param>
-    public DingTalkCustomRobot(IHttpPollyHelper httpPolly, DingTalkConnection dingTalkConnection)
+    /// <param name="LarkConnection"></param>
+    public LarkCustomRobot(IHttpPollyHelper httpPolly, LarkConnection LarkConnection)
     {
         _httpPolly = httpPolly;
-        _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
-        _secret = dingTalkConnection.Secret;
+        _url = LarkConnection.WebHookUrl + "/" + LarkConnection.AccessToken;
+        _secret = LarkConnection.Secret;
     }
 
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="text">内容</param>
-    /// <param name="atMobiles">被@的人群</param>
-    /// <param name="isAtAll">是否@全员</param>
+    /// <param name="content">内容</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<BaseResultDto> TextMessage(LarkText content)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        // 指定目标人群
-        var at = new DingTalkAt
-        {
-            AtMobiles = atMobiles,
-            IsAtAll = isAtAll
-        };
+        var msg_type = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, text, at });
+        var result = await Send(new { msg_type, content });
         return result;
     }
 
     /// <summary>
-    /// 发送链接消息
+    /// 发送富文本消息
     /// </summary>
     /// <param name="link"></param>
-    public async Task<BaseResultDto> LinkMessage(DingTalkLink link)
+    public async Task<BaseResultDto> PostMessage(LarkLink link)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
+        var msg_type = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, link });
+        var result = await Send(new { msg_type, link });
         return result;
     }
 
     /// <summary>
-    /// 发送文档消息
+    /// 发送群卡片消息
     /// </summary>
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<BaseResultDto> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<BaseResultDto> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var msg_type = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
         // 指定目标人群
-        var at = new DingTalkAt
+        var at = new LarkAt
         {
             AtMobiles = atMobiles,
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msgtype, markdown, at });
+        var result = await Send(new { msg_type, markdown, at });
         return result;
     }
 
     /// <summary>
-    /// 发送任务卡片消息
+    /// 发送图片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<BaseResultDto> ActionCardMessage(DingTalkActionCard actionCard)
+    public async Task<BaseResultDto> ImageMessage(LarkActionCard actionCard)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
+        var msg_type = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, actionCard });
+        var result = await Send(new { msg_type, actionCard });
         return result;
     }
 
     /// <summary>
-    /// 发送卡片菜单消息
+    /// 发送消息卡片
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<BaseResultDto> FeedCardMessage(DingTalkFeedCard feedCard)
+    public async Task<BaseResultDto> InterActiveMessage(LarkFeedCard feedCard)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
+        var msg_type = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, feedCard });
+        var result = await Send(new { msg_type, feedCard });
         return result;
     }
 
     /// <summary>
-    /// 钉钉执行发送消息
+    /// 飞书执行发送消息
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
@@ -155,16 +147,16 @@ public class DingTalkCustomRobot
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpEnum.Common, url, sendMessage);
+        var result = await _httpPolly.PostAsync<LarkResultInfoDto>(HttpEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {
-            if (result.ErrCode == 0 || result.ErrMsg == "ok")
+            if (result.Code == 0 || result.Msg == "success")
             {
                 return BaseResultDto.Success("发送成功");
             }
-            var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
-            var info = resultInfos.Where(e => e.Value == result.ErrCode).FirstOrDefault();
+            var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
+            var info = resultInfos.Where(e => e.Value == result.Code).FirstOrDefault();
             return BaseResultDto.BadRequest("发送失败，" + info?.Label);
         }
         return BaseResultDto.InternalServerError();

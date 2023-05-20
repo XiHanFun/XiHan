@@ -16,7 +16,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace XiHan.Infrastructures.Requests;
+namespace XiHan.Infrastructures.Requests.Https;
 
 /// <summary>
 /// HttpPollyHelper
