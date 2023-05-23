@@ -16,7 +16,7 @@ using Serilog;
 using SqlSugar;
 using SqlSugar.IOC;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Web.Setups.Services;
 

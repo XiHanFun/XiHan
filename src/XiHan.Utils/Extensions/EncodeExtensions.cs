@@ -2,23 +2,23 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:Base32EncodeHelper
-// Guid:87047528-03ee-4970-bfbd-94c861e3f0b3
+// FileName:EncodeExtensions
+// Guid:66fecdbc-ef3d-4694-86a1-704b500f3029
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-15 上午 11:15:08
+// CreateTime:2023-05-23 下午 03:53:21
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using System.Text;
 
-namespace XiHan.Utils.Encodes;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// Base32编码帮助类
+/// EncodeExtensions
 /// </summary>
-public static class Base32EncodeHelper
+public static partial class EncodeExtensions
 {
     /// <summary>
     /// 对字符串进行 Base32 编码
@@ -41,6 +41,116 @@ public static class Base32EncodeHelper
         byte[] bytes = Base32.FromBase32String(data);
         return Encoding.UTF8.GetString(bytes);
     }
+
+    /// <summary>
+    /// 对字符串进行 Base64 编码
+    /// </summary>
+    /// <param name="data">待编码的字符串</param>
+    /// <returns>编码后的字符串</returns>
+    public static string Base64Encode(this string data)
+    {
+        byte[] bytes = Encoding.UTF8.GetBytes(data);
+        return Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    /// 对 Base64 编码的字符串进行解码
+    /// </summary>
+    /// <param name="data">待解码的字符串</param>
+    /// <returns>解码后的字符串</returns>
+    public static string Base64Decode(this string data)
+    {
+        byte[] bytes = Convert.FromBase64String(data);
+        return Encoding.UTF8.GetString(bytes);
+    }
+
+    /// <summary>
+    /// 将字符串转化为二进制
+    /// </summary>
+    /// <param name="data">待转换的字符串</param>
+    /// <returns>转换后的二进制数组</returns>
+    public static byte[] ToBinary(this string data)
+    {
+        return Encoding.UTF8.GetBytes(data);
+    }
+
+    /// <summary>
+    /// 将二进制数据转化为字符串
+    /// </summary>
+    /// <param name="data">待转换的二进制数组</param>
+    /// <returns>转换后的字符串</returns>
+    public static string FromBinary(this byte[] data)
+    {
+        return Encoding.UTF8.GetString(data);
+    }
+
+    /// <summary>
+    /// 对字符串进行 HTML 编码
+    /// </summary>
+    /// <param name="data">待编码的字符串</param>
+    /// <returns>编码后的字符串</returns>
+    public static string HtmlEncode(this string data)
+    {
+        return System.Web.HttpUtility.HtmlEncode(data);
+    }
+
+    /// <summary>
+    /// 对 HTML 编码的字符串进行解码
+    /// </summary>
+    /// <param name="data">待解码的字符串</param>
+    /// <returns>解码后的字符串</returns>
+    public static string HtmlDecode(this string data)
+    {
+        return System.Web.HttpUtility.HtmlDecode(data);
+    }
+
+    /// <summary>
+    /// 将字符串转为 Unicode 编码
+    /// </summary>
+    /// <param name="data">待转码的字符串</param>
+    /// <returns>转码后的字符串</returns>
+    public static string ToUnicode(this string data)
+    {
+        StringBuilder sb = new();
+        for (int i = 0; i < data.Length; i++)
+        {
+            sb.AppendFormat(@"\u{0:x4}", (int)data[i]);
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// 将 Unicode 编码转换为原始的字符串
+    /// </summary>
+    /// <param name="data">待解码的字符串</param>
+    /// <returns>解码后的字符串</returns>
+    public static string FromUnicode(this string data)
+    {
+        return UnicodeRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
+    }
+
+    /// <summary>
+    /// 对字符串进行 URL 编码
+    /// </summary>
+    /// <param name="data">待编码的字符串</param>
+    /// <returns>编码后的字符串</returns>
+    public static string UrlEncode(this string data)
+    {
+        return Uri.EscapeDataString(data);
+    }
+
+    /// <summary>
+    /// 对 URL 编码的字符串进行解码
+    /// </summary>
+    /// <param name="data">待解码的字符串</param>
+    /// <returns>解码后的字符串</returns>
+    public static string UrlDecode(this string data)
+    {
+        return Uri.UnescapeDataString(data);
+    }
+
+    [System.Text.RegularExpressions.GeneratedRegex(@"\\u([0-9A-Za-z]{4})")]
+    private static partial System.Text.RegularExpressions.Regex UnicodeRegex();
 }
 
 /// <summary>

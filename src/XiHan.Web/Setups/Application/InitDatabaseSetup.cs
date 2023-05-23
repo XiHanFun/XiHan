@@ -16,7 +16,7 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
 
 namespace XiHan.Web.Setups.Application;

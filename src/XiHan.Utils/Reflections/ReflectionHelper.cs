@@ -12,8 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Utils.Objects;
-using XiHan.Utils.Types;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.Reflections;
 

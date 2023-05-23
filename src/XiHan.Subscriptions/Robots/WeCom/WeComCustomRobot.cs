@@ -11,10 +11,10 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Enums;
-using XiHan.Utils.Serializes;
-using XiHan.Infrastructures.Responses.Results;
 using XiHan.Infrastructures.Requests.Https;
+using XiHan.Infrastructures.Responses.Results;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Subscriptions.Robots.WeCom;
 

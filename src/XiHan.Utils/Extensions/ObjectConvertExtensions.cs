@@ -12,9 +12,8 @@
 #endregion <<版权版本注释>>
 
 using System.Collections;
-using XiHan.Utils.Types;
 
-namespace XiHan.Utils.Objects;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 对象转换拓展类
@@ -316,7 +315,7 @@ public static class ObjectConvertExtensions
     /// <returns></returns>
     public static bool IsEmptyOrNull(this object? thisValue)
     {
-        return !IsNotEmptyOrNull(thisValue);
+        return !thisValue.IsNotEmptyOrNull();
     }
 
     /// <summary>
@@ -326,7 +325,7 @@ public static class ObjectConvertExtensions
     /// <returns></returns>
     public static bool IsNotEmptyOrNull(this object? thisValue)
     {
-        return thisValue != null && ParseToString(thisValue) != string.Empty && ParseToString(thisValue) != "" && ParseToString(thisValue) != "undefined" && ParseToString(thisValue) != "null";
+        return thisValue != null && thisValue.ParseToString() != string.Empty && thisValue.ParseToString() != "" && thisValue.ParseToString() != "undefined" && thisValue.ParseToString() != "null";
     }
 
     /// <summary>
@@ -336,7 +335,7 @@ public static class ObjectConvertExtensions
     /// <returns></returns>
     public static bool IsNullOrZero(this object? thisValue)
     {
-        return !IsNotNullOrZero(thisValue);
+        return !thisValue.IsNotNullOrZero();
     }
 
     /// <summary>
@@ -346,7 +345,7 @@ public static class ObjectConvertExtensions
     /// <returns></returns>
     public static bool IsNotNullOrZero(this object? thisValue)
     {
-        return IsNotEmptyOrNull(thisValue) && ParseToString(thisValue) != "0";
+        return thisValue.IsNotEmptyOrNull() && thisValue.ParseToString() != "0";
     }
 
     #endregion
@@ -463,7 +462,7 @@ public static class ObjectConvertExtensions
         {
             return (T)value;
         }
-        object? result = CastTo(value, typeof(T));
+        object? result = value.CastTo(typeof(T));
         return (T?)result;
     }
 
@@ -478,7 +477,7 @@ public static class ObjectConvertExtensions
     {
         try
         {
-            return CastTo<T>(value);
+            return value.CastTo<T>();
         }
         catch (Exception)
         {

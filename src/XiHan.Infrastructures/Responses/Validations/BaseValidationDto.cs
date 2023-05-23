@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Responses.Validations;
 

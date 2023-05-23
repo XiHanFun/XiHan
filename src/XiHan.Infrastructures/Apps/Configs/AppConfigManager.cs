@@ -14,7 +14,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Serilog;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 
 namespace XiHan.Infrastructures.Apps.Configs;

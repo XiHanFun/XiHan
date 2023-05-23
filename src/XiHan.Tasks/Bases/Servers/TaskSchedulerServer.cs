@@ -23,8 +23,7 @@ using System.Reflection;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Enums;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Tasks.Bases.Servers;
 

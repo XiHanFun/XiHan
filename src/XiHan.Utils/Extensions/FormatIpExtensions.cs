@@ -13,7 +13,7 @@
 
 using System.Net;
 
-namespace XiHan.Utils.Formats;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// Ip地址格式化拓展类

@@ -12,10 +12,9 @@
 #endregion <<版权版本注释>>
 
 using System.Runtime.InteropServices;
-using XiHan.Utils.Formats;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 
-namespace XiHan.Infrastructures.Infos.BaseInfos;
+namespace XiHan.Utils.HardwareInfos;
 
 /// <summary>
 /// 操作系统帮助类

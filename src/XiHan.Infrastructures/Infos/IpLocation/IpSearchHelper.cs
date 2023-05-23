@@ -11,9 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Exceptions;
 using XiHan.Infrastructures.Infos.IpLocation.Ip2region;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Infos.IpLocation;
 

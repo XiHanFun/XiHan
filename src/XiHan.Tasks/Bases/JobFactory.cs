@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Spi;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Tasks.Bases;
 

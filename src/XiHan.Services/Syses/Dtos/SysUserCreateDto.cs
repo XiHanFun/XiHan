@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
 using System.ComponentModel.DataAnnotations;
 using XiHan.Models.Bases;
 using XiHan.Models.Syses;

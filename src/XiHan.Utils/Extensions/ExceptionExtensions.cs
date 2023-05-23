@@ -11,9 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Consoles;
-
-namespace XiHan.Utils.Exceptions;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 异常拓展类

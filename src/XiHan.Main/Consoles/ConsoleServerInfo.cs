@@ -13,10 +13,9 @@
 
 using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Formats;
 using XiHan.Infrastructures.Infos;
-using XiHan.Infrastructures.Infos.BaseInfos;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.HardwareInfos;
 using XiHan.Utils.Serializes;
 
 namespace XiHan.Main.Consoles;

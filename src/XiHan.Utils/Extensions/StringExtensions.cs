@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:StringHelper
+// FileName:StringExtensions
 // Guid:3630d8a8-77e0-45eb-a1e6-f9a6b5dc26ba
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace XiHan.Utils.Objects;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// StringHelper
+/// StringExtensions
 /// </summary>
-public static class StringHelper
+public static class StringExtensions
 {
     #region 分割组装
 
@@ -30,7 +30,7 @@ public static class StringHelper
     /// <param name="speater">分隔符</param>
     /// <param name="toLower">是否转换为小写</param>
     /// <returns></returns>
-    public static List<string> GetStrList(string str, char speater, bool toLower)
+    public static List<string> GetStrList(this string str, char speater, bool toLower)
     {
         List<string> list = new();
         var ss = str.Split(speater);
@@ -53,7 +53,7 @@ public static class StringHelper
     /// <param name="str"></param>
     /// <param name="splitstr"></param>
     /// <returns></returns>
-    public static string[]? GetSplitMulti(string? str, string splitstr)
+    public static string[]? GetSplitMulti(this string? str, string splitstr)
     {
         string[]? strArray = null;
         if (!string.IsNullOrEmpty(str))
@@ -68,7 +68,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static string[] GetStrArray(string str)
+    public static string[] GetStrArray(this string str)
     {
         return str.Split(new char[] { ',' });
     }
@@ -79,7 +79,7 @@ public static class StringHelper
     /// <param name="list"></param>
     /// <param name="speater"></param>
     /// <returns></returns>
-    public static string GetArrayStr(List<string> list, string speater)
+    public static string GetArrayStr(this List<string> list, string speater)
     {
         StringBuilder sb = new();
         for (var i = 0; i < list.Count; i++)
@@ -102,7 +102,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static string GetArrayStr(List<int> list)
+    public static string GetArrayStr(this List<int> list)
     {
         var sb = new StringBuilder();
         for (var i = 0; i < list.Count; i++)
@@ -125,7 +125,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static string GetArrayValueStr(Dictionary<int, int> list)
+    public static string GetArrayValueStr(this Dictionary<int, int> list)
     {
         var sb = new StringBuilder();
         foreach (var kvp in list)
@@ -146,7 +146,7 @@ public static class StringHelper
     /// <param name="oStr"></param>
     /// <param name="sepeater"></param>
     /// <returns></returns>
-    public static List<string> GetSubStringList(string oStr, char sepeater)
+    public static List<string> GetSubStringList(this string oStr, char sepeater)
     {
         var ss = oStr.Split(sepeater);
         return ss.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString()).ToList();
@@ -159,7 +159,7 @@ public static class StringHelper
     /// <summary>
     /// 删除最后结尾的一个逗号
     /// </summary>
-    public static string DelLastComma(string str)
+    public static string DelLastComma(this string str)
     {
         return str[..str.LastIndexOf(",", StringComparison.Ordinal)];
     }
@@ -167,7 +167,7 @@ public static class StringHelper
     /// <summary>
     /// 删除最后结尾的指定字符后的字符
     /// </summary>
-    public static string DelLastChar(string str, string strchar)
+    public static string DelLastChar(this string str, string strchar)
     {
         return str[..str.LastIndexOf(strchar, StringComparison.Ordinal)];
     }
@@ -181,7 +181,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public static string ToSbc(string input)
+    public static string ToSbc(this string input)
     {
         var c = input.ToCharArray();
         for (var i = 0; i < c.Length; i++)
@@ -202,7 +202,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="input">输入</param>
     /// <returns></returns>
-    public static string ToDbc(string input)
+    public static string ToDbc(this string input)
     {
         var c = input.ToCharArray();
         for (var i = 0; i < c.Length; i++)
@@ -228,7 +228,7 @@ public static class StringHelper
     /// <param name="strList"></param>
     /// <param name="splitString"></param>
     /// <returns></returns>
-    public static string GetCleanStyle(string? strList, string splitString)
+    public static string GetCleanStyle(this string? strList, string splitString)
     {
         string? result;
         //如果为空，返回空值
@@ -257,7 +257,7 @@ public static class StringHelper
     /// <param name="splitString"></param>
     /// <param name="error"></param>
     /// <returns></returns>
-    public static string? GetNewStyle(string? strList, string? newStyle, string splitString, out string error)
+    public static string? GetNewStyle(this string? strList, string? newStyle, string splitString, out string error)
     {
         string? returnValue;
         // 如果输入空值，返回空，并给出错误提示
@@ -314,7 +314,7 @@ public static class StringHelper
     /// <param name="str"></param>
     /// <param name="isDel"></param>
     /// <returns></returns>
-    public static string SqlSafeString(string str, bool isDel)
+    public static string SqlSafeString(this string str, bool isDel)
     {
         if (isDel)
         {
@@ -336,7 +336,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="value"></param>
     /// <returns>返回正确的整数ID，失败返回0</returns>
-    public static int StrToId(string? value)
+    public static int StrToId(this string? value)
     {
         if (!IsNumberId(value)) return 0;
         return value != null ? int.Parse(value) : 0;
@@ -351,7 +351,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="value">需验证的字符串。。</param>
     /// <returns>是否合法的bool值。</returns>
-    public static bool IsNumberId(string? value)
+    public static bool IsNumberId(this string? value)
     {
         return IsValidateStr("^[1-9]*[0-9]*$", value);
     }
@@ -362,7 +362,7 @@ public static class StringHelper
     /// <param name="express"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static bool IsValidateStr(string express, string? value)
+    public static bool IsValidateStr(this string express, string? value)
     {
         if (value == null) return false;
         var myRegex = new Regex(express);
@@ -378,7 +378,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="inputString">参数字符串</param>
     /// <returns></returns>
-    public static int StrLength(string inputString)
+    public static int StrLength(this string inputString)
     {
         ASCIIEncoding ascii = new();
         var tempLen = 0;
@@ -403,7 +403,7 @@ public static class StringHelper
     /// <param name="inputString">要处理的字符串</param>
     /// <param name="len">指定长度</param>
     /// <returns>返回处理后的字符串</returns>
-    public static string ClipString(string inputString, int len)
+    public static string ClipString(this string inputString, int len)
     {
         var isShowFix = false;
         if (len > 0 && len % 2 == 1)
@@ -450,7 +450,7 @@ public static class StringHelper
     /// </summary>
     /// <param name="strHtml"></param>
     /// <returns></returns>
-    public static string HtmlToTxt(string strHtml)
+    public static string HtmlToTxt(this string strHtml)
     {
         string[] aryReg ={
         @"<script[^>]*?>.*?</script>",

@@ -16,9 +16,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using XiHan.Utils.Types;
 
-namespace XiHan.Utils.Objects;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 对象属性拓展类

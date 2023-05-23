@@ -13,7 +13,7 @@
 
 using System.Net;
 using System.Net.Mail;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Subscriptions.Robots.Email;
 

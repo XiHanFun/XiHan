@@ -17,10 +17,10 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using XiHan.Web.Common.Swagger;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Utils.Consoles;
 using XiHan.Infrastructures.Infos;
+using XiHan.Utils.Extensions;
+using XiHan.Web.Common.Swagger;
 
 namespace XiHan.Web.Setups.Services;
 

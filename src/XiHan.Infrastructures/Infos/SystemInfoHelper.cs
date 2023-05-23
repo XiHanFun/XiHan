@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Infos.BaseInfos;
+using XiHan.Utils.HardwareInfos;
 
 namespace XiHan.Infrastructures.Infos;
 

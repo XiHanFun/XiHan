@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Formats;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 文件大小格式化拓展类

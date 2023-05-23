@@ -11,12 +11,10 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Formats;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 using XiHan.Utils.Shells;
 
-namespace XiHan.Infrastructures.Infos.BaseInfos;
+namespace XiHan.Utils.HardwareInfos;
 
 /// <summary>
 /// 内存帮助类

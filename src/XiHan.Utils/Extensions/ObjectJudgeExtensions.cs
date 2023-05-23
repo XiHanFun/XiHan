@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Objects;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 对象判断拓展类

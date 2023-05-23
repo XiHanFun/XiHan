@@ -14,8 +14,8 @@
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using XiHan.Web.Common.Swagger;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Web.Common.Swagger;
 
 namespace XiHan.Web.Setups.Application;
 

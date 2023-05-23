@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Mvc.Filters;
 using XiHan.Infrastructures.Responses.Validations;
-using XiHan.Utils.Enums;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Responses.Results;
 

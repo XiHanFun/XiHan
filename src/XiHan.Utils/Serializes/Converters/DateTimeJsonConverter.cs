@@ -13,7 +13,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.Serializes.Converters;
 

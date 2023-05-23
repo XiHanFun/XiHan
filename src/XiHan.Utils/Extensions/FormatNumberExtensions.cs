@@ -13,7 +13,7 @@
 
 using System.Globalization;
 
-namespace XiHan.Utils.Formats;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 金额格式化拓展类

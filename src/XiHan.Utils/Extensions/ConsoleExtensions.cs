@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.Consoles;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 控制台输出拓展类

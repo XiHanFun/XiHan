@@ -14,12 +14,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Main.Controllers.Bases;
 using XiHan.Web.Common.Swagger;
 using XiHan.Web.Filters;
-using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Responses.Results;
-using XiHan.Infrastructures.Infos;
 
 namespace XiHan.Main.Controllers.Test;
 

@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Main.Consoles;
 

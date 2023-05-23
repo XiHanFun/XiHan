@@ -11,8 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Formats;
-using XiHan.Infrastructures.Infos.BaseInfos;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.HardwareInfos;
 
 namespace XiHan.Test.Common;
 

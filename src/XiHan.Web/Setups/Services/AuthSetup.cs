@@ -15,9 +15,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using XiHan.Web.Common.Auth;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
+using XiHan.Web.Common.Auth;
 
 namespace XiHan.Web.Setups.Services;
 

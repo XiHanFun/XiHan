@@ -18,10 +18,18 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// </summary>
 public class LarkConnection
 {
+    private const string DefaultLarkWebHookUrl = "https://open.feishu.cn/open-apis/bot/v2/hook";
+
+    private string? _webHookUrl;
+
     /// <summary>
     /// 网络挂钩地址
     /// </summary>
-    public string WebHookUrl { get; set; } = string.Empty;
+    public string WebHookUrl
+    {
+        get => _webHookUrl ??= DefaultLarkWebHookUrl;
+        set => _webHookUrl = value;
+    }
 
     /// <summary>
     /// 访问令牌

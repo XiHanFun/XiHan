@@ -17,7 +17,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
 
-namespace XiHan.Utils.Types;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 类型拓展类
@@ -31,7 +31,7 @@ public static class TypeExtensions
     /// </summary>
     public static bool IsDeriveClassFrom<TBaseType>(this Type type, bool canAbstract = false)
     {
-        return IsDeriveClassFrom(type, typeof(TBaseType), canAbstract);
+        return type.IsDeriveClassFrom(typeof(TBaseType), canAbstract);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public static class TypeExtensions
     /// <returns> 是返回True，不是返回False </returns>
     public static bool IsNotNullableType(this Type type)
     {
-        return !IsNullableType(type);
+        return !type.IsNullableType();
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public static class TypeExtensions
     /// <returns> </returns>
     public static Type GetNonNullableType(this Type type)
     {
-        return IsNullableType(type) ? type.GetGenericArguments()[0] : type;
+        return type.IsNullableType() ? type.GetGenericArguments()[0] : type;
     }
 
     /// <summary>
@@ -199,7 +199,7 @@ public static class TypeExtensions
     /// <returns> </returns>
     public static Type GetUnNullableType(this Type type)
     {
-        if (IsNullableType(type))
+        if (type.IsNullableType())
         {
             NullableConverter nullableConverter = new(type);
             return nullableConverter.UnderlyingType;
@@ -220,7 +220,7 @@ public static class TypeExtensions
     public static string GetDescription(this Type type, bool inherit = true)
     {
         var result = string.Empty;
-        if (IsNotNullableType(type))
+        if (type.IsNotNullableType())
         {
             var fullName = type.FullName ?? result;
             DescriptionAttribute? desc = type.GetAttribute<DescriptionAttribute>(inherit);

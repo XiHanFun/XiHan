@@ -12,12 +12,10 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
-using XiHan.Utils.Exceptions;
-using XiHan.Utils.Formats;
-using XiHan.Utils.Objects;
+using XiHan.Utils.Extensions;
 using XiHan.Utils.Shells;
 
-namespace XiHan.Infrastructures.Infos.BaseInfos;
+namespace XiHan.Utils.HardwareInfos;
 
 /// <summary>
 /// 磁盘帮助类

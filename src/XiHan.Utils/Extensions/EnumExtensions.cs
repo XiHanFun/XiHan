@@ -13,10 +13,8 @@
 
 using System.ComponentModel;
 using System.Reflection;
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Objects;
 
-namespace XiHan.Utils.Enums;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 枚举拓展类

@@ -11,9 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Objects;
-
-namespace XiHan.Utils.Formats;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 时间格式化拓展类
@@ -42,7 +40,7 @@ public static class FormatTimeExtensions
         if (dateTimeBefore < dateTimeAfter)
         {
             var timeSpan = dateTimeAfter - dateTimeBefore;
-            return FormatTimeSpanToString(timeSpan);
+            return timeSpan.FormatTimeSpanToString();
         }
 
         throw new Exception("开始日期必须小于结束日期");
@@ -56,7 +54,7 @@ public static class FormatTimeExtensions
     public static string FormatMilliSecondsToString(this long milliseconds)
     {
         var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-        return FormatTimeSpanToString(timeSpan);
+        return timeSpan.FormatTimeSpanToString();
     }
 
     /// <summary>
@@ -67,7 +65,7 @@ public static class FormatTimeExtensions
     public static string FormatTimeTicksToString(this long ticks)
     {
         var timeSpan = TimeSpan.FromTicks(ticks);
-        return FormatTimeSpanToString(timeSpan);
+        return timeSpan.FormatTimeSpanToString();
     }
 
     /// <summary>
@@ -138,7 +136,7 @@ public static class FormatTimeExtensions
         {
             return value.Month.ParseToInt() + "个月前";
         }
-        else return (now.Year - value.Year) + "年前";
+        else return now.Year - value.Year + "年前";
     }
 
     /// <summary>

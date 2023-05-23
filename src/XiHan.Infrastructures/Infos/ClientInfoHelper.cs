@@ -12,8 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using System.Net;
 using UAParser;
-using XiHan.Infrastructures.Infos.BaseInfos;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Infos;
 
@@ -37,8 +38,8 @@ public static class ClientInfoHelper
 
         var clientModel = new ClientInfo
         {
-            RemoteIPv4 = ClientIpHelper.GetClientIpV4(httpContext),
-            RemoteIPv6 = ClientIpHelper.GetClientIpV6(httpContext),
+            RemoteIPv4 = GetClientIpV4(httpContext),
+            RemoteIPv6 = GetClientIpV6(httpContext),
         };
 
         var header = httpContext.Request.HttpContext.Request.Headers;
@@ -77,6 +78,59 @@ public static class ClientInfoHelper
         }
 
         return clientModel;
+    }
+
+    /// <summary>
+    /// 取得客户端 IP
+    /// </summary>
+    /// <returns></returns>
+    public static string GetClientIpV4(HttpContext httpContext)
+    {
+        return ClientIpAddressInfo(httpContext).MapToIPv4().ToString();
+    }
+
+    /// <summary>
+    /// 取得客户端 IP
+    /// </summary>
+    /// <returns></returns>
+    public static string GetClientIpV6(HttpContext httpContext)
+    {
+        return ClientIpAddressInfo(httpContext).MapToIPv6().ToString();
+    }
+
+    /// <summary>
+    /// 取得客户端 IP
+    /// </summary>
+    /// <returns></returns>
+    public static IPAddress ClientIpAddressInfo(HttpContext httpContext)
+    {
+        if (httpContext == null)
+        {
+            throw new ArgumentNullException(nameof(httpContext));
+        }
+
+        var result = "0.0.0.0";
+        var request = httpContext.Request;
+        var context = request.HttpContext;
+        var header = request.Headers;
+
+        if (context.Connection.RemoteIpAddress != null)
+        {
+            result = context.Connection.RemoteIpAddress.ToString();
+        }
+        else
+        {
+            // 取代理 IP
+            if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
+            {
+                result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
+            }
+        }
+        if (string.IsNullOrEmpty(result))
+        {
+            result = "0.0.0.0";
+        }
+        return result.FormatStringToIpAddress();
     }
 }
 

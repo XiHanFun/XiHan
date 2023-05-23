@@ -13,7 +13,7 @@
 
 using System.Text;
 
-namespace XiHan.Utils.Formats;
+namespace XiHan.Utils.Extensions;
 
 /// <summary>
 /// 字符串格式化拓展类

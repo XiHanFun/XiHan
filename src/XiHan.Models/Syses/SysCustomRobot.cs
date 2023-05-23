@@ -36,9 +36,6 @@ public class SysCustomRobot : BaseModifyEntity
 
     /// <summary>
     /// 网络挂钩地址
-    /// 钉钉 https://oapi.dingtalk.com/robot/send
-    /// 企业微信 https://qyapi.weixin.qq.com/cgi-bin/webhook/send
-    /// 飞书 https://open.feishu.cn/open-apis/bot/v2/hook
     /// </summary>
     [SugarColumn(Length = 100)]
     public string WebHookUrl { get; set; } = string.Empty;
@@ -60,7 +57,6 @@ public class SysCustomRobot : BaseModifyEntity
 
     /// <summary>
     /// 上传地址
-    /// 企业微信 https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
     public string? UploadkUrl { get; set; } = string.Empty;

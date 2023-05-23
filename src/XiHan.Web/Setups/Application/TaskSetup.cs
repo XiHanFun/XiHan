@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using XiHan.Models.Syses;
 using XiHan.Tasks.Bases.Servers;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Web.Setups.Application;
 

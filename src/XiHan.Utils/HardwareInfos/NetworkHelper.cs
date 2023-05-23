@@ -13,7 +13,7 @@
 
 using System.Net.NetworkInformation;
 
-namespace XiHan.Infrastructures.Infos.BaseInfos;
+namespace XiHan.Utils.HardwareInfos;
 
 /// <summary>
 /// 网卡信息帮助类

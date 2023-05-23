@@ -19,7 +19,7 @@ using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Subscriptions.Robots.DingTalk;
-using XiHan.Utils.Enums;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Messages.DingTalkPush;
 

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Subscriptions.Hubs;
-using XiHan.Utils.Consoles;
+using XiHan.Utils.Extensions;
 using XiHan.Web.Setups.Application;
 
 namespace XiHan.Web.Setups;
