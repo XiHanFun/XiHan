@@ -17,11 +17,11 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// RSA加密解密类
+/// RSA 加密解密类
 /// </summary>
 public static class RsaEncryptionHelper
 {
-    // Rsa容器
+    // Rsa 容器
     private static readonly RSACryptoServiceProvider RsaProvider;
 
     /// <summary>
@@ -36,7 +36,7 @@ public static class RsaEncryptionHelper
     }
 
     /// <summary>
-    /// 生成一个新的RSA密钥对，并将公钥和私钥存储到文件中
+    /// 生成一个新的 RSA 密钥对，并将公钥和私钥存储到文件中
     /// </summary>
     /// <param name="publicKeyFile"></param>
     /// <param name="privateKeyFile"></param>
@@ -53,7 +53,7 @@ public static class RsaEncryptionHelper
     }
 
     /// <summary>
-    /// 加载一个已有的RSA密钥对
+    /// 加载一个已有的 RSA 密钥对
     /// </summary>
     /// <param name="publicKeyFile"></param>
     /// <param name="privateKeyFile"></param>

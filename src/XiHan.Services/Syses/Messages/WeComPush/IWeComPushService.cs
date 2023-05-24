@@ -11,9 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Utils.Messages.WeCom;
-using File = XiHan.Utils.Messages.WeCom.File;
+using XiHan.Infrastructures.Responses.Results;
+using XiHan.Subscriptions.Robots.WeCom;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 
@@ -27,49 +26,49 @@ public interface IWeComPushService
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToText(Text text);
+    Task<BaseResultDto> WeComToText(WeComText text);
 
     /// <summary>
     /// 微信推送文档消息
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToMarkdown(Markdown markdown);
+    Task<BaseResultDto> WeComToMarkdown(WeComMarkdown markdown);
 
     /// <summary>
     /// 微信推送图片消息
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToImage(Image image);
+    Task<BaseResultDto> WeComToImage(WeComImage image);
 
     /// <summary>
     /// 微信推送图文消息
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToNews(News news);
+    Task<BaseResultDto> WeComToNews(WeComNews news);
 
     /// <summary>
     /// 微信推送文件消息
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToFile(File file);
+    Task<BaseResultDto> WeComToFile(WeComFile file);
 
     /// <summary>
     /// 微信推送文本通知消息
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToTextNotice(TemplateCardTextNotice templateCard);
+    Task<BaseResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard);
 
     /// <summary>
     /// 微信推送图文展示消息
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
-    Task<BaseResultDto> WeComToNewsNotice(TemplateCardNewsNotice templateCard);
+    Task<BaseResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard);
 
     /// <summary>
     /// 微信上传文件

@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using XiHan.Utils.Serializes.Converters;
 
 namespace XiHan.Utils.Serializes;
 
@@ -26,25 +27,44 @@ public static class SerializeHelper
     /// <summary>
     /// 公共参数
     /// </summary>
-    public static readonly JsonSerializerOptions JsonSerializerOptionsInstance = new()
+    public static JsonSerializerOptions JsonSerializerOptionsInstance = GetJsonSerializerOptions();
+
+    /// <summary>
+    /// 获取默认序列化参数
+    /// </summary>
+    /// <returns></returns>
+    private static JsonSerializerOptions GetJsonSerializerOptions()
     {
-        // 序列化格式
-        WriteIndented = true,
-        // 忽略循环引用
-        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+        var options = new JsonSerializerOptions
+        {
+            // 序列化格式
+            WriteIndented = true,
+            // 忽略循环引用
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            // 数字类型
+            NumberHandling = JsonNumberHandling.Strict,
+            // 允许额外符号
+            AllowTrailingCommas = true,
+            // 注释处理，允许在 JSON 输入中使用注释并忽略它们
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            // 属性名称不使用不区分大小写的比较
+            PropertyNameCaseInsensitive = false,
+            // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写
+            PropertyNamingPolicy = null,
+            // 获取或设置要在转义字符串时使用的编码器，不转义字符
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
+        // 布尔类型
+        options.Converters.Add(new BooleanJsonConverter());
         // 数字类型
-        NumberHandling = JsonNumberHandling.Strict,
-        // 允许额外符号
-        AllowTrailingCommas = true,
-        // 注释处理，允许在 JSON 输入中使用注释并忽略它们
-        ReadCommentHandling = JsonCommentHandling.Skip,
-        // 属性名称不使用不区分大小写的比较
-        PropertyNameCaseInsensitive = false,
-        // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写
-        PropertyNamingPolicy = null,
-        // 获取或设置要在转义字符串时使用的编码器，不转义字符
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-    };
+        options.Converters.Add(new IntJsonConverter());
+        options.Converters.Add(new LongJsonConverter());
+        options.Converters.Add(new DecimalJsonConverter());
+        // 日期类型
+        options.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
+
+        return options;
+    }
 
     /// <summary>
     /// 序列化为Json
@@ -74,7 +94,7 @@ public static class SerializeHelper
     /// <returns></returns>
     public static TEntity? DeserializeToObject<TEntity>(this string jsonString)
     {
-        return JsonSerializer.Deserialize<TEntity>(jsonString);
+        return JsonSerializer.Deserialize<TEntity>(jsonString, JsonSerializerOptionsInstance);
     }
 
     /// <summary>

@@ -19,6 +19,13 @@ namespace XiHan.Services.Bases;
 /// 服务基类
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
+/// <remarks>
+/// 方法命名规范（这里由于继承自BaseRepository，所以不更改）：
+/// Create
+/// Delete
+/// Modify
+/// Get
+/// </remarks>
 public class BaseService<TEntity> : BaseRepository<TEntity> where TEntity : class, new()
 {
 }

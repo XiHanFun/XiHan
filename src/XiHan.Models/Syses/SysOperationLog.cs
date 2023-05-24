@@ -17,10 +17,11 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
- /// 系统操作日志表
- /// </summary>
+/// 系统操作日志表
+/// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable(TableName = "Sys_Operation_Log")]
-public class SysOperationLog : BaseDeleteEntity
+public class SysOperationLog : BaseCreateEntity
 {
     /// <summary>
     /// 操作模块

@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases;
 
 namespace XiHan.Models.Posts;
@@ -20,7 +19,8 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章表
 /// </summary>
-[SugarTable(TableName = "PostArticle")]
+/// <remarks>记录创建，修改，删除，审核，状态信息</remarks>
+[SugarTable(TableName = "Post_Article")]
 public class PostArticle : BaseEntity
 {
     /// <summary>
@@ -131,76 +131,4 @@ public class PostArticle : BaseEntity
     public int CommentCount { get; set; }
 
     #endregion 文章统计
-}
-
-/// <summary>
-/// 发布状态
-/// </summary>
-public enum PubStatusEnum
-{
-    /// <summary>
-    /// 回收站
-    /// </summary>
-    [Description("回收站")]
-    Recycle = 0,
-
-    /// <summary>
-    /// 已发布
-    /// </summary>
-    [Description("已发布")]
-    Published = 1,
-
-    /// <summary>
-    /// 草稿箱
-    /// </summary>
-    [Description("草稿箱")]
-    Drafts = 2
-}
-
-/// <summary>
-/// 文章来源类型
-/// </summary>
-public enum SourceTypeEnum
-{
-    /// <summary>
-    /// 转载
-    /// </summary>
-    [Description("转载")]
-    Reprint = 0,
-
-    /// <summary>
-    /// 原创
-    /// </summary>
-    [Description("原创")]
-    Original = 1,
-
-    /// <summary>
-    /// 衍生
-    /// </summary>
-    [Description("衍生")]
-    Hybrid = 2
-}
-
-/// <summary>
-/// 公开类型
-/// </summary>
-public enum ExposedTypeEnum
-{
-    /// <summary>
-    /// 保留
-    /// </summary>
-    [Description("保留")]
-    Reserve = 0,
-
-    /// <summary>
-    /// 公开
-    /// </summary>
-    [Description("公开")]
-    Public = 1,
-
-    /// <summary>
-    /// 私密
-    /// </summary>
-    [Description("私密")]
-    Secret = 2,
 }

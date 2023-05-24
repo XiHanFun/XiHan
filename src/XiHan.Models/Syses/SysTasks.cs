@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -20,6 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统计划任务表
 /// </summary>
+/// <remarks>记录创建，修改，删除信息</remarks>
 [SugarTable(TableName = "Sys_Tasks")]
 public class SysTasks : BaseDeleteEntity
 {
@@ -39,7 +39,7 @@ public class SysTasks : BaseDeleteEntity
     /// 任务描述
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Remark { get; set; }
+    public string? Description { get; set; }
 
     #region 任务类型
 
@@ -165,46 +165,4 @@ public class SysTasks : BaseDeleteEntity
     #endregion
 
     #endregion
-}
-
-/// <summary>
-/// 触发器类型
-/// </summary>
-public enum TriggerTypeEnum
-{
-    /// <summary>
-    /// 定时任务
-    /// </summary>
-    [Description("定时任务")]
-    Interval = 1,
-
-    /// <summary>
-    /// 时间点或者周期性任务
-    /// </summary>
-    [Description("时间点或者周期性任务")]
-    Cron = 2,
-}
-
-/// <summary>
-/// 任务类型
-/// </summary>
-public enum JobTypeEnum
-{
-    /// <summary>
-    /// 程序集
-    /// </summary>
-    [Description("程序集")]
-    Assembly = 1,
-
-    /// <summary>
-    /// 网络请求
-    /// </summary>
-    [Description("网络请求")]
-    NetworkRequest = 2,
-
-    /// <summary>
-    /// SQL语句
-    /// </summary>
-    [Description("SQL语句")]
-    SqlStatement = 3,
 }

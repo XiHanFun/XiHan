@@ -13,7 +13,7 @@
 
 using SqlSugar;
 using System.Linq.Expressions;
-using XiHan.Infrastructure.Contexts.Pages;
+using XiHan.Infrastructures.Responses.Pages;
 
 namespace XiHan.Repositories.Bases;
 

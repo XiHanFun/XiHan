@@ -11,14 +11,15 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructures.Apps.Logging;
+using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Bases;
-using XiHan.Utils.Messages.Email;
+using XiHan.Services.Bases;
+using XiHan.Subscriptions.Robots.Email;
 
 namespace XiHan.Services.Syses.Messages.EmailPush;
 
@@ -26,28 +27,27 @@ namespace XiHan.Services.Syses.Messages.EmailPush;
 /// EmailPushService
 /// </summary>
 [AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class EmailPushService : IEmailPushService
+public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 {
     private readonly ILogger<EmailPushService> _logger;
-    private readonly IBaseRepository<SysEmail> _emailRepository;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public EmailPushService(ILogger<EmailPushService> logger, IBaseRepository<SysEmail> emailRepository)
+    public EmailPushService(ILogger<EmailPushService> logger)
     {
         _logger = logger;
-        _emailRepository = emailRepository;
     }
 
     /// <summary>
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    public async Task<BaseResultDto> SendEmail()
+    [AppLog(Title = "发送邮件", LogType = LogTypeEnum.Other)]
+    public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
     {
-        // var emailFromModel = await _emailRepository.GetFirstAsync<SysEmail>();
-
+        var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);
+        EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
         var subject = "测试";
         var body = "测试";
         List<string> toMail = new() { "" };
@@ -57,25 +57,25 @@ public class EmailPushService : IEmailPushService
         {
             new Attachment(@"")
         };
-        var model = new EmailModel
+        //EmailToModel emailTo = new()
+        //{
+        //    Subject = subject,
+        //    Body = body,
+        //    ToMail = toMail,
+        //    CcMail = ccMail,
+        //    BccMail = bccMail,
+        //    AttachmentsPath = attachmentsPath,
+        //};
+        EmailRobot emailHelper = new(emailFrom, emailTo);
+        var logoInfo = string.Empty;
+        if (await emailHelper.Send())
         {
-            //Host = AppSettings.Message.Email.Host.GetValue(),
-            //Port = AppSettings.Message.Email.Port.GetValue(),
-            //UseSsl = AppSettings.Message.Email.UseSsl.GetValue(),
-            //FromMail = AppSettings.Message.Email.From.Address.GetValue(),
-            //FromName = AppSettings.Message.Email.From.UserName.GetValue(),
-            //FromPassword = AppSettings.Message.Email.From.Password.GetValue(),
-            Subject = subject,
-            Body = body,
-            ToMail = toMail,
-            CcMail = ccMail,
-            BccMail = bccMail,
-            AttachmentsPath = attachmentsPath,
-        };
-        if (await EmailHelper.Send(model))
-        {
-            return BaseResponseDto.Ok("邮件发送成功");
+            logoInfo = "邮件发送成功";
+            _logger.LogInformation(logoInfo);
+            return BaseResultDto.Success(logoInfo);
         }
-        return BaseResponseDto.BadRequest("邮件发送失败");
+        logoInfo = "邮件发送失败";
+        _logger.LogError(logoInfo);
+        return BaseResultDto.BadRequest("邮件发送失败");
     }
 }

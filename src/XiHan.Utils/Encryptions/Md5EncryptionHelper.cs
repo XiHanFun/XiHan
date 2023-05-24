@@ -17,12 +17,12 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Md5加密类
+/// Md5 加密类
 /// </summary>
 public static class Md5EncryptionHelper
 {
     /// <summary>
-    /// 对字符串进行MD5加密
+    /// 对字符串进行 MD5 加密
     /// </summary>
     /// <param name="input">待加密的明文字符串</param>
     /// <returns>加密后的字符串（32位或64位）</returns>
@@ -32,9 +32,9 @@ public static class Md5EncryptionHelper
         byte[] inputBytes = Encoding.UTF8.GetBytes(input);
         byte[] hashBytes = MD5.HashData(inputBytes);
         StringBuilder sb = new();
-        for (int i = 0; i < hashBytes.Length; i++)
+        foreach (var t in hashBytes)
         {
-            sb.Append(hashBytes[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         string md5Str = sb.ToString();
         if (md5Str.Length == 32)
@@ -42,9 +42,9 @@ public static class Md5EncryptionHelper
             // 转换为64位MD5值
             byte[] bytes = Encoding.UTF8.GetBytes(md5Str);
             StringBuilder sb2 = new();
-            for (int i = 0; i < bytes.Length; i++)
+            foreach (var t in bytes)
             {
-                sb2.Append(bytes[i].ToString("x2"));
+                sb2.Append(t.ToString("x2"));
             }
             return sb2.ToString();
         }
@@ -56,12 +56,12 @@ public static class Md5EncryptionHelper
 }
 
 /// <summary>
-/// MD5数据流加密类
+/// MD5 数据流加密类
 /// </summary>
 public static class Md5StreamEncryptionHelper
 {
     /// <summary>
-    /// 对数据流进行MD5加密，返回32位MD5值
+    /// 对数据流进行 MD5 加密，返回32位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流路径</param>
     /// <returns></returns>
@@ -74,7 +74,7 @@ public static class Md5StreamEncryptionHelper
     }
 
     /// <summary>
-    /// 对数据流进行MD5加密，返回64位MD5值
+    /// 对数据流进行 MD5 加密，返回64位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流</param>
     /// <returns></returns>
@@ -84,9 +84,9 @@ public static class Md5StreamEncryptionHelper
         using var md5 = MD5.Create();
         byte[] hashBytes = md5.ComputeHash(stream);
         var sb = new StringBuilder();
-        for (int i = 0; i < hashBytes.Length; i++)
+        foreach (var t in hashBytes)
         {
-            sb.Append(hashBytes[i].ToString("x2"));
+            sb.Append(t.ToString("x2"));
         }
         return sb.ToString();
     }

@@ -21,11 +21,11 @@ namespace XiHan.Utils.Shells;
 public static class ShellHelper
 {
     /// <summary>
-    /// Linux系统命令
+    /// Linux 系统命令
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public static string Bash(this string command)
+    public static string Bash(string command)
     {
         var escapedArgs = command.Replace("\"", "\\\"");
         var process = new Process
@@ -47,12 +47,12 @@ public static class ShellHelper
     }
 
     /// <summary>
-    /// Windows系统命令
+    /// Windows 系统命令
     /// </summary>
     /// <param name="fileName"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public static string Cmd(this string fileName, string args)
+    public static string Cmd(string fileName, string args)
     {
         string output = string.Empty;
 
@@ -63,14 +63,12 @@ public static class ShellHelper
             RedirectStandardOutput = true
         };
 
-        using (var process = Process.Start(info))
+        using var process = Process.Start(info);
+        if (process == null)
         {
-            if (process == null)
-            {
-                return output;
-            }
-            output = process.StandardOutput.ReadToEnd();
+            return output;
         }
+        output = process.StandardOutput.ReadToEnd();
         return output;
     }
 }

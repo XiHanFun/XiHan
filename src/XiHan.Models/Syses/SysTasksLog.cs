@@ -19,11 +19,12 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统计划任务日志表
 /// </summary>
+/// <remarks>记录创建信息</remarks>
 [SugarTable("Sys_Tasks_Log")]
 public class SysTasksLog : BaseDeleteEntity
 {
     /// <summary>
-    /// 任务Id
+    /// 所属任务
     /// </summary>
     [SugarColumn(Length = 20)]
     public string JobId { get; set; } = string.Empty;

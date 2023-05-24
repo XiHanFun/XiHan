@@ -13,8 +13,8 @@
 
 using System.Text;
 using XiHan.Services.Commons.Migration.Dtos;
-using XiHan.Utils.Formats;
-using XiHan.Utils.Infos.BaseInfos;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.HardwareInfos;
 
 namespace XiHan.Services.Commons.Migration;
 

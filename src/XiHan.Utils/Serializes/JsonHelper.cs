@@ -21,18 +21,15 @@ namespace XiHan.Utils.Serializes;
 /// </summary>
 public class JsonHelper
 {
-    /// <summary>
-    /// 文件路径
-    /// </summary>
-    private readonly string JsonFileName;
+    private readonly string _jsonFilePath;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="jsonFileName"></param>
-    public JsonHelper(string jsonFileName)
+    /// <param name="jsonFilePath">文件路径</param>
+    public JsonHelper(string jsonFilePath)
     {
-        JsonFileName = jsonFileName;
+        _jsonFilePath = jsonFilePath;
     }
 
     /// <summary>
@@ -42,11 +39,11 @@ public class JsonHelper
     /// <returns></returns>
     public TEntity? Get<TEntity>()
     {
-        if (!File.Exists(JsonFileName))
+        if (!File.Exists(_jsonFilePath))
         {
             return default;
         }
-        var jsonStr = File.ReadAllText(JsonFileName, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
         var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
@@ -59,11 +56,11 @@ public class JsonHelper
     /// <returns>类型为TEntity的对象</returns>
     public TEntity? Get<TEntity>(string keyLink)
     {
-        if (!File.Exists(JsonFileName))
+        if (!File.Exists(_jsonFilePath))
         {
             return default;
         }
-        using StreamReader streamReader = new(JsonFileName);
+        using StreamReader streamReader = new(_jsonFilePath);
         var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
@@ -90,7 +87,7 @@ public class JsonHelper
     /// <param name="value"></param>
     public void Set<TEntity, TREntity>(string keyLink, TREntity value)
     {
-        var jsonStr = File.ReadAllText(JsonFileName, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
         dynamic? jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
@@ -119,7 +116,6 @@ public class JsonHelper
                 var obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
                 oldObject[keys[i]] = obj;
                 currentObject = oldObject[keys[i]];
-                continue;
             }
         }
         Save<dynamic>(jsoObj);
@@ -133,6 +129,6 @@ public class JsonHelper
     private void Save<TEntity>(TEntity jsoObj)
     {
         var jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
-        File.WriteAllText(JsonFileName, jsonStr, Encoding.UTF8);
+        File.WriteAllText(_jsonFilePath, jsonStr, Encoding.UTF8);
     }
 }

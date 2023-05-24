@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 
 namespace XiHan.Tasks.Bases.Servers;

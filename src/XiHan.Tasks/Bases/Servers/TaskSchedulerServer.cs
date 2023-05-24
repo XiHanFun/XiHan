@@ -20,19 +20,16 @@ using Serilog;
 using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
-using XiHan.Infrastructure.Contexts.Results;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
-using XiHan.Utils.Consoles;
-using XiHan.Utils.Enums;
+using XiHan.Models.Syses.Enums;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Tasks.Bases.Servers;
 
 /// <summary>
 /// 任务调度管理中心
 /// </summary>
-[AppService(ServiceType = typeof(ITaskSchedulerServer), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class TaskSchedulerServer : ITaskSchedulerServer
 {
     private readonly IScheduler _scheduler;
@@ -61,7 +58,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         // 从Factory中获取_scheduler实例
         var collection = new NameValueCollection()
         {
-            { "quartz.serializer.type","binary" },
+            {"quartz.serializer.type","binary"}
         };
         var factory = new StdSchedulerFactory(collection);
         return factory.GetScheduler().Result;
@@ -81,7 +78,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
             {
-                return BaseResponseDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
+                return BaseResultDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
 
             // 判断触发器类型，并创建一个触发器
@@ -124,14 +121,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的trigger重新设置job执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return BaseResponseDto.Ok($"启动计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"启动计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"启动计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -150,14 +147,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.DeleteJob(jobKey);
             }
-            return BaseResponseDto.Ok($"修改计划【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"修改计划【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"修改计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -172,14 +169,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             await _scheduler.DeleteJob(jobKey);
-            return BaseResponseDto.Ok($"删除计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"删除计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"删除计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -195,19 +192,19 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经开启
             if (_scheduler.IsStarted)
             {
-                return BaseResponseDto.Continue();
+                return BaseResultDto.Continue();
             }
 
             // 等待任务运行完成
             await _scheduler.Start();
-            return BaseResponseDto.Ok("计划任务开启成功！");
+            return BaseResultDto.Success("计划任务开启成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"开启计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -223,18 +220,18 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经停止
             if (_scheduler.IsShutdown)
             {
-                return BaseResponseDto.Continue();
+                return BaseResultDto.Continue();
             }
             // 等待任务运行停止
             await _scheduler.Shutdown();
-            return BaseResponseDto.Ok($"计划任务已经停止。");
+            return BaseResultDto.Success($"计划任务已经停止。");
         }
         catch (Exception ex)
         {
             var errorInfo = $"停止计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -258,18 +255,18 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);
             if (triggers.Count <= 0)
             {
-                return BaseResponseDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
+                return BaseResultDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
             }
 
             await _scheduler.TriggerJob(jobKey);
-            return BaseResponseDto.Ok($"计划任务[{jobKey.Name}]运行成功！");
+            return BaseResultDto.Success($"计划任务[{jobKey.Name}]运行成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"执行计划任务【{sysTasks.Name}】失败";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -288,14 +285,14 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.PauseJob(jobKey);
             }
-            return BaseResponseDto.Ok($"暂停计划任务:【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"暂停计划任务:【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"暂停计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -311,17 +308,17 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (!await _scheduler.CheckExists(jobKey))
             {
-                return BaseResponseDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
+                return BaseResultDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
             }
             await _scheduler.ResumeJob(jobKey);
-            return BaseResponseDto.Ok($"恢复计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"恢复计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
             var errorInfo = $"恢复计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResponseDto.InternalServerError(errorInfo);
+            return BaseResultDto.InternalServerError(errorInfo);
         }
     }
 
@@ -340,7 +337,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         if (sysTasks.JobType == JobTypeEnum.Assembly.GetEnumValueByKey() && sysTasks.AssemblyName != null && sysTasks.ClassName != null)
         {
             Assembly assembly = Assembly.Load(new AssemblyName(sysTasks.AssemblyName));
-            Type? jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
+            Type jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             if (sysTasks.JobParams != null)
@@ -362,7 +359,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.JobType == JobTypeEnum.NetworkRequest.GetEnumValueByKey() && sysTasks.RequestMethod != null && sysTasks.ApiUrl != null)
         {
-            Type? jobType = typeof(HttpClient);
+            Type jobType = typeof(HttpClient);
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             return job;
@@ -372,7 +369,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
 
     /// <summary>
     /// 创建任务
-    /// SQL语句类型
+    /// SQL 语句类型
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
@@ -380,7 +377,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.JobType == JobTypeEnum.SqlStatement.GetEnumValueByKey() && sysTasks.SqlText != null)
         {
-            Type? jobType = typeof(SqlSugarClient);
+            Type jobType = typeof(SqlSugarClient);
             // 传入执行程序集
             IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
             return job;
@@ -389,7 +386,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
-    /// 创建Interval类型的触发器
+    /// 创建 Interval 类型的触发器
     /// 定时任务
     /// </summary>
     /// <param name="sysTasks"></param>
@@ -398,6 +395,12 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         if (sysTasks.TriggerType == TriggerTypeEnum.Interval.GetEnumValueByKey())
         {
+            // 设置开始时间和结束时间
+            sysTasks.BeginTime ??= DateTime.Now;
+            sysTasks.EndTime ??= DateTime.MaxValue.AddDays(-1);
+            DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
+            DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
+
             if (sysTasks.EndTime <= DateTime.Now)
             {
                 throw new Exception($"结束时间小于当前时间计划将不会被执行！");
@@ -407,19 +410,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 throw new Exception($"该任务计划已完成:【{sysTasks.Name}】,无需重复启动,如需启动请修改已循环次数再提交");
             }
 
-            // 设置开始时间和结束时间
-            if (sysTasks.BeginTime == null)
-            {
-                sysTasks.BeginTime = DateTime.Now;
-            }
-            if (sysTasks.EndTime == null)
-            {
-                sysTasks.EndTime = DateTime.MaxValue.AddDays(-1);
-            }
-            DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
-            DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
-
-            // 触发作业立即运行，然后每10秒重复一次，无限循环
+            // 触发作业立即运行，然后每N秒重复一次，无限循环
             if (sysTasks.RunTimes > 0)
             {
                 ITrigger trigger = TriggerBuilder.Create()
@@ -430,7 +421,6 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .WithRepeatCount(sysTasks.RunTimes))
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }
             else
@@ -443,7 +433,6 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .RepeatForever())
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }
         }
@@ -451,7 +440,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
-    /// 创建Cron类型的触发器
+    /// 创建 Cron 类型的触发器
     /// 时间点或者周期性任务
     /// </summary>
     /// <param name="sysTasks"></param>
@@ -461,14 +450,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         if (sysTasks.TriggerType == TriggerTypeEnum.Cron.GetEnumValueByKey())
         {
             // 设置开始时间和结束时间
-            if (sysTasks.BeginTime == null)
-            {
-                sysTasks.BeginTime = DateTime.Now;
-            }
-            if (sysTasks.EndTime == null)
-            {
-                sysTasks.EndTime = DateTime.MaxValue.AddDays(-1);
-            }
+            sysTasks.BeginTime ??= DateTime.Now;
+            sysTasks.EndTime ??= DateTime.MaxValue.AddDays(-1);
             DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
             DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
 
@@ -482,7 +465,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                     .WithCronSchedule(sysTasks.Cron)
                     .ForJob(sysTasks.Name, sysTasks.JobGroup)
                     .Build();
-                // 解决Quartz启动后第一次会立即执行问题解决办法
+                // 解决 Quartz 启动后第一次会立即执行的办法
                 ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 return trigger;
             }

@@ -12,8 +12,7 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Utils.Objects;
-using XiHan.Utils.Types;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.Reflections;
 
@@ -25,8 +24,8 @@ public class ReflectionHelper
     /// <summary>
     /// 获取所有符合条件的程序集
     /// </summary>
-    /// <param name="prefix"></param>
-    /// <param name="suffix"></param>
+    /// <param name="prefix">前缀名</param>
+    /// <param name="suffix">后缀名</param>
     /// <returns></returns>
     public static List<Assembly> GetAssemblies(string prefix = "XiHan", string suffix = "dll")
     {

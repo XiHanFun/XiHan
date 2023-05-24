@@ -12,15 +12,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Posts;
 
 /// <summary>
 /// 文章标签表
 /// </summary>
-[SugarTable(TableName = "PostTag")]
-public class PostTag : BaseEntity
+/// <remarks>记录创建，修改信息</remarks>
+[SugarTable(TableName = "Post_Tag")]
+public class PostTag : BaseModifyEntity
 {
     /// <summary>
     /// 标签别名
@@ -50,7 +51,7 @@ public class PostTag : BaseEntity
     /// 标签描述
     /// </summary>
     [SugarColumn(Length = 50)]
-    public string Remark { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章总数

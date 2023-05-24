@@ -11,12 +11,15 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Apps.Services;
-using XiHan.Infrastructure.Contexts;
-using XiHan.Infrastructure.Contexts.Results;
-using XiHan.Utils.Https;
-using XiHan.Utils.Messages.WeCom;
-using File = XiHan.Utils.Messages.WeCom.File;
+using Mapster;
+using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Requests.Https;
+using XiHan.Infrastructures.Responses.Results;
+using XiHan.Models.Syses;
+using XiHan.Models.Syses.Enums;
+using XiHan.Services.Bases;
+using XiHan.Subscriptions.Robots.WeCom;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Messages.WeComPush;
 
@@ -24,32 +27,45 @@ namespace XiHan.Services.Syses.Messages.WeComPush;
 /// WeComMessagePushService
 /// </summary>
 [AppService(ServiceType = typeof(IWeComPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class WeComPushService : IWeComPushService
+public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
 {
-    /// <summary>
-    /// 机器人实例
-    /// </summary>
-    private readonly WeComRobotHelper WeComRobot;
+    private readonly WeComCustomRobot _weComRobot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="iHttpHelper"></param>
-    public WeComPushService(IHttpPollyHelper iHttpHelper)
+    /// <param name="httpPolly"></param>
+    public WeComPushService(IHttpPollyHelper httpPolly)
     {
-        WeComConnection conn = new();
-        WeComRobot = new WeComRobotHelper(iHttpHelper, conn);
+        WeComConnection weComConnection = GetWeComConn().Result;
+        _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);
     }
+
+    /// <summary>
+    /// 获取连接对象
+    /// </summary>
+    /// <returns></returns>
+    private async Task<WeComConnection> GetWeComConn()
+    {
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.WeCom.GetEnumValueByKey());
+        var config = new TypeAdapterConfig()
+            .ForType<SysCustomRobot, WeComConnection>()
+            .Map(dest => dest.Key, src => src.AccessTokenOrKey)
+            .Config;
+        WeComConnection weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
+        return weComConnection;
+    }
+
+    #region WeCom
 
     /// <summary>
     /// 微信推送文本消息
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToText(Text text)
+    public async Task<BaseResultDto> WeComToText(WeComText text)
     {
-        var result = await WeComRobot.TextMessage(text);
-        return WeComMessageReturn(result);
+        return await _weComRobot.TextMessage(text);
     }
 
     /// <summary>
@@ -57,10 +73,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToMarkdown(Markdown markdown)
+    public async Task<BaseResultDto> WeComToMarkdown(WeComMarkdown markdown)
     {
-        var result = await WeComRobot.MarkdownMessage(markdown);
-        return WeComMessageReturn(result);
+        return await _weComRobot.MarkdownMessage(markdown);
     }
 
     /// <summary>
@@ -68,10 +83,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToImage(Image image)
+    public async Task<BaseResultDto> WeComToImage(WeComImage image)
     {
-        var result = await WeComRobot.ImageMessage(image);
-        return WeComMessageReturn(result);
+        return await _weComRobot.ImageMessage(image);
     }
 
     /// <summary>
@@ -79,10 +93,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNews(News news)
+    public async Task<BaseResultDto> WeComToNews(WeComNews news)
     {
-        var result = await WeComRobot.NewsMessage(news);
-        return WeComMessageReturn(result);
+        return await _weComRobot.NewsMessage(news);
     }
 
     /// <summary>
@@ -90,10 +103,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToFile(File file)
+    public async Task<BaseResultDto> WeComToFile(WeComFile file)
     {
-        var result = await WeComRobot.FileMessage(file);
-        return WeComMessageReturn(result);
+        return await _weComRobot.FileMessage(file);
     }
 
     /// <summary>
@@ -101,10 +113,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToTextNotice(TemplateCardTextNotice templateCard)
+    public async Task<BaseResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
     {
-        var result = await WeComRobot.TextNoticeMessage(templateCard);
-        return WeComMessageReturn(result);
+        return await _weComRobot.TextNoticeMessage(templateCard);
     }
 
     /// <summary>
@@ -112,10 +123,9 @@ public class WeComPushService : IWeComPushService
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNewsNotice(TemplateCardNewsNotice templateCard)
+    public async Task<BaseResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
     {
-        var result = await WeComRobot.NewsNoticeMessage(templateCard);
-        return WeComMessageReturn(result);
+        return await _weComRobot.NewsNoticeMessage(templateCard);
     }
 
     /// <summary>
@@ -125,50 +135,8 @@ public class WeComPushService : IWeComPushService
     /// <returns></returns>
     public async Task<BaseResultDto> WeComToUploadkFile(FileStream fileStream)
     {
-        var result = await WeComRobot.UploadkFile(fileStream);
-        return WeComUploadReturn(result);
+        return await _weComRobot.UploadkFile(fileStream);
     }
 
-    /// <summary>
-    /// 消息统一格式返回
-    /// </summary>
-    /// <param name="result"></param>
-    /// <returns></returns>
-    private static BaseResultDto WeComMessageReturn(WeComResultInfoDto? result)
-    {
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-            {
-                return BaseResponseDto.Ok("发送成功");
-            }
-            else
-            {
-                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "发送失败");
-            }
-        }
-        return BaseResponseDto.InternalServerError();
-    }
-
-    /// <summary>
-    /// 上传文件统一格式返回
-    /// </summary>
-    /// <param name="result"></param>
-    /// <returns></returns>
-    private static BaseResultDto WeComUploadReturn(WeComResultInfoDto? result)
-    {
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result?.ErrMsg == "ok")
-            {
-                WeComUploadResultDto uploadResult = new("上传成功", result.MediaId);
-                return BaseResponseDto.Ok(uploadResult);
-            }
-            else
-            {
-                return BaseResponseDto.BadRequest(result?.ErrMsg ?? "上传失败");
-            }
-        }
-        return BaseResponseDto.InternalServerError();
-    }
+    #endregion
 }

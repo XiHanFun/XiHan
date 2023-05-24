@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -20,8 +19,9 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统开放授权协议表
 /// </summary>
+/// <remarks>记录创建，修改信息</remarks>
 [SugarTable(TableName = "Sys_Oauth")]
-public class SysOauth : BaseDeleteEntity
+public class SysOauth : BaseModifyEntity
 {
     /// <summary>
     /// 开放授权协议类型
@@ -58,52 +58,4 @@ public class SysOauth : BaseDeleteEntity
     /// 是否可用
     /// </summary>
     public bool IsEnabled { get; set; }
-}
-
-/// <summary>
-/// 开放授权协议类型
-/// </summary>
-public enum OauthTypeEnum
-{
-    /// <summary>
-    /// QQ
-    /// </summary>
-    [Description("QQ")]
-    QQ = 1,
-
-    /// <summary>
-    /// 微信
-    /// </summary>
-    [Description("微信")]
-    WeChat = 2,
-
-    /// <summary>
-    /// 支付宝
-    /// </summary>
-    [Description("支付宝")]
-    Alipay = 3,
-
-    /// <summary>
-    /// 微博
-    /// </summary>
-    [Description("微博")]
-    WeiBo = 4,
-
-    /// <summary>
-    /// 钉钉
-    /// </summary>
-    [Description("钉钉")]
-    DingTalk = 5,
-
-    /// <summary>
-    /// Github
-    /// </summary>
-    [Description("Github")]
-    Github = 6,
-
-    /// <summary>
-    /// Gitee
-    /// </summary>
-    [Description("Gitee")]
-    Gitee = 7,
 }
