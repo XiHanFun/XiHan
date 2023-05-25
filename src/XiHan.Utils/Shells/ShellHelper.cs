@@ -27,13 +27,13 @@ public static class ShellHelper
     /// <returns></returns>
     public static string Bash(string command)
     {
-        var escapedArgs = command.Replace("\"", "\\\"");
+        var escapedArgs = command.Replace(@"""", @"\""");
         var process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = "/bin/bash",
-                Arguments = $"-c \"{escapedArgs}\"",
+                FileName = @"/bin/bash",
+                Arguments = $@"-c ""{escapedArgs}""",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,

@@ -31,6 +31,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     // 日志开关
     private readonly bool _resourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
+    // 缓存时间
+    private readonly int _syncTimeout = AppSettings.Cache.SyncTimeout.GetValue();
+
     private readonly IMemoryCache _memoryCache;
     private readonly ILogger<ResourceFilterAsyncAttribute> _logger;
 
@@ -83,11 +86,10 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         {
             // 请求构造函数和方法,调用下一个过滤器
             var resourceExecuted = await next();
-            // 执行结果
-            // 若不存在此资源，缓存请求后的资源（请求构造函数和方法）
+            // 执行结果，若不存在此资源，缓存请求后的资源（请求构造函数和方法）
             if (resourceExecuted.Result != null)
             {
-                var syncTimeout = TimeSpan.FromMinutes(AppSettings.Cache.SyncTimeout.GetValue());
+                var syncTimeout = TimeSpan.FromMinutes(_syncTimeout);
                 var result = resourceExecuted.Result as ActionResult;
                 _memoryCache.Set(requestUrl + method, result, syncTimeout);
                 if (_resourceLogSwitch)

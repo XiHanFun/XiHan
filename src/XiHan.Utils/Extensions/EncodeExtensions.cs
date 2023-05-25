@@ -12,6 +12,8 @@
 #endregion <<版权版本注释>>
 
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace XiHan.Utils.Extensions;
 
@@ -91,7 +93,7 @@ public static partial class EncodeExtensions
     /// <returns>编码后的字符串</returns>
     public static string HtmlEncode(this string data)
     {
-        return System.Web.HttpUtility.HtmlEncode(data);
+        return HttpUtility.HtmlEncode(data);
     }
 
     /// <summary>
@@ -101,7 +103,7 @@ public static partial class EncodeExtensions
     /// <returns>解码后的字符串</returns>
     public static string HtmlDecode(this string data)
     {
-        return System.Web.HttpUtility.HtmlDecode(data);
+        return HttpUtility.HtmlDecode(data);
     }
 
     /// <summary>
@@ -149,8 +151,8 @@ public static partial class EncodeExtensions
         return Uri.UnescapeDataString(data);
     }
 
-    [System.Text.RegularExpressions.GeneratedRegex(@"\\u([0-9A-Za-z]{4})")]
-    private static partial System.Text.RegularExpressions.Regex UnicodeRegex();
+    [GeneratedRegex(@"\\u([0-9A-Za-z]{4})")]
+    private static partial Regex UnicodeRegex();
 }
 
 /// <summary>

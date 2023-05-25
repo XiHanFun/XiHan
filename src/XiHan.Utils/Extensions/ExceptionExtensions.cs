@@ -25,6 +25,6 @@ public static class ExceptionExtensions
     {
         var errorInfo = info + Environment.NewLine + ex.Message;
         errorInfo.WriteLineError();
-        throw new Exception(errorInfo);
+        throw new Exception(errorInfo, ex);
     }
 }

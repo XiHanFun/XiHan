@@ -54,7 +54,7 @@ public static class SwaggerSetup
     }
 
     /// <summary>
-    /// Swagger文档信息配置
+    /// Swagger 文档信息配置
     /// </summary>
     /// <param name="options"></param>
     internal static void SwaggerInfoConfig(SwaggerGenOptions options)
@@ -135,7 +135,7 @@ public static class SwaggerSetup
             // 生成注释文档，必须在 OperationFilter<AppendAuthorizeToSummaryOperationFilter>() 之前，否则没有(Auth)标签
             Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(xmlPath =>
             {
-                // 默认的第二个参数是false，这个是controller的注释，true时会显示注释，否则只显示方法注释
+                // 默认的第二个参数是false，这个是 controller 的注释，true 时会显示注释，否则只显示方法注释
                 options.IncludeXmlComments(xmlPath, true);
             });
         }
@@ -148,7 +148,7 @@ public static class SwaggerSetup
     }
 
     /// <summary>
-    /// Swagger文档中请求带JWT Token
+    /// Swagger 文档中请求带 JWT Token
     /// </summary>
     /// <param name="options"></param>
     internal static void SwaggerJwtConfig(SwaggerGenOptions options)

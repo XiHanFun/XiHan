@@ -35,30 +35,39 @@ public static class InitDatabaseStep
         var db = DbScoped.SugarScope;
         var databaseInited = AppSettings.Database.Inited.GetValue();
         // 若数据库已经初始化，则跳过，否则初始化数据库
+        "正在从配置中检测是否需要数据库初始化……".WriteLineInfo();
         if (databaseInited)
         {
+            "数据库已初始化。".WriteLineSuccess();
         }
         else
         {
-            "数据库正在初始化……".WriteLineInfo();
+            try
+            {
+                "数据库正在初始化……".WriteLineInfo();
 
-            // 创建数据库
-            "创建数据库……".WriteLineInfo();
-            db.DbMaintenance.CreateDatabase();
-            "数据库创建成功！".WriteLineSuccess();
+                // 创建数据库
+                "创建数据库……".WriteLineInfo();
+                db.DbMaintenance.CreateDatabase();
+                "数据库创建成功！".WriteLineSuccess();
 
-            // 创建数据表
-            "创建数据表……".WriteLineInfo();
+                // 创建数据表
+                "创建数据表……".WriteLineInfo();
 
-            // 获取所有 XiHan.Models 的实体
-            var entityes = ReflectionHelper.GetAllTypes()
-                .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)
-                .ToArray();
+                // 获取所有 XiHan.Models 的实体
+                var entityes = ReflectionHelper.GetAllTypes()
+                    .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)
+                    .ToArray();
 
-            db.CodeFirst.SetStringDefaultLength(512).InitTables(entityes);
+                db.CodeFirst.SetStringDefaultLength(512).InitTables(entityes);
 
-            "数据表创建成功！".WriteLineSuccess();
-            "数据库初始化已完成！".WriteLineSuccess();
+                "数据表创建成功！".WriteLineSuccess();
+                "数据库初始化已完成！".WriteLineSuccess();
+            }
+            catch (Exception ex)
+            {
+                ex.ThrowAndConsoleError("数据库初始化或数据表初始化失败，请检查数据库连接字符是否正确！");
+            }
         }
     }
 }

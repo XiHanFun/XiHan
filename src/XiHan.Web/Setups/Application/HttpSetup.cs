@@ -24,7 +24,7 @@ namespace XiHan.Web.Setups.Application;
 public static class HttpSetup
 {
     /// <summary>
-    /// Http应用扩展
+    /// Http 应用扩展
     /// </summary>
     /// <param name="app"></param>
     /// <param name="env"></param>

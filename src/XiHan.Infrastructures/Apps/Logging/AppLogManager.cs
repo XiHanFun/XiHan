@@ -93,7 +93,6 @@ public static class AppLogManager
                             // 写入模板
                             outputTemplate: template,
                             // 编码
-                            encoding: Encoding.UTF8)
-                    ));
+                            encoding: Encoding.UTF8)));
     }
 }

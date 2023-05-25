@@ -31,41 +31,25 @@ public static class Md5EncryptionHelper
         // 计算32位MD5值
         byte[] inputBytes = Encoding.UTF8.GetBytes(input);
         byte[] hashBytes = MD5.HashData(inputBytes);
-        StringBuilder sb = new();
-        foreach (var t in hashBytes)
-        {
-            sb.Append(t.ToString("x2"));
-        }
-        string md5Str = sb.ToString();
+        string md5Str = ComputeHash(hashBytes);
         if (md5Str.Length == 32)
         {
             // 转换为64位MD5值
             byte[] bytes = Encoding.UTF8.GetBytes(md5Str);
-            StringBuilder sb2 = new();
-            foreach (var t in bytes)
-            {
-                sb2.Append(t.ToString("x2"));
-            }
-            return sb2.ToString();
+            return ComputeHash(bytes);
         }
         else
         {
             return md5Str;
         }
     }
-}
 
-/// <summary>
-/// MD5 数据流加密类
-/// </summary>
-public static class Md5StreamEncryptionHelper
-{
     /// <summary>
     /// 对数据流进行 MD5 加密，返回32位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流路径</param>
     /// <returns></returns>
-    public static string Encrypt(string inputPath)
+    public static string EncryptStream(string inputPath)
     {
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var md5 = MD5.Create();
@@ -78,16 +62,28 @@ public static class Md5StreamEncryptionHelper
     /// </summary>
     /// <param name="inputPath">待加密的数据流</param>
     /// <returns></returns>
-    public static string Encrypt64(string inputPath)
+    public static string Encrypt64Stream(string inputPath)
     {
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var md5 = MD5.Create();
         byte[] hashBytes = md5.ComputeHash(stream);
-        var sb = new StringBuilder();
-        foreach (var t in hashBytes)
+        return ComputeHash(hashBytes);
+    }
+
+    /// <summary>
+    /// 计算哈希值
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    private static string ComputeHash(byte[] source)
+    {
+        // 将字节数组转换为十六进制字符串
+        StringBuilder sb = new();
+        foreach (var t in source)
         {
             sb.Append(t.ToString("x2"));
         }
+        // 返回生成的哈希值
         return sb.ToString();
     }
 }
