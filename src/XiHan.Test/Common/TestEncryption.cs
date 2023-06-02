@@ -29,6 +29,6 @@ public static class TestEncryption
         Console.WriteLine($@"字符串【{str}】MD5加密后：{Md5EncryptionHelper.Encrypt(str)}；");
 
         var file = @"D:\Blog\餐饮企业订单信息源数据.zip";
-        Console.WriteLine($@"文件【{file}】MD5加密后：{Md5StreamEncryptionHelper.Encrypt(file)}；");
+        Console.WriteLine($@"文件【{file}】MD5加密后：{Md5EncryptionHelper.EncryptStream(file)}；");
     }
 }
