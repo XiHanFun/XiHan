@@ -121,11 +121,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的trigger重新设置job执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return BaseResultDto.Success($"启动计划任务【{sysTasks.Name}】成功！");
+            return BaseResultDto.Success($"添加计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
-            var errorInfo = $"启动计划任务【{sysTasks.Name}】失败！";
+            var errorInfo = $"添加计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
             return BaseResultDto.InternalServerError(errorInfo);
@@ -197,7 +197,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
 
             // 等待任务运行完成
             await _scheduler.Start();
-            return BaseResultDto.Success("计划任务开启成功！");
+            return BaseResultDto.Success("开启计划任务成功！");
         }
         catch (Exception ex)
         {
@@ -224,7 +224,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             }
             // 等待任务运行停止
             await _scheduler.Shutdown();
-            return BaseResultDto.Success($"计划任务已经停止。");
+            return BaseResultDto.Success($"停止计划任务成功！");
         }
         catch (Exception ex)
         {

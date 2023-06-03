@@ -22,7 +22,7 @@ namespace XiHan.Web.Setups.Services;
 public static class CorsSetup
 {
     /// <summary>
-    /// Cors 服务扩展
+    /// 跨源资源共享服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public static class CorsSetup
                 // 配置允许访问的域名
                 policy.WithOrigins(origins)
                     // 是否允许同源时匹配配置的通配符域
-                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    //.SetIsOriginAllowedToAllowWildcardSubdomains()
                     // 允许任何请求头
                     .AllowAnyHeader()
                     // 允许任何方法
@@ -59,7 +59,7 @@ public static class CorsSetup
                     // 允许凭据（cookie）
                     .AllowCredentials()
                     // 允许请求头
-                    .WithExposedHeaders("X-Pagination");
+                    .WithExposedHeaders("X-Access-Control-Expose-Headers", "X-Pagination");
             });
         });
         return services;

@@ -47,7 +47,7 @@ public static class AppServiceManager
     public static void RegisterBaseService(IServiceCollection services)
     {
         // 属性或字段自动注入服务
-        services.AddSingleton<AppServiceAutowired>();
+        services.AddSingleton<AutowiredServiceManager>();
         // Ip 查询服务
         services.AddSingleton<ISearcher, Searcher>();
         IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");

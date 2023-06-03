@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:AppServiceAutowired
+// FileName:AutowiredServiceManager
 // Guid:9a4eb123-327c-4d54-9df2-0f76b5f772d5
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,12 +17,12 @@ using System.Reflection;
 namespace XiHan.Infrastructures.Apps.Services;
 
 /// <summary>
-/// 从容器通过属性或字段自动注入装配服务
+/// 属性或字段自动装配服务管理器
 /// </summary>
 /// <remarks>
 /// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
 /// </remarks>
-public class AppServiceAutowired
+public class AutowiredServiceManager
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly Dictionary<Type, Action<object, IServiceProvider>> _autowiredActions = new();
@@ -31,7 +31,7 @@ public class AppServiceAutowired
     /// 构造函数
     /// </summary>
     /// <param name="serviceProvider"></param>
-    public AppServiceAutowired(IServiceProvider serviceProvider)
+    public AutowiredServiceManager(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
@@ -71,7 +71,7 @@ public class AppServiceAutowired
                 // 字段赋值
                 foreach (FieldInfo field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                 {
-                    var autowiredAttr = field.GetCustomAttribute<ServiceAutowiredAttribute>();
+                    var autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>();
                     if (autowiredAttr != null)
                     {
                         var fieldExp = Expression.Field(obj, field);
@@ -83,7 +83,7 @@ public class AppServiceAutowired
                 // 属性赋值
                 foreach (PropertyInfo property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                 {
-                    var autowiredAttr = property.GetCustomAttribute<ServiceAutowiredAttribute>();
+                    var autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>();
                     if (autowiredAttr != null)
                     {
                         var propExp = Expression.Property(obj, property);

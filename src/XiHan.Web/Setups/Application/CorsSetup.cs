@@ -22,7 +22,7 @@ namespace XiHan.Web.Setups.Application;
 public static class CorsSetup
 {
     /// <summary>
-    /// Cors 应用扩展
+    /// 跨源资源共享应用扩展
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>

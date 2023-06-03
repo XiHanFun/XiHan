@@ -127,9 +127,14 @@ public static class AppSettings
         public static string PolicyName { get; set; } = string.Empty;
 
         /// <summary>
-        /// 溯源
+        /// 域名
         /// </summary>
         public static string[] Origins { get; set; } = Array.Empty<string>();
+
+        /// <summary>
+        /// 请求头
+        /// </summary>
+        public static string[] Headers { get; set; } = Array.Empty<string>();
     }
 
     /// <summary>
