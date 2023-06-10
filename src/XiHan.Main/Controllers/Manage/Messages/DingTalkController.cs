@@ -26,7 +26,7 @@ namespace XiHan.Main.Controllers.Manage.Messages;
 /// <code>包含：文本/链接/文档/任务卡片/卡片菜单</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Backstage)]
+[ApiGroup(ApiGroupNames.Manage)]
 public class DingTalkController : BaseApiController
 {
     private readonly IDingTalkPushService _dingTalkPushService;

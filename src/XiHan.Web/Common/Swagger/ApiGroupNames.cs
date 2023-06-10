@@ -28,13 +28,13 @@ public enum ApiGroupNames
     /// 前台接口
     /// </summary>
     [GroupInfo(Title = "前台接口", Description = "这是用于普通用户浏览的前台接口", Version = "v0.2.5")]
-    Reception,
+    Display,
 
     /// <summary>
     /// 后台接口
     /// </summary>
     [GroupInfo(Title = "后台接口", Description = "这是用于管理的后台接口", Version = "v0.2.5")]
-    Backstage,
+    Manage,
 
     /// <summary>
     /// 授权接口

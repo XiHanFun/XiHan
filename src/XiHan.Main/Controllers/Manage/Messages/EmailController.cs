@@ -26,7 +26,7 @@ namespace XiHan.Main.Controllers.Manage.Messages;
 /// <code>包含：SMTP</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Backstage)]
+[ApiGroup(ApiGroupNames.Manage)]
 public class EmailController : BaseApiController
 {
     private readonly IEmailPushService _emailPushService;

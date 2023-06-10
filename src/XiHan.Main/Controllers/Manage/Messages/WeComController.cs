@@ -28,7 +28,7 @@ namespace XiHan.Main.Controllers.Manage.Messages;
 /// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Backstage)]
+[ApiGroup(ApiGroupNames.Manage)]
 public class WeComController : BaseApiController
 {
     private readonly IWeComPushService _weComPushService;
