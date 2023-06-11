@@ -39,26 +39,14 @@ public enum OauthTypeEnum
     Alipay = 3,
 
     /// <summary>
-    /// 微博
-    /// </summary>
-    [Description("微博")]
-    WeiBo = 4,
-
-    /// <summary>
-    /// 钉钉
-    /// </summary>
-    [Description("钉钉")]
-    DingTalk = 5,
-
-    /// <summary>
     /// Github
     /// </summary>
     [Description("Github")]
-    Github = 6,
+    Github = 4,
 
     /// <summary>
     /// Gitee
     /// </summary>
     [Description("Gitee")]
-    Gitee = 7,
+    Gitee = 5,
 }

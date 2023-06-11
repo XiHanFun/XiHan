@@ -343,14 +343,119 @@ public static class AppSettings
             public static string SymmetricKey { get; set; } = string.Empty;
 
             /// <summary>
-            /// 过期时间容错值
-            /// </summary>
-            public static int ClockSkew { get; set; }
-
-            /// <summary>
             /// 过期时间
             /// </summary>
             public static int Expires { get; set; }
+
+            /// <summary>
+            /// 过期时间容错值
+            /// </summary>
+            public static int ClockSkew { get; set; }
+        }
+
+        /// <summary>
+        /// QQ 授权配置
+        /// </summary>
+        public static class QQ
+        {
+            /// <summary>
+            /// 获取用户授权得到 code
+            /// </summary>
+            public static string ApiAuthorize { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 code 得到 access_token
+            /// </summary>
+            public static string ApiAccessToken { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 access_token 得到用户信息
+            /// </summary>
+            public static string ApiUser { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// WeChat 授权配置
+        /// </summary>
+        public static class WeChat
+        {
+            /// <summary>
+            /// 获取用户授权得到 code
+            /// </summary>
+            public static string ApiAuthorize { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 code 得到 access_token
+            /// </summary>
+            public static string ApiAccessToken { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 access_token 得到用户信息
+            /// </summary>
+            public static string ApiUser { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// Alipay 授权配置
+        /// </summary>
+        public static class Alipay
+        {
+            /// <summary>
+            /// 获取用户授权得到 code
+            /// </summary>
+            public static string ApiAuthorize { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 code 得到 access_token
+            /// </summary>
+            public static string ApiAccessToken { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 access_token 得到用户信息
+            /// </summary>
+            public static string ApiUser { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// Github 授权配置
+        /// </summary>
+        public static class Github
+        {
+            /// <summary>
+            /// 获取用户授权得到 code
+            /// </summary>
+            public static string ApiAuthorize { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 code 得到 access_token
+            /// </summary>
+            public static string ApiAccessToken { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 access_token 得到用户信息
+            /// </summary>
+            public static string ApiUser { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// Gitee 授权配置
+        /// </summary>
+        public static class Gitee
+        {
+            /// <summary>
+            /// 获取用户授权得到 code
+            /// </summary>
+            public static string ApiAuthorize { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 code 得到 access_token
+            /// </summary>
+            public static string ApiAccessToken { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 根据 access_token 得到用户信息
+            /// </summary>
+            public static string ApiUser { get; set; } = string.Empty;
         }
     }
 }
