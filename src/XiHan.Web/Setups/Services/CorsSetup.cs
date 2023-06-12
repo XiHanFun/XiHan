@@ -44,12 +44,12 @@ public static class CorsSetup
             // 策略名称
             var policyName = AppSettings.Cors.PolicyName.GetValue();
             // 支持多个域名端口，端口号后不可带/符号
-            string[] origins = AppSettings.Cors.Origins.GetSection();
+            var origins = AppSettings.Cors.Origins.GetSection();
             // 添加指定策略
             options.AddPolicy(name: policyName, policy =>
             {
                 // 配置允许访问的域名
-                policy.WithOrigins(origins)
+                policy.WithOrigins(origins ?? Array.Empty<string>())
                     // 是否允许同源时匹配配置的通配符域
                     //.SetIsOriginAllowedToAllowWildcardSubdomains()
                     // 允许任何请求头
@@ -58,7 +58,7 @@ public static class CorsSetup
                     .AllowAnyMethod()
                     // 允许凭据（cookie）
                     .AllowCredentials()
-                    // 允许请求头
+                    // 允许请求头 (SignalR 用此请求头)
                     .WithExposedHeaders("X-Access-Control-Expose-Headers", "X-Pagination");
             });
         });
