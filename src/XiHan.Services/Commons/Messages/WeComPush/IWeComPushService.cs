@@ -14,7 +14,7 @@
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Subscriptions.Robots.WeCom;
 
-namespace XiHan.Services.Syses.Messages.WeComPush;
+namespace XiHan.Services.Commons.Messages.WeComPush;
 
 /// <summary>
 /// IWeComMessagePushService

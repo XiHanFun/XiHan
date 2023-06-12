@@ -29,9 +29,9 @@ public class PageWhereDto
     public string? Sort { get; set; }
 
     /// <summary>
-    /// 排序方式 默认 ASC
+    /// 排序方式 默认 Desc
     /// </summary>
-    public string? Order { get; set; } = "ASC";
+    public string? Order { get; set; } = "Desc";
 
     /// <summary>
     /// 分页实体
@@ -47,5 +47,5 @@ public class PageWhereDto<TWhereEntity> : PageWhereDto where TWhereEntity : clas
     /// <summary>
     /// 查询条件
     /// </summary>
-    public TWhereEntity? Where { get; set; }
+    public TWhereEntity Where { get; set; }
 }

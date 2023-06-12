@@ -16,7 +16,7 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
-namespace XiHan.Services.Syses.Logic;
+namespace XiHan.Services.Syses.Users.Logic;
 
 /// <summary>
 /// 系统用户角色关联服务

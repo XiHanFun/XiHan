@@ -23,23 +23,20 @@ namespace XiHan.Subscriptions.Robots.Email;
 public class EmailRobot
 {
     private readonly EmailFromModel _fromModel;
-    private readonly EmailToModel _toModel;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="fromModel"></param>
-    /// <param name="toModel"></param>
-    public EmailRobot(EmailFromModel fromModel, EmailToModel toModel)
+    public EmailRobot(EmailFromModel fromModel)
     {
         _fromModel = fromModel;
-        _toModel = toModel;
     }
 
     /// <summary>
     /// 发送邮件
     /// </summary>
-    public async Task<bool> Send()
+    public async Task<bool> Send(EmailToModel toModel)
     {
         // 初始化邮件实例
         using MailMessage message = new()
@@ -48,10 +45,10 @@ public class EmailRobot
             From = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
             Sender = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
             // 邮件主题
-            Subject = _toModel.Subject,
+            Subject = toModel.Subject,
             SubjectEncoding = _fromModel.Coding,
             // 邮件正文
-            Body = _toModel.Body,
+            Body = toModel.Body,
             BodyEncoding = _fromModel.Coding,
             // 优先级（高）
             Priority = MailPriority.High,
@@ -59,13 +56,13 @@ public class EmailRobot
             IsBodyHtml = true,
         };
         // 收件人地址集合
-        _toModel.ToMail.ForEach(to => message.To.Add(to));
+        toModel.ToMail.ForEach(to => message.To.Add(to));
         // 抄送人地址集合
-        _toModel.CcMail.ForEach(cc => message.CC.Add(cc));
+        toModel.CcMail.ForEach(cc => message.CC.Add(cc));
         // 密送人地址集合
-        _toModel.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
+        toModel.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
         // 在有附件的情况下添加附件
-        _toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
+        toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
 
         // 初始化连接实例
         using SmtpClient client = new(_fromModel.Host, _fromModel.Port)

@@ -14,8 +14,10 @@
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Menus;
+using XiHan.Services.Syses.Roles;
 
-namespace XiHan.Services.Syses.Logic;
+namespace XiHan.Services.Syses.Permissions.Logic;
 
 /// <summary>
 /// 系统权限服务

@@ -16,10 +16,11 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Dtos;
+using XiHan.Services.Syses.Roles;
+using XiHan.Services.Syses.Users.Dtos;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Services.Syses.Logic;
+namespace XiHan.Services.Syses.Users.Logic;
 
 /// <summary>
 /// 系统用户服务
@@ -42,11 +43,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 查询用户列表(根据分页条件)
     /// </summary>
-    /// <param name="whereDto"></param>
-    /// <param name="basePageDto"></param>
+    /// <param name="pageWhereDto"></param>
     /// <returns></returns>
-    public async Task<BasePageDataDto<SysUser>> GetUserList(SysUserWhereDto whereDto, BasePageDto basePageDto)
+    public async Task<BasePageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWhereDto> pageWhereDto)
     {
+        var whereDto = pageWhereDto.Where;
         var exp = Expressionable.Create<SysUser>();
         exp.AndIF(whereDto.UserName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.UserName!));
         exp.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
@@ -55,7 +56,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         exp.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
         exp.And(u => !u.IsDeleted);
 
-        var result = await QueryPageDataDtoAsync(exp.ToExpression(), basePageDto);
+        var result = await QueryPageDataDtoAsync(exp.ToExpression(), pageWhereDto.PageDto);
 
         return result;
     }
@@ -120,7 +121,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     {
         var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
 
-        var diffArr = roleIds.Where(id => !(sysUser.SysRoleIds).Contains(id)).ToList();
+        var diffArr = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
         var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
 
         if (diffArr.Any() || diffArr2.Any())

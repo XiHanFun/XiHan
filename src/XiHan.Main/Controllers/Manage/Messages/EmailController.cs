@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Main.Controllers.Bases;
-using XiHan.Services.Syses.Messages.EmailPush;
+using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Subscriptions.Robots.Email;
 using XiHan.Web.Common.Swagger;
 

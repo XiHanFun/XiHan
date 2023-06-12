@@ -14,7 +14,7 @@
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Subscriptions.Robots.Email;
 
-namespace XiHan.Services.Syses.Messages.EmailPush;
+namespace XiHan.Services.Commons.Messages.EmailPush;
 
 /// <summary>
 /// IEmailPushService

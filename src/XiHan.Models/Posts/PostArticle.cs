@@ -48,10 +48,10 @@ public class PostArticle : BaseEntity
     public string? Summary { get; set; }
 
     /// <summary>
-    /// 文章缩略图
+    /// 封面地址
     /// </summary>
     [SugarColumn(Length = 500)]
-    public string Thumbnail { get; set; } = string.Empty;
+    public string CoverlUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章内容
@@ -60,6 +60,12 @@ public class PostArticle : BaseEntity
     public string Content { get; set; } = string.Empty;
 
     #region 文章设置
+
+    /// <summary>
+    /// 编辑器类型
+    /// EditorTypeEnum
+    /// </summary>
+    public int EditorType { get; set; }
 
     /// <summary>
     /// 文章分类

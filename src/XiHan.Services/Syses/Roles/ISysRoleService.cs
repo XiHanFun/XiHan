@@ -14,7 +14,7 @@
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
-namespace XiHan.Services.Syses;
+namespace XiHan.Services.Syses.Roles;
 
 /// <summary>
 /// ISysRoleService

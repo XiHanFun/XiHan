@@ -11,7 +11,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Dtos;
+
+namespace XiHan.Services.Syses.Users.Dtos;
 
 /// <summary>
 /// SysUserWhereDto

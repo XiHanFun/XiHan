@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Main.Controllers.Bases;
-using XiHan.Services.Syses.Messages.DingTalkPush;
+using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.Web.Common.Swagger;
 

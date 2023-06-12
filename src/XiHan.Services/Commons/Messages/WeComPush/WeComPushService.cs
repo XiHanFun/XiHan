@@ -21,7 +21,7 @@ using XiHan.Services.Bases;
 using XiHan.Subscriptions.Robots.WeCom;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Services.Syses.Messages.WeComPush;
+namespace XiHan.Services.Commons.Messages.WeComPush;
 
 /// <summary>
 /// WeComMessagePushService

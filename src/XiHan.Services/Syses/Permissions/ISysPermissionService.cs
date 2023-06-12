@@ -13,7 +13,7 @@
 
 using XiHan.Models.Syses;
 
-namespace XiHan.Services.Syses;
+namespace XiHan.Services.Syses.Permissions;
 
 /// <summary>
 /// ISysPermissionService

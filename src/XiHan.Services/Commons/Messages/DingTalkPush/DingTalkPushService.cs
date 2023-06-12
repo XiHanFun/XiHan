@@ -21,7 +21,7 @@ using XiHan.Services.Bases;
 using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Services.Syses.Messages.DingTalkPush;
+namespace XiHan.Services.Commons.Messages.DingTalkPush;
 
 /// <summary>
 /// DingTalkMessagePush

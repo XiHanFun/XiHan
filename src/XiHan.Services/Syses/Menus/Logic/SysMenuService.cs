@@ -14,8 +14,9 @@
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Roles;
 
-namespace XiHan.Services.Syses.Logic;
+namespace XiHan.Services.Syses.Menus.Logic;
 
 /// <summary>
 /// 系统菜单服务

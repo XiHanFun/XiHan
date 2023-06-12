@@ -14,7 +14,7 @@
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Subscriptions.Robots.DingTalk;
 
-namespace XiHan.Services.Syses.Messages.DingTalkPush;
+namespace XiHan.Services.Commons.Messages.DingTalkPush;
 
 /// <summary>
 /// IDingTalkMessagePushService

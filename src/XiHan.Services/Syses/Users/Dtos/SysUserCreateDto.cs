@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using XiHan.Models.Bases;
 using XiHan.Models.Syses;
 
-namespace XiHan.Services.Syses.Dtos;
+namespace XiHan.Services.Syses.Users.Dtos;
 
 /// <summary>
 /// SysUserCreateDto

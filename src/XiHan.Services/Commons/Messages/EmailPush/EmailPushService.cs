@@ -21,7 +21,7 @@ using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Subscriptions.Robots.Email;
 
-namespace XiHan.Services.Syses.Messages.EmailPush;
+namespace XiHan.Services.Commons.Messages.EmailPush;
 
 /// <summary>
 /// EmailPushService
@@ -66,9 +66,9 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         //    BccMail = bccMail,
         //    AttachmentsPath = attachmentsPath,
         //};
-        EmailRobot emailHelper = new(emailFrom, emailTo);
+        EmailRobot emailHelper = new(emailFrom);
         var logoInfo = string.Empty;
-        if (await emailHelper.Send())
+        if (await emailHelper.Send(emailTo))
         {
             logoInfo = "邮件发送成功";
             _logger.LogInformation(logoInfo);

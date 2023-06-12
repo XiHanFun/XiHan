@@ -96,9 +96,9 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <summary>
     /// 自定义条件删除
     /// </summary>
-    /// <param name="func"></param>
+    /// <param name="where"></param>
     /// <returns></returns>
-    Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> func);
+    Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> where);
 
     /// <summary>
     /// 修改
@@ -122,6 +122,13 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     Task<bool> UpdateBatchAsync(List<TEntity> entities);
 
     /// <summary>
+    /// 是否存在
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <returns></returns>
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression);
+
+    /// <summary>
     /// 根据Id查找
     /// </summary>
     /// <param name="id"></param>
@@ -131,9 +138,9 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <summary>
     /// 自定义条件查找
     /// </summary>
-    /// <param name="func">自定义条件</param>
+    /// <param name="where">自定义条件</param>
     /// <returns></returns>
-    Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
+    Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where);
 
     /// <summary>
     /// 查询所有
@@ -144,9 +151,9 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <summary>
     /// 自定义条件查询
     /// </summary>
-    /// <param name="func">自定义条件</param>
+    /// <param name="where">自定义条件</param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> func);
+    Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> where);
 
     /// <summary>
     /// 分页查询
@@ -175,27 +182,27 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="func">自定义条件</param>
+    /// <param name="where">自定义条件</param>
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> where, int currentIndex, int pageSize, RefAsync<int> totalCount);
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="func">自定义条件</param>
+    /// <param name="where">自定义条件</param>
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, int currentIndex, int pageSize);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> where, int currentIndex, int pageSize);
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="func">自定义条件</param>
+    /// <param name="where">自定义条件</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns></returns>
-    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> func, BasePageDto pageDto);
+    Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> where, BasePageDto pageDto);
 }
