@@ -96,7 +96,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// <returns></returns>
     public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
     {
-        return await AddBatchAsync(sysUserRoles);
+        return await AddAsync(sysUserRoles);
     }
 
     /// <summary>

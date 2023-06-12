@@ -37,7 +37,7 @@ public static class ObjectPropertyExtensions
     }
 
     /// <summary>
-    /// 获取类型的Description特性描述信息
+    /// 获取类型的 Description 特性描述信息
     /// </summary>
     /// <param name="entity">类型对象</param>
     /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
@@ -54,6 +54,40 @@ public static class ObjectPropertyExtensions
             result = fullName + "(" + description + ")";
         }
         return result;
+    }
+
+    /// <summary>
+    /// 利用反射来判断对象是否包含某个字段
+    /// </summary>
+    /// <param name="instance">object</param>
+    /// <param name="fieldName">需要判断的字段</param>
+    /// <returns>是否包含</returns>
+    public static bool IsContainField(this object? instance, string fieldName)
+    {
+        if (instance != null && !string.IsNullOrEmpty(fieldName))
+        {
+            var findedFieldInfo = instance.GetType().GetField(fieldName);
+            if (findedFieldInfo != null)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 利用反射来获取字段信息
+    /// </summary>
+    /// <param name="instance">object</param>
+    /// <param name="fieldName">字段名称</param>
+    /// <returns>是否包含</returns>
+    public static FieldInfo GetField(this object? instance, string fieldName)
+    {
+        if (instance != null && !string.IsNullOrEmpty(fieldName))
+        {
+            var findedFieldInfo = instance.GetType().GetField(fieldName);
+            if (findedFieldInfo != null)
+                return findedFieldInfo;
+        }
+        throw new NotImplementedException(nameof(fieldName));
     }
 
     /// <summary>

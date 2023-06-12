@@ -53,6 +53,26 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> AddAsync(TEntity[] entities)
+    {
+        return await InsertRangeAsync(entities);
+    }
+
+    /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> AddAsync(List<TEntity> entities)
+    {
+        return await InsertRangeAsync(entities);
+    }
+
+    /// <summary>
     /// 新增返回Id
     /// </summary>
     /// <param name="entity"></param>
@@ -73,31 +93,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// 批量新增
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> AddBatchAsync(TEntity[] entities)
-    {
-        return await InsertRangeAsync(entities);
-    }
-
-    /// <summary>
-    /// 批量新增
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> AddBatchAsync(List<TEntity> entities)
-    {
-        return await InsertRangeAsync(entities);
-    }
-
-    /// <summary>
     /// 批量新增或更新
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> AddOrUpdateBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> AddOrUpdateAsync(List<TEntity> entities)
     {
         return await InsertOrUpdateAsync(entities);
     }
@@ -111,9 +111,20 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveByIdAsync(long id)
+    public virtual async Task<bool> RemoveAsync(long id)
     {
         return await DeleteByIdAsync(id);
+    }
+
+    /// <summary>
+    /// 根据Id批量删除
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> RemoveAsync(long[] ids)
+    {
+        dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
+        return await DeleteByIdsAsync(newIds);
     }
 
     /// <summary>
@@ -127,22 +138,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
-    /// 根据Id批量删除
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> RemoveByIdBatchAsync(long[] ids)
-    {
-        dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
-        return await DeleteByIdsAsync(newIds);
-    }
-
-    /// <summary>
     /// 批量删除
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> RemoveAsync(List<TEntity> entities)
     {
         return await DeleteAsync(entities);
     }
@@ -150,11 +150,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 自定义条件删除
     /// </summary>
-    /// <param name="where"></param>
+    /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> where)
+    public virtual async Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await DeleteAsync(where);
+        return await DeleteAsync(whereExpression);
     }
 
     #endregion
@@ -176,7 +176,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> UpdateBatchAsync(TEntity[] entities)
+    public virtual async Task<bool> UpdateAsync(TEntity[] entities)
     {
         return await UpdateRangeAsync(entities);
     }
@@ -186,7 +186,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> UpdateBatchAsync(List<TEntity> entities)
+    public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
     {
         return await UpdateRangeAsync(entities);
     }
@@ -210,7 +210,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindByIdAsync(long id)
+    public virtual async Task<TEntity> FindAsync(long id)
     {
         return await GetByIdAsync(id);
     }
@@ -218,18 +218,18 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 自定义条件查找
     /// </summary>
-    /// <param name="where">自定义条件</param>
+    /// <param name="whereExpression">自定义条件</param>
     /// <returns></returns>
-    public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where)
+    public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await GetFirstAsync(where);
+        return await GetFirstAsync(whereExpression);
     }
 
     /// <summary>
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryListAsync()
+    public virtual async Task<List<TEntity>> QueryAsync()
     {
         return await GetListAsync();
     }
@@ -237,11 +237,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 自定义条件查询
     /// </summary>
-    /// <param name="where">自定义条件</param>
+    /// <param name="whereExpression">自定义条件</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryListAsync(Expression<Func<TEntity, bool>> where)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await GetListAsync(where);
+        return await GetListAsync(whereExpression);
     }
 
     /// <summary>
@@ -251,9 +251,22 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryPageListAsync(int currentIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryAsync(int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await Context.Queryable<TEntity>().ToPageListAsync(currentIndex, pageSize, totalCount);
+    }
+
+    /// <summary>
+    /// 自定义条件分页查询
+    /// </summary>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="totalCount">查询到的总数</param>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, RefAsync<int> totalCount)
+    {
+        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageListAsync(currentIndex, pageSize, totalCount);
     }
 
     /// <summary>
@@ -262,7 +275,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(int currentIndex, int pageSize)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize)
     {
         return await Context.Queryable<TEntity>().ToPageDataDto(currentIndex, pageSize);
     }
@@ -270,67 +283,66 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="pageDto">分页传入实体</param>
+    /// <param name="pageDto">分页实体</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(BasePageDto pageDto)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(BasePageDto pageDto)
     {
-        return await Context.Queryable<TEntity>().ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
+        return await Context.Queryable<TEntity>().ToPageDataDto(pageDto);
     }
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="where">自定义条件</param>
-    /// <param name="currentIndex">页面索引</param>
-    /// <param name="pageSize">页面大小</param>
-    /// <param name="totalCount">查询到的总数</param>
-    /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryPageListAsync(Expression<Func<TEntity, bool>> where, int currentIndex, int pageSize, RefAsync<int> totalCount)
-    {
-        return await Context.Queryable<TEntity>().Where(where).ToPageListAsync(currentIndex, pageSize, totalCount);
-    }
-
-    /// <summary>
-    /// 自定义条件分页查询
-    /// </summary>
-    /// <param name="where">自定义条件</param>
+    /// <param name="whereExpression">自定义条件</param>
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> where, int currentIndex, int pageSize)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize)
     {
-        return await Context.Queryable<TEntity>().Where(where).ToPageDataDto(currentIndex, pageSize);
+        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(currentIndex, pageSize);
     }
 
     /// <summary>
     /// 自定义条件分页查询
     /// </summary>
-    /// <param name="where">自定义条件</param>
-    /// <param name="pageDto">分页传入实体</param>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="pageDto">分页实体</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoAsync(Expression<Func<TEntity, bool>> where, BasePageDto pageDto)
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, BasePageDto pageDto)
     {
-        return await Context.Queryable<TEntity>().Where(where).ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
+        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(pageDto);
     }
 
-    ///// <summary>
-    ///// 自定义条件分页排序查询
-    ///// </summary>
-    ///// <param name="where">自定义条件</param>
-    ///// <param name="pageDto">分页传入实体</param>
-    ///// <returns></returns>
-    //public virtual async Task<BasePageDataDto<TEntity>> QueryPageDataDtoOrderAsync(Expression<Func<TEntity, bool>> where, PageWhereDto pageWhereDto)
-    //{
-    //    if (pageWhereDto.Order.Equals("DESC", StringComparison.OrdinalIgnoreCase))
-    //    {
-    //        return await Context.Queryable<TEntity>().Where(where)
-    //            .OrderByDescending()
-    //           .ToPageDataDto(pageDto.CurrentIndex, pageDto.PageSize);
-    //    }
-    //    else
-    //    {
-    //    }
-    //}
+    /// <summary>
+    /// 自定义条件分页排序查询
+    /// </summary>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, int currentIndex, int pageSize, bool isOrderAsc = true)
+    {
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
+            .ToPageDataDto(currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 自定义条件分页排序查询
+    /// </summary>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="pageDto">分页实体</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, BasePageDto pageDto, bool isOrderAsc = true)
+    {
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
+            .ToPageDataDto(pageDto);
+    }
 
     #endregion
 }

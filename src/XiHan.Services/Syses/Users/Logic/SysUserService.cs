@@ -48,17 +48,15 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<BasePageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWhereDto> pageWhereDto)
     {
         var whereDto = pageWhereDto.Where;
-        var exp = Expressionable.Create<SysUser>();
-        exp.AndIF(whereDto.UserName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.UserName!));
-        exp.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
-        exp.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
-        exp.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.NickName!));
-        exp.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
-        exp.And(u => !u.IsDeleted);
+        var whereExpression = Expressionable.Create<SysUser>();
+        whereExpression.AndIF(whereDto.UserName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.UserName!));
+        whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
+        whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
+        whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.NickName!));
+        whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
+        whereExpression.And(u => !u.IsDeleted);
 
-        var result = await QueryPageDataDtoAsync(exp.ToExpression(), pageWhereDto.PageDto);
-
-        return result;
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhereDto.PageDto);
     }
 
     /// <summary>

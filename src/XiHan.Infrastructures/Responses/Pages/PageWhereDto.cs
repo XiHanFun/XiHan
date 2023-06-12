@@ -24,14 +24,14 @@ public class PageWhereDto
     public bool SelectAll { get; set; }
 
     /// <summary>
-    /// 排序列名
+    /// 排序字段
     /// </summary>
-    public string? Sort { get; set; }
+    public string? OrderByField { get; set; }
 
     /// <summary>
-    /// 排序方式 默认 Desc
+    /// 是否默认排序方式  Asc
     /// </summary>
-    public string? Order { get; set; } = "Desc";
+    public bool? IsOrderAsc { get; set; }
 
     /// <summary>
     /// 分页实体
@@ -42,10 +42,10 @@ public class PageWhereDto
 /// <summary>
 /// 通用分页实体基类(包含条件)
 /// </summary>
-public class PageWhereDto<TWhereEntity> : PageWhereDto where TWhereEntity : class
+public class PageWhereDto<WhereEntity> : PageWhereDto where WhereEntity : class
 {
     /// <summary>
     /// 查询条件
     /// </summary>
-    public TWhereEntity Where { get; set; }
+    public WhereEntity Where { get; set; } = null!;
 }
