@@ -27,6 +27,11 @@ public static class AppHttpContextManager
     private static Func<object, HttpContext>? _httpContextAccessor;
 
     /// <summary>
+    /// 当前上下文
+    /// </summary>
+    public static HttpContext? Current => GetHttpContextCurrent();
+
+    /// <summary>
     /// 获取当前 HttpContext 对象
     /// </summary>
     public static HttpContext? GetHttpContextCurrent()
@@ -68,9 +73,4 @@ public static class AppHttpContextManager
             return Expression.Lambda<Func<object, HttpContext>>(convertAsResult, target).Compile();
         }
     }
-
-    /// <summary>
-    /// 当前上下文
-    /// </summary>
-    public static HttpContext? Current => GetHttpContextCurrent();
 }

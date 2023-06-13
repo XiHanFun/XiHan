@@ -22,7 +22,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 类型拓展类
 /// </summary>
-public static class TypeExtensions
+public static class TypeExtension
 {
     #region 判断类型
 

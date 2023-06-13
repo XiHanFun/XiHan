@@ -16,7 +16,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 控制台输出拓展类
 /// </summary>
-public static class ConsoleExtensions
+public static class ConsoleExtension
 {
     private static readonly object ObjLock = new();
 

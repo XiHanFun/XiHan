@@ -16,7 +16,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 文件大小格式化拓展类
 /// </summary>
-public static class FormatFileSizeExtensions
+public static class FormatFileSizeExtension
 {
     private static readonly string[] Suffixes = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 

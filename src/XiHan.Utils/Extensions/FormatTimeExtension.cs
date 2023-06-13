@@ -16,7 +16,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 时间格式化拓展类
 /// </summary>
-public static class FormatTimeExtensions
+public static class FormatTimeExtension
 {
     /// <summary>
     /// 获取当前时间的时间戳

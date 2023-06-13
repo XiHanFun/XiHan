@@ -19,7 +19,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 枚举拓展类
 /// </summary>
-public static class EnumExtensions
+public static class EnumExtension
 {
     /// <summary>
     /// 根据键获取单个枚举的值

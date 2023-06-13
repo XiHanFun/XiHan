@@ -12,13 +12,14 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Infrastructures.Responses.Pages;
 
-namespace XiHan.Infrastructures.Responses.Pages;
+namespace XiHan.Infrastructures.Extensions;
 
 /// <summary>
 /// 分页拓展
 /// </summary>
-public static class PageExtensions
+public static class PageExtension
 {
     /// <summary>
     /// 获取List的分页后的数据

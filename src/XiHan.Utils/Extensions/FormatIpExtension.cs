@@ -18,7 +18,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// Ip地址格式化拓展类
 /// </summary>
-public static class FormatIpExtensions
+public static class FormatIpExtension
 {
     /// <summary>
     /// IPAddress转byte[]

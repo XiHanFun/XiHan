@@ -22,7 +22,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 对象属性拓展类
 /// </summary>
-public static class ObjectPropertyExtensions
+public static class ObjectPropertyExtension
 {
     /// <summary>
     /// 获取属性全名

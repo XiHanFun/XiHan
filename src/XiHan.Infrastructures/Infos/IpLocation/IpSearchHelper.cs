@@ -56,7 +56,7 @@ public static class IpSearchHelper
     /// </summary>
     /// <param name="ip"></param>
     /// <returns></returns>
-    public static AddressModel? Search(string ip)
+    public static UserAddressInfo? Search(string ip)
     {
         try
         {
@@ -67,7 +67,7 @@ public static class IpSearchHelper
                 return null;
             }
             string[] addressArray = modelStr.Replace('0', '-').Split('|');
-            AddressModel model = new()
+            UserAddressInfo addressInfo = new()
             {
                 // 国家 中国
                 Country = addressArray[0],
@@ -84,7 +84,7 @@ public static class IpSearchHelper
                 // 地区区号 0851
                 AreaCode = null,
             };
-            return model;
+            return addressInfo;
         }
         catch (Exception ex)
         {
@@ -92,52 +92,4 @@ public static class IpSearchHelper
             return null;
         }
     }
-}
-
-/// <summary>
-/// Ip 地区信息
-/// </summary>
-public class AddressModel
-{
-    /// <summary>
-    /// 国家
-    /// 中国
-    /// </summary>
-    public string? Country { get; set; }
-
-    /// <summary>
-    /// 省份/自治区/直辖市
-    /// 贵州
-    /// </summary>
-    public string? State { get; set; }
-
-    /// <summary>
-    /// 地级市
-    /// 安顺
-    /// </summary>
-    public string? PrefectureLevelCity { get; set; }
-
-    /// <summary>
-    /// 区/县
-    /// 西秀区
-    /// </summary>
-    public string? DistrictOrCounty { get; set; }
-
-    /// <summary>
-    /// 运营商
-    /// 联通
-    /// </summary>
-    public string? Operator { get; set; }
-
-    /// <summary>
-    /// 邮政编码
-    /// 561000
-    /// </summary>
-    public long? PostalCode { get; set; }
-
-    /// <summary>
-    /// 地区区号
-    /// 0851
-    /// </summary>
-    public int? AreaCode { get; set; }
 }

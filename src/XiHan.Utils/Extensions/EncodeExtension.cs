@@ -20,7 +20,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// EncodeExtensions
 /// </summary>
-public static partial class EncodeExtensions
+public static partial class EncodeExtension
 {
     /// <summary>
     /// 对字符串进行 Base32 编码

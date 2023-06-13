@@ -16,7 +16,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 对象判断拓展类
 /// </summary>
-public static class ObjectJudgeExtensions
+public static class ObjectJudgeExtension
 {
     #region 判断范围
 

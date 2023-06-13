@@ -18,7 +18,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 金额格式化拓展类
 /// </summary>
-public static class FormatNumberExtensions
+public static class FormatNumberExtension
 {
     /// <summary>
     /// 格式化金额(由千位转万位，如 12,345,678.90=>1234,5678.90 )

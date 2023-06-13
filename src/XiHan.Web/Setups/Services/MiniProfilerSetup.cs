@@ -39,12 +39,20 @@ public static class MiniProfilerSetup
         {
             services.AddMiniProfiler(options =>
             {
+                // 指定 MiniProfiler 的路由基础路径
                 options.RouteBasePath = @"/Profiler";
+                // 指定 MiniProfiler 的颜色方案
                 options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
+                // 指定 MiniProfiler 弹出窗口的位置
                 options.PopupRenderPosition = StackExchange.Profiling.RenderPosition.BottomLeft;
+                // 指定是否在 MiniProfiler 弹出窗口中显示子操作的执行时间
                 options.PopupShowTimeWithChildren = true;
+                // 指定是否在 MiniProfiler 弹出窗口中显示执行时间很短的操作
                 options.PopupShowTrivial = true;
+                // 指定 SQL 查询语句格式化器
                 options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+                // 控制是否跟踪数据库连接的打开和关闭操作
+                options.TrackConnectionOpenClose = true;
             });
         }
 

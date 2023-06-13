@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -40,6 +41,9 @@ public static class ControllerSetup
 
         services.AddControllers(configure =>
         {
+            // 接受浏览器 Accept 标头
+            configure.RespectBrowserAcceptHeader = true;
+
             // 全局注入过滤器
             configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
             configure.Filters.Add<ExceptionFilterAsyncAttribute>();

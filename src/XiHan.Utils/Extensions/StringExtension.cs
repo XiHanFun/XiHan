@@ -19,7 +19,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// StringExtensions
 /// </summary>
-public static class StringExtensions
+public static class StringExtension
 {
     #region 分割组装
 

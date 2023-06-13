@@ -16,7 +16,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 异常拓展类
 /// </summary>
-public static class ExceptionExtensions
+public static class ExceptionExtension
 {
     /// <summary>
     /// 抛出异常并打印信息

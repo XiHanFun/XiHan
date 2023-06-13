@@ -18,7 +18,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 对象转换拓展类
 /// </summary>
-public static class ObjectConvertExtensions
+public static class ObjectConvertExtension
 {
     #region Bool
 

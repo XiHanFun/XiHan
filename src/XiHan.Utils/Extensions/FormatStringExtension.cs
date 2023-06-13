@@ -18,7 +18,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 字符串格式化拓展类
 /// </summary>
-public static class FormatStringExtensions
+public static class FormatStringExtension
 {
     /// <summary>
     /// 字符串整体替换
