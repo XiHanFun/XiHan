@@ -26,14 +26,14 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> AddTaskScheduleAsync(SysTasks sysTasks);
+    Task<BaseResultDto> CreateTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 更新计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> UpdateTaskScheduleAsync(SysTasks sysTasks);
+    Task<BaseResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 删除指定计划任务

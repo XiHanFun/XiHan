@@ -71,7 +71,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> AddTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<BaseResultDto> CreateTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -137,7 +137,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> UpdateTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<BaseResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -249,7 +249,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             List<JobKey> jobKeys = jobs.ToList();
             if (jobKeys.Any())
             {
-                await AddTaskScheduleAsync(sysTasks);
+                await CreateTaskScheduleAsync(sysTasks);
             }
 
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);

@@ -49,7 +49,7 @@ public static class TaskSetup
             // 程序启动后注册所有定时任务
             foreach (var task in tasks)
             {
-                var result = schedulerServer.AddTaskScheduleAsync(task).Result;
+                var result = schedulerServer.CreateTaskScheduleAsync(task).Result;
                 if (result.IsSuccess)
                 {
                     var info = $"注册任务：{task.Name}成功！";

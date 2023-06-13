@@ -224,22 +224,22 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// 自定义条件分页排序查询
     /// </summary>
     /// <param name="whereExpression">自定义条件</param>
-    /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
+    /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, int currentIndex, int pageSize, bool isOrderAsc = true);
+    Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     /// <summary>
     /// 自定义条件分页排序查询
     /// </summary>
     /// <param name="whereExpression">自定义条件</param>
-    /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="pageDto">分页实体</param>
+    /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, BasePageDto pageDto, bool isOrderAsc = true);
+    Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, BasePageDto pageDto, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     #endregion
 }
