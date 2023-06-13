@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Security.Authentication;
 using XiHan.Infrastructures.Apps.Configs;
 
@@ -29,15 +29,13 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     // 日志开关
     private readonly bool _authorizationLogSwitch = AppSettings.LogConfig.Authorization.GetValue();
 
-    private readonly ILogger<AuthorizationFilterAsyncAttribute> _logger;
+    private readonly ILogger _logger = Log.ForContext<AuthorizationFilterAsyncAttribute>();
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    public AuthorizationFilterAsyncAttribute(ILogger<AuthorizationFilterAsyncAttribute> logger)
+    public AuthorizationFilterAsyncAttribute()
     {
-        _logger = logger;
     }
 
     /// <summary>
@@ -79,7 +77,7 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
             if (identities == null)
             {
                 if (_authorizationLogSwitch)
-                    _logger.LogInformation($"认证参数异常\n{info}");
+                    _logger.Information($"认证参数异常\n{info}");
                 // 认证参数异常
                 throw new AuthenticationException();
             }

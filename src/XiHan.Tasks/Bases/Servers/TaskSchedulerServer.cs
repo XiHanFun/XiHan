@@ -81,21 +81,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 return BaseResultDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
 
-            // 判断触发器类型，并创建一个触发器
-            ITrigger trigger = TriggerBuilder.Create().Build();
-            switch (sysTasks.TriggerType)
-            {
-                // 定时任务
-                case (int)TriggerTypeEnum.Interval:
-                    trigger = CreateIntervalTrigger(sysTasks);
-                    break;
-                // 时间点或者周期性任务
-                case (int)TriggerTypeEnum.Cron:
-                    trigger = CreateCronTrigger(sysTasks);
-                    break;
-            }
-
-            // 判断任务类型，并创建一个任务
+            // 判断任务类型，并创建一个任务，用于描述这个后台任务的详细信息
             IJobDetail job = new JobDetailImpl();
             switch (sysTasks.JobType)
             {
@@ -110,6 +96,20 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // SQL语句类型
                 case (int)JobTypeEnum.SqlStatement:
                     job = CreateSqlStatementJobDetail(sysTasks);
+                    break;
+            }
+
+            // 判断触发器类型，并创建一个触发器，指定任务的调度规则
+            ITrigger trigger = TriggerBuilder.Create().Build();
+            switch (sysTasks.TriggerType)
+            {
+                // 定时任务
+                case (int)TriggerTypeEnum.Interval:
+                    trigger = CreateIntervalTrigger(sysTasks);
+                    break;
+                // 时间点或者周期性任务
+                case (int)TriggerTypeEnum.Cron:
+                    trigger = CreateCronTrigger(sysTasks);
                     break;
             }
 

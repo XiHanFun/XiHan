@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Responses.Results;
@@ -30,15 +30,13 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     // 日志开关
     private readonly bool _resultLogSwitch = AppSettings.LogConfig.Result.GetValue();
 
-    private readonly ILogger<ResultFilterAsyncAttribute> _logger;
+    private readonly ILogger _logger = Log.ForContext<ResultFilterAsyncAttribute>();
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    public ResultFilterAsyncAttribute(ILogger<ResultFilterAsyncAttribute> logger)
+    public ResultFilterAsyncAttribute()
     {
-        _logger = logger;
     }
 
     /// <summary>
@@ -97,7 +95,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         var result = JsonSerializer.Serialize(resultExecuted.Result);
         if (_resultLogSwitch)
         {
-            _logger.LogInformation($"返回数据\n{info}\n{result}");
+            _logger.Information($"返回数据\n{info}\n{result}");
         }
     }
 }

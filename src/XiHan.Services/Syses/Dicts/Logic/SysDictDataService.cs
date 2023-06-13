@@ -27,17 +27,6 @@ namespace XiHan.Services.Syses.Dicts.Logic;
 [AppService(ServiceType = typeof(ISysDictDataService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
 {
-    private readonly ISysDictDataService _sysDictDataService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysDictDataService"></param>
-    public SysDictDataService(ISysDictDataService sysDictDataService)
-    {
-        _sysDictDataService = sysDictDataService;
-    }
-
     /// <summary>
     /// 新增字典数据
     /// </summary>
@@ -95,7 +84,18 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     }
 
     /// <summary>
-    /// 查询字典数据(根据类型)
+    /// 查询字典数据列表(根据字典类型)
+    /// </summary>
+    /// <param name="dictType"></param>
+    /// <returns></returns>
+    public async Task<List<SysDictData>> GetDictDataByType(string dictType)
+    {
+        var result = await QueryAsync(f => f.IsEnable && f.Type == dictType);
+        return result.OrderBy(o => o.SortOrder).ToList();
+    }
+
+    /// <summary>
+    /// 查询字典数据列表(根据多个字典类型)
     /// </summary>
     /// <param name="dictTypes"></param>
     /// <returns></returns>

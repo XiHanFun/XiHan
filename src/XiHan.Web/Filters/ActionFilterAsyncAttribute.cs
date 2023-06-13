@@ -14,7 +14,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
@@ -31,15 +31,13 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     // 日志开关
     private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
-    private readonly ILogger<ActionFilterAsyncAttribute> _logger;
+    private readonly ILogger _logger = Log.ForContext<ActionFilterAsyncAttribute>();
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    public ActionFilterAsyncAttribute(ILogger<ActionFilterAsyncAttribute> logger)
+    public ActionFilterAsyncAttribute()
     {
-        _logger = logger;
     }
 
     /// <summary>
@@ -79,7 +77,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                        $"\t 请求参数：{parameters}\n" +
                        $"\t 操作用户：{userId}";
             if (_actionLogSwitch)
-                _logger.LogInformation($"发起请求\n{info}");
+                _logger.Information($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             var actionExecuted = await next();
             if (actionExecuted.Result != null)
@@ -90,7 +88,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 var isRequestSucceed = actionExecuted.Exception == null;
                 // 请求成功就写入日志
                 if (isRequestSucceed && _actionLogSwitch)
-                    _logger.LogInformation($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
+                    _logger.Information($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
             }
         }
     }

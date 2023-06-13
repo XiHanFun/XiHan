@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Security.Authentication;
 using System.Security.Claims;
 using XiHan.Infrastructures.Apps.Configs;
@@ -32,15 +32,13 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     // 日志开关
     private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
-    private readonly ILogger<ExceptionFilterAsyncAttribute> _logger;
+    private readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
-    public ExceptionFilterAsyncAttribute(ILogger<ExceptionFilterAsyncAttribute> logger)
+    public ExceptionFilterAsyncAttribute()
     {
-        _logger = logger;
     }
 
     /// <summary>
@@ -92,7 +90,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                            $"\t 请求方法：{method}\n" +
                            $"\t 操作用户：{userId}";
                 if (_exceptionLogSwitch)
-                    _logger.LogError($"系统异常\n{info}\n{context.Exception}");
+                    _logger.Error($"系统异常\n{info}\n{context.Exception}");
             }
         }
         // 标记异常已经处理过了

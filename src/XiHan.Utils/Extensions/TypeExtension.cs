@@ -212,11 +212,31 @@ public static class TypeExtension
     #region 获取描述
 
     /// <summary>
-    /// 获取类型的Description特性描述信息
+    /// 获取属性的 Summary 特性注释信息
+    /// </summary>
+    /// <param name="propertyInfo">属性对象</param>
+    /// <param name="inherit">是否搜索类型的继承链以查找注释特性</param>
+    /// <returns>返回 Summary 特性注释信息，如不存在则返回类型的全名</returns>
+    public static string GetSummary<TEntity>(this PropertyInfo propertyInfo, bool inherit = true)
+    {
+        var result = string.Empty;
+        if (propertyInfo != null)
+        {
+            SummaryAttribute? summary = propertyInfo.GetCustomAttribute<SummaryAttribute>(inherit);
+            if (summary != null)
+            {
+                result = summary.Text;
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 获取类型的 Description 特性描述信息
     /// </summary>
     /// <param name="type">类型对象</param>
-    /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
-    /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
+    /// <param name="inherit">是否搜索类型的继承链以查找 Description 特性</param>
+    /// <returns>返回 Description 特性描述信息，如不存在则返回类型的全名</returns>
     public static string GetDescription(this Type type, bool inherit = true)
     {
         var result = string.Empty;
@@ -234,11 +254,11 @@ public static class TypeExtension
     }
 
     /// <summary>
-    /// 获取成员元数据的Description特性描述信息
+    /// 获取成员元数据的 Description 特性描述信息
     /// </summary>
     /// <param name="member">成员元数据对象</param>
     /// <param name="inherit">是否搜索成员的继承链以查找描述特性</param>
-    /// <returns>返回Description特性描述信息，如不存在则返回成员的名称</returns>
+    /// <returns>返回 Description 特性描述信息，如不存在则返回成员的名称</returns>
     public static string GetDescription(this MemberInfo member, bool inherit = true)
     {
         DescriptionAttribute? desc = member.GetAttribute<DescriptionAttribute>(inherit);
@@ -441,4 +461,25 @@ public static class TypeExtension
     }
 
     #endregion 私有方法
+}
+
+/// <summary>
+/// 注释特性
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
+public class SummaryAttribute : Attribute
+{
+    /// <summary>
+    /// 注释文本
+    /// </summary>
+    public string Text { get; }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="text"></param>
+    public SummaryAttribute(string text)
+    {
+        Text = text;
+    }
 }

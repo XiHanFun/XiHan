@@ -22,10 +22,12 @@ public class BaseValidationErrorDto
     /// 构造函数
     /// </summary>
     /// <param name="field"></param>
+    /// <param name="label"></param>
     /// <param name="message"></param>
-    public BaseValidationErrorDto(string? field, string? message)
+    public BaseValidationErrorDto(string? field, string? label, string? message)
     {
-        Field = field != string.Empty ? field : null;
+        Field = field;
+        Label = label;
         Message = message;
     }
 
@@ -33,6 +35,11 @@ public class BaseValidationErrorDto
     /// 字段
     /// </summary>
     public string? Field { get; }
+
+    /// <summary>
+    /// 标签(注释说明)
+    /// </summary>
+    public string? Label { get; }
 
     /// <summary>
     /// 信息

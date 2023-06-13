@@ -13,6 +13,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.Serializes.Converters;
 
@@ -30,9 +31,12 @@ public class BooleanJsonConverter : JsonConverter<bool>
     /// <returns></returns>
     public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType != JsonTokenType.True && reader.TokenType != JsonTokenType.False)
+        if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
+        {
             return reader.GetBoolean();
-        return bool.TryParse(reader.GetString(), out var date) ? date : reader.GetBoolean();
+        }
+
+        return reader.GetString().ParseToBool();
     }
 
     /// <summary>

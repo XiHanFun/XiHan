@@ -38,7 +38,7 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 字典项值
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 10)]
     public string Value { get; set; } = string.Empty;
 
     /// <summary>

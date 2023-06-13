@@ -37,26 +37,6 @@ public static class ObjectPropertyExtension
     }
 
     /// <summary>
-    /// 获取类型的 Description 特性描述信息
-    /// </summary>
-    /// <param name="entity">类型对象</param>
-    /// <param name="inherit">是否搜索类型的继承链以查找描述特性</param>
-    /// <returns>返回Description特性描述信息，如不存在则返回类型的全名</returns>
-    public static string GetDescription<TEntity>(this TEntity entity, bool inherit = true)
-    {
-        var result = string.Empty;
-        Type objectType = typeof(TEntity);
-        var fullName = objectType.FullName ?? result;
-        DescriptionAttribute? desc = objectType.GetAttribute<DescriptionAttribute>(inherit);
-        if (desc != null)
-        {
-            var description = desc.Description;
-            result = fullName + "(" + description + ")";
-        }
-        return result;
-    }
-
-    /// <summary>
     /// 利用反射来判断对象是否包含某个字段
     /// </summary>
     /// <param name="instance">object</param>
@@ -217,7 +197,7 @@ public static class ObjectPropertyExtension
     }
 
     /// <summary>
-    /// 把两个对象的差异信息转换为Json 格式
+    /// 把两个对象的差异信息转换为 Json 格式
     /// </summary>
     /// <typeparam name="TEntity">对象类型</typeparam>
     /// <param name="oldVal">对象实例1</param>

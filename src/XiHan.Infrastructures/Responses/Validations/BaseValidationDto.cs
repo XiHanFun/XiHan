@@ -27,10 +27,15 @@ public class BaseValidationDto
     public BaseValidationDto(ActionExecutingContext context)
     {
         TotalCount = context.ModelState.Count;
+
+        var a = context.ActionArguments.Select(s => s.Value);
+        var sss = context.ModelState;
+
         ValidationErrorDto = context.ModelState.Keys
                 .SelectMany(key => context.ModelState[key]!.Errors
-                .Select(x => new BaseValidationErrorDto(key.GetDescription(), x.ErrorMessage)))
+                .Select(x => new BaseValidationErrorDto(key, key, x.ErrorMessage)))
                 .ToList();
+        // .GetSummary()
     }
 
     /// <summary>

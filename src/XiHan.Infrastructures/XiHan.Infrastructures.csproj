@@ -35,9 +35,6 @@
     <ProjectReference Include="..\XiHan.Utils\XiHan.Utils.csproj" />
   </ItemGroup>
 	<ItemGroup>
-		<None Update="IpDatabases\ip2region.xdb">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 		<None Update="LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

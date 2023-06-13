@@ -60,7 +60,14 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     Task<SysDictData> GetDictDataById(long dictId);
 
     /// <summary>
-    /// 查询字典数据(根据类型)
+    /// 查询字典数据列表(根据字典类型)
+    /// </summary>
+    /// <param name="dictType"></param>
+    /// <returns></returns>
+    Task<List<SysDictData>> GetDictDataByType(string dictType);
+
+    /// <summary>
+    /// 查询字典数据列表(根据多个字典类型)
     /// </summary>
     /// <param name="dictTypes"></param>
     /// <returns></returns>

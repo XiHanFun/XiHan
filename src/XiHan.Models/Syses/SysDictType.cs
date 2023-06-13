@@ -26,7 +26,7 @@ public class SysDictType : BaseModifyEntity
     /// <summary>
     /// 字典名称
     /// </summary>
-    [SugarColumn(Length = 10)]
+    [SugarColumn(Length = 20)]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>

@@ -37,7 +37,7 @@ public class DecimalJsonConverter : JsonConverter<decimal>
             return reader.GetDecimal();
         }
 
-        return string.IsNullOrEmpty(reader.GetString()) ? 0L : reader.GetString().ParseToDecimal();
+        return reader.GetString().ParseToDecimal();
     }
 
     /// <summary>

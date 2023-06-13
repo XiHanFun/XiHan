@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
@@ -31,21 +31,20 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     // 日志开关
     private readonly bool _resourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
 
+    private readonly ILogger _logger = Log.ForContext<ResourceFilterAsyncAttribute>();
+
     // 缓存时间
     private readonly int _syncTimeout = AppSettings.Cache.SyncTimeout.GetValue();
 
     private readonly IMemoryCache _memoryCache;
-    private readonly ILogger<ResourceFilterAsyncAttribute> _logger;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="memoryCache"></param>
-    /// <param name="logger"></param>
-    public ResourceFilterAsyncAttribute(IMemoryCache memoryCache, ILogger<ResourceFilterAsyncAttribute> logger)
+    public ResourceFilterAsyncAttribute(IMemoryCache memoryCache)
     {
         _memoryCache = memoryCache;
-        _logger = logger;
     }
 
     /// <summary>
@@ -80,7 +79,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             // 请求构造函数和方法
             context.Result = value as ActionResult;
             if (_resourceLogSwitch)
-                _logger.LogInformation($"缓存数据\n{info}\n{context.Result}");
+                _logger.Information($"缓存数据\n{info}\n{context.Result}");
         }
         else
         {
@@ -94,7 +93,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
                 _memoryCache.Set(requestUrl + method, result, syncTimeout);
                 if (_resourceLogSwitch)
                 {
-                    _logger.LogInformation($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
+                    _logger.Information($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
                 }
             }
         }
