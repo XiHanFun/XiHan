@@ -63,7 +63,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         // 校验类型是否唯一
         if (!await CheckDictTypeUnique(sysDictType))
         {
-            throw new Exception($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
+            throw new ApplicationException($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
         }
         return await AddReturnIdAsync(sysDictType);
     }
@@ -81,7 +81,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         var isOfficialCount = sysDictTypeList.Where(s => s.IsOfficial).ToList().Count;
         if (isOfficialCount > 0)
         {
-            throw new Exception($"该字典为系统内置字典，不能删除！");
+            throw new ApplicationException($"该字典为系统内置字典，不能删除！");
         }
 
         // 已分配字典
@@ -91,7 +91,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
             foreach (var sysDictData in sysDictDataList)
             {
                 var sysDictType = sysDictTypeList.First(s => s.Type == sysDictData.Type);
-                throw new Exception($"字典【{sysDictType.Name}】已分配值【{sysDictData.Value}】,不能删除！");
+                throw new ApplicationException($"字典【{sysDictType.Name}】已分配值【{sysDictData.Value}】,不能删除！");
             }
         }
 
@@ -112,7 +112,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
             // 校验类型是否唯一
             if (!await CheckDictTypeUnique(sysDictType))
             {
-                throw new Exception($"已存在字典类型【{sysDictType.Type}】,不可修改为此类型！");
+                throw new ApplicationException($"已存在字典类型【{sysDictType.Type}】,不可修改为此类型！");
             }
 
             // 同步修改 SysDictData 表里面的 Type 值

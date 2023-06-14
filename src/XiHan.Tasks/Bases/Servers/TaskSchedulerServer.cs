@@ -78,7 +78,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
             {
-                return BaseResultDto.BadRequest($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
+                throw new ApplicationException($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
 
             // 判断任务类型，并创建一个任务，用于描述这个后台任务的详细信息
@@ -128,7 +128,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"添加计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -154,7 +154,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"修改计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -176,7 +176,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"删除计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -204,7 +204,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"开启计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -231,7 +231,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"停止计划任务失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -266,7 +266,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"执行计划任务【{sysTasks.Name}】失败";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -292,7 +292,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"暂停计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 
@@ -318,7 +318,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var errorInfo = $"恢复计划任务【{sysTasks.Name}】失败！";
             Log.Error(ex, errorInfo);
             errorInfo.WriteLineError();
-            return BaseResultDto.InternalServerError(errorInfo);
+            throw new ApplicationException(errorInfo);
         }
     }
 

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:SysDictTypeController
+// FileName:SysDictController
 // Guid:57b61160-85b3-47f9-8fe4-144bf4c1b3f5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
