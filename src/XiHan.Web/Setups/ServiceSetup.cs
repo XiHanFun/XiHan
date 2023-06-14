@@ -28,6 +28,7 @@ public static class ServiceSetup
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
         "Services Start……".WriteLineInfo();

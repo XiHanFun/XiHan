@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Responses.Validations;
 
@@ -27,15 +26,10 @@ public class BaseValidationDto
     public BaseValidationDto(ActionExecutingContext context)
     {
         TotalCount = context.ModelState.Count;
-
-        var a = context.ActionArguments.Select(s => s.Value);
-        var sss = context.ModelState;
-
         ValidationErrorDto = context.ModelState.Keys
                 .SelectMany(key => context.ModelState[key]!.Errors
-                .Select(x => new BaseValidationErrorDto(key, key, x.ErrorMessage)))
+                .Select(x => new BaseValidationErrorDto(key, x.ErrorMessage)))
                 .ToList();
-        // .GetSummary()
     }
 
     /// <summary>
@@ -47,4 +41,31 @@ public class BaseValidationDto
     /// 验证出错字段
     /// </summary>
     public List<BaseValidationErrorDto>? ValidationErrorDto { get; }
+}
+
+/// <summary>
+/// 验证出错字段实体基类
+/// </summary>
+public class BaseValidationErrorDto
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="message"></param>
+    public BaseValidationErrorDto(string? property, string? message)
+    {
+        Property = property;
+        Message = message;
+    }
+
+    /// <summary>
+    /// 属性
+    /// </summary>
+    public string? Property { get; }
+
+    /// <summary>
+    /// 信息
+    /// </summary>
+    public string? Message { get; }
 }

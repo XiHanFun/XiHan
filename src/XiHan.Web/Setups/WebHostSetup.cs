@@ -27,6 +27,7 @@ public static class WebHostSetup
     /// </summary>
     /// <param name="host"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IWebHostBuilder AddWebHostSetup(this IWebHostBuilder host)
     {
         "Host Start……".WriteLineInfo();

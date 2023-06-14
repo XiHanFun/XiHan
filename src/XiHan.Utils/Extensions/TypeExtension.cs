@@ -212,26 +212,6 @@ public static class TypeExtension
     #region 获取描述
 
     /// <summary>
-    /// 获取属性的 Summary 特性注释信息
-    /// </summary>
-    /// <param name="propertyInfo">属性对象</param>
-    /// <param name="inherit">是否搜索类型的继承链以查找注释特性</param>
-    /// <returns>返回 Summary 特性注释信息，如不存在则返回类型的全名</returns>
-    public static string GetSummary<TEntity>(this PropertyInfo propertyInfo, bool inherit = true)
-    {
-        var result = string.Empty;
-        if (propertyInfo != null)
-        {
-            SummaryAttribute? summary = propertyInfo.GetCustomAttribute<SummaryAttribute>(inherit);
-            if (summary != null)
-            {
-                result = summary.Text;
-            }
-        }
-        return result;
-    }
-
-    /// <summary>
     /// 获取类型的 Description 特性描述信息
     /// </summary>
     /// <param name="type">类型对象</param>
@@ -461,25 +441,4 @@ public static class TypeExtension
     }
 
     #endregion 私有方法
-}
-
-/// <summary>
-/// 注释特性
-/// </summary>
-[AttributeUsage(AttributeTargets.Property)]
-public class SummaryAttribute : Attribute
-{
-    /// <summary>
-    /// 注释文本
-    /// </summary>
-    public string Text { get; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="text"></param>
-    public SummaryAttribute(string text)
-    {
-        Text = text;
-    }
 }

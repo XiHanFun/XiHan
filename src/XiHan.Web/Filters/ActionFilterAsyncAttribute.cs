@@ -18,7 +18,7 @@ using Serilog;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Extensions;
 
 namespace XiHan.Web.Filters;
 
@@ -51,7 +51,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         // 模型验证
         if (!context.ModelState.IsValid)
         {
-            context.Result = new JsonResult(BaseResultDto.UnprocessableEntity(context));
+            context.Result = new JsonResult(context.GetValidationErrors());
         }
         else
         {

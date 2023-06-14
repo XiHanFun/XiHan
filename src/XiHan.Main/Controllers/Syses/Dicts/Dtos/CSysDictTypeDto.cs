@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Main.Controllers.Syses.Dicts.Dtos;
 
@@ -30,8 +29,7 @@ public class CSysDictTypeDto
 
     /// <summary>
     /// 字典类型
-    ///</summary>
-    [Summary("字典类型")]
+    /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(5, ErrorMessage = "{0}不能少于{1}个字符"), MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Type { get; set; } = string.Empty;

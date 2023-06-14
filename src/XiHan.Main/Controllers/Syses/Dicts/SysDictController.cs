@@ -56,7 +56,7 @@ public class SysDictController : BaseApiController
     /// <param name="sysDictTypeDto"></param>
     /// <returns></returns>
     [HttpPost("Create/Type")]
-    [AppLog(Title = "字典类型", LogType = LogTypeEnum.Insert)]
+    [AppLog(Title = "新增字典类型", LogType = LogTypeEnum.Insert)]
     public async Task<BaseResultDto> CreateDictType([FromBody] CSysDictTypeDto sysDictTypeDto)
     {
         SysDictType sysDictType = sysDictTypeDto.Adapt<SysDictType>();
@@ -71,12 +71,24 @@ public class SysDictController : BaseApiController
     /// <param name="sysDictDataDto"></param>
     /// <returns></returns>
     [HttpPost("Create/Data")]
-    [AppLog(Title = "字典数据", LogType = LogTypeEnum.Insert)]
+    [AppLog(Title = "新增字典数据", LogType = LogTypeEnum.Insert)]
     public async Task<BaseResultDto> CreateDictData([FromBody] CSysDictDataDto sysDictDataDto)
     {
         SysDictData sysDictData = sysDictDataDto.Adapt<SysDictData>();
         sysDictData = sysDictData.ToCreated();
         var result = await _sysDictDataService.CreateDictData(sysDictData);
+        return BaseResultDto.Success(result);
+    }
+
+    /// <summary>
+    /// 删除字典类型
+    /// </summary>
+    /// <returns></returns>
+    [HttpDelete("Delete/Type")]
+    [AppLog(Title = "删除字典类型", LogType = LogTypeEnum.Delete)]
+    public async Task<BaseResultDto> DeleteDictType([FromBody] long[] ids)
+    {
+        var result = await _sysDictTypeService.DeleteDictTypeByIds(ids);
         return BaseResultDto.Success(result);
     }
 

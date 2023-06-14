@@ -27,6 +27,7 @@ public static class ConfigSetup
     /// </summary>
     /// <param name="configs"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IConfigurationBuilder AddConfigSetup(this IConfigurationBuilder configs)
     {
         "Configuration Start……".WriteLineInfo();

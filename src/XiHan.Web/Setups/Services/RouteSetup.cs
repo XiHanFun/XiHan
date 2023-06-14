@@ -35,8 +35,8 @@ public static class RouteSetup
 
         services.AddRouting(route =>
         {
-            route.LowercaseUrls = true;
-            route.LowercaseQueryStrings = true;
+            route.LowercaseUrls = false;
+            route.LowercaseQueryStrings = false;
             // 路由前后加斜杠 /
             route.AppendTrailingSlash = false;
         });

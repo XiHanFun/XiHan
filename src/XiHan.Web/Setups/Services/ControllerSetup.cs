@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -45,10 +44,10 @@ public static class ControllerSetup
             configure.RespectBrowserAcceptHeader = true;
 
             // 全局注入过滤器
+            configure.Filters.Add<ActionFilterAsyncAttribute>();
             configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
             configure.Filters.Add<ExceptionFilterAsyncAttribute>();
             //configure.Filters.Add<ResourceFilterAsyncAttribute>();
-            configure.Filters.Add<ActionFilterAsyncAttribute>();
             configure.Filters.Add<ResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(setupAction =>
         {

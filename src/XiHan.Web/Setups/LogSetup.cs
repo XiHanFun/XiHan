@@ -27,7 +27,7 @@ public static class LogSetup
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
     public static ILoggingBuilder AddLogSetup(this ILoggingBuilder builder)
     {
         "Log Start……".WriteLineInfo();
