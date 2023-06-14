@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Enums;
 
 namespace XiHan.Infrastructures.Requests.Https;
 

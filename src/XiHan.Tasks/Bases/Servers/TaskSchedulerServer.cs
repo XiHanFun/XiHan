@@ -71,7 +71,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> CreateTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> CreateTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -121,7 +121,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的trigger重新设置job执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return BaseResultDto.Success($"添加计划任务【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"添加计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -137,7 +137,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -147,7 +147,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.DeleteJob(jobKey);
             }
-            return BaseResultDto.Success($"修改计划【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"修改计划【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -163,13 +163,13 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> DeleteTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> DeleteTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             await _scheduler.DeleteJob(jobKey);
-            return BaseResultDto.Success($"删除计划任务【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"删除计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -184,7 +184,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// 开启计划任务
     /// </summary>
     /// <returns></returns>
-    public async Task<BaseResultDto> StartTaskScheduleAsync()
+    public async Task<ResultDto> StartTaskScheduleAsync()
     {
         try
         {
@@ -192,12 +192,12 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经开启
             if (_scheduler.IsStarted)
             {
-                return BaseResultDto.Continue();
+                return ResultDto.Continue();
             }
 
             // 等待任务运行完成
             await _scheduler.Start();
-            return BaseResultDto.Success("开启计划任务成功！");
+            return ResultDto.Success("开启计划任务成功！");
         }
         catch (Exception ex)
         {
@@ -212,7 +212,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// 停止计划任务
     /// </summary>
     /// <returns></returns>
-    public async Task<BaseResultDto> StopTaskScheduleAsync()
+    public async Task<ResultDto> StopTaskScheduleAsync()
     {
         try
         {
@@ -220,11 +220,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 计划任务已经停止
             if (_scheduler.IsShutdown)
             {
-                return BaseResultDto.Continue();
+                return ResultDto.Continue();
             }
             // 等待任务运行停止
             await _scheduler.Shutdown();
-            return BaseResultDto.Success($"停止计划任务成功！");
+            return ResultDto.Success($"停止计划任务成功！");
         }
         catch (Exception ex)
         {
@@ -240,7 +240,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> RunTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> RunTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -255,11 +255,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);
             if (triggers.Count <= 0)
             {
-                return BaseResultDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
+                return ResultDto.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
             }
 
             await _scheduler.TriggerJob(jobKey);
-            return BaseResultDto.Success($"计划任务[{jobKey.Name}]运行成功！");
+            return ResultDto.Success($"计划任务[{jobKey.Name}]运行成功！");
         }
         catch (Exception ex)
         {
@@ -275,7 +275,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> PauseTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> PauseTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
@@ -285,7 +285,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.PauseJob(jobKey);
             }
-            return BaseResultDto.Success($"暂停计划任务:【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"暂停计划任务:【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -301,17 +301,17 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> ResumeTaskScheduleAsync(SysTasks sysTasks)
+    public async Task<ResultDto> ResumeTaskScheduleAsync(SysTasks sysTasks)
     {
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (!await _scheduler.CheckExists(jobKey))
             {
-                return BaseResultDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
+                return ResultDto.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
             }
             await _scheduler.ResumeJob(jobKey);
-            return BaseResultDto.Success($"恢复计划任务【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"恢复计划任务【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {

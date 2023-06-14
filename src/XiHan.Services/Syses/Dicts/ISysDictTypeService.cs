@@ -56,13 +56,20 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// </summary>
     /// <param name="dictId"></param>
     /// <returns></returns>
-    Task<SysDictType> GetDictType(long dictId);
+    Task<SysDictType> GetDictTypeById(long dictId);
 
     /// <summary>
     /// 查询所有字典类型
     /// </summary>
     /// <returns></returns>
     Task<List<SysDictType>> GetAllDictType();
+
+    /// <summary>
+    /// 查询字典类型列表
+    /// </summary>
+    /// <param name="sysDictTypeWhere"></param>
+    /// <returns></returns>
+    Task<List<SysDictType>> GetDictTypeList(SysDictTypeWhereDto sysDictTypeWhere);
 
     /// <summary>
     /// 查询字典类型列表(根据分页条件)

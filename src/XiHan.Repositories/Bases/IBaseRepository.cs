@@ -160,7 +160,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    Task<List<TEntity>> QueryAsync();
+    Task<List<TEntity>> QueryAllAsync();
 
     /// <summary>
     /// 自定义条件查询
@@ -168,6 +168,15 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="whereExpression">自定义条件</param>
     /// <returns></returns>
     Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression);
+
+    /// <summary>
+    /// 自定义条件查询
+    /// </summary>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     /// <summary>
     /// 分页查询

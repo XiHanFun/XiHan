@@ -92,8 +92,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByType(string dictType)
     {
-        var result = await QueryAsync(f => f.IsEnable && f.Type == dictType);
-        return result.OrderBy(o => o.SortOrder).ToList();
+        return await QueryAsync(f => f.IsEnable && f.Type == dictType, o => o.SortOrder);
     }
 
     /// <summary>
@@ -103,8 +102,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByTypes(string[] dictTypes)
     {
-        var result = await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type));
-        return result.OrderBy(o => o.SortOrder).ToList();
+        return await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type), o => o.SortOrder);
     }
 
     /// <summary>
@@ -122,6 +120,6 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
     }
 }

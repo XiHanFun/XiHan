@@ -230,7 +230,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 查询所有
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync()
+    public virtual async Task<List<TEntity>> QueryAllAsync()
     {
         return await GetListAsync();
     }
@@ -243,6 +243,20 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
         return await GetListAsync(whereExpression);
+    }
+
+    /// <summary>
+    /// 自定义条件查询
+    /// </summary>
+    /// <param name="whereExpression">自定义条件</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    {
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
+            .ToListAsync();
     }
 
     /// <summary>

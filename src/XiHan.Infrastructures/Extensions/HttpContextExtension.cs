@@ -12,14 +12,12 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Security.Claims;
 using UAParser;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Infos.IpLocation;
-using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verification;
 
@@ -267,16 +265,6 @@ public static class HttpContextExtension
     public static string? GetQueryString(this HttpContext context)
     {
         return context != null ? context.Request.QueryString.Value : "";
-    }
-
-    /// <summary>
-    /// 获取模型验证出错字段
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static BaseResultDto GetValidationErrors(this ActionExecutingContext context)
-    {
-        return BaseResultDto.UnprocessableEntity(context);
     }
 
     /// <summary>

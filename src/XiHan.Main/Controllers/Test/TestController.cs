@@ -43,12 +43,12 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public ActionResult<BaseResultDto> ClientInfo()
+    public ActionResult<ResultDto> ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = App.HttpContext!;
         HttpContexInfotHelper clientInfoHelper = new(httpContext);
-        return BaseResultDto.Success(clientInfoHelper);
+        return ResultDto.Success(clientInfoHelper);
     }
 
     /// <summary>
@@ -91,9 +91,9 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("LogInfo")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> LogInfo(string log)
+    public ActionResult<ResultDto> LogInfo(string log)
     {
-        return BaseResultDto.Success($"测试日志写入:{log}");
+        return ResultDto.Success($"测试日志写入:{log}");
     }
 
     /// <summary>
@@ -102,9 +102,9 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("ResourceFilterAttribute")]
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> ResourceFilterAttribute()
+    public ActionResult<ResultDto> ResourceFilterAttribute()
     {
-        return BaseResultDto.Success(DateTime.Now);
+        return ResultDto.Success(DateTime.Now);
     }
 
     /// <summary>
@@ -113,8 +113,8 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("ResourceFilterAsyncAttribute")]
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
-    public ActionResult<BaseResultDto> ResourceFilterAsyncAttribute()
+    public ActionResult<ResultDto> ResourceFilterAsyncAttribute()
     {
-        return BaseResultDto.Success(DateTime.Now);
+        return ResultDto.Success(DateTime.Now);
     }
 }

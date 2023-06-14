@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructures.Enums;
+namespace XiHan.Infrastructures.Requests;
 
 /// <summary>
 /// 网络请求组别

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BaseResultDto
+// FileName:ResultDto
 // Guid:4abbac7e-e91a-4ad2-a048-9f4c16a43464
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,8 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Infrastructures.Enums;
-using XiHan.Infrastructures.Responses.Validations;
+using XiHan.Infrastructures.Responses.Actions;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Responses.Results;
@@ -21,7 +20,7 @@ namespace XiHan.Infrastructures.Responses.Results;
 /// <summary>
 /// 通用结果实体
 /// </summary>
-public class BaseResultDto
+public class ResultDto
 {
     /// <summary>
     /// 是否成功
@@ -52,9 +51,9 @@ public class BaseResultDto
     /// 继续响应 100
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto Continue()
+    public static ResultDto Continue()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = true,
             Code = HttpResponseCodeEnum.Continue,
@@ -67,9 +66,9 @@ public class BaseResultDto
     /// 响应成功 200
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto Success()
+    public static ResultDto Success()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = true,
             Code = HttpResponseCodeEnum.Success,
@@ -83,9 +82,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static BaseResultDto Success(string messageData)
+    public static ResultDto Success(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = true,
             Code = HttpResponseCodeEnum.Success,
@@ -99,9 +98,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="datas"></param>
     /// <returns></returns>
-    public static BaseResultDto Success(dynamic datas)
+    public static ResultDto Success(dynamic datas)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = true,
             Code = HttpResponseCodeEnum.Success,
@@ -115,9 +114,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static BaseResultDto BadRequest(string messageData)
+    public static ResultDto BadRequest(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.BadRequest,
@@ -131,9 +130,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="datas"></param>
     /// <returns></returns>
-    public static BaseResultDto BadRequest(dynamic datas)
+    public static ResultDto BadRequest(dynamic datas)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.BadRequest,
@@ -146,9 +145,9 @@ public class BaseResultDto
     /// 响应失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto Unauthorized()
+    public static ResultDto Unauthorized()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.Unauthorized,
@@ -162,9 +161,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static BaseResultDto Unauthorized(string messageData)
+    public static ResultDto Unauthorized(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.Unauthorized,
@@ -177,9 +176,9 @@ public class BaseResultDto
     /// 响应失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto Forbidden()
+    public static ResultDto Forbidden()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.Forbidden,
@@ -192,9 +191,9 @@ public class BaseResultDto
     /// 响应失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto NotFound()
+    public static ResultDto NotFound()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.NotFound,
@@ -208,9 +207,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static BaseResultDto NotFound(string messageData)
+    public static ResultDto NotFound(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.NotFound,
@@ -224,9 +223,9 @@ public class BaseResultDto
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static BaseResultDto UnprocessableEntity(string messageData)
+    public static ResultDto UnprocessableEntity(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.UnprocessableEntity,
@@ -240,14 +239,14 @@ public class BaseResultDto
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static BaseResultDto UnprocessableEntity(ActionExecutingContext context)
+    public static ResultDto UnprocessableEntity(ActionExecutingContext context)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.UnprocessableEntity,
             Message = HttpResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Datas = new BaseValidationDto(context)
+            Datas = new ValidationDto(context)
         };
     }
 
@@ -255,9 +254,9 @@ public class BaseResultDto
     /// 响应出错，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto InternalServerError()
+    public static ResultDto InternalServerError()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.InternalServerError,
@@ -270,9 +269,9 @@ public class BaseResultDto
     /// 响应出错，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto InternalServerError(string messageData)
+    public static ResultDto InternalServerError(string messageData)
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.InternalServerError,
@@ -285,9 +284,9 @@ public class BaseResultDto
     /// 响应出错，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static BaseResultDto NotImplemented()
+    public static ResultDto NotImplemented()
     {
-        return new BaseResultDto
+        return new ResultDto
         {
             IsSuccess = false,
             Code = HttpResponseCodeEnum.NotImplemented,

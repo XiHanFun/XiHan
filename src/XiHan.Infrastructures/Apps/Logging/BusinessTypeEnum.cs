@@ -13,7 +13,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructures.Enums;
+namespace XiHan.Infrastructures.Apps.Logging;
 
 /// <summary>
 /// 业务操作类型
@@ -30,13 +30,13 @@ public enum BusinessTypeEnum
     /// 新增
     /// </summary>
     [Description("新增")]
-    Insert = 1,
+    Create = 1,
 
     /// <summary>
     /// 修改
     /// </summary>
     [Description("修改")]
-    Update = 2,
+    Modify = 2,
 
     /// <summary>
     /// 删除

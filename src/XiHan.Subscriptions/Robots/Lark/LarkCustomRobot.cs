@@ -14,7 +14,7 @@
 using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
-using XiHan.Infrastructures.Enums;
+using XiHan.Infrastructures.Requests;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
@@ -49,7 +49,7 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="content">内容</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> TextMessage(LarkText content)
+    public async Task<ResultDto> TextMessage(LarkText content)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
@@ -62,7 +62,7 @@ public class LarkCustomRobot
     /// 发送富文本消息
     /// </summary>
     /// <param name="post"></param>
-    public async Task<BaseResultDto> PostMessage(LarkPost post)
+    public async Task<ResultDto> PostMessage(LarkPost post)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
@@ -77,7 +77,7 @@ public class LarkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<BaseResultDto> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ResultDto> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
@@ -96,7 +96,7 @@ public class LarkCustomRobot
     /// 发送图片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<BaseResultDto> ImageMessage(LarkActionCard actionCard)
+    public async Task<ResultDto> ImageMessage(LarkActionCard actionCard)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
@@ -109,7 +109,7 @@ public class LarkCustomRobot
     /// 发送消息卡片
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<BaseResultDto> InterActiveMessage(LarkFeedCard feedCard)
+    public async Task<ResultDto> InterActiveMessage(LarkFeedCard feedCard)
     {
         // 消息类型
         var msg_type = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
@@ -123,7 +123,7 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<BaseResultDto> Send(object objSend)
+    private async Task<ResultDto> Send(object objSend)
     {
         var url = _url;
         var sendMessage = objSend.SerializeToJson();
@@ -153,12 +153,12 @@ public class LarkCustomRobot
         {
             if (result.Code == 0 || result.Msg == "success")
             {
-                return BaseResultDto.Success("发送成功");
+                return ResultDto.Success("发送成功");
             }
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
             var info = resultInfos.Where(e => e.Value == result.Code).FirstOrDefault();
-            return BaseResultDto.BadRequest("发送失败，" + info?.Label);
+            return ResultDto.BadRequest("发送失败，" + info?.Label);
         }
-        return BaseResultDto.InternalServerError();
+        return ResultDto.InternalServerError();
     }
 }

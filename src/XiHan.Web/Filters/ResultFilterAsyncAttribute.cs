@@ -33,13 +33,6 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     private readonly ILogger _logger = Log.ForContext<ResultFilterAsyncAttribute>();
 
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ResultFilterAsyncAttribute()
-    {
-    }
-
-    /// <summary>
     /// 在某结果执行时
     /// </summary>
     /// <param name="context"></param>
@@ -49,30 +42,29 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         // 不为空就做处理
-        if (context.Result is BaseResultDto resultModel)
+        if (context.Result is ResultDto resultModel)
         {
-            // 如果是通用数据类返回结果，则转换为json结果
+            // 如果是 ResultDto，则转换为 JsonResult
             context.Result = new JsonResult(resultModel);
         }
         else if (context.Result is ObjectResult objectResult)
         {
-            // 如果是对象结果，则转换为json结果
+            // 如果是 ObjectResult，则转换为 JsonResult
             context.Result = new JsonResult(objectResult.Value);
         }
         else if (context.Result is ContentResult contentResult)
         {
-            // 如果是内容结果，则转换为json结果
+            // 如果是 ContentResult，则转换为 JsonResult
             context.Result = new JsonResult(contentResult.Content);
         }
         else if (context.Result is JsonResult jsonResult)
         {
-            // 如果是json结果，则转换为json结果
+            // 如果是 JsonResult，则转换为 JsonResult
             context.Result = new JsonResult(jsonResult.Value);
         }
         else
         {
-            // 其他结果，则转换为json结果
-            throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
+            // 其他类型就不做处理，返回源结果(如文件类型，需要导出，所以不转换)
         }
         // 请求构造函数和方法,调用下一个过滤器
         var resultExecuted = await next();

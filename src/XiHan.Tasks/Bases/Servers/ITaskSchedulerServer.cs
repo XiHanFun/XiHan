@@ -26,52 +26,52 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> CreateTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> CreateTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 更新计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> ModifyTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 删除指定计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> DeleteTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> DeleteTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 开启计划任务
     /// </summary>
     /// <returns></returns>
-    Task<BaseResultDto> StartTaskScheduleAsync();
+    Task<ResultDto> StartTaskScheduleAsync();
 
     /// <summary>
     /// 停止计划任务
     /// </summary>
     /// <returns></returns>
-    Task<BaseResultDto> StopTaskScheduleAsync();
+    Task<ResultDto> StopTaskScheduleAsync();
 
     /// <summary>
     /// 立即运行指定计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> RunTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> RunTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 暂停指定的计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> PauseTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> PauseTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 恢复指定计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
-    Task<BaseResultDto> ResumeTaskScheduleAsync(SysTasks sysTasks);
+    Task<ResultDto> ResumeTaskScheduleAsync(SysTasks sysTasks);
 }

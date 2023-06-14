@@ -49,7 +49,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
-    public async Task<BaseResultDto> WeComToText()
+    public async Task<ResultDto> WeComToText()
     {
         List<string> atMobiles = new() { "@all" };
         var text = new WeComText
@@ -65,7 +65,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
-    public async Task<BaseResultDto> WeComToMarkdown()
+    public async Task<ResultDto> WeComToMarkdown()
     {
         var markdown = new WeComMarkdown
         {
@@ -82,7 +82,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Image")]
-    public async Task<BaseResultDto> WeComToImage()
+    public async Task<ResultDto> WeComToImage()
     {
         const string filePath = @"D:\ServerData\系统信息\摘繁华\图片\avatar\zhaifanhua.png";
         var md5 = Md5EncryptionHelper.EncryptStream(filePath);
@@ -100,7 +100,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("News")]
-    public async Task<BaseResultDto> WeComToNews()
+    public async Task<ResultDto> WeComToNews()
     {
         List<WeComArticle> articles = new()
         {
@@ -125,7 +125,7 @@ public class WeComController : BaseApiController
     /// <param name="mediaId"></param>
     /// <returns></returns>
     [HttpPost("File")]
-    public async Task<BaseResultDto> WeComToFile(string mediaId)
+    public async Task<ResultDto> WeComToFile(string mediaId)
     {
         var file = new WeComFile
         {
@@ -139,7 +139,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("TextNotice")]
-    public async Task<BaseResultDto> WeComToTextNotice(string mediaId)
+    public async Task<ResultDto> WeComToTextNotice(string mediaId)
     {
         // 来源
         var source = new WeComSource
@@ -232,7 +232,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("NewsNotice")]
-    public async Task<BaseResultDto> WeComToNewsNotice()
+    public async Task<ResultDto> WeComToNewsNotice()
     {
         // 来源
         var source = new WeComSource
@@ -335,7 +335,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("UploadFile")]
-    public async Task<BaseResultDto> UploadFile(IFormFile formFile)
+    public async Task<ResultDto> UploadFile(IFormFile formFile)
     {
         if (formFile.Length > 0)
         {
@@ -350,7 +350,7 @@ public class WeComController : BaseApiController
 
             return await _weComPushService.WeComToUploadkFile(stream);
         }
-        return BaseResultDto.InternalServerError();
+        return ResultDto.InternalServerError();
     }
 
     #endregion 上传文件

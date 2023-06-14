@@ -83,7 +83,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         var isOfficialCount = sysDictTypeList.Where(s => s.IsOfficial).ToList().Count;
         if (isOfficialCount > 0)
         {
-            throw new ApplicationException($"该字典为系统内置字典，不能删除！");
+            throw new ApplicationException($"存在系统内置字典，不能删除！");
         }
 
         // 已分配字典
@@ -129,7 +129,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// </summary>
     /// <param name="dictId"></param>
     /// <returns></returns>
-    public async Task<SysDictType> GetDictType(long dictId)
+    public async Task<SysDictType> GetDictTypeById(long dictId)
     {
         return await FindAsync(f => f.BaseId == dictId);
     }
@@ -140,7 +140,23 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<List<SysDictType>> GetAllDictType()
     {
-        return await QueryAsync();
+        return await QueryAllAsync();
+    }
+
+    /// <summary>
+    /// 查询字典类型列表
+    /// </summary>
+    /// <param name="sysDictTypeWhere"></param>
+    /// <returns></returns>
+    public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWhereDto sysDictTypeWhere)
+    {
+        var whereExpression = Expressionable.Create<SysDictType>();
+        whereExpression.AndIF(sysDictTypeWhere.Name.IsNotEmptyOrNull(), u => u.Name.Contains(sysDictTypeWhere.Name!));
+        whereExpression.AndIF(sysDictTypeWhere.Type.IsNotEmptyOrNull(), u => u.Type == sysDictTypeWhere.Type);
+        whereExpression.AndIF(sysDictTypeWhere.IsEnable != null, u => u.IsEnable == sysDictTypeWhere.IsEnable);
+        whereExpression.AndIF(sysDictTypeWhere.IsOfficial != null, u => u.IsOfficial == sysDictTypeWhere.IsOfficial);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => o.Type);
     }
 
     /// <summary>
@@ -158,6 +174,6 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Type);
     }
 }

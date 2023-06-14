@@ -45,7 +45,7 @@ public class EmailController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Send")]
-    public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
+    public async Task<ResultDto> SendEmail(EmailToModel emailTo)
     {
         return await _emailPushService.SendEmail(emailTo);
     }

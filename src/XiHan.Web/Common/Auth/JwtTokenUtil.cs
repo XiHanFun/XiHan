@@ -23,7 +23,7 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Web.Common.Auth;
 
 /// <summary>
-/// JwtTokenUtil
+/// JwtToken 工具类
 /// </summary>
 public static class JwtTokenUtil
 {

@@ -70,7 +70,7 @@ public static class SystemInfoHelper
     /// 内存信息
     /// </summary>
     /// <returns></returns>
-    public static RamInfo RamInfo => RamHelper.GetRamInfos();
+    public static List<RamInfo> RamInfo => RamHelper.GetRamInfos();
 
     /// <summary>
     /// 磁盘信息

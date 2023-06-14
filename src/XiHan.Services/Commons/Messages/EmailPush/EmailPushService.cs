@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Enums;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -45,7 +44,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// </summary>
     /// <returns></returns>
     [AppLog(Title = "发送邮件", BusinessType = BusinessTypeEnum.Other)]
-    public async Task<BaseResultDto> SendEmail(EmailToModel emailTo)
+    public async Task<ResultDto> SendEmail(EmailToModel emailTo)
     {
         var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);
         EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
@@ -73,10 +72,10 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             logoInfo = "邮件发送成功";
             _logger.LogInformation(logoInfo);
-            return BaseResultDto.Success(logoInfo);
+            return ResultDto.Success(logoInfo);
         }
         logoInfo = "邮件发送失败";
         _logger.LogError(logoInfo);
-        return BaseResultDto.BadRequest("邮件发送失败");
+        return ResultDto.BadRequest("邮件发送失败");
     }
 }

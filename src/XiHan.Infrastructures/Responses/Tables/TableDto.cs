@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:BaseTableDto
+// FileName:TableDto
 // Guid:9d512d36-cd5c-4102-bed2-6457e9093085
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,7 +16,7 @@ namespace XiHan.Infrastructures.Responses.Tables;
 /// <summary>
 /// 通用表格实体(支持分页)
 /// </summary>
-public class BaseTableDto<TEntity> where TEntity : class
+public class TableDto<TEntity> where TEntity : class
 {
     /// <summary>
     /// 数据总数

@@ -63,7 +63,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToText(WeComText text)
+    public async Task<ResultDto> WeComToText(WeComText text)
     {
         return await _weComRobot.TextMessage(text);
     }
@@ -73,7 +73,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToMarkdown(WeComMarkdown markdown)
+    public async Task<ResultDto> WeComToMarkdown(WeComMarkdown markdown)
     {
         return await _weComRobot.MarkdownMessage(markdown);
     }
@@ -83,7 +83,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToImage(WeComImage image)
+    public async Task<ResultDto> WeComToImage(WeComImage image)
     {
         return await _weComRobot.ImageMessage(image);
     }
@@ -93,7 +93,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNews(WeComNews news)
+    public async Task<ResultDto> WeComToNews(WeComNews news)
     {
         return await _weComRobot.NewsMessage(news);
     }
@@ -103,7 +103,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToFile(WeComFile file)
+    public async Task<ResultDto> WeComToFile(WeComFile file)
     {
         return await _weComRobot.FileMessage(file);
     }
@@ -113,7 +113,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
+    public async Task<ResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
     {
         return await _weComRobot.TextNoticeMessage(templateCard);
     }
@@ -123,7 +123,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
+    public async Task<ResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
     {
         return await _weComRobot.NewsNoticeMessage(templateCard);
     }
@@ -133,7 +133,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="fileStream">文件</param>
     /// <returns></returns>
-    public async Task<BaseResultDto> WeComToUploadkFile(FileStream fileStream)
+    public async Task<ResultDto> WeComToUploadkFile(FileStream fileStream)
     {
         return await _weComRobot.UploadkFile(fileStream);
     }

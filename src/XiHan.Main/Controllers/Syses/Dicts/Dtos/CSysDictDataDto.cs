@@ -12,19 +12,21 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
+using XiHan.Main.Controllers.Bases;
 
 namespace XiHan.Main.Controllers.Syses.Dicts.Dtos;
 
 /// <summary>
-/// CSysDictDataDto
+/// 字典数据创建修改实体
 /// </summary>
-public class CSysDictDataDto
+public class CSysDictDataDto : BaseIdDto
 {
     /// <summary>
     /// 字典类型
     ///</summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符"), MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [RegularExpression("^[a-z][a-z0-9_]*$", ErrorMessage = "{0}必须以字母开头,且只能由小写字母、加下划线、数字组成")]
     public string Type { get; set; } = string.Empty;
 
     /// <summary>
