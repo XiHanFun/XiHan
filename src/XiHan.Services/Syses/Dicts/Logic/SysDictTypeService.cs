@@ -13,6 +13,7 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -48,9 +49,9 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         var findSysDictType = await GetFirstAsync(f => f.Type == sysDictType.Type);
         if (findSysDictType != null && findSysDictType.BaseId != sysDictType.BaseId)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /// <summary>
@@ -65,6 +66,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         {
             throw new ApplicationException($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
         }
+        sysDictType = sysDictType.ToCreated();
         return await AddReturnIdAsync(sysDictType);
     }
 
@@ -105,7 +107,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<bool> ModifyDictType(SysDictType sysDictType)
     {
-        SysDictType oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
+        var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
 
         if (sysDictType.Type != oldDictType.Type)
         {
@@ -118,6 +120,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
             // 同步修改 SysDictData 表里面的 Type 值
             await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
         }
+        sysDictType = sysDictType.ToModified();
         return await UpdateAsync(sysDictType);
     }
 
@@ -143,11 +146,11 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 查询字典类型列表(根据分页条件)
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<BasePageDataDto<SysDictType>> GetDictTypeList(PageWhereDto<SysDictTypeWhereDto> pageWhereDto)
+    public async Task<PageDataDto<SysDictType>> GetDictTypeList(PageWhereDto<SysDictTypeWhereDto> pageWhere)
     {
-        var whereDto = pageWhereDto.Where;
+        var whereDto = pageWhere.Where;
 
         var whereExpression = Expressionable.Create<SysDictType>();
         whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
@@ -155,6 +158,6 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhereDto.PageDto);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
     }
 }

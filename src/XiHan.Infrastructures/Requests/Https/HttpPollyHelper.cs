@@ -15,6 +15,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using XiHan.Infrastructures.Enums;
 
 namespace XiHan.Infrastructures.Requests.Https;
 
@@ -38,13 +39,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Get 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> GetAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -67,13 +68,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <summary>
     /// Get 请求
     /// </summary>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> GetAsync(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -97,14 +98,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -129,14 +130,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Post 请求 上传文件
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
         if (headers != null)
         {
@@ -163,14 +164,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Post 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -195,14 +196,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Post 请求
     /// </summary>
     /// <typeparam name="TREntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync<TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -225,14 +226,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <summary>
     /// Post 请求
     /// </summary>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -257,14 +258,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TREntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpEnum httpEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -289,14 +290,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Put 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity>(HttpEnum httpEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
@@ -321,13 +322,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// Delete 请求
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="httpEnum"></param>
+    /// <param name="httpGroupEnum"></param>
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> DeleteAsync<TEntity>(HttpEnum httpEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
-        using var client = _httpClientFactory.CreateClient(httpEnum.ToString());
+        using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
         {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))

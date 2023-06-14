@@ -13,6 +13,7 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Extensions;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
@@ -79,11 +80,13 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
         List<SysUserRole> sysUserRoles = new();
         foreach (var item in sysUser.SysRoleIds)
         {
-            sysUserRoles.Add(new SysUserRole
+            var sysUserRole = new SysUserRole
             {
                 RoleId = item,
                 UserId = sysUser.BaseId
-            });
+            };
+            sysUserRole = sysUserRole.ToCreated();
+            sysUserRoles.Add(sysUserRole);
         }
 
         return sysUserRoles.Any() ? await CreateUserRoles(sysUserRoles) : false;
@@ -96,6 +99,10 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// <returns></returns>
     public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
     {
+        sysUserRoles.ForEach(sysUserRole =>
+        {
+            sysUserRole = sysUserRole.ToCreated();
+        });
         return await AddAsync(sysUserRoles);
     }
 
@@ -106,6 +113,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// <returns></returns>
     public async Task<bool> CreateUserRole(SysUserRole sysUserRole)
     {
+        sysUserRole = sysUserRole.ToCreated();
         return await AddAsync(sysUserRole);
     }
 }

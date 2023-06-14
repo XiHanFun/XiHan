@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Enums;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
@@ -156,7 +157,7 @@ public class WeComCustomRobot
             { "filelength",fileStream.Length.ToString() },
         };
         // 发起请求，上传地址
-        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpEnum.Common, _fileUrl, fileStream, headers);
+        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _fileUrl, fileStream, headers);
         // 包装返回信息
         if (result != null)
         {
@@ -187,7 +188,7 @@ public class WeComCustomRobot
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpEnum.Common, _messageUrl, sendMessage);
+        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _messageUrl, sendMessage);
         // 包装返回信息
         if (result != null)
         {

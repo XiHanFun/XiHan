@@ -13,6 +13,7 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -34,6 +35,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<long> CreateDictData(SysDictData sysDictData)
     {
+        sysDictData = sysDictData.ToCreated();
         return await AddReturnIdAsync(sysDictData);
     }
 
@@ -54,7 +56,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> ModifyDictData(SysDictData sysDictData)
     {
-        sysDictData.ModifiedTime = DateTime.Now;
+        sysDictData = sysDictData.ToModified();
         return await UpdateAsync(sysDictData);
     }
 
@@ -108,11 +110,11 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 查询字典数据列表(根据分页条件)
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<BasePageDataDto<SysDictData>> GetDictDataList(PageWhereDto<SysDictDataWhereDto> pageWhereDto)
+    public async Task<PageDataDto<SysDictData>> GetDictDataList(PageWhereDto<SysDictDataWhereDto> pageWhere)
     {
-        var whereDto = pageWhereDto.Where;
+        var whereDto = pageWhere.Where;
 
         var whereExpression = Expressionable.Create<SysDictData>();
         whereExpression.AndIF(whereDto.Type.IsNotEmptyOrNull(), u => u.Type == whereDto.Type);
@@ -120,6 +122,6 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhereDto.PageDto);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
     }
 }

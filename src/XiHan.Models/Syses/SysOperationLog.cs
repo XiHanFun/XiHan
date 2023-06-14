@@ -31,10 +31,10 @@ public class SysOperationLog : BaseCreateEntity
 
     /// <summary>
     /// 业务类型
-    /// LogTypeEnum
+    /// BusinessTypeEnum
     /// 0其它 1新增 2修改 3删除 4授权 5导出 6导入 7强退 8生成代码 9清空数据
     /// </summary>
-    public int LogType { get; set; }
+    public int BusinessType { get; set; }
 
     /// <summary>
     /// 操作类型

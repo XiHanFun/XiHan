@@ -76,7 +76,7 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// <summary>
     /// 查询字典数据列表(根据分页条件)
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<BasePageDataDto<SysDictData>> GetDictDataList(PageWhereDto<SysDictDataWhereDto> pageWhereDto);
+    Task<PageDataDto<SysDictData>> GetDictDataList(PageWhereDto<SysDictDataWhereDto> pageWhere);
 }

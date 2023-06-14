@@ -11,6 +11,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Enums;
+
 namespace XiHan.Infrastructures.Apps.Logging;
 
 /// <summary>
@@ -27,7 +29,7 @@ public class AppLogAttribute : Attribute
     /// <summary>
     /// 日志类型
     /// </summary>
-    public LogTypeEnum LogType { get; set; }
+    public BusinessTypeEnum BusinessType { get; set; }
 
     /// <summary>
     /// 是否保存请求数据
@@ -59,13 +61,13 @@ public class AppLogAttribute : Attribute
     /// 构造函数
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="logType"></param>
+    /// <param name="businessType"></param>
     /// <param name="saveRequestData"></param>
     /// <param name="saveResponseData"></param>
-    public AppLogAttribute(string name, LogTypeEnum logType, bool saveRequestData = true, bool saveResponseData = true)
+    public AppLogAttribute(string name, BusinessTypeEnum businessType, bool saveRequestData = true, bool saveResponseData = true)
     {
         Title = name;
-        LogType = logType;
+        BusinessType = businessType;
         IsSaveRequestData = saveRequestData;
         IsSaveResponseData = saveResponseData;
     }

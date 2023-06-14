@@ -14,6 +14,7 @@
 using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
+using XiHan.Infrastructures.Enums;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
@@ -154,7 +155,7 @@ public class DingTalkCustomRobot
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpEnum.Common, url, sendMessage);
+        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {

@@ -276,7 +276,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize)
     {
         return await Context.Queryable<TEntity>().ToPageDataDto(currentIndex, pageSize);
     }
@@ -284,11 +284,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 分页查询
     /// </summary>
-    /// <param name="pageDto">分页实体</param>
+    /// <param name="page">分页实体</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(BasePageDto pageDto)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page)
     {
-        return await Context.Queryable<TEntity>().ToPageDataDto(pageDto);
+        return await Context.Queryable<TEntity>().ToPageDataDto(page);
     }
 
     /// <summary>
@@ -298,7 +298,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(currentIndex, pageSize);
     }
@@ -307,11 +307,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 自定义条件分页查询
     /// </summary>
     /// <param name="whereExpression">自定义条件</param>
-    /// <param name="pageDto">分页实体</param>
+    /// <param name="page">分页实体</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, BasePageDto pageDto)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page)
     {
-        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(pageDto);
+        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(page);
     }
 
     /// <summary>
@@ -323,7 +323,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -334,15 +334,15 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 自定义条件分页排序查询
     /// </summary>
     /// <param name="whereExpression">自定义条件</param>
-    /// <param name="pageDto">分页实体</param>
+    /// <param name="page">分页实体</param>
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<BasePageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, BasePageDto pageDto, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
-            .ToPageDataDto(pageDto);
+            .ToPageDataDto(page);
     }
 
     #endregion

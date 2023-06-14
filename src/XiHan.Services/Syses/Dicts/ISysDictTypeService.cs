@@ -67,7 +67,7 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// <summary>
     /// 查询字典类型列表(根据分页条件)
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<BasePageDataDto<SysDictType>> GetDictTypeList(PageWhereDto<SysDictTypeWhereDto> pageWhereDto);
+    Task<PageDataDto<SysDictType>> GetDictTypeList(PageWhereDto<SysDictTypeWhereDto> pageWhere);
 }

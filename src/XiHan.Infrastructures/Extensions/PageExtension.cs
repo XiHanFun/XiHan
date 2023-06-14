@@ -43,7 +43,7 @@ public static class PageExtension
     /// <param name="pageDto">分页传入实体</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
-    public static List<TEntity> ToPageList<TEntity>(this IList<TEntity> entities, BasePageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
+    public static List<TEntity> ToPageList<TEntity>(this IList<TEntity> entities, PageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
     {
         return entities.Skip((pageDto.CurrentIndex - defaultFirstInex) * pageDto.PageSize).Take(pageDto.PageSize).ToList();
     }
@@ -69,7 +69,7 @@ public static class PageExtension
     /// <param name="entities">数据源</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
-    public static List<TEntity> ToPageList<TEntity>(this IQueryable<TEntity> entities, BasePageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
+    public static List<TEntity> ToPageList<TEntity>(this IQueryable<TEntity> entities, PageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
     {
         return entities.Skip((pageDto.CurrentIndex - defaultFirstInex) * pageDto.PageSize).Take(pageDto.PageSize).ToList();
     }
@@ -82,11 +82,11 @@ public static class PageExtension
     /// <param name="currentIndex">当前页标</param>
     /// <param name="pageSize">每页大小</param>
     /// <returns>分页后的List数据</returns>
-    public static BasePageDataDto<TEntity> ToPageDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(currentIndex, pageSize, entities.Count()),
+            PageInfo = new PageInfoDto(currentIndex, pageSize, entities.Count()),
         };
         return pageDataDto;
     }
@@ -98,11 +98,11 @@ public static class PageExtension
     /// <param name="entities">数据源</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns>分页后的List数据</returns>
-    public static BasePageDataDto<TEntity> ToPageDto<TEntity>(this IQueryable<TEntity> entities, BasePageDto pageDto) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDto<TEntity>(this IQueryable<TEntity> entities, PageDto pageDto) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
+            PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
         };
         return pageDataDto;
     }
@@ -116,11 +116,11 @@ public static class PageExtension
     /// <param name="pageSize">每页大小</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的Dto结果</returns>
-    public static BasePageDataDto<TEntity> ToPageDataDto<TEntity>(this IList<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IList<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(currentIndex, pageSize, entities.Count),
+            PageInfo = new PageInfoDto(currentIndex, pageSize, entities.Count),
             Datas = entities.ToPageList(currentIndex, pageSize, defaultFirstInex)
         };
         return pageDataDto;
@@ -134,11 +134,11 @@ public static class PageExtension
     /// <param name="pageDto">分页传入实体</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的Dto结果</returns>
-    public static BasePageDataDto<TEntity> ToPageDataDto<TEntity>(this IList<TEntity> entities, BasePageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IList<TEntity> entities, PageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count),
+            PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count),
             Datas = entities.ToPageList(pageDto, defaultFirstInex)
         };
         return pageDataDto;
@@ -154,11 +154,11 @@ public static class PageExtension
     /// <param name="pageSize">每页大小</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
-    public static BasePageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstInex = 1) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(currentIndex, pageSize, entities.Count()),
+            PageInfo = new PageInfoDto(currentIndex, pageSize, entities.Count()),
             Datas = entities.ToPageList(currentIndex, pageSize, defaultFirstInex)
         };
         return pageDataDto;
@@ -173,11 +173,11 @@ public static class PageExtension
     /// <param name="pageDto">分页传入实体</param>
     /// <param name="defaultFirstInex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
-    public static BasePageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, BasePageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, PageDto pageDto, int defaultFirstInex = 1) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
+            PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, entities.Count()),
             Datas = entities.ToPageList(pageDto, defaultFirstInex)
         };
         return pageDataDto;
@@ -189,17 +189,17 @@ public static class PageExtension
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>
     /// <returns>分页后的所有数据</returns>
-    public static BasePageDataDto<TEntity> ToAllPageDataDto<TEntity>(this IList<TEntity> entities) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToAllPageDataDto<TEntity>(this IList<TEntity> entities) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(),
+            PageInfo = new PageInfoDto(),
             Datas = entities.ToList()
         };
-        pageDataDto.Page.CurrentIndex = 1;
-        pageDataDto.Page.TotalCount = pageDataDto.Datas.Count;
-        pageDataDto.Page.PageSize = pageDataDto.Page.TotalCount;
-        pageDataDto.Page.PageCount = 1;
+        pageDataDto.PageInfo.CurrentIndex = 1;
+        pageDataDto.PageInfo.TotalCount = pageDataDto.Datas.Count;
+        pageDataDto.PageInfo.PageSize = pageDataDto.PageInfo.TotalCount;
+        pageDataDto.PageInfo.PageCount = 1;
         return pageDataDto;
     }
 
@@ -209,17 +209,17 @@ public static class PageExtension
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>
     /// <returns>分页后的所有数据</returns>
-    public static BasePageDataDto<TEntity> ToAllPageDataDto<TEntity>(this IQueryable<TEntity> entities) where TEntity : class, new()
+    public static PageDataDto<TEntity> ToAllPageDataDto<TEntity>(this IQueryable<TEntity> entities) where TEntity : class, new()
     {
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(),
+            PageInfo = new PageInfoDto(),
             Datas = entities.ToList()
         };
-        pageDataDto.Page.CurrentIndex = 1;
-        pageDataDto.Page.TotalCount = pageDataDto.Datas.Count;
-        pageDataDto.Page.PageSize = pageDataDto.Page.TotalCount;
-        pageDataDto.Page.PageCount = 1;
+        pageDataDto.PageInfo.CurrentIndex = 1;
+        pageDataDto.PageInfo.TotalCount = pageDataDto.Datas.Count;
+        pageDataDto.PageInfo.PageSize = pageDataDto.PageInfo.TotalCount;
+        pageDataDto.PageInfo.PageCount = 1;
         return pageDataDto;
     }
 
@@ -234,13 +234,13 @@ public static class PageExtension
     /// <param name="currentIndex">当前页标</param>
     /// <param name="pageSize">每页大小</param>
     /// <returns>分页后的List数据</returns>
-    public static async Task<BasePageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
+    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
         var datas = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(currentIndex, pageSize, totalCount),
+            PageInfo = new PageInfoDto(currentIndex, pageSize, totalCount),
             Datas = datas,
         };
         return pageDataDto;
@@ -254,13 +254,13 @@ public static class PageExtension
     /// <param name="entities">数据源</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns>分页后的List数据</returns>
-    public static async Task<BasePageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, BasePageDto pageDto) where TEntity : class, new()
+    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, PageDto pageDto) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
         var datas = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
-        BasePageDataDto<TEntity> pageDataDto = new()
+        PageDataDto<TEntity> pageDataDto = new()
         {
-            Page = new BasePageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, totalCount),
+            PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, totalCount),
             Datas = datas,
         };
         return pageDataDto;

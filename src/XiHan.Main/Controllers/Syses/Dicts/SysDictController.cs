@@ -15,6 +15,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps.Logging;
+using XiHan.Infrastructures.Enums;
 using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Infrastructures.Responses.Results;
@@ -53,14 +54,13 @@ public class SysDictController : BaseApiController
     /// <summary>
     /// 新增字典类型
     /// </summary>
-    /// <param name="sysDictTypeDto"></param>
+    /// <param name="cSysDictType"></param>
     /// <returns></returns>
     [HttpPost("Create/Type")]
-    [AppLog(Title = "新增字典类型", LogType = LogTypeEnum.Insert)]
-    public async Task<BaseResultDto> CreateDictType([FromBody] CSysDictTypeDto sysDictTypeDto)
+    [AppLog(Title = "新增字典类型", BusinessType = BusinessTypeEnum.Insert)]
+    public async Task<BaseResultDto> CreateDictType([FromBody] CSysDictTypeDto cSysDictType)
     {
-        SysDictType sysDictType = sysDictTypeDto.Adapt<SysDictType>();
-        sysDictType = sysDictType.ToCreated();
+        SysDictType sysDictType = cSysDictType.Adapt<SysDictType>();
         var result = await _sysDictTypeService.CreateDictType(sysDictType);
         return BaseResultDto.Success(result);
     }
@@ -68,14 +68,13 @@ public class SysDictController : BaseApiController
     /// <summary>
     /// 新增字典数据
     /// </summary>
-    /// <param name="sysDictDataDto"></param>
+    /// <param name="cSysDictData"></param>
     /// <returns></returns>
     [HttpPost("Create/Data")]
-    [AppLog(Title = "新增字典数据", LogType = LogTypeEnum.Insert)]
-    public async Task<BaseResultDto> CreateDictData([FromBody] CSysDictDataDto sysDictDataDto)
+    [AppLog(Title = "新增字典数据", BusinessType = BusinessTypeEnum.Insert)]
+    public async Task<BaseResultDto> CreateDictData([FromBody] CSysDictDataDto cSysDictData)
     {
-        SysDictData sysDictData = sysDictDataDto.Adapt<SysDictData>();
-        sysDictData = sysDictData.ToCreated();
+        SysDictData sysDictData = cSysDictData.Adapt<SysDictData>();
         var result = await _sysDictDataService.CreateDictData(sysDictData);
         return BaseResultDto.Success(result);
     }
@@ -85,7 +84,7 @@ public class SysDictController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpDelete("Delete/Type")]
-    [AppLog(Title = "删除字典类型", LogType = LogTypeEnum.Delete)]
+    [AppLog(Title = "删除字典类型", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<BaseResultDto> DeleteDictType([FromBody] long[] ids)
     {
         var result = await _sysDictTypeService.DeleteDictTypeByIds(ids);
@@ -95,13 +94,13 @@ public class SysDictController : BaseApiController
     /// <summary>
     /// 查询字典数据列表
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Get/Data/List")]
-    public async Task<BaseResultDto> GetDictDataList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhereDto)
+    public async Task<BaseResultDto> GetDictDataList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhere)
     {
-        var result = await _sysDictDataService.GetDictDataList(pageWhereDto);
+        var result = await _sysDictDataService.GetDictDataList(pageWhere);
         return BaseResultDto.Success(result);
     }
 

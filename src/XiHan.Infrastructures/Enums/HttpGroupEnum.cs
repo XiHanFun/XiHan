@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:HttpEnum
+// FileName:HttpGroupEnum
 // Guid:f06f7e72-341f-43bf-80b0-375eecb05957
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,12 +13,12 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructures.Requests.Https;
+namespace XiHan.Infrastructures.Enums;
 
 /// <summary>
-/// HttpEnum
+/// 网络请求组别
 /// </summary>
-public enum HttpEnum
+public enum HttpGroupEnum
 {
     /// <summary>
     /// 公共
@@ -30,35 +30,11 @@ public enum HttpEnum
     /// 本地
     /// </summary>
     [Description("本地")]
-    LocalHost
-}
-
-/// <summary>
-/// 网络请求方式
-/// </summary>
-public enum HttpMethodEnum
-{
-    /// <summary>
-    /// 获取数据
-    /// </summary>
-    [Description("获取数据")]
-    Get,
+    Local,
 
     /// <summary>
-    /// 提交数据
+    /// 远程
     /// </summary>
-    [Description("提交数据")]
-    Post,
-
-    /// <summary>
-    /// 删除数据
-    /// </summary>
-    [Description("删除数据")]
-    Delete,
-
-    /// <summary>
-    /// 更新数据
-    /// </summary>
-    [Description("更新数据")]
-    Put,
+    [Description("远程")]
+    Remote
 }

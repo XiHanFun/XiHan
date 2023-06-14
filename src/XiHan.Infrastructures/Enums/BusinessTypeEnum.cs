@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:LogTypeEnum
+// FileName:BusinessTypeEnum
 // Guid:c5476f41-ac11-4b2a-bd75-054b853efd23
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -13,12 +13,12 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructures.Apps.Logging;
+namespace XiHan.Infrastructures.Enums;
 
 /// <summary>
-/// 日志操作类型
+/// 业务操作类型
 /// </summary>
-public enum LogTypeEnum
+public enum BusinessTypeEnum
 {
     /// <summary>
     /// 其它

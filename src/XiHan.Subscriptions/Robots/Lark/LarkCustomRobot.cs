@@ -14,6 +14,7 @@
 using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
+using XiHan.Infrastructures.Enums;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
@@ -146,7 +147,7 @@ public class LarkCustomRobot
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
         // 发起请求
-        var result = await _httpPolly.PostAsync<LarkResultInfoDto>(HttpEnum.Common, url, sendMessage);
+        var result = await _httpPolly.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {

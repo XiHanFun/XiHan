@@ -13,6 +13,7 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -43,11 +44,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 查询用户列表(根据分页条件)
     /// </summary>
-    /// <param name="pageWhereDto"></param>
+    /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<BasePageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWhereDto> pageWhereDto)
+    public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWhereDto> pageWhere)
     {
-        var whereDto = pageWhereDto.Where;
+        var whereDto = pageWhere.Where;
         var whereExpression = Expressionable.Create<SysUser>();
         whereExpression.AndIF(whereDto.UserName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.UserName!));
         whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
@@ -56,7 +57,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
         whereExpression.And(u => !u.IsDeleted);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhereDto.PageDto);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
     }
 
     /// <summary>
@@ -86,8 +87,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> GetUserNameUnique(string userName)
     {
-        int count = await CountAsync(u => u.UserName == userName && !u.IsDeleted);
-        if (count > 0)
+        var findSysUser = await GetFirstAsync(u => u.UserName == userName && !u.IsDeleted);
+        if (findSysUser != null)
         {
             return false;
         }
@@ -101,10 +102,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<long> CreateUser(SysUser sysUser)
     {
+        sysUser = sysUser.ToCreated();
         long userId = await AddReturnIdAsync(sysUser);
-        sysUser.BaseId = userId;
 
         //新增用户角色信息
+        sysUser.BaseId = userId;
         await _sysUserRoleService.CreateUserRole(sysUser);
 
         return userId;
@@ -129,6 +131,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
             // 新增用户与角色关联
             await _sysUserRoleService.CreateUserRole(sysUser);
         }
+        sysUser = sysUser.ToModified();
         return await UpdateAsync(sysUser);
     }
 }

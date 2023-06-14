@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:WebHookTypeEnum
+// FileName:CustomRobotTypeEnum
 // Guid:9f8be55b-25f8-4a40-af16-050ad4ef815f
 // Author:Administrator
 // Email:me@zhaifanhua.com
