@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -83,22 +82,11 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                            $"\t 请求方法：{method}\n" +
                            $"\t 操作用户：{userId}";
                 if (_exceptionLogSwitch)
-                    _logger.Error($"系统异常\n{info}\n{context.Exception}");
+                    _logger.Error(context.Exception, $"系统异常\n{info}");
             }
         }
         // 标记异常已经处理过了
         context.ExceptionHandled = true;
         await Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// 判断是否Ajax请求
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
-    private static bool IsAjaxRequest(HttpRequest request)
-    {
-        var header = request.Headers["X-Request-With"];
-        return "XMLHttpRequest".Equals(header.FirstOrDefault());
     }
 }

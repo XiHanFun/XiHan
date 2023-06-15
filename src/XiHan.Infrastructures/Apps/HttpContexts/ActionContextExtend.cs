@@ -36,33 +36,40 @@ public static class ActionContextExtend
         return ResultDto.UnprocessableEntity(context);
     }
 
-    //public static string GetActionContextInfo(this ActionContext context)
-    //{
-    //    // 获取控制器、路由信息
-    //    var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-    //    // 获取请求的方法
-    //    var method = actionDescriptor?.MethodInfo;
-    //    // 获取 HttpContext 和 HttpRequest 对象
-    //    var httpContext = context.HttpContext;
-    //    var httpRequest = httpContext.Request;
-    //    // 获取客户端 Ip 地址
-    //    var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-    //    // 获取请求的 Url 地址(域名、路径、参数)
-    //    var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
-    //    // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
-    //    var parameters = context.ActionArguments;
-    //    // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-    //    var userId = httpContext.User.FindFirstValue("UserId");
+    /// <summary>
+    /// 获取控制器上下文信息
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static ActionContextInfo GetActionContextInfo(this ActionContext context)
+    {
+        // 获取控制器、路由信息
+        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+        // 获取请求的方法
+        var methodInfo = actionDescriptor?.MethodInfo;
+        // 获取 HttpContext 和 HttpRequest 对象
+        var httpContext = context.HttpContext;
+        var httpRequest = httpContext.Request;
+        // 获取客户端 Ip 地址
+        var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+        // 获取请求的 Url 地址(域名、路径、参数)
+        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
+        // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
+        //var parameters = context.ActionArguments;
+        // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
+        var userId = httpContext.User.FindFirstValue("UserId");
 
-    //    var actionContextInfo = new ActionContextInfo();
-    //    actionContextInfo.MethodName = method;
-    //    actionContextInfo.MethodReturnType = actionDescriptor?.MethodInfo.ReturnType;
-    //    actionContextInfo.ControllerType = actionDescriptor?.ControllerTypeInfo;
-    //    actionContextInfo.RemoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-    //    actionContextInfo.RequestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
-    //    actionContextInfo.ActionArguments = parameters;
-    //    actionContextInfo.UserId = userId;
-    //}
+        var actionContextInfo = new ActionContextInfo();
+        actionContextInfo.MethodInfo = methodInfo;
+        actionContextInfo.MethodReturnType = methodInfo?.ReturnType;
+        actionContextInfo.ControllerType = actionDescriptor?.ControllerTypeInfo;
+        actionContextInfo.RemoteIp = remoteIp;
+        actionContextInfo.RequestUrl = requestUrl;
+        //actionContextInfo.ActionArguments = parameters;
+        actionContextInfo.UserId = userId;
+
+        return actionContextInfo;
+    }
 }
 
 /// <summary>
@@ -73,7 +80,7 @@ public class ActionContextInfo
     /// <summary>
     /// 请求的方法名称
     /// </summary>
-    public string? MethodName { get; set; }
+    public MethodInfo? MethodInfo { get; set; }
 
     /// <summary>
     /// Action 类型
