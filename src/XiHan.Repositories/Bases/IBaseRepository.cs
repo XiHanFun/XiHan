@@ -65,6 +65,13 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
+    Task<bool> AddOrUpdateAsync(TEntity[] entities);
+
+    /// <summary>
+    /// 批量新增或更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> AddOrUpdateAsync(List<TEntity> entities);
 
     #endregion
@@ -105,6 +112,38 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="whereExpression"></param>
     /// <returns></returns>
     Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> whereExpression);
+
+    #endregion
+
+    #region 逻辑删除
+
+    /// <summary>
+    /// 根据Id逻辑删除
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> SoftRemoveAsync(long id);
+
+    /// <summary>
+    /// 逻辑删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    Task<bool> SoftRemoveAsync(TEntity entity);
+
+    /// <summary>
+    /// 批量逻辑删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    Task<bool> SoftRemoveAsync(List<TEntity> entities);
+
+    /// <summary>
+    /// 自定义条件逻辑删除
+    /// </summary>
+    /// <param name="whereExpression"></param>
+    /// <returns></returns>
+    Task<bool> SoftRemoveAsync(Expression<Func<TEntity, bool>> whereExpression);
 
     #endregion
 

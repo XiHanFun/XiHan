@@ -21,11 +21,18 @@ namespace XiHan.Models.Bases.Entity;
 public abstract class BaseCreateEntity : BaseIdEntity
 {
     /// <summary>
-    /// 创建用户
+    /// 创建用户主键
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户")]
-    public virtual long? CreatedBy { get; set; }
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户主键")]
+    public virtual long? CreatedId { get; set; }
+
+    /// <summary>
+    /// 创建用户名称
+    /// </summary>
+    /// <remarks>修改不会有此字段</remarks>
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户名称")]
+    public virtual string? CreatedBy { get; set; }
 
     /// <summary>
     /// 创建时间

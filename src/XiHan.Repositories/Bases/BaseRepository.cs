@@ -14,8 +14,8 @@
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
-using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
+using XiHan.Repositories.Entities;
 
 namespace XiHan.Repositories.Bases;
 
@@ -27,8 +27,10 @@ namespace XiHan.Repositories.Bases;
 /// 方法命名规范：
 /// 新增 Add
 /// 删除 Remove
+/// 逻辑删除 SoftRemove
 /// 修改 Update
-/// 查找查询 Find/Query
+/// 查找 Find
+/// 查询 Query
 /// </remarks>
 public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
 {
@@ -50,6 +52,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(TEntity entity)
     {
+        entity.ToCreated();
         return await InsertAsync(entity);
     }
 
@@ -60,6 +63,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(TEntity[] entities)
     {
+        entities.ToList().ForEach(entity => entity.ToCreated());
         return await InsertRangeAsync(entities);
     }
 
@@ -70,6 +74,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(List<TEntity> entities)
     {
+        entities.ForEach(entity => entity.ToCreated());
         return await InsertRangeAsync(entities);
     }
 
@@ -80,6 +85,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<long> AddReturnIdAsync(TEntity entity)
     {
+        entity.ToCreated();
         return await InsertReturnBigIdentityAsync(entity);
     }
 
@@ -90,7 +96,25 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddOrUpdateAsync(TEntity entity)
     {
+        entity.ToCreated();
+        entity.ToModified();
         return await InsertOrUpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量新增或更新
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> AddOrUpdateAsync(TEntity[] entities)
+    {
+        var entityList = entities.ToList();
+        entityList.ForEach(entity =>
+        {
+            entity.ToCreated();
+            entity.ToModified();
+        });
+        return await InsertOrUpdateAsync(entityList);
     }
 
     /// <summary>
@@ -100,6 +124,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddOrUpdateAsync(List<TEntity> entities)
     {
+        entities.ForEach(entity =>
+        {
+            entity.ToCreated();
+            entity.ToModified();
+        });
         return await InsertOrUpdateAsync(entities);
     }
 
@@ -160,6 +189,56 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 
     #endregion
 
+    #region 逻辑删除
+
+    /// <summary>
+    /// 根据Id逻辑删除
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> SoftRemoveAsync(long id)
+    {
+        var entity = await GetByIdAsync(id);
+        entity.ToDeleted();
+        return await UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 逻辑删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> SoftRemoveAsync(TEntity entity)
+    {
+        entity.ToDeleted();
+        return await UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量逻辑删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> SoftRemoveAsync(List<TEntity> entities)
+    {
+        entities.ForEach(entity => entity.ToDeleted());
+        return await UpdateRangeAsync(entities);
+    }
+
+    /// <summary>
+    /// 自定义条件逻辑删除
+    /// </summary>
+    /// <param name="whereExpression"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> SoftRemoveAsync(Expression<Func<TEntity, bool>> whereExpression)
+    {
+        var entities = await GetListAsync(whereExpression);
+        entities.ForEach(entity => entity.ToDeleted());
+        return await UpdateRangeAsync(entities);
+    }
+
+    #endregion
+
     #region 修改
 
     /// <summary>
@@ -169,6 +248,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
+        entity.ToModified();
         return await UpdateAsync(entity);
     }
 
@@ -179,6 +259,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> UpdateAsync(TEntity[] entities)
     {
+        entities.ToList().ForEach(entity => entity.ToModified());
         return await UpdateRangeAsync(entities);
     }
 
@@ -189,6 +270,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
     {
+        entities.ForEach(entity => entity.ToModified());
         return await UpdateRangeAsync(entities);
     }
 
@@ -268,7 +350,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await Context.Queryable<TEntity>().ToPageListAsync(currentIndex, pageSize, totalCount);
+        return await Context.Queryable<TEntity>()
+            .ToPageListAsync(currentIndex, pageSize, totalCount);
     }
 
     /// <summary>
@@ -281,7 +364,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
-        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageListAsync(currentIndex, pageSize, totalCount);
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .ToPageListAsync(currentIndex, pageSize, totalCount);
     }
 
     /// <summary>
@@ -292,7 +376,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize)
     {
-        return await Context.Queryable<TEntity>().ToPageDataDto(currentIndex, pageSize);
+        return await Context.Queryable<TEntity>()
+            .ToPageDataDto(currentIndex, pageSize);
     }
 
     /// <summary>
@@ -302,7 +387,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page)
     {
-        return await Context.Queryable<TEntity>().ToPageDataDto(page);
+        return await Context.Queryable<TEntity>()
+            .ToPageDataDto(page);
     }
 
     /// <summary>
@@ -314,7 +400,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize)
     {
-        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(currentIndex, pageSize);
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .ToPageDataDto(currentIndex, pageSize);
     }
 
     /// <summary>
@@ -325,7 +412,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page)
     {
-        return await Context.Queryable<TEntity>().Where(whereExpression).ToPageDataDto(page);
+        return await Context.Queryable<TEntity>().Where(whereExpression)
+            .ToPageDataDto(page);
     }
 
     /// <summary>

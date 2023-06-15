@@ -14,7 +14,6 @@
 using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
-using XiHan.Infrastructures.Requests;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;

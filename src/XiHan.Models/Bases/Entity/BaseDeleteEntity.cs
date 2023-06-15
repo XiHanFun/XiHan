@@ -28,11 +28,18 @@ public abstract class BaseDeleteEntity : BaseModifyEntity, ISoftDelete
     public virtual bool IsDeleted { get; set; } = false;
 
     /// <summary>
-    /// 删除用户
+    /// 删除用户主键
     /// </summary>
     /// <remarks>插入不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "删除用户")]
-    public virtual long? DeletedBy { get; set; }
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "删除用户主键")]
+    public virtual long? DeletedId { get; set; }
+
+    /// <summary>
+    /// 删除用户名称
+    /// </summary>
+    /// <remarks>插入不会有此字段</remarks>
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "删除用户名称")]
+    public virtual string? DeletedBy { get; set; }
 
     /// <summary>
     /// 删除时间

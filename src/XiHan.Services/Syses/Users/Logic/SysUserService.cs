@@ -13,9 +13,9 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Extensions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
+using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Roles;
 using XiHan.Services.Syses.Users.Dtos;

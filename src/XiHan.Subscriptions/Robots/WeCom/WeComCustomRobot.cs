@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Requests;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;

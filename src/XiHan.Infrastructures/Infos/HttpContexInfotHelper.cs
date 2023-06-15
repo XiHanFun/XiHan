@@ -12,7 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using XiHan.Infrastructures.Extensions;
+using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Infrastructures.Infos;
 

@@ -21,11 +21,18 @@ namespace XiHan.Models.Bases.Entity;
 public abstract class BaseAuditEntity : BaseDeleteEntity
 {
     /// <summary>
-    /// 审核用户
+    /// 审核用户主键
     /// </summary>
     /// <remarks>插入不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户")]
-    public virtual long? AuditedBy { get; set; }
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户主键")]
+    public virtual long? AuditedId { get; set; }
+
+    /// <summary>
+    /// 审核用户名称
+    /// </summary>
+    /// <remarks>插入不会有此字段</remarks>
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户名称")]
+    public virtual string? AuditedBy { get; set; }
 
     /// <summary>
     /// 审核时间
