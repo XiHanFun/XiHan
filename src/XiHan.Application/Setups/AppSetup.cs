@@ -53,6 +53,8 @@ public static class AppSetup
         app.UseStaticFiles();
         // 路由
         app.UseRouting();
+        // 限流
+        app.UseRateLimiter();
         // 跨域
         app.UseCorsSetup();
         // 鉴权授权

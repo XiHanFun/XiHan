@@ -18,6 +18,8 @@ using System.IdentityModel.Tokens.Jwt;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.Application.Common.Auth;
+using Microsoft.AspNetCore.Http;
+using NetTaste;
 
 namespace XiHan.Application.Setups.Services;
 
@@ -55,7 +57,7 @@ public static class AuthSetup
             options.Events = new JwtBearerEvents
             {
                 // 认证失败时
-                OnAuthenticationFailed = context =>
+                OnAuthenticationFailed = async context =>
                 {
                     var jwtHandler = new JwtSecurityTokenHandler();
                     var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", "");
@@ -75,7 +77,7 @@ public static class AuthSetup
                             context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                         }
                         // 返回自定义的未授权模型数据
-                        return Task.FromResult(ResultDto.Unauthorized("授权为空或因伪造无法读取"));
+                        await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.Unauthorized("授权为空或因伪造无法读取！"));
                     }
 
                     // 如果过期，则把是否过期添加到返回头信息中
@@ -83,17 +85,17 @@ public static class AuthSetup
                     {
                         context.Response.Headers.Add("Token-Expired", "true");
                         // 返回自定义的未授权模型数据
-                        return Task.FromResult(ResultDto.Unauthorized("授权已过期"));
+                        await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.Unauthorized("授权已过期！"));
                     }
-                    return Task.FromResult(ResultDto.Unauthorized());
+                    await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.Unauthorized());
                 },
                 // 未授权时
-                OnChallenge = context =>
+                OnChallenge = async context =>
                 {
                     // 将Token错误添加到返回头信息中
-                    context.Response.Headers.Add("Token-Error", context.ErrorDescription);
+                    context.HttpContext.Response.Headers.Add("Token-Error", context.ErrorDescription);
                     // 返回自定义的未授权模型数据
-                    return Task.FromResult(ResultDto.Unauthorized("未授权"));
+                    await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.Unauthorized("未授权！"));
                 }
             };
         });

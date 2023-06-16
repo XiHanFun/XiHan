@@ -251,6 +251,22 @@ public class ResultDto
     }
 
     /// <summary>
+    /// 并发请求过多 429
+    /// </summary>
+    /// <param name="messageData"></param>
+    /// <returns></returns>
+    public static ResultDto TooManyRequests(string messageData)
+    {
+        return new ResultDto
+        {
+            IsSuccess = false,
+            Code = HttpResponseCodeEnum.TooManyRequests,
+            Message = HttpResponseCodeEnum.TooManyRequests.GetEnumDescriptionByKey(),
+            Datas = messageData
+        };
+    }
+
+    /// <summary>
     /// 响应出错，服务器内部错误 500
     /// </summary>
     /// <returns></returns>

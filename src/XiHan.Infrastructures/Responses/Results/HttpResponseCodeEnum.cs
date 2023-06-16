@@ -93,6 +93,12 @@ public enum HttpResponseCodeEnum
     UnprocessableEntity = 422,
 
     /// <summary>
+    /// 并发请求过多
+    /// </summary>
+    [Description("并发请求过多")]
+    TooManyRequests = 429,
+
+    /// <summary>
     /// 服务器端程序错误
     /// </summary>
     [Description("服务器端程序错误")]

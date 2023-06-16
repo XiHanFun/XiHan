@@ -20,6 +20,7 @@ using XiHan.Infrastructures.Responses.Results;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.Application.Common.Swagger;
 using XiHan.Application.Filters;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace XiHan.WebApi.Controllers.Test;
 
@@ -94,6 +95,17 @@ public class TestController : BaseApiController
     public ActionResult<ResultDto> LogInfo(string log)
     {
         return ResultDto.Success($"测试日志写入:{log}");
+    }
+
+    /// <summary>
+    /// 限流
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("RateLimiting")]
+    [EnableRateLimiting("MyPolicy")]
+    public ActionResult<ResultDto> RateLimiting()
+    {
+        return ResultDto.Success(DateTime.Now);
     }
 
     /// <summary>

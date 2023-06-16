@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Extensions;
 using XiHan.Application.Setups.Services;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Builder;
 
 namespace XiHan.Application.Setups;
 
@@ -51,6 +53,8 @@ public static class ServiceSetup
         services.AddSwaggerSetup();
         // RabbitMQ
         services.AddRabbitMqSetup();
+        // 限流
+        services.AddRateLimiterSetup();
         // 性能分析
         services.AddMiniProfilerSetup();
         // 健康检查
