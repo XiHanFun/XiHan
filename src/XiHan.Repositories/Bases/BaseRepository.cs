@@ -53,7 +53,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddAsync(TEntity entity)
     {
         entity.ToCreated();
-        return await InsertAsync(entity);
+        return await base.InsertAsync(entity);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddAsync(TEntity[] entities)
     {
         entities.ToList().ForEach(entity => entity.ToCreated());
-        return await InsertRangeAsync(entities);
+        return await base.InsertRangeAsync(entities);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddAsync(List<TEntity> entities)
     {
         entities.ForEach(entity => entity.ToCreated());
-        return await InsertRangeAsync(entities);
+        return await base.InsertRangeAsync(entities);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<long> AddReturnIdAsync(TEntity entity)
     {
         entity.ToCreated();
-        return await InsertReturnBigIdentityAsync(entity);
+        return await base.InsertReturnBigIdentityAsync(entity);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         entity.ToCreated();
         entity.ToModified();
-        return await InsertOrUpdateAsync(entity);
+        return await base.InsertOrUpdateAsync(entity);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             entity.ToCreated();
             entity.ToModified();
         });
-        return await InsertOrUpdateAsync(entityList);
+        return await base.InsertOrUpdateAsync(entityList);
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             entity.ToCreated();
             entity.ToModified();
         });
-        return await InsertOrUpdateAsync(entities);
+        return await base.InsertOrUpdateAsync(entities);
     }
 
     #endregion
@@ -143,7 +143,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(long id)
     {
-        return await DeleteByIdAsync(id);
+        return await base.DeleteByIdAsync(id);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> RemoveAsync(long[] ids)
     {
         dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
-        return await DeleteByIdsAsync(newIds);
+        return await base.DeleteByIdsAsync(newIds);
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(TEntity entity)
     {
-        return await DeleteAsync(entity);
+        return await base.DeleteAsync(entity);
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(List<TEntity> entities)
     {
-        return await DeleteAsync(entities);
+        return await base.DeleteAsync(entities);
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await DeleteAsync(whereExpression);
+        return await base.DeleteAsync(whereExpression);
     }
 
     #endregion
@@ -200,7 +200,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         var entity = await GetByIdAsync(id);
         entity.ToDeleted();
-        return await UpdateAsync(entity);
+        return await base.UpdateAsync(entity);
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> SoftRemoveAsync(TEntity entity)
     {
         entity.ToDeleted();
-        return await UpdateAsync(entity);
+        return await base.UpdateAsync(entity);
     }
 
     /// <summary>
@@ -222,7 +222,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> SoftRemoveAsync(List<TEntity> entities)
     {
         entities.ForEach(entity => entity.ToDeleted());
-        return await UpdateRangeAsync(entities);
+        return await base.UpdateRangeAsync(entities);
     }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         var entities = await GetListAsync(whereExpression);
         entities.ForEach(entity => entity.ToDeleted());
-        return await UpdateRangeAsync(entities);
+        return await base.UpdateRangeAsync(entities);
     }
 
     #endregion
@@ -249,7 +249,18 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
         entity.ToModified();
-        return await UpdateAsync(entity);
+        return await base.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 修改某列
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <param name="whereExpression"></param>
+    /// <returns></returns>
+    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
+    {
+        return await base.UpdateAsync(columns, whereExpression);
     }
 
     /// <summary>
@@ -260,7 +271,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> UpdateAsync(TEntity[] entities)
     {
         entities.ToList().ForEach(entity => entity.ToModified());
-        return await UpdateRangeAsync(entities);
+        return await base.UpdateRangeAsync(entities);
     }
 
     /// <summary>
@@ -271,22 +282,12 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
     {
         entities.ForEach(entity => entity.ToModified());
-        return await UpdateRangeAsync(entities);
+        return await base.UpdateRangeAsync(entities);
     }
 
     #endregion
 
     #region 查找查询
-
-    /// <summary>
-    /// 是否存在
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
-    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
-    }
 
     /// <summary>
     /// 根据Id查找
@@ -295,7 +296,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<TEntity> FindAsync(long id)
     {
-        return await GetByIdAsync(id);
+        return await base.GetByIdAsync(id);
     }
 
     /// <summary>
@@ -305,7 +306,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await GetFirstAsync(whereExpression);
+        return await base.GetFirstAsync(whereExpression);
     }
 
     /// <summary>
@@ -314,7 +315,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAllAsync()
     {
-        return await GetListAsync();
+        return await base.GetListAsync();
     }
 
     /// <summary>
@@ -324,7 +325,17 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression)
     {
-        return await GetListAsync(whereExpression);
+        return await base.GetListAsync(whereExpression);
+    }
+
+    /// <summary>
+    /// 是否存在
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <returns></returns>
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
     }
 
     /// <summary>

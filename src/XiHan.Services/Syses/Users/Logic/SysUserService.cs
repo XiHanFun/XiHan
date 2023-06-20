@@ -42,6 +42,86 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
+    /// 校验用户名称是否唯一
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    public async Task<bool> GetUserNameUnique(string userName)
+    {
+        var findSysUser = await GetFirstAsync(u => u.UserName == userName && !u.IsDeleted);
+        if (findSysUser != null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 新增用户
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<long> CreateUser(SysUser sysUser)
+    {
+        long userId = await AddReturnIdAsync(sysUser);
+
+        //新增用户角色信息
+        sysUser.BaseId = userId;
+        await _sysUserRoleService.CreateUserRole(sysUser);
+        return userId;
+    }
+
+    /// <summary>
+    /// 修改用户信息
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyUser(SysUser sysUser)
+    {
+        var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+
+        var diffArr = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
+        var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
+
+        if (diffArr.Any() || diffArr2.Any())
+        {
+            // 删除用户与角色关联
+            await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
+            // 新增用户与角色关联
+            await _sysUserRoleService.CreateUserRole(sysUser);
+        }
+        return await UpdateAsync(sysUser);
+    }
+
+    /// <summary>
+    /// 修改用户状态
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public async Task<bool> ChangeUserStatus(SysUser user)
+    {
+        return await UpdateAsync(s => new SysUser()
+        {
+            StateKey = user.StateKey,
+            StateValue = user.StateValue,
+        }, f => f.BaseId == user.BaseId);
+    }
+
+    /// <summary>
+    /// 重置密码
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public async Task<bool> ResetPassword(long userId, string password)
+    {
+        return await UpdateAsync(s => new SysUser()
+        {
+            Password = password
+        }, f => f.BaseId == userId);
+    }
+
+    /// <summary>
     /// 查询用户列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
@@ -78,60 +158,5 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         }
 
         return sysUser;
-    }
-
-    /// <summary>
-    /// 校验用户名称是否唯一
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <returns></returns>
-    public async Task<bool> GetUserNameUnique(string userName)
-    {
-        var findSysUser = await GetFirstAsync(u => u.UserName == userName && !u.IsDeleted);
-        if (findSysUser != null)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    /// <summary>
-    /// 新增用户
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <returns></returns>
-    public async Task<long> CreateUser(SysUser sysUser)
-    {
-        sysUser = sysUser.ToCreated();
-        long userId = await AddReturnIdAsync(sysUser);
-
-        //新增用户角色信息
-        sysUser.BaseId = userId;
-        await _sysUserRoleService.CreateUserRole(sysUser);
-
-        return userId;
-    }
-
-    /// <summary>
-    /// 修改用户信息
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <returns></returns>
-    public async Task<bool> ModifyUser(SysUser sysUser)
-    {
-        var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
-
-        var diffArr = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
-        var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
-
-        if (diffArr.Any() || diffArr2.Any())
-        {
-            // 删除用户与角色关联
-            await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
-            // 新增用户与角色关联
-            await _sysUserRoleService.CreateUserRole(sysUser);
-        }
-        sysUser = sysUser.ToModified();
-        return await UpdateAsync(sysUser);
     }
 }

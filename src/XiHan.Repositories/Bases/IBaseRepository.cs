@@ -157,6 +157,14 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     new Task<bool> UpdateAsync(TEntity entity);
 
     /// <summary>
+    /// 修改某列
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <param name="whereExpression"></param>
+    /// <returns></returns>
+    new Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression);
+
+    /// <summary>
     /// 批量修改
     /// </summary>
     /// <param name="entities"></param>
@@ -173,13 +181,6 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     #endregion
 
     #region 查找查询
-
-    /// <summary>
-    /// 是否存在
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
-    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression);
 
     /// <summary>
     /// 根据Id查找
@@ -207,6 +208,13 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="whereExpression">自定义条件</param>
     /// <returns></returns>
     Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression);
+
+    /// <summary>
+    /// 是否存在
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <returns></returns>
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression);
 
     /// <summary>
     /// 自定义条件查询
