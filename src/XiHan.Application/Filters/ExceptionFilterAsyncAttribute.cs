@@ -44,20 +44,30 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            // 未实现异常
-            if (context.Exception is NotImplementedException)
+            // 应用级异常
+            if (context.Exception is ApplicationException)
             {
-                context.Result = new JsonResult(ResultDto.NotImplemented());
+                context.Result = new JsonResult(ResultDto.BadRequest(context.Exception.Message));
             }
             // 认证授权异常
             else if (context.Exception is AuthenticationException)
             {
-                context.Result = new JsonResult(ResultDto.Unauthorized(context.Exception.Message));
+                context.Result = new JsonResult(ResultDto.Unauthorized());
             }
-            // 应用级异常
-            else if (context.Exception is ApplicationException)
+            // 禁止访问异常
+            else if (context.Exception is UnauthorizedAccessException)
             {
-                context.Result = new JsonResult(ResultDto.BadRequest(context.Exception.Message));
+                context.Result = new JsonResult(ResultDto.Forbidden());
+            }
+            // 数据未找到异常
+            else if (context.Exception is FileNotFoundException)
+            {
+                context.Result = new JsonResult(ResultDto.NotFound());
+            }
+            // 未实现异常
+            else if (context.Exception is NotImplementedException)
+            {
+                context.Result = new JsonResult(ResultDto.NotImplemented());
             }
             else
             {

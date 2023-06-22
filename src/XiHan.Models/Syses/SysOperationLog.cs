@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -27,7 +28,7 @@ public class SysOperationLog : BaseCreateEntity
     /// 操作模块
     ///</summary>
     [SugarColumn(Length = 20, IsNullable = true)]
-    public string? Module { get; set; }
+    public string Module { get; set; } = string.Empty;
 
     /// <summary>
     /// 业务类型
@@ -37,22 +38,28 @@ public class SysOperationLog : BaseCreateEntity
     public int BusinessType { get; set; }
 
     /// <summary>
-    /// 操作类型
+    /// 操作方法
     ///</summary>
-    [SugarColumn(IsNullable = true)]
-    public int? OperatorType { get; set; }
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Method { get; set; }
 
     /// <summary>
-    /// 请求类型 GET、POST等
+    /// 请求类型
+    /// HttpRequestMethodEnum GET、POST等
     /// </summary>
-    [SugarColumn(Length = 10, IsNullable = true)]
-    public string? RequestType { get; set; }
+    public int HttpRequestMethod { get; set; }
+
+    /// <summary>
+    /// 操作人员Id
+    ///</summary>
+    [SugarColumn(Length = 20, IsNullable = true)]
+    public string? UserId { get; set; }
 
     /// <summary>
     /// 操作人员
     ///</summary>
     [SugarColumn(Length = 20, IsNullable = true)]
-    public string? User { get; set; }
+    public string? UserName { get; set; }
 
     /// <summary>
     /// 操作Ip
@@ -73,12 +80,6 @@ public class SysOperationLog : BaseCreateEntity
     public string? Referrer { get; set; }
 
     /// <summary>
-    /// 操作方法
-    ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Method { get; set; }
-
-    /// <summary>
     /// 请求参数
     ///</summary>
     [SugarColumn(Length = 200, IsNullable = true)]
@@ -89,4 +90,17 @@ public class SysOperationLog : BaseCreateEntity
     ///</summary>
     [SugarColumn(Length = 4000, IsNullable = true)]
     public string? RequestResult { get; set; }
+
+    /// <summary>
+    /// 错误消息
+    /// </summary>
+    [DisplayName("错误消息")]
+    [SugarColumn(Length = 4000, IsNullable = true)]
+    public string? ErrorMsg { get; set; }
+
+    /// <summary>
+    /// 操作用时
+    /// </summary>
+    [DisplayName("操作用时")]
+    public long Elapsed { get; set; }
 }

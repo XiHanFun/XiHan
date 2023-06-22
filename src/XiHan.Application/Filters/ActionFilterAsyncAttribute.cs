@@ -78,10 +78,16 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 // 获取返回的结果
                 var returnResult = actionExecuted.Result as ActionResult;
                 // 判断是否请求成功，没有异常就是请求成功
-                var isRequestSucceed = actionExecuted.Exception == null;
-                // 请求成功就写入日志
-                if (isRequestSucceed && _actionLogSwitch)
-                    _logger.Information($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
+                var requestException = actionExecuted.Exception;
+                if (requestException != null)
+                {
+                    // 请求成功就写入日志
+                    if (_actionLogSwitch)
+                        _logger.Information($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
+                }
+                else
+                {
+                }
             }
         }
     }

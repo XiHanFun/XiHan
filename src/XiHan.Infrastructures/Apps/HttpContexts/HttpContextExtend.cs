@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Security.Claims;
 using UAParser;
-using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Infos.IpLocation;
 using XiHan.Utils.Extensions;

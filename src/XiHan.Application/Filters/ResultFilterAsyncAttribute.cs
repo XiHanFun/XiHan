@@ -42,20 +42,20 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         // 不为空就做处理
-        if (context.Result is ResultDto resultModel)
+        if (context.Result is ResultDto resultDto)
         {
             // 如果是 ResultDto，则转换为 JsonResult
-            context.Result = new JsonResult(resultModel);
-        }
-        else if (context.Result is ObjectResult objectResult)
-        {
-            // 如果是 ObjectResult，则转换为 JsonResult
-            context.Result = new JsonResult(objectResult.Value);
+            context.Result = new JsonResult(resultDto);
         }
         else if (context.Result is ContentResult contentResult)
         {
             // 如果是 ContentResult，则转换为 JsonResult
             context.Result = new JsonResult(contentResult.Content);
+        }
+        else if (context.Result is ObjectResult objectResult)
+        {
+            // 如果是 ObjectResult，则转换为 JsonResult
+            context.Result = new JsonResult(objectResult.Value);
         }
         else if (context.Result is JsonResult jsonResult)
         {

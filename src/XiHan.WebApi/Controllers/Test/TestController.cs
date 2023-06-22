@@ -14,13 +14,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Infos;
-using XiHan.Infrastructures.Responses.Results;
-using XiHan.WebApi.Controllers.Bases;
+using Microsoft.AspNetCore.RateLimiting;
 using XiHan.Application.Common.Swagger;
 using XiHan.Application.Filters;
-using Microsoft.AspNetCore.RateLimiting;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Infos;
+using XiHan.WebApi.Controllers.Bases;
 
 namespace XiHan.WebApi.Controllers.Test;
 
@@ -33,23 +32,16 @@ namespace XiHan.WebApi.Controllers.Test;
 public class TestController : BaseApiController
 {
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TestController()
-    {
-    }
-
-    /// <summary>
     /// 客户端信息
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public ActionResult<ResultDto> ClientInfo()
+    public HttpContexInfotHelper ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = App.HttpContext!;
         HttpContexInfotHelper clientInfoHelper = new(httpContext);
-        return ResultDto.Success(clientInfoHelper);
+        return clientInfoHelper;
     }
 
     /// <summary>
@@ -92,9 +84,9 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("LogInfo")]
     [TypeFilter(typeof(ActionFilterAsyncAttribute))]
-    public ActionResult<ResultDto> LogInfo(string log)
+    public string LogInfo(string log)
     {
-        return ResultDto.Success($"测试日志写入:{log}");
+        return $"测试日志写入:{log}";
     }
 
     /// <summary>
@@ -103,20 +95,9 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("RateLimiting")]
     [EnableRateLimiting("MyPolicy")]
-    public ActionResult<ResultDto> RateLimiting()
+    public string RateLimiting()
     {
-        return ResultDto.Success(DateTime.Now);
-    }
-
-    /// <summary>
-    /// 资源过滤器
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("ResourceFilterAttribute")]
-    [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
-    public ActionResult<ResultDto> ResourceFilterAttribute()
-    {
-        return ResultDto.Success(DateTime.Now);
+        return "测试限流";
     }
 
     /// <summary>
@@ -125,8 +106,8 @@ public class TestController : BaseApiController
     /// <returns></returns>
     [HttpGet("ResourceFilterAsyncAttribute")]
     [TypeFilter(typeof(ResourceFilterAsyncAttribute))]
-    public ActionResult<ResultDto> ResourceFilterAsyncAttribute()
+    public string ResourceFilterAsyncAttribute()
     {
-        return ResultDto.Success(DateTime.Now);
+        return "异步资源过滤器" + DateTime.Now;
     }
 }

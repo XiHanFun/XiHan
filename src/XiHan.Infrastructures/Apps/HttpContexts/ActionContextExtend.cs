@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Reflection;
 using System.Security.Claims;
 using XiHan.Infrastructures.Responses.Results;
-using static XiHan.Infrastructures.Apps.Configs.AppSettings.Auth;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
