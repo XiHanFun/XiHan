@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using XiHan.Infrastructures.Responses.Actions;
 using XiHan.Utils.Extensions;
 
@@ -30,12 +31,12 @@ public class ResultDto
     /// <summary>
     /// 响应码
     /// </summary>
-    public HttpResponseCodeEnum Code { get; set; } = HttpResponseCodeEnum.Success;
+    public ResponseCodeEnum Code { get; set; } = ResponseCodeEnum.Success;
 
     /// <summary>
     /// 响应信息
     /// </summary>
-    public string? Message { get; set; } = HttpResponseCodeEnum.Success.GetEnumDescriptionByKey();
+    public string? Message { get; set; } = ResponseCodeEnum.Success.GetEnumDescriptionByKey();
 
     /// <summary>
     /// 数据集合
@@ -56,8 +57,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = true,
-            Code = HttpResponseCodeEnum.Continue,
-            Message = HttpResponseCodeEnum.Continue.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Continue,
+            Message = ResponseCodeEnum.Continue.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -71,8 +72,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = true,
-            Code = HttpResponseCodeEnum.Success,
-            Message = HttpResponseCodeEnum.Success.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Success,
+            Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -87,8 +88,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = true,
-            Code = HttpResponseCodeEnum.Success,
-            Message = HttpResponseCodeEnum.Success.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Success,
+            Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -103,8 +104,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = true,
-            Code = HttpResponseCodeEnum.Success,
-            Message = HttpResponseCodeEnum.Success.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Success,
+            Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
             Datas = datas
         };
     }
@@ -119,8 +120,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.BadRequest,
-            Message = HttpResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.BadRequest,
+            Message = ResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -135,8 +136,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.BadRequest,
-            Message = HttpResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.BadRequest,
+            Message = ResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
             Datas = datas
         };
     }
@@ -150,8 +151,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.Unauthorized,
-            Message = HttpResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Unauthorized,
+            Message = ResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -166,8 +167,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.Unauthorized,
-            Message = HttpResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Unauthorized,
+            Message = ResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -181,8 +182,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.Forbidden,
-            Message = HttpResponseCodeEnum.Forbidden.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.Forbidden,
+            Message = ResponseCodeEnum.Forbidden.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -196,8 +197,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.NotFound,
-            Message = HttpResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.NotFound,
+            Message = ResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -212,9 +213,24 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.NotFound,
-            Message = HttpResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.NotFound,
+            Message = ResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
             Datas = messageData
+        };
+    }
+
+    /// <summary>
+    ///  响应失败，参数不合法 422
+    /// </summary>
+    /// <returns></returns>
+    public static ResultDto UnprocessableEntity()
+    {
+        return new ResultDto
+        {
+            IsSuccess = false,
+            Code = ResponseCodeEnum.UnprocessableEntity,
+            Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Datas = null
         };
     }
 
@@ -228,8 +244,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.UnprocessableEntity,
-            Message = HttpResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.UnprocessableEntity,
+            Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -237,16 +253,16 @@ public class ResultDto
     /// <summary>
     /// 响应失败，参数不合法 422
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="modelState"></param>
     /// <returns></returns>
-    public static ResultDto UnprocessableEntity(ActionExecutingContext context)
+    public static ResultDto UnprocessableEntity(ModelStateDictionary modelState)
     {
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.UnprocessableEntity,
-            Message = HttpResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Datas = new ValidationDto(context)
+            Code = ResponseCodeEnum.UnprocessableEntity,
+            Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
+            Datas = new ValidationDto(modelState)
         };
     }
 
@@ -260,8 +276,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.TooManyRequests,
-            Message = HttpResponseCodeEnum.TooManyRequests.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.TooManyRequests,
+            Message = ResponseCodeEnum.TooManyRequests.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -275,8 +291,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.InternalServerError,
-            Message = HttpResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.InternalServerError,
+            Message = ResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
             Datas = null
         };
     }
@@ -290,8 +306,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.InternalServerError,
-            Message = HttpResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.InternalServerError,
+            Message = ResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
             Datas = messageData
         };
     }
@@ -305,8 +321,8 @@ public class ResultDto
         return new ResultDto
         {
             IsSuccess = false,
-            Code = HttpResponseCodeEnum.NotImplemented,
-            Message = HttpResponseCodeEnum.NotImplemented.GetEnumDescriptionByKey(),
+            Code = ResponseCodeEnum.NotImplemented,
+            Message = ResponseCodeEnum.NotImplemented.GetEnumDescriptionByKey(),
             Datas = null
         };
     }

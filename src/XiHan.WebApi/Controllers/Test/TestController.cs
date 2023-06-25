@@ -72,7 +72,7 @@ public class TestController : BaseApiController
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     [HttpGet("Exception")]
-    public string Exception()
+    public string NotImplementedException()
     {
         throw new NotImplementedException("这是一个未实现或异常的接口");
     }

@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Infrastructures.Infos;
@@ -34,6 +35,7 @@ public class HttpContexInfotHelper
 
         ClientInfo = httpContext.GetClientInfo();
         AddressInfo = httpContext.GetAddressInfo();
+        AuthInfo = httpContext.GetUserAuthInfo();
     }
 
     /// <summary>
@@ -45,54 +47,11 @@ public class HttpContexInfotHelper
     /// 地址信息
     /// </summary>
     public UserAddressInfo? AddressInfo { get; set; }
-}
-
-/// <summary>
-/// Ip 地区信息
-/// </summary>
-public class UserAddressInfo
-{
-    /// <summary>
-    /// 国家
-    /// 中国
-    /// </summary>
-    public string? Country { get; set; }
 
     /// <summary>
-    /// 省份/自治区/直辖市
-    /// 贵州
+    /// 权限信息
     /// </summary>
-    public string? State { get; set; }
-
-    /// <summary>
-    /// 地级市
-    /// 安顺
-    /// </summary>
-    public string? PrefectureLevelCity { get; set; }
-
-    /// <summary>
-    /// 区/县
-    /// 西秀区
-    /// </summary>
-    public string? DistrictOrCounty { get; set; }
-
-    /// <summary>
-    /// 运营商
-    /// 联通
-    /// </summary>
-    public string? Operator { get; set; }
-
-    /// <summary>
-    /// 邮政编码
-    /// 561000
-    /// </summary>
-    public long? PostalCode { get; set; }
-
-    /// <summary>
-    /// 地区区号
-    /// 0851
-    /// </summary>
-    public int? AreaCode { get; set; }
+    public UserAuthInfo? AuthInfo { get; set; }
 }
 
 /// <summary>
@@ -149,4 +108,98 @@ public class UserClientInfo
     /// 远程IPv6
     /// </summary>
     public string? RemoteIPv6 { get; init; }
+
+    /// <summary>
+    /// 请求地址
+    /// </summary>
+    public string? RequestUrl { get; init; }
+
+    /// <summary>
+    /// 请求参数
+    /// </summary>
+    public string? QueryString { get; init; }
+}
+
+/// <summary>
+/// 地址信息
+/// </summary>
+public class UserAddressInfo
+{
+    /// <summary>
+    /// 国家
+    /// 中国
+    /// </summary>
+    public string? Country { get; set; }
+
+    /// <summary>
+    /// 省份/自治区/直辖市
+    /// 贵州
+    /// </summary>
+    public string? State { get; set; }
+
+    /// <summary>
+    /// 地级市
+    /// 安顺
+    /// </summary>
+    public string? PrefectureLevelCity { get; set; }
+
+    /// <summary>
+    /// 区/县
+    /// 西秀区
+    /// </summary>
+    public string? DistrictOrCounty { get; set; }
+
+    /// <summary>
+    /// 运营商
+    /// 联通
+    /// </summary>
+    public string? Operator { get; set; }
+
+    /// <summary>
+    /// 邮政编码
+    /// 561000
+    /// </summary>
+    public long? PostalCode { get; set; }
+
+    /// <summary>
+    /// 地区区号
+    /// 0851
+    /// </summary>
+    public int? AreaCode { get; set; }
+}
+
+/// <summary>
+/// 权限信息
+/// </summary>
+public class UserAuthInfo
+{
+    /// <summary>
+    /// 用户 Id
+    /// </summary>
+    public long? UserId { get; set; }
+
+    /// <summary>
+    /// 用户名称
+    /// </summary>
+    public string? UserName { get; set; }
+
+    /// <summary>
+    /// 用户权限
+    /// </summary>
+    public string? UserRole { get; set; }
+
+    /// <summary>
+    /// 请求令牌
+    /// </summary>
+    public string? UserToken { get; set; }
+
+    /// <summary>
+    /// 是否管理员
+    /// </summary>
+    public bool? IsAdmin { get; set; }
+
+    /// <summary>
+    /// ClaimsIdentity
+    /// </summary>
+    public IEnumerable<ClaimsIdentity>? Claims { get; set; }
 }

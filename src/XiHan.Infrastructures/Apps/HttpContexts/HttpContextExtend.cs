@@ -27,6 +27,66 @@ namespace XiHan.Infrastructures.Apps.HttpContexts;
 /// </summary>
 public static class HttpContextExtend
 {
+    #region 客户端信息
+
+    /// <summary>
+    /// 获取客户端信息
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static UserClientInfo GetClientInfo(this HttpContext httpContext)
+    {
+        if (httpContext == null)
+        {
+            throw new ArgumentNullException(nameof(httpContext));
+        }
+
+        var clientModel = new UserClientInfo
+        {
+            RemoteIPv4 = httpContext.GetClientIpV4(),
+            RemoteIPv6 = httpContext.GetClientIpV6(),
+            RequestUrl = httpContext.GetRequestUrl(),
+            QueryString = httpContext.GetQueryString()
+        };
+
+        var header = httpContext.Request.HttpContext.Request.Headers;
+
+        if (header.TryGetValue("Accept-Language", out var value))
+        {
+            clientModel.Language = value.ToString().Split(';')[0];
+        }
+        if (header.TryGetValue("Referer", out var value1))
+        {
+            clientModel.Referer = value1.ToString();
+        }
+        if (header.TryGetValue("User-Agent", out var value2))
+        {
+            var agent = value2.ToString();
+            var clientInfo = Parser.GetDefault().Parse(agent);
+            clientModel.Agent = agent;
+            clientModel.OsName = clientInfo.OS.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
+            {
+                clientModel.OsVersion = clientInfo.OS.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
+                {
+                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
+                }
+            }
+            clientModel.UaName = clientInfo.UA.Family;
+            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
+            {
+                clientModel.UaVersion = clientInfo.UA.Major;
+                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
+                {
+                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
+                }
+            }
+        }
+        return clientModel;
+    }
+
     /// <summary>
     /// 是否是 ajax 请求
     /// </summary>
@@ -40,6 +100,16 @@ public static class HttpContextExtend
         }
         var request = context.Request;
         return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers != null && request.Headers["X-Requested-With"] == "XMLHttpRequest";
+    }
+
+    /// <summary>
+    /// 判断是否IP
+    /// </summary>
+    /// <param name="ip"></param>
+    /// <returns></returns>
+    public static bool IsIp(string ip)
+    {
+        return RegexHelper.IsIpRegex(ip);
     }
 
     /// <summary>
@@ -100,60 +170,28 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 获取客户端信息
+    /// 获取请求Url
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static UserClientInfo GetClientInfo(this HttpContext httpContext)
+    public static string? GetRequestUrl(this HttpContext context)
     {
-        if (httpContext == null)
-        {
-            throw new ArgumentNullException(nameof(httpContext));
-        }
-
-        var clientModel = new UserClientInfo
-        {
-            RemoteIPv4 = httpContext.GetClientIpV4(),
-            RemoteIPv6 = httpContext.GetClientIpV6(),
-        };
-
-        var header = httpContext.Request.HttpContext.Request.Headers;
-
-        if (header.TryGetValue("Accept-Language", out var value))
-        {
-            clientModel.Language = value.ToString().Split(';')[0];
-        }
-        if (header.TryGetValue("Referer", out var value1))
-        {
-            clientModel.Referer = value1.ToString();
-        }
-        if (header.TryGetValue("User-Agent", out var value2))
-        {
-            var agent = value2.ToString();
-            var clientInfo = Parser.GetDefault().Parse(agent);
-            clientModel.Agent = agent;
-            clientModel.OsName = clientInfo.OS.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
-            {
-                clientModel.OsVersion = clientInfo.OS.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
-                {
-                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
-                }
-            }
-            clientModel.UaName = clientInfo.UA.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
-            {
-                clientModel.UaVersion = clientInfo.UA.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
-                {
-                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
-                }
-            }
-        }
-        return clientModel;
+        return context != null ? context.Request.Path.Value : "";
     }
+
+    /// <summary>
+    /// 获取请求参数
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string? GetQueryString(this HttpContext context)
+    {
+        return context != null ? context.Request.QueryString.Value : "";
+    }
+
+    #endregion
+
+    #region 地址信息
 
     /// <summary>
     /// 获取地址信息
@@ -172,15 +210,38 @@ public static class HttpContextExtend
         return addressInfo;
     }
 
+    #endregion
+
+    #region 权限信息
+
+    /// <summary>
+    /// 获取登录用户权限信息
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    public static UserAuthInfo GetUserAuthInfo(this HttpContext httpContext)
+    {
+        var userAuthInfo = new UserAuthInfo
+        {
+            UserId = httpContext.GetUserId(),
+            UserName = httpContext.GetUserName(),
+            UserRole = httpContext.GetUserRole(),
+            UserToken = httpContext.GetUserToken(),
+            IsAdmin = httpContext.IsAdmin(),
+            Claims = httpContext.GetClaims()
+        };
+        return userAuthInfo;
+    }
+
     /// <summary>
     /// 获取登录用户 Id
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static long GetUserId(this HttpContext context)
+    public static long? GetUserId(this HttpContext context)
     {
         var uid = context.User.FindFirstValue(ClaimTypes.PrimarySid);
-        return uid.IsNotEmptyOrNull() ? uid.ParseToLong() : 0L;
+        return uid.ParseToLong();
     }
 
     /// <summary>
@@ -190,8 +251,8 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string? GetUserName(this HttpContext context)
     {
-        var uid = context.User?.Identity?.Name;
-        return uid;
+        var uname = context.User?.Identity?.Name;
+        return uname;
     }
 
     /// <summary>
@@ -199,20 +260,10 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static int GetUserRole(this HttpContext context)
+    public static string? GetUserRole(this HttpContext context)
     {
-        var roleid = context.User.FindFirstValue(ClaimTypes.Role) ?? "0";
-        return roleid.ParseToInt();
-    }
-
-    /// <summary>
-    /// 获取用户代理
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string GetUserAgent(this HttpContext context)
-    {
-        return context.Request.Headers["User-Agent"].ToString();
+        var roleid = context.User.FindFirstValue(ClaimTypes.Role);
+        return roleid.ParseToString();
     }
 
     /// <summary>
@@ -246,33 +297,5 @@ public static class HttpContextExtend
         return context.User?.Identities;
     }
 
-    /// <summary>
-    /// 获取请求Url
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string? GetRequestUrl(this HttpContext context)
-    {
-        return context != null ? context.Request.Path.Value : "";
-    }
-
-    /// <summary>
-    /// 获取请求参数
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string? GetQueryString(this HttpContext context)
-    {
-        return context != null ? context.Request.QueryString.Value : "";
-    }
-
-    /// <summary>
-    /// 判断是否IP
-    /// </summary>
-    /// <param name="ip"></param>
-    /// <returns></returns>
-    public static bool IsIp(string ip)
-    {
-        return RegexHelper.IsIpRegex(ip);
-    }
+    #endregion
 }

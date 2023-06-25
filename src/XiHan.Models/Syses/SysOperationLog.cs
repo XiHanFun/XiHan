@@ -28,14 +28,15 @@ public class SysOperationLog : BaseCreateEntity
     /// 操作模块
     ///</summary>
     [SugarColumn(Length = 20, IsNullable = true)]
-    public string Module { get; set; } = string.Empty;
+    public string? Module { get; set; }
 
     /// <summary>
     /// 业务类型
     /// BusinessTypeEnum
     /// 0其它 1新增 2修改 3删除 4授权 5导出 6导入 7强退 8生成代码 9清空数据
     /// </summary>
-    public int BusinessType { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public int? BusinessType { get; set; }
 
     /// <summary>
     /// 操作方法
@@ -47,7 +48,8 @@ public class SysOperationLog : BaseCreateEntity
     /// 请求类型
     /// HttpRequestMethodEnum GET、POST等
     /// </summary>
-    public int HttpRequestMethod { get; set; }
+    [SugarColumn(IsNullable = true)]
+    public int? HttpRequestMethod { get; set; }
 
     /// <summary>
     /// 操作人员Id

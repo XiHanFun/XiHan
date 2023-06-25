@@ -16,10 +16,10 @@ using Quartz.Impl;
 using Quartz.Impl.Matchers;
 using Quartz.Impl.Triggers;
 using Quartz.Spi;
-using Serilog;
 using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
@@ -78,57 +78,46 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
             {
-                throw new ApplicationException($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
+                throw new Exception($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
             }
 
             // 判断任务类型，并创建一个任务，用于描述这个后台任务的详细信息
             IJobDetail job = new JobDetailImpl();
-            switch (sysTasks.JobType)
+            job = sysTasks.JobType switch
             {
                 // 程序集
-                case (int)JobTypeEnum.Assembly:
-                    job = CreateAssemblyJobDetail(sysTasks);
-                    break;
+                (int)JobTypeEnum.Assembly => CreateAssemblyJobDetail(sysTasks),
                 // 网络请求
-                case (int)JobTypeEnum.NetworkRequest:
-                    job = CreateNetworkRequestJobDetail(sysTasks);
-                    break;
+                (int)JobTypeEnum.NetworkRequest => CreateNetworkRequestJobDetail(sysTasks),
                 // SQL语句类型
-                case (int)JobTypeEnum.SqlStatement:
-                    job = CreateSqlStatementJobDetail(sysTasks);
-                    break;
-            }
+                (int)JobTypeEnum.SqlStatement => CreateSqlStatementJobDetail(sysTasks),
+                _ => throw new Exception("尝试创建系统未指定的任务类型！"),
+            };
 
             // 判断触发器类型，并创建一个触发器，指定任务的调度规则
             ITrigger trigger = TriggerBuilder.Create().Build();
-            switch (sysTasks.TriggerType)
+            trigger = sysTasks.TriggerType switch
             {
                 // 定时任务
-                case (int)TriggerTypeEnum.Interval:
-                    trigger = CreateIntervalTrigger(sysTasks);
-                    break;
+                (int)TriggerTypeEnum.Interval => CreateIntervalTrigger(sysTasks),
                 // 时间点或者周期性任务
-                case (int)TriggerTypeEnum.Cron:
-                    trigger = CreateCronTrigger(sysTasks);
-                    break;
-            }
+                (int)TriggerTypeEnum.Cron => CreateCronTrigger(sysTasks),
+                _ => throw new Exception("尝试创建系统未指定的触发器类型！"),
+            };
 
-            // 开启调度器，判断任务调度是否开启
+            // 判断任务调度是否开启，开启调度器
             if (!_scheduler.IsStarted) await StartTaskScheduleAsync();
 
             // 将触发器和任务器绑定到调度器中
             await _scheduler.ScheduleJob(job, trigger);
-            // 按新的trigger重新设置job执行
+            // 按新的触发器重新设置任务执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return ResultDto.Success($"添加计划任务【{sysTasks.Name}】成功！");
+            return ResultDto.Success($"添加计划【{sysTasks.Name}】成功！");
         }
         catch (Exception ex)
         {
-            var errorInfo = $"添加计划任务【{sysTasks.Name}】失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"添加计划任务【{sysTasks.Name}】失败！", ex);
         }
     }
 
@@ -151,10 +140,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"修改计划任务【{sysTasks.Name}】失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"修改计划任务【{sysTasks.Name}】失败！", ex);
         }
     }
 
@@ -173,10 +159,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"删除计划任务【{sysTasks.Name}】失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"删除计划任务【{sysTasks.Name}】失败！", ex);
         }
     }
 
@@ -201,10 +184,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"开启计划任务失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"开启计划任务失败！", ex);
         }
     }
 
@@ -228,10 +208,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"停止计划任务失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException("停止计划任务失败！", ex);
         }
     }
 
@@ -263,10 +240,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"执行计划任务【{sysTasks.Name}】失败";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"执行计划任务【{sysTasks.Name}】失败", ex);
         }
     }
 
@@ -289,10 +263,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"暂停计划任务【{sysTasks.Name}】失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"暂停计划任务【{sysTasks.Name}】失败！", ex);
         }
     }
 
@@ -315,10 +286,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            var errorInfo = $"恢复计划任务【{sysTasks.Name}】失败！";
-            Log.Error(ex, errorInfo);
-            errorInfo.WriteLineError();
-            throw new ApplicationException(errorInfo);
+            throw new CustomException($"恢复计划任务【{sysTasks.Name}】失败！", ex);
         }
     }
 

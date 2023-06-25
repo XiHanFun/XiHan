@@ -19,6 +19,7 @@ using Serilog;
 using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Application.Filters;
 
@@ -55,26 +56,15 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        // 获取控制器、路由信息
-        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-        // 获取请求的方法
-        var method = actionDescriptor!.MethodInfo;
-        // 获取 HttpContext 和 HttpRequest 对象
-        var httpContext = context.HttpContext;
-        var httpRequest = httpContext.Request;
-        // 获取客户端 Ip 地址
-        var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-        // 获取请求的 Url 地址(域名、路径、参数)
-        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
-        // 获取操作人（必须授权访问才有值）"userId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-        var userId = httpContext.User.FindFirstValue("UserId");
+        // 控制器信息
+        var actionContextInfo = context.GetActionContextInfo();
         // 写入日志
-        var info = $"\t 请求Ip：{remoteIp}\n" +
-                   $"\t 请求地址：{requestUrl}\n" +
-                   $"\t 请求方法：{method}\n" +
-                   $"\t 操作用户：{userId}";
+        var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
+                   $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                   $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                   $"\t 操作用户：{actionContextInfo.UserId}";
         // 若存在此资源，直接返回缓存资源
-        if (_memoryCache.TryGetValue(requestUrl + method, out var value))
+        if (_memoryCache.TryGetValue(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, out var value))
         {
             // 请求构造函数和方法
             context.Result = value as ActionResult;
@@ -88,9 +78,8 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             // 执行结果，若不存在此资源，缓存请求后的资源（请求构造函数和方法）
             if (resourceExecuted.Result != null)
             {
-                var syncTimeout = TimeSpan.FromMinutes(_syncTimeout);
                 var result = resourceExecuted.Result as ActionResult;
-                _memoryCache.Set(requestUrl + method, result, syncTimeout);
+                _memoryCache.Set(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, result, TimeSpan.FromMinutes(_syncTimeout));
                 if (_resourceLogSwitch)
                 {
                     _logger.Information($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");

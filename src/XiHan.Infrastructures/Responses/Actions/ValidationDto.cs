@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace XiHan.Infrastructures.Responses.Actions;
 
@@ -23,11 +23,11 @@ public class ValidationDto
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ValidationDto(ActionExecutingContext context)
+    public ValidationDto(ModelStateDictionary modelState)
     {
-        TotalCount = context.ModelState.Count;
-        ValidationErrorDto = context.ModelState.Keys
-                .SelectMany(key => context.ModelState[key]!.Errors
+        TotalCount = modelState.Count;
+        ValidationErrorDto = modelState.Keys
+                .SelectMany(key => modelState[key]!.Errors
                 .Select(x => new ValidationErrorDto(key, x.ErrorMessage)))
                 .ToList();
     }

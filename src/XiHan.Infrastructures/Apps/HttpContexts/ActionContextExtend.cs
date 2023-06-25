@@ -13,7 +13,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Reflection;
 using System.Security.Claims;
 using XiHan.Infrastructures.Responses.Results;
@@ -28,11 +28,11 @@ public static class ActionContextExtend
     /// <summary>
     /// 获取模型验证出错字段
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="modelState"></param>
     /// <returns></returns>
-    public static ResultDto GetValidationErrors(this ActionExecutingContext context)
+    public static ResultDto GetValidationErrors(this ModelStateDictionary modelState)
     {
-        return ResultDto.UnprocessableEntity(context);
+        return ResultDto.UnprocessableEntity(modelState);
     }
 
     /// <summary>
@@ -58,14 +58,16 @@ public static class ActionContextExtend
         // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
         var userId = httpContext.User.FindFirstValue("UserId");
 
-        var actionContextInfo = new ActionContextInfo();
-        actionContextInfo.MethodInfo = methodInfo;
-        actionContextInfo.MethodReturnType = methodInfo?.ReturnType;
-        actionContextInfo.ControllerType = actionDescriptor?.ControllerTypeInfo;
-        actionContextInfo.RemoteIp = remoteIp;
-        actionContextInfo.RequestUrl = requestUrl;
-        //actionContextInfo.ActionArguments = parameters;
-        actionContextInfo.UserId = userId;
+        var actionContextInfo = new ActionContextInfo
+        {
+            MethodInfo = methodInfo,
+            MethodReturnType = methodInfo?.ReturnType,
+            ControllerType = actionDescriptor?.ControllerTypeInfo,
+            RemoteIp = remoteIp,
+            RequestUrl = requestUrl,
+            //actionContextInfo.ActionArguments = parameters;
+            UserId = userId
+        };
 
         return actionContextInfo;
     }

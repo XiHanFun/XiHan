@@ -41,16 +41,17 @@ public static class TaskSetup
         try
         {
             ITaskSchedulerServer schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
+            var context = SqlSugar.IOC.DbScoped.SugarScope;
 
-            var tasks = SqlSugar.IOC.DbScoped.SugarScope.Queryable<SysTasks>()
+            var tasks = context.Queryable<SysTasks>()
                 .Where(m => m.IsStart)
                 .ToList();
 
             // 程序启动后注册所有定时任务
             foreach (var task in tasks)
             {
-                var result = schedulerServer.CreateTaskScheduleAsync(task).Result;
-                if (result.IsSuccess)
+                var result = schedulerServer.CreateTaskScheduleAsync(task);
+                if (result.Result.IsSuccess)
                 {
                     var info = $"注册任务：{task.Name}成功！";
                     info.WriteLineSuccess();
@@ -66,7 +67,7 @@ public static class TaskSetup
         }
         catch (Exception ex)
         {
-            var errorInfo = @$"注册定时任务出错！";
+            var errorInfo = $"注册定时任务出错！";
             errorInfo.WriteLineError();
             Log.Error(ex, errorInfo);
         }

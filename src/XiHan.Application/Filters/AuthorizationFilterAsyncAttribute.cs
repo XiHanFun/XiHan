@@ -12,11 +12,11 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
 using System.Security.Authentication;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Application.Filters;
 
@@ -39,33 +39,21 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        // 获取控制器、路由信息
-        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-        // 获取请求的方法
-        var method = actionDescriptor!.MethodInfo;
-        // 获取 Action 类型
-        var methodType = actionDescriptor.MethodInfo;
-        // 获取 HttpContext 对象
-        var httpContext = context.HttpContext;
-        var httpRequest = httpContext.Request;
-        // 获取控制器类型
-        var controllerType = actionDescriptor.ControllerTypeInfo;
-        // 获取客户端 Ip 地址
-        var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-        // 获取请求的 Url 地址(域名、路径、参数)
-        var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
+        // 控制器信息
+        var actionContextInfo = context.GetActionContextInfo();
         // 是否授权访问
         var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
-                            || controllerType.IsDefined(typeof(AuthorizeAttribute), true)
-                            || methodType.IsDefined(typeof(AuthorizeAttribute), true);
+                            || actionContextInfo.ControllerType!.IsDefined(typeof(AuthorizeAttribute), true)
+                            || actionContextInfo.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
         // 写入日志
-        var info = $"\t 请求Ip：{remoteIp}\n" +
-                   $"\t 请求地址：{requestUrl}\n" +
-                   $"\t 请求方法：{method}";
+        var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
+                   $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                   $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                   $"\t 操作用户：{actionContextInfo.UserId}";
         // 授权访问就进行权限检查
         if (isAuthorize)
         {
-            var identities = httpContext.User.Identities;
+            var identities = context.HttpContext.User.Identities;
             // 验证权限
             if (identities == null)
             {

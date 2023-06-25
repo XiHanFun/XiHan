@@ -12,10 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Spi;
-using XiHan.Utils.Extensions;
+using XiHan.Infrastructures.Exceptions;
 
 namespace XiHan.Tasks.Bases;
 
@@ -24,18 +23,15 @@ namespace XiHan.Tasks.Bases;
 /// </summary>
 public class JobFactory : IJobFactory
 {
-    private readonly ILogger<JobFactory> _logger;
     private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
     /// 构造函数
     /// 注入反射获取依赖对象
     /// </summary>
-    /// <param name="logger"></param>
     /// <param name="serviceProvider"></param>
-    public JobFactory(ILogger<JobFactory> logger, IServiceProvider serviceProvider)
+    public JobFactory(IServiceProvider serviceProvider)
     {
-        _logger = logger;
         _serviceProvider = serviceProvider;
     }
 
@@ -63,10 +59,7 @@ public class JobFactory : IJobFactory
         }
         catch (Exception ex)
         {
-            var errorInfo = "Job创建失败！";
-            errorInfo.WriteLineError();
-            _logger.LogError(ex, errorInfo);
-            throw;
+            throw new CustomException("Job创建失败！", ex);
         }
     }
 

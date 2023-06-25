@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
-// FileName:HttpResponseCodeEnum
+// FileName:ResponseCodeEnum
 // Guid:1c4a433e-7804-4d50-8947-a001d4b9ee2f
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,7 +18,7 @@ namespace XiHan.Infrastructures.Responses.Results;
 /// <summary>
 /// 通用响应标识
 /// </summary>
-public enum HttpResponseCodeEnum
+public enum ResponseCodeEnum
 {
     /// <summary>
     /// 继续请求

@@ -12,10 +12,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
-using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
@@ -42,33 +40,20 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         // 模型验证
-        if (!context.ModelState.IsValid)
+        var modelState = context.ModelState;
+        if (!modelState.IsValid)
         {
-            context.Result = new JsonResult(context.GetValidationErrors());
+            context.Result = new JsonResult(modelState.GetValidationErrors());
         }
         else
         {
-            // 获取控制器、路由信息
-            var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-            // 获取请求的方法
-            var method = actionDescriptor?.MethodInfo;
-            // 获取 HttpContext 和 HttpRequest 对象
-            var httpContext = context.HttpContext;
-            var httpRequest = httpContext.Request;
-            // 获取客户端 Ip 地址
-            var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
-            // 获取请求的 Url 地址(域名、路径、参数)
-            var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
-            // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
-            var parameters = context.ActionArguments;
-            // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
-            var userId = httpContext.User.FindFirstValue("UserId");
+            // 控制器信息
+            var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
-            var info = $"\t 请求Ip：{remoteIp}\n" +
-                       $"\t 请求地址：{requestUrl}\n" +
-                       $"\t 请求方法：{method}\n" +
-                       $"\t 请求参数：{parameters}\n" +
-                       $"\t 操作用户：{userId}";
+            var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
+                       $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                       $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                       $"\t 操作用户：{actionContextInfo.UserId}";
             if (_actionLogSwitch)
                 _logger.Information($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
@@ -83,7 +68,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 {
                     // 请求成功就写入日志
                     if (_actionLogSwitch)
-                        _logger.Information($"请求数据\n{info}\n {JsonSerializer.Serialize(returnResult)}");
+                        _logger.Information($"请求结果\n{info}\n {JsonSerializer.Serialize(returnResult)}");
                 }
                 else
                 {
