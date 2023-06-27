@@ -33,10 +33,10 @@ public static class InitDatabaseStep
     public static void InitDatabase(this IApplicationBuilder app)
     {
         var db = DbScoped.SugarScope;
-        var databaseInited = AppSettings.Database.Inited.GetValue();
+        var databaseInitialized = AppSettings.Database.Initialized.GetValue();
         // 若数据库已经初始化，则跳过，否则初始化数据库
         "正在从配置中检测是否需要数据库初始化……".WriteLineInfo();
-        if (databaseInited)
+        if (databaseInitialized)
         {
             "数据库已初始化。".WriteLineSuccess();
         }
@@ -55,11 +55,11 @@ public static class InitDatabaseStep
                 "创建数据表……".WriteLineInfo();
 
                 // 获取所有 XiHan.Models 的实体
-                var entityes = ReflectionHelper.GetAllTypes()
+                var entities = ReflectionHelper.GetAllTypes()
                     .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)
                     .ToArray();
 
-                db.CodeFirst.SetStringDefaultLength(512).InitTables(entityes);
+                db.CodeFirst.SetStringDefaultLength(512).InitTables(entities);
 
                 "数据表创建成功！".WriteLineSuccess();
                 "数据库初始化已完成！".WriteLineSuccess();

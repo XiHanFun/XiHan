@@ -39,10 +39,7 @@ public class JsonHelper
     /// <returns></returns>
     public TEntity? Get<TEntity>()
     {
-        if (!File.Exists(_jsonFilePath))
-        {
-            return default;
-        }
+        if (!File.Exists(_jsonFilePath)) return default;
         var jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
         var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
@@ -56,10 +53,7 @@ public class JsonHelper
     /// <returns>类型为TEntity的对象</returns>
     public TEntity? Get<TEntity>(string keyLink)
     {
-        if (!File.Exists(_jsonFilePath))
-        {
-            return default;
-        }
+        if (!File.Exists(_jsonFilePath)) return default;
         using StreamReader streamReader = new(_jsonFilePath);
         var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
@@ -69,12 +63,12 @@ public class JsonHelper
         foreach (var key in keys)
         {
             currentObject = currentObject[key];
-            if (currentObject == null)
-            {
-                return default;
-            }
+            if (currentObject == null) return default;
         }
-        var result = JsonSerializer.Deserialize<TEntity>(currentObject.ToString(), SerializeHelper.JsonSerializerOptionsInstance);
+
+        var result =
+            JsonSerializer.Deserialize<TEntity>(currentObject.ToString(),
+                SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
@@ -101,13 +95,9 @@ public class JsonHelper
             if (i == keys.Length - 1)
             {
                 if (isValueType || value is string)
-                {
                     oldObject[keys[i]] = JsonSerializer.Serialize(value);
-                }
                 else
-                {
                     oldObject[keys[i]] = value;
-                }
             }
             else
             {
@@ -118,6 +108,7 @@ public class JsonHelper
                 currentObject = oldObject[keys[i]];
             }
         }
+
         Save<dynamic>(jsoObj);
     }
 

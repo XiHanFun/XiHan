@@ -36,11 +36,11 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public HttpContexInfotHelper ClientInfo()
+    public HttpContextInfoHelper ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
         var httpContext = App.HttpContext!;
-        HttpContexInfotHelper clientInfoHelper = new(httpContext);
+        HttpContextInfoHelper clientInfoHelper = new(httpContext);
         return clientInfoHelper;
     }
 

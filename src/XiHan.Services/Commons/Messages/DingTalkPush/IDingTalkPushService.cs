@@ -28,14 +28,14 @@ public interface IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    Task<ResultDto> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false);
+    Task<CustomResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false);
 
     /// <summary>
     /// 钉钉推送链接消息
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
-    Task<ResultDto> DingTalkToLink(DingTalkLink link);
+    Task<CustomResult> DingTalkToLink(DingTalkLink link);
 
     /// <summary>
     /// 钉钉推送文档消息
@@ -44,19 +44,19 @@ public interface IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    Task<ResultDto> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false);
+    Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false);
 
     /// <summary>
     /// 钉钉推送任务卡片消息
     /// </summary>
     /// <param name="actionCard"></param>
     /// <returns></returns>
-    Task<ResultDto> DingTalkToActionCard(DingTalkActionCard actionCard);
+    Task<CustomResult> DingTalkToActionCard(DingTalkActionCard actionCard);
 
     /// <summary>
     /// 钉钉推送卡片菜单消息
     /// </summary>
     /// <param name="feedCard"></param>
     /// <returns></returns>
-    Task<ResultDto> DingTalkToFeedCard(DingTalkFeedCard feedCard);
+    Task<CustomResult> DingTalkToFeedCard(DingTalkFeedCard feedCard);
 }

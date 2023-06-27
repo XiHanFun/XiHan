@@ -25,5 +25,5 @@ public interface IEmailPushService
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    Task<ResultDto> SendEmail(EmailToModel emailTo);
+    Task<CustomResult> SendEmail(EmailToModel emailTo);
 }

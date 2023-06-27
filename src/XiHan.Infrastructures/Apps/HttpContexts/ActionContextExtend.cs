@@ -30,9 +30,9 @@ public static class ActionContextExtend
     /// </summary>
     /// <param name="modelState"></param>
     /// <returns></returns>
-    public static ResultDto GetValidationErrors(this ModelStateDictionary modelState)
+    public static CustomResult GetValidationErrors(this ModelStateDictionary modelState)
     {
-        return ResultDto.UnprocessableEntity(modelState);
+        return CustomResult.UnprocessableEntity(modelState);
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class ActionContextInfo
     /// <summary>
     /// 请求的方法名称
     /// </summary>
-    public MethodInfo? MethodInfo { get; set; }
+    public MethodInfo? MethodInfo { get; init; }
 
     /// <summary>
     /// Action 类型
@@ -91,17 +91,17 @@ public class ActionContextInfo
     /// <summary>
     /// 控制器类型
     /// </summary>
-    public TypeInfo? ControllerType { get; set; }
+    public TypeInfo? ControllerType { get; init; }
 
     /// <summary>
     /// 请求的方法名称
     /// </summary>
-    public string? RemoteIp { get; set; }
+    public string? RemoteIp { get; init; }
 
     /// <summary>
     /// 请求的 Url 地址(域名、路径、参数)
     /// </summary>
-    public string? RequestUrl { get; set; }
+    public string? RequestUrl { get; init; }
 
     /// <summary>
     /// 请求参数
@@ -111,5 +111,5 @@ public class ActionContextInfo
     /// <summary>
     /// 操作人Id
     /// </summary>
-    public string? UserId { get; set; }
+    public string? UserId { get; init; }
 }

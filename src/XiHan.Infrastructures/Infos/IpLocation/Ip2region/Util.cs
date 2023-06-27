@@ -5,7 +5,7 @@ namespace XiHan.Infrastructures.Infos.IpLocation.Ip2region;
 /// <summary>
 /// 工具类
 /// </summary>
-/// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
+/// <remarks>powered by https://github.com/lionsoul2014/ip2region</remarks>
 public static class Util
 {
     /// <summary>

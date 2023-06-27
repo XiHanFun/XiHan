@@ -40,7 +40,7 @@ public static class TaskSetup
 
         try
         {
-            ITaskSchedulerServer schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
+            var schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
             var context = SqlSugar.IOC.DbScoped.SugarScope;
 
             var tasks = context.Queryable<SysTasks>()
@@ -67,7 +67,7 @@ public static class TaskSetup
         }
         catch (Exception ex)
         {
-            var errorInfo = $"注册定时任务出错！";
+            const string errorInfo = $"注册定时任务出错！";
             errorInfo.WriteLineError();
             Log.Error(ex, errorInfo);
         }

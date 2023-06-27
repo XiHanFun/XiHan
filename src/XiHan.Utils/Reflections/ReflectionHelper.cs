@@ -19,7 +19,7 @@ namespace XiHan.Utils.Reflections;
 /// <summary>
 /// 反射拓展帮助类
 /// </summary>
-public class ReflectionHelper
+public static class ReflectionHelper
 {
     /// <summary>
     /// 获取所有符合条件的程序集
@@ -31,17 +31,14 @@ public class ReflectionHelper
     {
         List<Assembly> result = new();
 
-        string currentDomain = AppDomain.CurrentDomain.BaseDirectory;
+        var currentDomain = AppDomain.CurrentDomain.BaseDirectory;
         DirectoryInfo rootDirectory = new(currentDomain);
         var files = rootDirectory.GetFiles().ToList();
         var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{prefix}.".ToLowerInvariant()) &&
                                     e.Name.ToLowerInvariant().Contains($".{suffix}".ToLowerInvariant()))
             .Select(e => e.FullName).ToList();
 
-        dlls.ForEach(dll =>
-        {
-            result.Add(Assembly.LoadFrom(dll));
-        });
+        dlls.ForEach(dll => { result.Add(Assembly.LoadFrom(dll)); });
 
         return result;
     }
@@ -50,15 +47,12 @@ public class ReflectionHelper
     /// 获取所有的Type
     /// </summary>
     /// <returns></returns>
-    public static List<Type> GetAllTypes()
+    public static IEnumerable<Type> GetAllTypes()
     {
         List<Type> types = new();
 
-        List<Assembly> assemblies = GetAssemblies();
-        assemblies.ForEach(assembly =>
-        {
-            types = types.Union(assembly.GetTypes().ToList()).ToList();
-        });
+        var assemblies = GetAssemblies();
+        assemblies.ForEach(assembly => { types = types.Union(assembly.GetTypes().ToList()).ToList(); });
 
         return types;
     }
@@ -68,14 +62,15 @@ public class ReflectionHelper
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static List<Type> GetTypes<TAttribute>() where TAttribute : Attribute
+    public static IEnumerable<Type> GetTypes<TAttribute>() where TAttribute : Attribute
     {
         List<Type> types = new();
 
-        List<Assembly> assemblies = GetAssemblies();
+        var assemblies = GetAssemblies();
         assemblies.ForEach(assembly =>
         {
-            types = types.Union(assembly.GetTypes().Where(e => !e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute))).ToList()).ToList();
+            types = types.Union(assembly.GetTypes()
+                .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute))).ToList()).ToList();
         });
 
         return types;
@@ -90,7 +85,8 @@ public class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
-        return GetTypes<TAttribute>().Where(t => typeof(T).IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetTypes<TAttribute>().Where(t => typeof(T).IsAssignableFrom(t))
+            .Where(t => t is { IsAbstract: false, IsClass: true }).ToList();
     }
 
     /// <summary>
@@ -102,7 +98,8 @@ public class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
-        return GetTypes<TAttribute>().Where(t => type.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetTypes<TAttribute>().Where(t => type.IsAssignableFrom(t))
+            .Where(t => t is { IsAbstract: false, IsClass: true }).ToList();
     }
 
     /// <summary>
@@ -112,7 +109,8 @@ public class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetSubClass(Type type)
     {
-        return GetAllTypes().Where(t => type.IsAssignableFrom(t)).Where(t => !t.IsAbstract && t.IsClass).ToList();
+        return GetAllTypes().Where(type.IsAssignableFrom).Where(t => t is { IsAbstract: false, IsClass: true })
+            .ToList();
     }
 
     /// <summary>
@@ -121,26 +119,23 @@ public class ReflectionHelper
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static List<Dictionary<string, dynamic>> FiltrationProp<TAttribute>(object obj) where TAttribute : Attribute
+    public static List<Dictionary<string, dynamic>> FiltrationProp<TAttribute>(object? obj) where TAttribute : Attribute
     {
         var result = new List<Dictionary<string, dynamic>>();
-        if (obj != null)
+        if (obj == null) return result;
+        if (obj is not IEnumerable<dynamic> objDynamics) return result;
+        var objDynamicList = objDynamics.ToList();
+        objDynamicList.ForEach(objDynamic =>
         {
-            var objDynamics = (obj as IEnumerable<dynamic>);
-            if (objDynamics != null)
-            {
-                var objDynamicList = objDynamics.ToList();
-                objDynamicList.ForEach(objDynamic =>
-                {
-                    // 找到所有【没有此特性】或【有此特性但忽略字段】的属性
-                    var item = (objDynamic as object).GetType().GetProperties()
-                    .Where(prop => !prop.HasAttribute<TAttribute>() ||
-                                   (prop.HasAttribute<TAttribute>() && !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>("IsIgnore")))
-                    .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
-                    result.Add(item);
-                });
-            }
-        }
+            // 找到所有【没有此特性】或【有此特性但忽略字段】的属性
+            var item = (objDynamic as object).GetType().GetProperties()
+                .Where(prop => !prop.HasAttribute<TAttribute>()
+                               || (prop.HasAttribute<TAttribute>() &&
+                                   !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!
+                                       .GetPropertyValue<TAttribute, bool>("IsIgnore")))
+                .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
+            result.Add(item);
+        });
         return result;
     }
 
@@ -149,16 +144,15 @@ public class ReflectionHelper
     /// </summary>
     /// <param name="tableName"></param>
     /// <returns></returns>
-    public static List<string> GetTableColums(string tableName)
+    public static List<string> GetTableColumns(string tableName)
     {
         List<string> result = new();
         GetAssemblies().ForEach(assembly =>
         {
-            var calssType = assembly.GetTypes().FirstOrDefault(a => a.Name == tableName);
-            if (calssType != null)
-            {
-                result = calssType.GetProperties().Where(a => a.Name.Contains("Target")).Select(a => a.Name.FirstToLower()).ToList();
-            }
+            var classType = assembly.GetTypes().FirstOrDefault(a => a.Name == tableName);
+            if (classType != null)
+                result = classType.GetProperties().Where(a => a.Name.Contains("Target"))
+                    .Select(a => a.Name.FirstToLower()).ToList();
         });
         return result;
     }

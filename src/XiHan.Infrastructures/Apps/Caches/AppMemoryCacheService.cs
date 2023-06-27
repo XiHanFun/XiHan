@@ -11,13 +11,12 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.Caching.Memory;
-using SqlSugar;
 using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace XiHan.Infrastructures.Caches;
+namespace XiHan.Infrastructures.Apps.Caches;
 
 /// <summary>
 /// MemoryCache缓存操作
@@ -49,7 +48,7 @@ public class AppMemoryCacheService : IAppCacheService
             throw new ArgumentNullException(nameof(key));
         }
 
-        return _cache.TryGetValue(key, out object? cached);
+        return _cache.TryGetValue(key, out _);
     }
 
     #endregion
@@ -83,9 +82,9 @@ public class AppMemoryCacheService : IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
     /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
-    /// <param name="expiressAbsoulte">绝对过期时长</param>
+    /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
-    public bool Add(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
+    public bool Add(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
         if (key == null)
         {
@@ -98,7 +97,7 @@ public class AppMemoryCacheService : IAppCacheService
 
         _cache.Set(key, value, new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
-            .SetAbsoluteExpiration(expiressAbsoulte));
+            .SetAbsoluteExpiration(expiresAbsolute));
 
         return Exists(key);
     }
@@ -121,10 +120,11 @@ public class AppMemoryCacheService : IAppCacheService
         {
             throw new ArgumentNullException(nameof(value));
         }
-        if (isSliding)
-            _cache.Set(key, value, new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn));
-        else
-            _cache.Set(key, value, new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
+
+        _cache.Set(key, value,
+            isSliding
+                ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
+                : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
 
         return Exists(key);
     }
@@ -155,7 +155,7 @@ public class AppMemoryCacheService : IAppCacheService
     ///</summary>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    public IList<string> SearchCacheRegex(string pattern)
+    public IEnumerable<string> SearchCacheRegex(string pattern)
     {
         var cacheKeys = GetCacheKeys();
         var l = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToList();
@@ -216,7 +216,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public void RemoveByPattern(string pattern)
     {
-        IList<string> l = SearchCacheRegex(pattern);
+        IEnumerable<string> l = SearchCacheRegex(pattern);
         foreach (var s in l)
         {
             Remove(s);
@@ -247,7 +247,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
-    public object? GetByKey(string key)
+    public object GetByKey(string key)
     {
         if (key == null)
         {
@@ -284,10 +284,7 @@ public class AppMemoryCacheService : IAppCacheService
         var cacheItems = entries as IDictionary;
         var keys = new List<string>();
         if (cacheItems == null) return keys;
-        foreach (DictionaryEntry cacheItem in cacheItems)
-        {
-            keys.Add(cacheItem.Key.ToString()!);
-        }
+        keys.AddRange(from DictionaryEntry cacheItem in cacheItems select cacheItem.Key.ToString()!);
         return keys;
     }
 
@@ -311,10 +308,9 @@ public class AppMemoryCacheService : IAppCacheService
         {
             throw new ArgumentNullException(nameof(value));
         }
-        if (Exists(key))
-            if (!Remove(key)) return false;
 
-        return Add(key, value);
+        if (!Exists(key)) return Add(key, value);
+        return Remove(key) && Add(key, value);
     }
 
     /// <summary>
@@ -323,9 +319,9 @@ public class AppMemoryCacheService : IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">新的缓存Value</param>
     /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
-    /// <param name="expiressAbsoulte">绝对过期时长</param>
+    /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
-    public bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
+    public bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
         if (key == null)
         {
@@ -335,10 +331,9 @@ public class AppMemoryCacheService : IAppCacheService
         {
             throw new ArgumentNullException(nameof(value));
         }
-        if (Exists(key))
-            if (!Remove(key)) return false;
 
-        return Add(key, value, expiresSliding, expiressAbsoulte);
+        if (!Exists(key)) return Add(key, value, expiresSliding, expiresAbsolute);
+        return Remove(key) && Add(key, value, expiresSliding, expiresAbsolute);
     }
 
     /// <summary>

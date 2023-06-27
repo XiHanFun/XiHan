@@ -45,7 +45,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
-    public async Task<ResultDto> DingTalkToText()
+    public async Task<CustomResult> DingTalkToText()
     {
         const string keyWord = "消息提醒";
         var text = new DingTalkText
@@ -62,7 +62,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Link")]
-    public async Task<ResultDto> DingTalkToLink()
+    public async Task<CustomResult> DingTalkToLink()
     {
         const string keyWord = "消息提醒";
         var link = new DingTalkLink
@@ -81,7 +81,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
-    public async Task<ResultDto> DingTalkToMarkdown()
+    public async Task<CustomResult> DingTalkToMarkdown()
     {
         const string keyWord = "消息提醒";
         var markdown = new DingTalkMarkdown
@@ -102,7 +102,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("WholeActionCard")]
-    public async Task<ResultDto> DingTalkToWholeActionCard()
+    public async Task<CustomResult> DingTalkToWholeActionCard()
     {
         const string keyWord = "消息提醒";
         var actionCard = new DingTalkActionCard
@@ -122,7 +122,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("PartActionCard")]
-    public async Task<ResultDto> DingTalkToPartActionCard()
+    public async Task<CustomResult> DingTalkToPartActionCard()
     {
         const string keyWord = "消息提醒";
         var actionCard = new DingTalkActionCard
@@ -154,7 +154,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("FeedCard")]
-    public async Task<ResultDto> DingTalkToFeedCard()
+    public async Task<CustomResult> DingTalkToFeedCard()
     {
         const string keyWord = "消息提醒";
         var feedCard = new DingTalkFeedCard

@@ -35,16 +35,17 @@ public static class CpuHelper
     /// <returns></returns>
     public static string GetWindowsCpuRate()
     {
-        string result = string.Empty;
+        var result = string.Empty;
         try
         {
-            string output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage");
+            var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage");
             result = output.Replace("LoadPercentage", string.Empty).Trim() + "%";
         }
         catch (Exception ex)
         {
             ("获取处理器信息出错，" + ex.Message).WriteLineError();
         }
+
         return result;
     }
 
@@ -54,16 +55,17 @@ public static class CpuHelper
     /// <returns></returns>
     public static string GetUnixCpuRate()
     {
-        string result = string.Empty;
+        var result = string.Empty;
         try
         {
-            string output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)"" | awk '{print $2 + $4}'");
+            var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)"" | awk '{print $2 + $4}'");
             result = output.Trim() + "%";
         }
         catch (Exception ex)
         {
             ("获取处理器信息出错，" + ex.Message).WriteLineError();
         }
+
         return result;
     }
 
@@ -84,6 +86,7 @@ public static class CpuHelper
             cpuInfo.CpuCount = GetCpuCount();
             cpuInfo.CpuRate = GetWindowsCpuRate();
         }
+
         return cpuInfo;
     }
 }

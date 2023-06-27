@@ -31,6 +31,13 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     private readonly bool _resultLogSwitch = AppSettings.LogConfig.Result.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ResultFilterAsyncAttribute>();
+    
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ResultFilterAsyncAttribute()
+    {
+    }
 
     /// <summary>
     /// 在某结果执行时
@@ -41,31 +48,23 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        // 不为空就做处理
-        if (context.Result is ResultDto resultDto)
+        context.Result = context.Result switch
         {
-            // 如果是 ResultDto，则转换为 JsonResult
-            context.Result = new JsonResult(resultDto);
-        }
-        else if (context.Result is ContentResult contentResult)
-        {
-            // 如果是 ContentResult，则转换为 JsonResult
-            context.Result = new JsonResult(contentResult.Content);
-        }
-        else if (context.Result is ObjectResult objectResult)
-        {
-            // 如果是 ObjectResult，则转换为 JsonResult
-            context.Result = new JsonResult(objectResult.Value);
-        }
-        else if (context.Result is JsonResult jsonResult)
-        {
-            // 如果是 JsonResult，则转换为 JsonResult
-            context.Result = new JsonResult(jsonResult.Value);
-        }
-        else
-        {
-            // 其他类型就不做处理，返回源结果(如文件类型，需要导出，所以不转换)
-        }
+            // 不为空就做处理
+            CustomResult customResult =>
+                // 如果是 CustomResult，则转换为 JsonResult
+                new JsonResult(customResult),
+            ContentResult contentResult =>
+                // 如果是 ContentResult，则转换为 JsonResult
+                new JsonResult(contentResult.Content),
+            ObjectResult objectResult =>
+                // 如果是 ObjectResult，则转换为 JsonResult
+                new JsonResult(objectResult.Value),
+            JsonResult jsonResult =>
+                // 如果是 JsonResult，则转换为 JsonResult
+                new JsonResult(jsonResult.Value),
+            _ => context.Result
+        };
         // 请求构造函数和方法,调用下一个过滤器
         var resultExecuted = await next();
 

@@ -40,15 +40,15 @@ public static class AesEncryptionHelper
     public static string Encrypt(string plainText, string password)
     {
         // 生成盐
-        byte[] salt = new byte[BlockSize / 8];
+        var salt = new byte[BlockSize / 8];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
 
         // 扩展密码为 IV 和 KEY
-        byte[] key = DeriveKey(password, salt, KeySize / 8);
-        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
+        var key = DeriveKey(password, salt, KeySize / 8);
+        var iv = DeriveKey(password, salt, BlockSize / 8);
 
         using var aes = Aes.Create();
         aes.Key = key;
@@ -59,10 +59,10 @@ public static class AesEncryptionHelper
         using (var cipherStream = new MemoryStream())
         using (var cryptoStream = new CryptoStream(cipherStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
         {
-            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+            var plainBytes = Encoding.UTF8.GetBytes(plainText);
             cryptoStream.Write(plainBytes, 0, plainBytes.Length);
             cryptoStream.FlushFinalBlock();
-            byte[] cipherBytes = cipherStream.ToArray();
+            var cipherBytes = cipherStream.ToArray();
 
             cipherText = Convert.ToBase64String(cipherBytes);
         }
@@ -81,40 +81,31 @@ public static class AesEncryptionHelper
     public static string Decrypt(string cipherText, string password)
     {
         // 检查密文的有效性
-        if (string.IsNullOrEmpty(cipherText))
-        {
-            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
-        }
+        if (string.IsNullOrEmpty(cipherText)) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         // 解析盐和密文
-        string[] parts = cipherText.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length != 2)
-        {
-            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
-        }
+        var parts = cipherText.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length != 2) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
-        byte[] salt = Convert.FromBase64String(parts[0]);
-        byte[] cipherBytes = Convert.FromBase64String(parts[1]);
+        var salt = Convert.FromBase64String(parts[0]);
+        var cipherBytes = Convert.FromBase64String(parts[1]);
 
         // 扩展密码为 IV 和 KEY
-        byte[] key = DeriveKey(password, salt, KeySize / 8);
-        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
+        var key = DeriveKey(password, salt, KeySize / 8);
+        var iv = DeriveKey(password, salt, BlockSize / 8);
 
         using var aes = Aes.Create();
         aes.Key = key;
         aes.IV = iv;
 
         // 解密算法
-        string plainText;
-        using (var plainStream = new MemoryStream())
-        using (var cryptoStream = new CryptoStream(plainStream, aes.CreateDecryptor(), CryptoStreamMode.Write))
-        {
-            cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
-            cryptoStream.FlushFinalBlock();
-            byte[] plainBytes = plainStream.ToArray();
+        using var plainStream = new MemoryStream();
+        using var cryptoStream = new CryptoStream(plainStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
+        cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
+        cryptoStream.FlushFinalBlock();
+        var plainBytes = plainStream.ToArray();
 
-            plainText = Encoding.UTF8.GetString(plainBytes);
-        }
+        var plainText = Encoding.UTF8.GetString(plainBytes);
 
         // 返回解密结果
         return plainText;

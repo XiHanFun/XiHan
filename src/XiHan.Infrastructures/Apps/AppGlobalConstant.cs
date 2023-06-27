@@ -21,15 +21,15 @@ public static class AppGlobalConstant
     /// <summary>
     /// 管理员权限
     /// </summary>
-    public static string AdminPermission = "*:*:*";
+    public const string AdminPermission = "*:*:*";
 
     /// <summary>
     /// 管理员角色
     /// </summary>
-    public static string AdminRole = "admin";
+    public const string AdminRole = "admin";
 
     /// <summary>
     /// 开发版本API映射路径
     /// </summary>
-    public static string DevApiProxy = "/dev-api/";
+    public const string DevApiProxy = "/dev-api/";
 }

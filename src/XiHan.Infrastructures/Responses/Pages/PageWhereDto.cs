@@ -42,10 +42,10 @@ public class PageWhereDto
 /// <summary>
 /// 通用分页实体基类(包含条件)
 /// </summary>
-public class PageWhereDto<WhereEntity> : PageWhereDto where WhereEntity : class
+public class PageWhereDto<TWhereEntity> : PageWhereDto where TWhereEntity : class
 {
     /// <summary>
     /// 查询条件
     /// </summary>
-    public WhereEntity Where { get; set; } = null!;
+    public TWhereEntity Where { get; set; } = null!;
 }

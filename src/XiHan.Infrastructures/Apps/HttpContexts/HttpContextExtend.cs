@@ -18,7 +18,7 @@ using UAParser;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Infos.IpLocation;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.Verification;
+using XiHan.Utils.Verifications;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
@@ -60,29 +60,25 @@ public static class HttpContextExtend
         {
             clientModel.Referer = value1.ToString();
         }
-        if (header.TryGetValue("User-Agent", out var value2))
+        if (!header.TryGetValue("User-Agent", out var value2)) return clientModel;
+        var agent = value2.ToString();
+        var clientInfo = Parser.GetDefault().Parse(agent);
+        clientModel.Agent = agent;
+        clientModel.OsName = clientInfo.OS.Family;
+        if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
         {
-            var agent = value2.ToString();
-            var clientInfo = Parser.GetDefault().Parse(agent);
-            clientModel.Agent = agent;
-            clientModel.OsName = clientInfo.OS.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
+            clientModel.OsVersion = clientInfo.OS.Major;
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
             {
-                clientModel.OsVersion = clientInfo.OS.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
-                {
-                    clientModel.OsVersion += "." + clientInfo.OS.Minor;
-                }
+                clientModel.OsVersion += "." + clientInfo.OS.Minor;
             }
-            clientModel.UaName = clientInfo.UA.Family;
-            if (!string.IsNullOrWhiteSpace(clientInfo.UA.Major))
-            {
-                clientModel.UaVersion = clientInfo.UA.Major;
-                if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
-                {
-                    clientModel.UaVersion += "." + clientInfo.UA.Minor;
-                }
-            }
+        }
+        clientModel.UaName = clientInfo.UA.Family;
+        if (string.IsNullOrWhiteSpace(clientInfo.UA.Major)) return clientModel;
+        clientModel.UaVersion = clientInfo.UA.Major;
+        if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
+        {
+            clientModel.UaVersion += "." + clientInfo.UA.Minor;
         }
         return clientModel;
     }
@@ -99,7 +95,7 @@ public static class HttpContextExtend
             throw new ArgumentNullException(nameof(context));
         }
         var request = context.Request;
-        return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers != null && request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest";
     }
 
     /// <summary>
@@ -174,7 +170,7 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string? GetRequestUrl(this HttpContext context)
+    public static string? GetRequestUrl(this HttpContext? context)
     {
         return context != null ? context.Request.Path.Value : "";
     }
@@ -184,7 +180,7 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string? GetQueryString(this HttpContext context)
+    public static string? GetQueryString(this HttpContext? context)
     {
         return context != null ? context.Request.QueryString.Value : "";
     }
@@ -202,7 +198,7 @@ public static class HttpContextExtend
     public static UserAddressInfo GetAddressInfo(this HttpContext httpContext)
     {
         var addressInfo = new UserAddressInfo();
-        var addressInfoResult = IpSearchHelper.Search(httpContext.GetClientIpV4() ?? string.Empty);
+        var addressInfoResult = IpSearchHelper.Search(httpContext.GetClientIpV4());
         if (addressInfoResult != null)
         {
             addressInfo = addressInfoResult;
@@ -251,7 +247,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string? GetUserName(this HttpContext context)
     {
-        var uname = context.User?.Identity?.Name;
+        var uname = context.User.Identity?.Name;
         return uname;
     }
 
@@ -260,10 +256,10 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string? GetUserRole(this HttpContext context)
+    public static string GetUserRole(this HttpContext context)
     {
-        var roleid = context.User.FindFirstValue(ClaimTypes.Role);
-        return roleid.ParseToString();
+        var roleId = context.User.FindFirstValue(ClaimTypes.Role);
+        return roleId.ParseToString();
     }
 
     /// <summary>
@@ -292,9 +288,9 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static IEnumerable<ClaimsIdentity>? GetClaims(this HttpContext context)
+    public static IEnumerable<ClaimsIdentity> GetClaims(this HttpContext context)
     {
-        return context.User?.Identities;
+        return context.User.Identities;
     }
 
     #endregion

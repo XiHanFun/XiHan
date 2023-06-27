@@ -63,15 +63,15 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 修改同步字典类型
     /// </summary>
-    /// <param name="old_dictType">旧字典类型</param>
-    /// <param name="new_dictType">新字典类型</param>
+    /// <param name="oldDictType">旧字典类型</param>
+    /// <param name="newDictType">新字典类型</param>
     /// <returns></returns>
-    public async Task<int> ModifyDictDataType(string old_dictType, string new_dictType)
+    public async Task<int> ModifyDictDataType(string oldDictType, string newDictType)
     {
         // 只更新 Type 字段
         return await Context.Updateable<SysDictData>()
-            .SetColumns(t => new SysDictData() { Type = new_dictType })
-            .Where(f => f.Type == old_dictType)
+            .SetColumns(t => new SysDictData() { Type = newDictType })
+            .Where(f => f.Type == oldDictType)
             .ExecuteCommandAsync();
     }
 

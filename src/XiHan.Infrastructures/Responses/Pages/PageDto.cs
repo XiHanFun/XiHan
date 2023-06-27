@@ -26,7 +26,7 @@ public class PageDto
     /// <summary>
     /// 每页大小最大值
     /// </summary>
-    public const int MaxPageSize = 100;
+    private const int MaxPageSize = 100;
 
     private int _pageSize = 10;
 

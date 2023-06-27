@@ -30,18 +30,25 @@ public static class RamHelper
         var ramInfos = new List<RamInfo>();
         try
         {
-            string output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
+            var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
             var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
             if (lines.Any())
             {
                 // 单位是 KB
                 var freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
                 var totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-                var ramInfo = new RamInfo();
-                ramInfo.TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
-                ramInfo.UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024).FormatByteToString();
-                ramInfo.FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString();
-                ramInfo.AvailableRate = totalMemoryParts[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) + "%";
+                var ramInfo = new RamInfo
+                {
+                    TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
+                    UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024)
+                        .FormatByteToString(),
+                    FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
+                    AvailableRate = totalMemoryParts[1].ParseToLong() == 0
+                        ? "0%"
+                        : Math.Round(
+                              (decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) +
+                          "%"
+                };
                 ramInfos.Add(ramInfo);
             }
         }
@@ -49,6 +56,7 @@ public static class RamHelper
         {
             ("获取内存信息出错，" + ex.Message).WriteLineError();
         }
+
         return ramInfos;
     }
 
@@ -61,7 +69,7 @@ public static class RamHelper
         var ramInfos = new List<RamInfo>();
         try
         {
-            string output = ShellHelper.Bash("free -k | awk '{print $2,$3,$4,$7}'");
+            var output = ShellHelper.Bash("free -k | awk '{print $2,$3,$4,$7}'");
             var lines = output.Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
             if (lines.Any())
             {
@@ -69,11 +77,15 @@ public static class RamHelper
                 var memory = lines[1].Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
                 if (memory.Length >= 4)
                 {
-                    var ramInfo = new RamInfo();
-                    ramInfo.TotalSpace = (memory[0].ParseToLong() * 1024).FormatByteToString();
-                    ramInfo.UsedSpace = (memory[1].ParseToLong() * 1024).FormatByteToString();
-                    ramInfo.FreeSpace = (memory[2].ParseToLong() * 1024).FormatByteToString();
-                    ramInfo.AvailableRate = memory[0].ParseToLong() == 0 ? "0%" : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%";
+                    var ramInfo = new RamInfo
+                    {
+                        TotalSpace = (memory[0].ParseToLong() * 1024).FormatByteToString(),
+                        UsedSpace = (memory[1].ParseToLong() * 1024).FormatByteToString(),
+                        FreeSpace = (memory[2].ParseToLong() * 1024).FormatByteToString(),
+                        AvailableRate = memory[0].ParseToLong() == 0
+                            ? "0%"
+                            : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%"
+                    };
                     ramInfos.Add(ramInfo);
                 }
             }
@@ -82,6 +94,7 @@ public static class RamHelper
         {
             ("获取内存信息出错，" + ex.Message).WriteLineError();
         }
+
         return ramInfos;
     }
 
@@ -92,13 +105,9 @@ public static class RamHelper
     public static List<RamInfo> GetRamInfos()
     {
         if (OsPlatformHelper.GetOsIsUnix())
-        {
             return GetUnixRam();
-        }
         else
-        {
             return GetWindowsRam();
-        }
     }
 }
 

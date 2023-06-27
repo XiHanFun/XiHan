@@ -36,11 +36,11 @@ public static class ShellHelper
                 Arguments = $@"-c ""{escapedArgs}""",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = true
             }
         };
         process.Start();
-        string result = process.StandardOutput.ReadToEnd();
+        var result = process.StandardOutput.ReadToEnd();
         process.WaitForExit();
         process.Dispose();
         return result;
@@ -54,7 +54,7 @@ public static class ShellHelper
     /// <returns></returns>
     public static string Cmd(string fileName, string args)
     {
-        string output = string.Empty;
+        var output = string.Empty;
 
         var info = new ProcessStartInfo
         {
@@ -64,10 +64,7 @@ public static class ShellHelper
         };
 
         using var process = Process.Start(info);
-        if (process == null)
-        {
-            return output;
-        }
+        if (process == null) return output;
         output = process.StandardOutput.ReadToEnd();
         return output;
     }

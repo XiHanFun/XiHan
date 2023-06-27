@@ -15,8 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Extensions;
 using XiHan.Application.Setups.Services;
-using System.Threading.RateLimiting;
-using Microsoft.AspNetCore.Builder;
 
 namespace XiHan.Application.Setups;
 

@@ -44,10 +44,10 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// </summary>
     /// <returns></returns>
     [AppLog(Title = "发送邮件", BusinessType = BusinessTypeEnum.Other)]
-    public async Task<ResultDto> SendEmail(EmailToModel emailTo)
+    public async Task<CustomResult> SendEmail(EmailToModel emailTo)
     {
         var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);
-        EmailFromModel emailFrom = sysEmail.Adapt<EmailFromModel>();
+        var emailFrom = sysEmail.Adapt<EmailFromModel>();
         var subject = "测试";
         var body = "测试";
         List<string> toMail = new() { "" };
@@ -57,8 +57,6 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             new Attachment(@"")
         };
-        //EmailToModel emailTo = new()
-        //{
         //    Subject = subject,
         //    Body = body,
         //    ToMail = toMail,
@@ -72,10 +70,10 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             logoInfo = "邮件发送成功";
             _logger.LogInformation(logoInfo);
-            return ResultDto.Success(logoInfo);
+            return CustomResult.Success(logoInfo);
         }
         logoInfo = "邮件发送失败";
         _logger.LogError(logoInfo);
-        return ResultDto.BadRequest("邮件发送失败");
+        return CustomResult.BadRequest("邮件发送失败");
     }
 }

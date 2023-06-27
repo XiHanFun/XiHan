@@ -20,8 +20,8 @@ namespace XiHan.Models.Syses;
 /// 系统文件对象存储配置
 /// </summary>
 /// <remarks>记录创建，修改信息</remarks>
-[SugarTable(TableName = "Sys_File_OSS")]
-public class SysFileOSS : BaseModifyEntity
+[SugarTable(TableName = "Sys_File_Oss")]
+public class SysFileOss : BaseModifyEntity
 {
     /// <summary>
     /// 存储类型

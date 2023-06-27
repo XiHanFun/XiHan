@@ -36,9 +36,9 @@ public static class AppLogManager
         var waringPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Waring/.log";
         var errorPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Error/.log";
         var fatalPath = ApplicationInfoHelper.CurrentDirectory + @"Logs/Fatal/.log";
-        var infoTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Message：{Message}{NewLine}================{NewLine}";
-        var warnTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}";
-        var errorTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}Properties：{Properties}{NewLine}================{NewLine}";
+        const string infoTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Message：{Message}{NewLine}================{NewLine}";
+        const string warnTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}================{NewLine}";
+        const string errorTemplate = @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Source：{SourceContext}{NewLine}Message：{Message}{NewLine}Exception：{Exception}{NewLine}Properties：{Properties}{NewLine}================{NewLine}";
 
         Log.Logger = new LoggerConfiguration()
                 // 日志调用类命名空间如果以 Microsoft 开头的其他日志进行重写，覆盖日志输出最小级别为 Warning
@@ -77,7 +77,7 @@ public static class AppLogManager
     {
         return config.WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == level)
                     // 异步输出到文件
-                    .WriteTo.Async(congfig => congfig.File(
+                    .WriteTo.Async(newConfig => newConfig.File(
                             // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
                             path: filePath.ToLowerInvariant(),
                             // 生成周期：天

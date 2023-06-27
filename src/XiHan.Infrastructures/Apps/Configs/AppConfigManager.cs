@@ -40,31 +40,27 @@ public static class AppConfigManager
     /// <param name="config"></param>
     public static void RegisterConfig(IConfigurationBuilder config)
     {
-        if (config is ConfigurationManager configurationManager)
+        if (config is not ConfigurationManager configurationManager) return;
+        var jsonFilePath = configurationManager.Sources
+            .OfType<JsonConfigurationSource>()
+            .Select(file => file.Path!)
+            .ToList();
+        if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json")) return;
+        try
         {
-            var jsonFilePath = configurationManager.Sources
-                .OfType<JsonConfigurationSource>()
-                .Select(file => file.Path!)
-                .ToList();
-            if (jsonFilePath.Any() && jsonFilePath.Remove("appsettings.json"))
-            {
-                try
-                {
-                    var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
-                    var envName = configurationFile.Split('.')[1];
-                    ConfigurationRoot = config.Build();
-                    ConfigurationFile = configurationFile;
-                    var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
-                    Log.Information(infoMsg);
-                    infoMsg.WriteLineSuccess();
-                }
-                catch (Exception ex)
-                {
-                    var errorMsg = $"配置注册出错，配置文件未找到！";
-                    Log.Error(ex, errorMsg);
-                    errorMsg.WriteLineError();
-                }
-            }
+            var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
+            var envName = configurationFile.Split('.')[1];
+            ConfigurationRoot = config.Build();
+            ConfigurationFile = configurationFile;
+            var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
+            Log.Information(infoMsg);
+            infoMsg.WriteLineSuccess();
+        }
+        catch (Exception ex)
+        {
+            var errorMsg = $"配置注册出错，配置文件未找到！";
+            Log.Error(ex, errorMsg);
+            errorMsg.WriteLineError();
         }
     }
 
@@ -109,7 +105,7 @@ public static class AppConfigManager
 
     /// <summary>
     /// 获取属性名称
-    /// 例如 AppSettings.Database.Inited => Database:Inited
+    /// 例如 AppSettings.Database.Initialized => Database:Initialized
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>

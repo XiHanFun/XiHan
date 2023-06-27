@@ -16,7 +16,7 @@ namespace XiHan.Services.Syses.Users.Dtos;
 /// <summary>
 /// SysUserWhereDto
 /// </summary>
-public class SysUserWhereDto
+public abstract class SysUserWhereDto
 {
     /// <summary>
     /// 用户名称

@@ -51,7 +51,7 @@ public static class CorsSetup
             options.AddPolicy(name: policyName, policy =>
             {
                 // 配置允许访问的域名
-                policy.WithOrigins(origins ?? Array.Empty<string>())
+                policy.WithOrigins(origins)
                     // 是否允许同源时匹配配置的通配符域
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
                     // 允许任何请求头
@@ -61,7 +61,7 @@ public static class CorsSetup
                     // 允许凭据（cookie）
                     .AllowCredentials()
                     // 允许请求头 (SignalR 用此请求头)
-                    .WithExposedHeaders(headers ?? Array.Empty<string>());
+                    .WithExposedHeaders(headers);
             });
         });
         return services;

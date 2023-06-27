@@ -58,11 +58,11 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpPost("Create/Type")]
     [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Create)]
-    public async Task<ResultDto> CreateDictType([FromBody] CSysDictTypeDto cSysDictType)
+    public async Task<CustomResult> CreateDictType([FromBody] CSysDictTypeDto cSysDictType)
     {
-        SysDictType sysDictType = cSysDictType.Adapt<SysDictType>();
+        var sysDictType = cSysDictType.Adapt<SysDictType>();
         var result = await _sysDictTypeService.CreateDictType(sysDictType);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -72,11 +72,11 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpPost("Create/Data")]
     [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Create)]
-    public async Task<ResultDto> CreateDictData([FromBody] CSysDictDataDto cSysDictData)
+    public async Task<CustomResult> CreateDictData([FromBody] CSysDictDataDto cSysDictData)
     {
-        SysDictData sysDictData = cSysDictData.Adapt<SysDictData>();
+        var sysDictData = cSysDictData.Adapt<SysDictData>();
         var result = await _sysDictDataService.CreateDictData(sysDictData);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     #endregion
@@ -89,10 +89,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpDelete("Delete/Type")]
     [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<ResultDto> DeleteDictType([FromBody] long[] ids)
+    public async Task<CustomResult> DeleteDictType([FromBody] long[] ids)
     {
         var result = await _sysDictTypeService.DeleteDictTypeByIds(ids);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -102,10 +102,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpDelete("Delete/Data")]
     [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<ResultDto> DeleteDictData([FromBody] long[] ids)
+    public async Task<CustomResult> DeleteDictData([FromBody] long[] ids)
     {
         var result = await _sysDictDataService.DeleteDictDataByIds(ids);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     #endregion
@@ -119,11 +119,11 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpPut("Modify/Type")]
     [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Modify)]
-    public async Task<ResultDto> ModifyDictData([FromBody] CSysDictTypeDto cSysDictType)
+    public async Task<CustomResult> ModifyDictData([FromBody] CSysDictTypeDto cSysDictType)
     {
         var sysDictType = cSysDictType.Adapt<SysDictType>();
         var result = await _sysDictTypeService.ModifyDictType(sysDictType);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -133,11 +133,11 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [HttpPut("Modify/Data")]
     [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Modify)]
-    public async Task<ResultDto> ModifyDictData([FromBody] CSysDictDataDto cSysDictData)
+    public async Task<CustomResult> ModifyDictData([FromBody] CSysDictDataDto cSysDictData)
     {
         var sysDictData = cSysDictData.Adapt<SysDictData>();
         var result = await _sysDictDataService.ModifyDictData(sysDictData);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     #endregion
@@ -151,10 +151,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpGet("Get/Type/{sysDictTypeId}")]
-    public async Task<ResultDto> GetDictTypeById(long sysDictTypeId)
+    public async Task<CustomResult> GetDictTypeById(long sysDictTypeId)
     {
         var result = await _sysDictTypeService.GetDictTypeById(sysDictTypeId);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -164,10 +164,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Get/Type/List")]
-    public async Task<ResultDto> GetDictTypeList([FromBody] PageWhereDto<SysDictTypeWhereDto> pageWhere)
+    public async Task<CustomResult> GetDictTypeList([FromBody] PageWhereDto<SysDictTypeWhereDto> pageWhere)
     {
         var result = await _sysDictTypeService.GetDictTypeList(pageWhere);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -177,10 +177,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpGet("Get/Data/{sysDictDataId}")]
-    public async Task<ResultDto> GetDictDataById(long sysDictDataId)
+    public async Task<CustomResult> GetDictDataById(long sysDictDataId)
     {
         var result = await _sysDictDataService.GetDictDataById(sysDictDataId);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -190,10 +190,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpGet("Get/Data/ByType/{sysDictType}")]
-    public async Task<ResultDto> GetDictDataByType(string sysDictType)
+    public async Task<CustomResult> GetDictDataByType(string sysDictType)
     {
         var result = await _sysDictDataService.GetDictDataByType(sysDictType);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -203,10 +203,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Get/Data/ByTypes")]
-    public async Task<ResultDto> GetDictDataByTypes([FromBody] string[] sysDictTypes)
+    public async Task<CustomResult> GetDictDataByTypes([FromBody] string[] sysDictTypes)
     {
         var result = await _sysDictDataService.GetDictDataByTypes(sysDictTypes);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     /// <summary>
@@ -216,10 +216,10 @@ public class SysDictController : BaseApiController
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Get/Data/List")]
-    public async Task<ResultDto> GetDictDataList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhere)
+    public async Task<CustomResult> GetDictDataList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhere)
     {
         var result = await _sysDictDataService.GetDictDataList(pageWhere);
-        return ResultDto.Success(result);
+        return CustomResult.Success(result);
     }
 
     #endregion
@@ -235,7 +235,7 @@ public class SysDictController : BaseApiController
     public async Task<FileStreamResult> ExportDict()
     {
         var result = await _sysDictTypeService.GetAllDictType();
-        var fileName = ExportExcel(result, "SysdictType", "字典类型");
+        var fileName = ExportExcel(result, "SysDictType", "字典类型");
         return ExportExcel(fileName.Item2, fileName.Item1);
         //return ResultDto.Success(new { path = "/Export/" + fileName, fileName = fileName.Item1 });
     }

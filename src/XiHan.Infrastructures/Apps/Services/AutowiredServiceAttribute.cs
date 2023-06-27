@@ -35,6 +35,6 @@ namespace XiHan.Infrastructures.Apps.Services;
 /// }
 /// </code>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class AutowiredServiceAttribute : Attribute
+public abstract class AutowiredServiceAttribute : Attribute
 {
 }

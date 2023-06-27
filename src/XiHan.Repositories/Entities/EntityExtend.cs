@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Utils.Extensions;
 
@@ -120,7 +119,7 @@ public static class EntityExtend
             }
         }
 
-        HttpContext? context = AppHttpContextManager.Current;
+        var context = AppHttpContextManager.Current;
         if (propertyInfo.HandleId.IsNotEmptyOrNull())
         {
             if (types.GetProperty(propertyInfo.HandleId!) != null && context != null)
@@ -146,22 +145,22 @@ public static class EntityExtend
         /// <summary>
         /// 是否处理
         /// </summary>
-        public string? IsHandle { get; set; }
+        public string? IsHandle { get; init; }
 
         /// <summary>
         /// 处理人主键
         /// </summary>
-        public string? HandleId { get; set; }
+        public string? HandleId { get; init; }
 
         /// <summary>
         /// 处理人名称
         /// </summary>
-        public string? HandleBy { get; set; }
+        public string? HandleBy { get; init; }
 
         /// <summary>
         /// 处理时间
         /// </summary>
-        public string? HandleTime { get; set; }
+        public string? HandleTime { get; init; }
     }
 
     #endregion

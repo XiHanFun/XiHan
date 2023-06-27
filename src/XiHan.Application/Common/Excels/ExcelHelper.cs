@@ -38,7 +38,7 @@ public static class ExcelHelper
         {
             var item = Activator.CreateInstance<T>();
 
-            for (int i = 0; i < properties.Length; i++)
+            for (var i = 0; i < properties.Length; i++)
             {
                 var property = properties[i];
                 var cellValue = row[i]?.ToString();
@@ -99,7 +99,7 @@ public static class ExcelHelper
         {
             var row = new object[properties.Length];
 
-            for (int i = 0; i < properties.Length; i++)
+            for (var i = 0; i < properties.Length; i++)
             {
                 var property = properties[i];
                 var value = property.GetValue(item);

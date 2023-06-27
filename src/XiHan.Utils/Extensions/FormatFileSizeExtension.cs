@@ -32,12 +32,10 @@ public static class FormatFileSizeExtension
         {
             var current = Math.Pow(1024, i + 1);
             var temp = bytes / current;
-            if (temp < 1)
-            {
-                return (bytes / last).ToString("f3") + Suffixes[i];
-            }
+            if (temp < 1) return (bytes / last).ToString("f3") + Suffixes[i];
             last = current;
         }
+
         return bytes.ToString();
     }
 }

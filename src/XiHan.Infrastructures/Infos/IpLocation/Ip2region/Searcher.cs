@@ -6,7 +6,7 @@ namespace XiHan.Infrastructures.Infos.IpLocation.Ip2region;
 /// <summary>
 /// 查询器
 /// </summary>
-/// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
+/// <remarks>powered by https://github.com/lionsoul2014/ip2region</remarks>
 public class Searcher : ISearcher
 {
     private const int HeaderInfoLength = 256;
@@ -201,7 +201,7 @@ public class Searcher : ISearcher
                 var rLen = _contentStream.Read(buff);
                 if (rLen != buff.Length)
                 {
-                    throw new IOException($"incomplete read: readed bytes should be {buff.Length}");
+                    throw new IOException($"incomplete read: read bytes should be {buff.Length}");
                 }
 
                 break;

@@ -23,27 +23,27 @@ public class ChatHub : Hub<IChatClient>
     /// <summary>
     /// 公共组
     /// </summary>
-    private const string _CommonGroup = "CommonGroup";
+    private const string CommonGroup = "CommonGroup";
 
     /// <summary>
     /// 加入群组
     /// </summary>
-    private const string _AddToGroup = "加入群组";
+    private const string GroupAdded = "加入群组";
 
     /// <summary>
     /// 退出群组
     /// </summary>
-    private const string _RemoveFromGroup = "退出群组";
+    private const string GroupRemoved = "退出群组";
 
     /// <summary>
     /// 新建连接
     /// </summary>
-    private const string _Connected = "新建连接";
+    private const string Connected = "新建连接";
 
     /// <summary>
     /// 断开连接
     /// </summary>
-    private const string _Disconnected = "断开连接";
+    private const string Disconnected = "断开连接";
 
     #region 发送消息给用户或群组
 
@@ -101,7 +101,7 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("SendMessageToCommonGroup")]
     public async Task SendMessageToCommonGroup(string message)
     {
-        await Clients.Group(_CommonGroup).ReceiveMessage(message);
+        await Clients.Group(CommonGroup).ReceiveMessage(message);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("AddToGroup")]
     public async Task AddToGroup(string groupNameName)
     {
-        await SendMessageToGroup(groupNameName, _AddToGroup);
+        await SendMessageToGroup(groupNameName, GroupAdded);
         await Groups.AddToGroupAsync(Context.ConnectionId, groupNameName);
     }
 
@@ -139,7 +139,7 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("RemoveFromGroup")]
     public async Task RemoveFromGroup(string groupNameName)
     {
-        await SendMessageToGroup(groupNameName, _RemoveFromGroup);
+        await SendMessageToGroup(groupNameName, GroupRemoved);
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupNameName);
     }
 
@@ -153,8 +153,8 @@ public class ChatHub : Hub<IChatClient>
     /// <returns></returns>
     public override async Task OnConnectedAsync()
     {
-        await AddToGroup(_CommonGroup);
-        await Clients.Group(_CommonGroup).ReceiveMessage(_Connected);
+        await AddToGroup(CommonGroup);
+        await Clients.Group(CommonGroup).ReceiveMessage(Connected);
         await base.OnConnectedAsync();
     }
 
@@ -165,8 +165,8 @@ public class ChatHub : Hub<IChatClient>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        await RemoveFromGroup(_CommonGroup);
-        await Clients.Group(_CommonGroup).ReceiveMessage(_Disconnected);
+        await RemoveFromGroup(CommonGroup);
+        await Clients.Group(CommonGroup).ReceiveMessage(Disconnected);
         await base.OnDisconnectedAsync(exception);
     }
 

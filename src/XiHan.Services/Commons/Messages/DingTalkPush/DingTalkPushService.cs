@@ -37,7 +37,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="httpPolly"></param>
     public DingTalkPushService(IHttpPollyHelper httpPolly)
     {
-        DingTalkConnection dingTalkConnection = GetDingTalkConn().Result;
+        var dingTalkConnection = GetDingTalkConn().Result;
         _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);
     }
 
@@ -52,7 +52,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
             .ForType<SysCustomRobot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        DingTalkConnection dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
+        var dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
         return dingTalkConnection;
     }
 
@@ -65,7 +65,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<ResultDto> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
     }
@@ -75,7 +75,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
-    public async Task<ResultDto> DingTalkToLink(DingTalkLink link)
+    public async Task<CustomResult> DingTalkToLink(DingTalkLink link)
     {
         return await _dingTalkRobot.LinkMessage(link);
     }
@@ -87,7 +87,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<ResultDto> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
     }
@@ -97,7 +97,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// </summary>
     /// <param name="actionCard"></param>
     /// <returns></returns>
-    public async Task<ResultDto> DingTalkToActionCard(DingTalkActionCard actionCard)
+    public async Task<CustomResult> DingTalkToActionCard(DingTalkActionCard actionCard)
     {
         return await _dingTalkRobot.ActionCardMessage(actionCard);
     }
@@ -107,7 +107,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// </summary>
     /// <param name="feedCard"></param>
     /// <returns></returns>
-    public async Task<ResultDto> DingTalkToFeedCard(DingTalkFeedCard feedCard)
+    public async Task<CustomResult> DingTalkToFeedCard(DingTalkFeedCard feedCard)
     {
         return await _dingTalkRobot.FeedCardMessage(feedCard);
     }

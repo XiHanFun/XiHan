@@ -72,7 +72,7 @@ public static class SqlSugarSetup
             "PostgreSQL" => new IocConfig
             {
                 DbType = IocDbType.PostgreSQL,
-                ConnectionString = AppSettings.Database.ConnectionString.PostgreSQL.GetValue(),
+                ConnectionString = AppSettings.Database.ConnectionString.PostgreSql.GetValue(),
                 IsAutoCloseConnection = true
             },
             _ => new IocConfig
@@ -100,7 +100,7 @@ public static class SqlSugarSetup
                     Log.Information(info);
                 }
             };
-            client.Aop.OnLogExecuted = (sql, pars) =>
+            client.Aop.OnLogExecuted = (_, _) =>
             {
                 var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime;
                 if (databaseConsole)

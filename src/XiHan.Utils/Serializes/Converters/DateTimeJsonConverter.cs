@@ -50,12 +50,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     /// <returns></returns>
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            return reader.GetDateTime();
-        }
-
-        return reader.GetString().ParseToDate();
+        return reader.TokenType == JsonTokenType.String ? reader.GetDateTime() : reader.GetString().ParseToDate();
     }
 
     /// <summary>

@@ -30,9 +30,10 @@ public static class ObjectJudgeExtension
     /// <param name="leftEqual"> 是否可等于上限（默认等于） </param>
     /// <param name="rightEqual"> 是否可等于下限（默认等于） </param>
     /// <returns> 是否介于 </returns>
-    public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = true, bool rightEqual = true) where T : IComparable
+    public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = true,
+        bool rightEqual = true) where T : IComparable
     {
-        bool flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
+        var flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
         return flag && (rightEqual ? value.CompareTo(end) <= 0 : value.CompareTo(end) < 0);
     }
 
@@ -45,9 +46,10 @@ public static class ObjectJudgeExtension
     /// <param name="max">范围大值</param>
     /// <param name="minEqual">是否可等于小值（默认等于）</param>
     /// <param name="maxEqual">是否可等于大值（默认等于）</param>
-    public static bool IsInRange<T>(this IComparable<T> value, T min, T max, bool minEqual = true, bool maxEqual = true) where T : IComparable
+    public static bool IsInRange<T>(this IComparable<T> value, T min, T max, bool minEqual = true, bool maxEqual = true)
+        where T : IComparable
     {
-        bool flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;
+        var flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;
         return flag && (maxEqual ? value.CompareTo(max) <= 0 : value.CompareTo(max) < 0);
     }
 
@@ -63,17 +65,11 @@ public static class ObjectJudgeExtension
     public static bool IsNullOrEmpty<T>(this T? data)
     {
         // 如果为null
-        if (data == null)
-        {
-            return true;
-        }
+        if (data == null) return true;
 
         // 如果为""
         if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-        {
-            return true;
-        }
+        if (string.IsNullOrEmpty(data.ToString()?.Trim())) return true;
 
         // 如果为DBNull
         return data is DBNull;
@@ -86,17 +82,11 @@ public static class ObjectJudgeExtension
     public static bool IsNullOrEmpty(this object? data)
     {
         // 如果为null
-        if (data == null)
-        {
-            return true;
-        }
+        if (data == null) return true;
 
         // 如果为""
         if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
-        {
-            return true;
-        }
+        if (string.IsNullOrEmpty(data.ToString()?.Trim())) return true;
 
         // 如果为DBNull
         return data is DBNull;

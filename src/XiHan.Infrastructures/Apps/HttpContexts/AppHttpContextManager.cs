@@ -34,14 +34,11 @@ public static class AppHttpContextManager
     /// <summary>
     /// 获取当前 HttpContext 对象
     /// </summary>
-    public static HttpContext? GetHttpContextCurrent()
+    private static HttpContext? GetHttpContextCurrent()
     {
         var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
-        if (asyncLocal == null) return null;
 
         var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
-        if (holder == null) return null;
-
         return (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
 
         // 创建异步本地访问器

@@ -16,7 +16,7 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 /// <summary>
 /// SysDictDataWhereDto
 /// </summary>
-public class SysDictDataWhereDto
+public abstract class SysDictDataWhereDto
 {
     /// <summary>
     /// 字典类型

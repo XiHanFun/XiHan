@@ -13,7 +13,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace XiHan.Utils.Verification;
+namespace XiHan.Utils.Verifications;
 
 /// <summary>
 /// 字符验证帮助类
@@ -85,15 +85,15 @@ public static partial class RegexHelper
         switch (checkValue.Length)
         {
             case 18:
-                {
-                    var check = IsNumberPeople18(checkValue);
-                    return check;
-                }
+            {
+                var check = IsNumberPeople18(checkValue);
+                return check;
+            }
             case 15:
-                {
-                    var check = IsNumberPeople15(checkValue);
-                    return check;
-                }
+            {
+                var check = IsNumberPeople15(checkValue);
+                return check;
+            }
             default:
                 return false;
         }
@@ -107,36 +107,23 @@ public static partial class RegexHelper
     public static bool IsNumberPeople18(string checkValue)
     {
         // 数字验证
-        if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) || long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out _) == false)
-        {
-            return false;
-        }
+        if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) ||
+            long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out _) == false) return false;
         // 省份验证
-        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
-        if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture))
-        {
-            return false;
-        }
+        var address =
+            "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture)) return false;
         // 生日验证
         var birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
-        if (!DateTime.TryParse(birth, out _))
-        {
-            return false;
-        }
+        if (!DateTime.TryParse(birth, out _)) return false;
         // 校验码验证
         string[] arrVarifyCode = "1,0,x,9,8,7,6,5,4,3,2".Split(',');
         string[] wi = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(',');
         var ai = checkValue.Remove(17).ToCharArray();
         var sum = 0;
-        for (var i = 0; i < 17; i++)
-        {
-            sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
-        }
+        for (var i = 0; i < 17; i++) sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
         Math.DivRem(sum, 11, out var y);
-        if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLowerInvariant())
-        {
-            return false;
-        }
+        if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLowerInvariant()) return false;
         // 符合GB11643-1999标准
         return true;
     }
@@ -149,22 +136,14 @@ public static partial class RegexHelper
     public static bool IsNumberPeople15(string checkValue)
     {
         // 数字验证
-        if (long.TryParse(checkValue, out var n) == false || n < Math.Pow(10, 14))
-        {
-            return false;
-        }
+        if (long.TryParse(checkValue, out var n) == false || n < Math.Pow(10, 14)) return false;
         // 省份验证
-        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
-        if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture))
-        {
-            return false;
-        }
+        var address =
+            "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture)) return false;
         // 生日验证
         var birth = checkValue.Substring(6, 6).Insert(4, "-").Insert(2, "-");
-        if (DateTime.TryParse(birth, out _) == false)
-        {
-            return false;
-        }
+        if (DateTime.TryParse(birth, out _) == false) return false;
         // 符合15位身份证标准
         return true;
     }
@@ -206,12 +185,10 @@ public static partial class RegexHelper
     {
         if (IntRegex().Match(source).Success)
         {
-            if (long.Parse(source) > 0x7fffffffL || long.Parse(source) < -2147483648L)
-            {
-                return false;
-            }
+            if (long.Parse(source) > 0x7fffffffL || long.Parse(source) < -2147483648L) return false;
             return true;
         }
+
         return false;
     }
 
@@ -250,9 +227,9 @@ public static partial class RegexHelper
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
-    public static bool IsNumberSeveralMN(string checkValue)
+    public static bool IsNumberSeveralMn(string checkValue)
     {
-        return NumberSeveralMNRegex().IsMatch(checkValue);
+        return NumberSeveralMnRegex().IsMatch(checkValue);
     }
 
     /// <summary>
@@ -429,11 +406,7 @@ public static partial class RegexHelper
     /// <returns></returns>
     public static bool IsChinese(string checkValue)
     {
-        if (ChineseRegex().Matches(checkValue).Count == checkValue.Length)
-        {
-            return true;
-        }
-        return false;
+        return ChineseRegex().Matches(checkValue).Count == checkValue.Length;
     }
 
     #endregion
@@ -463,7 +436,7 @@ public static partial class RegexHelper
     {
         try
         {
-            return DateTime.TryParse(checkValue, out var result);
+            return DateTime.TryParse(checkValue, out _);
         }
         catch
         {
@@ -525,6 +498,7 @@ public static partial class RegexHelper
                     result = false;
                     return result;
                 }
+
                 result = true;
             }
         }
@@ -532,92 +506,98 @@ public static partial class RegexHelper
         {
             return result;
         }
+
         return result;
     }
 
     #endregion
 
     [GeneratedRegex(@"^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex GuidRegex();
+    private static partial Regex GuidRegex();
 
     [GeneratedRegex(@"^(\d{3,4})\d{7,8}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberTelRegex();
+    private static partial Regex NumberTelRegex();
 
-    [GeneratedRegex(@"^[A-Za-z0-9](([\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex EmailRegex();
+    [GeneratedRegex(@"^[A-Za-z0-9](([\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$",
+        RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex EmailRegex();
 
     [GeneratedRegex(@"^(-){0,1}\d+$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex IntRegex();
+    private static partial Regex IntRegex();
 
     [GeneratedRegex(@"^[0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberRegex();
+    private static partial Regex NumberRegex();
 
     [GeneratedRegex(@"^[0-9]+\.{0,1}[0-9]{0,2}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberIntOrDoubleRegex();
+    private static partial Regex NumberIntOrDoubleRegex();
 
     [GeneratedRegex(@"^\d{n}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberSeveralNRegex();
+    private static partial Regex NumberSeveralNRegex();
 
     [GeneratedRegex(@"^\d{n,}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberSeveralAtLeastNRegex();
+    private static partial Regex NumberSeveralAtLeastNRegex();
 
     [GeneratedRegex(@"^\d{m,n}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberSeveralMNRegex();
+    private static partial Regex NumberSeveralMnRegex();
 
     [GeneratedRegex(@"^(0|[1-9] [0-9]*)$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberBeginZeroOrNotZeroRegex();
+    private static partial Regex NumberBeginZeroOrNotZeroRegex();
 
     [GeneratedRegex(@"^[0-9]+(.[0-9]{2})?$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberPositiveRealTwoDoubleRegex();
+    private static partial Regex NumberPositiveRealTwoDoubleRegex();
 
     [GeneratedRegex(@"^[0-9]+(.[0-9]{1,3})?$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberPositiveRealOneOrThreeDoubleRegex();
+    private static partial Regex NumberPositiveRealOneOrThreeDoubleRegex();
 
     [GeneratedRegex(@"^\+?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberPositiveIntNotZeroRegex();
+    private static partial Regex NumberPositiveIntNotZeroRegex();
 
     [GeneratedRegex(@"^\-?[1-9][0-9]*$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberNegativeIntNotZeroRegex();
+    private static partial Regex NumberNegativeIntNotZeroRegex();
 
     [GeneratedRegex(@"^[A-Za-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex LetterRegex();
+    private static partial Regex LetterRegex();
 
     [GeneratedRegex(@"^[A-Z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex LetterCapitalRegex();
+    private static partial Regex LetterCapitalRegex();
 
     [GeneratedRegex(@"^[a-z]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex LetterLowerRegex();
+    private static partial Regex LetterLowerRegex();
 
     [GeneratedRegex(@"^[A-Za-z0-9]+$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex NumberOrLetterRegex();
+    private static partial Regex NumberOrLetterRegex();
 
     [GeneratedRegex(@"[^\x00-\xff]", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex LengthStrRegex();
+    private static partial Regex LengthStrRegex();
 
     [GeneratedRegex(@"^.{3}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex CharThreeRegex();
+    private static partial Regex CharThreeRegex();
 
     [GeneratedRegex(@"^\d{6}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex PostCodeRegex();
+    private static partial Regex PostCodeRegex();
 
     [GeneratedRegex(@"[^%&',;=?$\x22]+", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex CharSpecialRegex();
+    private static partial Regex CharSpecialRegex();
 
     [GeneratedRegex(@"^[\u4e00-\u9fa5]{0,}$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex ContainChineseRegex();
+    private static partial Regex ContainChineseRegex();
 
     [GeneratedRegex(@"[一-龥]", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex ChineseRegex();
+    private static partial Regex ChineseRegex();
 
-    [GeneratedRegex(@"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\.-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%\./-~-]*)?$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex UrlRegex();
+    [GeneratedRegex(
+        @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\.-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%\./-~-]*)?$",
+        RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex UrlRegex();
 
     [GeneratedRegex(@"^^(0?[1-9]|1[0-2])$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex MonthRegex();
+    private static partial Regex MonthRegex();
 
     [GeneratedRegex(@"^((0?[1-9])|((1|2)[0-9])|30|31)$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex DayRegex();
+    private static partial Regex DayRegex();
 
-    [GeneratedRegex(@"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$", RegexOptions.IgnoreCase, "zh-CN")]
-    public static partial Regex IpRegex();
+    [GeneratedRegex(
+        @"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$",
+        RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex IpRegex();
 }

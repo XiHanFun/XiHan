@@ -51,7 +51,7 @@ public class PostArticle : BaseEntity
     /// 封面地址
     /// </summary>
     [SugarColumn(Length = 500)]
-    public string CoverlUrl { get; set; } = string.Empty;
+    public string CoverUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章内容

@@ -47,10 +47,10 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// <summary>
     /// 修改同步字典类型
     /// </summary>
-    /// <param name="old_dictType">旧字典类型</param>
-    /// <param name="new_dictType">新字典类型</param>
+    /// <param name="oldDictType">旧字典类型</param>
+    /// <param name="newDictType">新字典类型</param>
     /// <returns></returns>
-    Task<int> ModifyDictDataType(string old_dictType, string new_dictType);
+    Task<int> ModifyDictDataType(string oldDictType, string newDictType);
 
     /// <summary>
     /// 查询字典数据(根据Id)

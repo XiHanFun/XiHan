@@ -11,7 +11,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructures.Caches;
+namespace XiHan.Infrastructures.Apps.Caches;
 
 /// <summary>
 /// IAppCacheService
@@ -45,9 +45,9 @@ public interface IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
     /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
-    /// <param name="expiressAbsoulte">绝对过期时长</param>
+    /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
-    bool Add(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
+    bool Add(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute);
 
     /// <summary>
     /// 添加缓存
@@ -140,9 +140,9 @@ public interface IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">新的缓存Value</param>
     /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
-    /// <param name="expiressAbsoulte">绝对过期时长</param>
+    /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
-    bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
+    bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute);
 
     /// <summary>
     /// 修改缓存

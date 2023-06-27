@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
 using XiHan.Infrastructures.Requests.Https;
@@ -28,19 +27,19 @@ namespace XiHan.Subscriptions.Robots.Lark;
 public class LarkCustomRobot
 {
     private readonly IHttpPollyHelper _httpPolly;
-    private readonly string _url;
+    private readonly string _url; 
     private readonly string _secret;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    /// <param name="LarkConnection"></param>
-    public LarkCustomRobot(IHttpPollyHelper httpPolly, LarkConnection LarkConnection)
+    /// <param name="larkConnection"></param>
+    public LarkCustomRobot(IHttpPollyHelper httpPolly, LarkConnection larkConnection)
     {
         _httpPolly = httpPolly;
-        _url = LarkConnection.WebHookUrl + "/" + LarkConnection.AccessToken;
-        _secret = LarkConnection.Secret;
+        _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
+        _secret = larkConnection.Secret;
     }
 
     /// <summary>
@@ -48,12 +47,12 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="content">内容</param>
     /// <returns></returns>
-    public async Task<ResultDto> TextMessage(LarkText content)
+    public async Task<CustomResult> TextMessage(LarkText content)
     {
         // 消息类型
-        var msg_type = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type, content });
+        var result = await Send(new { msg_type = msgType, content });
         return result;
     }
 
@@ -61,12 +60,12 @@ public class LarkCustomRobot
     /// 发送富文本消息
     /// </summary>
     /// <param name="post"></param>
-    public async Task<ResultDto> PostMessage(LarkPost post)
+    public async Task<CustomResult> PostMessage(LarkPost post)
     {
         // 消息类型
-        var msg_type = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
+        var msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type, post });
+        var result = await Send(new { msg_type = msgType, post });
         return result;
     }
 
@@ -76,10 +75,10 @@ public class LarkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<ResultDto> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msg_type = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
+        var msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
         // 指定目标人群
         var at = new LarkAt
         {
@@ -87,7 +86,7 @@ public class LarkCustomRobot
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msg_type, markdown, at });
+        var result = await Send(new { msg_type = msgType, markdown, at });
         return result;
     }
 
@@ -95,12 +94,12 @@ public class LarkCustomRobot
     /// 发送图片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<ResultDto> ImageMessage(LarkActionCard actionCard)
+    public async Task<CustomResult> ImageMessage(LarkActionCard actionCard)
     {
         // 消息类型
-        var msg_type = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        var msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type, actionCard });
+        var result = await Send(new { msg_type = msgType, actionCard });
         return result;
     }
 
@@ -108,12 +107,12 @@ public class LarkCustomRobot
     /// 发送消息卡片
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<ResultDto> InterActiveMessage(LarkFeedCard feedCard)
+    public async Task<CustomResult> InterActiveMessage(LarkFeedCard feedCard)
     {
         // 消息类型
-        var msg_type = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
+        var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type, feedCard });
+        var result = await Send(new { msg_type = msgType, feedCard });
         return result;
     }
 
@@ -122,7 +121,7 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<ResultDto> Send(object objSend)
+    private async Task<CustomResult> Send(object objSend)
     {
         var url = _url;
         var sendMessage = objSend.SerializeToJson();
@@ -136,11 +135,11 @@ public class LarkCustomRobot
             var keyByte = encoding.GetBytes(_secret);
             var messageBytes = encoding.GetBytes(sign);
             // 使用 HmacSHA256 算法计算签名
-            using (var hmacsha256 = new HMACSHA256(keyByte))
+            using (var hash256 = new HMACSHA256(keyByte))
             {
-                var hashmessage = hmacsha256.ComputeHash(messageBytes);
+                var hashMessage = hash256.ComputeHash(messageBytes);
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
-                sign = Convert.ToBase64String(hashmessage).UrlEncode();
+                sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";
@@ -152,12 +151,12 @@ public class LarkCustomRobot
         {
             if (result.Code == 0 || result.Msg == "success")
             {
-                return ResultDto.Success("发送成功");
+                return CustomResult.Success("发送成功");
             }
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
-            var info = resultInfos.Where(e => e.Value == result.Code).FirstOrDefault();
-            return ResultDto.BadRequest("发送失败，" + info?.Label);
+            var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
+            return CustomResult.BadRequest("发送失败，" + info?.Label);
         }
-        return ResultDto.InternalServerError();
+        return CustomResult.InternalServerError();
     }
 }

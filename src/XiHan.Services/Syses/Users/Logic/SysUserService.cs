@@ -63,7 +63,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<long> CreateUser(SysUser sysUser)
     {
-        long userId = await AddReturnIdAsync(sysUser);
+        var userId = await AddReturnIdAsync(sysUser);
 
         //新增用户角色信息
         sysUser.BaseId = userId;

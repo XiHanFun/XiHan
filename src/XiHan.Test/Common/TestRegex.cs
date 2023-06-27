@@ -11,14 +11,14 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Verification;
+using XiHan.Utils.Verifications;
 
 namespace XiHan.Test.Common;
 
 /// <summary>
 /// TestRegex
 /// </summary>
-public class TestRegex
+public abstract class TestRegex
 {
     // 身份证号
     public static void TestCardId()

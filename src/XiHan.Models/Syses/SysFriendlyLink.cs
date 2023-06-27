@@ -33,7 +33,7 @@ public class SysFriendlyLink : BaseEntity
     /// 头像路径
     /// </summary>
     [SugarColumn(Length = 200)]
-    public string AvatarPath { get; set; } = "/Images/SysFriendlyLink/Avatar/defult.png";
+    public string AvatarPath { get; set; } = "/Images/SysFriendlyLink/Avatar/default.png";
 
     /// <summary>
     /// 友链地址

@@ -16,15 +16,15 @@ namespace XiHan.Subscriptions.Robots.WeCom;
 /// <summary>
 /// WeChatConnection
 /// </summary>
-public class WeComConnection
+public abstract class WeComConnection
 {
     private const string DefaultWeComWebHookUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send";
 
-    private const string DefaultWeComUploadkUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media";
+    private const string DefaultWeComUploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media";
 
     private string? _webHookUrl;
 
-    private string? _uploadkUrl;
+    private string? _uploadUrl;
 
     /// <summary>
     /// 网络挂钩地址
@@ -38,10 +38,10 @@ public class WeComConnection
     /// <summary>
     /// 文件上传地址
     /// </summary>
-    public string UploadkUrl
+    public string UploadUrl
     {
-        get => _uploadkUrl ??= DefaultWeComUploadkUrl;
-        set => _uploadkUrl = value;
+        get => _uploadUrl ??= DefaultWeComUploadUrl;
+        set => _uploadUrl = value;
     }
 
     /// <summary>

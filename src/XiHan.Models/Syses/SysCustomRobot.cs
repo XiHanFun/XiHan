@@ -59,5 +59,5 @@ public class SysCustomRobot : BaseModifyEntity
     /// 上传地址
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
-    public string? UploadkUrl { get; set; } = string.Empty;
+    public string? UploadUrl { get; set; } = string.Empty;
 }

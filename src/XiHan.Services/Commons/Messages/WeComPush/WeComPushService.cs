@@ -37,7 +37,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// <param name="httpPolly"></param>
     public WeComPushService(IHttpPollyHelper httpPolly)
     {
-        WeComConnection weComConnection = GetWeComConn().Result;
+        var weComConnection = GetWeComConn().Result;
         _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);
     }
 
@@ -52,7 +52,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
             .ForType<SysCustomRobot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
-        WeComConnection weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
+        var weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
         return weComConnection;
     }
 
@@ -63,7 +63,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToText(WeComText text)
+    public async Task<CustomResult> WeComToText(WeComText text)
     {
         return await _weComRobot.TextMessage(text);
     }
@@ -73,7 +73,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToMarkdown(WeComMarkdown markdown)
+    public async Task<CustomResult> WeComToMarkdown(WeComMarkdown markdown)
     {
         return await _weComRobot.MarkdownMessage(markdown);
     }
@@ -83,7 +83,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToImage(WeComImage image)
+    public async Task<CustomResult> WeComToImage(WeComImage image)
     {
         return await _weComRobot.ImageMessage(image);
     }
@@ -93,7 +93,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToNews(WeComNews news)
+    public async Task<CustomResult> WeComToNews(WeComNews news)
     {
         return await _weComRobot.NewsMessage(news);
     }
@@ -103,7 +103,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToFile(WeComFile file)
+    public async Task<CustomResult> WeComToFile(WeComFile file)
     {
         return await _weComRobot.FileMessage(file);
     }
@@ -113,7 +113,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
+    public async Task<CustomResult> WeComToTextNotice(WeComTemplateCardTextNotice templateCard)
     {
         return await _weComRobot.TextNoticeMessage(templateCard);
     }
@@ -123,7 +123,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
+    public async Task<CustomResult> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard)
     {
         return await _weComRobot.NewsNoticeMessage(templateCard);
     }
@@ -133,9 +133,9 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// </summary>
     /// <param name="fileStream">文件</param>
     /// <returns></returns>
-    public async Task<ResultDto> WeComToUploadkFile(FileStream fileStream)
+    public async Task<CustomResult> WeComToUploadFile(FileStream fileStream)
     {
-        return await _weComRobot.UploadkFile(fileStream);
+        return await _weComRobot.UploadFile(fileStream);
     }
 
     #endregion

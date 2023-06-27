@@ -13,7 +13,7 @@
 
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Application.Common.Mapsters;
+using XiHan.Application.Common.Mapster;
 
 namespace XiHan.Application.Setups.Services;
 
@@ -36,7 +36,7 @@ public static class MapsterSetup
         }
 
         // 创建具体的映射对象
-        services.AddSingleton(MapsterAdaptConifg.InitMapperConfig());
+        services.AddSingleton(MapsterAdaptConfig.InitMapperConfig());
         services.AddScoped<IMapper, ServiceMapper>();
 
         return services;

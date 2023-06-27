@@ -34,7 +34,7 @@ public static class JwtTokenUtil
     /// <returns></returns>
     public static string TokenIssue(TokenModel tokenModel)
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
 
         // Nuget引入：Microsoft.IdentityModel.Tokens
         var claims = new List<Claim>
@@ -79,7 +79,7 @@ public static class JwtTokenUtil
     /// <returns></returns>
     public static bool TokenIsSafeVerify(string token)
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
         var jwtHandler = new JwtSecurityTokenHandler();
         var symmetricKey = authJwtSetting.SymmetricKey;
 
@@ -109,7 +109,7 @@ public static class JwtTokenUtil
     /// <returns></returns>
     public static TokenValidationParameters TokenVerify()
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
         // 签名密钥
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
         // 令牌验证参数

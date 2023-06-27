@@ -41,33 +41,48 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineError(this string inputStr, ConsoleColor frontColor = ConsoleColor.Red) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineError(this string inputStr, ConsoleColor frontColor = ConsoleColor.Red)
+    {
+        WriteColorLine(inputStr, frontColor);
+    }
 
     /// <summary>
     /// 警告信息
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineWarning(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineWarning(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow)
+    {
+        WriteColorLine(inputStr, frontColor);
+    }
 
     /// <summary>
     /// 处理信息
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan)
+    {
+        WriteColorLine(inputStr, frontColor);
+    }
 
     /// <summary>
     /// 正常信息
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineInfo(this string inputStr, ConsoleColor frontColor = ConsoleColor.White) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineInfo(this string inputStr, ConsoleColor frontColor = ConsoleColor.White)
+    {
+        WriteColorLine(inputStr, frontColor);
+    }
 
     /// <summary>
     /// 成功信息
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineSuccess(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green) => WriteColorLine(inputStr, frontColor);
+    public static void WriteLineSuccess(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green)
+    {
+        WriteColorLine(inputStr, frontColor);
+    }
 }

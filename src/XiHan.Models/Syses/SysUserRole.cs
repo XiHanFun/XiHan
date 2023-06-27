@@ -26,10 +26,10 @@ public class SysUserRole : BaseModifyEntity
     /// <summary>
     /// 用户账户
     /// </summary>
-    public long UserId { get; set; }
+    public long UserId { get; init; }
 
     /// <summary>
     /// 系统角色
     /// </summary>
-    public long RoleId { get; set; }
+    public long RoleId { get; init; }
 }

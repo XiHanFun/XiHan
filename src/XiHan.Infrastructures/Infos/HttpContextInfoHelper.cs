@@ -20,13 +20,13 @@ namespace XiHan.Infrastructures.Infos;
 /// <summary>
 /// 请求上下文信息帮助类
 /// </summary>
-public class HttpContexInfotHelper
+public class HttpContextInfoHelper
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpContext"></param>
-    public HttpContexInfotHelper(HttpContext httpContext)
+    public HttpContextInfoHelper(HttpContext httpContext)
     {
         if (httpContext == null)
         {

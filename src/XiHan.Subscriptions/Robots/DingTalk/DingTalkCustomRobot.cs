@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
 using System.Security.Cryptography;
 using System.Text;
 using XiHan.Infrastructures.Requests.Https;
@@ -50,10 +49,10 @@ public class DingTalkCustomRobot
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
     /// <returns></returns>
-    public async Task<ResultDto> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 指定目标人群
         var at = new DingTalkAt
         {
@@ -61,7 +60,7 @@ public class DingTalkCustomRobot
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msgtype, text, at });
+        var result = await Send(new { msgType, text, at });
         return result;
     }
 
@@ -69,12 +68,12 @@ public class DingTalkCustomRobot
     /// 发送链接消息
     /// </summary>
     /// <param name="link"></param>
-    public async Task<ResultDto> LinkMessage(DingTalkLink link)
+    public async Task<CustomResult> LinkMessage(DingTalkLink link)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, link });
+        var result = await Send(new { msgType, link });
         return result;
     }
 
@@ -84,10 +83,10 @@ public class DingTalkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<ResultDto> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         // 指定目标人群
         var at = new DingTalkAt
         {
@@ -95,7 +94,7 @@ public class DingTalkCustomRobot
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msgtype, markdown, at });
+        var result = await Send(new { msgType, markdown, at });
         return result;
     }
 
@@ -103,12 +102,12 @@ public class DingTalkCustomRobot
     /// 发送任务卡片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<ResultDto> ActionCardMessage(DingTalkActionCard actionCard)
+    public async Task<CustomResult> ActionCardMessage(DingTalkActionCard actionCard)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, actionCard });
+        var result = await Send(new { msgType, actionCard });
         return result;
     }
 
@@ -116,12 +115,12 @@ public class DingTalkCustomRobot
     /// 发送卡片菜单消息
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<ResultDto> FeedCardMessage(DingTalkFeedCard feedCard)
+    public async Task<CustomResult> FeedCardMessage(DingTalkFeedCard feedCard)
     {
         // 消息类型
-        var msgtype = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msgtype, feedCard });
+        var result = await Send(new { msgType, feedCard });
         return result;
     }
 
@@ -130,7 +129,7 @@ public class DingTalkCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<ResultDto> Send(object objSend)
+    private async Task<CustomResult> Send(object objSend)
     {
         var url = _url;
         var sendMessage = objSend.SerializeToJson();
@@ -144,11 +143,11 @@ public class DingTalkCustomRobot
             var keyByte = encoding.GetBytes(_secret);
             var messageBytes = encoding.GetBytes(sign);
             // 使用 HmacSHA256 算法计算签名
-            using (var hmacsha256 = new HMACSHA256(keyByte))
+            using (var hash256 = new HMACSHA256(keyByte))
             {
-                var hashmessage = hmacsha256.ComputeHash(messageBytes);
+                var hashMessage = hash256.ComputeHash(messageBytes);
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
-                sign = Convert.ToBase64String(hashmessage).UrlEncode();
+                sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";
@@ -156,16 +155,13 @@ public class DingTalkCustomRobot
         // 发起请求
         var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
-        if (result != null)
+        if (result == null) return CustomResult.InternalServerError();
+        if (result.ErrCode == 0 || result.ErrMsg == "ok")
         {
-            if (result.ErrCode == 0 || result.ErrMsg == "ok")
-            {
-                return ResultDto.Success("发送成功");
-            }
-            var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
-            var info = resultInfos.Where(e => e.Value == result.ErrCode).FirstOrDefault();
-            return ResultDto.BadRequest("发送失败，" + info?.Label);
+            return CustomResult.Success("发送成功");
         }
-        return ResultDto.InternalServerError();
+        var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
+        var info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
+        return CustomResult.BadRequest("发送失败，" + info?.Label);
     }
 }

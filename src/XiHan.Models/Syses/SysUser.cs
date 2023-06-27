@@ -57,7 +57,7 @@ public class SysUser : BaseEntity
     /// 头像路径
     /// </summary>
     [SugarColumn(Length = 200)]
-    public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/defult.png";
+    public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/default.png";
 
     /// <summary>
     /// 用户昵称
@@ -123,7 +123,7 @@ public class SysUser : BaseEntity
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public static bool IsAdmin(long userId)
+    private static bool IsAdmin(long userId)
     {
         return userId == 00000001L;
     }

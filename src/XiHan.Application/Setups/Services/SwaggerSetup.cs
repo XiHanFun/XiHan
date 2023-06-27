@@ -57,7 +57,7 @@ public static class SwaggerSetup
     /// Swagger 文档信息配置
     /// </summary>
     /// <param name="options"></param>
-    internal static void SwaggerInfoConfig(SwaggerGenOptions options)
+    private static void SwaggerInfoConfig(SwaggerGenOptions options)
     {
         // 需要暴露的分组
         var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
@@ -65,7 +65,7 @@ public static class SwaggerSetup
         typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
-            if (!publishGroup.Any(pgroup => pgroup.ToLower() == group.Name.ToLower())) return;
+            if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
             // 获取分组信息
             var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
             // 添加文档介绍
@@ -151,7 +151,7 @@ public static class SwaggerSetup
     /// Swagger 文档中请求带 JWT Token
     /// </summary>
     /// <param name="options"></param>
-    internal static void SwaggerJwtConfig(SwaggerGenOptions options)
+    private static void SwaggerJwtConfig(SwaggerGenOptions options)
     {
         // 定义安全方案
         var securitySchemeOauth2 = new OpenApiSecurityScheme

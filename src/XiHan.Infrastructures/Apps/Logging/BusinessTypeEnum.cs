@@ -72,7 +72,7 @@ public enum BusinessTypeEnum
     /// 生成代码
     /// </summary>
     [Description("生成代码")]
-    Gencode = 8,
+    GenCode = 8,
 
     /// <summary>
     /// 清空数据

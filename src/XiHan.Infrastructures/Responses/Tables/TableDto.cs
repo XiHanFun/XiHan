@@ -26,5 +26,5 @@ public class TableDto<TEntity> where TEntity : class
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Datas { get; set; }
+    public List<TEntity>? Data { get; set; }
 }

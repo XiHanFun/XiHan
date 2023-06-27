@@ -1,4 +1,13 @@
 {
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://127.0.0.1:9708",
+      "sslPort": 0
+    }
+  },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -10,44 +19,34 @@
     "Development": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "Test": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Test"
       },
-      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "Production": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "http://127.0.0.1:9708",
       "dotnetRunMessages": true
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {},
       "publishAllPorts": true
-    }
-  },
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://127.0.0.1:9708",
-      "sslPort": 0
     }
   }
 }

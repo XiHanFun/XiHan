@@ -5,7 +5,7 @@ namespace XiHan.Infrastructures.Infos.IpLocation.Ip2region;
 /// <summary>
 /// ISearcher
 /// </summary>
-/// <remarks>powerd by https://github.com/lionsoul2014/ip2region</remarks>
+/// <remarks>powered by https://github.com/lionsoul2014/ip2region</remarks>
 public interface ISearcher
 {
     /// <summary>

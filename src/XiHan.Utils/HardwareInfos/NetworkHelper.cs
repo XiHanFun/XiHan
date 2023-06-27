@@ -29,11 +29,12 @@ public static class NetworkHelper
         var networkInfos = new List<NetworkInfo>();
 
         // 获取可用网卡
-        var interfaces = NetworkInterface.GetAllNetworkInterfaces().Where(network => network.OperationalStatus == OperationalStatus.Up);
+        var interfaces = NetworkInterface.GetAllNetworkInterfaces()
+            .Where(network => network.OperationalStatus == OperationalStatus.Up);
 
-        foreach (NetworkInterface ni in interfaces)
+        foreach (var ni in interfaces)
         {
-            IPInterfaceProperties properties = ni.GetIPProperties();
+            var properties = ni.GetIPProperties();
             var networkInfo = new NetworkInfo
             {
                 Name = ni.Name,
@@ -42,10 +43,11 @@ public static class NetworkHelper
                 Speed = ni.Speed.ToString("#,##0") + " bps",
                 PhysicalAddress = ni.GetPhysicalAddress().ToString(),
                 DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
-                IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList(),
+                IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
             };
             networkInfos.Add(networkInfo);
         }
+
         return networkInfos;
     }
 }

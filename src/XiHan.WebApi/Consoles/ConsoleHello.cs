@@ -36,7 +36,7 @@ public static class ConsoleHello
     /// <summary>
     /// Logo
     /// </summary>
-    public static string Logo { get; set; } = $@"
+    private const string Logo = $@"
 ██╗  ██╗██╗██╗  ██╗ █████╗ ███╗   ██╗
 ╚██╗██╔╝██║██║  ██║██╔══██╗████╗  ██║
  ╚███╔╝ ██║███████║███████║██╔██╗ ██║
@@ -47,25 +47,25 @@ public static class ConsoleHello
     /// <summary>
     /// 寄语
     /// </summary>
-    public static string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
+    private const string SendWord = $@"碧落降恩承淑颜，共挚崎缘挽曦寒。迁般故事终成忆，谨此葳蕤换思短。";
 
     /// <summary>
     /// Copyright
     /// </summary>
-    public static string Copyright { get; set; } = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
+    private static readonly string Copyright= $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 
     /// <summary>
     /// 官方文档
     /// </summary>
-    public static string OfficialDocuments { get; set; } = $@"官方文档：https://docs.xihan.fun";
+    private const string OfficialDocuments= $@"官方文档：https://docs.xihan.fun";
 
     /// <summary>
     /// 官方组织
     /// </summary>
-    public static string OfficialOrganization { get; set; } = $@"官方组织：https://github.com/XiHanFun";
+    private const string OfficialOrganization = $@"官方组织：https://github.com/XiHanFun";
 
     /// <summary>
     /// 源码仓库
     /// </summary>
-    public static string SourceCodeRepository { get; set; } = $@"源码仓库：https://github.com/XiHanFun/XiHan.Framework";
+    private const string SourceCodeRepository = $@"源码仓库：https://github.com/XiHanFun/XiHan.Framework";
 }

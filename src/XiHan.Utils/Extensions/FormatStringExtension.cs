@@ -45,6 +45,7 @@ public static class FormatStringExtension
             start += oldStr.Length;
             end = start;
         }
+
         // 查找到最后一个位置之后，把剩下的字符串拼接进去
         strBuffer.Append(content[end..]);
         return strBuffer.ToString();

@@ -65,6 +65,7 @@ public static class EnumExtension
         {
             ("获取单个枚举的描述信息出错，" + ex.Message).WriteLineError();
         }
+
         return description;
     }
 
@@ -73,7 +74,7 @@ public static class EnumExtension
     /// </summary>
     /// <param name="enumType"></param>
     /// <returns></returns>
-    public static List<EnumDescDto> GetEnumInfos(this Type enumType)
+    public static IEnumerable<EnumDescDto> GetEnumInfos(this Type enumType)
     {
         List<EnumDescDto> result = new();
         var fields = enumType.GetFields().ToList();
@@ -81,18 +82,16 @@ public static class EnumExtension
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理
-            if (field.FieldType.IsEnum)
+            if (!field.FieldType.IsEnum) return;
+            var desc = string.Empty;
+            if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
+                desc = description.Description;
+            result.Add(new EnumDescDto
             {
-                var desc = string.Empty;
-                if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
-                    desc = description.Description;
-                result.Add(new EnumDescDto()
-                {
-                    Key = field.Name.ToString(),
-                    Value = (int)field.GetRawConstantValue()!,
-                    Label = desc,
-                });
-            }
+                Key = field.Name.ToString(),
+                Value = (int)field.GetRawConstantValue()!,
+                Label = desc
+            });
         });
         return result;
     }
@@ -135,10 +134,10 @@ public class EnumDescDto
     /// <summary>
     /// 值
     /// </summary>
-    public int Value { get; set; }
+    public int Value { get; init; }
 
     /// <summary>
     /// 描述
     /// </summary>
-    public string Label { get; set; } = string.Empty;
+    public string Label { get; init; } = string.Empty;
 }

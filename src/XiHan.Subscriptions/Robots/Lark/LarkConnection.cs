@@ -16,7 +16,7 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// <summary>
 /// LarkConnection
 /// </summary>
-public class LarkConnection
+public abstract class LarkConnection
 {
     private const string DefaultLarkWebHookUrl = "https://open.feishu.cn/open-apis/bot/v2/hook";
 

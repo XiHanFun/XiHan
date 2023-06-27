@@ -32,6 +32,13 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     private readonly ILogger _logger = Log.ForContext<AuthorizationFilterAsyncAttribute>();
 
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public AuthorizationFilterAsyncAttribute()
+    {
+    }
+
+    /// <summary>
     /// 在某授权时执行
     /// </summary>
     /// <param name="context"></param>

@@ -27,23 +27,21 @@ public static class StringExtension
     /// 把字符串按照分隔符转换成 List
     /// </summary>
     /// <param name="str">源字符串</param>
-    /// <param name="speater">分隔符</param>
+    /// <param name="separator">分隔符</param>
     /// <param name="toLower">是否转换为小写</param>
     /// <returns></returns>
-    public static List<string> GetStrList(this string str, char speater, bool toLower)
+    public static List<string> GetStrList(this string str, char separator, bool toLower)
     {
         List<string> list = new();
-        var ss = str.Split(speater);
+        var ss = str.Split(separator);
         foreach (var s in ss)
         {
-            if (string.IsNullOrEmpty(s) || s == speater.ToString()) continue;
+            if (string.IsNullOrEmpty(s) || s == separator.ToString()) continue;
             var strVal = s;
-            if (toLower)
-            {
-                strVal = s.ToLower();
-            }
+            if (toLower) strVal = s.ToLower();
             list.Add(strVal);
         }
+
         return list;
     }
 
@@ -51,15 +49,12 @@ public static class StringExtension
     /// 分割字符串
     /// </summary>
     /// <param name="str"></param>
-    /// <param name="splitstr"></param>
+    /// <param name="splitter"></param>
     /// <returns></returns>
-    public static string[]? GetSplitMulti(this string? str, string splitstr)
+    public static string[]? GetSplitMulti(this string? str, string splitter)
     {
         string[]? strArray = null;
-        if (!string.IsNullOrEmpty(str))
-        {
-            strArray = new Regex(splitstr).Split(str);
-        }
+        if (!string.IsNullOrEmpty(str)) strArray = new Regex(splitter).Split(str);
         return strArray;
     }
 
@@ -83,7 +78,6 @@ public static class StringExtension
     {
         StringBuilder sb = new();
         for (var i = 0; i < list.Count; i++)
-        {
             if (i == list.Count - 1)
             {
                 sb.Append(list[i]);
@@ -93,7 +87,7 @@ public static class StringExtension
                 sb.Append(list[i]);
                 sb.Append(speater);
             }
-        }
+
         return sb.ToString();
     }
 
@@ -106,7 +100,6 @@ public static class StringExtension
     {
         var sb = new StringBuilder();
         for (var i = 0; i < list.Count; i++)
-        {
             if (i == list.Count - 1)
             {
                 sb.Append(list[i]);
@@ -116,7 +109,7 @@ public static class StringExtension
                 sb.Append(list[i]);
                 sb.Append(',');
             }
-        }
+
         return sb.ToString();
     }
 
@@ -128,14 +121,8 @@ public static class StringExtension
     public static string GetArrayValueStr(this Dictionary<int, int> list)
     {
         var sb = new StringBuilder();
-        foreach (var kvp in list)
-        {
-            sb.Append(kvp.Value + ",");
-        }
-        if (list.Count > 0)
-        {
-            return DelLastComma(sb.ToString());
-        }
+        foreach (var kvp in list) sb.Append(kvp.Value + ",");
+        if (list.Count > 0) return DelLastComma(sb.ToString());
 
         return "";
     }
@@ -191,9 +178,11 @@ public static class StringExtension
                 c[i] = (char)12288;
                 continue;
             }
+
             if (c[i] < 127)
                 c[i] = (char)(c[i] + 65248);
         }
+
         return new string(c);
     }
 
@@ -212,9 +201,11 @@ public static class StringExtension
                 c[i] = (char)32;
                 continue;
             }
+
             if (c[i] > 65280 && c[i] < 65375)
                 c[i] = (char)(c[i] - 65248);
         }
+
         return new string(c);
     }
 
@@ -242,6 +233,7 @@ public static class StringExtension
             var newString = strList.Replace(splitString, "");
             result = newString;
         }
+
         return result;
     }
 
@@ -282,12 +274,8 @@ public static class StringExtension
                 StringBuilder lengstr = new();
                 if (newStyle != null)
                     for (var i = 0; i < newStyle.Length; i++)
-                    {
                         if (newStyle.Substring(i, 1) == splitString)
-                        {
                             lengstr.Append(i + ",");
-                        }
-                    }
 
                 if (!string.IsNullOrWhiteSpace(lengstr.ToString()))
                 {
@@ -295,12 +283,14 @@ public static class StringExtension
                     var str = lengstr.ToString().Split(',');
                     strList = str.Aggregate(strList, (current, bb) => current.Insert(int.Parse(bb), splitString));
                 }
+
                 // 给出最后的结果
                 returnValue = strList;
                 // 因为是正常的输出，没有错误
                 error = "";
             }
         }
+
         return returnValue;
     }
 
@@ -322,6 +312,7 @@ public static class StringExtension
             str = str.Replace(@"""", "");
             return str;
         }
+
         str = str.Replace(@"'", "&#39;");
         str = str.Replace(@"""", "&#34;");
         return str;
@@ -384,12 +375,10 @@ public static class StringExtension
         var tempLen = 0;
         var s = ascii.GetBytes(inputString);
         foreach (var t in s)
-        {
             if (t == 63)
                 tempLen += 2;
             else
                 tempLen += 1;
-        }
         return tempLen;
     }
 
@@ -411,6 +400,7 @@ public static class StringExtension
             isShowFix = true;
             len--;
         }
+
         ASCIIEncoding ascii = new();
         var tempLen = 0;
         StringBuilder tempString = new();
@@ -452,26 +442,28 @@ public static class StringExtension
     /// <returns></returns>
     public static string HtmlToTxt(this string strHtml)
     {
-        string[] aryReg ={
-        @"<script[^>]*?>.*?</script>",
-        @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
-        @"([\r\n])[\s]+",
-        @"&(quot|#34);",
-        @"&(amp|#38);",
-        @"&(lt|#60);",
-        @"&(gt|#62);",
-        @"&(nbsp|#160);",
-        @"&(iexcl|#161);",
-        @"&(cent|#162);",
-        @"&(pound|#163);",
-        @"&(copy|#169);",
-        @"&#(\d+);",
-        @"-->",
-        @"<!--.*\n"
+        string[] aryReg =
+        {
+            @"<script[^>]*?>.*?</script>",
+            @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
+            @"([\r\n])[\s]+",
+            @"&(quot|#34);",
+            @"&(amp|#38);",
+            @"&(lt|#60);",
+            @"&(gt|#62);",
+            @"&(nbsp|#160);",
+            @"&(iexcl|#161);",
+            @"&(cent|#162);",
+            @"&(pound|#163);",
+            @"&(copy|#169);",
+            @"&#(\d+);",
+            @"-->",
+            @"<!--.*\n"
         };
 
         var newReg = aryReg[0];
-        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
+        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase))
+            .Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
 
         var replace = strOutput.Replace("<", "");
         var s = strOutput.Replace(">", "");

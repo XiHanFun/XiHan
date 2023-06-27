@@ -145,7 +145,7 @@ public static class AppSettings
         /// <summary>
         /// 是否已经初始化
         /// </summary>
-        public static bool Inited { get; set; }
+        public static bool Initialized { get; set; }
 
         /// <summary>
         /// 类型
@@ -178,9 +178,9 @@ public static class AppSettings
             public static string Oracle { get; set; } = string.Empty;
 
             /// <summary>
-            /// PostgreSQL
+            /// PostgreSql
             /// </summary>
-            public static string PostgreSQL { get; set; } = string.Empty;
+            public static string PostgreSql { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -206,9 +206,9 @@ public static class AppSettings
     }
 
     /// <summary>
-    /// RabbitMQ
+    /// RabbitMq
     /// </summary>
-    public static class RabbitMQ
+    public static class RabbitMq
     {
         /// <summary>
         /// 是否可用
@@ -254,7 +254,7 @@ public static class AppSettings
         /// <summary>
         /// 分布式
         /// </summary>
-        public static class Distributedcache
+        public static class DistributedCache
         {
             /// <summary>
             /// 是否可用
@@ -356,7 +356,7 @@ public static class AppSettings
         /// <summary>
         /// QQ 授权配置
         /// </summary>
-        public static class QQ
+        public static class Qq
         {
             /// <summary>
             /// 获取用户授权得到 code

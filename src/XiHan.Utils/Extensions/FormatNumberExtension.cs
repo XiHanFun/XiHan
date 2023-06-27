@@ -51,16 +51,10 @@ public static class FormatNumberExtension
     /// <returns></returns>
     private static string FormatStringComma(string numint)
     {
-        if (numint.Length <= 4)
-        {
-            return numint;
-        }
+        if (numint.Length <= 4) return numint;
         var numNoFormat = numint[..^4];
         var numFormat = numint.Substring(numint.Length - 4, 4);
-        if (numNoFormat.Length > 4)
-        {
-            return FormatStringComma(numNoFormat) + "," + numFormat;
-        }
+        if (numNoFormat.Length > 4) return FormatStringComma(numNoFormat) + "," + numFormat;
 
         return numNoFormat + "," + numFormat;
     }

@@ -69,10 +69,7 @@ public static class TypeExtension
     /// <returns>是返回True，不是返回False</returns>
     public static bool IsEnumerable(this Type type)
     {
-        if (type == typeof(string))
-        {
-            return false;
-        }
+        if (type == typeof(string)) return false;
         return typeof(IEnumerable).IsAssignableFrom(type);
     }
 
@@ -84,36 +81,22 @@ public static class TypeExtension
     /// <returns></returns>
     public static bool IsGenericAssignableFrom(this Type genericType, Type type)
     {
-        if (!genericType.IsGenericType)
-        {
-            throw new ArgumentException("该功能只支持泛型类型的调用，非泛型类型可使用 IsAssignableFrom 方法。");
-        }
+        if (!genericType.IsGenericType) throw new ArgumentException("该功能只支持泛型类型的调用，非泛型类型可使用 IsAssignableFrom 方法。");
 
         List<Type> allOthers = new() { type };
-        if (genericType.IsInterface)
-        {
-            allOthers.AddRange(type.GetInterfaces());
-        }
+        if (genericType.IsInterface) allOthers.AddRange(type.GetInterfaces());
 
         foreach (var other in allOthers)
         {
-            Type cur = other;
+            var cur = other;
             while (cur != null)
             {
-                if (cur.IsGenericType)
-                {
-                    cur = cur.GetGenericTypeDefinition();
-                }
-                if (cur.IsSubclassOf(genericType) || cur == genericType)
-                {
-                    return true;
-                }
-                if (cur.BaseType != null)
-                {
-                    cur = cur.BaseType;
-                }
+                if (cur.IsGenericType) cur = cur.GetGenericTypeDefinition();
+                if (cur.IsSubclassOf(genericType) || cur == genericType) return true;
+                if (cur.BaseType != null) cur = cur.BaseType;
             }
         }
+
         return false;
     }
 
@@ -123,8 +106,8 @@ public static class TypeExtension
     public static bool IsAsync(this MethodInfo method)
     {
         return method.ReturnType == typeof(Task) ||
-                                    method.ReturnType.IsGenericType &&
-                                    method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
+               (method.ReturnType.IsGenericType &&
+                method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>));
     }
 
     /// <summary>
@@ -135,10 +118,7 @@ public static class TypeExtension
     /// <returns></returns>
     public static bool IsBaseOn(this Type type, Type baseType)
     {
-        if (baseType.IsGenericTypeDefinition)
-        {
-            return baseType.IsGenericAssignableFrom(type);
-        }
+        if (baseType.IsGenericTypeDefinition) return baseType.IsGenericAssignableFrom(type);
         return baseType.IsAssignableFrom(type);
     }
 
@@ -150,7 +130,7 @@ public static class TypeExtension
     /// <returns></returns>
     public static bool IsBaseOn<TBaseType>(this Type type)
     {
-        Type baseType = typeof(TBaseType);
+        var baseType = typeof(TBaseType);
         return type.IsBaseOn(baseType);
     }
 
@@ -170,12 +150,9 @@ public static class TypeExtension
     public static bool IsVirtual(this PropertyInfo property)
     {
         var accessor = property.GetAccessors().FirstOrDefault();
-        if (accessor == null)
-        {
-            return false;
-        }
+        if (accessor == null) return false;
 
-        return accessor.IsVirtual && !accessor.IsFinal;
+        return accessor is { IsVirtual: true, IsFinal: false };
     }
 
     #endregion
@@ -204,6 +181,7 @@ public static class TypeExtension
             NullableConverter nullableConverter = new(type);
             return nullableConverter.UnderlyingType;
         }
+
         return type;
     }
 
@@ -223,13 +201,14 @@ public static class TypeExtension
         if (type.IsNotNullableType())
         {
             var fullName = type.FullName ?? result;
-            DescriptionAttribute? desc = type.GetAttribute<DescriptionAttribute>(inherit);
+            var desc = type.GetAttribute<DescriptionAttribute>(inherit);
             if (desc != null)
             {
                 var description = desc.Description;
                 result = fullName + "(" + description + ")";
             }
         }
+
         return result;
     }
 
@@ -241,21 +220,12 @@ public static class TypeExtension
     /// <returns>返回 Description 特性描述信息，如不存在则返回成员的名称</returns>
     public static string GetDescription(this MemberInfo member, bool inherit = true)
     {
-        DescriptionAttribute? desc = member.GetAttribute<DescriptionAttribute>(inherit);
-        if (desc != null)
-        {
-            return desc.Description;
-        }
-        DisplayNameAttribute? displayName = member.GetAttribute<DisplayNameAttribute>(inherit);
-        if (displayName != null)
-        {
-            return displayName.DisplayName;
-        }
-        DisplayAttribute? display = member.GetAttribute<DisplayAttribute>(inherit);
-        if (display != null)
-        {
-            return display.Name ?? string.Empty;
-        }
+        var desc = member.GetAttribute<DescriptionAttribute>(inherit);
+        if (desc != null) return desc.Description;
+        var displayName = member.GetAttribute<DisplayNameAttribute>(inherit);
+        if (displayName != null) return displayName.DisplayName;
+        var display = member.GetAttribute<DisplayAttribute>(inherit);
+        if (display != null) return display.Name ?? string.Empty;
         return member.Name;
     }
 
@@ -336,22 +306,22 @@ public static class TypeExtension
 
     private static readonly Dictionary<Type, string> BuiltInTypeNames = new()
     {
-            { typeof(bool), "bool" },
-            { typeof(byte), "byte" },
-            { typeof(char), "char" },
-            { typeof(decimal), "decimal" },
-            { typeof(double), "double" },
-            { typeof(float), "float" },
-            { typeof(int), "int" },
-            { typeof(long), "long" },
-            { typeof(object), "object" },
-            { typeof(sbyte), "sbyte" },
-            { typeof(short), "short" },
-            { typeof(string), "string" },
-            { typeof(uint), "uint" },
-            { typeof(ulong), "ulong" },
-            { typeof(ushort), "ushort" },
-            { typeof(void), "void" }
+        { typeof(bool), "bool" },
+        { typeof(byte), "byte" },
+        { typeof(char), "char" },
+        { typeof(decimal), "decimal" },
+        { typeof(double), "double" },
+        { typeof(float), "float" },
+        { typeof(int), "int" },
+        { typeof(long), "long" },
+        { typeof(object), "object" },
+        { typeof(sbyte), "sbyte" },
+        { typeof(short), "short" },
+        { typeof(string), "string" },
+        { typeof(uint), "uint" },
+        { typeof(ulong), "ulong" },
+        { typeof(ushort), "ushort" },
+        { typeof(void), "void" }
     };
 
     private static void ProcessType(StringBuilder builder, Type type, bool fullName)
@@ -378,10 +348,7 @@ public static class TypeExtension
     private static void ProcessArrayType(StringBuilder builder, Type type, bool fullName)
     {
         var innerType = type;
-        while (innerType!.IsArray)
-        {
-            innerType = innerType.GetElementType();
-        }
+        while (innerType!.IsArray) innerType = innerType.GetElementType();
 
         ProcessType(builder, innerType, fullName);
 
@@ -394,7 +361,8 @@ public static class TypeExtension
         }
     }
 
-    private static void ProcessGenericType(StringBuilder builder, Type type, Type[] genericArguments, int length, bool fullName)
+    private static void ProcessGenericType(StringBuilder builder, Type type, Type[] genericArguments, int length,
+        bool fullName)
     {
         var offset = type.IsNested ? type.DeclaringType!.GetGenericArguments().Length : 0;
 
@@ -425,16 +393,10 @@ public static class TypeExtension
         for (var i = offset; i < length; i++)
         {
             ProcessType(builder, genericArguments[i], fullName);
-            if (i + 1 == length)
-            {
-                continue;
-            }
+            if (i + 1 == length) continue;
 
             builder.Append(',');
-            if (!genericArguments[i + 1].IsGenericParameter)
-            {
-                builder.Append(' ');
-            }
+            if (!genericArguments[i + 1].IsGenericParameter) builder.Append(' ');
         }
 
         builder.Append('>');

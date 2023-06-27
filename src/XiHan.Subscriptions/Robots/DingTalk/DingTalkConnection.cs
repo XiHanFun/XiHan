@@ -16,7 +16,7 @@ namespace XiHan.Subscriptions.Robots.DingTalk;
 /// <summary>
 /// DingTalkConnection
 /// </summary>
-public class DingTalkConnection
+public abstract class DingTalkConnection
 {
     private const string DefaultDingTalkWebHookUrl = "https://oapi.dingtalk.com/robot/send";
 

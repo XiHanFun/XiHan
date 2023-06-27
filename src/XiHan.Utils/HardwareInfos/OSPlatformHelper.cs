@@ -28,18 +28,9 @@ public static class OsPlatformHelper
     /// <exception cref="Exception"></exception>
     public static string GetOperatingSystem()
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            return OSPlatform.OSX.ToString();
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            return OSPlatform.Linux.ToString();
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            return OSPlatform.Windows.ToString();
-        }
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return OSPlatform.OSX.ToString();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return OSPlatform.Linux.ToString();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return OSPlatform.Windows.ToString();
 
         throw new Exception("Cannot determine operating system!");
     }

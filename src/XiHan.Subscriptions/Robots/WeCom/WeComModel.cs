@@ -221,12 +221,12 @@ public class WeComTemplateCardNewsNotice
 public class WeComAt
 {
     /// <summary>
-    /// 被@的用户微信号，@all表示提醒所有人 示例：["wangqing","@all"]
+    /// 被@的用户微信号，@all表示提醒所有人 示例：["wangling","@all"]
     /// </summary>
     [JsonPropertyName("mentioned_list")]
-    public List<string>? Mentioneds { set; get; }
+    public List<string>? Mentions { set; get; }
 
-    /// <summary>
+    /// <summary>s
     /// 被@的手机号，@all表示提醒所有人 示例：["13800001111","@all"]
     /// </summary>
     [JsonPropertyName("mentioned_mobile_list")]

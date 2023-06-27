@@ -21,10 +21,10 @@ public class PageDataDto<TEntity> where TEntity : class
     /// <summary>
     /// 分页数据
     /// </summary>
-    public PageInfoDto? PageInfo { get; set; }
+    public PageInfoDto? PageInfo { get; init; }
 
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity>? Datas { get; set; }
+    public List<TEntity>? Data { get; init; }
 }

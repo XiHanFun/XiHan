@@ -31,12 +31,7 @@ public class IntJsonConverter : JsonConverter<int>
     /// <returns></returns>
     public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.Number)
-        {
-            return reader.GetInt32();
-        }
-
-        return reader.GetString().ParseToInt();
+        return reader.TokenType == JsonTokenType.Number ? reader.GetInt32() : reader.GetString().ParseToInt();
     }
 
     /// <summary>

@@ -81,9 +81,7 @@ public static class ControllerSetup
             options.JsonSerializerOptions.Converters.Add(new DecimalJsonConverter());
             // 日期类型
             options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-        })
-        // 添加 XML 格式支持
-        .AddXmlSerializerFormatters();
+        });
 
         return services;
     }

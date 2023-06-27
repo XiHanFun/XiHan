@@ -40,8 +40,8 @@ public static class RateLimiterSetup
         services.AddRateLimiter(options =>
         {
             // 全局限流器
-            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
-                RateLimitPartition.GetFixedWindowLimiter(partitionKey: "fixed", partition => new FixedWindowRateLimiterOptions
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(_ =>
+                RateLimitPartition.GetFixedWindowLimiter(partitionKey: "fixed", _ => new FixedWindowRateLimiterOptions
                 {
                     AutoReplenishment = true,
                     PermitLimit = 1000,
@@ -50,8 +50,8 @@ public static class RateLimiterSetup
                 }));
 
             // 自定义限流策略
-            options.AddPolicy("MyPolicy", httpContext =>
-                RateLimitPartition.GetFixedWindowLimiter(partitionKey: "MyPolicy", partition => new FixedWindowRateLimiterOptions
+            options.AddPolicy("MyPolicy", _ =>
+                RateLimitPartition.GetFixedWindowLimiter(partitionKey: "MyPolicy", _ => new FixedWindowRateLimiterOptions
                 {
                     AutoReplenishment = true,
                     PermitLimit = 10,
@@ -67,12 +67,12 @@ public static class RateLimiterSetup
                 context.HttpContext.Response.StatusCode = 429;
                 if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                 {
-                    await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.TooManyRequests($"请求过多，请在{retryAfter.TotalMinutes}分钟后重试。"), token);
+                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.TooManyRequests($"请求过多，请在{retryAfter.TotalMinutes}分钟后重试。"), token);
                 }
                 else
                 {
                     // 返回自定义的未授权模型数据
-                    await context.HttpContext.Response.WriteAsJsonAsync(ResultDto.TooManyRequests("请稍后重试。"), token);
+                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.TooManyRequests("请稍后重试。"), token);
                 }
             };
         });

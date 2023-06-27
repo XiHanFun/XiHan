@@ -55,7 +55,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     public async Task OnExceptionAsync(ExceptionContext context)
     {
         // 异常默认返回服务器错误，不直接明文显示
-        var result = new JsonResult(ResultDto.InternalServerError());
+        var result = new JsonResult(CustomResult.InternalServerError());
 
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
@@ -63,32 +63,32 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
             // 自定义异常
             if (context.Exception is CustomException)
             {
-                result = new JsonResult(ResultDto.BadRequest(context.Exception.Message));
+                result = new JsonResult(CustomResult.BadRequest(context.Exception.Message));
             }
             // 参数异常
             else if (context.Exception is ArgumentException)
             {
-                result = new JsonResult(ResultDto.UnprocessableEntity());
+                result = new JsonResult(CustomResult.UnprocessableEntity());
             }
             // 认证授权异常
             else if (context.Exception is AuthenticationException)
             {
-                result = new JsonResult(ResultDto.Unauthorized());
+                result = new JsonResult(CustomResult.Unauthorized());
             }
             // 禁止访问异常
             else if (context.Exception is UnauthorizedAccessException)
             {
-                result = new JsonResult(ResultDto.Forbidden());
+                result = new JsonResult(CustomResult.Forbidden());
             }
             // 数据未找到异常
             else if (context.Exception is FileNotFoundException)
             {
-                result = new JsonResult(ResultDto.NotFound());
+                result = new JsonResult(CustomResult.NotFound());
             }
             // 未实现异常
             else if (context.Exception is NotImplementedException)
             {
-                result = new JsonResult(ResultDto.NotImplemented());
+                result = new JsonResult(CustomResult.NotImplemented());
             }
 
             // 控制器信息

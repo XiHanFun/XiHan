@@ -37,7 +37,7 @@ public class SysUserOauth : BaseCreateEntity
     public string OauthId { get; set; } = string.Empty;
 
     /// <summary>
-    /// QQ / 微信同一主体下 Unionid 相同
+    /// QQ / 微信同一主体下 Union 相同
     /// </summary>
     [SugarColumn(Length = 100)]
     public string? UnionId { get; set; }

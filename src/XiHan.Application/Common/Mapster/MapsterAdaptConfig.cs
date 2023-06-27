@@ -13,12 +13,12 @@
 
 using Mapster;
 
-namespace XiHan.Application.Common.Mapsters;
+namespace XiHan.Application.Common.Mapster;
 
 /// <summary>
 /// MapsterAdaptConifg
 /// </summary>
-public static class MapsterAdaptConifg
+public static class MapsterAdaptConfig
 {
     /// <summary>
     /// 初始化配置映射关系

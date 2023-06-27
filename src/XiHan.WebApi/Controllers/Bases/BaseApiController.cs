@@ -41,7 +41,7 @@ public class BaseApiController : ControllerBase
         // 创建文件流
         Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
         var stream = System.IO.File.OpenRead(path);
-        string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        var mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         return File(stream, mimeType, HttpUtility.UrlEncode(fileName));
     }
 
@@ -65,11 +65,11 @@ public class BaseApiController : ControllerBase
     /// <param name="sheetName"></param>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    protected (string, string) ExportExcelMini<T>(List<T> list, string sheetName, string fileName)
+    private (string, string) ExportExcelMini<T>(List<T> list, string sheetName, string fileName)
     {
         var rootpath = ApplicationInfoHelper.CurrentDirectory;
-        string sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
-        string fullPath = Path.Combine(rootpath, "export", sFileName);
+        var sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
+        var fullPath = Path.Combine(rootpath, "export", sFileName);
 
         Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
@@ -85,8 +85,8 @@ public class BaseApiController : ControllerBase
     /// <returns></returns>
     protected (string, string) ExportExcelMini(Dictionary<string, object> sheets, string fileName)
     {
-        string sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
-        string fullPath = Path.Combine(_rootPath, "export", sFileName);
+        var sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
+        var fullPath = Path.Combine(_rootPath, "export", sFileName);
 
         Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
@@ -104,8 +104,8 @@ public class BaseApiController : ControllerBase
     /// <returns></returns>
     protected string DownloadImportTemplate<T>(List<T> list, Stream stream, string fileName)
     {
-        string sFileName = $"{fileName}模板.xlsx";
-        string newFileName = Path.Combine(_rootPath, "ImportTemplate", sFileName);
+        var sFileName = $"{fileName}模板.xlsx";
+        var newFileName = Path.Combine(_rootPath, "ImportTemplate", sFileName);
 
         if (!Directory.Exists(newFileName))
         {
@@ -122,8 +122,8 @@ public class BaseApiController : ControllerBase
     /// <returns></returns>
     protected (string, string) DownloadImportTemplate(string fileName)
     {
-        string sFileName = $"{fileName}.xlsx";
-        string fullPath = Path.Combine(_rootPath, "ImportTemplate", sFileName);
+        var sFileName = $"{fileName}.xlsx";
+        var fullPath = Path.Combine(_rootPath, "ImportTemplate", sFileName);
 
         return (sFileName, fullPath);
     }

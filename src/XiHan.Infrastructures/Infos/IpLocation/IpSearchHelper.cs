@@ -45,7 +45,7 @@ public static class IpSearchHelper
         {
             lock (Lock)
             {
-                _searcherInstance ??= new(CachePolicyEnum.VectorIndex, IpDbPath);
+                _searcherInstance ??= new Searcher(CachePolicyEnum.VectorIndex, IpDbPath);
             }
             return _searcherInstance;
         }

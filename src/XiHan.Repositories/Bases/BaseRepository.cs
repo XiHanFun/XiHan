@@ -38,7 +38,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 构造函数
     /// </summary>
     /// <param name="context"></param>
-    public BaseRepository(ISqlSugarClient? context = null) : base(context)
+    protected BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         Context = DbScoped.SugarScope;
     }
@@ -246,7 +246,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(TEntity entity)
+    public new virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         entity.ToModified();
         return await base.UpdateAsync(entity);
@@ -258,7 +258,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
+    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);
     }

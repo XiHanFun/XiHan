@@ -27,7 +27,7 @@ public static class SerializeHelper
     /// <summary>
     /// 公共参数
     /// </summary>
-    public static JsonSerializerOptions JsonSerializerOptionsInstance = GetJsonSerializerOptions();
+    public static readonly JsonSerializerOptions JsonSerializerOptionsInstance = GetJsonSerializerOptions();
 
     /// <summary>
     /// 获取默认序列化参数
@@ -52,7 +52,7 @@ public static class SerializeHelper
             // 数据格式首字母小写 JsonNamingPolicy.CamelCase驼峰样式，null则为不改变大小写
             PropertyNamingPolicy = null,
             // 获取或设置要在转义字符串时使用的编码器，不转义字符
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
         // 布尔类型
         options.Converters.Add(new BooleanJsonConverter());

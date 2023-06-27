@@ -27,7 +27,7 @@ public class WeComCustomRobot
     private readonly IHttpPollyHelper _httpPolly;
     private readonly string _messageUrl;
 
-    // 正式文件上传地址，调用接口凭证, 机器人 webhookurl 中的 key 参数
+    // 正式文件上传地址，调用接口凭证, 机器人 webhook 中的 key 参数
     private readonly string _fileUrl;
 
     /// <summary>
@@ -39,7 +39,7 @@ public class WeComCustomRobot
     {
         _httpPolly = httpPolly;
         _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
-        _fileUrl = weChatConnection.UploadkUrl + "?key=" + weChatConnection.Key + "&type=file";
+        _fileUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key + "&type=file";
     }
 
     /// <summary>
@@ -47,12 +47,12 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="text">内容</param>
     /// <returns></returns>
-    public async Task<ResultDto> TextMessage(WeComText text)
+    public async Task<CustomResult> TextMessage(WeComText text)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, text });
+        var result = await SendMessage(new { msgType, text });
         return result;
     }
 
@@ -61,12 +61,12 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="markdown">文档</param>
     /// <returns></returns>
-    public async Task<ResultDto> MarkdownMessage(WeComMarkdown markdown)
+    public async Task<CustomResult> MarkdownMessage(WeComMarkdown markdown)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, markdown });
+        var result = await SendMessage(new { msgType, markdown });
         return result;
     }
 
@@ -75,12 +75,12 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="image">图片</param>
     /// <returns></returns>
-    public async Task<ResultDto> ImageMessage(WeComImage image)
+    public async Task<CustomResult> ImageMessage(WeComImage image)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, image });
+        var result = await SendMessage(new { msgType, image });
         return result;
     }
 
@@ -89,12 +89,12 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<ResultDto> NewsMessage(WeComNews news)
+    public async Task<CustomResult> NewsMessage(WeComNews news)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, news });
+        var result = await SendMessage(new { msgType, news });
         return result;
     }
 
@@ -103,12 +103,12 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<ResultDto> FileMessage(WeComFile file)
+    public async Task<CustomResult> FileMessage(WeComFile file)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, file });
+        var result = await SendMessage(new { msgType, file });
         return result;
     }
 
@@ -117,13 +117,13 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultDto> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
+    public async Task<CustomResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, template_card = templateCard });
+        var result = await SendMessage(new { msgType, template_card = templateCard });
         return result;
     }
 
@@ -132,13 +132,13 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
-    public async Task<ResultDto> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
+    public async Task<CustomResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
     {
         // 消息类型
-        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgtype, template_card = templateCard });
+        var result = await SendMessage(new { msgType, template_card = templateCard });
         return result;
     }
 
@@ -148,7 +148,7 @@ public class WeComCustomRobot
     /// <remarks>素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用</remarks>
     /// <remarks>文件大小在5B~20M之间</remarks>
     /// <returns></returns>
-    public async Task<ResultDto> UploadkFile(FileStream fileStream)
+    public async Task<CustomResult> UploadFile(FileStream fileStream)
     {
         Dictionary<string, string> headers = new()
         {
@@ -167,14 +167,14 @@ public class WeComCustomRobot
                     Message = "上传成功",
                     MediaId = result.MediaId
                 };
-                return ResultDto.Success(uploadResult);
+                return CustomResult.Success(uploadResult);
             }
             else
             {
-                return ResultDto.BadRequest("上传失败");
+                return CustomResult.BadRequest("上传失败");
             }
         }
-        return ResultDto.InternalServerError();
+        return CustomResult.InternalServerError();
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<ResultDto> SendMessage(object objSend)
+    private async Task<CustomResult> SendMessage(object objSend)
     {
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
@@ -193,13 +193,13 @@ public class WeComCustomRobot
         {
             if (result.ErrCode == 0 || result.ErrMsg == "ok")
             {
-                return ResultDto.Success("发送成功");
+                return CustomResult.Success("发送成功");
             }
             else
             {
-                return ResultDto.BadRequest("发送失败");
+                return CustomResult.BadRequest("发送失败");
             }
         }
-        return ResultDto.InternalServerError();
+        return CustomResult.InternalServerError();
     }
 }

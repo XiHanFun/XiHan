@@ -44,7 +44,7 @@ public static class AppServiceManager
     /// 注册基础服务
     /// </summary>
     /// <param name="services"></param>
-    public static void RegisterBaseService(IServiceCollection services)
+    private static void RegisterBaseService(IServiceCollection services)
     {
         // 属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceManager>();
@@ -60,7 +60,7 @@ public static class AppServiceManager
     /// <remarks>
     /// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
     /// </remarks>
-    public static void RegisterSelfService(IServiceCollection services)
+    private static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库
         string[] libraries = new string[] { "XiHan.Infrastructures", "XiHan.Repositories", "XiHan.Services", "XiHan.Tasks" };

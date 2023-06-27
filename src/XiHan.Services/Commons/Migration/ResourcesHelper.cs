@@ -28,7 +28,7 @@ public class ResourcesService
     /// </summary>
     /// <param name="resourceInfo"></param>
     /// <returns></returns>
-    public async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
+    public static async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
     {
         if (resourceInfo == null)
         {
@@ -44,7 +44,7 @@ public class ResourcesService
                 // 路径
                 Path = path
             };
-            var content = File.ReadAllText(path, Encoding.UTF8);
+            var content = await File.ReadAllTextAsync(path, Encoding.UTF8);
             // 替换资源
             content = content.FormatReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写

@@ -16,8 +16,8 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.DependencyInjection;
+using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Caches;
 
 namespace XiHan.Application.Setups.Services;
 
@@ -40,12 +40,12 @@ public static class CacheSetup
         }
 
         // 分布式缓存
-        var isEnabledDistributedcache = AppSettings.Cache.Distributedcache.IsEnabled.GetValue();
-        if (isEnabledDistributedcache)
+        var isEnabledDistributedCache = AppSettings.Cache.DistributedCache.IsEnabled.GetValue();
+        if (isEnabledDistributedCache)
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.Distributedcache.Redis.ConnectionString.GetValue();
-            var instanceName = AppSettings.Cache.Distributedcache.Redis.InstanceName.GetValue();
+            var connectionString = AppSettings.Cache.DistributedCache.Redis.ConnectionString.GetValue();
+            var instanceName = AppSettings.Cache.DistributedCache.Redis.InstanceName.GetValue();
             var redisStr = $"{connectionString}, prefix = {instanceName}";
             var redisClient = new CSRedisClient(redisStr);
             // 用法一：基于 Redis 初始化 IDistributedCache

@@ -64,12 +64,12 @@ public static class ConsoleServerInfo
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();
-        $@"是否初始化：{AppSettings.Database.Inited.GetValue()}".WriteLineInfo();
+        $@"是否初始化：{AppSettings.Database.Initialized.GetValue()}".WriteLineInfo();
         "===============分析===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}".WriteLineInfo();
         "===============缓存===============".WriteLineInfo();
         $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.GetValue()}分钟".WriteLineInfo();
-        $@"分布式缓存：{AppSettings.Cache.Distributedcache.IsEnabled.GetValue()}".WriteLineInfo();
+        $@"分布式缓存：{AppSettings.Cache.DistributedCache.IsEnabled.GetValue()}".WriteLineInfo();
         $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}".WriteLineInfo();
         "===============跨域===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}".WriteLineInfo();

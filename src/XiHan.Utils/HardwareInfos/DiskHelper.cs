@@ -33,16 +33,10 @@ public static class DiskHelper
         if (!Directory.Exists(directoryPath)) return;
         // 删除目录中所有的文件
         var fileNames = GetFiles(directoryPath);
-        foreach (var t in fileNames)
-        {
-            DeleteFile(t);
-        }
+        foreach (var t in fileNames) DeleteFile(t);
         // 删除目录中所有的子目录
         var directoryNames = GetDirectories(directoryPath);
-        foreach (var t in directoryNames)
-        {
-            DeleteDirectory(t);
-        }
+        foreach (var t in directoryNames) DeleteDirectory(t);
     }
 
     /// <summary>
@@ -51,10 +45,7 @@ public static class DiskHelper
     /// <param name="filePath">文件的绝对路径</param>
     public static void ClearFile(string filePath)
     {
-        if (!File.Exists(filePath))
-        {
-            return;
-        }
+        if (!File.Exists(filePath)) return;
         // 删除文件
         File.Delete(filePath);
         // 重新创建该文件
@@ -86,18 +77,12 @@ public static class DiskHelper
         if (!Directory.Exists(varFromDirectory)) return;
         var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
-        {
             foreach (var d in directories)
-            {
                 CopyFolder(d, varToDirectory + d[d.LastIndexOf(@"\", StringComparison.Ordinal)..]);
-            }
-        }
         var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
         foreach (var s in files)
-        {
             File.Copy(s, varToDirectory + s[s.LastIndexOf(@"\", StringComparison.Ordinal)..], true);
-        }
     }
 
     #endregion
@@ -128,9 +113,7 @@ public static class DiskHelper
         if (!IsExistDirectory(descDirectoryPath)) return;
         // 如果目标中存在同名文件,则删除
         if (IsExistFile(descDirectoryPath + @"\" + sourceFileName))
-        {
             DeleteFile(descDirectoryPath + @"\" + sourceFileName);
-        }
         // 将文件移动到指定目录
         File.Move(sourceFilePath, descDirectoryPath + @"\" + sourceFileName);
     }
@@ -161,10 +144,7 @@ public static class DiskHelper
     /// <param name="dir">要创建的目录路径包括目录名</param>
     public static void CreateDirectory(string dir)
     {
-        if (!Directory.Exists(dir))
-        {
-            Directory.CreateDirectory(dir);
-        }
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
     }
 
     /// <summary>
@@ -177,9 +157,7 @@ public static class DiskHelper
     {
         dir = dir.Replace(@"/", @"\");
         if (dir.IndexOf(@"\", StringComparison.Ordinal) > -1)
-        {
             CreateDirectory(dir[..dir.LastIndexOf(@"\", StringComparison.Ordinal)]);
-        }
         StreamWriter sw = new(dir, false, encoding);
         sw.Write(pagestr);
         sw.Close();
@@ -195,10 +173,7 @@ public static class DiskHelper
     /// <param name="dir">要删除的目录路径和名称</param>
     public static void DeleteDirectory(string dir)
     {
-        if (Directory.Exists(dir))
-        {
-            Directory.Delete(dir, true);
-        }
+        if (Directory.Exists(dir)) Directory.Delete(dir, true);
     }
 
     /// <summary>
@@ -207,10 +182,7 @@ public static class DiskHelper
     /// <param name="file">要删除的文件路径和名称</param>
     public static void DeleteFile(string file)
     {
-        if (File.Exists(file))
-        {
-            File.Delete(file);
-        }
+        if (File.Exists(file)) File.Delete(file);
     }
 
     /// <summary>
@@ -224,18 +196,13 @@ public static class DiskHelper
         if (!Directory.Exists(varFromDirectory)) return;
         var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
-        {
             foreach (var d in directories)
-            {
-                DeleteFolderFiles(d, string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
-            }
-        }
+                DeleteFolderFiles(d,
+                    string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
         var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
         foreach (var s in files)
-        {
             File.Delete(string.Concat(varToDirectory, s.AsSpan(s.LastIndexOf(@"\", StringComparison.Ordinal))));
-        }
     }
 
     #endregion
@@ -316,7 +283,8 @@ public static class DiskHelper
     /// <param name="isSearchChild">是否搜索子目录</param>
     public static string[] GetDirectories(string directoryPath, string searchPattern, bool isSearchChild)
     {
-        return Directory.GetDirectories(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        return Directory.GetDirectories(directoryPath, searchPattern,
+            isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     /// <summary>
@@ -349,10 +317,7 @@ public static class DiskHelper
     public static string[] GetFiles(string directoryPath)
     {
         // 如果目录不存在，则抛出异常
-        if (!IsExistDirectory(directoryPath))
-        {
-            throw new FileNotFoundException();
-        }
+        if (!IsExistDirectory(directoryPath)) throw new FileNotFoundException();
         // 获取文件列表
         return Directory.GetFiles(directoryPath);
     }
@@ -366,12 +331,10 @@ public static class DiskHelper
     public static string[] GetFiles(string directoryPath, string searchPattern, bool isSearchChild)
     {
         // 如果目录不存在，则抛出异常
-        if (!IsExistDirectory(directoryPath))
-        {
-            throw new FileNotFoundException();
-        }
+        if (!IsExistDirectory(directoryPath)) throw new FileNotFoundException();
 
-        return Directory.GetFiles(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        return Directory.GetFiles(directoryPath, searchPattern,
+            isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     #endregion
@@ -435,6 +398,7 @@ public static class DiskHelper
         {
             ex.ThrowAndConsoleError("获取文件信息出错!");
         }
+
         return false;
     }
 
@@ -457,6 +421,7 @@ public static class DiskHelper
         {
             ex.ThrowAndConsoleError("获取文件信息出错!");
         }
+
         return false;
     }
 
@@ -522,7 +487,10 @@ public static class DiskHelper
     /// <returns></returns>
     public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
     {
-        return GetHardDiskTotalSpace(hardDiskName) == 0 ? "0%" : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
+        return GetHardDiskTotalSpace(hardDiskName) == 0
+            ? "0%"
+            : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) +
+              "%";
     }
 
     /// <summary>
@@ -571,7 +539,8 @@ public static class DiskHelper
                     TypeName = item.DriveType.ToString(),
                     TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
                     FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
-                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
+                    UsedSpace =
+                        (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
                     AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
                 };
                 diskInfos.Add(info);
@@ -581,6 +550,7 @@ public static class DiskHelper
         {
             ex.ThrowAndConsoleError("获取磁盘信息出错!");
         }
+
         return diskInfos;
     }
 
@@ -593,7 +563,7 @@ public static class DiskHelper
         List<DiskInfo> diskInfos = new();
         try
         {
-            string output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}'");
+            var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}'");
             var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
             if (lines.Any())
             {
@@ -611,8 +581,12 @@ public static class DiskHelper
                             TypeName = rootDisk[0].Trim(),
                             TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatByteToString(),
                             UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
-                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatByteToString(),
-                            AvailableRate = rootDisk[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%",
+                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024)
+                                .FormatByteToString(),
+                            AvailableRate = rootDisk[1].ParseToLong() == 0
+                                ? "0%"
+                                : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) +
+                                  "%"
                         };
                         diskInfos.Add(info);
                     }
@@ -623,6 +597,7 @@ public static class DiskHelper
         {
             ex.ThrowAndConsoleError("获取磁盘信息出错!");
         }
+
         return diskInfos;
     }
 
