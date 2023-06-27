@@ -34,10 +34,7 @@ public static class CacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 分布式缓存
         var isEnabledDistributedCache = AppSettings.Cache.DistributedCache.IsEnabled.GetValue();
@@ -63,10 +60,7 @@ public static class CacheSetup
 
         // 响应缓存
         var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();
-        if (isEnabledResponseCache)
-        {
-            services.AddResponseCaching();
-        }
+        if (isEnabledResponseCache) services.AddResponseCaching();
 
         return services;
     }

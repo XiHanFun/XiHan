@@ -79,11 +79,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             if (resourceExecuted.Result != null)
             {
                 var result = resourceExecuted.Result as ActionResult;
-                _memoryCache.Set(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, result, TimeSpan.FromMinutes(_syncTimeout));
-                if (_resourceLogSwitch)
-                {
-                    _logger.Information($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
-                }
+                _memoryCache.Set(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, result,
+                    TimeSpan.FromMinutes(_syncTimeout));
+                if (_resourceLogSwitch) _logger.Information($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
             }
         }
     }

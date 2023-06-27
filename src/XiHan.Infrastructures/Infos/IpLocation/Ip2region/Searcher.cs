@@ -33,9 +33,7 @@ public class Searcher : ISearcher
     public Searcher(CachePolicyEnum cachePolicy = CachePolicyEnum.Content, string? dbPath = null)
     {
         if (string.IsNullOrEmpty(dbPath))
-        {
             dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
-        }
 
         _contentStream = File.OpenRead(dbPath);
         _cachePolicy = cachePolicy;
@@ -48,6 +46,7 @@ public class Searcher : ISearcher
                     _contentStream.CopyTo(stream);
                     _contentBuff = stream.ToArray();
                 }
+
                 break;
 
             case CachePolicyEnum.VectorIndex:
@@ -62,6 +61,7 @@ public class Searcher : ISearcher
                     _contentStream.CopyTo(stream);
                     _contentBuff = stream.ToArray();
                 }
+
                 break;
         }
     }
@@ -105,8 +105,8 @@ public class Searcher : ISearcher
     public string Search(uint ip)
     {
         var result = string.Empty;
-        var il0 = ip >> 24 & 0xFF;
-        var il1 = ip >> 16 & 0xFF;
+        var il0 = (ip >> 24) & 0xFF;
+        var il1 = (ip >> 16) & 0xFF;
         var idx = il0 * VectorIndexCols * VectorIndexSize + il1 * VectorIndexSize;
         uint sPtr;
         uint ePtr;
@@ -169,10 +169,7 @@ public class Searcher : ISearcher
             }
         }
 
-        if (dataLen == 0)
-        {
-            return result;
-        }
+        if (dataLen == 0) return result;
 
         var regionBuff = new byte[dataLen];
         Read((int)dataPtr, regionBuff);
@@ -199,10 +196,7 @@ public class Searcher : ISearcher
                 IoCount++;
 
                 var rLen = _contentStream.Read(buff);
-                if (rLen != buff.Length)
-                {
-                    throw new IOException($"incomplete read: read bytes should be {buff.Length}");
-                }
+                if (rLen != buff.Length) throw new IOException($"incomplete read: read bytes should be {buff.Length}");
 
                 break;
         }

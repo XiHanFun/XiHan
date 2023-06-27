@@ -62,34 +62,22 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
         {
             // 自定义异常
             if (context.Exception is CustomException)
-            {
                 result = new JsonResult(CustomResult.BadRequest(context.Exception.Message));
-            }
             // 参数异常
             else if (context.Exception is ArgumentException)
-            {
                 result = new JsonResult(CustomResult.UnprocessableEntity());
-            }
             // 认证授权异常
             else if (context.Exception is AuthenticationException)
-            {
                 result = new JsonResult(CustomResult.Unauthorized());
-            }
             // 禁止访问异常
             else if (context.Exception is UnauthorizedAccessException)
-            {
                 result = new JsonResult(CustomResult.Forbidden());
-            }
             // 数据未找到异常
             else if (context.Exception is FileNotFoundException)
-            {
                 result = new JsonResult(CustomResult.NotFound());
-            }
             // 未实现异常
             else if (context.Exception is NotImplementedException)
-            {
                 result = new JsonResult(CustomResult.NotImplemented());
-            }
 
             // 控制器信息
             var actionContextInfo = context.GetActionContextInfo();

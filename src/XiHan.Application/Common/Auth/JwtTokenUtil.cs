@@ -38,13 +38,13 @@ public static class JwtTokenUtil
 
         // Nuget引入：Microsoft.IdentityModel.Tokens
         var claims = new List<Claim>
-            {
-                new Claim("UserId", tokenModel.UserId.ToString()),
-                new Claim("UserName", tokenModel.UserName),
-                new Claim("NickName", tokenModel.NickName),
-                new Claim("Issuer", authJwtSetting.Issuer),
-                new Claim("Audience", authJwtSetting.Audience),
-            };
+        {
+            new("UserId", tokenModel.UserId.ToString()),
+            new("UserName", tokenModel.UserName),
+            new("NickName", tokenModel.NickName),
+            new("Issuer", authJwtSetting.Issuer),
+            new("Audience", authJwtSetting.Audience)
+        };
         // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
         List<string> sysRolesClaim = new(tokenModel.SysRoles.Split(','));
         claims.AddRange(sysRolesClaim.Select(role => new Claim("SysRole", role)));
@@ -91,7 +91,9 @@ public static class JwtTokenUtil
             token = token.ParseToString().Replace("Bearer ", "");
             // 读取旧token
             var jwtToken = jwtHandler.ReadJwtToken(token);
-            var verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
+            var verifyResult = jwtToken.RawSignature ==
+                               JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload,
+                                   credentials);
             return verifyResult;
         }
         catch (Exception ex)
@@ -132,7 +134,7 @@ public static class JwtTokenUtil
             // 过期时间容错值,单位为秒,若为0，过期时间一到立即失效
             ClockSkew = TimeSpan.FromSeconds(authJwtSetting.ClockSkew),
             // 需要过期时间
-            RequireExpirationTime = true,
+            RequireExpirationTime = true
         };
         return tokenValidationParameters;
     }
@@ -151,9 +153,7 @@ public static class JwtTokenUtil
 
             // 开始Token校验
             if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
-            {
                 throw new ArgumentException("token 为空或无法解析！", nameof(token));
-            }
 
             var jwtToken = jwtHandler.ReadJwtToken(token);
             List<Claim> claims = jwtToken.Claims.ToList();
@@ -174,7 +174,7 @@ public static class JwtTokenUtil
                 UserId = userId,
                 UserName = userName,
                 NickName = nickName,
-                SysRoles = string.Join(',', sysRoles),
+                SysRoles = string.Join(',', sysRoles)
             };
             return tokenModel;
         }
@@ -202,7 +202,7 @@ public static class JwtTokenUtil
                 Audience = AppSettings.Auth.Jwt.Audience.GetValue(),
                 SymmetricKey = AppSettings.Auth.Jwt.SymmetricKey.GetValue(),
                 ClockSkew = AppSettings.Auth.Jwt.ClockSkew.GetValue(),
-                Expires = AppSettings.Auth.Jwt.Expires.GetValue(),
+                Expires = AppSettings.Auth.Jwt.Expires.GetValue()
             };
             // 判断结果
             authJwtSetting.GetPropertyInfos().ForEach(setting =>

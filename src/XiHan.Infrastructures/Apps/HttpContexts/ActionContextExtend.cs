@@ -50,7 +50,9 @@ public static class ActionContextExtend
         var httpContext = context.HttpContext;
         var httpRequest = httpContext.Request;
         // 获取客户端 Ip 地址
-        var remoteIp = httpContext.Connection.RemoteIpAddress == null ? string.Empty : httpContext.Connection.RemoteIpAddress.ToString();
+        var remoteIp = httpContext.Connection.RemoteIpAddress == null
+            ? string.Empty
+            : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
         var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
         // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改

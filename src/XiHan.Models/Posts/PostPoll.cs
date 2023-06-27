@@ -49,12 +49,10 @@ public enum PollTypeEnum
     /// <summary>
     /// 文章
     /// </summary>
-    [Description("文章")]
-    Article = 1,
+    [Description("文章")] Article = 1,
 
     /// <summary>
     /// 评论
     /// </summary>
-    [Description("评论")]
-    Comment = 2
+    [Description("评论")] Comment = 2
 }

@@ -15,7 +15,5 @@ using XiHan.Test.Common;
 
 Console.WriteLine("Hello, World!");
 while (true)
-{
     // TestChinaDate.ChinaDate();
     TestRegex.TestCardId();
-}

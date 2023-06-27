@@ -18,7 +18,7 @@ namespace XiHan.Infrastructures.Apps.Caches;
 /// </summary>
 public interface IAppCacheService
 {
-    #region  验证缓存项是否存在
+    #region 验证缓存项是否存在
 
     /// <summary>
     /// 验证缓存项是否存在
@@ -29,7 +29,7 @@ public interface IAppCacheService
 
     #endregion
 
-    #region  添加缓存
+    #region 添加缓存
 
     /// <summary>
     /// 添加缓存
@@ -70,7 +70,7 @@ public interface IAppCacheService
 
     #endregion
 
-    #region  删除缓存
+    #region 删除缓存
 
     /// <summary>
     /// 删除缓存
@@ -99,7 +99,7 @@ public interface IAppCacheService
 
     #endregion
 
-    #region  获取缓存
+    #region 获取缓存
 
     /// <summary>
     /// 获取缓存
@@ -124,7 +124,7 @@ public interface IAppCacheService
 
     #endregion
 
-    #region  修改缓存
+    #region 修改缓存
 
     /// <summary>
     /// 修改缓存

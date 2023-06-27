@@ -88,9 +88,9 @@ public class DingTalkController : BaseApiController
         {
             Title = keyWord + "长沙天气",
             Text = "#### 长沙天气 \n" +
-                    "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
-                    "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
-                    "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n",
+                   "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
+                   "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
+                   "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
         };
         List<string> atMobiles = new() { "1302873****" };
         var isAtAll = false;
@@ -108,9 +108,10 @@ public class DingTalkController : BaseApiController
         var actionCard = new DingTalkActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
-            Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
-                    "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
-                    "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
+            Text =
+                "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
+                "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
+                "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
             SingleTitle = "阅读全文",
             SingleUrl = "https://www.dingtalk.com/"
         };
@@ -128,20 +129,21 @@ public class DingTalkController : BaseApiController
         var actionCard = new DingTalkActionCard
         {
             Title = keyWord + "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
-            Text = "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
-                    "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
-                    "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
+            Text =
+                "![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png) " +
+                "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
+                "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
             BtnOrientation = "1",
             Btns = new List<DingTalkBtnInfo>
             {
-                new DingTalkBtnInfo
+                new()
                 {
-                    Title = keyWord +"不错",
+                    Title = keyWord + "不错",
                     ActionUrl = "https://www.dingtalk.com/"
                 },
-                new DingTalkBtnInfo
+                new()
                 {
-                    Title = keyWord +"不感兴趣",
+                    Title = keyWord + "不感兴趣",
                     ActionUrl = "https://www.dingtalk.com/"
                 }
             }
@@ -161,17 +163,17 @@ public class DingTalkController : BaseApiController
         {
             Links = new List<DingTalkFeedCardLink>
             {
-                new DingTalkFeedCardLink
+                new()
                 {
                     Title = keyWord + "时代的火车向前开",
-                    MessageUrl="https://www.dingtalk.com/",
-                    PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
+                    MessageUrl = "https://www.dingtalk.com/",
+                    PicUrl = "https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 },
-                new DingTalkFeedCardLink
+                new()
                 {
                     Title = keyWord + "时代在召唤",
-                    MessageUrl="https://www.dingtalk.com/",
-                    PicUrl="https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
+                    MessageUrl = "https://www.dingtalk.com/",
+                    PicUrl = "https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 }
             }
         };

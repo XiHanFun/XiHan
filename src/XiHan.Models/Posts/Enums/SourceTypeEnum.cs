@@ -23,18 +23,15 @@ public enum SourceTypeEnum
     /// <summary>
     /// 转载
     /// </summary>
-    [Description("转载")]
-    Reprint = 0,
+    [Description("转载")] Reprint = 0,
 
     /// <summary>
     /// 原创
     /// </summary>
-    [Description("原创")]
-    Original = 1,
+    [Description("原创")] Original = 1,
 
     /// <summary>
     /// 衍生
     /// </summary>
-    [Description("衍生")]
-    Hybrid = 2
+    [Description("衍生")] Hybrid = 2
 }

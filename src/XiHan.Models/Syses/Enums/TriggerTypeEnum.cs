@@ -23,12 +23,10 @@ public enum TriggerTypeEnum
     /// <summary>
     /// 定时任务
     /// </summary>
-    [Description("定时任务")]
-    Interval = 1,
+    [Description("定时任务")] Interval = 1,
 
     /// <summary>
     /// 时间点或者周期性任务
     /// </summary>
-    [Description("时间点或者周期性任务")]
-    Cron = 2,
+    [Description("时间点或者周期性任务")] Cron = 2
 }

@@ -42,16 +42,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var response = await client.GetAsync(url);
         if (response.StatusCode == HttpStatusCode.OK)
         {
@@ -71,25 +68,18 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var response = await client.GetAsync(url);
         if (response.StatusCode == HttpStatusCode.OK)
-        {
             return await response.Content.ReadAsStringAsync();
-        }
         else
-        {
             throw new Exception($"Http Error StatusCode:{response.StatusCode}");
-        }
     }
 
     /// <summary>
@@ -102,16 +92,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
         var response = await client.PostAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -134,17 +121,14 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !formDataContent.Headers.Contains(header.Key)))
-            {
                 formDataContent.Headers.Add(header.Key, header.Value);
-            }
-        }
         formDataContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
         formDataContent.Add(new StreamContent(fileStream, (int)fileStream.Length), "file", fileStream.Name);
         var response = await client.PostAsync(url, formDataContent);
@@ -168,16 +152,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
         var response = await client.PostAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -200,26 +181,19 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
         var response = await client.PostAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
-        {
             return await response.Content.ReadAsStringAsync();
-        }
         else
-        {
             throw new Exception($"Http Error StatusCode:{response.StatusCode}");
-        }
     }
 
     /// <summary>
@@ -230,26 +204,19 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
         var response = await client.PostAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
-        {
             return await response.Content.ReadAsStringAsync();
-        }
         else
-        {
             throw new Exception($"Http Error StatusCode:{response.StatusCode}");
-        }
     }
 
     /// <summary>
@@ -262,16 +229,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
         var response = await client.PutAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -294,16 +258,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var stringContent = new StringContent(request, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(url, stringContent);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -325,16 +286,13 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
-        {
             foreach (var header in headers.Where(header => !client.DefaultRequestHeaders.Contains(header.Key)))
-            {
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
-            }
-        }
         var response = await client.DeleteAsync(url);
         if (response.StatusCode == HttpStatusCode.OK)
         {

@@ -23,18 +23,15 @@ public enum PermissionTypeEnum
     /// <summary>
     /// 页面权限(菜单级)
     /// </summary>
-    [Description("页面权限(菜单级)")]
-    Page = 1,
+    [Description("页面权限(菜单级)")] Page = 1,
 
     /// <summary>
     /// 操作权限(按钮级)
     /// </summary>
-    [Description("操作权限(按钮级)")]
-    Operation = 2,
+    [Description("操作权限(按钮级)")] Operation = 2,
 
     /// <summary>
     /// 数据权限(访问响应级）
     /// </summary>
-    [Description("数据权限(访问响应级)")]
-    Data = 3,
+    [Description("数据权限(访问响应级)")] Data = 3
 }

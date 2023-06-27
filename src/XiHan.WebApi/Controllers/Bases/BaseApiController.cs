@@ -107,10 +107,7 @@ public class BaseApiController : ControllerBase
         var sFileName = $"{fileName}模板.xlsx";
         var newFileName = Path.Combine(_rootPath, "ImportTemplate", sFileName);
 
-        if (!Directory.Exists(newFileName))
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(newFileName));
-        }
+        if (!Directory.Exists(newFileName)) Directory.CreateDirectory(Path.GetDirectoryName(newFileName));
         MiniExcel.SaveAs(newFileName, list);
         return sFileName;
     }

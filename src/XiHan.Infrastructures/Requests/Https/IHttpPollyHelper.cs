@@ -27,7 +27,8 @@ public interface IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null);
+    Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Get 请求
@@ -48,7 +49,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post 请求 上传文件
@@ -59,7 +61,8 @@ public interface IHttpPollyHelper
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post 请求
@@ -70,7 +73,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post 请求
@@ -81,7 +85,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
+    Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post 请求
@@ -91,7 +96,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null);
+    Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Put 请求
@@ -103,7 +109,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Put 请求
@@ -114,7 +121,8 @@ public interface IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null);
+    Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Delete 请求
@@ -124,5 +132,6 @@ public interface IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null);
+    Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null);
 }

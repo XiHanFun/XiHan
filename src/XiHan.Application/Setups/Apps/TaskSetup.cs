@@ -33,10 +33,7 @@ public static class TaskSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
         try
         {

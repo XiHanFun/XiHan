@@ -53,7 +53,7 @@ public class EmailRobot
             // 优先级（高）
             Priority = MailPriority.High,
             // 网页形式
-            IsBodyHtml = true,
+            IsBodyHtml = true
         };
         // 收件人地址集合
         toModel.ToMail.ForEach(to => message.To.Add(to));
@@ -101,6 +101,7 @@ public class EmailRobot
         {
             throw new Exception($"Exception caught in RetryIfBusy(): {ex}");
         }
+
         return false;
     }
 }

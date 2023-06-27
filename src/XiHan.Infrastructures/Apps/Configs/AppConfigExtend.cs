@@ -52,7 +52,8 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TKey, TValue>(this TKey key, TValue value, [CallerArgumentExpression(nameof(key))] string fullName = "")
+    public static void Set<TKey, TValue>(this TKey key, TValue value,
+        [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
         AppConfigManager.Set<TKey, TValue>(fullName, value);
     }

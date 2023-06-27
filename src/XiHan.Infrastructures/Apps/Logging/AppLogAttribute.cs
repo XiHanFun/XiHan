@@ -63,7 +63,8 @@ public class AppLogAttribute : Attribute
     /// <param name="businessType"></param>
     /// <param name="saveRequestData"></param>
     /// <param name="saveResponseData"></param>
-    public AppLogAttribute(string name, BusinessTypeEnum businessType, bool saveRequestData = true, bool saveResponseData = true)
+    public AppLogAttribute(string name, BusinessTypeEnum businessType, bool saveRequestData = true,
+        bool saveResponseData = true)
     {
         Title = name;
         BusinessType = businessType;

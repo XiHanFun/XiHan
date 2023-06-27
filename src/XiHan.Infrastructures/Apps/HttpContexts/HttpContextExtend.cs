@@ -37,10 +37,7 @@ public static class HttpContextExtend
     /// <exception cref="ArgumentNullException"></exception>
     public static UserClientInfo GetClientInfo(this HttpContext httpContext)
     {
-        if (httpContext == null)
-        {
-            throw new ArgumentNullException(nameof(httpContext));
-        }
+        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
 
         var clientModel = new UserClientInfo
         {
@@ -52,14 +49,8 @@ public static class HttpContextExtend
 
         var header = httpContext.Request.HttpContext.Request.Headers;
 
-        if (header.TryGetValue("Accept-Language", out var value))
-        {
-            clientModel.Language = value.ToString().Split(';')[0];
-        }
-        if (header.TryGetValue("Referer", out var value1))
-        {
-            clientModel.Referer = value1.ToString();
-        }
+        if (header.TryGetValue("Accept-Language", out var value)) clientModel.Language = value.ToString().Split(';')[0];
+        if (header.TryGetValue("Referer", out var value1)) clientModel.Referer = value1.ToString();
         if (!header.TryGetValue("User-Agent", out var value2)) return clientModel;
         var agent = value2.ToString();
         var clientInfo = Parser.GetDefault().Parse(agent);
@@ -68,18 +59,13 @@ public static class HttpContextExtend
         if (!string.IsNullOrWhiteSpace(clientInfo.OS.Major))
         {
             clientModel.OsVersion = clientInfo.OS.Major;
-            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor))
-            {
-                clientModel.OsVersion += "." + clientInfo.OS.Minor;
-            }
+            if (!string.IsNullOrWhiteSpace(clientInfo.OS.Minor)) clientModel.OsVersion += "." + clientInfo.OS.Minor;
         }
+
         clientModel.UaName = clientInfo.UA.Family;
         if (string.IsNullOrWhiteSpace(clientInfo.UA.Major)) return clientModel;
         clientModel.UaVersion = clientInfo.UA.Major;
-        if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor))
-        {
-            clientModel.UaVersion += "." + clientInfo.UA.Minor;
-        }
+        if (!string.IsNullOrWhiteSpace(clientInfo.UA.Minor)) clientModel.UaVersion += "." + clientInfo.UA.Minor;
         return clientModel;
     }
 
@@ -90,12 +76,10 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsAjaxRequest(this HttpContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        if (context == null) throw new ArgumentNullException(nameof(context));
         var request = context.Request;
-        return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        return request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
+               request.Headers["X-Requested-With"] == "XMLHttpRequest";
     }
 
     /// <summary>
@@ -136,10 +120,7 @@ public static class HttpContextExtend
     /// <exception cref="ArgumentNullException"></exception>
     public static IPAddress GetClientIpAddressInfo(this HttpContext httpContext)
     {
-        if (httpContext == null)
-        {
-            throw new ArgumentNullException(nameof(httpContext));
-        }
+        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
 
         var result = "0.0.0.0";
         var request = httpContext.Request;
@@ -154,14 +135,10 @@ public static class HttpContextExtend
         {
             // 取代理 IP
             if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
-            {
                 result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
-            }
         }
-        if (string.IsNullOrEmpty(result))
-        {
-            result = "0.0.0.0";
-        }
+
+        if (string.IsNullOrEmpty(result)) result = "0.0.0.0";
         return result.FormatStringToIpAddress();
     }
 
@@ -199,10 +176,7 @@ public static class HttpContextExtend
     {
         var addressInfo = new UserAddressInfo();
         var addressInfoResult = IpSearchHelper.Search(httpContext.GetClientIpV4());
-        if (addressInfoResult != null)
-        {
-            addressInfo = addressInfoResult;
-        }
+        if (addressInfoResult != null) addressInfo = addressInfoResult;
         return addressInfo;
     }
 

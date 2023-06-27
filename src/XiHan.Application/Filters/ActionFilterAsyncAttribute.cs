@@ -30,7 +30,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ActionFilterAsyncAttribute>();
-    
+
     /// <summary>
     /// 构造函数
     /// </summary>

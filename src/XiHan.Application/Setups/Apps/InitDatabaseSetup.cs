@@ -37,11 +37,8 @@ public static class InitDatabaseStep
         // 若数据库已经初始化，则跳过，否则初始化数据库
         "正在从配置中检测是否需要数据库初始化……".WriteLineInfo();
         if (databaseInitialized)
-        {
             "数据库已初始化。".WriteLineSuccess();
-        }
         else
-        {
             try
             {
                 "数据库正在初始化……".WriteLineInfo();
@@ -68,6 +65,5 @@ public static class InitDatabaseStep
             {
                 ex.ThrowAndConsoleError("数据库初始化或数据表初始化失败，请检查数据库连接字符是否正确！");
             }
-        }
     }
 }

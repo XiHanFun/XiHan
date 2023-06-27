@@ -29,14 +29,10 @@ public static class MiniProfilerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddMiniProfilerSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
         if (isEnabledMiniprofiler)
-        {
             services.AddMiniProfiler(options =>
             {
                 // 指定 MiniProfiler 的路由基础路径
@@ -54,7 +50,6 @@ public static class MiniProfilerSetup
                 // 控制是否跟踪数据库连接的打开和关闭操作
                 options.TrackConnectionOpenClose = true;
             });
-        }
 
         return services;
     }

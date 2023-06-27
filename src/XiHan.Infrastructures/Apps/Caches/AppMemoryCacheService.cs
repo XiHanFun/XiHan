@@ -31,7 +31,7 @@ public class AppMemoryCacheService : IAppCacheService
         // 最大缓存个数限制(这属于一个说明性属性，而且单位也不是缓存数目，而是缓存真正占用的空间大小，当所有缓存大小超过这个值的时候进行一次缓存压缩)
         SizeLimit = 60,
         // 过期扫描频率(默认为1分钟，可以理解为每过多久移除一次过期的缓存项)
-        ExpirationScanFrequency = TimeSpan.FromMinutes(5),
+        ExpirationScanFrequency = TimeSpan.FromMinutes(5)
     });
 
     #region 验证缓存项是否存在
@@ -43,10 +43,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Exists(string key)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
 
         return _cache.TryGetValue(key, out _);
     }
@@ -63,14 +60,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Add(string key, object value)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         _cache.Set(key, value);
         return Exists(key);
@@ -86,14 +77,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Add(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         _cache.Set(key, value, new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
@@ -112,14 +97,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Add(string key, object value, TimeSpan expiresIn, bool isSliding = false)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         _cache.Set(key, value,
             isSliding
@@ -137,14 +116,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <param name="seconds">缓存时长，默认7200秒</param>
     public bool Add(string key, object value, int seconds = 7200)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         _cache.Set(key, value, DateTime.Now.AddSeconds(seconds));
         return Exists(key);
@@ -173,10 +146,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Remove(string key)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
         _cache.Remove(key);
 
         return !Exists(key);
@@ -189,10 +159,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public void RemoveAll(IEnumerable<string> keys)
     {
-        if (keys == null)
-        {
-            throw new ArgumentNullException(nameof(keys));
-        }
+        if (keys == null) throw new ArgumentNullException(nameof(keys));
 
         keys.ToList().ForEach(item => _cache.Remove(item));
     }
@@ -203,10 +170,7 @@ public class AppMemoryCacheService : IAppCacheService
     public void RemoveCacheAll()
     {
         var l = GetCacheKeys();
-        foreach (var s in l)
-        {
-            Remove(s);
-        }
+        foreach (var s in l) Remove(s);
     }
 
     /// <summary>
@@ -217,10 +181,7 @@ public class AppMemoryCacheService : IAppCacheService
     public void RemoveByPattern(string pattern)
     {
         IEnumerable<string> l = SearchCacheRegex(pattern);
-        foreach (var s in l)
-        {
-            Remove(s);
-        }
+        foreach (var s in l) Remove(s);
     }
 
     #endregion
@@ -234,10 +195,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public T? GetByKey<T>(string key) where T : class
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
 
         return _cache.Get(key) as T;
     }
@@ -249,10 +207,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public object GetByKey(string key)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
         return _cache.Get(key) ?? new object();
     }
 
@@ -263,10 +218,7 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public IDictionary<string, object?> GetAll(IEnumerable<string> keys)
     {
-        if (keys == null)
-        {
-            throw new ArgumentNullException(nameof(keys));
-        }
+        if (keys == null) throw new ArgumentNullException(nameof(keys));
 
         var dict = new Dictionary<string, object?>();
         keys.ToList().ForEach(item => dict.Add(item, _cache.Get(item)));
@@ -300,14 +252,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Replace(string key, object value)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         if (!Exists(key)) return Add(key, value);
         return Remove(key) && Add(key, value);
@@ -323,14 +269,8 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
         if (!Exists(key)) return Add(key, value, expiresSliding, expiresAbsolute);
         return Remove(key) && Add(key, value, expiresSliding, expiresAbsolute);
@@ -346,16 +286,11 @@ public class AppMemoryCacheService : IAppCacheService
     /// <returns></returns>
     public bool Replace(string key, object value, TimeSpan expiresIn, bool isSliding = false)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (value == null) throw new ArgumentNullException(nameof(value));
         if (Exists(key))
-            if (!Remove(key)) return false;
+            if (!Remove(key))
+                return false;
 
         return Add(key, value, expiresIn, isSliding);
     }

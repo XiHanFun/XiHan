@@ -214,32 +214,27 @@ public enum DingTalkMsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    [Description("text")]
-    Text,
+    [Description("text")] Text,
 
     /// <summary>
     /// 链接类型
     /// </summary>
-    [Description("link")]
-    Link,
+    [Description("link")] Link,
 
     /// <summary>
     /// 文档类型
     /// </summary>
-    [Description("markdown")]
-    Markdown,
+    [Description("markdown")] Markdown,
 
     /// <summary>
     /// 任务卡片类型
     /// </summary>
-    [Description("actionCard")]
-    ActionCard,
+    [Description("actionCard")] ActionCard,
 
     /// <summary>
     /// 菜单卡片类型
     /// </summary>
-    [Description("feedCard")]
-    FeedCard
+    [Description("feedCard")] FeedCard
 }
 
 #endregion

@@ -14,8 +14,8 @@
 namespace XiHan.Application.Common.Swagger;
 
 /// <summary>
- /// ApiGroupNames
- /// </summary>
+/// ApiGroupNames
+/// </summary>
 public enum ApiGroupNames
 {
     /// <summary>
@@ -52,5 +52,5 @@ public enum ApiGroupNames
     /// 测试接口
     /// </summary>
     [GroupInfo(Title = "测试接口", Description = "这是用于测试的测试接口", Version = "v0.2.5")]
-    Test,
+    Test
 }

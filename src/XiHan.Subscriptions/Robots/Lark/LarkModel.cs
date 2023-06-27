@@ -196,32 +196,27 @@ public enum LarkMsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    [Description("text")]
-    Text,
+    [Description("text")] Text,
 
     /// <summary>
     /// 富文本类型
     /// </summary>
-    [Description("post")]
-    Post,
+    [Description("post")] Post,
 
     /// <summary>
     /// 群名片类型
     /// </summary>
-    [Description("share_chat")]
-    ShareChat,
+    [Description("share_chat")] ShareChat,
 
     /// <summary>
     /// 图片类型
     /// </summary>
-    [Description("image")]
-    Image,
+    [Description("image")] Image,
 
     /// <summary>
     /// 消息卡片类型
     /// </summary>
-    [Description("interactive")]
-    InterActive
+    [Description("interactive")] InterActive
 }
 
 #endregion

@@ -30,10 +30,7 @@ public static class HttpPollySetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddHttpPollySetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 注入 Http 请求
         services.AddHttpClient();

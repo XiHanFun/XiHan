@@ -30,10 +30,7 @@ public static class TaskSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddTaskSchedulers(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 添加Quartz服务
         services.AddSingleton<IJobFactory, JobFactory>();

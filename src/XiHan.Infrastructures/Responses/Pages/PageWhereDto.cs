@@ -36,7 +36,7 @@ public class PageWhereDto
     /// <summary>
     /// 分页实体
     /// </summary>
-    public PageDto Page { get; set; } = new PageDto();
+    public PageDto Page { get; set; } = new();
 }
 
 /// <summary>

@@ -32,7 +32,8 @@ public static class ObjectPropertyExtension
     /// <param name="fullName"></param>
     /// <returns></returns>
     public static string GetFullNameOf<TEntity>([DisallowNull] this TEntity entity,
-        [CallerArgumentExpression(nameof(entity))] string fullName = "")
+        [CallerArgumentExpression(nameof(entity))]
+        string fullName = "")
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
         if (fullName == null) throw new ArgumentNullException(nameof(fullName));

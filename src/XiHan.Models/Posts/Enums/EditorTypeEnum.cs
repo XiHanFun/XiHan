@@ -23,12 +23,10 @@ public enum EditorTypeEnum
     /// <summary>
     /// Markdown 类型
     /// </summary>
-    [Description("Markdown 类型")]
-    Markdown = 0,
+    [Description("Markdown 类型")] Markdown = 0,
 
     /// <summary>
     /// Html 类型
     /// </summary>
-    [Description("Html 类型")]
-    Html = 1
+    [Description("Html 类型")] Html = 1
 }

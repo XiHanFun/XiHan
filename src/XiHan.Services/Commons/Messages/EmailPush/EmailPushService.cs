@@ -72,6 +72,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
             _logger.LogInformation(logoInfo);
             return CustomResult.Success(logoInfo);
         }
+
         logoInfo = "邮件发送失败";
         _logger.LogError(logoInfo);
         return CustomResult.BadRequest("邮件发送失败");

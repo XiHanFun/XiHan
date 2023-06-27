@@ -32,10 +32,7 @@ public static class HttpSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseHttpSetup(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
         // 环境变量，开发环境
         if (env.IsDevelopment())
@@ -49,6 +46,7 @@ public static class HttpSetup
             // 使用HSTS的中间件，该中间件添加了严格传输安全头
             app.UseHsts();
         }
+
         // Nginx 反向代理获取真实IP
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {

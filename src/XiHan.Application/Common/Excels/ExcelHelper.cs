@@ -43,10 +43,7 @@ public static class ExcelHelper
                 var property = properties[i];
                 var cellValue = row[i]?.ToString();
 
-                if (string.IsNullOrEmpty(cellValue))
-                {
-                    continue;
-                }
+                if (string.IsNullOrEmpty(cellValue)) continue;
 
                 if (property.PropertyType == typeof(string))
                 {
@@ -54,24 +51,15 @@ public static class ExcelHelper
                 }
                 else if (property.PropertyType == typeof(int))
                 {
-                    if (int.TryParse(cellValue, out int value))
-                    {
-                        property.SetValue(item, value);
-                    }
+                    if (int.TryParse(cellValue, out int value)) property.SetValue(item, value);
                 }
                 else if (property.PropertyType == typeof(double))
                 {
-                    if (double.TryParse(cellValue, out double value))
-                    {
-                        property.SetValue(item, value);
-                    }
+                    if (double.TryParse(cellValue, out double value)) property.SetValue(item, value);
                 }
                 else if (property.PropertyType == typeof(DateTime))
                 {
-                    if (DateTime.TryParse(cellValue, out DateTime value))
-                    {
-                        property.SetValue(item, value);
-                    }
+                    if (DateTime.TryParse(cellValue, out DateTime value)) property.SetValue(item, value);
                 }
                 // TODO: 支持更多的数据类型转换
             }

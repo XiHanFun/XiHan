@@ -31,10 +31,7 @@ public static class ConfigSetup
     public static IConfigurationBuilder AddConfigSetup(this IConfigurationBuilder configs)
     {
         "Configuration Start……".WriteLineInfo();
-        if (configs == null)
-        {
-            throw new ArgumentNullException(nameof(configs));
-        }
+        if (configs == null) throw new ArgumentNullException(nameof(configs));
 
         // 配置创建
         AppConfigManager.RegisterConfig(configs);

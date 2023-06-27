@@ -69,18 +69,25 @@ public class AutowiredServiceManager
             if (getService != null)
             {
                 // 字段赋值
-                setList.AddRange((from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) 
-                    let autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>() where autowiredAttr != null 
-                    let fieldExp = Expression.Field(obj, field) 
-                    let createService = Expression.Call(spParam, getService, Expression.Constant(field.FieldType)) 
-                    select Expression.Assign(fieldExp, Expression.Convert(createService, field.FieldType))));
+                setList.AddRange(
+                    from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public |
+                                                        BindingFlags.NonPublic)
+                    let autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>()
+                    where autowiredAttr != null
+                    let fieldExp = Expression.Field(obj, field)
+                    let createService = Expression.Call(spParam, getService, Expression.Constant(field.FieldType))
+                    select Expression.Assign(fieldExp, Expression.Convert(createService, field.FieldType)));
                 // 属性赋值
-                setList.AddRange((from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) 
-                    let autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>() where autowiredAttr != null 
-                    let propExp = Expression.Property(obj, property) 
-                    let createService = Expression.Call(spParam, getService, Expression.Constant(property.PropertyType)) 
-                    select Expression.Assign(propExp, Expression.Convert(createService, property.PropertyType))));
+                setList.AddRange(
+                    from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public |
+                                                               BindingFlags.NonPublic)
+                    let autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>()
+                    where autowiredAttr != null
+                    let propExp = Expression.Property(obj, property)
+                    let createService = Expression.Call(spParam, getService, Expression.Constant(property.PropertyType))
+                    select Expression.Assign(propExp, Expression.Convert(createService, property.PropertyType)));
             }
+
             var bodyExp = Expression.Block(setList);
             var setAction = Expression.Lambda<Action<object, IServiceProvider>>(bodyExp, objParam, spParam).Compile();
             _autowiredActions[serviceType] = setAction;

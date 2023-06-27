@@ -14,8 +14,8 @@
 namespace XiHan.Application.Common.Swagger;
 
 /// <summary>
- /// ApiGroupAttribute
- /// </summary>
+/// ApiGroupAttribute
+/// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
 public class ApiGroupAttribute : Attribute
 {

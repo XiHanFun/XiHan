@@ -75,20 +75,20 @@ public class EmailToModel
     /// <summary>
     /// 接收者邮箱
     /// </summary>
-    public List<string> ToMail { get; set; } = new List<string>();
+    public List<string> ToMail { get; set; } = new();
 
     /// <summary>
     /// 抄送给邮箱
     /// </summary>
-    public List<string> CcMail { get; set; } = new List<string>();
+    public List<string> CcMail { get; set; } = new();
 
     /// <summary>
     /// 密送给邮箱
     /// </summary>
-    public List<string> BccMail { get; set; } = new List<string>();
+    public List<string> BccMail { get; set; } = new();
 
     /// <summary>
     /// 附件
     /// </summary>
-    public List<Attachment> AttachmentsPath { get; set; } = new List<Attachment>();
+    public List<Attachment> AttachmentsPath { get; set; } = new();
 }

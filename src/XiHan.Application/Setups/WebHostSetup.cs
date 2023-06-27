@@ -31,10 +31,7 @@ public static class WebHostSetup
     public static IWebHostBuilder AddWebHostSetup(this IWebHostBuilder host)
     {
         "Host Start……".WriteLineInfo();
-        if (host == null)
-        {
-            throw new ArgumentNullException(nameof(host));
-        }
+        if (host == null) throw new ArgumentNullException(nameof(host));
 
         // 端口
         var port = AppSettings.Port.GetValue();

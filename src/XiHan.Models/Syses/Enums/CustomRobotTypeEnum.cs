@@ -23,18 +23,15 @@ public enum CustomRobotTypeEnum
     /// <summary>
     /// 钉钉
     /// </summary>
-    [Description("钉钉")]
-    DingTalk = 1,
+    [Description("钉钉")] DingTalk = 1,
 
     /// <summary>
     /// 企业微信
     /// </summary>
-    [Description("企业微信")]
-    WeCom = 2,
+    [Description("企业微信")] WeCom = 2,
 
     /// <summary>
     /// 飞书
     /// </summary>
-    [Description("飞书")]
-    Lark = 3,
+    [Description("飞书")] Lark = 3
 }

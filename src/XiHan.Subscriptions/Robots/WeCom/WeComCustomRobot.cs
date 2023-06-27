@@ -152,11 +152,12 @@ public class WeComCustomRobot
     {
         Dictionary<string, string> headers = new()
         {
-            { "filename",fileStream.Name },
-            { "filelength",fileStream.Length.ToString() },
+            { "filename", fileStream.Name },
+            { "filelength", fileStream.Length.ToString() }
         };
         // 发起请求，上传地址
-        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _fileUrl, fileStream, headers);
+        var result =
+            await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _fileUrl, fileStream, headers);
         // 包装返回信息
         if (result != null)
         {
@@ -174,6 +175,7 @@ public class WeComCustomRobot
                 return CustomResult.BadRequest("上传失败");
             }
         }
+
         return CustomResult.InternalServerError();
     }
 
@@ -192,14 +194,11 @@ public class WeComCustomRobot
         if (result != null)
         {
             if (result.ErrCode == 0 || result.ErrMsg == "ok")
-            {
                 return CustomResult.Success("发送成功");
-            }
             else
-            {
                 return CustomResult.BadRequest("发送失败");
-            }
         }
+
         return CustomResult.InternalServerError();
     }
 }

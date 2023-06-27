@@ -31,7 +31,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     private readonly bool _resultLogSwitch = AppSettings.LogConfig.Result.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ResultFilterAsyncAttribute>();
-    
+
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -77,9 +77,6 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
                    $"\t 操作用户：{actionContextInfo.UserId}";
         // 执行结果
         var result = JsonSerializer.Serialize(resultExecuted.Result);
-        if (_resultLogSwitch)
-        {
-            _logger.Information($"返回数据\n{info}\n{result}");
-        }
+        if (_resultLogSwitch) _logger.Information($"返回数据\n{info}\n{result}");
     }
 }

@@ -23,24 +23,20 @@ public enum HttpRequestMethodEnum
     /// <summary>
     /// 获取数据
     /// </summary>
-    [Description("获取数据")]
-    Get,
+    [Description("获取数据")] Get,
 
     /// <summary>
     /// 提交数据
     /// </summary>
-    [Description("提交数据")]
-    Post,
+    [Description("提交数据")] Post,
 
     /// <summary>
     /// 删除数据
     /// </summary>
-    [Description("删除数据")]
-    Delete,
+    [Description("删除数据")] Delete,
 
     /// <summary>
     /// 更新数据
     /// </summary>
-    [Description("更新数据")]
-    Put,
+    [Description("更新数据")] Put
 }

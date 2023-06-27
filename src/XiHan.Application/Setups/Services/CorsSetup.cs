@@ -29,16 +29,10 @@ public static class CorsSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCorsSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
-        if (!isEnabledCors)
-        {
-            return services;
-        }
+        if (!isEnabledCors) return services;
         services.AddCors(options =>
         {
             // 策略名称
@@ -48,7 +42,7 @@ public static class CorsSetup
             // 支持多个请求头
             var headers = AppSettings.Cors.Headers.GetSection();
             // 添加指定策略
-            options.AddPolicy(name: policyName, policy =>
+            options.AddPolicy(policyName, policy =>
             {
                 // 配置允许访问的域名
                 policy.WithOrigins(origins)

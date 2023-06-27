@@ -49,10 +49,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<bool> GetUserNameUnique(string userName)
     {
         var findSysUser = await GetFirstAsync(u => u.UserName == userName && !u.IsDeleted);
-        if (findSysUser != null)
-        {
-            return false;
-        }
+        if (findSysUser != null) return false;
         return true;
     }
 
@@ -90,6 +87,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
             // 新增用户与角色关联
             await _sysUserRoleService.CreateUserRole(sysUser);
         }
+
         return await UpdateAsync(sysUser);
     }
 
@@ -103,7 +101,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         return await UpdateAsync(s => new SysUser()
         {
             StateKey = user.StateKey,
-            StateValue = user.StateValue,
+            StateValue = user.StateValue
         }, f => f.BaseId == user.BaseId);
     }
 

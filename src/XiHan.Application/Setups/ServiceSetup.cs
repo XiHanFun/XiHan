@@ -32,10 +32,7 @@ public static class ServiceSetup
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
         "Services Start……".WriteLineInfo();
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // Cache
         services.AddCacheSetup();

@@ -56,6 +56,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
         {
             // roles.AddRange(_sysRoleService.GetRoleIdsByUserId(user.BaseId));
         }
+
         return roles;
     }
 

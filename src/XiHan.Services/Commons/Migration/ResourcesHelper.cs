@@ -30,10 +30,7 @@ public class ResourcesService
     /// <returns></returns>
     public static async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
     {
-        if (resourceInfo == null)
-        {
-            throw new ArgumentNullException(nameof(resourceInfo));
-        }
+        if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
 
         List<MigrationInfoDto> list = new();
         string[] paths = DiskHelper.GetFiles(resourceInfo.Path);
@@ -54,6 +51,7 @@ public class ResourcesService
             migrationInfo.IsSucess = true;
             list.Add(migrationInfo);
         }
+
         return await Task.FromResult(list);
     }
 }

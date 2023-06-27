@@ -33,13 +33,11 @@ public static class AppSetup
     /// <param name="streamHtml"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env, Func<Stream> streamHtml)
+    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env,
+        Func<Stream> streamHtml)
     {
         "XiHan Application Start……".WriteLineInfo();
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
         // 初始化数据库
         app.InitDatabase();

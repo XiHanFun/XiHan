@@ -50,8 +50,8 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
         var actionContextInfo = context.GetActionContextInfo();
         // 是否授权访问
         var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
-                            || actionContextInfo.ControllerType!.IsDefined(typeof(AuthorizeAttribute), true)
-                            || actionContextInfo.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
+                          || actionContextInfo.ControllerType!.IsDefined(typeof(AuthorizeAttribute), true)
+                          || actionContextInfo.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
         // 写入日志
         var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
                    $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
@@ -74,6 +74,9 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
             }
         }
         // 匿名访问直接跳过处理
-        else await Task.CompletedTask;
+        else
+        {
+            await Task.CompletedTask;
+        }
     }
 }

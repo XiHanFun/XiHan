@@ -44,7 +44,8 @@ public interface IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false);
+    Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null,
+        bool isAtAll = false);
 
     /// <summary>
     /// 钉钉推送任务卡片消息

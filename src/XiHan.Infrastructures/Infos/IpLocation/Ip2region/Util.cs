@@ -38,7 +38,9 @@ public static class Util
     /// <param name="y"></param>
     /// <returns></returns>
     public static uint GetMidIp(uint x, uint y)
-        => (x & y) + ((x ^ y) >> 1);
+    {
+        return (x & y) + ((x ^ y) >> 1);
+    }
 
     /// <summary>
     /// 中间IP
@@ -47,5 +49,7 @@ public static class Util
     /// <param name="y"></param>
     /// <returns></returns>
     public static int GetMidIp(int x, int y)
-        => (x & y) + ((x ^ y) >> 1);
+    {
+        return (x & y) + ((x ^ y) >> 1);
+    }
 }

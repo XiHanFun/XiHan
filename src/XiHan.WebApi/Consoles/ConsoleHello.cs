@@ -52,12 +52,12 @@ public static class ConsoleHello
     /// <summary>
     /// Copyright
     /// </summary>
-    private static readonly string Copyright= $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
+    private static readonly string Copyright = $@"Copyright (C){DateTime.Now.Year} ZhaiFanhua All Rights Reserved.";
 
     /// <summary>
     /// 官方文档
     /// </summary>
-    private const string OfficialDocuments= $@"官方文档：https://docs.xihan.fun";
+    private const string OfficialDocuments = $@"官方文档：https://docs.xihan.fun";
 
     /// <summary>
     /// 官方组织

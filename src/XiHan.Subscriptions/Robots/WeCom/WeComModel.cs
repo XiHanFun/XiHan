@@ -142,7 +142,7 @@ public class WeComTemplateCardTextNotice
     /// 整体卡片的点击跳转事件，text_notice模版卡片中该字段为必填项
     /// </summary>
     [JsonPropertyName("card_action")]
-    public WeComCardAction CardAction { get; set; } = new WeComCardAction();
+    public WeComCardAction CardAction { get; set; } = new();
 }
 
 /// <summary>
@@ -172,7 +172,7 @@ public class WeComTemplateCardNewsNotice
     /// 图片样式
     /// </summary>
     [JsonPropertyName("card_image")]
-    public WeComCardImage CardImage { get; set; } = new WeComCardImage();
+    public WeComCardImage CardImage { get; set; } = new();
 
     /// <summary>
     /// 左图右文样式
@@ -208,7 +208,7 @@ public class WeComTemplateCardNewsNotice
     /// 整体卡片的点击跳转事件，text_notice模版卡片中该字段为必填项
     /// </summary>
     [JsonPropertyName("card_action")]
-    public WeComCardAction CardAction { get; set; } = new WeComCardAction();
+    public WeComCardAction CardAction { get; set; } = new();
 }
 
 #endregion 基本类型
@@ -570,38 +570,32 @@ public enum WeComMsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    [Description("text")]
-    Text,
+    [Description("text")] Text,
 
     /// <summary>
     /// 文档类型
     /// </summary>
-    [Description("markdown")]
-    Markdown,
+    [Description("markdown")] Markdown,
 
     /// <summary>
     /// 图片类型
     /// </summary>
-    [Description("image")]
-    Image,
+    [Description("image")] Image,
 
     /// <summary>
     /// 图文类型
     /// </summary>
-    [Description("news")]
-    News,
+    [Description("news")] News,
 
     /// <summary>
     /// 文件类型
     /// </summary>
-    [Description("file")]
-    File,
+    [Description("file")] File,
 
     /// <summary>
     /// 模版卡片类型
     /// </summary>
-    [Description("template_card")]
-    TemplateCard
+    [Description("template_card")] TemplateCard
 }
 
 /// <summary>
@@ -612,14 +606,12 @@ public enum WeComTemplateCardType
     /// <summary>
     /// 文本通知类型，属于模版卡片类型
     /// </summary>
-    [Description("text_notice")]
-    TextNotice,
+    [Description("text_notice")] TextNotice,
 
     /// <summary>
     /// 图文展示类型，属于模版卡片类型
     /// </summary>
-    [Description("news_notice")]
-    NewsNotice
+    [Description("news_notice")] NewsNotice
 }
 
 #endregion

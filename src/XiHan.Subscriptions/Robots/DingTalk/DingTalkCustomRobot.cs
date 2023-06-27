@@ -83,7 +83,8 @@ public class DingTalkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null,
+        bool isAtAll = false)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
@@ -149,17 +150,16 @@ public class DingTalkCustomRobot
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
+
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
+
         // 发起请求
         var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result == null) return CustomResult.InternalServerError();
-        if (result.ErrCode == 0 || result.ErrMsg == "ok")
-        {
-            return CustomResult.Success("发送成功");
-        }
+        if (result.ErrCode == 0 || result.ErrMsg == "ok") return CustomResult.Success("发送成功");
         var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
         var info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
         return CustomResult.BadRequest("发送失败，" + info?.Label);

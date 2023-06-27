@@ -33,10 +33,7 @@ public static class SqlSugarSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         var databaseType = AppSettings.Database.Type.GetValue();
         var databaseConsole = AppSettings.Database.Console.GetValue();
@@ -91,38 +88,21 @@ public static class SqlSugarSetup
             {
                 var param = client.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
                 var info = $"SQL语句:" + Environment.NewLine + UtilMethods.GetSqlString(config.DbType, sql, pars);
-                if (databaseConsole)
-                {
-                    info.WriteLineHandle();
-                }
-                if (databaseLogInfo)
-                {
-                    Log.Information(info);
-                }
+                if (databaseConsole) info.WriteLineHandle();
+                if (databaseLogInfo) Log.Information(info);
             };
             client.Aop.OnLogExecuted = (_, _) =>
             {
                 var handle = $"SQL时间:" + Environment.NewLine + client.Ado.SqlExecutionTime;
-                if (databaseConsole)
-                {
-                    handle.WriteLineHandle();
-                }
-                if (databaseLogInfo)
-                {
-                    Log.Information(handle);
-                }
+                if (databaseConsole) handle.WriteLineHandle();
+                if (databaseLogInfo) Log.Information(handle);
             };
             client.Aop.OnError = exp =>
             {
-                var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message + Environment.NewLine + UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
-                if (databaseConsole)
-                {
-                    errorInfo.WriteLineError();
-                }
-                if (databaseLogError)
-                {
-                    Log.Error(exp, errorInfo);
-                }
+                var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message + Environment.NewLine +
+                                UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+                if (databaseConsole) errorInfo.WriteLineError();
+                if (databaseLogError) Log.Error(exp, errorInfo);
             };
         });
         return services;

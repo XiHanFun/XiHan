@@ -47,6 +47,7 @@ public static class IpSearchHelper
             {
                 _searcherInstance ??= new Searcher(CachePolicyEnum.VectorIndex, IpDbPath);
             }
+
             return _searcherInstance;
         }
     }
@@ -62,10 +63,7 @@ public static class IpSearchHelper
         {
             // 中国|0|浙江省|杭州市|电信
             var modelStr = GetSearcher.Search(ip);
-            if (modelStr.IsEmptyOrNull())
-            {
-                return null;
-            }
+            if (modelStr.IsEmptyOrNull()) return null;
             string[] addressArray = modelStr.Replace('0', '-').Split('|');
             UserAddressInfo addressInfo = new()
             {
@@ -82,7 +80,7 @@ public static class IpSearchHelper
                 // 邮政编码 561000
                 PostalCode = null,
                 // 地区区号 0851
-                AreaCode = null,
+                AreaCode = null
             };
             return addressInfo;
         }

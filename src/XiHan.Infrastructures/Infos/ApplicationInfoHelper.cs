@@ -24,12 +24,18 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 应用名称
     /// </summary>
-    public static string Name(Assembly assembly) => assembly.GetName().Name!;
+    public static string Name(Assembly assembly)
+    {
+        return assembly.GetName().Name!;
+    }
 
     /// <summary>
     /// 应用版本
     /// </summary>
-    public static string Version(Assembly assembly) => assembly.GetName().Version!.ToString();
+    public static string Version(Assembly assembly)
+    {
+        return assembly.GetName().Version!.ToString();
+    }
 
     /// <summary>
     /// 所在路径

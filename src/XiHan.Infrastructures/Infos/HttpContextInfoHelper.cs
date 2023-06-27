@@ -28,10 +28,7 @@ public class HttpContextInfoHelper
     /// <param name="httpContext"></param>
     public HttpContextInfoHelper(HttpContext httpContext)
     {
-        if (httpContext == null)
-        {
-            throw new ArgumentNullException(nameof(httpContext));
-        }
+        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
 
         ClientInfo = httpContext.GetClientInfo();
         AddressInfo = httpContext.GetAddressInfo();

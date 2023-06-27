@@ -33,7 +33,7 @@ public static class EntityExtend
         {
             HandleId = "CreatedId",
             HandleBy = "CreatedBy",
-            HandleTime = "CreatedTime",
+            HandleTime = "CreatedTime"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -50,7 +50,7 @@ public static class EntityExtend
         {
             HandleId = "ModifiedId",
             HandleBy = "ModifiedBy",
-            HandleTime = "ModifiedTime",
+            HandleTime = "ModifiedTime"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -68,7 +68,7 @@ public static class EntityExtend
             IsHandle = "IsDeleted",
             HandleId = "DeletedId",
             HandleBy = "DeletedBy",
-            HandleTime = "DeletedTime",
+            HandleTime = "DeletedTime"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -85,7 +85,7 @@ public static class EntityExtend
         {
             HandleId = "AuditedId",
             HandleBy = "AuditedBy",
-            HandleTime = "AuditedTime",
+            HandleTime = "AuditedTime"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -105,35 +105,19 @@ public static class EntityExtend
         if (types == null) return source;
 
         if (propertyInfo.IsHandle.IsNotEmptyOrNull())
-        {
             if (types.GetProperty(propertyInfo.IsHandle!) != null)
-            {
                 types.GetProperty(propertyInfo.IsHandle!)?.SetValue(source, true, null);
-            }
-        }
         if (propertyInfo.HandleTime.IsNotEmptyOrNull())
-        {
             if (types.GetProperty(propertyInfo.HandleTime!) != null)
-            {
                 types.GetProperty(propertyInfo.HandleTime!)?.SetValue(source, DateTime.Now, null);
-            }
-        }
 
         var context = AppHttpContextManager.Current;
         if (propertyInfo.HandleId.IsNotEmptyOrNull())
-        {
             if (types.GetProperty(propertyInfo.HandleId!) != null && context != null)
-            {
                 types.GetProperty(propertyInfo.HandleId!)?.SetValue(source, context.GetUserId(), null);
-            }
-        }
         if (propertyInfo.HandleBy.IsNotEmptyOrNull())
-        {
             if (types.GetProperty(propertyInfo.HandleBy!) != null && context != null)
-            {
                 types.GetProperty(propertyInfo.HandleBy!)?.SetValue(source, context.GetUserName(), null);
-            }
-        }
         return source;
     }
 

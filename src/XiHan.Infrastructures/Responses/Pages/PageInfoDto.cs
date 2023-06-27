@@ -22,7 +22,8 @@ public class PageInfoDto : PageDto
     /// 构造函数
     /// </summary>
     public PageInfoDto()
-    { }
+    {
+    }
 
     /// <summary>
     /// 构造函数

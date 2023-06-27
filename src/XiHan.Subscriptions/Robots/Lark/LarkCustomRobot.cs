@@ -27,7 +27,7 @@ namespace XiHan.Subscriptions.Robots.Lark;
 public class LarkCustomRobot
 {
     private readonly IHttpPollyHelper _httpPolly;
-    private readonly string _url; 
+    private readonly string _url;
     private readonly string _secret;
 
     /// <summary>
@@ -75,7 +75,8 @@ public class LarkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<CustomResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<CustomResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null,
+        bool isAtAll = false)
     {
         // 消息类型
         var msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
@@ -141,22 +142,22 @@ public class LarkCustomRobot
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
+
             // 得到最终的签名
             url += $"&timestamp={timeStamp}&sign={sign}";
         }
+
         // 发起请求
         var result = await _httpPolly.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {
-            if (result.Code == 0 || result.Msg == "success")
-            {
-                return CustomResult.Success("发送成功");
-            }
+            if (result.Code == 0 || result.Msg == "success") return CustomResult.Success("发送成功");
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
             var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
             return CustomResult.BadRequest("发送失败，" + info?.Label);
         }
+
         return CustomResult.InternalServerError();
     }
 }

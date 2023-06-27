@@ -48,14 +48,12 @@ public enum DingTalkResultErrCodeEnum
     /// sign not match 签名不匹配
     /// ip X.X.X.X not in whitelist IP地址不在白名单
     /// </remarks>
-    [Description("消息校验未通过，请查看机器人的安全设置")]
-    MessageVerificationFailed = 310000,
+    [Description("消息校验未通过，请查看机器人的安全设置")] MessageVerificationFailed = 310000,
 
     /// <summary>
     /// 群已被解散，请向其他群发消息
     /// </summary>
-    [Description("群已被解散，请向其他群发消息")]
-    GroupDisbanded = 400013,
+    [Description("群已被解散，请向其他群发消息")] GroupDisbanded = 400013,
 
     /// <summary>
     /// access_token不存在，请确认access_token拼写是否正确
@@ -66,8 +64,7 @@ public enum DingTalkResultErrCodeEnum
     /// <summary>
     /// 机器人已停用，请联系管理员启用机器人
     /// </summary>
-    [Description("机器人已停用，请联系管理员启用机器人")]
-    RobotDeactivated = 400102,
+    [Description("机器人已停用，请联系管理员启用机器人")] RobotDeactivated = 400102,
 
     /// <summary>
     /// 不支持的消息类型，请使用文档中支持的消息类型
@@ -78,36 +75,30 @@ public enum DingTalkResultErrCodeEnum
     /// <summary>
     /// 机器人不存在，请确认机器人是否在群中
     /// </summary>
-    [Description("机器人不存在，请确认机器人是否在群中")]
-    RobotNotExist = 400106,
+    [Description("机器人不存在，请确认机器人是否在群中")] RobotNotExist = 400106,
 
     /// <summary>
     /// 发送速度太快而限流，请降低发送速度
     /// </summary>
-    [Description("发送速度太快而限流，请降低发送速度")]
-    SendingSpeedTooFast = 410100,
+    [Description("发送速度太快而限流，请降低发送速度")] SendingSpeedTooFast = 410100,
 
     /// <summary>
     /// 含有不安全的外链，请确认发送的内容合法
     /// </summary>
-    [Description("含有不安全的外链，请确认发送的内容合法")]
-    UnsafeOuterChain = 430101,
+    [Description("含有不安全的外链，请确认发送的内容合法")] UnsafeOuterChain = 430101,
 
     /// <summary>
     /// 含有不合适的文本，请确认发送的内容合法
     /// </summary>
-    [Description("含有不合适的文本，请确认发送的内容合法")]
-    ContainsInappropriateText = 430102,
+    [Description("含有不合适的文本，请确认发送的内容合法")] ContainsInappropriateText = 430102,
 
     /// <summary>
     /// 含有不合适的图片，请确认发送的内容合法
     /// </summary>
-    [Description("含有不合适的图片，请确认发送的内容合法")]
-    ContainsInappropriateImages = 430103,
+    [Description("含有不合适的图片，请确认发送的内容合法")] ContainsInappropriateImages = 430103,
 
     /// <summary>
     /// 含有不合适的内容，请确认发送的内容合法
     /// </summary>
-    [Description("含有不合适的内容，请确认发送的内容合法")]
-    ContainsInappropriateContent = 430104,
+    [Description("含有不合适的内容，请确认发送的内容合法")] ContainsInappropriateContent = 430104
 }

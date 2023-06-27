@@ -25,14 +25,16 @@ public class CSysDictTypeDto : BaseIdDto
     /// 字典名称
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符"), MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
+    [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典类型
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(5, ErrorMessage = "{0}不能少于{1}个字符"), MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MinLength(5, ErrorMessage = "{0}不能少于{1}个字符")]
+    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
     [RegularExpression("^[a-z][a-z0-9_]*$", ErrorMessage = "{0}必须以字母开头,且只能由小写字母、加下划线、数字组成")]
     public string Type { get; set; } = string.Empty;
 

@@ -48,10 +48,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     public async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
         var findSysDictType = await GetFirstAsync(f => f.Type == sysDictType.Type);
-        if (findSysDictType != null && findSysDictType.BaseId != sysDictType.BaseId)
-        {
-            return false;
-        }
+        if (findSysDictType != null && findSysDictType.BaseId != sysDictType.BaseId) return false;
         return true;
     }
 
@@ -63,10 +60,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     public async Task<long> CreateDictType(SysDictType sysDictType)
     {
         // 校验类型是否唯一
-        if (!await CheckDictTypeUnique(sysDictType))
-        {
-            throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
-        }
+        if (!await CheckDictTypeUnique(sysDictType)) throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
         sysDictType = sysDictType.ToCreated();
         return await AddReturnIdAsync(sysDictType);
     }
@@ -82,21 +76,17 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
 
         // 系统内置字典
         var isOfficialCount = sysDictTypeList.Where(s => s.IsOfficial).ToList().Count;
-        if (isOfficialCount > 0)
-        {
-            throw new CustomException($"存在系统内置字典，不能删除！");
-        }
+        if (isOfficialCount > 0) throw new CustomException($"存在系统内置字典，不能删除！");
 
         // 已分配字典
-        var sysDictDataList = await _sysDictDataService.QueryAsync(f => sysDictTypeList.Select(s => s.Type).ToList().Contains(f.Type));
+        var sysDictDataList =
+            await _sysDictDataService.QueryAsync(f => sysDictTypeList.Select(s => s.Type).ToList().Contains(f.Type));
         if (sysDictDataList.Any())
-        {
             foreach (var sysDictData in sysDictDataList)
             {
                 var sysDictType = sysDictTypeList.First(s => s.Type == sysDictData.Type);
                 throw new CustomException($"字典【{sysDictType.Name}】已分配值【{sysDictData.Value}】,不能删除！");
             }
-        }
 
         return await RemoveAsync(s => dictIds.Contains(s.BaseId));
     }
@@ -114,13 +104,12 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         {
             // 校验类型是否唯一
             if (!await CheckDictTypeUnique(sysDictType))
-            {
                 throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可修改为此类型！");
-            }
 
             // 同步修改 SysDictData 表里面的 Type 值
             await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
         }
+
         sysDictType = sysDictType.ToModified();
         return await UpdateAsync(sysDictType);
     }

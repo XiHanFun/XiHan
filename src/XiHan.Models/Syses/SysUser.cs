@@ -132,13 +132,13 @@ public class SysUser : BaseEntity
     /// 所属角色集合
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public List<SysRole> SysRoles { get; set; } = new List<SysRole>();
+    public List<SysRole> SysRoles { get; set; } = new();
 
     /// <summary>
     /// 所属角色主键集合
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    public List<long> SysRoleIds { get; set; } = new List<long>();
+    public List<long> SysRoleIds { get; set; } = new();
 
     #endregion
 }
