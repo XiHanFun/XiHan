@@ -164,7 +164,8 @@ public static class PageExtend
     /// <param name="defaultFirstIndex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
     public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex,
-        int pageSize, int defaultFirstIndex = 1) where TEntity : class, new()
+        int pageSize, int defaultFirstIndex = 1)
+        where TEntity : class, new()
     {
         PageDataDto<TEntity> pageDataDto = new()
         {

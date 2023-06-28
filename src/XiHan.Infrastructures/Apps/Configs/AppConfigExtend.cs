@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace XiHan.Infrastructures.Apps.Configs;
@@ -27,8 +28,11 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TKey GetValue<TKey>(this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
+    public static TKey GetValue<TKey>([DisallowNull] this TKey key,
+        [CallerArgumentExpression(nameof(key))]
+        string fullName = "")
     {
+        if (key == null) throw new ArgumentNullException(nameof(key));
         return AppConfigManager.GetValue<TKey>(fullName);
     }
 
@@ -39,8 +43,11 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static TKey GetSection<TKey>(this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
+    public static TKey GetSection<TKey>([DisallowNull] this TKey key,
+        [CallerArgumentExpression(nameof(key))]
+        string fullName = "")
     {
+        if (key == null) throw new ArgumentNullException(nameof(key));
         return AppConfigManager.GetSection<TKey>(fullName);
     }
 
@@ -52,9 +59,11 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
-    public static void Set<TKey, TValue>(this TKey key, TValue value,
-        [CallerArgumentExpression(nameof(key))] string fullName = "")
+    public static void Set<TKey, TValue>([DisallowNull] this TKey key, TValue value,
+        [CallerArgumentExpression(nameof(key))]
+        string fullName = "")
     {
+        if (key == null) throw new ArgumentNullException(nameof(key));
         AppConfigManager.Set<TKey, TValue>(fullName, value);
     }
 }

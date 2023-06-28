@@ -37,7 +37,6 @@ public static class AppHttpContextManager
     private static HttpContext? GetHttpContextCurrent()
     {
         var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
-
         var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
         return (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
 

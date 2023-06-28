@@ -41,9 +41,7 @@ public static class AppConfigManager
     public static void RegisterConfig(IConfigurationBuilder config)
     {
         if (config is not ConfigurationManager configurationManager) return;
-        var jsonFilePath = configurationManager.Sources
-            .OfType<JsonConfigurationSource>()
-            .Select(file => file.Path!)
+        var jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>().Select(file => file.Path!)
             .ToList();
         if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json")) return;
         try
@@ -58,7 +56,7 @@ public static class AppConfigManager
         }
         catch (Exception ex)
         {
-            var errorMsg = $"配置注册出错，配置文件未找到！";
+            const string errorMsg = $"配置注册出错，配置文件未找到！";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
         }

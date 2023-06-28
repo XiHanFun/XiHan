@@ -153,7 +153,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(long[] ids)
     {
-        dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
+        var newIds = ids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newIds);
     }
 
@@ -246,7 +246,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(TEntity entity)
+    public new virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         entity.ToModified();
         return await base.UpdateAsync(entity);
@@ -258,7 +258,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
+    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
         Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);

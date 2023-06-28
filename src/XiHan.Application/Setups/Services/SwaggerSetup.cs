@@ -115,10 +115,7 @@ public static class SwaggerSetup
             {
                 var containList = new List<bool>();
                 // 遍历判断是否包含这个分组
-                apiGroupAttributeList.ForEach(attribute =>
-                {
-                    containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
-                });
+                apiGroupAttributeList.ForEach(attribute => { containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName)); });
                 // 若有，则为该分组名称分配此 Action
                 if (containList.Any(c => c)) return true;
             }
