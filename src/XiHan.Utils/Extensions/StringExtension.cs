@@ -462,8 +462,7 @@ public static class StringExtension
         };
 
         var newReg = aryReg[0];
-        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase))
-            .Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
+        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
 
         var replace = strOutput.Replace("<", "");
         var s = strOutput.Replace(">", "");

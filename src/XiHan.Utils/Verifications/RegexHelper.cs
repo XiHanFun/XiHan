@@ -110,8 +110,7 @@ public static partial class RegexHelper
         if (long.TryParse(checkValue.Remove(17), out var n) == false || n < Math.Pow(10, 16) ||
             long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out _) == false) return false;
         // 省份验证
-        var address =
-            "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
         if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture)) return false;
         // 生日验证
         var birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
@@ -138,8 +137,7 @@ public static partial class RegexHelper
         // 数字验证
         if (long.TryParse(checkValue, out var n) == false || n < Math.Pow(10, 14)) return false;
         // 省份验证
-        var address =
-            "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        var address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
         if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture)) return false;
         // 生日验证
         var birth = checkValue.Substring(6, 6).Insert(4, "-").Insert(2, "-");

@@ -40,14 +40,11 @@ public static class RamHelper
                 var ramInfo = new RamInfo
                 {
                     TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
-                    UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024)
-                        .FormatByteToString(),
+                    UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024).FormatByteToString(),
                     FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
                     AvailableRate = totalMemoryParts[1].ParseToLong() == 0
                         ? "0%"
-                        : Math.Round(
-                              (decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) +
-                          "%"
+                        : Math.Round((decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) + "%"
                 };
                 ramInfos.Add(ramInfo);
             }
@@ -82,9 +79,7 @@ public static class RamHelper
                         TotalSpace = (memory[0].ParseToLong() * 1024).FormatByteToString(),
                         UsedSpace = (memory[1].ParseToLong() * 1024).FormatByteToString(),
                         FreeSpace = (memory[2].ParseToLong() * 1024).FormatByteToString(),
-                        AvailableRate = memory[0].ParseToLong() == 0
-                            ? "0%"
-                            : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%"
+                        AvailableRate = memory[0].ParseToLong() == 0 ? "0%" : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%"
                     };
                     ramInfos.Add(ramInfo);
                 }

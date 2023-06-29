@@ -37,8 +37,7 @@ public static class VerificationCodeHelper
     /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母字符源</param>
     /// <returns></returns>
-    public static string CodeLetter(int length = 6,
-        string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeLetter(int length = 6, string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }
@@ -49,8 +48,7 @@ public static class VerificationCodeHelper
     /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母或数字字符源</param>
     /// <returns></returns>
-    public static string CodeNumberOrLetter(int length = 6,
-        string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeNumberOrLetter(int length = 6, string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }

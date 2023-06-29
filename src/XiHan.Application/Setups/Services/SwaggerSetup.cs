@@ -17,10 +17,10 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Infos;
 using XiHan.Utils.Extensions;
-using XiHan.Application.Common.Swagger;
 
 namespace XiHan.Application.Setups.Services;
 
@@ -63,7 +63,7 @@ public static class SwaggerSetup
         {
             // 获取枚举值上的特性
             if (publishGroup.All(
-                    pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
+                pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
             // 获取分组信息
             var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>()
                 .FirstOrDefault();
@@ -73,7 +73,7 @@ public static class SwaggerSetup
                 Title = info?.Title,
                 Version = info?.Version,
                 Description = info?.Description +
-                              $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                    $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                 Contact = new OpenApiContact
                 {
                     Name = AppSettings.Syses.Admin.Name.GetValue(),

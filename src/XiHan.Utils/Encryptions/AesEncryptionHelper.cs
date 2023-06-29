@@ -57,14 +57,16 @@ public static class AesEncryptionHelper
         // 加密算法
         string cipherText;
         using (var cipherStream = new MemoryStream())
-        using (var cryptoStream = new CryptoStream(cipherStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
         {
-            var plainBytes = Encoding.UTF8.GetBytes(plainText);
-            cryptoStream.Write(plainBytes, 0, plainBytes.Length);
-            cryptoStream.FlushFinalBlock();
-            var cipherBytes = cipherStream.ToArray();
+            using (var cryptoStream = new CryptoStream(cipherStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            {
+                var plainBytes = Encoding.UTF8.GetBytes(plainText);
+                cryptoStream.Write(plainBytes, 0, plainBytes.Length);
+                cryptoStream.FlushFinalBlock();
+                var cipherBytes = cipherStream.ToArray();
 
-            cipherText = Convert.ToBase64String(cipherBytes);
+                cipherText = Convert.ToBase64String(cipherBytes);
+            }
         }
 
         // 返回加密结果

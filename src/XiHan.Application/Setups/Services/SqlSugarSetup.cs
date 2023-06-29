@@ -100,7 +100,7 @@ public static class SqlSugarSetup
             client.Aop.OnError = exp =>
             {
                 var errorInfo = $"SQL出错:" + Environment.NewLine + exp.Message + Environment.NewLine +
-                                UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+                    UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
                 if (databaseConsole) errorInfo.WriteLineError();
                 if (databaseLogError) Log.Error(exp, errorInfo);
             };

@@ -12,13 +12,13 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using XiHan.Application.Common.Auth;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
-using XiHan.Application.Common.Auth;
-using Microsoft.AspNetCore.Http;
 
 namespace XiHan.Application.Setups.Services;
 

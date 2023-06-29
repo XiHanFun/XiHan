@@ -21,9 +21,9 @@ namespace XiHan.Models.Syses.Enums;
 public enum OauthTypeEnum
 {
     /// <summary>
-    /// Qq
+    /// QQ
     /// </summary>
-    [Description("QQ")] Qq = 1,
+    [Description("QQ")] QQ = 1,
 
     /// <summary>
     /// 微信

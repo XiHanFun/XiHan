@@ -356,7 +356,7 @@ public static class AppSettings
         /// <summary>
         /// QQ 授权配置
         /// </summary>
-        public static class Qq
+        public static class QQ
         {
             /// <summary>
             /// 获取用户授权得到 code

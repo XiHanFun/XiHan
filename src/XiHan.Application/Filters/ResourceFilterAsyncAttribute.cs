@@ -12,11 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 using Serilog;
-using System.Security.Claims;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
@@ -60,9 +58,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         var actionContextInfo = context.GetActionContextInfo();
         // 写入日志
         var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                   $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                   $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                   $"\t 操作用户：{actionContextInfo.UserId}";
+            $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+            $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+            $"\t 操作用户：{actionContextInfo.UserId}";
         // 若存在此资源，直接返回缓存资源
         if (_memoryCache.TryGetValue(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, out var value))
         {

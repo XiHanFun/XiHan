@@ -13,8 +13,8 @@
 
 using Serilog;
 using System.Reflection;
-using XiHan.WebApi.Consoles;
 using XiHan.Application.Setups;
+using XiHan.WebApi.Consoles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,8 +41,7 @@ try
 
     // 配置中间件
     var app = builder.Build();
-    app.UseApplicationSetup(app.Environment,
-        () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.WebApi.index.html")!);
+    app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.WebApi.index.html")!);
 
     // 打印服务端信息
     ConsoleServerInfo.ConfirmServerInfo();

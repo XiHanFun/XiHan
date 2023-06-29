@@ -14,8 +14,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MiniExcelLibs;
 using System.Web;
-using XiHan.Infrastructures.Infos;
 using XiHan.Application.Common.Swagger;
+using XiHan.Infrastructures.Infos;
 
 namespace XiHan.WebApi.Controllers.Bases;
 

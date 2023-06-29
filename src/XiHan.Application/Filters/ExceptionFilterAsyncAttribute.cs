@@ -19,9 +19,7 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.Models.Syses;
 using XiHan.Services.Syses.Operations;
-using XiHan.Services.Syses.Operations.Logic;
 
 namespace XiHan.Application.Filters;
 
@@ -83,9 +81,9 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
             var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                       $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                       $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                       $"\t 操作用户：{actionContextInfo.UserId}";
+                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                $"\t 操作用户：{actionContextInfo.UserId}";
 
             if (_exceptionLogSwitch)
                 _logger.Error(context.Exception, $"系统异常\n{info}");

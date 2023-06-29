@@ -79,7 +79,7 @@ public static class HttpContextExtend
         if (context == null) throw new ArgumentNullException(nameof(context));
         var request = context.Request;
         return request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
-               request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            request.Headers["X-Requested-With"] == "XMLHttpRequest";
     }
 
     /// <summary>

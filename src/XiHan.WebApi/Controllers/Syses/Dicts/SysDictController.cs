@@ -14,15 +14,15 @@
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.WebApi.Controllers.Bases;
-using XiHan.WebApi.Controllers.Syses.Dicts.Dtos;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Dicts;
 using XiHan.Services.Syses.Dicts.Dtos;
-using XiHan.Application.Common.Swagger;
+using XiHan.WebApi.Controllers.Bases;
+using XiHan.WebApi.Controllers.Syses.Dicts.Dtos;
 
 namespace XiHan.WebApi.Controllers.Syses.Dicts;
 

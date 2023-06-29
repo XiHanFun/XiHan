@@ -58,9 +58,9 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                       $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                       $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                       $"\t 操作用户：{actionContextInfo.UserId}";
+                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                $"\t 操作用户：{actionContextInfo.UserId}";
             if (_actionLogSwitch)
                 _logger.Information($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器

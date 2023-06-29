@@ -13,11 +13,11 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.WebApi.Controllers.Bases;
 using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Subscriptions.Robots.Email;
-using XiHan.Application.Common.Swagger;
+using XiHan.WebApi.Controllers.Bases;
 
 namespace XiHan.WebApi.Controllers.Manage.Messages;
 

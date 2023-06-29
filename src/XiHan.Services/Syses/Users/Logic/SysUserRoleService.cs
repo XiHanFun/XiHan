@@ -80,7 +80,8 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
             {
                 RoleId = item,
                 UserId = sysUser.BaseId
-            }).Select(sysUserRole => sysUserRole.ToCreated())
+            })
+            .Select(sysUserRole => sysUserRole.ToCreated())
             .ToList();
 
         return sysUserRoles.Any() && await CreateUserRoles(sysUserRoles);

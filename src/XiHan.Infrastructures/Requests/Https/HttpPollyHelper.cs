@@ -42,8 +42,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> GetAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)

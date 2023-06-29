@@ -252,7 +252,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         try
         {
             var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (!await _scheduler.CheckExists(jobKey)) return CustomResult.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
+            if (!await _scheduler.CheckExists(jobKey))
+                return CustomResult.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
             await _scheduler.ResumeJob(jobKey);
             return CustomResult.Success($"恢复计划任务【{sysTasks.Name}】成功！");
         }
@@ -274,11 +275,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <returns></returns>
     private static IJobDetail CreateAssemblyJobDetail(SysTasks sysTasks)
     {
-        if (sysTasks.JobType != JobTypeEnum.Assembly.GetEnumValueByKey() || sysTasks.AssemblyName == null ||
-            sysTasks.ClassName == null) throw new AggregateException($"任务类型错误或缺少参数！");
+        if (sysTasks.JobType != JobTypeEnum.Assembly.GetEnumValueByKey() || sysTasks.AssemblyName == null || sysTasks.ClassName == null)
+            throw new AggregateException($"任务类型错误或缺少参数！");
         var assembly = Assembly.Load(new AssemblyName(sysTasks.AssemblyName));
-        var jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ??
-                      throw new AggregateException($"未找到该类型的任务计划！");
+        var jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
         // 传入执行程序集
         IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
         if (sysTasks.JobParams != null) job.JobDataMap.Add("JobParam", sysTasks.JobParams);
@@ -293,8 +293,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <returns></returns>
     private static IJobDetail CreateNetworkRequestJobDetail(SysTasks sysTasks)
     {
-        if (sysTasks.JobType != JobTypeEnum.NetworkRequest.GetEnumValueByKey() ||
-            sysTasks is not { RequestMethod: not null, ApiUrl: not null })
+        if (sysTasks.JobType != JobTypeEnum.NetworkRequest.GetEnumValueByKey() || sysTasks is not { RequestMethod: not null, ApiUrl: not null })
             throw new AggregateException($"任务类型错误或缺少参数！");
         var jobType = typeof(HttpClient);
         // 传入执行程序集
@@ -334,7 +333,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         var starRunTime = DateBuilder.NextGivenSecondDate(sysTasks.BeginTime, 1);
         var endRunTime = DateBuilder.NextGivenSecondDate(sysTasks.EndTime, 1);
 
-        if (sysTasks.EndTime <= DateTime.Now) throw new Exception($"结束时间小于当前时间计划将不会被执行！");
+        if (sysTasks.EndTime <= DateTime.Now)
+            throw new Exception($"结束时间小于当前时间计划将不会被执行！");
         if (sysTasks.CycleRunTimes != 0 && sysTasks.CycleHasRunTimes >= sysTasks.CycleRunTimes)
             throw new Exception($"该任务计划已完成:【{sysTasks.Name}】,无需重复启动,如需启动请修改已循环次数再提交");
 

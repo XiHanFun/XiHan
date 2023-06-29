@@ -14,8 +14,8 @@
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Application.Common.Swagger;
+using XiHan.Infrastructures.Apps.Configs;
 
 namespace XiHan.Application.Setups.Apps;
 
@@ -55,7 +55,7 @@ public static class SwaggerSetup
                 {
                     // 获取枚举值上的特性
                     if (publishGroup.All(pGroup =>
-                            !string.Equals(pGroup.ToLower(), group.Name.ToLower(), StringComparison.Ordinal))) return;
+                        !string.Equals(pGroup.ToLower(), group.Name.ToLower(), StringComparison.Ordinal))) return;
                     var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>()
                         .FirstOrDefault();
                     // 切换分组操作,参数一是使用的哪个json文件,参数二是个名字

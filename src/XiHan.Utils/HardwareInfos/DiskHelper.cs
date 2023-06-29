@@ -197,8 +197,7 @@ public static class DiskHelper
         var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
             foreach (var d in directories)
-                DeleteFolderFiles(d,
-                    string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
+                DeleteFolderFiles(d, string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
         var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
         foreach (var s in files)
@@ -283,8 +282,7 @@ public static class DiskHelper
     /// <param name="isSearchChild">是否搜索子目录</param>
     public static string[] GetDirectories(string directoryPath, string searchPattern, bool isSearchChild)
     {
-        return Directory.GetDirectories(directoryPath, searchPattern,
-            isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        return Directory.GetDirectories(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     /// <summary>
@@ -333,8 +331,7 @@ public static class DiskHelper
         // 如果目录不存在，则抛出异常
         if (!IsExistDirectory(directoryPath)) throw new FileNotFoundException();
 
-        return Directory.GetFiles(directoryPath, searchPattern,
-            isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        return Directory.GetFiles(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     #endregion
@@ -487,10 +484,7 @@ public static class DiskHelper
     /// <returns></returns>
     public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
     {
-        return GetHardDiskTotalSpace(hardDiskName) == 0
-            ? "0%"
-            : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) +
-              "%";
+        return GetHardDiskTotalSpace(hardDiskName) == 0 ? "0%" : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
     }
 
     /// <summary>
@@ -583,10 +577,7 @@ public static class DiskHelper
                             UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
                             FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024)
                                 .FormatByteToString(),
-                            AvailableRate = rootDisk[1].ParseToLong() == 0
-                                ? "0%"
-                                : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) +
-                                  "%"
+                            AvailableRate = rootDisk[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%"
                         };
                         diskInfos.Add(info);
                     }

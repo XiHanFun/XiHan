@@ -12,9 +12,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
+using XiHan.Application.Setups.Services;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Extensions;
-using XiHan.Application.Setups.Services;
 
 namespace XiHan.Application.Setups;
 

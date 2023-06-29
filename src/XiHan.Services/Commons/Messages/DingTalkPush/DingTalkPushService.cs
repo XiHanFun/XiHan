@@ -47,10 +47,8 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysCustomRobot = await GetFirstAsync(e =>
-            e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.DingTalk.GetEnumValueByKey());
-        var config = new TypeAdapterConfig()
-            .ForType<SysCustomRobot, DingTalkConnection>()
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.DingTalk.GetEnumValueByKey());
+        var config = new TypeAdapterConfig().ForType<SysCustomRobot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
         var dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
@@ -66,8 +64,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null,
-        bool isAtAll = false)
+    public async Task<CustomResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
     }
@@ -89,8 +86,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null,
-        bool isAtAll = false)
+    public async Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
     }

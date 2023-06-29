@@ -23,15 +23,18 @@ public enum HttpGroupEnum
     /// <summary>
     /// 公共
     /// </summary>
-    [Description("公共")] Common,
+    [Description("公共")]
+    Common,
 
     /// <summary>
     /// 本地
     /// </summary>
-    [Description("本地")] Local,
+    [Description("本地")]
+    Local,
 
     /// <summary>
     /// 远程
     /// </summary>
-    [Description("远程")] Remote
+    [Description("远程")]
+    Remote
 }

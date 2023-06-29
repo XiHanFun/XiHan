@@ -31,9 +31,7 @@ public static class ObjectPropertyExtension
     /// <param name="entity"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
-    public static string GetFullNameOf<TEntity>([DisallowNull] this TEntity entity,
-        [CallerArgumentExpression(nameof(entity))]
-        string fullName = "")
+    public static string GetFullNameOf<TEntity>([DisallowNull] this TEntity entity, [CallerArgumentExpression(nameof(entity))] string fullName = "")
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
         if (fullName == null) throw new ArgumentNullException(nameof(fullName));
@@ -63,8 +61,7 @@ public static class ObjectPropertyExtension
     {
         if (instance == null || string.IsNullOrEmpty(fieldName)) throw new NotImplementedException(nameof(fieldName));
         var foundFieldInfo = instance.GetType().GetField(fieldName);
-        if (foundFieldInfo != null)
-            return foundFieldInfo;
+        if (foundFieldInfo != null) return foundFieldInfo;
         throw new NotImplementedException(nameof(fieldName));
     }
 
@@ -94,8 +91,7 @@ public static class ObjectPropertyExtension
         var objectType = typeof(TEntity);
         var propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
-            throw new ArgumentException(
-                $"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
 
         var paramObj = Expression.Parameter(typeof(TEntity));
         var paramVal = Expression.Parameter(typeof(TValue));
@@ -121,8 +117,7 @@ public static class ObjectPropertyExtension
         var objectType = typeof(TEntity);
         var propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
-            throw new ArgumentException(
-                $"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
 
         var paramObj = Expression.Parameter(objectType);
         var paramVal = Expression.Parameter(typeof(TValue));
@@ -151,7 +146,8 @@ public static class ObjectPropertyExtension
         var properties = type.GetProperties();
         return properties.Select(info => new CustomPropertyInfo()
         {
-            PropertyName = info.Name, PropertyType = info.PropertyType.Name,
+            PropertyName = info.Name,
+            PropertyType = info.PropertyType.Name,
             PropertyValue = info.GetValue(entity).ParseToString()
         }).ToList();
     }
@@ -163,8 +159,7 @@ public static class ObjectPropertyExtension
     /// <param name="entity1">对象实例1</param>
     /// <param name="entity2">对象实例2</param>
     /// <returns></returns>
-    public static IEnumerable<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity entity1,
-        TEntity entity2) where TEntity : class
+    public static IEnumerable<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
     {
         var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
@@ -187,8 +182,7 @@ public static class ObjectPropertyExtension
     /// <param name="newVal">对象实例2</param>
     /// <param name="specialList">要排除某些特殊属性</param>
     /// <returns></returns>
-    public static string GetPropertyChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList)
-        where TEntity : class
+    public static string GetPropertyChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
         var list = GetPropertyDetailedCompare(oldVal, newVal);

@@ -96,8 +96,10 @@ public static class FormatTimeExtension
         {
             case < 1:
                 return "刚刚";
+
             case >= 1 and < 60:
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
+
             default:
             {
                 if (dep.TotalHours < 24)
@@ -107,6 +109,7 @@ public static class FormatTimeExtension
                     {
                         case < 7:
                             return dep.TotalDays.ParseToInt() + "天前";
+
                         case >= 7 and < 30:
                         {
                             var defaultWeek = dep.TotalDays.ParseToInt() / 7;
@@ -146,12 +149,9 @@ public static class FormatTimeExtension
                     6 => DateTime.ParseExact(thisValue, "yyyyMM", System.Globalization.CultureInfo.CurrentCulture),
                     8 => DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture),
                     10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture),
-                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm",
-                        System.Globalization.CultureInfo.CurrentCulture),
-                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss",
-                        System.Globalization.CultureInfo.CurrentCulture),
-                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss",
-                        System.Globalization.CultureInfo.CurrentCulture)
+                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture),
+                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss", System.Globalization.CultureInfo.CurrentCulture),
+                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss", System.Globalization.CultureInfo.CurrentCulture)
                 };
             }
         }

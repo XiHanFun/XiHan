@@ -83,8 +83,7 @@ public class DingTalkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null,
-        bool isAtAll = false)
+    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();

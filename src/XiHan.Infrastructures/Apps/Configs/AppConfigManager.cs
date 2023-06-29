@@ -41,9 +41,12 @@ public static class AppConfigManager
     public static void RegisterConfig(IConfigurationBuilder config)
     {
         if (config is not ConfigurationManager configurationManager) return;
-        var jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>().Select(file => file.Path!)
+
+        var jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>()
+            .Select(file => file.Path!)
             .ToList();
         if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json")) return;
+
         try
         {
             var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));

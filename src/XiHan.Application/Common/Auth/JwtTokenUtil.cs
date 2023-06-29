@@ -92,8 +92,8 @@ public static class JwtTokenUtil
             // 读取旧token
             var jwtToken = jwtHandler.ReadJwtToken(token);
             var verifyResult = jwtToken.RawSignature ==
-                               JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload,
-                                   credentials);
+                JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload,
+                    credentials);
             return verifyResult;
         }
         catch (Exception ex)

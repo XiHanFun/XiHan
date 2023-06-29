@@ -35,7 +35,7 @@ public static class ReflectionHelper
         DirectoryInfo rootDirectory = new(currentDomain);
         var files = rootDirectory.GetFiles().ToList();
         var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{prefix}.".ToLowerInvariant()) &&
-                                    e.Name.ToLowerInvariant().Contains($".{suffix}".ToLowerInvariant()))
+                e.Name.ToLowerInvariant().Contains($".{suffix}".ToLowerInvariant()))
             .Select(e => e.FullName).ToList();
 
         dlls.ForEach(dll => { result.Add(Assembly.LoadFrom(dll)); });
@@ -129,10 +129,9 @@ public static class ReflectionHelper
         {
             // 找到所有【没有此特性】或【有此特性但忽略字段】的属性
             var item = (objDynamic as object).GetType().GetProperties()
-                .Where(prop => !prop.HasAttribute<TAttribute>()
-                               || (prop.HasAttribute<TAttribute>() &&
-                                   !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!
-                                       .GetPropertyValue<TAttribute, bool>("IsIgnore")))
+                .Where(prop => !prop.HasAttribute<TAttribute>() || (prop.HasAttribute<TAttribute>() &&
+                    !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>(
+                        "IsIgnore")))
                 .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
             result.Add(item);
         });

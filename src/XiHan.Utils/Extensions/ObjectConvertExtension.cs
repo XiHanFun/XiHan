@@ -288,7 +288,7 @@ public static class ObjectConvertExtension
     public static bool IsNotEmptyOrNull(this object? thisValue)
     {
         return thisValue != null && thisValue.ParseToString() != string.Empty && thisValue.ParseToString() != "" &&
-               thisValue.ParseToString() != "undefined" && thisValue.ParseToString() != "null";
+            thisValue.ParseToString() != "undefined" && thisValue.ParseToString() != "null";
     }
 
     /// <summary>
@@ -336,8 +336,8 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static DateTime ParseToDate(this object? thisValue, DateTime errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            DateTime.TryParse(thisValue.ToString(), out var reveal)) return reveal;
+        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reveal))
+            return reveal;
         return errorValue;
     }
 

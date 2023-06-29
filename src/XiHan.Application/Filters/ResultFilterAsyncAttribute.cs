@@ -72,9 +72,9 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         var actionContextInfo = context.GetActionContextInfo();
         // 写入日志
         var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                   $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                   $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                   $"\t 操作用户：{actionContextInfo.UserId}";
+            $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+            $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+            $"\t 操作用户：{actionContextInfo.UserId}";
         // 执行结果
         var result = JsonSerializer.Serialize(resultExecuted.Result);
         if (_resultLogSwitch) _logger.Information($"返回数据\n{info}\n{result}");

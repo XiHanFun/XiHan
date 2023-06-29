@@ -49,8 +49,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     {
         var sysCustomRobot = await GetFirstAsync(e =>
             e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.WeCom.GetEnumValueByKey());
-        var config = new TypeAdapterConfig()
-            .ForType<SysCustomRobot, WeComConnection>()
+        var config = new TypeAdapterConfig().ForType<SysCustomRobot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
         var weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);

@@ -13,13 +13,13 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.WebApi.Controllers.Bases;
 using XiHan.Services.Commons.Messages.WeComPush;
 using XiHan.Subscriptions.Robots.WeCom;
 using XiHan.Utils.Encryptions;
-using XiHan.Application.Common.Swagger;
+using XiHan.WebApi.Controllers.Bases;
 
 namespace XiHan.WebApi.Controllers.Manage.Messages;
 
@@ -70,9 +70,9 @@ public class WeComController : BaseApiController
         var markdown = new WeComMarkdown
         {
             Content = "#### 长沙天气 \n" +
-                      "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
-                      "> [screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
-                      "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
+                "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
+                "> [screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
+                "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
         };
         return await _weComPushService.WeComToMarkdown(markdown);
     }

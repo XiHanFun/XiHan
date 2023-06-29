@@ -11,10 +11,10 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.Extensions.Caching.Memory;
 using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace XiHan.Infrastructures.Apps.Caches;
 
@@ -44,6 +44,7 @@ public class AppMemoryCacheService : IAppCacheService
     public bool Exists(string key)
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
+
         return _cache.TryGetValue(key, out _);
     }
 
@@ -61,6 +62,7 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
+
         _cache.Set(key, value);
         return Exists(key);
     }
@@ -77,8 +79,10 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
-        _cache.Set(key, value,
-            new MemoryCacheEntryOptions().SetSlidingExpiration(expiresSliding).SetAbsoluteExpiration(expiresAbsolute));
+
+        _cache.Set(key, value, new MemoryCacheEntryOptions()
+            .SetSlidingExpiration(expiresSliding)
+            .SetAbsoluteExpiration(expiresAbsolute));
         return Exists(key);
     }
 
@@ -94,10 +98,10 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
-        _cache.Set(key, value,
-            isSliding
-                ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
-                : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
+
+        _cache.Set(key, value, isSliding
+            ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
+            : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
         return Exists(key);
     }
 
@@ -112,6 +116,7 @@ public class AppMemoryCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
         if (seconds <= 0) throw new ArgumentOutOfRangeException(nameof(seconds));
+
         _cache.Set(key, value, DateTime.Now.AddSeconds(seconds));
         return Exists(key);
     }
@@ -140,6 +145,7 @@ public class AppMemoryCacheService : IAppCacheService
     public bool Remove(string key)
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
+
         _cache.Remove(key);
         return !Exists(key);
     }
@@ -152,6 +158,7 @@ public class AppMemoryCacheService : IAppCacheService
     public void RemoveAll(IEnumerable<string> keys)
     {
         if (keys == null) throw new ArgumentNullException(nameof(keys));
+
         keys.ToList().ForEach(item => _cache.Remove(item));
     }
 
@@ -187,6 +194,7 @@ public class AppMemoryCacheService : IAppCacheService
     public T? GetByKey<T>(string key) where T : class
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
+
         return _cache.Get(key) as T;
     }
 
@@ -198,6 +206,7 @@ public class AppMemoryCacheService : IAppCacheService
     public object GetByKey(string key)
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
+
         return _cache.Get(key) ?? new object();
     }
 
@@ -209,6 +218,7 @@ public class AppMemoryCacheService : IAppCacheService
     public IDictionary<string, object?> GetAll(IEnumerable<string> keys)
     {
         if (keys == null) throw new ArgumentNullException(nameof(keys));
+
         var dict = new Dictionary<string, object?>();
         keys.ToList().ForEach(item => dict.Add(item, _cache.Get(item)));
         return dict;
@@ -243,6 +253,7 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
+
         if (!Exists(key)) return Add(key, value);
         return Remove(key) && Add(key, value);
     }
@@ -259,6 +270,7 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
+
         if (!Exists(key)) return Add(key, value, expiresSliding, expiresAbsolute);
         return Remove(key) && Add(key, value, expiresSliding, expiresAbsolute);
     }
@@ -275,6 +287,7 @@ public class AppMemoryCacheService : IAppCacheService
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
+
         if (!Exists(key)) return Add(key, value, expiresIn, isSliding);
         return Remove(key) && Add(key, value, expiresIn, isSliding);
     }
