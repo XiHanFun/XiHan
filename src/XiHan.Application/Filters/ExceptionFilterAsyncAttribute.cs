@@ -33,15 +33,13 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
-    private readonly ISysOperationLogService _sysOperationLogService;
+
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysOperationLogService"></param>
-    public ExceptionFilterAsyncAttribute(ISysOperationLogService sysOperationLogService)
+    public ExceptionFilterAsyncAttribute()
     {
-        _sysOperationLogService = sysOperationLogService;
     }
 
     /// <summary>
@@ -58,24 +56,22 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            // 自定义异常
-            if (context.Exception is CustomException)
-                result = new JsonResult(CustomResult.BadRequest(context.Exception.Message));
-            // 参数异常
-            else if (context.Exception is ArgumentException)
-                result = new JsonResult(CustomResult.UnprocessableEntity());
-            // 认证授权异常
-            else if (context.Exception is AuthenticationException)
-                result = new JsonResult(CustomResult.Unauthorized());
-            // 禁止访问异常
-            else if (context.Exception is UnauthorizedAccessException)
-                result = new JsonResult(CustomResult.Forbidden());
-            // 数据未找到异常
-            else if (context.Exception is FileNotFoundException)
-                result = new JsonResult(CustomResult.NotFound());
-            // 未实现异常
-            else if (context.Exception is NotImplementedException)
-                result = new JsonResult(CustomResult.NotImplemented());
+            result = context.Exception switch
+            {
+                // 参数异常
+                ArgumentException => new JsonResult(CustomResult.UnprocessableEntity()),
+                // 认证授权异常
+                AuthenticationException => new JsonResult(CustomResult.Unauthorized()),
+                // 禁止访问异常
+                UnauthorizedAccessException => new JsonResult(CustomResult.Forbidden()),
+                // 数据未找到异常
+                FileNotFoundException => new JsonResult(CustomResult.NotFound()),
+                // 未实现异常
+                NotImplementedException => new JsonResult(CustomResult.NotImplemented()),
+                // 自定义异常
+                CustomException => new JsonResult(CustomResult.BadRequest(context.Exception.Message)),
+                _ => result
+            };
 
             // 控制器信息
             var actionContextInfo = context.GetActionContextInfo();

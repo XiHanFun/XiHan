@@ -12,7 +12,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
@@ -94,15 +93,18 @@ public class SysOperationLog : BaseCreateEntity
     public string? RequestResult { get; set; }
 
     /// <summary>
+    /// 操作状态（true 正常 false异常）
+    /// </summary>
+    public bool Status { get; set; } = true;
+
+    /// <summary>
     /// 错误消息
     /// </summary>
-    [DisplayName("错误消息")]
     [SugarColumn(Length = 4000, IsNullable = true)]
     public string? ErrorMsg { get; set; }
 
     /// <summary>
     /// 操作用时
     /// </summary>
-    [DisplayName("操作用时")]
     public long Elapsed { get; set; }
 }

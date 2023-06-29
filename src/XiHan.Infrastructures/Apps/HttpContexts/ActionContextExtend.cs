@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -62,12 +63,12 @@ public static class ActionContextExtend
 
         var actionContextInfo = new ActionContextInfo
         {
+            HttpRequest = httpRequest,
             MethodInfo = methodInfo,
             MethodReturnType = methodInfo?.ReturnType,
             ControllerType = actionDescriptor?.ControllerTypeInfo,
             RemoteIp = remoteIp,
             RequestUrl = requestUrl,
-            //actionContextInfo.ActionArguments = parameters;
             UserId = userId
         };
 
@@ -80,6 +81,11 @@ public static class ActionContextExtend
 /// </summary>
 public class ActionContextInfo
 {
+    /// <summary>
+    /// 请求
+    /// </summary>
+    public HttpRequest? HttpRequest { get; init; }
+
     /// <summary>
     /// 请求的方法名称
     /// </summary>
@@ -114,4 +120,9 @@ public class ActionContextInfo
     /// 操作人Id
     /// </summary>
     public string? UserId { get; init; }
+
+    /// <summary>
+    /// 操作人名称
+    /// </summary>
+    public string? UserName { get; init; }
 }

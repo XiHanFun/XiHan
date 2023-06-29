@@ -39,5 +39,5 @@ public abstract class BaseCreateEntity : BaseIdEntity
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建时间")]
-    public virtual DateTime? CreatedTime { get; set; } = DateTime.Now;
+    public virtual DateTime CreatedTime { get; set; } = DateTime.Now;
 }

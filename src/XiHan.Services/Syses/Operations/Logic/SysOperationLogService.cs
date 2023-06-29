@@ -13,14 +13,17 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Operations.Dtos;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Operations.Logic;
 
 /// <summary>
-/// SysOperationLogService
+/// 系统操作日志服务
 /// </summary>
 [AppService(ServiceType = typeof(ISysOperationLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperationLogService
@@ -55,34 +58,33 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     }
 
     /// <summary>
-    /// 查询系统操作日志集合
+    /// 查询操作日志(根据Id)
     /// </summary>
-    /// <param name="sysOper">操作日志对象</param>
-    /// <param name="pager"></param>
-    /// <returns>操作日志集合</returns>
-    public PagedInfo<SysOperLog> SelectOperLogList(SysOperLogDto sysOper, PagerInfo pager)
+    /// <param name="logId"></param>
+    /// <returns></returns>
+    public async Task<SysOperationLog> GetOperationLogById(long logId)
     {
-        sysOper.BeginTime = DateTimeHelper.GetBeginTime(sysOper.BeginTime, -1);
-        sysOper.EndTime = DateTimeHelper.GetBeginTime(sysOper.EndTime, 1);
-
-        var exp = Expressionable.Create<SysOperLog>();
-        exp.And(it => it.OperTime >= sysOper.BeginTime && it.OperTime <= sysOper.EndTime);
-        exp.AndIF(sysOper.Title.IfNotEmpty(), it => it.Title.Contains(sysOper.Title));
-        exp.AndIF(sysOper.OperName.IfNotEmpty(), it => it.OperName.Contains(sysOper.OperName));
-        exp.AndIF(sysOper.BusinessType != -1, it => it.BusinessType == sysOper.BusinessType);
-        exp.AndIF(sysOper.Status != -1, it => it.Status == sysOper.Status);
-        exp.AndIF(sysOper.OperParam != null, it => it.OperParam.Contains(sysOper.OperParam));
-
-        return GetPages(exp.ToExpression(), pager, x => x.OperId, OrderByType.Desc);
+        return await FindAsync(logId);
     }
 
     /// <summary>
-    /// 查询操作日志详细
+    /// 查询操作日志列表(根据分页条件)
     /// </summary>
-    /// <param name="operId">操作ID</param>
-    /// <returns>操作日志对象</returns>
-    public SysOperLog SelectOperLogById(long operId)
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    public async Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWhereDto> pageWhere)
     {
-        return GetById(operId);
+        var whereDto = pageWhere.Where;
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
+        whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
+
+        var whereExpression = Expressionable.Create<SysOperationLog>();
+        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
+        whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
+        whereExpression.AndIF(whereDto.HttpRequestMethod.IsNotEmptyOrNull(), l => l.HttpRequestMethod == whereDto.HttpRequestMethod);
+        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime);
     }
 }

@@ -30,6 +30,52 @@ public static class FormatTimeExtension
     }
 
     /// <summary>
+    /// 获取日期天的最小时间
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static DateTime GetDayMinDate(this DateTime dateTime)
+    {
+        return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0);
+    }
+
+    /// <summary>
+    /// 获取日期天的最大时间
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static DateTime GetDayMaxDate(this DateTime dateTime)
+    {
+        return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 23, 59, 59);
+    }
+
+    /// <summary>
+    /// 获取日期开始时间
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <param name="days"></param>
+    /// <returns></returns>
+    public static DateTime GetBeginTime(this DateTime? dateTime, int days = 0)
+    {
+        if (dateTime == DateTime.MinValue || dateTime == null)
+        {
+            return DateTime.Now.AddDays(days);
+        }
+
+        return (DateTime)dateTime;
+    }
+
+    /// <summary>
+    /// 时间转换字符串
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static string FormatDateTimeToString(this DateTime? dateTime)
+    {
+        return dateTime != null ? dateTime.Value.ToString(dateTime.Value.Year == DateTime.Now.Year ? "MM-dd HH:mm" : "yyyy-MM-dd HH:mm") : string.Empty;
+    }
+
+    /// <summary>
     /// 时间转换字符串
     /// </summary>
     /// <param name="dateTimeBefore"></param>
@@ -62,6 +108,39 @@ public static class FormatTimeExtension
     {
         var timeSpan = TimeSpan.FromTicks(ticks);
         return timeSpan.FormatTimeSpanToString();
+    }
+
+    /// <summary>
+    /// 毫秒转换字符串
+    /// </summary>
+    /// <param name="ms"></param>
+    /// <returns></returns>
+    public static string FormatTimeMilliSecondToString(this long ms)
+    {
+        const int ss = 1000;
+        const int mi = ss * 60;
+        const int hh = mi * 60;
+        const int dd = hh * 24;
+
+        var day = ms / dd;
+        var hour = (ms - day * dd) / hh;
+        var minute = (ms - day * dd - hour * hh) / mi;
+        var second = (ms - day * dd - hour * hh - minute * mi) / ss;
+        var milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+
+        // 天
+        var sDay = day < 10 ? "0" + day : "" + day;
+        // 小时
+        var sHour = hour < 10 ? "0" + hour : "" + hour;
+        // 分钟
+        var sMinute = minute < 10 ? "0" + minute : "" + minute;
+        // 秒
+        var sSecond = second < 10 ? "0" + second : "" + second;
+        // 毫秒
+        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;
+        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : "" + sMilliSecond;
+
+        return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
     }
 
     /// <summary>

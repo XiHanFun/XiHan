@@ -17,6 +17,9 @@ using Serilog;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Infrastructures.Requests.Https;
+using XiHan.Models.Syses;
+using XiHan.Services.Syses.Operations;
 
 namespace XiHan.Application.Filters;
 
@@ -30,12 +33,15 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ActionFilterAsyncAttribute>();
+    private readonly ISysOperationLogService _sysOperationLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ActionFilterAsyncAttribute()
+    /// <param name="sysOperationLogService"></param>
+    public ActionFilterAsyncAttribute(ISysOperationLogService sysOperationLogService)
     {
+        _sysOperationLogService = sysOperationLogService;
     }
 
     /// <summary>
@@ -46,6 +52,17 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     /// <returns></returns>
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
+        // 控制器信息
+        var actionContextInfo = context.GetActionContextInfo();
+        // 记录日志
+        var sysOperationLog = new SysOperationLog()
+        {
+            Ip = actionContextInfo.RemoteIp,
+            Status = true,
+            UserId = actionContextInfo.UserId
+        };
+
+
         // 模型验证
         var modelState = context.ModelState;
         if (!modelState.IsValid)
@@ -54,8 +71,6 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         }
         else
         {
-            // 控制器信息
-            var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
                 $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
@@ -79,8 +94,12 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 }
                 else
                 {
+                    sysOperationLog.Status = false;
+                    sysOperationLog.ErrorMsg = requestException?.Message;
                 }
             }
         }
+
+        await _sysOperationLogService.CreateOperationLog(sysOperationLog);
     }
 }
