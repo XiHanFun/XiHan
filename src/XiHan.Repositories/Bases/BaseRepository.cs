@@ -15,6 +15,7 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Responses.Pages;
+using XiHan.Models.Bases.Interface;
 using XiHan.Repositories.Entities;
 
 namespace XiHan.Repositories.Bases;
@@ -187,6 +188,18 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         return await base.DeleteAsync(whereExpression);
     }
 
+    /// <summary>
+    /// 清空表
+    /// </summary>
+    /// <returns></returns>
+    public virtual async Task<bool> ClearAsync()
+    {
+        return await Task.Run(() =>
+        {
+            return Context.DbMaintenance.TruncateTable<TEntity>();
+        });
+    }
+
     #endregion
 
     #region 逻辑删除
@@ -246,7 +259,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public new virtual async Task<bool> UpdateAsync(TEntity entity)
+    public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
         entity.ToModified();
         return await base.UpdateAsync(entity);
@@ -258,7 +271,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
+    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
         Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);

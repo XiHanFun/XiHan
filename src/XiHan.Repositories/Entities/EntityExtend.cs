@@ -12,6 +12,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Models.Bases.Interface;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Repositories.Entities;
