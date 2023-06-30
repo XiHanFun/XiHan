@@ -19,7 +19,7 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// <summary>
 /// 结果信息
 /// </summary>
-public abstract class LarkResultInfoDto
+public class LarkResultInfoDto
 {
     /// <summary>
     /// 结果代码

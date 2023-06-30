@@ -21,7 +21,7 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// <summary>
 /// 文本类型
 /// </summary>
-public abstract class LarkText
+public class LarkText
 {
     /// <summary>
     /// 文本内容
@@ -33,7 +33,7 @@ public abstract class LarkText
 /// <summary>
 /// 富文本类型
 /// </summary>
-public abstract class LarkPost
+public class LarkPost
 {
     /// <summary>
     /// 消息标题
@@ -45,7 +45,7 @@ public abstract class LarkPost
 /// <summary>
 /// 文档类型
 /// </summary>
-public abstract class LarkMarkdown
+public class LarkMarkdown
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -63,7 +63,7 @@ public abstract class LarkMarkdown
 /// <summary>
 /// 任务卡片类型
 /// </summary>
-public abstract class LarkActionCard
+public class LarkActionCard
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -105,7 +105,7 @@ public abstract class LarkActionCard
 /// <summary>
 /// 菜单卡片类型
 /// </summary>
-public abstract class LarkFeedCard
+public class LarkFeedCard
 {
     /// <summary>
     /// 链接列表

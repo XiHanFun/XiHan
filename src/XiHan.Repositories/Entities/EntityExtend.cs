@@ -12,8 +12,6 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Models.Bases.Interface;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Repositories.Entities;
 
@@ -105,20 +103,20 @@ public static class EntityExtend
         var types = source?.GetType();
         if (types == null) return source;
 
-        if (propertyInfo.IsHandle.IsNotEmptyOrNull())
-            if (types.GetProperty(propertyInfo.IsHandle!) != null)
-                types.GetProperty(propertyInfo.IsHandle!)?.SetValue(source, true, null);
-        if (propertyInfo.HandleTime.IsNotEmptyOrNull())
-            if (types.GetProperty(propertyInfo.HandleTime!) != null)
-                types.GetProperty(propertyInfo.HandleTime!)?.SetValue(source, DateTime.Now, null);
+        if (propertyInfo.IsHandle != null)
+            if (types.GetProperty(propertyInfo.IsHandle) != null)
+                types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true, null);
+        if (propertyInfo.HandleTime != null)
+            if (types.GetProperty(propertyInfo.HandleTime) != null)
+                types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
 
         var context = AppHttpContextManager.Current;
-        if (propertyInfo.HandleId.IsNotEmptyOrNull())
-            if (types.GetProperty(propertyInfo.HandleId!) != null && context != null)
-                types.GetProperty(propertyInfo.HandleId!)?.SetValue(source, context.GetUserId(), null);
-        if (propertyInfo.HandleBy.IsNotEmptyOrNull())
-            if (types.GetProperty(propertyInfo.HandleBy!) != null && context != null)
-                types.GetProperty(propertyInfo.HandleBy!)?.SetValue(source, context.GetUserName(), null);
+        if (propertyInfo.HandleId != null)
+            if (types.GetProperty(propertyInfo.HandleId) != null && context != null)
+                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, context.GetUserId(), null);
+        if (propertyInfo.HandleBy != null)
+            if (types.GetProperty(propertyInfo.HandleBy) != null && context != null)
+                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, context.GetUserName(), null);
         return source;
     }
 

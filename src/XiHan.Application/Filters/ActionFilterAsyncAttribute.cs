@@ -17,9 +17,8 @@ using Serilog;
 using System.Text.Json;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Requests.Https;
-using XiHan.Models.Syses;
-using XiHan.Services.Syses.Operations;
+using XiHan.Infrastructures.Responses.Actions;
+using XiHan.Infrastructures.Responses.Results;
 
 namespace XiHan.Application.Filters;
 
@@ -33,15 +32,12 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ActionFilterAsyncAttribute>();
-    private readonly ISysOperationLogService _sysOperationLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysOperationLogService"></param>
-    public ActionFilterAsyncAttribute(ISysOperationLogService sysOperationLogService)
+    public ActionFilterAsyncAttribute()
     {
-        _sysOperationLogService = sysOperationLogService;
     }
 
     /// <summary>
@@ -52,25 +48,18 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     /// <returns></returns>
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        // 控制器信息
-        var actionContextInfo = context.GetActionContextInfo();
-        // 记录日志
-        var sysOperationLog = new SysOperationLog()
-        {
-            Ip = actionContextInfo.RemoteIp,
-            Status = true,
-            UserId = actionContextInfo.UserId
-        };
-
-
         // 模型验证
         var modelState = context.ModelState;
         if (!modelState.IsValid)
         {
-            context.Result = new JsonResult(modelState.GetValidationErrors());
+            // 获取模型验证出错字段
+            var validationErrors = new ValidationDto(modelState);
+            context.Result = new JsonResult(CustomResult.UnprocessableEntity(validationErrors));
         }
         else
         {
+            // 控制器信息
+            var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
                 $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
@@ -94,12 +83,8 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 }
                 else
                 {
-                    sysOperationLog.Status = false;
-                    sysOperationLog.ErrorMsg = requestException?.Message;
                 }
             }
         }
-
-        await _sysOperationLogService.CreateOperationLog(sysOperationLog);
     }
 }

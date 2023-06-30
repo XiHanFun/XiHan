@@ -14,10 +14,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Reflection;
 using System.Security.Claims;
-using XiHan.Infrastructures.Responses.Results;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
@@ -26,16 +24,6 @@ namespace XiHan.Infrastructures.Apps.HttpContexts;
 /// </summary>
 public static class ActionContextExtend
 {
-    /// <summary>
-    /// 获取模型验证出错字段
-    /// </summary>
-    /// <param name="modelState"></param>
-    /// <returns></returns>
-    public static CustomResult GetValidationErrors(this ModelStateDictionary modelState)
-    {
-        return CustomResult.UnprocessableEntity(modelState);
-    }
-
     /// <summary>
     /// 获取控制器上下文信息
     /// </summary>

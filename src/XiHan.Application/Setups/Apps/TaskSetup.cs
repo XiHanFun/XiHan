@@ -40,9 +40,7 @@ public static class TaskSetup
             var schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
             var context = SqlSugar.IOC.DbScoped.SugarScope;
 
-            var tasks = context.Queryable<SysTasks>()
-                .Where(m => m.IsStart)
-                .ToList();
+            var tasks = context.Queryable<SysTasks>().Where(m => m.IsStart).ToList();
 
             // 程序启动后注册所有定时任务
             foreach (var task in tasks)

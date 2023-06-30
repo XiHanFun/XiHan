@@ -188,8 +188,8 @@ public static class DiskHelper
     /// <summary>
     /// 仅删除指定文件夹和子文件夹的文件
     /// </summary>
-    /// <param name="varFromDirectory">指定文件夹路径</param>
-    /// <param name="varToDirectory">对应其他文件夹路径</param>
+    /// <param name="varFromDirectory"></param>
+    /// <param name="varToDirectory"></param>
     public static void DeleteFolderFiles(string varFromDirectory, string varToDirectory)
     {
         Directory.CreateDirectory(varToDirectory);
@@ -231,7 +231,8 @@ public static class DiskHelper
     /// <summary>
     /// 从文件的绝对路径中获取扩展名
     /// </summary>
-    /// <param name="filePath">文件的绝对路径</param>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static string GetFileExtension(string filePath)
     {
         // 获取文件的名称
@@ -242,7 +243,8 @@ public static class DiskHelper
     /// <summary>
     /// 从文件的绝对路径中获取文件名(不包含扩展名)
     /// </summary>
-    /// <param name="filePath">文件的绝对路径</param>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static string GetFileNameNoExtension(string filePath)
     {
         // 获取文件的名称
@@ -253,7 +255,8 @@ public static class DiskHelper
     /// <summary>
     /// 从文件的绝对路径中获取文件名(包含扩展名)
     /// </summary>
-    /// <param name="filePath">文件的绝对路径</param>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static string GetFileNameWithExtension(string filePath)
     {
         // 获取文件的名称
@@ -268,7 +271,8 @@ public static class DiskHelper
     /// <summary>
     /// 获取指定目录中所有子目录列表,若要搜索嵌套的子目录列表,请使用重载方法
     /// </summary>
-    /// <param name="directoryPath">指定目录的绝对路径</param>
+    /// <param name="directoryPath"></param>
+    /// <returns></returns>
     public static string[] GetDirectories(string directoryPath)
     {
         return Directory.GetDirectories(directoryPath);
@@ -280,6 +284,7 @@ public static class DiskHelper
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <param name="searchPattern">模式字符串，"*"代表0或N个字符，"?"代表1个字符。范例："Log*.xml"表示搜索所有以Log开头的Xml文件。</param>
     /// <param name="isSearchChild">是否搜索子目录</param>
+    /// <returns></returns>
     public static string[] GetDirectories(string directoryPath, string searchPattern, bool isSearchChild)
     {
         return Directory.GetDirectories(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
@@ -312,6 +317,7 @@ public static class DiskHelper
     /// 获取指定目录中所有文件列表
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
+    /// <returns></returns>
     public static string[] GetFiles(string directoryPath)
     {
         // 如果目录不存在，则抛出异常
@@ -326,6 +332,7 @@ public static class DiskHelper
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <param name="searchPattern">模式字符串，"*"代表0或N个字符，"?"代表1个字符。范例："Log*.xml"表示搜索所有以Log开头的Xml文件。</param>
     /// <param name="isSearchChild">是否搜索子目录</param>
+    /// <returns></returns>
     public static string[] GetFiles(string directoryPath, string searchPattern, bool isSearchChild)
     {
         // 如果目录不存在，则抛出异常
@@ -363,6 +370,7 @@ public static class DiskHelper
     /// 获取文本文件的行数
     /// </summary>
     /// <param name="filePath">文件的绝对路径</param>
+    /// <returns></returns>
     public static int GetLineCount(string filePath)
     {
         // 将文本文件的各行读到一个字符串数组中
@@ -405,6 +413,8 @@ public static class DiskHelper
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <param name="searchPattern">模式字符串，"*"代表0或N个字符，"?"代表1个字符。范例："Log*.xml"表示搜索所有以Log开头的Xml文件。</param>
     /// <param name="isSearchChild">是否搜索子目录</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static bool IsContainsFiles(string directoryPath, string searchPattern, bool isSearchChild)
     {
         try
@@ -426,6 +436,7 @@ public static class DiskHelper
     /// 检测指定目录是否为空
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
+    /// <returns></returns>
     public static bool IsEmptyDirectory(string directoryPath)
     {
         try
@@ -457,6 +468,7 @@ public static class DiskHelper
     /// 检测指定文件是否存在,如果存在则返回true。
     /// </summary>
     /// <param name="filePath">文件的绝对路径</param>
+    /// <returns></returns>
     public static bool IsExistFile(string filePath)
     {
         return File.Exists(filePath);
@@ -466,6 +478,7 @@ public static class DiskHelper
     /// 检查文件,如果文件不存在则创建
     /// </summary>
     /// <param name="filePath">路径,包括文件名</param>
+    /// <returns></returns>
     public static void ExistsFile(string filePath)
     {
         if (File.Exists(filePath)) return;
@@ -490,6 +503,7 @@ public static class DiskHelper
     /// <summary>
     /// 磁盘分区
     /// </summary>
+    /// <returns></returns>
     public static string GetDiskPartition()
     {
         return string.Join("；", Environment.GetLogicalDrives());
@@ -524,7 +538,7 @@ public static class DiskHelper
         List<DiskInfo> diskInfos = new();
         try
         {
-            var driv = DriveInfo.GetDrives();
+            var driv = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
             foreach (var item in driv)
             {
                 var info = new DiskInfo
@@ -533,8 +547,7 @@ public static class DiskHelper
                     TypeName = item.DriveType.ToString(),
                     TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
                     FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
-                    UsedSpace =
-                        (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
+                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
                     AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
                 };
                 diskInfos.Add(info);
@@ -575,8 +588,7 @@ public static class DiskHelper
                             TypeName = rootDisk[0].Trim(),
                             TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatByteToString(),
                             UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
-                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024)
-                                .FormatByteToString(),
+                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatByteToString(),
                             AvailableRate = rootDisk[1].ParseToLong() == 0 ? "0%" : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%"
                         };
                         diskInfos.Add(info);

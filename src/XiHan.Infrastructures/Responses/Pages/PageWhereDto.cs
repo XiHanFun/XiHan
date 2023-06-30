@@ -26,12 +26,12 @@ public class PageWhereDto
     /// <summary>
     /// 排序字段
     /// </summary>
-    public string? OrderByField { get; set; }
+    public string? OrderBy { get; set; }
 
     /// <summary>
     /// 是否默认排序方式  Asc
     /// </summary>
-    public bool? IsOrderAsc { get; set; }
+    public bool IsAsc { get; set; }
 
     /// <summary>
     /// 分页实体

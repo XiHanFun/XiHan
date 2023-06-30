@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:AutowiredServiceManager
 // Guid:9a4eb123-327c-4d54-9df2-0f76b5f772d5
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-21 下午 01:04:48
 // ----------------------------------------------------------------

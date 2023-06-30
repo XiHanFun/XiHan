@@ -57,7 +57,7 @@ public class SysDictController : BaseApiController
     /// <param name="cSysDictType"></param>
     /// <returns></returns>
     [HttpPost("Create/Type")]
-    [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Create)]
+    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Create)]
     public async Task<CustomResult> CreateDictType([FromBody] CSysDictTypeDto cSysDictType)
     {
         var sysDictType = cSysDictType.Adapt<SysDictType>();
@@ -71,7 +71,7 @@ public class SysDictController : BaseApiController
     /// <param name="cSysDictData"></param>
     /// <returns></returns>
     [HttpPost("Create/Data")]
-    [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Create)]
+    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Create)]
     public async Task<CustomResult> CreateDictData([FromBody] CSysDictDataDto cSysDictData)
     {
         var sysDictData = cSysDictData.Adapt<SysDictData>();
@@ -88,7 +88,7 @@ public class SysDictController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpDelete("Delete/Type")]
-    [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Delete)]
+    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<CustomResult> DeleteDictType([FromBody] long[] ids)
     {
         var result = await _sysDictTypeService.DeleteDictTypeByIds(ids);
@@ -101,7 +101,7 @@ public class SysDictController : BaseApiController
     /// <param name="ids"></param>
     /// <returns></returns>
     [HttpDelete("Delete/Data")]
-    [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Delete)]
+    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<CustomResult> DeleteDictData([FromBody] long[] ids)
     {
         var result = await _sysDictDataService.DeleteDictDataByIds(ids);
@@ -118,7 +118,7 @@ public class SysDictController : BaseApiController
     /// <param name="cSysDictType"></param>
     /// <returns></returns>
     [HttpPut("Modify/Type")]
-    [AppLog(Title = "字典类型", BusinessType = BusinessTypeEnum.Modify)]
+    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<CustomResult> ModifyDictData([FromBody] CSysDictTypeDto cSysDictType)
     {
         var sysDictType = cSysDictType.Adapt<SysDictType>();
@@ -132,7 +132,7 @@ public class SysDictController : BaseApiController
     /// <param name="cSysDictData"></param>
     /// <returns></returns>
     [HttpPut("Modify/Data")]
-    [AppLog(Title = "字典数据", BusinessType = BusinessTypeEnum.Modify)]
+    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<CustomResult> ModifyDictData([FromBody] CSysDictDataDto cSysDictData)
     {
         var sysDictData = cSysDictData.Adapt<SysDictData>();
@@ -231,7 +231,7 @@ public class SysDictController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("Export/Data")]
-    [AppLog(Title = "字典导出", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
+    [AppLog(Module = "字典导出", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
     public async Task<FileStreamResult> ExportDict()
     {
         var result = await _sysDictTypeService.GetAllDictType();

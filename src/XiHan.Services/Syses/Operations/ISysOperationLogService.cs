@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:ISysOperationLogService
 // Guid:cc608975-d552-481f-a2e6-070d3bd75b2a
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-21 下午 05:42:45
 // ----------------------------------------------------------------

@@ -43,7 +43,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    [AppLog(Title = "发送邮件", BusinessType = BusinessTypeEnum.Other)]
+    [AppLog(Module = "发送邮件", BusinessType = BusinessTypeEnum.Other)]
     public async Task<CustomResult> SendEmail(EmailToModel emailTo)
     {
         var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);

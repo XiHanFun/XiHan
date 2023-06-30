@@ -11,6 +11,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Infos.IpLocation.Ip2region;
 using XiHan.Utils.Extensions;
 

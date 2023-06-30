@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:ServiceLifeTimeEnum
 // Guid:a690c369-797c-4713-a4a3-5ea80782de34
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-20 下午 03:16:25
 // ----------------------------------------------------------------

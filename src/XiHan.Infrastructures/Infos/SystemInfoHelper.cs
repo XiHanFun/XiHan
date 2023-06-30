@@ -63,19 +63,16 @@ public static class SystemInfoHelper
     /// <summary>
     /// 处理器信息
     /// </summary>
-    /// <returns></returns>
     public static CpuInfo CpuInfo => CpuHelper.GetCpuInfos();
 
     /// <summary>
     /// 内存信息
     /// </summary>
-    /// <returns></returns>
     public static List<RamInfo> RamInfo => RamHelper.GetRamInfos();
 
     /// <summary>
     /// 磁盘信息
     /// </summary>
-    /// <returns></returns>
     public static List<DiskInfo> DiskInfo => DiskHelper.GetDiskInfos();
 
     /// <summary>

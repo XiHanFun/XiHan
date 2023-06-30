@@ -19,14 +19,37 @@ namespace XiHan.Infrastructures.Responses.Pages;
 public class PageDto
 {
     /// <summary>
-    /// 当前页标
+    /// 默认当前页
     /// </summary>
-    public int CurrentIndex { get; set; } = 1;
+    private const int DefaultIndex = 1;
 
     /// <summary>
     /// 每页大小最大值
     /// </summary>
     private const int MaxPageSize = 100;
+
+    /// <summary>
+    /// 每页大小最大值
+    /// </summary>
+    private const int MinPageSize = 1;
+
+    private int _currentIndex = 1;
+
+    /// <summary>
+    /// 当前页标
+    /// </summary>
+    public int CurrentIndex
+    {
+        get => _currentIndex;
+        set
+        {
+            if (value < DefaultIndex)
+            {
+                value = DefaultIndex;
+            }
+            _currentIndex = value;
+        }
+    }
 
     private int _pageSize = 10;
 
@@ -36,6 +59,17 @@ public class PageDto
     public int PageSize
     {
         get => _pageSize;
-        set => _pageSize = value > MaxPageSize ? MaxPageSize : value;
+        set
+        {
+            if (value > MaxPageSize)
+            {
+                value = MaxPageSize;
+            }
+            else if (value < MinPageSize)
+            {
+                value = MinPageSize;
+            }
+            _pageSize = value;
+        }
     }
 }

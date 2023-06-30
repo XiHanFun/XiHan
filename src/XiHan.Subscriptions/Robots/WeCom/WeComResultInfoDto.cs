@@ -18,7 +18,7 @@ namespace XiHan.Subscriptions.Robots.WeCom;
 /// <summary>
 /// 结果信息
 /// </summary>
-public abstract class WeComResultInfoDto
+public class WeComResultInfoDto
 {
     /// <summary>
     /// 结果代码

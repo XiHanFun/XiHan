@@ -18,7 +18,7 @@ namespace XiHan.Test.Common;
 /// <summary>
 /// TestRegex
 /// </summary>
-public abstract class TestRegex
+public class TestRegex
 {
     // 身份证号
     public static void TestCardId()

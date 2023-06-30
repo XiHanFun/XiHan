@@ -23,6 +23,65 @@ namespace XiHan.Models.Syses;
 [SugarTable(TableName = "Sys_Operation_Log")]
 public class SysOperationLog : BaseCreateEntity
 {
+    #region 客户端信息
+
+    /// <summary>
+    /// 是否是 ajax 请求
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public bool? IsAjaxRequest { get; set; }
+
+    /// <summary>
+    /// 请求类型
+    /// RequestMethodEnum GET、POST等
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public int? RequestMethod { get; set; }
+
+    /// <summary>
+    /// 请求地址
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public string? RequestUrl { get; set; }
+
+    /// <summary>
+    /// 请求参数
+    ///</summary>
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? QueryString { get; set; }
+
+    /// <summary>
+    /// 操作地点
+    ///</summary>
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Location { get; set; }
+
+    /// <summary>
+    /// 来源页面
+    /// </summary>
+    [SugarColumn(Length = 100, IsNullable = true)]
+    public string? Referrer { get; set; }
+
+    /// <summary>
+    /// 代理信息
+    /// </summary>
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? Agent { get; set; }
+
+    /// <summary>
+    /// 操作Ip
+    ///</summary>
+    [SugarColumn(Length = 20, IsNullable = true)]
+    public string? Ip { get; set; }
+
+    #endregion
+
+    /// <summary>
+    /// 操作方法
+    ///</summary>
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Method { get; set; }
+
     /// <summary>
     /// 操作模块
     ///</summary>
@@ -38,59 +97,10 @@ public class SysOperationLog : BaseCreateEntity
     public int? BusinessType { get; set; }
 
     /// <summary>
-    /// 操作方法
-    ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Method { get; set; }
-
-    /// <summary>
-    /// 请求类型
-    /// HttpRequestMethodEnum GET、POST等
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public int? HttpRequestMethod { get; set; }
-
-    /// <summary>
-    /// 操作人员Id
-    ///</summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string? UserId { get; set; }
-
-    /// <summary>
-    /// 操作人员
-    ///</summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string? UserName { get; set; }
-
-    /// <summary>
-    /// 操作Ip
-    ///</summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string? Ip { get; set; }
-
-    /// <summary>
-    /// 操作地点
-    ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Location { get; set; }
-
-    /// <summary>
-    /// 来源页面
-    /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Referrer { get; set; }
-
-    /// <summary>
-    /// 请求参数
-    ///</summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? RequestParam { get; set; }
-
-    /// <summary>
-    /// 请求结果
+    /// 响应结果
     ///</summary>
     [SugarColumn(Length = 4000, IsNullable = true)]
-    public string? RequestResult { get; set; }
+    public string? ResponseResult { get; set; }
 
     /// <summary>
     /// 操作状态（true 正常 false异常）

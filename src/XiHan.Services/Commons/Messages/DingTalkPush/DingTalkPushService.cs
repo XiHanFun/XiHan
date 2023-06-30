@@ -13,6 +13,7 @@
 
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
@@ -37,7 +38,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <param name="httpPolly"></param>
     public DingTalkPushService(IHttpPollyHelper httpPolly)
     {
-        var dingTalkConnection = GetDingTalkConn().Result;
+        var dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
         _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);
     }
 

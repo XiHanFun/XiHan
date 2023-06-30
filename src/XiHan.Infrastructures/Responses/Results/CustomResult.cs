@@ -252,16 +252,16 @@ public class CustomResult
     /// <summary>
     /// 响应失败，参数不合法 422
     /// </summary>
-    /// <param name="modelState"></param>
+    /// <param name="data"></param>
     /// <returns></returns>
-    public static CustomResult UnprocessableEntity(ModelStateDictionary modelState)
+    public static CustomResult UnprocessableEntity(dynamic data)
     {
         return new CustomResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
             Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Data = new ValidationDto(modelState)
+            Data = data
         };
     }
 

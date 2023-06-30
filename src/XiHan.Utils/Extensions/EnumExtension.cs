@@ -77,8 +77,7 @@ public static class EnumExtension
     public static IEnumerable<EnumDescDto> GetEnumInfos(this Type enumType)
     {
         List<EnumDescDto> result = new();
-        var fields = enumType.GetFields().ToList();
-        if (fields.Any()) return result;
+        var fields = enumType.GetFields().Skip(1).ToList();
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理

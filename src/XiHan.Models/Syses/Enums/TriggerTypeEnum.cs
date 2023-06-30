@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:TriggerTypeEnum
 // Guid:447d5552-c5b1-4e20-9a91-d9040beedadf
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-04-20 下午 03:28:03
 // ----------------------------------------------------------------

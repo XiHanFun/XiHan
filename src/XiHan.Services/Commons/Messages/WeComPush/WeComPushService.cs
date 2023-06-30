@@ -13,6 +13,7 @@
 
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
@@ -37,7 +38,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// <param name="httpPolly"></param>
     public WeComPushService(IHttpPollyHelper httpPolly)
     {
-        var weComConnection = GetWeComConn().Result;
+        var weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
         _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);
     }
 
@@ -59,7 +60,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     #region WeCom
 
     /// <summary>
-    /// 微信推送文本消息
+    /// 企业微信推送文本消息
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -69,7 +70,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送文档消息
+    /// 企业微信推送文档消息
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
@@ -79,7 +80,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送图片消息
+    /// 企业微信推送图片消息
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
@@ -89,7 +90,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送图文消息
+    /// 企业微信推送图文消息
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
@@ -99,7 +100,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送文件消息
+    /// 企业微信推送文件消息
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
@@ -109,7 +110,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送文本通知消息
+    /// 企业微信推送文本通知消息
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
     /// <returns></returns>
@@ -119,7 +120,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信推送图文展示消息
+    /// 企业微信推送图文展示消息
     /// </summary>
     /// <param name="templateCard">图文展示-模版卡片</param>
     /// <returns></returns>
@@ -129,7 +130,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     }
 
     /// <summary>
-    /// 微信上传文件
+    /// 企业微信上传文件
     /// </summary>
     /// <param name="fileStream">文件</param>
     /// <returns></returns>

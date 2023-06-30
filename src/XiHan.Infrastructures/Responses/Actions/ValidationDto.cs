@@ -26,7 +26,7 @@ public class ValidationDto
     public ValidationDto(ModelStateDictionary modelState)
     {
         TotalCount = modelState.Count;
-        ValidationErrorDto = modelState.Keys
+        ValidationErrorDtos = modelState.Keys
             .SelectMany(key => modelState[key]!.Errors
                 .Select(x => new ValidationErrorDto(key, x.ErrorMessage)))
             .ToList();
@@ -40,7 +40,7 @@ public class ValidationDto
     /// <summary>
     /// 验证出错字段
     /// </summary>
-    public List<ValidationErrorDto>? ValidationErrorDto { get; }
+    public List<ValidationErrorDto>? ValidationErrorDtos { get; }
 }
 
 /// <summary>

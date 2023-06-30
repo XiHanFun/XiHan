@@ -13,6 +13,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using XiHan.Application.Middlewares;
 using XiHan.Application.Setups.Apps;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Subscriptions.Hubs;
@@ -33,8 +34,7 @@ public static class AppSetup
     /// <param name="streamHtml"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env,
-        Func<Stream> streamHtml)
+    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env, Func<Stream> streamHtml)
     {
         "XiHan Application Start……".WriteLineInfo();
         if (app == null) throw new ArgumentNullException(nameof(app));
@@ -47,19 +47,23 @@ public static class AppSetup
         app.UseMiniProfilerSetup();
         // Swagger
         app.UseSwaggerSetup(streamHtml);
-        // 使用静态文件
+        // 使用静态文件，访问 wwwroot 目录文件，要放在 UseRouting 前面
         app.UseStaticFiles();
         // 路由
         app.UseRouting();
         // 限流
         app.UseRateLimiter();
-        // 跨域
+        // 跨域，要放在 UseEndpoints 前
         app.UseCorsSetup();
         // 鉴权授权
         app.UseAuthentication();
         app.UseAuthorization();
+        // 开启响应缓存
+        app.UseResponseCaching();
         // 恢复或启动任务
         app.UseTaskSchedulers();
+        // 自定义操作中间件
+        //app.UseMiddleware<CustomOperationMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {

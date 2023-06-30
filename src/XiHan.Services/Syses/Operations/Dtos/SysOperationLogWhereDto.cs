@@ -16,7 +16,7 @@ namespace XiHan.Services.Syses.Operations.Dtos;
 /// <summary>
 /// SysOperationLogWhereDto
 /// </summary>
-public abstract class SysOperationLogWhereDto
+public class SysOperationLogWhereDto
 {
     /// <summary>
     /// 开始时间
@@ -42,9 +42,9 @@ public abstract class SysOperationLogWhereDto
 
     /// <summary>
     /// 请求类型
-    /// HttpRequestMethodEnum GET、POST等
+    /// RequestMethodEnum GET、POST等
     /// </summary>
-    public int? HttpRequestMethod { get; set; }
+    public int? RequestMethod { get; set; }
 
     /// <summary>
     /// 操作状态（true 正常 false异常）

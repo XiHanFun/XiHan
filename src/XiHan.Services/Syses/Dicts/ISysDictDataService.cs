@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:ISysDictDataService
 // Guid:101a7507-9827-4fd3-aa83-7328354c3b9a
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-12 下午 04:31:49
 // ----------------------------------------------------------------

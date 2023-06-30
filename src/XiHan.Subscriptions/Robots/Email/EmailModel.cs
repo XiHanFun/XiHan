@@ -19,7 +19,7 @@ namespace XiHan.Subscriptions.Robots.Email;
 /// <summary>
 /// EmailFromModel
 /// </summary>
-public abstract class EmailFromModel
+public class EmailFromModel
 {
     /// <summary>
     /// 服务器

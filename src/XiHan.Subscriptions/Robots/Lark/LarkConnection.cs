@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:LarkConnection
 // Guid:f2365168-e192-48e0-ac99-32925512f628
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-05-20 下午 02:10:28
 // ----------------------------------------------------------------
@@ -16,7 +16,7 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// <summary>
 /// LarkConnection
 /// </summary>
-public abstract class LarkConnection
+public class LarkConnection
 {
     private const string DefaultLarkWebHookUrl = "https://open.feishu.cn/open-apis/bot/v2/hook";
 

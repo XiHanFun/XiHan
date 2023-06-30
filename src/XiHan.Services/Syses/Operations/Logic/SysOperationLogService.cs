@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:SysOperationLogService
 // Guid:8bab505b-cf3a-4778-ae9c-df04b00f66a0
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-21 下午 05:43:16
 // ----------------------------------------------------------------
@@ -82,7 +82,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
         whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
         whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
-        whereExpression.AndIF(whereDto.HttpRequestMethod.IsNotEmptyOrNull(), l => l.HttpRequestMethod == whereDto.HttpRequestMethod);
+        whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod == whereDto.RequestMethod);
         whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime);

@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:SysDictTypeWhereDto
 // Guid:3cd51a41-be16-4d82-901e-40e7dc59496b
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-12 下午 04:43:08
 // ----------------------------------------------------------------
@@ -16,7 +16,7 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 /// <summary>
 /// SysDictTypeWhereDto
 /// </summary>
-public abstract class SysDictTypeWhereDto
+public class SysDictTypeWhereDto
 {
     /// <summary>
     /// 字典名称

@@ -4,7 +4,7 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:SysDictTypeService
 // Guid:3f7ca12f-9a86-4e07-b304-1a0f951a133c
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-12 下午 04:32:05
 // ----------------------------------------------------------------
@@ -164,6 +164,6 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Type);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => pageWhere.OrderBy ?? o.Type, pageWhere.IsAsc);
     }
 }

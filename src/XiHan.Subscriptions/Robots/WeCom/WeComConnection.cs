@@ -16,7 +16,7 @@ namespace XiHan.Subscriptions.Robots.WeCom;
 /// <summary>
 /// WeChatConnection
 /// </summary>
-public abstract class WeComConnection
+public class WeComConnection
 {
     private const string DefaultWeComWebHookUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send";
 

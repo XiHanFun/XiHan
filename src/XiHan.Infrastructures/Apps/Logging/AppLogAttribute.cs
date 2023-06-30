@@ -20,12 +20,12 @@ namespace XiHan.Infrastructures.Apps.Logging;
 public class AppLogAttribute : Attribute
 {
     /// <summary>
-    /// 标题
+    /// 操作模块
     /// </summary>
-    public string Title { get; set; } = string.Empty;
+    public string Module { get; set; } = string.Empty;
 
     /// <summary>
-    /// 日志类型
+    /// 业务类型
     /// </summary>
     public BusinessTypeEnum BusinessType { get; set; }
 
@@ -49,22 +49,22 @@ public class AppLogAttribute : Attribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="name"></param>
-    public AppLogAttribute(string name)
+    /// <param name="module"></param>
+    public AppLogAttribute(string module)
     {
-        Title = name;
+        Module = module;
     }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="module"></param>
     /// <param name="businessType"></param>
     /// <param name="saveRequestData"></param>
     /// <param name="saveResponseData"></param>
-    public AppLogAttribute(string name, BusinessTypeEnum businessType, bool saveRequestData = true, bool saveResponseData = true)
+    public AppLogAttribute(string module, BusinessTypeEnum businessType, bool saveRequestData = true, bool saveResponseData = true)
     {
-        Title = name;
+        Module = module;
         BusinessType = businessType;
         IsSaveRequestData = saveRequestData;
         IsSaveResponseData = saveResponseData;

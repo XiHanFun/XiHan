@@ -19,7 +19,6 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.Services.Syses.Operations;
 
 namespace XiHan.Application.Filters;
 
@@ -33,7 +32,6 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
     private readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
-
 
     /// <summary>
     /// 构造函数
@@ -50,13 +48,10 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-        // 异常默认返回服务器错误，不直接明文显示
-        var result = new JsonResult(CustomResult.InternalServerError());
-
         // 异常是否被处理过，没有则在这里处理
         if (context.ExceptionHandled == false)
         {
-            result = context.Exception switch
+            context.Result = context.Exception switch
             {
                 // 参数异常
                 ArgumentException => new JsonResult(CustomResult.UnprocessableEntity()),
@@ -70,7 +65,8 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 NotImplementedException => new JsonResult(CustomResult.NotImplemented()),
                 // 自定义异常
                 CustomException => new JsonResult(CustomResult.BadRequest(context.Exception.Message)),
-                _ => result
+                // 异常默认返回服务器错误，不直接明文显示
+                _ => new JsonResult(CustomResult.InternalServerError()),
             };
 
             // 控制器信息
@@ -87,7 +83,6 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 
         // 标记异常已经处理过了
         context.ExceptionHandled = true;
-        context.Result = result;
 
         await Task.CompletedTask;
     }

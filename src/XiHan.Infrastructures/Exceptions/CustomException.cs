@@ -4,13 +4,14 @@
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // FileName:CustomException
 // Guid:661fd4f6-f39d-4e1c-8132-43b39be4a6ce
-// Author:Administrator
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
 // CreateTime:2023-06-25 上午 10:16:41
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
+using System.Runtime.Serialization;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Exceptions;
@@ -28,24 +29,40 @@ public class CustomException : Exception
     /// <summary>
     /// 异常详情
     /// </summary>
-    public Exception? Exception { get; set; }
+    public new Exception? InnerException { get; set; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="message"></param>
-    public CustomException(string message) : base(message)
+    public CustomException() : base("服务器端程序错误")
     {
-        message.WriteLineError();
     }
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="message"></param>
-    /// <param name="exception"></param>
-    public CustomException(string message, Exception exception) : base(message, exception)
+    public CustomException(string? message) : base(message)
     {
-        message.WriteLineError();
+        message?.WriteLineError();
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="innerException"></param>
+    public CustomException(string? message, Exception? innerException) : base(message, innerException)
+    {
+        message?.WriteLineError();
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="context"></param>
+    protected CustomException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
     }
 }
