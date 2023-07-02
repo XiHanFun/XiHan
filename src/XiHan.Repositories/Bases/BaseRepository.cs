@@ -15,7 +15,6 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Models.Bases.Interface;
 using XiHan.Repositories.Entities;
 
 namespace XiHan.Repositories.Bases;
@@ -64,8 +63,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(TEntity[] entities)
     {
-        entities.ToList().ForEach(entity => entity.ToCreated());
-        return await base.InsertRangeAsync(entities);
+        var entityList = entities.ToList();
+        return await AddAsync(entityList);
     }
 
     /// <summary>
@@ -110,12 +109,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddOrUpdateAsync(TEntity[] entities)
     {
         var entityList = entities.ToList();
-        entityList.ForEach(entity =>
-        {
-            entity.ToCreated();
-            entity.ToModified();
-        });
-        return await base.InsertOrUpdateAsync(entityList);
+        return await AddOrUpdateAsync(entityList);
     }
 
     /// <summary>
@@ -173,6 +167,17 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
+    public virtual async Task<bool> RemoveAsync(TEntity[] entities)
+    {
+        var entityList = entities.ToList();
+        return await RemoveAsync(entityList);
+    }
+
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(List<TEntity> entities)
     {
         return await base.DeleteAsync(entities);
@@ -194,10 +199,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> ClearAsync()
     {
-        return await Task.Run(() =>
-        {
-            return Context.DbMaintenance.TruncateTable<TEntity>();
-        });
+        return await Task.Run(Context.DbMaintenance.TruncateTable<TEntity>);
     }
 
     #endregion
@@ -225,6 +227,17 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         entity.ToDeleted();
         return await base.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// 批量逻辑删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    public virtual async Task<bool> SoftRemoveAsync(TEntity[] entities)
+    {
+        var entityList = entities.ToList();
+        return await SoftRemoveAsync(entityList);
     }
 
     /// <summary>
@@ -284,8 +297,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> UpdateAsync(TEntity[] entities)
     {
-        entities.ToList().ForEach(entity => entity.ToModified());
-        return await base.UpdateRangeAsync(entities);
+        var entityList = entities.ToList();
+        return await UpdateAsync(entityList);
     }
 
     /// <summary>
