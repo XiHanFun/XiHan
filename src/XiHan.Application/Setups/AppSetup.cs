@@ -63,7 +63,7 @@ public static class AppSetup
         // 恢复或启动任务
         app.UseTaskSchedulers();
         // 自定义操作中间件
-        //app.UseMiddleware<CustomOperationMiddleware>();
+        app.UseMiddleware<CustomOperationMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {

@@ -12,13 +12,13 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Infos;
-using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Operations;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.Serializes;
 
 namespace XiHan.Application.Middlewares;
 
@@ -48,6 +48,8 @@ public class CustomOperationMiddleware
     /// <returns></returns>
     public async Task InvokeAsync(HttpContext context)
     {
+        var stopwatch = Stopwatch.StartNew();
+
         // 获取当前请求上下文信息
         var httpContextInfo = new HttpContextInfoHelper(context);
         var clientInfo = httpContextInfo.ClientInfo;
@@ -69,7 +71,9 @@ public class CustomOperationMiddleware
 
         try
         {
+            //var requestParameters = context.GetRequestParameters();
             await _next(context);
+            //var responseResult = context.GetResponseResult();
 
             var endpoint = context.GetEndpoint();
             if (endpoint != null)
@@ -79,19 +83,20 @@ public class CustomOperationMiddleware
                 {
                     sysOperationLog.BusinessType = logAttribute.BusinessType.GetEnumValueByKey();
                     sysOperationLog.Module = logAttribute.Module;
-                    sysOperationLog.QueryString = logAttribute.IsSaveRequestData ? sysOperationLog.QueryString : string.Empty;
-                    sysOperationLog.ResponseResult = logAttribute.IsSaveResponseData ? sysOperationLog.ResponseResult : string.Empty;
+                    //sysOperationLog.RequestParameters = logAttribute.IsSaveRequestData ? requestParameters : string.Empty;
+                    //sysOperationLog.ResponseResult = logAttribute.IsSaveResponseData ? responseResult : string.Empty;
                 }
             }
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
             sysOperationLog.Status = false;
-            sysOperationLog.ErrorMsg = exception.Message;
+            sysOperationLog.ErrorMsg = ex.Message;
         }
-        finally
-        {
-            await _sysOperationLogService.CreateOperationLog(sysOperationLog);
-        }
+        stopwatch.Stop();
+        var elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+        sysOperationLog.ElapsedTime = elapsedMilliseconds;
+
+        await _sysOperationLogService.CreateOperationLog(sysOperationLog);
     }
 }

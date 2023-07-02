@@ -48,21 +48,18 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
+        // 结果不为空就做序列化处理
         context.Result = context.Result switch
         {
-            // 不为空就做处理
-            CustomResult customResult =>
-                // 如果是 CustomResult，则转换为 JsonResult
-                new JsonResult(customResult),
-            ContentResult contentResult =>
-                // 如果是 ContentResult，则转换为 JsonResult
-                new JsonResult(contentResult.Content),
-            ObjectResult objectResult =>
-                // 如果是 ObjectResult，则转换为 JsonResult
-                new JsonResult(objectResult.Value),
-            JsonResult jsonResult =>
-                // 如果是 JsonResult，则转换为 JsonResult
-                new JsonResult(jsonResult.Value),
+            // 如果是 CustomResult，则转换为 JsonResult
+            CustomResult customResult => new JsonResult(customResult),
+            // 如果是 ContentResult，则转换为 JsonResult
+            ContentResult contentResult => new JsonResult(contentResult.Content),
+            // 如果是 ObjectResult，则转换为 JsonResult
+            ObjectResult objectResult => new JsonResult(objectResult.Value),
+            // 如果是 JsonResult，则转换为 JsonResult
+            JsonResult jsonResult => new JsonResult(jsonResult.Value),
+            // 其他直接返回
             _ => context.Result
         };
         // 请求构造函数和方法,调用下一个过滤器

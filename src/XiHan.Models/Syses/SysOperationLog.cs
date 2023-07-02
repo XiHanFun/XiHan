@@ -32,23 +32,16 @@ public class SysOperationLog : BaseCreateEntity
     public bool? IsAjaxRequest { get; set; }
 
     /// <summary>
-    /// 请求类型
-    /// RequestMethodEnum GET、POST等
+    /// 请求类型 GET、POST等
     /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public int? RequestMethod { get; set; }
+    [SugarColumn(Length = 10, IsNullable = true)]
+    public string? RequestMethod { get; set; }
 
     /// <summary>
     /// 请求地址
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public string? RequestUrl { get; set; }
-
-    /// <summary>
-    /// 请求参数
-    ///</summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? QueryString { get; set; }
 
     /// <summary>
     /// 操作地点
@@ -97,6 +90,12 @@ public class SysOperationLog : BaseCreateEntity
     public int? BusinessType { get; set; }
 
     /// <summary>
+    /// 请求参数
+    ///</summary>
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? RequestParameters { get; set; }
+
+    /// <summary>
     /// 响应结果
     ///</summary>
     [SugarColumn(Length = 4000, IsNullable = true)]
@@ -116,5 +115,5 @@ public class SysOperationLog : BaseCreateEntity
     /// <summary>
     /// 操作用时
     /// </summary>
-    public long Elapsed { get; set; }
+    public long ElapsedTime { get; set; }
 }

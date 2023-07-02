@@ -12,14 +12,14 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
 using UAParser;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Infos.IpLocation;
-using XiHan.Infrastructures.Requests.Https;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.Serializes;
 using XiHan.Utils.Verifications;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
@@ -34,51 +34,56 @@ public static class HttpContextExtend
     /// <summary>
     /// 获取客户端信息
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static UserClientInfo GetClientInfo(this HttpContext? httpContext)
+    public static UserClientInfo GetClientInfo(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var requestMethod = httpContext.Request.Method;
-        var header = httpContext.Request.HttpContext.Request.Headers;
-        header.TryGetValue("Accept-Language", out var language);
-        header.TryGetValue("Referer", out var referer);
-        header.TryGetValue("User-Agent", out var agent);
-        var clientInfo = Parser.GetDefault().Parse(agent);
-
-        var clientModel = new UserClientInfo
+        try
         {
-            IsAjaxRequest = httpContext.IsAjaxRequest(),
-            RequestMethod = typeof(RequestMethodEnum).GetEnumInfos().First(m => m.Key.ToLowerInvariant() == requestMethod.ToLowerInvariant()).Value,
-            RequestUrl = httpContext.GetRequestUrl(),
-            QueryString = httpContext.GetQueryString(requestMethod),
-            Language = language.ToString().Split(';')[0],
-            Referer = referer.ToString(),
-            Agent = agent.ToString(),
-            DeviceType = clientInfo.Device.Family,
-            OsName = clientInfo.OS.Family,
-            OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
-            UaName = clientInfo.UA.Family,
-            UaVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
-            RemoteIPv4 = httpContext.GetClientIpV4(),
-            RemoteIPv6 = httpContext.GetClientIpV6(),
-        };
-        return clientModel;
+            var header = context.Request.HttpContext.Request.Headers;
+            header.TryGetValue("Accept-Language", out var language);
+            header.TryGetValue("Referer", out var referer);
+            header.TryGetValue("User-Agent", out var agent);
+            var clientInfo = Parser.GetDefault().Parse(agent);
+
+            var clientModel = new UserClientInfo
+            {
+                IsAjaxRequest = context.IsAjaxRequest(),
+                RequestMethod = context.Request.Method.ToUpperInvariant(),
+                RequestUrl = context.GetRequestUrl(),
+                Language = language.ToString().Split(';')[0],
+                Referer = referer.ToString(),
+                Agent = agent.ToString(),
+                DeviceType = clientInfo.Device.Family,
+                OsName = clientInfo.OS.Family,
+                OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
+                UaName = clientInfo.UA.Family,
+                UaVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
+                RemoteIPv4 = context.GetClientIpV4(),
+                RemoteIPv6 = context.GetClientIpV6(),
+            };
+            return clientModel;
+        }
+        catch (Exception ex)
+        {
+            throw new CustomException("获取客户端信息出错！", ex);
+        }
     }
 
     /// <summary>
     /// 是否是 ajax 请求
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsAjaxRequest(this HttpContext? httpContext)
+    public static bool IsAjaxRequest(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var request = httpContext.Request;
+        var request = context.Request;
         return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest";
     }
 
@@ -95,43 +100,41 @@ public static class HttpContextExtend
     /// <summary>
     /// 取得客户端 IP4
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetClientIpV4(this HttpContext? httpContext)
+    public static string GetClientIpV4(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.GetClientIpAddressInfo().MapToIPv4().ToString();
+        return context.GetClientIpAddressInfo().MapToIPv4().ToString();
     }
 
     /// <summary>
     /// 取得客户端 IP6
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetClientIpV6(this HttpContext? httpContext)
+    public static string GetClientIpV6(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.GetClientIpAddressInfo().MapToIPv6().ToString();
+        return context.GetClientIpAddressInfo().MapToIPv6().ToString();
     }
 
     /// <summary>
     /// 取得客户端 IP
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IPAddress GetClientIpAddressInfo(this HttpContext? httpContext)
+    public static IPAddress GetClientIpAddressInfo(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
         var result = "0.0.0.0";
-        var request = httpContext.Request;
-        var context = request.HttpContext;
-        var header = request.Headers;
+        var header = context.Request.Headers;
 
         if (context.Connection.RemoteIpAddress != null)
         {
@@ -151,57 +154,66 @@ public static class HttpContextExtend
     /// <summary>
     /// 获取请求Url
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetRequestUrl(this HttpContext? httpContext)
+    public static string? GetRequestUrl(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.Request.Path.Value;
+        return context.Request.Path.Value;
     }
 
     /// <summary>
     /// 获取请求参数
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetQueryString(this HttpContext? httpContext)
+    public static string GetRequestParameters(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.Request.QueryString.Value;
-    }
-
-    /// <summary>
-    /// 获取请求参数
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <param name="method"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetQueryString(this HttpContext? httpContext, string method)
-    {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
-
-        string? param = string.Empty;
-        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsDelete(method))
+        string requestParameters = string.Empty;
+        var request = context.Request;
+        var method = request.Method;
+        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsDelete(method) || HttpMethods.IsPatch(method))
         {
-            using var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8);
-            // 先获取请求实体，需要使用异步方式才能获取
-            param = reader.ReadToEndAsync().Result;
+            // 使用异步获取请求实体
+            using var reader = new StreamReader(request.Body, Encoding.UTF8);
+            var requestBody = reader.ReadToEndAsync().Result;
             // 为空则取请求字符串里的参数
-            if (param.IsEmptyOrNull())
-            {
-                param = GetQueryString(httpContext);
-            }
+            requestParameters = requestBody.IsEmptyOrNull() ? (request.QueryString.Value ?? string.Empty) : requestBody;
         }
         else
         {
-            param = GetQueryString(httpContext);
+            requestParameters = request.QueryString.Value ?? string.Empty;
         }
-        return param;
+        return requestParameters;
+    }
+
+    /// <summary>
+    /// 获取响应结果
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static string GetResponseResult(this HttpContext? context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        var response = context.Response;
+        // 创建一个内存流作为响应的替代
+        var originalResponseBody = response.Body;
+        using var responseBody = new MemoryStream();
+        // 替换响应流
+        context.Response.Body = responseBody;
+        // 处理响应结果
+        var responseResult = new StreamReader(responseBody).ReadToEndAsync().Result;
+        // 将响应结果写回原始响应流
+        responseBody.CopyToAsync(originalResponseBody);
+
+        return responseResult;
     }
 
     #endregion
@@ -211,17 +223,26 @@ public static class HttpContextExtend
     /// <summary>
     /// 获取地址信息
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static UserAddressInfo GetAddressInfo(this HttpContext? httpContext)
+    public static UserAddressInfo GetAddressInfo(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var addressInfo = new UserAddressInfo();
-        var addressInfoResult = IpSearchHelper.Search(httpContext.GetClientIpV4());
-        if (addressInfoResult != null) addressInfo = addressInfoResult;
-        return addressInfo;
+        try
+        {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
+            var addressInfo = new UserAddressInfo();
+            var addressInfoResult = IpSearchHelper.Search(context.GetClientIpV4());
+            if (addressInfoResult != null) addressInfo = addressInfoResult;
+            return addressInfo;
+        }
+        catch (Exception ex)
+        {
+            throw new CustomException("获取地址信息出错！", ex);
+        }
     }
 
     #endregion
@@ -231,122 +252,112 @@ public static class HttpContextExtend
     /// <summary>
     /// 获取登录用户权限信息
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static UserAuthInfo GetUserAuthInfo(this HttpContext? httpContext)
+    public static UserAuthInfo GetUserAuthInfo(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var userAuthInfo = new UserAuthInfo
+        try
         {
-            UserId = httpContext.GetUserId(),
-            UserName = httpContext.GetUserName(),
-            UserRole = httpContext.GetUserRole(),
-            UserToken = httpContext.GetUserToken(),
-            IsAdmin = httpContext.IsAdmin(),
-            Claims = httpContext.GetClaims()
-        };
-        return userAuthInfo;
+            var userAuthInfo = new UserAuthInfo
+            {
+                UserId = context.GetUserId(),
+                UserName = context.GetUserName(),
+                UserRole = context.GetUserRole(),
+                UserToken = context.GetUserToken(),
+                IsAdmin = context.IsAdmin(),
+                Claims = context.GetClaims()
+            };
+            return userAuthInfo;
+        }
+        catch (Exception ex)
+        {
+            throw new CustomException("获取地址信息出错！", ex);
+        }
     }
 
     /// <summary>
     /// 获取登录用户 Id
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static long? GetUserId(this HttpContext? httpContext)
+    public static long? GetUserId(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var uid = httpContext.User.FindFirstValue(ClaimTypes.PrimarySid);
+        var uid = context.User.FindFirstValue(ClaimTypes.PrimarySid);
         return uid.ParseToLong();
     }
 
     /// <summary>
     /// 获取登录用户名
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetUserName(this HttpContext? httpContext)
+    public static string? GetUserName(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var uname = httpContext.User.Identity?.Name;
+        var uname = context.User.Identity?.Name;
         return uname;
     }
 
     /// <summary>
     /// 获取登录用户权限
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetUserRole(this HttpContext? httpContext)
+    public static string GetUserRole(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var roleId = httpContext.User.FindFirstValue(ClaimTypes.Role);
+        var roleId = context.User.FindFirstValue(ClaimTypes.Role);
         return roleId.ParseToString();
     }
 
     /// <summary>
     /// 获取请求令牌
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetUserToken(this HttpContext? httpContext)
+    public static string GetUserToken(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.Request.Headers["Authorization"].ToString();
+        return context.Request.Headers["Authorization"].ToString();
     }
 
     /// <summary>
     /// 判断是否是管理员
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsAdmin(this HttpContext? httpContext)
+    public static bool IsAdmin(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var userName = httpContext.GetUserName();
+        var userName = context.GetUserName();
         return userName == AppGlobalConstant.AdminRole;
     }
 
     /// <summary>
     /// ClaimsIdentity
     /// </summary>
-    /// <param name="httpContext"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IEnumerable<ClaimsIdentity> GetClaims(this HttpContext? httpContext)
+    public static IEnumerable<ClaimsIdentity> GetClaims(this HttpContext? context)
     {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
+        if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return httpContext.User.Identities;
-    }
-
-    #endregion
-
-    #region 特性信息
-
-    /// <summary>
-    /// 获取终结点
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static Endpoint? GetEndpoint(this HttpContext? httpContext)
-    {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
-
-        return httpContext.Features.Get<IEndpointFeature>()?.Endpoint;
+        return context.User.Identities;
     }
 
     #endregion
@@ -365,17 +376,12 @@ public class UserClientInfo
     /// <summary>
     /// 请求方式
     /// </summary>
-    public int? RequestMethod { get; set; }
+    public string? RequestMethod { get; set; }
 
     /// <summary>
     /// 请求地址
     /// </summary>
     public string? RequestUrl { get; set; }
-
-    /// <summary>
-    /// 请求参数
-    /// </summary>
-    public string? QueryString { get; set; }
 
     /// <summary>
     /// 语言
