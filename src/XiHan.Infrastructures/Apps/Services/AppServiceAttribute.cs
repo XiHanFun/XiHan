@@ -15,12 +15,9 @@ namespace XiHan.Infrastructures.Apps.Services;
 
 /// <summary>
 /// 服务标记
-/// 如果服务是本身，直接在类上使用[AppService]
-/// 如果服务是接口，需要指定实现接口，在类上使用 [AppService(ServiceType = typeof(实现接口))]
+/// 如果服务是本身，直接在类上使用[AppService]；如果服务是接口，需要指定实现接口，在类上使用 [AppService(ServiceType = typeof(实现接口))]；
 /// </summary>
-/// <remarks>
-/// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
-/// </remarks>
+/// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class AppServiceAttribute : Attribute
 {

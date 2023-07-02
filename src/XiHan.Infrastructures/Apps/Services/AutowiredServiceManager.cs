@@ -19,9 +19,7 @@ namespace XiHan.Infrastructures.Apps.Services;
 /// <summary>
 /// 属性或字段自动装配服务管理器
 /// </summary>
-/// <remarks>
-/// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
-/// </remarks>
+/// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
 public class AutowiredServiceManager
 {
     private readonly IServiceProvider _serviceProvider;

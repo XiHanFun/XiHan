@@ -16,28 +16,28 @@ using SqlSugar;
 namespace XiHan.Models.Bases.Entity;
 
 /// <summary>
-/// 创建基类，含主键
+/// 新增基类，含主键
 /// </summary>
 public abstract class BaseCreateEntity : BaseIdEntity
 {
     /// <summary>
-    /// 创建用户主键
+    /// 新增用户主键
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户主键")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增用户主键")]
     public virtual long? CreatedId { get; set; }
 
     /// <summary>
-    /// 创建用户名称
+    /// 新增用户名称
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建用户名称")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增用户名称")]
     public virtual string? CreatedBy { get; set; }
 
     /// <summary>
-    /// 创建时间
+    /// 新增时间
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "创建时间")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增时间")]
     public virtual DateTime CreatedTime { get; set; } = DateTime.Now;
 }

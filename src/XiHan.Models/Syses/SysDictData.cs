@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统字典数据表
 /// </summary>
-/// <remarks>记录创建，修改信息</remarks>
+/// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Dict_Data")]
 public class SysDictData : BaseModifyEntity
 {

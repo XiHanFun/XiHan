@@ -16,28 +16,28 @@ using SqlSugar;
 namespace XiHan.Models.Bases.Entity;
 
 /// <summary>
-/// 修改基类，含主键，创建
+/// 修改基类，含主键，新增
 /// </summary>
 public abstract class BaseModifyEntity : BaseCreateEntity
 {
     /// <summary>
     /// 修改用户主键
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户主键")]
     public virtual long? ModifiedId { get; set; }
 
     /// <summary>
     /// 修改用户名称
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户名称")]
     public virtual string? ModifiedBy { get; set; }
 
     /// <summary>
     /// 修改时间
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改时间")]
-    public virtual DateTime? ModifiedTime { get; set; }
+    public virtual DateTime? ModifiedTime { get; set; } = DateTime.Now;
 }

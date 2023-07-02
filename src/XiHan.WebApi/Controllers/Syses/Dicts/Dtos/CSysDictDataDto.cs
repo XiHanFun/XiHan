@@ -17,7 +17,7 @@ using XiHan.WebApi.Controllers.Bases;
 namespace XiHan.WebApi.Controllers.Syses.Dicts.Dtos;
 
 /// <summary>
-/// 字典数据创建修改实体
+/// 字典数据新增修改实体
 /// </summary>
 public class CSysDictDataDto : BaseIdDto
 {

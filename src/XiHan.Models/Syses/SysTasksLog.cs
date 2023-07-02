@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统计划任务日志表
 /// </summary>
-/// <remarks>记录创建信息</remarks>
+/// <remarks>记录新增信息</remarks>
 [SugarTable("Sys_Tasks_Log")]
 public class SysTasksLog : BaseDeleteEntity
 {

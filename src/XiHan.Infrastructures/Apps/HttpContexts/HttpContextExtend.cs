@@ -19,7 +19,6 @@ using UAParser;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Infos.IpLocation;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.Serializes;
 using XiHan.Utils.Verifications;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
@@ -43,7 +42,7 @@ public static class HttpContextExtend
 
         try
         {
-            var header = context.Request.HttpContext.Request.Headers;
+            var header = context.Request.Headers;
             header.TryGetValue("Accept-Language", out var language);
             header.TryGetValue("Referer", out var referer);
             header.TryGetValue("User-Agent", out var agent);
@@ -170,22 +169,23 @@ public static class HttpContextExtend
     /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetRequestParameters(this HttpContext? context)
+    public static async Task<string> GetRequestParameters(this HttpContext? context)
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
         string requestParameters = string.Empty;
         var request = context.Request;
         var method = request.Method;
-        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsDelete(method) || HttpMethods.IsPatch(method))
+        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsPatch(method))
         {
             // 使用异步获取请求实体
+            request.EnableBuffering();
             using var reader = new StreamReader(request.Body, Encoding.UTF8);
-            var requestBody = reader.ReadToEndAsync().Result;
+            var requestBody = await reader.ReadToEndAsync();
             // 为空则取请求字符串里的参数
             requestParameters = requestBody.IsEmptyOrNull() ? (request.QueryString.Value ?? string.Empty) : requestBody;
         }
-        else
+        else if (HttpMethods.IsGet(method) || HttpMethods.IsDelete(method))
         {
             requestParameters = request.QueryString.Value ?? string.Empty;
         }
@@ -198,21 +198,17 @@ public static class HttpContextExtend
     /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetResponseResult(this HttpContext? context)
+    public static async Task<string> GetResponseResult(this HttpContext? context)
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
+        string responseResult = string.Empty;
         var response = context.Response;
-        // 创建一个内存流作为响应的替代
-        var originalResponseBody = response.Body;
-        using var responseBody = new MemoryStream();
-        // 替换响应流
-        context.Response.Body = responseBody;
-        // 处理响应结果
-        var responseResult = new StreamReader(responseBody).ReadToEndAsync().Result;
-        // 将响应结果写回原始响应流
-        responseBody.CopyToAsync(originalResponseBody);
-
+        // 使用异步获取请求实体
+        using var reader = new StreamReader(response.Body, Encoding.UTF8);
+        var requestBody = await reader.ReadToEndAsync();
+        // 为空则取请求字符串里的参数
+        responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
         return responseResult;
     }
 

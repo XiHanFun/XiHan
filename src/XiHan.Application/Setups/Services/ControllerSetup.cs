@@ -11,7 +11,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -44,7 +43,8 @@ public static class ControllerSetup
             // 全局注入过滤器
             configure.Filters.Add<ActionFilterAsyncAttribute>();
             configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
-            configure.Filters.Add<ExceptionFilterAsyncAttribute>();
+            // 已弃用
+            //configure.Filters.Add<ExceptionFilterAsyncAttribute>();
             //configure.Filters.Add<ResourceFilterAsyncAttribute>();
             configure.Filters.Add<ResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(setupAction =>

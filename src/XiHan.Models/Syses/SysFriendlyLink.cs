@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统友情链接表
 /// </summary>
-/// <remarks>记录创建，修改，删除，审核，状态信息</remarks>
+/// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
 [SugarTable(TableName = "Sys_Friendly_Link")]
 public class SysFriendlyLink : BaseEntity
 {

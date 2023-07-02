@@ -19,7 +19,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章标签表
 /// </summary>
-/// <remarks>记录创建，修改信息</remarks>
+/// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Post_Tag")]
 public class PostTag : BaseModifyEntity
 {

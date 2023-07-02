@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统角色权限关联表(为某角色分配权限)
 /// </summary>
-/// <remarks>记录创建，修改信息</remarks>
+/// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Role_Permission")]
 public class SysRolePermission : BaseModifyEntity
 {

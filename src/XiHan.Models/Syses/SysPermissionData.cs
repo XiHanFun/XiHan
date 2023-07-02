@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统权限数据关联表(为某权限分配数据)
 /// </summary>
-/// <remarks>记录创建，修改信息</remarks>
+/// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Permission_Data")]
 public class SysPermissionData : BaseModifyEntity
 {

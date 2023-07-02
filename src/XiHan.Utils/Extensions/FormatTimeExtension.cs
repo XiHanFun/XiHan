@@ -152,8 +152,8 @@ public static class FormatTimeExtension
     {
         var result = string.Empty;
         if (timeSpan.Days >= 1) result = timeSpan.Days + "天";
-        if (timeSpan.Hours >= 1) result += timeSpan.Hours + "时";
-        if (timeSpan.Minutes >= 1) result += timeSpan.Minutes + "分";
+        if (timeSpan.Hours >= 1) result += timeSpan.Hours + "小时";
+        if (timeSpan.Minutes >= 1) result += timeSpan.Minutes + "分钟";
         if (timeSpan.Seconds >= 1) result += timeSpan.Seconds + "秒";
         if (timeSpan.Milliseconds >= 1) result += timeSpan.Milliseconds + "毫秒";
         return result;
@@ -180,28 +180,28 @@ public static class FormatTimeExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-            {
-                if (dep.TotalHours < 24)
-                    return dep.TotalHours.ParseToInt() + "小时前";
-                else
-                    switch (dep.TotalDays)
-                    {
-                        case < 7:
-                            return dep.TotalDays.ParseToInt() + "天前";
+                {
+                    if (dep.TotalHours < 24)
+                        return dep.TotalHours.ParseToInt() + "小时前";
+                    else
+                        switch (dep.TotalDays)
+                        {
+                            case < 7:
+                                return dep.TotalDays.ParseToInt() + "天前";
 
-                        case >= 7 and < 30:
-                        {
-                            var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                            return defaultWeek + "周前";
+                            case >= 7 and < 30:
+                                {
+                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                                    return defaultWeek + "周前";
+                                }
+                            default:
+                                {
+                                    if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
+                                        return value.Month.ParseToInt() + "个月前";
+                                    else return now.Year - value.Year + "年前";
+                                }
                         }
-                        default:
-                        {
-                            if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
-                                return value.Month.ParseToInt() + "个月前";
-                            else return now.Year - value.Year + "年前";
-                        }
-                    }
-            }
+                }
         }
     }
 
