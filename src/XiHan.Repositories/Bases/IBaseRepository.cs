@@ -228,7 +228,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression);
+    new Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression);
 
     /// <summary>
     /// 自定义条件查询

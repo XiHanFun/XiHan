@@ -11,9 +11,9 @@
 
 #endregion <<版权版本注释>>
 
+using System.Net.Mail;
 using Mapster;
 using Microsoft.Extensions.Logging;
-using System.Net.Mail;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Results;
@@ -57,16 +57,17 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             new Attachment(@"")
         };
-        //    Subject = subject,
-        //    Body = body,
-        //    ToMail = toMail,
-        //    CcMail = ccMail,
-        //    BccMail = bccMail,
-        //    AttachmentsPath = attachmentsPath,
-        //};
-        EmailRobot emailHelper = new(emailFrom);
+        var emailToModel=new EmailToModel {
+            Subject = subject,
+            Body = body,
+            ToMail = toMail,
+            CcMail = ccMail,
+            BccMail = bccMail,
+            AttachmentsPath = attachmentsPath,
+        };
+        var emailRobot = new EmailRobot(emailFrom);
         var logoInfo = string.Empty;
-        if (await emailHelper.Send(emailTo))
+        if (await emailRobot.Send(emailTo))
         {
             logoInfo = "邮件发送成功";
             _logger.LogInformation(logoInfo);
