@@ -43,7 +43,8 @@ public static class ControllerSetup
             // 全局注入过滤器
             configure.Filters.Add<ActionFilterAsyncAttribute>();
             configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
-            configure.Filters.Add<ExceptionFilterAsyncAttribute>();
+            // 已弃用
+            //configure.Filters.Add<ExceptionFilterAsyncAttribute>();
             //configure.Filters.Add<ResourceFilterAsyncAttribute>();
             configure.Filters.Add<ResultFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(setupAction =>
@@ -63,11 +64,11 @@ public static class ControllerSetup
             options.JsonSerializerOptions.AllowTrailingCommas = true;
             // 注释处理，允许在 JSON 输入中使用注释并忽略它们
             options.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
-            // 属性名称不使用不区分大小写的比较
+            // 属性名称使用区分大小写的比较
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
             // 数据格式首字母小写 JsonNamingPolicy.CamelCase 驼峰样式，null则为不改变大小写
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            // 获取或设置要在转义字符串时使用的编码器，不转义字符
+            // 获取或设置要在转义字符串时使用的编码器，UnsafeRelaxedJsonEscaping 为不转义字符
             options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
             // 布尔类型

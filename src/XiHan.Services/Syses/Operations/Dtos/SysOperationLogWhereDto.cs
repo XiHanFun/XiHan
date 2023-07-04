@@ -41,10 +41,9 @@ public class SysOperationLogWhereDto
     public int? BusinessType { get; set; }
 
     /// <summary>
-    /// 请求类型
-    /// RequestMethodEnum GET、POST等
+    /// 请求类型 GET、POST等
     /// </summary>
-    public int? RequestMethod { get; set; }
+    public string? RequestMethod { get; set; }
 
     /// <summary>
     /// 操作状态（true 正常 false异常）

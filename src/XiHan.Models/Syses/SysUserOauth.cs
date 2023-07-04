@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 用户第三方授权表
 /// </summary>
-/// <remarks>记录创建信息</remarks>
+/// <remarks>记录新增信息</remarks>
 [SugarTable(TableName = "Sys_User_Oauth")]
 public class SysUserOauth : BaseCreateEntity
 {

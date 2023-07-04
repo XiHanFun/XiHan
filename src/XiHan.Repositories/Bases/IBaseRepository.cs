@@ -104,6 +104,13 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
+    Task<bool> RemoveAsync(TEntity[] entities);
+
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
     Task<bool> RemoveAsync(List<TEntity> entities);
 
     /// <summary>
@@ -130,6 +137,13 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="entity"></param>
     /// <returns></returns>
     Task<bool> SoftRemoveAsync(TEntity entity);
+
+    /// <summary>
+    /// 批量逻辑删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <returns></returns>
+    Task<bool> SoftRemoveAsync(TEntity[] entities);
 
     /// <summary>
     /// 批量逻辑删除
@@ -214,7 +228,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression);
+    Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression);
 
     /// <summary>
     /// 自定义条件查询

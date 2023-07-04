@@ -34,16 +34,20 @@ public static class ServiceSetup
         "Services Start……".WriteLineInfo();
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // Cache
-        services.AddCacheSetup();
+        // 内存缓存
+        services.AddMemoryCacheSetup();
+        // 分布式缓存
+        services.AddDistributedCacheSetup();
+        // 响应缓存
+        services.AddResponseCacheSetup();
         // SqlSugar
         services.AddSqlSugarSetup();
         // Mapster
         services.AddMapsterSetup();
-        // Auth
-        services.AddAuthSetup();
         // Http上下文
         services.AddHttpPollySetup();
+        // Auth，必须在 AddAuthSetup 后才能使用
+        services.AddAuthSetup();
         // Swagger
         services.AddSwaggerSetup();
         // RabbitMQ
@@ -56,10 +60,12 @@ public static class ServiceSetup
         services.AddHealthChecks();
         // 即时通讯
         services.AddSignalRSetup();
-        // 服务注册
-        AppServiceManager.RegisterService(services);
         // 计划任务
         services.AddTaskSchedulers();
+
+        // 服务注册
+        AppServiceManager.RegisterService(services);
+
         // Route
         services.AddRouteSetup();
         // Cors

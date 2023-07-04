@@ -62,8 +62,8 @@ public static class AppSetup
         app.UseResponseCaching();
         // 恢复或启动任务
         app.UseTaskSchedulers();
-        // 自定义操作中间件
-        //app.UseMiddleware<CustomOperationMiddleware>();
+        // 全局异常中间件
+        app.UseMiddleware<GlobalExceptionMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {

@@ -56,10 +56,8 @@ public static class AppServiceManager
     /// <summary>
     /// 注册自身服务
     /// </summary>
+    /// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
     /// <param name="services"></param>
-    /// <remarks>
-    /// 参考地址：https://www.cnblogs.com/loogn/p/10566510.html
-    /// </remarks>
     private static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库

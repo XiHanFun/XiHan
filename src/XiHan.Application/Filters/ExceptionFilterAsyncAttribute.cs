@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
 using System.Security.Authentication;
+using XiHan.Application.Middlewares;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Exceptions;
@@ -25,6 +26,8 @@ namespace XiHan.Application.Filters;
 /// <summary>
 /// 异步异常处理过滤器属性（一般用于捕捉异常）
 /// </summary>
+/// <remarks>已弃用(2023-07-03)，推荐<see cref="GlobalExceptionMiddleware" />全局异常中间件</remarks>
+[Obsolete("已弃用，推荐 GlobalExceptionMiddleware 全局异常中间件")]
 [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {

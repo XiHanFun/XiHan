@@ -49,7 +49,7 @@ public class TestController : BaseApiController
     /// 过时
     /// </summary>
     /// <returns></returns>
-    [Obsolete]
+    [Obsolete("过时接口", true)]
     [HttpGet("Obsolete")]
     public string Obsolete()
     {

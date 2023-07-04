@@ -20,7 +20,7 @@ namespace XiHan.Models.Posts;
 /// <summary>
 /// 文章点赞表
 /// </summary>
-/// <remarks>记录创建信息</remarks>
+/// <remarks>记录新增信息</remarks>
 [SugarTable(TableName = "Post_Poll")]
 public class PostPoll : BaseCreateEntity
 {

@@ -15,25 +15,34 @@ namespace XiHan.Infrastructures.Apps.Services;
 
 /// <summary>
 /// AutowiredServiceAttribute
-/// </summary>
+/// <example> 调用示例：
 /// <code>
-/// // 待注入属性和字段的类
-/// public class HomeController : Controller
+/// // 将属性注入 Service 实例
+/// public class PropertyClass
 /// {
-///     // 将通过属性注入 Service 实例
 ///     [AutowiredService]
 ///     public IService Service { get; set; }
 ///
-///     // 将通过字段注入 Service 实例
+///     public PropertyClass(AppAutowiredService appAutowiredService)
+///     {
+///         appAutowiredService.Autowired(this);
+///     }
+/// }
+/// // 通过字段注入 Service 实例
+/// public class FieldClass
+/// {
 ///     [AutowiredService]
 ///     public IService _service;
 ///
-///     public MyClass(AppAutowiredService appAutowiredService)
+///     public FieldClass(AppAutowiredService appAutowiredService)
 ///     {
 ///         appAutowiredService.Autowired(this);
 ///     }
 /// }
 /// </code>
+/// </example>
+/// </summary>
+/// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 public class AutowiredServiceAttribute : Attribute
 {

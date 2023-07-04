@@ -16,28 +16,28 @@ using SqlSugar;
 namespace XiHan.Models.Bases.Entity;
 
 /// <summary>
-/// 审核基类，含主键，创建，修改，删除
+/// 审核基类，含主键，新增，修改，删除
 /// </summary>
 public abstract class BaseAuditEntity : BaseDeleteEntity
 {
     /// <summary>
     /// 审核用户主键
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户主键")]
     public virtual long? AuditedId { get; set; }
 
     /// <summary>
     /// 审核用户名称
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户名称")]
     public virtual string? AuditedBy { get; set; }
 
     /// <summary>
     /// 审核时间
     /// </summary>
-    /// <remarks>插入不会有此字段</remarks>
+    /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核时间")]
     public virtual DateTime? AuditedTime { get; set; }
 }

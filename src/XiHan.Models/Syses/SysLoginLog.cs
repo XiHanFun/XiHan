@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses;
 /// <summary>
 /// 系统登录日志表
 /// </summary>
-/// <remarks>记录创建信息</remarks>
+/// <remarks>记录新增信息</remarks>
 [SugarTable(TableName = "Sys_Login_Log")]
 public class SysLoginLog : BaseCreateEntity
 {
