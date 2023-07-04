@@ -19,6 +19,7 @@ using XiHan.Application.Common.Swagger;
 using XiHan.Application.Filters;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Infos;
+using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 
 namespace XiHan.WebApi.Controllers.Test;
@@ -109,5 +110,27 @@ public class TestController : BaseApiController
     public string ResourceFilterAsyncAttribute()
     {
         return "异步资源过滤器" + DateTime.Now;
+    }
+
+    /// <summary>
+    /// Base64加密
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    [HttpGet("Base64Encode")]
+    public string Base64Encode(string password)
+    {
+        return password.Base64Encode();
+    }
+
+    /// <summary>
+    /// Base64解密
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    [HttpGet("Base64Decode")]
+    public string Base64Decode(string password)
+    {
+        return password.Base64Decode();
     }
 }
