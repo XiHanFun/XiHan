@@ -360,7 +360,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
+    public virtual new async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
     {
         return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
     }

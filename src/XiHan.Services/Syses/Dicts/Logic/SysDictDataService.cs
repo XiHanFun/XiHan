@@ -13,6 +13,7 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Repositories.Entities;
@@ -29,14 +30,37 @@ namespace XiHan.Services.Syses.Dicts.Logic;
 public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
 {
     /// <summary>
-    /// 新增字典数据
+    /// 校验字典值是否唯一
     /// </summary>
+    /// <param name="sysDictData">字典类型</param>
+    /// <returns></returns>
+    public async Task<bool> CheckDictValueUnique(SysDictData sysDictData)
+    {
+        var isUnique = true;
+        if (await IsAnyAsync(f => f.Type == sysDictData.Type && f.Value == sysDictData.Value))
+        {
+            isUnique = false;
+            throw new CustomException($"字典【{sysDictData.Type}】下已存在字典数据值【{sysDictData.Value}】");
+        }
+        return isUnique;
+    }
+
+    /// <summary>
+    /// 新增字典数据
+    /// </summary>啊
     /// <param name="sysDictData"></param>
     /// <returns></returns>
     public async Task<long> CreateDictData(SysDictData sysDictData)
     {
-        sysDictData = sysDictData.ToCreated();
-        return await AddReturnIdAsync(sysDictData);
+        // 校验类型是否唯一
+        if (await CheckDictValueUnique(sysDictData))
+        {
+            return await AddReturnIdAsync(sysDictData);
+        }
+        else
+        {
+            throw new CustomException($"不可重复新增！");
+        }
     }
 
     /// <summary>
@@ -56,8 +80,15 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> ModifyDictData(SysDictData sysDictData)
     {
-        sysDictData = sysDictData.ToModified();
-        return await UpdateAsync(sysDictData);
+        // 校验类型是否唯一
+        if (await CheckDictValueUnique(sysDictData))
+        {
+            return await UpdateAsync(sysDictData);
+        }
+        else
+        {
+            throw new CustomException($"已存在字典数据【{sysDictData.Value}】,不可修改！");
+        }
     }
 
     /// <summary>

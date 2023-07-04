@@ -16,7 +16,6 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Dicts.Dtos;
 using XiHan.Utils.Extensions;
@@ -47,9 +46,13 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
-        var findSysDictType = await GetFirstAsync(f => f.Type == sysDictType.Type);
-        if (findSysDictType != null && findSysDictType.BaseId != sysDictType.BaseId) return false;
-        return true;
+        var isUnique = true;
+        if (await IsAnyAsync(f => f.Type == sysDictType.Type))
+        {
+            isUnique = false;
+            throw new CustomException($"已存在字典类型【{sysDictType.Type}】");
+        }
+        return isUnique;
     }
 
     /// <summary>
@@ -60,9 +63,14 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     public async Task<long> CreateDictType(SysDictType sysDictType)
     {
         // 校验类型是否唯一
-        if (!await CheckDictTypeUnique(sysDictType)) throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可重复新增！");
-        sysDictType = sysDictType.ToCreated();
-        return await AddReturnIdAsync(sysDictType);
+        if (await CheckDictTypeUnique(sysDictType))
+        {
+            return await AddReturnIdAsync(sysDictType);
+        }
+        else
+        {
+            throw new CustomException($"不可重复新增！");
+        }
     }
 
     /// <summary>
@@ -79,8 +87,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         if (isOfficialCount > 0) throw new CustomException($"存在系统内置字典，不能删除！");
 
         // 已分配字典
-        var sysDictDataList =
-            await _sysDictDataService.QueryAsync(f => sysDictTypeList.Select(s => s.Type).ToList().Contains(f.Type));
+        var sysDictDataList = await _sysDictDataService.QueryAsync(f => sysDictTypeList.Select(s => s.Type).ToList().Contains(f.Type));
         if (sysDictDataList.Any())
             foreach (var sysDictData in sysDictDataList)
             {
@@ -103,14 +110,16 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         if (sysDictType.Type != oldDictType.Type)
         {
             // 校验类型是否唯一
-            if (!await CheckDictTypeUnique(sysDictType))
+            if (await CheckDictTypeUnique(sysDictType))
+            {
+                // 同步修改 SysDictData 表里面的 Type 值
+                await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
+            }
+            else
+            {
                 throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可修改为此类型！");
-
-            // 同步修改 SysDictData 表里面的 Type 值
-            await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
+            }
         }
-
-        sysDictType = sysDictType.ToModified();
         return await UpdateAsync(sysDictType);
     }
 
@@ -164,6 +173,6 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => pageWhere.OrderBy ?? o.Type, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Type);
     }
 }

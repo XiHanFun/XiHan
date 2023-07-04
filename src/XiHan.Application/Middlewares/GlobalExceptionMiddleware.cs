@@ -69,6 +69,9 @@ public class GlobalExceptionMiddleware
         }
         catch (Exception ex)
         {
+            // 记录操作日志
+            await HandleExceptionAsync(context, stopwatch.ElapsedMilliseconds, ex);
+
             // 处理异常
             var exceptionResult = ex switch
             {
@@ -91,9 +94,6 @@ public class GlobalExceptionMiddleware
             context.Response.ContentType = "text/json;charset=utf-8";
             context.Response.StatusCode = exceptionResult.Code.GetEnumValueByKey();
             await context.Response.WriteAsync(exceptionResult.SerializeToJson(), Encoding.UTF8);
-
-            // 记录操作日志
-            await HandleExceptionAsync(context, stopwatch.ElapsedMilliseconds, ex);
         }
     }
 
