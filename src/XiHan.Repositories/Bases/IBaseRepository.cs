@@ -37,14 +37,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> AddAsync(TEntity[] entities);
-
-    /// <summary>
-    /// 批量新增
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    Task<bool> AddAsync(List<TEntity> entities);
+    Task<bool> AddAsync(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// 新增返回Id
@@ -52,6 +45,10 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="entity"></param>
     /// <returns></returns>
     Task<long> AddReturnIdAsync(TEntity entity);
+
+    #endregion
+
+    #region 新增新增或更新
 
     /// <summary>
     /// 新增或更新
@@ -65,14 +62,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> AddOrUpdateAsync(TEntity[] entities);
-
-    /// <summary>
-    /// 批量新增或更新
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    Task<bool> AddOrUpdateAsync(List<TEntity> entities);
+    Task<bool> AddOrUpdateAsync(IEnumerable<TEntity> entities);
 
     #endregion
 
@@ -90,7 +80,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    Task<bool> RemoveAsync(long[] ids);
+    Task<bool> RemoveAsync(IEnumerable<long> ids);
 
     /// <summary>
     /// 删除
@@ -104,14 +94,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> RemoveAsync(TEntity[] entities);
-
-    /// <summary>
-    /// 批量删除
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    Task<bool> RemoveAsync(List<TEntity> entities);
+    Task<bool> RemoveAsync(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// 自定义条件删除
@@ -143,14 +126,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync(TEntity[] entities);
-
-    /// <summary>
-    /// 批量逻辑删除
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    Task<bool> SoftRemoveAsync(List<TEntity> entities);
+    Task<bool> SoftRemoveAsync(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// 自定义条件逻辑删除
@@ -183,14 +159,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> UpdateAsync(TEntity[] entities);
-
-    /// <summary>
-    /// 批量修改
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    Task<bool> UpdateAsync(List<TEntity> entities);
+    Task<bool> UpdateAsync(IEnumerable<TEntity> entities);
 
     #endregion
 
@@ -299,8 +268,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression,
-        bool isOrderAsc = true);
+    Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     /// <summary>
     /// 自定义条件分页排序查询
@@ -310,8 +278,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression,
-        bool isOrderAsc = true);
+    Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     #endregion
 }

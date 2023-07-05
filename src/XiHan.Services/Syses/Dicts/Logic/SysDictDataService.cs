@@ -45,14 +45,10 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// </summary>
     /// <param name="sysDictData">字典类型</param>
     /// <returns></returns>
-    public async Task<bool> CheckDictValueUnique(SysDictData sysDictData)
+    private async Task<bool> CheckDictValueUnique(SysDictData sysDictData)
     {
-        var isUnique = true;
-        if (await IsAnyAsync(f => f.Type == sysDictData.Type && f.Value == sysDictData.Value))
-        {
-            isUnique = false;
-            throw new CustomException($"字典【{sysDictData.Type}】下已存在字典数据值【{sysDictData.Value}】!");
-        }
+        var isUnique = await IsAnyAsync(f => f.Type == sysDictData.Type && f.Value == sysDictData.Value);
+        if (isUnique) throw new CustomException($"字典【{sysDictData.Type}】下已存在字典数据值【{sysDictData.Value}】!");
         return isUnique;
     }
 
@@ -63,7 +59,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<long> CreateDictData(SysDictData sysDictData)
     {
-        await CheckDictValueUnique(sysDictData);
+        _ = await CheckDictValueUnique(sysDictData);
 
         return await AddReturnIdAsync(sysDictData);
     }
@@ -85,7 +81,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> ModifyDictData(SysDictData sysDictData)
     {
-        await CheckDictValueUnique(sysDictData);
+        _ = await CheckDictValueUnique(sysDictData);
 
         return await UpdateAsync(sysDictData);
     }
@@ -100,7 +96,10 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     {
         // 只更新 Type 字段
         return await Context.Updateable<SysDictData>()
-            .SetColumns(t => new SysDictData() { Type = newDictType })
+            .SetColumns(t => new SysDictData()
+            {
+                Type = newDictType
+            })
             .Where(f => f.Type == oldDictType)
             .ExecuteCommandAsync();
     }
@@ -112,12 +111,10 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<SysDictData> GetDictDataById(long dictId)
     {
-        string key = $"GetDictDataById_{dictId}";
-        if (_appCacheService.Get(key) is not SysDictData sysDictData)
-        {
-            sysDictData = await FindAsync(dictId);
-            _appCacheService.SetWithMinutes(key, sysDictData, 30);
-        }
+        var key = $"GetDictDataById_{dictId}";
+        if (_appCacheService.Get(key) is SysDictData sysDictData) return sysDictData;
+        sysDictData = await FindAsync(dictId);
+        _appCacheService.SetWithMinutes(key, sysDictData, 30);
 
         return sysDictData;
     }
@@ -129,12 +126,10 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByType(string dictType)
     {
-        string key = $"GetDictDataByType_{dictType}";
-        if (_appCacheService.Get(key) is not List<SysDictData> list)
-        {
-            list = await QueryAsync(f => f.IsEnable && f.Type == dictType, o => o.SortOrder);
-            _appCacheService.SetWithMinutes(key, list, 30);
-        }
+        var key = $"GetDictDataByType_{dictType}";
+        if (_appCacheService.Get(key) is List<SysDictData> list) return list;
+        list = await QueryAsync(f => f.IsEnable && f.Type == dictType, o => o.SortOrder);
+        _appCacheService.SetWithMinutes(key, list, 30);
 
         return list;
     }
@@ -146,12 +141,10 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByTypes(string[] dictTypes)
     {
-        string key = $"GetDictDataByType_{dictTypes.GetArrayStr("_")}";
-        if (_appCacheService.Get(key) is not List<SysDictData> list)
-        {
-            list = await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type), o => o.SortOrder);
-            _appCacheService.SetWithMinutes(key, list, 30);
-        }
+        var key = $"GetDictDataByType_{dictTypes.GetArrayStr("_")}";
+        if (_appCacheService.Get(key) is List<SysDictData> list) return list;
+        list = await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type), o => o.SortOrder);
+        _appCacheService.SetWithMinutes(key, list, 30);
         return list;
     }
 

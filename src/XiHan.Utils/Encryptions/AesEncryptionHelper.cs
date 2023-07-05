@@ -34,8 +34,8 @@ public static class AesEncryptionHelper
     /// <summary>
     /// 加密方法
     /// </summary>
-    /// <param name="plainText"></param>
-    /// <param name="password"></param>
+    /// <param name="plainText">要加密的文本</param>
+    /// <param name="password">密码</param>
     /// <returns></returns>
     public static string Encrypt(string plainText, string password)
     {
@@ -76,8 +76,8 @@ public static class AesEncryptionHelper
     /// <summary>
     /// 解密方法
     /// </summary>
-    /// <param name="cipherText"></param>
-    /// <param name="password"></param>
+    /// <param name="cipherText">要解密的文本</param>
+    /// <param name="password">密码</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static string Decrypt(string cipherText, string password)
@@ -86,7 +86,10 @@ public static class AesEncryptionHelper
         if (string.IsNullOrEmpty(cipherText)) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         // 解析盐和密文
-        var parts = cipherText.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+        var parts = cipherText.Split(new[]
+        {
+            ':'
+        }, StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 2) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         var salt = Convert.FromBase64String(parts[0]);

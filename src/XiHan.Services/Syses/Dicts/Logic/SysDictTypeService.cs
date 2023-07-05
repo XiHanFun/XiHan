@@ -46,12 +46,8 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
-        var isUnique = true;
-        if (await IsAnyAsync(f => f.Type == sysDictType.Type))
-        {
-            isUnique = false;
-            throw new CustomException($"已存在字典类型【{sysDictType.Type}】!");
-        }
+        var isUnique = await IsAnyAsync(f => f.Type == sysDictType.Type);
+        if (isUnique) throw new CustomException($"已存在字典类型【{sysDictType.Type}】!");
         return isUnique;
     }
 
@@ -62,7 +58,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<long> CreateDictType(SysDictType sysDictType)
     {
-        await CheckDictTypeUnique(sysDictType);
+        _ = await CheckDictTypeUnique(sysDictType);
 
         return await AddReturnIdAsync(sysDictType);
     }
@@ -82,12 +78,12 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
 
         // 已分配字典
         var sysDictDataList = await _sysDictDataService.QueryAsync(f => sysDictTypeList.Select(s => s.Type).ToList().Contains(f.Type));
-        if (sysDictDataList.Any())
-            foreach (var sysDictData in sysDictDataList)
-            {
-                var sysDictType = sysDictTypeList.First(s => s.Type == sysDictData.Type);
-                throw new CustomException($"字典【{sysDictType.Name}】已分配值【{sysDictData.Value}】,不能删除！");
-            }
+        if (!sysDictDataList.Any()) return await RemoveAsync(s => dictIds.Contains(s.BaseId));
+        foreach (var sysDictData in sysDictDataList)
+        {
+            var sysDictType = sysDictTypeList.First(s => s.Type == sysDictData.Type);
+            throw new CustomException($"字典【{sysDictType.Name}】已分配值【{sysDictData.Value}】,不能删除！");
+        }
 
         return await RemoveAsync(s => dictIds.Contains(s.BaseId));
     }
@@ -101,12 +97,10 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     {
         var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
 
-        if (sysDictType.Type != oldDictType.Type)
-        {
-            await CheckDictTypeUnique(sysDictType);
-            // 同步修改 SysDictData 表里面的 Type 值
-            await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
-        }
+        if (sysDictType.Type == oldDictType.Type) return await UpdateAsync(sysDictType);
+        await CheckDictTypeUnique(sysDictType);
+        // 同步修改 SysDictData 表里面的 Type 值
+        await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
         return await UpdateAsync(sysDictType);
     }
 

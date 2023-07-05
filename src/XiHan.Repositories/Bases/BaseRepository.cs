@@ -26,6 +26,7 @@ namespace XiHan.Repositories.Bases;
 /// <remarks>
 /// 方法命名规范：
 /// 新增 Add
+/// 新增或更新 AddOrUpdate
 /// 删除 Remove
 /// 逻辑删除 SoftRemove
 /// 修改 Update
@@ -61,21 +62,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> AddAsync(TEntity[] entities)
+    public virtual async Task<bool> AddAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        return await AddAsync(entityList);
-    }
-
-    /// <summary>
-    /// 批量新增
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> AddAsync(List<TEntity> entities)
-    {
-        entities.ForEach(entity => entity.ToCreated());
-        return await base.InsertRangeAsync(entities);
+        entityList.ForEach(entity => entity.ToCreated());
+        return await base.InsertRangeAsync(entityList);
     }
 
     /// <summary>
@@ -88,6 +79,10 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         entity.ToCreated();
         return await base.InsertReturnBigIdentityAsync(entity);
     }
+
+    #endregion
+
+    #region 新增新增或更新
 
     /// <summary>
     /// 新增或更新
@@ -106,25 +101,15 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> AddOrUpdateAsync(TEntity[] entities)
+    public virtual async Task<bool> AddOrUpdateAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        return await AddOrUpdateAsync(entityList);
-    }
-
-    /// <summary>
-    /// 批量新增或更新
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> AddOrUpdateAsync(List<TEntity> entities)
-    {
-        entities.ForEach(entity =>
+        entityList.ForEach(entity =>
         {
             entity.ToCreated();
             entity.ToModified();
         });
-        return await base.InsertOrUpdateAsync(entities);
+        return await base.InsertOrUpdateAsync(entityList);
     }
 
     #endregion
@@ -146,7 +131,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveAsync(long[] ids)
+    public virtual async Task<bool> RemoveAsync(IEnumerable<long> ids)
     {
         var newIds = ids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newIds);
@@ -167,20 +152,10 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> RemoveAsync(TEntity[] entities)
+    public virtual async Task<bool> RemoveAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        return await RemoveAsync(entityList);
-    }
-
-    /// <summary>
-    /// 批量删除
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> RemoveAsync(List<TEntity> entities)
-    {
-        return await base.DeleteAsync(entities);
+        return await base.DeleteAsync(entityList);
     }
 
     /// <summary>
@@ -234,21 +209,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync(TEntity[] entities)
+    public virtual async Task<bool> SoftRemoveAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        return await SoftRemoveAsync(entityList);
-    }
-
-    /// <summary>
-    /// 批量逻辑删除
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync(List<TEntity> entities)
-    {
-        entities.ForEach(entity => entity.ToDeleted());
-        return await base.UpdateRangeAsync(entities);
+        entityList.ForEach(entity => entity.ToDeleted());
+        return await base.UpdateRangeAsync(entityList);
     }
 
     /// <summary>
@@ -284,9 +249,9 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
-        Expression<Func<TEntity, bool>> whereExpression)
+    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
     {
+        columns.ToModified();
         return await base.UpdateAsync(columns, whereExpression);
     }
 
@@ -295,21 +260,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> UpdateAsync(TEntity[] entities)
+    public virtual async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        return await UpdateAsync(entityList);
-    }
-
-    /// <summary>
-    /// 批量修改
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> UpdateAsync(List<TEntity> entities)
-    {
-        entities.ForEach(entity => entity.ToModified());
-        return await base.UpdateRangeAsync(entities);
+        entityList.ForEach(entity => entity.ToModified());
+        return await base.UpdateRangeAsync(entityList);
     }
 
     #endregion
@@ -400,8 +355,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression,
-        int currentIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .ToPageListAsync(currentIndex, pageSize, totalCount);
@@ -464,8 +418,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize,
-        Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -480,8 +433,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression,
-        bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
