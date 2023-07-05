@@ -42,7 +42,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 校验字典类型是否唯一
     /// </summary>
-    /// <param name="sysDictType">字典类型</param>
+    /// <param name="sysDictType"></param>
     /// <returns></returns>
     public async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
@@ -50,7 +50,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         if (await IsAnyAsync(f => f.Type == sysDictType.Type))
         {
             isUnique = false;
-            throw new CustomException($"已存在字典类型【{sysDictType.Type}】");
+            throw new CustomException($"已存在字典类型【{sysDictType.Type}】!");
         }
         return isUnique;
     }
@@ -62,15 +62,9 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<long> CreateDictType(SysDictType sysDictType)
     {
-        // 校验类型是否唯一
-        if (await CheckDictTypeUnique(sysDictType))
-        {
-            return await AddReturnIdAsync(sysDictType);
-        }
-        else
-        {
-            throw new CustomException($"不可重复新增！");
-        }
+        await CheckDictTypeUnique(sysDictType);
+
+        return await AddReturnIdAsync(sysDictType);
     }
 
     /// <summary>
@@ -109,16 +103,9 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
 
         if (sysDictType.Type != oldDictType.Type)
         {
-            // 校验类型是否唯一
-            if (await CheckDictTypeUnique(sysDictType))
-            {
-                // 同步修改 SysDictData 表里面的 Type 值
-                await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
-            }
-            else
-            {
-                throw new CustomException($"已存在字典类型【{sysDictType.Type}】,不可修改为此类型！");
-            }
+            await CheckDictTypeUnique(sysDictType);
+            // 同步修改 SysDictData 表里面的 Type 值
+            await _sysDictDataService.ModifyDictDataType(oldDictType.Type, sysDictType.Type);
         }
         return await UpdateAsync(sysDictType);
     }

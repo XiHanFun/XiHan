@@ -13,11 +13,13 @@
 
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Roles;
 using XiHan.Services.Syses.Users.Dtos;
+using XiHan.Utils.Encryptions;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Users.Logic;
@@ -47,9 +49,13 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> GetUserNameUnique(string userName)
     {
-        var findSysUser = await GetFirstAsync(u => u.UserName == userName && !u.IsDeleted);
-        if (findSysUser != null) return false;
-        return true;
+        var isUnique = true;
+        if (await IsAnyAsync(u => u.UserName == userName && !u.IsDeleted))
+        {
+            isUnique = false;
+            throw new CustomException($"用户名【{userName}】已存在！");
+        }
+        return isUnique;
     }
 
     /// <summary>
@@ -59,9 +65,10 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<long> CreateUser(SysUser sysUser)
     {
-        var userId = await AddReturnIdAsync(sysUser);
+        await GetUserNameUnique(sysUser.UserName);
 
-        //新增用户角色信息
+        var userId = await AddReturnIdAsync(sysUser);
+        // 新增用户角色信息
         sysUser.BaseId = userId;
         await _sysUserRoleService.CreateUserRole(sysUser);
         return userId;
@@ -74,12 +81,35 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUser(SysUser sysUser)
     {
-        var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+        await GetUserNameUnique(sysUser.UserName);
 
-        var diffArr = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
+        return await UpdateAsync(sysUser);
+    }
+
+    /// <summary>
+    /// 修改用户信息
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyUserInfo(SysUser sysUser)
+    {
+        await GetUserNameUnique(sysUser.UserName);
+
+        return await UpdateAsync(sysUser);
+    }
+
+    /// <summary>
+    /// 修改用户角色
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyUserRole(SysUser sysUser)
+    {
+        var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+        var diffArr1 = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
         var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
 
-        if (diffArr.Any() || diffArr2.Any())
+        if (diffArr1.Any() || diffArr2.Any())
         {
             // 删除用户与角色关联
             await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
@@ -91,7 +121,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
-    /// 修改用户状态
+    /// 更改用户状态
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -105,16 +135,16 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
-    /// 重置密码
+    /// 重置用户密码
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public async Task<bool> ResetPassword(long userId, string password)
+    public async Task<bool> ResetUserPassword(long userId, string password)
     {
         return await UpdateAsync(s => new SysUser()
         {
-            Password = password
+            Password = Md5EncryptionHelper.Encrypt(password)
         }, f => f.BaseId == userId);
     }
 

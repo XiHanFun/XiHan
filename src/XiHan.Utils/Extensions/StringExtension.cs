@@ -33,12 +33,12 @@ public static class StringExtension
     public static List<string> GetStrList(this string str, char separator, bool toLower)
     {
         List<string> list = new();
-        var ss = str.Split(separator);
-        foreach (var s in ss)
+        var sStr = str.Split(separator);
+        foreach (var s in sStr)
         {
             if (string.IsNullOrEmpty(s) || s == separator.ToString()) continue;
             var strVal = s;
-            if (toLower) strVal = s.ToLower();
+            if (toLower) strVal = s.ToLowerInvariant();
             list.Add(strVal);
         }
 
@@ -46,12 +46,12 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 分割字符串
+    /// 把字符串按照分隔符转换成数组
     /// </summary>
     /// <param name="str"></param>
     /// <param name="splitter"></param>
     /// <returns></returns>
-    public static string[]? GetSplitMulti(this string? str, string splitter)
+    public static string[]? GetStrArray(this string? str, string splitter)
     {
         string[]? strArray = null;
         if (!string.IsNullOrEmpty(str)) strArray = new Regex(splitter).Split(str);
@@ -69,12 +69,12 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 把List按照分隔符组装成string类型
+    /// 把 List 按照分隔符组装成 string 类型
     /// </summary>
     /// <param name="list"></param>
     /// <param name="speater"></param>
     /// <returns></returns>
-    public static string GetArrayStr(this List<string> list, string speater)
+    public static string GetListStr(this List<string> list, string speater)
     {
         StringBuilder sb = new();
         for (var i = 0; i < list.Count; i++)
@@ -92,22 +92,23 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 得到数组列表以逗号分隔的字符串
+    /// 把数组按照分隔符组装成 string 类型
     /// </summary>
-    /// <param name="list"></param>
+    /// <param name="array"></param>
+    /// <param name="speater"></param>
     /// <returns></returns>
-    public static string GetArrayStr(this List<int> list)
+    public static string GetArrayStr(this string[] array, string speater)
     {
-        var sb = new StringBuilder();
-        for (var i = 0; i < list.Count; i++)
-            if (i == list.Count - 1)
+        StringBuilder sb = new();
+        for (var i = 0; i < array.Length; i++)
+            if (i == array.Length - 1)
             {
-                sb.Append(list[i]);
+                sb.Append(array[i]);
             }
             else
             {
-                sb.Append(list[i]);
-                sb.Append(',');
+                sb.Append(array[i]);
+                sb.Append(speater);
             }
 
         return sb.ToString();
@@ -118,10 +119,11 @@ public static class StringExtension
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static string GetArrayValueStr(this Dictionary<int, int> list)
+    public static string GetDictionaryValueStr(this Dictionary<int, int> list)
     {
         var sb = new StringBuilder();
-        foreach (var kvp in list) sb.Append(kvp.Value + ",");
+        foreach (var kvp in list)
+            sb.Append(kvp.Value + ",");
         if (list.Count > 0) return DelLastComma(sb.ToString());
 
         return "";
@@ -130,13 +132,14 @@ public static class StringExtension
     /// <summary>
     /// 把字符串按照指定分隔符装成 List 去除重复
     /// </summary>
-    /// <param name="oStr"></param>
+    /// <param name="str"></param>
     /// <param name="sepeater"></param>
     /// <returns></returns>
-    public static List<string> GetSubStringList(this string oStr, char sepeater)
+    public static List<string> GetSubStringList(this string str, char sepeater)
     {
-        var ss = oStr.Split(sepeater);
-        return ss.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString()).ToList();
+        var sStr = str.Split(sepeater);
+        return sStr.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString())
+            .ToList();
     }
 
     #endregion

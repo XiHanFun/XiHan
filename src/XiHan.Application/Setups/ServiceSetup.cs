@@ -37,7 +37,7 @@ public static class ServiceSetup
         // 内存缓存
         services.AddMemoryCacheSetup();
         // 分布式缓存
-        services.AddDistributedCacheSetup();
+        services.AddRedisCacheSetup();
         // 响应缓存
         services.AddResponseCacheSetup();
         // SqlSugar

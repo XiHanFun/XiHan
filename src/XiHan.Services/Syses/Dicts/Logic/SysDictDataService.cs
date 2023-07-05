@@ -12,11 +12,11 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Dicts.Dtos;
 using XiHan.Utils.Extensions;
@@ -29,6 +29,17 @@ namespace XiHan.Services.Syses.Dicts.Logic;
 [AppService(ServiceType = typeof(ISysDictDataService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
 {
+    private readonly IAppCacheService _appCacheService;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="appCacheService"></param>
+    public SysDictDataService(IAppCacheService appCacheService)
+    {
+        _appCacheService = appCacheService;
+    }
+
     /// <summary>
     /// 校验字典值是否唯一
     /// </summary>
@@ -40,7 +51,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         if (await IsAnyAsync(f => f.Type == sysDictData.Type && f.Value == sysDictData.Value))
         {
             isUnique = false;
-            throw new CustomException($"字典【{sysDictData.Type}】下已存在字典数据值【{sysDictData.Value}】");
+            throw new CustomException($"字典【{sysDictData.Type}】下已存在字典数据值【{sysDictData.Value}】!");
         }
         return isUnique;
     }
@@ -52,15 +63,9 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<long> CreateDictData(SysDictData sysDictData)
     {
-        // 校验类型是否唯一
-        if (await CheckDictValueUnique(sysDictData))
-        {
-            return await AddReturnIdAsync(sysDictData);
-        }
-        else
-        {
-            throw new CustomException($"不可重复新增！");
-        }
+        await CheckDictValueUnique(sysDictData);
+
+        return await AddReturnIdAsync(sysDictData);
     }
 
     /// <summary>
@@ -80,15 +85,9 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> ModifyDictData(SysDictData sysDictData)
     {
-        // 校验类型是否唯一
-        if (await CheckDictValueUnique(sysDictData))
-        {
-            return await UpdateAsync(sysDictData);
-        }
-        else
-        {
-            throw new CustomException($"已存在字典数据【{sysDictData.Value}】,不可修改！");
-        }
+        await CheckDictValueUnique(sysDictData);
+
+        return await UpdateAsync(sysDictData);
     }
 
     /// <summary>
@@ -113,7 +112,14 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<SysDictData> GetDictDataById(long dictId)
     {
-        return await FindAsync(dictId);
+        string key = $"GetDictDataById_{dictId}";
+        if (_appCacheService.Get(key) is not SysDictData sysDictData)
+        {
+            sysDictData = await FindAsync(dictId);
+            _appCacheService.SetWithMinutes(key, sysDictData, 30);
+        }
+
+        return sysDictData;
     }
 
     /// <summary>
@@ -123,7 +129,14 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByType(string dictType)
     {
-        return await QueryAsync(f => f.IsEnable && f.Type == dictType, o => o.SortOrder);
+        string key = $"GetDictDataByType_{dictType}";
+        if (_appCacheService.Get(key) is not List<SysDictData> list)
+        {
+            list = await QueryAsync(f => f.IsEnable && f.Type == dictType, o => o.SortOrder);
+            _appCacheService.SetWithMinutes(key, list, 30);
+        }
+
+        return list;
     }
 
     /// <summary>
@@ -133,7 +146,13 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataByTypes(string[] dictTypes)
     {
-        return await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type), o => o.SortOrder);
+        string key = $"GetDictDataByType_{dictTypes.GetArrayStr("_")}";
+        if (_appCacheService.Get(key) is not List<SysDictData> list)
+        {
+            list = await QueryAsync(f => f.IsEnable && dictTypes.Contains(f.Type), o => o.SortOrder);
+            _appCacheService.SetWithMinutes(key, list, 30);
+        }
+        return list;
     }
 
     /// <summary>

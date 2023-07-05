@@ -32,7 +32,7 @@ public static class MemoryCacheSetup
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 内存缓存(默认开启)
-        services.AddSingleton<IAppCacheService, AppMemoryCacheService>();
+        services.AddSingleton<IAppCacheService, AppCacheService>();
         services.AddMemoryCache();
 
         return services;

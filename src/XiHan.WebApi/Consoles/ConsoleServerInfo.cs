@@ -69,7 +69,7 @@ public static class ConsoleServerInfo
         $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}".WriteLineInfo();
         "===============缓存===============".WriteLineInfo();
         $@"内存式缓存：默认启用；缓存时常：{AppSettings.Cache.SyncTimeout.GetValue()}分钟".WriteLineInfo();
-        $@"分布式缓存：{AppSettings.Cache.DistributedCache.IsEnabled.GetValue()}".WriteLineInfo();
+        $@"分布式缓存：{AppSettings.Cache.RedisCache.IsEnabled.GetValue()}".WriteLineInfo();
         $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}".WriteLineInfo();
         "===============跨域===============".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}".WriteLineInfo();

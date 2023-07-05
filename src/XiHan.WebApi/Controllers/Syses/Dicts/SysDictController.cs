@@ -226,19 +226,19 @@ public class SysDictController : BaseApiController
 
     #region 导出
 
-    /// <summary>
-    /// 字典导出
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("Export/Data")]
-    [AppLog(Module = "字典导出", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
-    public async Task<FileStreamResult> ExportDict()
-    {
-        var result = await _sysDictTypeService.GetAllDictType();
-        var fileName = ExportExcel(result, "SysDictType", "字典类型");
-        return ExportExcel(fileName.Item2, fileName.Item1);
-        //return ResultDto.Success(new { path = "/Export/" + fileName, fileName = fileName.Item1 });
-    }
+    ///// <summary>
+    ///// 字典导出
+    ///// </summary>
+    ///// <returns></returns>
+    //[HttpGet("Export/Data")]
+    //[AppLog(Module = "字典导出", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
+    //public async Task<FileStreamResult> ExportDict()
+    //{
+    //    var result = await _sysDictTypeService.GetAllDictType();
+    //    var fileName = ExportExcel(result, "SysDictType", "字典类型");
+    //    return ExportExcel(fileName.Item2, fileName.Item1);
+    //    //return ResultDto.Success(new { path = "/Export/" + fileName, fileName = fileName.Item1 });
+    //}
 
     #endregion
 }

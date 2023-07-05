@@ -86,20 +86,18 @@ public static class ExcelHelper
         foreach (var item in data)
         {
             var row = new object[properties.Length];
-
             for (var i = 0; i < properties.Length; i++)
             {
                 var property = properties[i];
                 var value = property.GetValue(item);
-
-                row[i] = value;
+                row[i] = value ?? DBNull.Value;
             }
-
             rows.Add(row);
         }
+        var result = new List<object[]> { header }.Concat(rows);
 
         // 写入数据到 Excel 文件
-        MiniExcel.SaveAs(filePath, new List<object[]> { header }.Concat(rows), true, sheetName);
+        MiniExcel.SaveAs(filePath, result, true, sheetName);
     }
 
     /// <summary>

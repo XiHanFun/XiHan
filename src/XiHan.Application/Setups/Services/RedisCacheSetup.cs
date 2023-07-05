@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// FileName:DistributedCacheSetup
+// FileName:RedisCacheSetup
 // Guid:5c45f05d-b77a-4ffa-8975-77aff404eb20
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -20,9 +20,9 @@ using XiHan.Infrastructures.Apps.Configs;
 namespace XiHan.Application.Setups.Services;
 
 /// <summary>
-/// DistributedCacheSetup
+/// RedisCacheSetup
 /// </summary>
-public static class DistributedCacheSetup
+public static class RedisCacheSetup
 {
     /// <summary>
     /// 分布式缓存 服务扩展
@@ -30,18 +30,18 @@ public static class DistributedCacheSetup
     /// <param name="services"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddDistributedCacheSetup(this IServiceCollection services)
+    public static IServiceCollection AddRedisCacheSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 分布式缓存
-        var isEnabledDistributedCache = AppSettings.Cache.DistributedCache.IsEnabled.GetValue();
-        if (isEnabledDistributedCache)
+        var isEnabledRedisCache = AppSettings.Cache.RedisCache.IsEnabled.GetValue();
+        if (isEnabledRedisCache)
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.DistributedCache.Redis.ConnectionString.GetValue();
-            var instanceName = AppSettings.Cache.DistributedCache.Redis.InstanceName.GetValue();
-            var redisStr = $"{connectionString}, prefix = {instanceName}";
+            var connectionString = AppSettings.Cache.RedisCache.Redis.ConnectionString.GetValue();
+            var prefix = AppSettings.Cache.RedisCache.Redis.Prefix.GetValue();
+            var redisStr = $"{connectionString}, prefix = {prefix}";
             var redisClient = new CSRedisClient(redisStr);
             // 用法一：基于 Redis 初始化 IDistributedCache
             services.AddSingleton(redisClient);

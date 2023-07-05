@@ -254,7 +254,7 @@ public static class AppSettings
         /// <summary>
         /// 分布式
         /// </summary>
-        public static class DistributedCache
+        public static class RedisCache
         {
             /// <summary>
             /// 是否可用
@@ -272,9 +272,9 @@ public static class AppSettings
                 public static string ConnectionString { get; set; } = string.Empty;
 
                 /// <summary>
-                /// 实例名称
+                /// 前辍
                 /// </summary>
-                public static string InstanceName { get; set; } = string.Empty;
+                public static string Prefix { get; set; } = string.Empty;
             }
         }
 
