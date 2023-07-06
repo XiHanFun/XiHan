@@ -1,0 +1,6 @@
+﻿services:
+  xihan.webapi:
+    image: xihan.webapi
+    build:
+      context: .
+      dockerfile: XiHan.WebApi/Dockerfile
