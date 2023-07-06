@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:RabbitMQSetup
 // Guid:b0a1be0b-98e4-4a24-92a4-87f636916fce
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-03-19 上午 02:47:05
+// CreatedTime:2023-03-19 上午 02:47:05
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

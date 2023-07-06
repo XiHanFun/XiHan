@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:TaskSchedulerServer
 // Guid:0415d360-cb23-4b9a-8f51-3636c2af2b72
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-11 下午 03:05:28
+// CreatedTime:2023-04-11 下午 03:05:28
 // ----------------------------------------------------------------​
 
 #endregion <<版权版本注释>>

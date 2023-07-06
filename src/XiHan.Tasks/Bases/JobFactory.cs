@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:JobFactory
 // Guid:39fa2376-1280-4912-8ded-4e6df638456e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-11 下午 03:57:16
+// CreatedTime:2023-04-11 下午 03:57:16
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

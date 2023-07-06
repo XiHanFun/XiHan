@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:SysUser
-// long:5c92c656-8955-4343-8e6f-7ba028f1eab4
+// Guid:5c92c656-8955-4343-8e6f-7ba028f1eab4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 04:30:03
+// CreatedTime:2022-05-08 下午 04:30:03
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -23,91 +24,120 @@ namespace XiHan.Models.Syses;
 [SugarTable(TableName = "Sys_User")]
 public class SysUser : BaseEntity
 {
+    #region 账号信息
+
     /// <summary>
-    /// 用户名称
+    /// 用户账号
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string UserName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 电子邮件
-    /// </summary>
-    [SugarColumn(Length = 50)]
-    public string Email { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 手机号
-    /// </summary>
-    [SugarColumn(Length = 11)]
-    public string Phone { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 用户来源
-    /// </summary>
-    [SugarColumn(Length = 50)]
-    public string From { get; set; } = string.Empty;
+    public virtual string Account { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码（MD5加密）
     /// </summary>
     [SugarColumn(Length = 64)]
-    public string Password { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 头像路径
-    /// </summary>
-    [SugarColumn(Length = 200)]
-    public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/default.png";
+    public virtual string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户昵称
     /// </summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string? NickName { get; set; }
+    [SugarColumn(Length = 20)]
+    public string NickName { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户签名
+    /// 头像路径
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 512)]
+    public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/default.png";
+
+    /// <summary>
+    /// 签名
+    /// </summary>
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Signature { get; set; }
 
+    #endregion
+
+    #region 基本信息
+
     /// <summary>
-    /// 用户性别 男(true)女(false)
+    /// 姓名
+    /// </summary>
+    [SugarColumn(IsNullable = true, Length = 10)]
+    public virtual string RealName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 性别
+    /// 男(true)女(false)
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public bool? Gender { get; set; }
 
     /// <summary>
-    /// 用户地址
+    /// 邮箱
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? Address { get; set; }
+    [SugarColumn(Length = 64)]
+    public string Email { get; set; } = string.Empty;
 
     /// <summary>
-    /// 出生日期
+    /// 手机号码
+    /// </summary>
+    [SugarColumn(IsNullable = true, Length = 11)]
+    public string? Phone { get; set; }
+
+    /// <summary>
+    /// 生日
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public DateTime? Birthday { get; set; }
 
     /// <summary>
-    /// 注册Ip
+    /// 地址
     /// </summary>
-    [SugarColumn(IsOnlyIgnoreUpdate = true, IsNullable = true)]
-    public string? RegisterIp { get; set; }
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Address { get; set; }
+
+    #endregion
+
+    #region 注册信息
 
     /// <summary>
-    /// 最后登录Ip
+    /// 注册来源
     /// </summary>
-    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true)]
+    [SugarColumn(Length = 64)]
+    public string RegisterFrom { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 注册Ip
+    /// </summary>
+    [SugarColumn(IsOnlyIgnoreUpdate = true, IsNullable = true, Length = 64)]
+    public string? RegisterIp { get; set; }
+
+    #endregion
+
+    #region 登录信息
+
+    /// <summary>
+    /// 最新登录设备
+    /// </summary>
+    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true, Length = 128)]
+    public string? LastLoginDevice { get; set; }
+
+    /// <summary>
+    /// 最新登录Ip
+    /// </summary>
+    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true, Length = 64)]
     public string? LastLoginIp { get; set; }
 
     /// <summary>
-    /// 最后登录时间
+    /// 最新登录时间
     /// </summary>
     [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true)]
     public DateTime? LastLoginTime { get; set; }
 
-    #region 其他字段
+    #endregion
+
+    #region 其他信息
 
     /// <summary>
     /// 是否超级管理员

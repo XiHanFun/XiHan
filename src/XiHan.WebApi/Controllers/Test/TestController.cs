@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:TestController
 // Guid:845e3ab1-519a-407f-bd95-1204e9506dbd
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-17 上午 04:42:29
+// CreatedTime:2022-06-17 上午 04:42:29
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

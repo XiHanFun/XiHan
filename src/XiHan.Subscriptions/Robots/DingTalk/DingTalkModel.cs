@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:DingTalkModel
 // Guid:5d00cc16-5e63-4fd4-9052-54068c536acf
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-11-06 上午 02:36:46
+// CreatedTime:2022-11-06 上午 02:36:46
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:CpuHelper
 // Guid:2e1f186b-92ad-4e02-9e15-d373684b181e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-09 上午 06:41:41
+// CreatedTime:2023-04-09 上午 06:41:41
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

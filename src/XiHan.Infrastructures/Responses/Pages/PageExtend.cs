@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:PageExtend
 // Guid:a345ade2-5c23-474d-b6b5-ea29490d57b0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-09-02 上午 01:03:21
+// CreatedTime:2022-09-02 上午 01:03:21
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -44,8 +45,7 @@ public static class PageExtend
     /// <returns>分页后的List数据</returns>
     public static List<TEntity> ToPageList<TEntity>(this IEnumerable<TEntity> entities, PageDto pageDto, int defaultFirstIndex = 1) where TEntity : class, new()
     {
-        return entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize)
-            .ToList();
+        return entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize).ToList();
     }
 
     /// <summary>
@@ -71,8 +71,7 @@ public static class PageExtend
     /// <param name="defaultFirstIndex">默认起始下标</param>
     public static List<TEntity> ToPageList<TEntity>(this IQueryable<TEntity> entities, PageDto pageDto, int defaultFirstIndex = 1) where TEntity : class, new()
     {
-        return entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize)
-            .ToList();
+        return entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize).ToList();
     }
 
     /// <summary>
@@ -155,8 +154,7 @@ public static class PageExtend
     /// <param name="pageSize">每页大小</param>
     /// <param name="defaultFirstIndex">默认起始下标</param>
     /// <returns>分页后的List数据</returns>
-    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstIndex = 1)
-        where TEntity : class, new()
+    public static PageDataDto<TEntity> ToPageDataDto<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize, int defaultFirstIndex = 1) where TEntity : class, new()
     {
         PageDataDto<TEntity> pageDataDto = new()
         {

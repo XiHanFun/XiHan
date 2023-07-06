@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:WeComCustomRobot
 // Guid:1f9edb73-56c9-4849-88a8-c57488b3582d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-11-08 上午 02:32:32
+// CreatedTime:2022-11-08 上午 02:32:32
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

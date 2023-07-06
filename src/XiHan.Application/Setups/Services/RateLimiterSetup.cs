@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:RateLimiterSetup
 // Guid:e03abdbe-8b80-488f-9644-d4ec72075f2b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023/6/16 23:05:26
+// CreatedTime:2023/6/16 23:05:26
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

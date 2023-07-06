@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
-        <AssemblyVersion>0.2.5</AssemblyVersion>
-        <FileVersion>0.2.5</FileVersion>
+        <AssemblyVersion>0.2.6</AssemblyVersion>
+        <FileVersion>0.2.6</FileVersion>
         <Title>XiHan.Application</Title>
-        <Version>0.2.5</Version>
+        <Version>0.2.6</Version>
         <Authors>ZhaiFanhua</Authors>
         <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

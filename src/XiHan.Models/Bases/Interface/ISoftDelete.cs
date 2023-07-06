@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:ISoftDelete
-// long:1814189a-40ec-447b-95ad-8d77a973df7e
+// Guid:1814189a-40ec-447b-95ad-8d77a973df7e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-05-18 下午 05:52:13
+// CreatedTime:2023-05-18 下午 05:52:13
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

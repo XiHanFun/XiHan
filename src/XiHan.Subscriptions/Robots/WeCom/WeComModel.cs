@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:WeChatModel
 // Guid:479a9594-c7fb-42e7-bc6a-2c51c7e58b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-11-08 上午 12:47:53
+// CreatedTime:2022-11-08 上午 12:47:53
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

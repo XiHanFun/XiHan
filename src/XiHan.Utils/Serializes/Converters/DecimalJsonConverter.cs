@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:DecimalJsonConverter
 // Guid:302db373-1155-429b-b57b-07744a04c1b7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-25 下午 10:57:32
+// CreatedTime:2023-04-25 下午 10:57:32
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

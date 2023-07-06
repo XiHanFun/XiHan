@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:IEmailPushService
 // Guid:a4bee990-b81b-4883-a722-908a55905543
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-12-07 下午 01:32:01
+// CreatedTime:2022-12-07 下午 01:32:01
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

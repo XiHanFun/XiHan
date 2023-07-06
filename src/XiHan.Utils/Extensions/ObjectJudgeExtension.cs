@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:ObjectJudgeExtensions
 // Guid:1301570f-1215-438e-bb49-f9b2fca6525b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-11 下午 10:12:13
+// CreatedTime:2023-04-11 下午 10:12:13
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

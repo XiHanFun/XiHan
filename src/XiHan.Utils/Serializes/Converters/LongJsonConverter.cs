@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:LongJsonConverter
 // Guid:6c399d59-ef12-4354-a5b6-d9af73b04f8b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-25 下午 11:04:51
+// CreatedTime:2023-04-25 下午 11:04:51
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -18,7 +19,7 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Utils.Serializes.Converters;
 
 /// <summary>
-/// LongJsonConverter
+/// GuidJsonConverter
 /// </summary>
 public class LongJsonConverter : JsonConverter<long>
 {
@@ -36,7 +37,7 @@ public class LongJsonConverter : JsonConverter<long>
 
     /// <summary>
     /// 写
-    /// long数据在前端会出现丢失精度，故转换为string类型
+    /// Guid数据在前端会出现丢失精度，故转换为string类型
     /// </summary>
     /// <param name="writer"></param>
     /// <param name="value"></param>

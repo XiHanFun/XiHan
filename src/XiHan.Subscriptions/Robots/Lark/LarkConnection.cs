@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:LarkConnection
 // Guid:f2365168-e192-48e0-ac99-32925512f628
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-05-20 下午 02:10:28
+// CreatedTime:2023-05-20 下午 02:10:28
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

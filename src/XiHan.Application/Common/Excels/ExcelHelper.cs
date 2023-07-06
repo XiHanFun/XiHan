@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:ExcelHelper
 // Guid:4180647d-307e-4904-a3dc-38048e5e39b0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-06-15 上午 03:44:24
+// CreatedTime:2023-06-15 上午 03:44:24
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

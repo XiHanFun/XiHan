@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:WeComConnection
 // Guid:e090aec3-2ede-4510-8ec2-6e542f34c26d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-11-24 上午 02:35:23
+// CreatedTime:2022-11-24 上午 02:35:23
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:SwaggerSetup
 // Guid:40c713e1-7cdf-42da-9e08-84d1bff1489f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-09-29 上午 01:03:07
+// CreatedTime:2022-09-29 上午 01:03:07
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

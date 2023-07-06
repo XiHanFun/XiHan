@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:DesEncryptionHelper
 // Guid:f43de28f-10c4-4735-84e6-27e4f3cec000
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-15 下午 12:01:48
+// CreatedTime:2023-04-15 下午 12:01:48
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

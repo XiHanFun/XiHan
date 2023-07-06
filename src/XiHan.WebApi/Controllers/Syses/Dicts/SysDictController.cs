@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:SysDictController
 // Guid:57b61160-85b3-47f9-8fe4-144bf4c1b3f5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-06-13 下午 11:54:11
+// CreatedTime:2023-06-13 下午 11:54:11
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

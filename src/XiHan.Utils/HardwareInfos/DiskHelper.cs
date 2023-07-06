@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:DiskHelper
 // Guid:4e1014f7-200b-42f3-a1bf-cde1c500054a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-06-03 下午 08:48:25
+// CreatedTime:2022-06-03 下午 08:48:25
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

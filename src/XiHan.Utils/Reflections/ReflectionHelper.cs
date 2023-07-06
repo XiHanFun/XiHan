@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:ReflectionHelper
 // Guid:e8f234f6-9d3e-4dbc-aee6-d02fbf424954
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-11 下午 09:28:46
+// CreatedTime:2023-04-11 下午 09:28:46
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

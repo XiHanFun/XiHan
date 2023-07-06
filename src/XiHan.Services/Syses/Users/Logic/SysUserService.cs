@@ -2,15 +2,17 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:SysUserService
 // Guid:2f0d94cc-ae27-4504-94bf-cc835ad307f9
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-22 上午 02:04:14
+// CreatedTime:2023-04-22 上午 02:04:14
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Services;
@@ -44,14 +46,14 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
-    /// 校验用户名称是否唯一
+    /// 校验账户是否唯一
     /// </summary>
-    /// <param name="userName"></param>
+    /// <param name="account"></param>
     /// <returns></returns>
-    private async Task<bool> GetUserNameUnique(string userName)
+    private async Task<bool> GetAccountUnique(string account)
     {
-        var isUnique = await IsAnyAsync(u => u.UserName == userName && !u.IsDeleted);
-        if (isUnique) throw new CustomException($"用户名【{userName}】已存在！");
+        var isUnique = await IsAnyAsync(u => u.Account == account && !u.IsDeleted);
+        if (isUnique) throw new CustomException($"账户【{account}】已存在！");
         return isUnique;
     }
 
@@ -70,13 +72,14 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 新增用户
     /// </summary>
-    /// <param name="sysUser"></param>
+    /// <param name="sysUserCreate"></param>
     /// <returns></returns>
-    public async Task<long> CreateUser(SysUser sysUser)
+    public async Task<long> CreateUser(SysUserCreateDto sysUserCreate)
     {
+        var sysUser = sysUserCreate.Adapt<SysUser>();
         var secretKey = AppSettings.Syses.Domain.GetValue();
         sysUser.Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(sysUser.Password, secretKey));
-        _ = await GetUserNameUnique(sysUser.UserName);
+        _ = await GetAccountUnique(sysUser.Account);
         var userId = await AddReturnIdAsync(sysUser);
 
         // 新增用户角色信息
@@ -99,6 +102,40 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
+    /// 修改用户账号信息
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyUserAccountInfo(SysUser sysUser)
+    {
+        return await UpdateAsync(s => new SysUser()
+        {
+            Account = sysUser.Account,
+            NickName = sysUser.NickName,
+            AvatarPath = sysUser.AvatarPath,
+            Signature = sysUser.Signature,
+        }, f => f.BaseId == sysUser.BaseId);
+    }
+
+    /// <summary>
+    /// 修改用户基本信息
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyUserBaseInfo(SysUser sysUser)
+    {
+        return await UpdateAsync(s => new SysUser()
+        {
+            RealName = sysUser.RealName,
+            Gender = sysUser.Gender,
+            Email = sysUser.Email,
+            Phone = sysUser.Phone,
+            Birthday = sysUser.Birthday,
+            Address = sysUser.Address,
+        }, f => f.BaseId == sysUser.BaseId);
+    }
+
+    /// <summary>
     /// 修改用户登陆信息
     /// </summary>
     /// <param name="sysUser"></param>
@@ -107,25 +144,9 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     {
         return await UpdateAsync(s => new SysUser()
         {
+            LastLoginDevice = sysUser.LastLoginDevice,
             LastLoginIp = sysUser.LastLoginIp,
             LastLoginTime = DateTime.Now
-        }, f => f.BaseId == sysUser.BaseId);
-    }
-
-    /// <summary>
-    /// 修改用户信息
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <returns></returns>
-    public async Task<bool> ModifyUserInfo(SysUser sysUser)
-    {
-        return await UpdateAsync(s => new SysUser()
-        {
-            NickName = sysUser.NickName,
-            Signature = sysUser.Signature,
-            Gender = sysUser.Gender,
-            Address = sysUser.Address,
-            Birthday = sysUser.Birthday
         }, f => f.BaseId == sysUser.BaseId);
     }
 
@@ -150,7 +171,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// </summary>
     /// <param name="sysUser"></param>
     /// <returns></returns>
-    public async Task<bool> ChangeUserStatus(SysUser sysUser)
+    public async Task<bool> ModifyUserStatus(SysUser sysUser)
     {
         return await UpdateAsync(s => new SysUser()
         {
@@ -165,7 +186,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <param name="userId"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public async Task<bool> ResetUserPassword(long userId, string password)
+    public async Task<bool> ModifyUserPassword(long userId, string password)
     {
         var secretKey = AppSettings.Syses.Domain.GetValue();
         return await UpdateAsync(s => new SysUser()
@@ -193,11 +214,12 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     {
         var whereDto = pageWhere.Where;
         var whereExpression = Expressionable.Create<SysUser>();
-        whereExpression.AndIF(whereDto.UserName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.UserName!));
+        whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
+        whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.NickName.Contains(whereDto.NickName!));
+        whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), u => u.RealName.Contains(whereDto.RealName!));
+        whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
         whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
         whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
-        whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.UserName.Contains(whereDto.NickName!));
-        whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
         whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
@@ -210,10 +232,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser?> GetUserById(long userId)
     {
-        var exp = Expressionable.Create<SysUser>();
-        exp.And(u => !u.IsDeleted);
-
-        var sysUser = await FindAsync(exp.ToExpression());
+        var sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
         sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
         sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
 

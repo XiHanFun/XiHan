@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:SysDictType
-// long:9f923080-701d-4eec-9171-2112f128fdaf
+// Guid:9f923080-701d-4eec-9171-2112f128fdaf
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-10-24 上午 11:10:00
+// CreatedTime:2022-10-24 上午 11:10:00
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -43,11 +44,11 @@ public class SysDictType : BaseModifyEntity
     /// <summary>
     /// 是否系统内置
     /// </summary>
-    public bool IsOfficial { get; set; }
+    public bool IsOfficial { get; set; } = false;
 
     /// <summary>
     /// 字典描述
     /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 200, IsNullable = true)]
     public string? Description { get; set; }
 }

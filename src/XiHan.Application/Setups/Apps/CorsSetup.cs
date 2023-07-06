@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:CorsSetup
 // Guid:8015c072-e6b5-4a52-aec5-6bd747cfe0a2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-09-29 上午 01:25:14
+// CreatedTime:2022-09-29 上午 01:25:14
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

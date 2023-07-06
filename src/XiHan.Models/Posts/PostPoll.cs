@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:PostPoll
-// long:2fcf240c-8218-497c-aae9-83f9c5791dfe
+// Guid:2fcf240c-8218-497c-aae9-83f9c5791dfe
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-08 下午 06:29:20
+// CreatedTime:2022-05-08 下午 06:29:20
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

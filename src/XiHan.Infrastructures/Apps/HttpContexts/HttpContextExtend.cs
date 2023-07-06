@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:HttpContextExtension
 // Guid:61d55324-ab83-4df1-a500-e076d5b6cd89
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-06-13 下午 09:01:53
+// CreatedTime:2023-06-13 下午 09:01:53
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -484,7 +485,7 @@ public class UserAddressInfo
 public class UserAuthInfo
 {
     /// <summary>
-    /// 用户 Id
+    /// 用户ID
     /// </summary>
     public long? UserId { get; set; }
 

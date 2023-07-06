@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:ServiceLifeTimeEnum
 // Guid:a690c369-797c-4713-a4a3-5ea80782de34
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-04-20 下午 03:16:25
+// CreatedTime:2023-04-20 下午 03:16:25
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>

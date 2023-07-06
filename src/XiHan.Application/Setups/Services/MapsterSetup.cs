@@ -2,11 +2,12 @@
 
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:AutoMapperSetup
 // Guid:4960fc12-c08b-426e-abf1-efaf35db4d9f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2022-05-30 上午 02:57:37
+// CreatedTime:2022-05-30 上午 02:57:37
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
