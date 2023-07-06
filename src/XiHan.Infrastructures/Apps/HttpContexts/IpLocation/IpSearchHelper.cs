@@ -12,11 +12,10 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Infos.IpLocation.Ip2region;
+using XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Infrastructures.Infos.IpLocation;
+namespace XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 
 /// <summary>
 /// Ip 查询帮助类

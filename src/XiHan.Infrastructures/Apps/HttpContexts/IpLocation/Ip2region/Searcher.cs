@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 
-namespace XiHan.Infrastructures.Infos.IpLocation.Ip2region;
+namespace XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 
 /// <summary>
 /// 查询器
@@ -105,8 +105,8 @@ public class Searcher : ISearcher
     public string Search(uint ip)
     {
         var result = string.Empty;
-        var il0 = (ip >> 24) & 0xFF;
-        var il1 = (ip >> 16) & 0xFF;
+        var il0 = ip >> 24 & 0xFF;
+        var il1 = ip >> 16 & 0xFF;
         var idx = il0 * VectorIndexCols * VectorIndexSize + il1 * VectorIndexSize;
         uint sPtr;
         uint ePtr;

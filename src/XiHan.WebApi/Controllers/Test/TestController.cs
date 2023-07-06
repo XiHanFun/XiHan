@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using XiHan.Application.Common.Swagger;
 using XiHan.Application.Filters;
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 

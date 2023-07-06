@@ -1,4 +1,4 @@
-namespace XiHan.Infrastructures.Infos.IpLocation.Ip2region;
+namespace XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 
 /// <summary>
 /// CachePolicyEnum

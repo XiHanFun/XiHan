@@ -13,9 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using XiHan.Infrastructures.Apps.HttpContexts;
 
-namespace XiHan.Infrastructures.Infos;
+namespace XiHan.Infrastructures.Apps.HttpContexts;
 
 /// <summary>
 /// 请求上下文信息帮助类
