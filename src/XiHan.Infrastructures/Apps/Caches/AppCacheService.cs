@@ -16,6 +16,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Infrastructures.Apps.Caches;
 
@@ -34,6 +35,15 @@ public class AppCacheService : IAppCacheService
         // 过期扫描频率(默认为1分钟，可以理解为每过多久移除一次过期的缓存项)
         ExpirationScanFrequency = TimeSpan.FromMinutes(5)
     });
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="memoryCache"></param>
+    public AppCacheService(IMemoryCache memoryCache)
+    {
+        _cache = memoryCache;
+    }
 
     #region 验证缓存项是否存在
 
@@ -64,7 +74,7 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _cache.Set(key, value);
+        _cache.Set(key, value.SerializeToJson());
         return Exists(key);
     }
 
@@ -81,7 +91,7 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _cache.Set(key, value, new MemoryCacheEntryOptions()
+        _cache.Set(key, value.SerializeToJson(), new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
             .SetAbsoluteExpiration(expiresAbsolute));
         return Exists(key);
@@ -100,7 +110,7 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _cache.Set(key, value, isSliding
+        _cache.Set(key, value.SerializeToJson(), isSliding
             ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
             : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
         return Exists(key);
@@ -118,7 +128,7 @@ public class AppCacheService : IAppCacheService
         if (value == null) throw new ArgumentNullException(nameof(value));
         if (seconds <= 0) throw new ArgumentOutOfRangeException(nameof(seconds));
 
-        _cache.Set(key, value, DateTime.Now.AddSeconds(seconds));
+        _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddSeconds(seconds));
         return Exists(key);
     }
 
@@ -134,7 +144,7 @@ public class AppCacheService : IAppCacheService
         if (value == null) throw new ArgumentNullException(nameof(value));
         if (minutes <= 0) throw new ArgumentOutOfRangeException(nameof(minutes));
 
-        _cache.Set(key, value, DateTime.Now.AddMinutes(minutes));
+        _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddMinutes(minutes));
         return Exists(key);
     }
 
@@ -202,8 +212,8 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        if (!Exists(key)) return Set(key, value);
-        return Remove(key) && Set(key, value);
+        if (!Exists(key)) return Set(key, value.SerializeToJson());
+        return Remove(key) && Set(key, value.SerializeToJson());
     }
 
     /// <summary>
@@ -219,8 +229,8 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        if (!Exists(key)) return Set(key, value, expiresSliding, expiresAbsolute);
-        return Remove(key) && Set(key, value, expiresSliding, expiresAbsolute);
+        if (!Exists(key)) return Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
+        return Remove(key) && Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
     }
 
     /// <summary>
@@ -236,8 +246,8 @@ public class AppCacheService : IAppCacheService
         if (key == null) throw new ArgumentNullException(nameof(key));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        if (!Exists(key)) return Set(key, value, expiresIn, isSliding);
-        return Remove(key) && Set(key, value, expiresIn, isSliding);
+        if (!Exists(key)) return Set(key, value.SerializeToJson(), expiresIn, isSliding);
+        return Remove(key) && Set(key, value.SerializeToJson(), expiresIn, isSliding);
     }
 
     #endregion

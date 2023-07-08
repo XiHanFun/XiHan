@@ -18,20 +18,20 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统字典数据表
+/// 系统字典项表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Dict_Data")]
 public class SysDictData : BaseModifyEntity
 {
     /// <summary>
-    /// 字典类型
+    /// 字典ID
     ///</summary>
     [SugarColumn(Length = 50)]
-    public string Type { get; init; } = string.Empty;
+    public long DictTypeId { get; set; }
 
     /// <summary>
-    /// 字典标签
+    /// 字典项标签
     /// </summary>
     [SugarColumn(Length = 50)]
     public string Label { get; set; } = string.Empty;
@@ -54,7 +54,7 @@ public class SysDictData : BaseModifyEntity
     public int SortOrder { get; set; }
 
     /// <summary>
-    /// 样式
+    /// 字典项样式
     /// </summary>
     [SugarColumn(Length = 50)]
     public string CssClass { get; set; } = string.Empty;

@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
+
 namespace XiHan.Services.Syses.Dicts.Dtos;
 
 /// <summary>
@@ -20,14 +22,19 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 public class SysDictDataWhereDto
 {
     /// <summary>
-    /// 字典类型
+    /// 字典ID
     ///</summary>
-    public string? Type { get; set; }
+    public long? DictTypeId { get; set; }
 
     /// <summary>
-    /// 字典标签
+    /// 字典项标签
     /// </summary>
     public string? Label { get; set; }
+
+    /// <summary>
+    /// 字典项值
+    ///</summary>
+    public string? Value { get; set; }
 
     /// <summary>
     /// 是否默认值

@@ -20,14 +20,14 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 public class SysDictTypeWhereDto
 {
     /// <summary>
-    /// 字典类型
-    ///</summary>
-    public string? Type { get; set; }
-
-    /// <summary>
     /// 字典名称
     /// </summary>
-    public string? Name { get; set; }
+    public string? DictName { get; set; }
+
+    /// <summary>
+    /// 字典编码
+    ///</summary>
+    public string? DictCode { get; set; }
 
     /// <summary>
     /// 是否启用

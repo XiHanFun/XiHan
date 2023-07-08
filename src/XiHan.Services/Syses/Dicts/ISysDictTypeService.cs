@@ -25,57 +25,50 @@ namespace XiHan.Services.Syses.Dicts;
 public interface ISysDictTypeService : IBaseService<SysDictType>
 {
     /// <summary>
-    /// 校验字典类型是否唯一
-    /// </summary>
-    /// <param name="sysDictType">字典类型</param>
-    /// <returns></returns>
-    Task<bool> CheckDictTypeUnique(SysDictType sysDictType);
-
-    /// <summary>
-    /// 新增字典类型
+    /// 新增字典
     /// </summary>
     /// <param name="sysDictType"></param>
     /// <returns></returns>
     Task<long> CreateDictType(SysDictType sysDictType);
 
     /// <summary>
-    /// 批量删除字典类型
+    /// 批量删除字典
     /// </summary>
     /// <param name="dictIds"></param>
     /// <returns></returns>
     Task<bool> DeleteDictTypeByIds(long[] dictIds);
 
     /// <summary>
-    /// 修改字典类型
+    /// 修改字典
     /// </summary>
     /// <param name="sysDictType"></param>
     /// <returns></returns>
     Task<bool> ModifyDictType(SysDictType sysDictType);
 
     /// <summary>
-    /// 查询字典类型
+    /// 查询字典
     /// </summary>
     /// <param name="dictId"></param>
     /// <returns></returns>
     Task<SysDictType> GetDictTypeById(long dictId);
 
     /// <summary>
-    /// 查询所有字典类型
+    /// 查询所有字典
     /// </summary>
     /// <returns></returns>
     Task<List<SysDictType>> GetAllDictType();
 
     /// <summary>
-    /// 查询字典类型列表
+    /// 查询字典列表
     /// </summary>
     /// <param name="sysDictTypeWhere"></param>
     /// <returns></returns>
     Task<List<SysDictType>> GetDictTypeList(SysDictTypeWhereDto sysDictTypeWhere);
 
     /// <summary>
-    /// 查询字典类型列表(根据分页条件)
+    /// 查询字典列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysDictType>> GetDictTypeList(PageWhereDto<SysDictTypeWhereDto> pageWhere);
+    Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWhereDto> pageWhere);
 }

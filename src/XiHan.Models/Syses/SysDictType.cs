@@ -18,7 +18,7 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统字典类型表
+/// 系统字典表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Dict_Type")]
@@ -28,13 +28,13 @@ public class SysDictType : BaseModifyEntity
     /// 字典名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    public string DictName { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字典类型
+    /// 字典编码
     ///</summary>
     [SugarColumn(Length = 50)]
-    public string Type { get; set; } = string.Empty;
+    public string DictCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否启用

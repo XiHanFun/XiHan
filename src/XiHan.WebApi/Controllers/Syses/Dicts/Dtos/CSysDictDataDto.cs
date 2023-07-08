@@ -23,16 +23,13 @@ namespace XiHan.WebApi.Controllers.Syses.Dicts.Dtos;
 public class CSysDictDataDto : BaseIdDto
 {
     /// <summary>
-    /// 字典类型
+    /// 字典ID
     ///</summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
-    [RegularExpression("^[a-z][a-z0-9_]*$", ErrorMessage = "{0}必须以字母开头,且只能由小写字母、加下划线、数字组成")]
-    public string Type { get; set; } = string.Empty;
+    public long DictTypeId { get; set; }
 
     /// <summary>
-    /// 字典标签
+    /// 字典项标签
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
@@ -60,7 +57,7 @@ public class CSysDictDataDto : BaseIdDto
     public int SortOrder { get; set; }
 
     /// <summary>
-    /// 样式
+    /// 字典项样式
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]

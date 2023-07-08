@@ -29,7 +29,7 @@ namespace XiHan.WebApi.Controllers.Syses.Dicts;
 
 /// <summary>
 /// 系统字典管理
-/// <code>包含：字典类型/字典数据</code>
+/// <code>包含：字典/字典项</code>
 /// </summary>
 //[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
@@ -53,12 +53,12 @@ public class SysDictController : BaseApiController
     #region 新增
 
     /// <summary>
-    /// 新增字典类型
+    /// 新增字典
     /// </summary>
     /// <param name="cSysDictType"></param>
     /// <returns></returns>
     [HttpPost("Create/Type")]
-    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Create)]
+    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Create)]
     public async Task<CustomResult> CreateDictType([FromBody] CSysDictTypeDto cSysDictType)
     {
         var sysDictType = cSysDictType.Adapt<SysDictType>();
@@ -67,12 +67,12 @@ public class SysDictController : BaseApiController
     }
 
     /// <summary>
-    /// 新增字典数据
+    /// 新增字典项
     /// </summary>
     /// <param name="cSysDictData"></param>
     /// <returns></returns>
     [HttpPost("Create/Data")]
-    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Create)]
+    [AppLog(Module = "字典项", BusinessType = BusinessTypeEnum.Create)]
     public async Task<CustomResult> CreateDictData([FromBody] CSysDictDataDto cSysDictData)
     {
         var sysDictData = cSysDictData.Adapt<SysDictData>();
@@ -85,27 +85,28 @@ public class SysDictController : BaseApiController
     #region 删除
 
     /// <summary>
-    /// 删除字典类型
+    /// 删除字典
     /// </summary>
+    /// <param name="dictIds"></param>
     /// <returns></returns>
-    [HttpDelete("Delete/Type")]
-    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<CustomResult> DeleteDictType([FromBody] long[] ids)
+    [HttpDelete("Delete/Type/ByIds")]
+    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Delete)]
+    public async Task<CustomResult> DeleteDictType([FromBody] long[] dictIds)
     {
-        var result = await _sysDictTypeService.DeleteDictTypeByIds(ids);
+        var result = await _sysDictTypeService.DeleteDictTypeByIds(dictIds);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 删除字典数据
+    /// 删除字典项
     /// </summary>
-    /// <param name="ids"></param>
+    /// <param name="dictDataIds"></param>
     /// <returns></returns>
-    [HttpDelete("Delete/Data")]
-    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<CustomResult> DeleteDictData([FromBody] long[] ids)
+    [HttpDelete("Delete/Data/ByIds")]
+    [AppLog(Module = "字典项", BusinessType = BusinessTypeEnum.Delete)]
+    public async Task<CustomResult> DeleteDictData([FromBody] long[] dictDataIds)
     {
-        var result = await _sysDictDataService.DeleteDictDataByIds(ids);
+        var result = await _sysDictDataService.DeleteDictDataByIds(dictDataIds);
         return CustomResult.Success(result);
     }
 
@@ -114,12 +115,12 @@ public class SysDictController : BaseApiController
     #region 修改
 
     /// <summary>
-    /// 修改字典类型
+    /// 修改字典
     /// </summary>
     /// <param name="cSysDictType"></param>
     /// <returns></returns>
     [HttpPut("Modify/Type")]
-    [AppLog(Module = "字典类型", BusinessType = BusinessTypeEnum.Modify)]
+    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<CustomResult> ModifyDictData([FromBody] CSysDictTypeDto cSysDictType)
     {
         var sysDictType = cSysDictType.Adapt<SysDictType>();
@@ -128,12 +129,12 @@ public class SysDictController : BaseApiController
     }
 
     /// <summary>
-    /// 修改字典数据
+    /// 修改字典项
     /// </summary>
     /// <param name="cSysDictData"></param>
     /// <returns></returns>
     [HttpPut("Modify/Data")]
-    [AppLog(Module = "字典数据", BusinessType = BusinessTypeEnum.Modify)]
+    [AppLog(Module = "字典项", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<CustomResult> ModifyDictData([FromBody] CSysDictDataDto cSysDictData)
     {
         var sysDictData = cSysDictData.Adapt<SysDictData>();
@@ -146,80 +147,80 @@ public class SysDictController : BaseApiController
     #region 查询
 
     /// <summary>
-    /// 查询字典类型详情
+    /// 查询字典详情
     /// </summary>
-    /// <param name="sysDictTypeId"></param>
+    /// <param name="dictId"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpGet("Get/Type/{sysDictTypeId}")]
-    public async Task<CustomResult> GetDictTypeById(long sysDictTypeId)
+    [HttpPost("Get/Type/ById")]
+    public async Task<CustomResult> GetDictTypeById([FromBody] long dictId)
     {
-        var result = await _sysDictTypeService.GetDictTypeById(sysDictTypeId);
+        var result = await _sysDictTypeService.GetDictTypeById(dictId);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 查询字典类型列表
+    /// 查询字典分页列表
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpPost("Get/Type/List")]
-    public async Task<CustomResult> GetDictTypeList([FromBody] PageWhereDto<SysDictTypeWhereDto> pageWhere)
+    [HttpPost("Get/Type/PageList")]
+    public async Task<CustomResult> GetDictTypePageList([FromBody] PageWhereDto<SysDictTypeWhereDto> pageWhere)
     {
-        var result = await _sysDictTypeService.GetDictTypeList(pageWhere);
+        var result = await _sysDictTypeService.GetDictTypePageList(pageWhere);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 查询字典数据详情
+    /// 查询字典项详情
     /// </summary>
-    /// <param name="sysDictDataId"></param>
+    /// <param name="dictDataId"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpGet("Get/Data/{sysDictDataId}")]
-    public async Task<CustomResult> GetDictDataById(long sysDictDataId)
+    [HttpPost("Get/Data/ById")]
+    public async Task<CustomResult> GetDictDataById([FromBody] long dictDataId)
     {
-        var result = await _sysDictDataService.GetDictDataById(sysDictDataId);
+        var result = await _sysDictDataService.GetDictDataById(dictDataId);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 查询字典数据列表(根据字典类型)
+    /// 查询字典项列表(根据字典编码)
     /// </summary>
-    /// <param name="sysDictType"></param>
+    /// <param name="dictCode"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpGet("Get/Data/ByType/{sysDictType}")]
-    public async Task<CustomResult> GetDictDataByType(string sysDictType)
+    [HttpPost("Get/Data/ByTypeCode")]
+    public async Task<CustomResult> GetDictDataByType([FromBody] string dictCode)
     {
-        var result = await _sysDictDataService.GetDictDataByType(sysDictType);
+        var result = await _sysDictDataService.GetDictDataByType(dictCode);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 查询字典数据列表(根据多个字典类型)
+    /// 查询字典项列表(根据多个字典)
     /// </summary>
-    /// <param name="sysDictTypes"></param>
+    /// <param name="dictCodes"></param>
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("Get/Data/ByTypes")]
-    public async Task<CustomResult> GetDictDataByTypes([FromBody] string[] sysDictTypes)
+    public async Task<CustomResult> GetDictDataByTypes([FromBody] string[] dictCodes)
     {
-        var result = await _sysDictDataService.GetDictDataByTypes(sysDictTypes);
+        var result = await _sysDictDataService.GetDictDataByTypes(dictCodes);
         return CustomResult.Success(result);
     }
 
     /// <summary>
-    /// 查询字典数据列表
+    /// 查询字典项分页列表
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    [HttpPost("Get/Data/List")]
-    public async Task<CustomResult> GetDictDataList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhere)
+    [HttpPost("Get/Data/PageList")]
+    public async Task<CustomResult> GetDictDataPageList([FromBody] PageWhereDto<SysDictDataWhereDto> pageWhere)
     {
-        var result = await _sysDictDataService.GetDictDataList(pageWhere);
+        var result = await _sysDictDataService.GetDictDataPageList(pageWhere);
         return CustomResult.Success(result);
     }
 
@@ -236,7 +237,7 @@ public class SysDictController : BaseApiController
     //public async Task<FileStreamResult> ExportDict()
     //{
     //    var result = await _sysDictTypeService.GetAllDictType();
-    //    var fileName = ExportExcel(result, "SysDictType", "字典类型");
+    //    var fileName = ExportExcel(result, "SysDictType", "字典");
     //    return ExportExcel(fileName.Item2, fileName.Item1);
     //    //return ResultDto.Success(new { path = "/Export/" + fileName, fileName = fileName.Item1 });
     //}
