@@ -3,24 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:CSysDictTypeDto
-// Guid:5ecd4d58-269e-4297-972f-a7c8d0540aec
-// Author:zhaifanhua
+// FileName:SysDictTypeCDto
+// Guid:2343c661-15b8-45ba-ae2a-715ce9dbec4c
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-06-14 上午 02:31:34
+// CreateTime:2023-07-10 上午 02:15:20
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
-using XiHan.WebApi.Controllers.Bases;
+using XiHan.Services.Bases;
 
-namespace XiHan.WebApi.Controllers.Syses.Dicts.Dtos;
+namespace XiHan.Services.Syses.Dicts.Dtos;
 
 /// <summary>
-/// 字典类型新增修改实体
+/// SysDictTypeCDto
 /// </summary>
-public class CSysDictTypeDto : BaseIdDto
+public class SysDictTypeCDto : BaseIdDto
 {
     /// <summary>
     /// 字典名称

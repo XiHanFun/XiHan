@@ -27,9 +27,9 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// <summary>
     /// 新增字典
     /// </summary>
-    /// <param name="sysDictType"></param>
+    /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
-    Task<long> CreateDictType(SysDictType sysDictType);
+    Task<long> CreateDictType(SysDictTypeCDto dictTypeCDto);
 
     /// <summary>
     /// 批量删除字典
@@ -41,9 +41,9 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// <summary>
     /// 修改字典
     /// </summary>
-    /// <param name="sysDictType"></param>
+    /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
-    Task<bool> ModifyDictType(SysDictType sysDictType);
+    Task<bool> ModifyDictType(SysDictTypeCDto dictTypeCDto);
 
     /// <summary>
     /// 查询字典
@@ -53,22 +53,22 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     Task<SysDictType> GetDictTypeById(long dictId);
 
     /// <summary>
-    /// 查询所有字典
+    /// 查询字典列表(所有)
     /// </summary>
     /// <returns></returns>
-    Task<List<SysDictType>> GetAllDictType();
+    Task<List<SysDictType>> GetDictTypeList();
 
     /// <summary>
     /// 查询字典列表
     /// </summary>
-    /// <param name="sysDictTypeWhere"></param>
+    /// <param name="dictTypeWDto"></param>
     /// <returns></returns>
-    Task<List<SysDictType>> GetDictTypeList(SysDictTypeWhereDto sysDictTypeWhere);
+    Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto dictTypeWDto);
 
     /// <summary>
     /// 查询字典列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWhereDto> pageWhere);
+    Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWDto> pageWhere);
 }

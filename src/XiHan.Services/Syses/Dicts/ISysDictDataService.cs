@@ -27,9 +27,9 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// <summary>
     /// 新增字典项
     /// </summary>
-    /// <param name="sysDictData"></param>
+    /// <param name="dictDataCDto"></param>
     /// <returns></returns>
-    Task<long> CreateDictData(SysDictData sysDictData);
+    Task<long> CreateDictData(SysDictDataCDto dictDataCDto);
 
     /// <summary>
     /// 批量删除字典项
@@ -41,9 +41,9 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// <summary>
     /// 修改字典数项
     /// </summary>
-    /// <param name="sysDictData"></param>
+    /// <param name="dictDataCDto"></param>
     /// <returns></returns>
-    Task<bool> ModifyDictData(SysDictData sysDictData);
+    Task<bool> ModifyDictData(SysDictDataCDto dictDataCDto);
 
     /// <summary>
     /// 查询字典项(根据Id)
@@ -57,19 +57,19 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// </summary>
     /// <param name="dictCode"></param>
     /// <returns></returns>
-    Task<List<SysDictData>> GetDictDataByType(string dictCode);
+    Task<List<SysDictData>> GetDictDataListByType(string dictCode);
 
     /// <summary>
     /// 查询字典项列表(根据多个字典编码)
     /// </summary>
     /// <param name="dictCodes"></param>
     /// <returns></returns>
-    Task<List<SysDictData>> GetDictDataByTypes(string[] dictCodes);
+    Task<List<SysDictData>> GetDictDataListByTypes(string[] dictCodes);
 
     /// <summary>
     /// 查询字典项列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWhereDto> pageWhere);
+    Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWDto> pageWhere);
 }

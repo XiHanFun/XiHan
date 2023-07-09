@@ -20,17 +20,7 @@ namespace XiHan.Infrastructures.Apps;
 public static class AppGlobalConstant
 {
     /// <summary>
-    /// 管理员权限
+    /// 默认密码
     /// </summary>
-    public const string AdminPermission = "*:*:*";
-
-    /// <summary>
-    /// 管理员角色
-    /// </summary>
-    public const string AdminRole = "admin";
-
-    /// <summary>
-    /// 开发版本API映射路径
-    /// </summary>
-    public const string DevApiProxy = "/dev-api/";
+    public const string SysPassword = "XH_password_123";
 }

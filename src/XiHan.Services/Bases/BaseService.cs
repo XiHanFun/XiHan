@@ -21,11 +21,11 @@ namespace XiHan.Services.Bases;
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 /// <remarks>
-/// 方法命名规范（这里由于继承自BaseRepository，所以不更改）：
-/// Create
-/// Delete
-/// Modify
-/// Get
+/// 服务方法命名规范（这里由于继承自BaseRepository，所以不更改）：
+/// 新增：Create
+/// 删除：Delete
+/// 修改：Modify
+/// 查询：Get
 /// </remarks>
 public class BaseService<TEntity> : BaseRepository<TEntity> where TEntity : class, new()
 {

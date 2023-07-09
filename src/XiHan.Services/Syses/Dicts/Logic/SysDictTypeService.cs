@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
@@ -55,10 +56,12 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 新增字典
     /// </summary>
-    /// <param name="sysDictType"></param>
+    /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
-    public async Task<long> CreateDictType(SysDictType sysDictType)
+    public async Task<long> CreateDictType(SysDictTypeCDto dictTypeCDto)
     {
+        var sysDictType = dictTypeCDto.Adapt<SysDictType>();
+
         _ = await CheckDictTypeUnique(sysDictType);
 
         return await AddReturnIdAsync(sysDictType);
@@ -92,10 +95,14 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 修改字典
     /// </summary>
-    /// <param name="sysDictType"></param>
+    /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyDictType(SysDictType sysDictType)
+    public async Task<bool> ModifyDictType(SysDictTypeCDto dictTypeCDto)
     {
+        var sysDictType = dictTypeCDto.Adapt<SysDictType>();
+
+        _ = await CheckDictTypeUnique(sysDictType);
+
         var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
 
         if (sysDictType.DictCode != oldDictType.DictCode) await CheckDictTypeUnique(sysDictType);
@@ -113,10 +120,10 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     }
 
     /// <summary>
-    /// 查询所有字典
+    /// 查询字典列表(所有)
     /// </summary>
     /// <returns></returns>
-    public async Task<List<SysDictType>> GetAllDictType()
+    public async Task<List<SysDictType>> GetDictTypeList()
     {
         return await QueryAllAsync();
     }
@@ -124,15 +131,15 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 查询字典列表
     /// </summary>
-    /// <param name="sysDictTypeWhere"></param>
+    /// <param name="dictTypeWDto"></param>
     /// <returns></returns>
-    public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWhereDto sysDictTypeWhere)
+    public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto dictTypeWDto)
     {
         var whereExpression = Expressionable.Create<SysDictType>();
-        whereExpression.AndIF(sysDictTypeWhere.DictName.IsNotEmptyOrNull(), u => u.DictName.Contains(sysDictTypeWhere.DictName!));
-        whereExpression.AndIF(sysDictTypeWhere.DictCode.IsNotEmptyOrNull(), u => u.DictCode == sysDictTypeWhere.DictCode);
-        whereExpression.AndIF(sysDictTypeWhere.IsEnable != null, u => u.IsEnable == sysDictTypeWhere.IsEnable);
-        whereExpression.AndIF(sysDictTypeWhere.IsOfficial != null, u => u.IsOfficial == sysDictTypeWhere.IsOfficial);
+        whereExpression.AndIF(dictTypeWDto.DictName.IsNotEmptyOrNull(), u => u.DictName.Contains(dictTypeWDto.DictName!));
+        whereExpression.AndIF(dictTypeWDto.DictCode.IsNotEmptyOrNull(), u => u.DictCode == dictTypeWDto.DictCode);
+        whereExpression.AndIF(dictTypeWDto.IsEnable != null, u => u.IsEnable == dictTypeWDto.IsEnable);
+        whereExpression.AndIF(dictTypeWDto.IsOfficial != null, u => u.IsOfficial == dictTypeWDto.IsOfficial);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.DictCode);
     }
@@ -142,7 +149,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWhereDto> pageWhere)
+    public async Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 

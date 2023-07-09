@@ -14,6 +14,7 @@
 
 using Mapster;
 using SqlSugar;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
@@ -33,6 +34,7 @@ namespace XiHan.Services.Syses.Users.Logic;
 [AppService(ServiceType = typeof(ISysUserService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysUserService : BaseService<SysUser>, ISysUserService
 {
+    private string _secretKey = AppSettings.Syses.Domain.GetValue();
     private readonly ISysUserRoleService _sysUserRoleService;
     private readonly ISysRoleService _sysRoleService;
 
@@ -48,43 +50,33 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 校验账户是否唯一
     /// </summary>
-    /// <param name="account"></param>
-    /// <returns></returns>
-    private async Task<bool> GetAccountUnique(string account)
-    {
-        var isUnique = await IsAnyAsync(u => u.Account == account && !u.IsDeleted);
-        if (isUnique) throw new CustomException($"账户【{account}】已存在！");
-        return isUnique;
-    }
-
-    /// <summary>
-    /// 校验角色是否允许操作
-    /// </summary>
     /// <param name="sysUser"></param>
     /// <returns></returns>
-    private bool GetUserIsAdmin(SysUser sysUser)
+    private async Task<bool> GetAccountUnique(SysUser sysUser)
     {
-        var isAdmin = sysUser.IsAdmin();
-        if (!isAdmin) throw new CustomException("不允许操作超级管理员角色！");
-        return isAdmin;
+        var isUnique = await IsAnyAsync(u => u.Account == sysUser.Account && !u.IsDeleted);
+        if (isUnique) throw new CustomException($"账户【{sysUser.Account}】已存在！");
+        return isUnique;
     }
 
     /// <summary>
     /// 新增用户
     /// </summary>
-    /// <param name="sysUserCreate"></param>
+    /// <param name="userCDto"></param>
     /// <returns></returns>
-    public async Task<long> CreateUser(SysUserCreateDto sysUserCreate)
+    public async Task<long> CreateUser(SysUserCDto userCDto)
     {
-        var sysUser = sysUserCreate.Adapt<SysUser>();
-        var secretKey = AppSettings.Syses.Domain.GetValue();
-        sysUser.Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(sysUser.Password, secretKey));
-        _ = await GetAccountUnique(sysUser.Account);
+        var sysUser = userCDto.Adapt<SysUser>();
+
+        _ = await GetAccountUnique(sysUser);
+
+        string password = AppGlobalConstant.SysPassword;
+        sysUser.Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey));
         var userId = await AddReturnIdAsync(sysUser);
 
         // 新增用户角色信息
         sysUser.BaseId = userId;
-        await _sysUserRoleService.CreateUserRole(sysUser);
+        //await _sysUserRoleService.CreateUserRole(sysUser);
         return userId;
     }
 
@@ -104,10 +96,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 修改用户账号信息
     /// </summary>
-    /// <param name="sysUser"></param>
+    /// <param name="userCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyUserAccountInfo(SysUser sysUser)
+    public async Task<bool> ModifyUserAccountInfo(SysUserCDto userCDto)
     {
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             Account = sysUser.Account,
@@ -120,10 +113,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 修改用户基本信息
     /// </summary>
-    /// <param name="sysUser"></param>
+    /// <param name="userCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyUserBaseInfo(SysUser sysUser)
+    public async Task<bool> ModifyUserBaseInfo(SysUserCDto userCDto)
     {
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             RealName = sysUser.RealName,
@@ -138,10 +132,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 修改用户登陆信息
     /// </summary>
-    /// <param name="sysUser"></param>
+    /// <param name="userCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyUserLoginInfo(SysUser sysUser)
+    public async Task<bool> ModifyUserLoginInfo(SysUserCDto userCDto)
     {
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             LastLoginDevice = sysUser.LastLoginDevice,
@@ -150,29 +145,31 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         }, f => f.BaseId == sysUser.BaseId);
     }
 
-    /// <summary>
-    /// 修改用户角色
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <returns></returns>
-    public async Task<bool> ModifyUserRole(SysUser sysUser)
-    {
-        var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
-        var diffArr1 = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
-        var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
+    ///// <summary>
+    ///// 修改用户角色
+    ///// </summary>
+    ///// <param name="userCDto"></param>
+    ///// <returns></returns>
+    //public async Task<bool> ModifyUserRole(SysUserCDto userCDto)
+    //{
+    //    var sysUser = userCDto.Adapt<SysUser>();
+    //    //var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+    //    //var diffArr1 = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
+    //    //var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
 
-        if (!diffArr1.Any() && !diffArr2.Any()) return true;
-        // 删除用户与角色关联并重新关联用户与角色
-        return await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId) && await _sysUserRoleService.CreateUserRole(sysUser);
-    }
+    //    //if (!diffArr1.Any() && !diffArr2.Any()) return true;
+    //    // 删除用户与角色关联并重新关联用户与角色
+    //    return await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId) && await _sysUserRoleService.CreateUserRole(sysUser);
+    //}
 
     /// <summary>
     /// 更改用户状态
     /// </summary>
-    /// <param name="sysUser"></param>
+    /// <param name="userCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyUserStatus(SysUser sysUser)
+    public async Task<bool> ModifyUserStatus(SysUserCDto userCDto)
     {
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             StateKey = sysUser.StateKey,
@@ -188,10 +185,9 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(long userId, string password)
     {
-        var secretKey = AppSettings.Syses.Domain.GetValue();
         return await UpdateAsync(s => new SysUser()
         {
-            Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, secretKey))
+            Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey))
         }, f => f.BaseId == userId);
     }
 
@@ -210,7 +206,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWhereDto> pageWhere)
+    public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
         var whereExpression = Expressionable.Create<SysUser>();
@@ -233,8 +229,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<SysUser?> GetUserById(long userId)
     {
         var sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
-        sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
-        sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
+        //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
+        //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
 
         return sysUser;
     }

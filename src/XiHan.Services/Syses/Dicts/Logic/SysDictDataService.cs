@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using SqlSugar;
 using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
@@ -56,12 +57,14 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 新增字典项
     /// </summary>
-    /// <param name="sysDictData"></param>
+    /// <param name="dictDataCDto"></param>
     /// <returns></returns>
-    public async Task<long> CreateDictData(SysDictData sysDictData)
+    public async Task<long> CreateDictData(SysDictDataCDto dictDataCDto)
     {
+        var sysDictData = dictDataCDto.Adapt<SysDictData>();
         if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.BaseId == sysDictData.DictTypeId && t.IsEnable))
             throw new CustomException($"该字典不存在!");
+
         _ = await CheckDictValueUnique(sysDictData);
 
         return await AddReturnIdAsync(sysDictData);
@@ -81,10 +84,12 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 修改字典数项
     /// </summary>
-    /// <param name="sysDictData"></param>
+    /// <param name="dictDataCDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyDictData(SysDictData sysDictData)
+    public async Task<bool> ModifyDictData(SysDictDataCDto dictDataCDto)
     {
+        var sysDictData = dictDataCDto.Adapt<SysDictData>();
+
         _ = await CheckDictValueUnique(sysDictData);
 
         return await UpdateAsync(sysDictData);
@@ -93,13 +98,13 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 查询字典项(根据Id)
     /// </summary>
-    /// <param name="dictId"></param>
+    /// <param name="dictDataId"></param>
     /// <returns></returns>
-    public async Task<SysDictData> GetDictDataById(long dictId)
+    public async Task<SysDictData> GetDictDataById(long dictDataId)
     {
-        var key = $"GetDictDataById_{dictId}";
+        var key = $"GetDictDataById_{dictDataId}";
         if (_appCacheService.Get(key) is SysDictData sysDictData) return sysDictData;
-        sysDictData = await FindAsync(d => d.BaseId == dictId && d.IsEnable);
+        sysDictData = await FindAsync(d => d.BaseId == dictDataId && d.IsEnable);
         _appCacheService.SetWithMinutes(key, sysDictData, 30);
 
         return sysDictData;
@@ -110,7 +115,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// </summary>
     /// <param name="dictCode"></param>
     /// <returns></returns>
-    public async Task<List<SysDictData>> GetDictDataByType(string dictCode)
+    public async Task<List<SysDictData>> GetDictDataListByType(string dictCode)
     {
         var key = $"GetDictDataByType_{dictCode}";
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
@@ -130,7 +135,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// </summary>
     /// <param name="dictCodes"></param>
     /// <returns></returns>
-    public async Task<List<SysDictData>> GetDictDataByTypes(string[] dictCodes)
+    public async Task<List<SysDictData>> GetDictDataListByTypes(string[] dictCodes)
     {
         var key = $"GetDictDataByType_{dictCodes.GetArrayStr(",")}";
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
@@ -150,7 +155,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWhereDto> pageWhere)
+    public async Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 

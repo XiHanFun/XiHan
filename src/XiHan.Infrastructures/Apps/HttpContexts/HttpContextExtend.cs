@@ -264,7 +264,7 @@ public static class HttpContextExtend
                 UserName = context.GetUserName(),
                 UserRole = context.GetUserRole(),
                 UserToken = context.GetUserToken(),
-                IsAdmin = context.IsAdmin(),
+                //IsAdmin = context.IsAdmin(),
                 Claims = context.GetClaims()
             };
             return userAuthInfo;
@@ -330,19 +330,19 @@ public static class HttpContextExtend
         return context.Request.Headers["Authorization"].ToString();
     }
 
-    /// <summary>
-    /// 判断是否是管理员
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsAdmin(this HttpContext? context)
-    {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+    ///// <summary>
+    ///// 判断是否是管理员
+    ///// </summary>
+    ///// <param name="context"></param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public static bool IsAdmin(this HttpContext? context)
+    //{
+    //    if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var userName = context.GetUserName();
-        return userName == AppGlobalConstant.AdminRole;
-    }
+    //    var userName = context.GetUserName();
+    //    return userName == AppGlobalConstant.AdminRole;
+    //}
 
     /// <summary>
     /// ClaimsIdentity

@@ -48,15 +48,15 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     public List<string> GetRolePermission(SysUser user)
     {
         var roles = new List<string>();
-        // 管理员拥有所有权限
-        if (user.IsAdmin())
-        {
-            roles.Add("admin");
-        }
-        else
-        {
-            // roles.AddRange(_sysRoleService.GetRoleIdsByUserId(user.BaseId));
-        }
+        //// 管理员拥有所有权限
+        //if (user.IsAdmin())
+        //{
+        //    roles.Add("admin");
+        //}
+        //else
+        //{
+        //    // roles.AddRange(_sysRoleService.GetRoleIdsByUserId(user.BaseId));
+        //}
 
         return roles;
     }

@@ -70,23 +70,23 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
         return await DeleteAsync(it => it.RoleId == roleId && userIds.Contains(it.UserId));
     }
 
-    /// <summary>
-    /// 新增用户角色信息
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <returns></returns>
-    public async Task<bool> CreateUserRole(SysUser sysUser)
-    {
-        var sysUserRoles = sysUser.SysRoleIds.Select(item => new SysUserRole
-            {
-                RoleId = item,
-                UserId = sysUser.BaseId
-            })
-            .Select(sysUserRole => sysUserRole.ToCreated())
-            .ToList();
+    ///// <summary>
+    ///// 新增用户角色信息
+    ///// </summary>
+    ///// <param name="sysUser"></param>
+    ///// <returns></returns>
+    //public async Task<bool> CreateUserRole(SysUser sysUser)
+    //{
+    //    var sysUserRoles = sysUser.SysRoleIds.Select(item => new SysUserRole
+    //        {
+    //            RoleId = item,
+    //            UserId = sysUser.BaseId
+    //        })
+    //        .Select(sysUserRole => sysUserRole.ToCreated())
+    //        .ToList();
 
-        return sysUserRoles.Any() && await CreateUserRoles(sysUserRoles);
-    }
+    //    return sysUserRoles.Any() && await CreateUserRoles(sysUserRoles);
+    //}
 
     /// <summary>
     /// 批量新增用户角色

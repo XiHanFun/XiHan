@@ -136,39 +136,4 @@ public class SysUser : BaseEntity
     public DateTime? LastLoginTime { get; set; }
 
     #endregion
-
-    #region 其他信息
-
-    /// <summary>
-    /// 是否超级管理员
-    /// </summary>
-    /// <returns></returns>
-    public bool IsAdmin()
-    {
-        return IsAdmin(BaseId);
-    }
-
-    /// <summary>
-    /// 是否超级管理员
-    /// </summary>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    private static bool IsAdmin(long userId)
-    {
-        return userId == 00000001L;
-    }
-
-    /// <summary>
-    /// 所属角色集合
-    /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public List<SysRole> SysRoles { get; set; } = new();
-
-    /// <summary>
-    /// 所属角色主键集合
-    /// </summary>
-    [SugarColumn(IsIgnore = true)]
-    public List<long> SysRoleIds { get; set; } = new();
-
-    #endregion
 }
