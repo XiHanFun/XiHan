@@ -86,15 +86,15 @@ public static partial class RegexHelper
         switch (checkValue.Length)
         {
             case 18:
-            {
-                var check = IsNumberPeople18(checkValue);
-                return check;
-            }
+                {
+                    var check = IsNumberPeople18(checkValue);
+                    return check;
+                }
             case 15:
-            {
-                var check = IsNumberPeople15(checkValue);
-                return check;
-            }
+                {
+                    var check = IsNumberPeople15(checkValue);
+                    return check;
+                }
             default:
                 return false;
         }
