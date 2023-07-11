@@ -45,7 +45,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 校验字典项值是否唯一
     /// </summary>
-    /// <param name="sysDictData">字典类型</param>
+    /// <param name="sysDictData"></param>
     /// <returns></returns>
     private async Task<bool> CheckDictValueUnique(SysDictData sysDictData)
     {

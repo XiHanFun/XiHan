@@ -12,8 +12,11 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Exceptions;
+using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Permissions.Dtos;
 
 namespace XiHan.Services.Syses.Permissions;
 
@@ -23,16 +26,45 @@ namespace XiHan.Services.Syses.Permissions;
 public interface ISysPermissionService : IBaseService<SysPermission>
 {
     /// <summary>
-    /// 获取角色权限
+    /// 新增权限
     /// </summary>
-    /// <param name="user">用户信息</param>
-    /// <returns>角色权限信息</returns>
-    List<string> GetRolePermission(SysUser user);
+    /// <param name="permissionCDto"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+    Task<long> CreatePermission(SysPermissionCDto permissionCDto);
 
     /// <summary>
-    /// 获取菜单权限
+    /// 批量删除权限
     /// </summary>
-    /// <param name="user">用户信息</param>
-    /// <returns>菜单权限信息</returns>
-    List<string> GetMenuPermission(SysUser user);
+    /// <param name="dictIds"></param>
+    /// <returns></returns>
+    Task<bool> DeletePermissionByIds(long[] dictIds);
+
+    /// <summary>
+    /// 修改字典数项
+    /// </summary>
+    /// <param name="permissionCDto"></param>
+    /// <returns></returns>
+    Task<bool> ModifyPermission(SysPermissionCDto permissionCDto);
+
+    /// <summary>
+    /// 查询权限(根据Id)
+    /// </summary>
+    /// <param name="permissionId"></param>
+    /// <returns></returns>
+    Task<SysPermission> GetPermissionById(long permissionId);
+
+    /// <summary>
+    /// 查询权限
+    /// </summary>
+    /// <param name="permissionWDto"></param>
+    /// <returns></returns>
+    Task<List<SysPermission>> GetDictTypeList(SysPermissionWDto permissionWDto);
+
+    /// <summary>
+    /// 查询权限(根据分页条件)
+    /// </summary>
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    Task<PageDataDto<SysPermission>> GetDictTypePageList(PageWhereDto<SysPermissionWDto> pageWhere);
 }

@@ -12,11 +12,16 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
+using SqlSugar;
+using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
+using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Menus;
-using XiHan.Services.Syses.Roles;
+using XiHan.Services.Syses.Permissions.Dtos;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Permissions.Logic;
 
@@ -26,49 +31,113 @@ namespace XiHan.Services.Syses.Permissions.Logic;
 [AppService(ServiceType = typeof(ISysPermissionService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysPermissionService : BaseService<SysPermission>, ISysPermissionService
 {
-    private readonly ISysRoleService _sysRoleService;
-    private readonly ISysMenuService _sysMenuService;
+    private readonly IAppCacheService _appCacheService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysRoleService"></param>
-    /// <param name="sysMenuService"></param>
-    public SysPermissionService(ISysRoleService sysRoleService, ISysMenuService sysMenuService)
+    /// <param name="appCacheService"></param>
+    public SysPermissionService(IAppCacheService appCacheService)
     {
-        _sysRoleService = sysRoleService;
-        _sysMenuService = sysMenuService;
+        _appCacheService = appCacheService;
     }
 
     /// <summary>
-    /// 获取角色权限
+    /// 校验权限是否唯一
     /// </summary>
-    /// <param name="user">用户信息</param>
-    /// <returns>角色权限信息</returns>
-    public List<string> GetRolePermission(SysUser user)
+    /// <param name="sysPermission"></param>
+    /// <returns></returns>
+    private async Task<bool> CheckDictValueUnique(SysPermission sysPermission)
     {
-        var roles = new List<string>();
-        //// 管理员拥有所有权限
-        //if (user.IsAdmin())
-        //{
-        //    roles.Add("admin");
-        //}
-        //else
-        //{
-        //    // roles.AddRange(_sysRoleService.GetRoleIdsByUserId(user.BaseId));
-        //}
-
-        return roles;
+        var isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code || p.Name == sysPermission.Name);
+        if (isUnique) throw new CustomException($"权限【{sysPermission.Name}】已存在!");
+        return isUnique;
     }
 
     /// <summary>
-    /// 获取菜单权限
+    /// 新增权限
     /// </summary>
-    /// <param name="user">用户信息</param>
-    /// <returns>菜单权限信息</returns>
-    public List<string> GetMenuPermission(SysUser user)
+    /// <param name="permissionCDto"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+    public async Task<long> CreatePermission(SysPermissionCDto permissionCDto)
     {
-        var menus = new List<string>();
-        return menus;
+        var sysPermission = permissionCDto.Adapt<SysPermission>();
+
+        _ = await CheckDictValueUnique(sysPermission);
+
+        return await AddReturnIdAsync(sysPermission);
+    }
+
+    /// <summary>
+    /// 批量删除权限
+    /// </summary>
+    /// <param name="dictIds"></param>
+    /// <returns></returns>
+    public async Task<bool> DeletePermissionByIds(long[] dictIds)
+    {
+        var Permission = await QueryAsync(d => dictIds.Contains(d.BaseId));
+        return await RemoveAsync(Permission);
+    }
+
+    /// <summary>
+    /// 修改字典数项
+    /// </summary>
+    /// <param name="permissionCDto"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyPermission(SysPermissionCDto permissionCDto)
+    {
+        var sysPermission = permissionCDto.Adapt<SysPermission>();
+
+        _ = await CheckDictValueUnique(sysPermission);
+
+        return await UpdateAsync(sysPermission);
+    }
+
+    /// <summary>
+    /// 查询权限(根据Id)
+    /// </summary>
+    /// <param name="permissionId"></param>
+    /// <returns></returns>
+    public async Task<SysPermission> GetPermissionById(long permissionId)
+    {
+        var key = $"GetPermissionById_{permissionId}";
+        if (_appCacheService.Get(key) is SysPermission sysPermission) return sysPermission;
+        sysPermission = await FindAsync(d => d.BaseId == permissionId);
+        _appCacheService.SetWithMinutes(key, sysPermission, 30);
+
+        return sysPermission;
+    }
+
+    /// <summary>
+    /// 查询权限
+    /// </summary>
+    /// <param name="permissionWDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysPermission>> GetDictTypeList(SysPermissionWDto permissionWDto)
+    {
+        var whereExpression = Expressionable.Create<SysPermission>();
+        whereExpression.AndIF(permissionWDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(permissionWDto.Name!));
+        whereExpression.AndIF(permissionWDto.Code.IsNotEmptyOrNull(), u => u.Code == permissionWDto.Code);
+        whereExpression.AndIF(permissionWDto.PermissionType != null, u => u.PermissionType == permissionWDto.PermissionType);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder);
+    }
+
+    /// <summary>
+    /// 查询权限(根据分页条件)
+    /// </summary>
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    public async Task<PageDataDto<SysPermission>> GetDictTypePageList(PageWhereDto<SysPermissionWDto> pageWhere)
+    {
+        var whereDto = pageWhere.Where;
+
+        var whereExpression = Expressionable.Create<SysPermission>();
+        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
+        whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
+
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
     }
 }

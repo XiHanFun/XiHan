@@ -12,8 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
-
 namespace XiHan.Services.Syses.Dicts.Dtos;
 
 /// <summary>
