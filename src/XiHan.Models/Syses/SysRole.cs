@@ -40,13 +40,18 @@ public class SysRole : BaseDeleteEntity
     /// <summary>
     /// 角色名称
     /// </summary>
-    [SugarColumn(Length = 10)]
+    [SugarColumn(Length = 20)]
     public string Name { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 角色排序
+    /// </summary>
+    public int SortOrder { get; set; }
 
     /// <summary>
     /// 角色描述
     /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 100, IsNullable = true)]
     public string? Description { get; set; }
 
     #region 其他字段

@@ -180,15 +180,18 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <summary>
     /// 重置用户密码
     /// </summary>
-    /// <param name="userId"></param>
-    /// <param name="password"></param>
+    /// <param name="userPwdMDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyUserPassword(long userId, string password)
+    public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        return await UpdateAsync(s => new SysUser()
+        if (await IsAnyAsync(u => u.BaseId == userPwdMDto.BaseId && u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
         {
-            Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey))
-        }, f => f.BaseId == userId);
+            return await UpdateAsync(s => new SysUser()
+            {
+                Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.NewPassword, _secretKey))
+            }, f => f.BaseId == userPwdMDto.BaseId);
+        }
+        throw new CustomException("重置密码出错，旧密码有误！");
     }
 
     /// <summary>

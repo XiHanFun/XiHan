@@ -27,9 +27,9 @@ public interface ISysOperationLogService : IBaseService<SysOperationLog>
     /// <summary>
     /// 新增操作日志
     /// </summary>
-    /// <param name="sysOperationLog"></param>
+    /// <param name="operationLog"></param>
     /// <returns></returns>
-    Task CreateOperationLog(SysOperationLog sysOperationLog);
+    Task CreateOperationLog(SysOperationLog operationLog);
 
     /// <summary>
     /// 批量删除操作日志
@@ -55,5 +55,5 @@ public interface ISysOperationLogService : IBaseService<SysOperationLog>
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWhereDto> pageWhere);
+    Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWDto> pageWhere);
 }

@@ -20,6 +20,11 @@ namespace XiHan.Infrastructures.Apps;
 public static class AppGlobalConstant
 {
     /// <summary>
+    /// 默认角色
+    /// </summary>
+    public const string SysRoleAdmin = "sys_role_admin";
+
+    /// <summary>
     /// 默认密码
     /// </summary>
     public const string SysPassword = "XH_password_123";

@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysUserService
-// Guid:d3876fef-9f85-4947-bb58-abc7e38b858d
-// Author:zhaifanhua
+// FileName:ISysPermissionMenuService
+// Guid:cde15f3f-c840-4024-a238-825acf9322b2
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-04-22 上午 12:45:47
+// CreateTime:2023-07-11 下午 04:47:48
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,11 +15,11 @@
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
-namespace XiHan.Services.Syses.Users;
+namespace XiHan.Services.Syses.Permissions;
 
 /// <summary>
-/// ISysUserService
+/// ISysPermissionMenuService
 /// </summary>
-public interface ISysUserService : IBaseService<SysUser>
+public interface ISysPermissionMenuService : IBaseService<SysPermissionMenu>
 {
 }

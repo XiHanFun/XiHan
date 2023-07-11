@@ -16,7 +16,6 @@ using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Operations.Dtos;
 using XiHan.Utils.Extensions;
@@ -32,12 +31,11 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// <summary>
     /// 新增操作日志
     /// </summary>
-    /// <param name="sysOperationLog"></param>
+    /// <param name="operationLog"></param>
     /// <returns></returns>
-    public async Task CreateOperationLog(SysOperationLog sysOperationLog)
+    public async Task CreateOperationLog(SysOperationLog operationLog)
     {
-        sysOperationLog = sysOperationLog.ToCreated();
-        await AddAsync(sysOperationLog);
+        await AddAsync(operationLog);
     }
 
     /// <summary>
@@ -73,7 +71,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWhereDto> pageWhere)
+    public async Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);

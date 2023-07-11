@@ -13,13 +13,14 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Models.Syses;
+using XiHan.Services.Bases;
 
 namespace XiHan.Services.Syses.Permissions;
 
 /// <summary>
 /// ISysPermissionService
 /// </summary>
-public interface ISysPermissionService
+public interface ISysPermissionService : IBaseService<SysPermission>
 {
     /// <summary>
     /// 获取角色权限

@@ -12,9 +12,13 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Roles.Dtos;
 using XiHan.Services.Syses.Users;
 
 namespace XiHan.Services.Syses.Roles.Logic;
@@ -26,14 +30,59 @@ namespace XiHan.Services.Syses.Roles.Logic;
 public class SysRoleService : BaseService<SysRole>, ISysRoleService
 {
     private ISysUserRoleService _sysUserRoleService;
+    private ISysRolePermissionService _sysRolePermissionService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="sysUserRoleService"></param>
-    public SysRoleService(ISysUserRoleService sysUserRoleService)
+    /// <param name="sysRolePermissionService"></param>
+    public SysRoleService(ISysUserRoleService sysUserRoleService, ISysRolePermissionService sysRolePermissionService)
     {
         _sysUserRoleService = sysUserRoleService;
+        _sysRolePermissionService = sysRolePermissionService;
+    }
+
+    /// <summary>
+    /// 校验角色是否唯一
+    /// </summary>
+    /// <param name="sysRole"></param>
+    /// <returns></returns>
+    private async Task<bool> CheckRoleUnique(SysRole sysRole)
+    {
+        var isUnique = await IsAnyAsync(f => f.Code == sysRole.Code || f.Name == sysRole.Name);
+        if (isUnique) throw new CustomException($"角色【{sysRole.Name}】已存在!");
+        return isUnique;
+    }
+
+    /// <summary>
+    /// 新增角色
+    /// </summary>
+    /// <param name="roleCDto"></param>
+    /// <returns></returns>
+    public async Task<long> CreateRole(SysRoleCDto roleCDto)
+    {
+        var sysRole = roleCDto.Adapt<SysRole>();
+
+        _ = await CheckRoleUnique(sysRole);
+
+        return await AddReturnIdAsync(sysRole);
+    }
+
+    /// <summary>
+    /// 批量删除角色
+    /// </summary>
+    /// <param name="dictIds"></param>
+    /// <returns></returns>
+    public async Task<bool> DeleteRoleByIds(long[] dictIds)
+    {
+        var roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
+        if (roles.Any(r => r.Code == AppGlobalConstant.SysRoleAdmin))
+        {
+            throw new CustomException($"禁止删除系统管理员角色!");
+        }
+
+        return await RemoveAsync(roles);
     }
 
     /// <summary>
