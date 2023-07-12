@@ -36,9 +36,9 @@ public interface ISysPermissionService : IBaseService<SysPermission>
     /// <summary>
     /// 批量删除权限
     /// </summary>
-    /// <param name="dictIds"></param>
+    /// <param name="permissionIds"></param>
     /// <returns></returns>
-    Task<bool> DeletePermissionByIds(long[] dictIds);
+    Task<bool> DeletePermissionByIds(long[] permissionIds);
 
     /// <summary>
     /// 修改字典数项
@@ -55,16 +55,16 @@ public interface ISysPermissionService : IBaseService<SysPermission>
     Task<SysPermission> GetPermissionById(long permissionId);
 
     /// <summary>
-    /// 查询权限
+    /// 查询权限列表
     /// </summary>
     /// <param name="permissionWDto"></param>
     /// <returns></returns>
-    Task<List<SysPermission>> GetDictTypeList(SysPermissionWDto permissionWDto);
+    Task<List<SysPermission>> GetPermissionList(SysPermissionWDto permissionWDto);
 
     /// <summary>
-    /// 查询权限(根据分页条件)
+    /// 查询权限列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysPermission>> GetDictTypePageList(PageWhereDto<SysPermissionWDto> pageWhere);
+    Task<PageDataDto<SysPermission>> GetPermissionPageList(PageWhereDto<SysPermissionWDto> pageWhere);
 }

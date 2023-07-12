@@ -47,7 +47,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// </summary>
     /// <param name="sysPermission"></param>
     /// <returns></returns>
-    private async Task<bool> CheckDictValueUnique(SysPermission sysPermission)
+    private async Task<bool> CheckPermissionUnique(SysPermission sysPermission)
     {
         var isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code || p.Name == sysPermission.Name);
         if (isUnique) throw new CustomException($"权限【{sysPermission.Name}】已存在!");
@@ -64,7 +64,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     {
         var sysPermission = permissionCDto.Adapt<SysPermission>();
 
-        _ = await CheckDictValueUnique(sysPermission);
+        _ = await CheckPermissionUnique(sysPermission);
 
         return await AddReturnIdAsync(sysPermission);
     }
@@ -72,12 +72,12 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <summary>
     /// 批量删除权限
     /// </summary>
-    /// <param name="dictIds"></param>
+    /// <param name="permissionIds"></param>
     /// <returns></returns>
-    public async Task<bool> DeletePermissionByIds(long[] dictIds)
+    public async Task<bool> DeletePermissionByIds(long[] permissionIds)
     {
-        var Permission = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        return await RemoveAsync(Permission);
+        var permissionList = await QueryAsync(d => permissionIds.Contains(d.BaseId));
+        return await RemoveAsync(permissionList);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     {
         var sysPermission = permissionCDto.Adapt<SysPermission>();
 
-        _ = await CheckDictValueUnique(sysPermission);
+        _ = await CheckPermissionUnique(sysPermission);
 
         return await UpdateAsync(sysPermission);
     }
@@ -110,11 +110,11 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     }
 
     /// <summary>
-    /// 查询权限
+    /// 查询权限列表
     /// </summary>
     /// <param name="permissionWDto"></param>
     /// <returns></returns>
-    public async Task<List<SysPermission>> GetDictTypeList(SysPermissionWDto permissionWDto)
+    public async Task<List<SysPermission>> GetPermissionList(SysPermissionWDto permissionWDto)
     {
         var whereExpression = Expressionable.Create<SysPermission>();
         whereExpression.AndIF(permissionWDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(permissionWDto.Name!));
@@ -125,11 +125,11 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     }
 
     /// <summary>
-    /// 查询权限(根据分页条件)
+    /// 查询权限列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysPermission>> GetDictTypePageList(PageWhereDto<SysPermissionWDto> pageWhere)
+    public async Task<PageDataDto<SysPermission>> GetPermissionPageList(PageWhereDto<SysPermissionWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 

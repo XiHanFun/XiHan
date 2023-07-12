@@ -77,8 +77,8 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> DeleteDictDataByIds(long[] dictIds)
     {
-        var dictData = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        return await RemoveAsync(dictData);
+        var dictDataList = await QueryAsync(d => dictIds.Contains(d.BaseId));
+        return await RemoveAsync(dictDataList);
     }
 
     /// <summary>
