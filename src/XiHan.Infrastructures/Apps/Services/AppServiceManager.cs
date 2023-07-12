@@ -18,6 +18,8 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.IdGenerator;
+using XiHan.Utils.IdGenerator.Contract;
 
 namespace XiHan.Infrastructures.Apps.Services;
 
@@ -47,6 +49,9 @@ public static class AppServiceManager
     /// <param name="services"></param>
     private static void RegisterBaseService(IServiceCollection services)
     {
+        // 雪花算法Id
+        var options = new IdGeneratorOptions();
+        IdHelper.SetIdGenerator(options);
         // 属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceManager>();
         // Ip 查询服务

@@ -14,6 +14,7 @@
 
 using SqlSugar;
 using XiHan.Models.Bases.Interface;
+using XiHan.Utils.IdGenerator;
 
 namespace XiHan.Models.Bases.Entity;
 
@@ -25,6 +26,6 @@ public abstract class BaseIdEntity : IBaseEntity<long>
     /// <summary>
     /// 主键标识
     /// </summary>
-    [SugarColumn(IsPrimaryKey = true, IsIdentity = true, ColumnDescription = "主键标识")]
-    public virtual long BaseId { get; set; }
+    [SugarColumn(IsPrimaryKey = true, ColumnDescription = "主键标识")]
+    public virtual long BaseId { get; set; } = IdHelper.NextId();
 }
