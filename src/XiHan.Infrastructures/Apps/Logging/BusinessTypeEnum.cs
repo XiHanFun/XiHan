@@ -34,50 +34,56 @@ public enum BusinessTypeEnum
     Create = 1,
 
     /// <summary>
-    /// 修改
-    /// </summary>
-    [Description("修改")]
-    Modify = 2,
-
-    /// <summary>
     /// 删除
     /// </summary>
     [Description("删除")]
-    Delete = 3,
+    Delete = 2,
+
+    /// <summary>
+    /// 修改
+    /// </summary>
+    [Description("修改")]
+    Modify = 3,
+
+    /// <summary>
+    /// 查询
+    /// </summary>
+    [Description("查询")]
+    Get = 4,
 
     /// <summary>
     /// 授权
     /// </summary>
     [Description("授权")]
-    Grant = 4,
+    Grant = 5,
 
     /// <summary>
     /// 导出
     /// </summary>
     [Description("导出")]
-    Export = 5,
+    Export = 6,
 
     /// <summary>
     /// 导入
     /// </summary>
     [Description("导入")]
-    Import = 6,
+    Import = 7,
 
     /// <summary>
     /// 强退
     /// </summary>
     [Description("强退")]
-    Force = 7,
-
-    /// <summary>
-    /// 生成代码
-    /// </summary>
-    [Description("生成代码")]
-    GenCode = 8,
+    Force = 8,
 
     /// <summary>
     /// 清空数据
     /// </summary>
     [Description("清空数据")]
-    Clean = 9
+    Clean = 9,
+
+    /// <summary>
+    /// 生成代码
+    /// </summary>
+    [Description("生成代码")]
+    GenCode = 10
 }

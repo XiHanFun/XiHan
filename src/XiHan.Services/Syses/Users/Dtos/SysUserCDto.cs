@@ -20,7 +20,7 @@ namespace XiHan.Services.Syses.Users.Dtos;
 /// <summary>
 /// SysUserCDto
 /// </summary>
-public class SysUserCDto : BaseIdDto
+public class SysUserCDto
 {
     /// <summary>
     /// 用户账号

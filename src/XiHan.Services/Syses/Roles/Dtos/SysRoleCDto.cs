@@ -20,7 +20,7 @@ namespace XiHan.Services.Syses.Roles.Dtos;
 /// <summary>
 /// SysRoleCDto
 /// </summary>
-public class SysRoleCDto : BaseIdDto
+public class SysRoleCDto
 {
     /// <summary>
     /// 父级角色
