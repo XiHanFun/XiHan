@@ -27,7 +27,7 @@ namespace XiHan.WebApi.Controllers.Syses.Dicts;
 /// <summary>
 /// 系统字典管理
 /// </summary>
-[Authorize]
+//[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
 [Route("SysDictType")]
 public class SysDictTypeController : BaseApiController
@@ -49,7 +49,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
     [HttpPost("Create")]
-    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Create)]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Create)]
     public async Task<CustomResult> CreateDictType([FromBody] SysDictTypeCDto dictTypeCDto)
     {
         var result = await _sysDictTypeService.CreateDictType(dictTypeCDto);
@@ -62,7 +62,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="dictIds"></param>
     /// <returns></returns>
     [HttpDelete("Delete")]
-    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Delete)]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<CustomResult> DeleteDictType([FromBody] long[] dictIds)
     {
         var result = await _sysDictTypeService.DeleteDictTypeByIds(dictIds);
@@ -75,7 +75,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
     [HttpPut("Modify")]
-    [AppLog(Module = "字典", BusinessType = BusinessTypeEnum.Modify)]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<CustomResult> ModifyDictData([FromBody] SysDictTypeCDto dictTypeCDto)
     {
         var result = await _sysDictTypeService.ModifyDictType(dictTypeCDto);
@@ -88,6 +88,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="dictId"></param>
     /// <returns></returns>
     [HttpPost("GetList/ById")]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<CustomResult> GetDictTypeById([FromBody] long dictId)
     {
         var result = await _sysDictTypeService.GetDictTypeById(dictId);
@@ -100,6 +101,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="dictTypeWDto"></param>
     /// <returns></returns>
     [HttpPost("GetList")]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<CustomResult> GetDictTypePageList([FromBody] SysDictTypeWDto dictTypeWDto)
     {
         var result = await _sysDictTypeService.GetDictTypeList(dictTypeWDto);
@@ -112,6 +114,7 @@ public class SysDictTypeController : BaseApiController
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [HttpPost("GetPageList")]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<CustomResult> GetDictTypePageList([FromBody] PageWhereDto<SysDictTypeWDto> pageWhere)
     {
         var result = await _sysDictTypeService.GetDictTypePageList(pageWhere);

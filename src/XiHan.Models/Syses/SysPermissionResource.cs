@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysPermissionData
+// FileName:SysPermissionResource
 // Guid:7350f0eb-f8b3-4d81-ac4f-ca3d9adfd884
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,22 +18,17 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统权限数据关联表(为某权限分配数据)
+/// 系统权限资源关联表(为某权限分配资源)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Sys_Permission_Data")]
-public class SysPermissionData : BaseModifyEntity
+[SugarTable(TableName = "Sys_Permission_Resource")]
+public class SysPermissionResource : BaseModifyEntity
 {
     /// <summary>
-    /// 所属用户
-    /// </summary>
-    public long UserId { get; set; }
-
-    /// <summary>
-    /// 所属角色
+    /// 所属权限
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public long? RoleId { get; set; }
+    public long PermissionId { get; set; }
 
     /// <summary>
     /// 资源编码

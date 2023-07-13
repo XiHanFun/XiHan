@@ -20,7 +20,7 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 /// <summary>
 /// SysDictDataCDto
 /// </summary>
-public class SysDictDataCDto : BaseIdDto
+public class SysDictDataCDto
 {
     /// <summary>
     /// 字典ID
