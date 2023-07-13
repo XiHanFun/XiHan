@@ -75,7 +75,7 @@ public class IdHelper
     /// <returns></returns>
     public static long NextId()
     {
-        if (IdGenInstance == null) throw new ArgumentException("Please initialize Yitter.IdGeneratorOptions first.");
+        if (IdGenInstance == null) throw new ArgumentException("Please initialize IdHelper.IdGeneratorOptions first.");
 
         return IdGenInstance.NewLong();
     }
