@@ -17,6 +17,9 @@ using SqlSugar;
 using SqlSugar.IOC;
 using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Models.Bases;
+using XiHan.Models.Bases.Entity;
+using XiHan.Models.Bases.Interface;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
 
@@ -52,10 +55,8 @@ public static class InitDatabaseStep
                 // 创建数据表
                 "创建数据表……".WriteLineInfo();
 
-                // 获取所有 XiHan.Models 的实体
-                var entities = ReflectionHelper.GetAllTypes()
-                    .Where(p => !p.IsAbstract && p.GetCustomAttribute<SugarTable>() != null)
-                    .ToArray();
+                // 获取含有 SugarTable 的所有 Models 的实体
+                var entities = ReflectionHelper.GetContainsAttributeSubClass<SugarTable>(typeof(IBaseIdEntity<>)).ToArray();
 
                 db.CodeFirst.SetStringDefaultLength(512).InitTables(entities);
 

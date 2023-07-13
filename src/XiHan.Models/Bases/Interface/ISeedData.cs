@@ -1,26 +1,29 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseEntity
-// Guid:c54f6677-db24-4a58-91a8-97bf61cfdd27
-// Author:zhaifanhua
+// FileName:ISeedData
+// Guid:e6e582b4-d6c8-46fc-a88a-96c54e730d35
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-06-05 上午 12:42:39
+// CreateTime:2023-07-13 上午 10:36:55
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
+
 namespace XiHan.Models.Bases.Interface;
 
 /// <summary>
-/// IBaseEntity
+/// 种子数据接口
 /// </summary>
-public interface IBaseEntity<TKey>
+public interface ISeedData<T> where T : class
 {
     /// <summary>
-    /// 主键
+    /// 初始化种子数据
     /// </summary>
-    TKey BaseId { get; set; }
+    /// <param name="sugarClient"></param>
+    public Task InitSeedData(ISqlSugarClient sugarClient);
 }

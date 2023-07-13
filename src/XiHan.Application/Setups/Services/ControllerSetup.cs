@@ -44,10 +44,11 @@ public static class ControllerSetup
             // 全局注入过滤器
             configure.Filters.Add<ActionFilterAsyncAttribute>();
             configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
-            // 已弃用
-            //configure.Filters.Add<ExceptionFilterAsyncAttribute>();
             //configure.Filters.Add<ResourceFilterAsyncAttribute>();
             configure.Filters.Add<ResultFilterAsyncAttribute>();
+
+            // 已弃用，由 GlobalExceptionMiddleware 全局异常中间件代替
+            //configure.Filters.Add<ExceptionFilterAsyncAttribute>();
         }).ConfigureApiBehaviorOptions(setupAction =>
         {
             // 关闭默认模型验证，通过 ActionFilterAsyncAttribute 自定义验证

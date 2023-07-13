@@ -42,7 +42,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="context"></param>
     protected BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
-        Context = DbScoped.SugarScope;
+        base.Context = DbScoped.SugarScope;
     }
 
     #region 新增

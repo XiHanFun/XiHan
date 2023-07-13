@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISoftDelete
-// Guid:1814189a-40ec-447b-95ad-8d77a973df7e
+// FileName:IBaseIdEntity
+// Guid:c54f6677-db24-4a58-91a8-97bf61cfdd27
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-05-18 下午 05:52:13
+// CreatedTime:2022-06-05 上午 12:42:39
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,12 +15,12 @@
 namespace XiHan.Models.Bases.Interface;
 
 /// <summary>
-/// 软删除接口
+/// 通用主键接口
 /// </summary>
-public interface ISoftDelete
+public interface IBaseIdEntity<TKey>
 {
     /// <summary>
-    /// 是否已删除
+    /// 主键
     /// </summary>
-    bool IsDeleted { get; set; }
+    TKey BaseId { get; set; }
 }

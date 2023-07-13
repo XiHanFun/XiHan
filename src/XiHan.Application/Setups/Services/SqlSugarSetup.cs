@@ -75,8 +75,8 @@ public static class SqlSugarSetup
             },
             _ => new IocConfig
             {
-                DbType = IocDbType.SqlServer,
-                ConnectionString = AppSettings.Database.ConnectionString.SqlServer.GetValue(),
+                DbType = IocDbType.MySql,
+                ConnectionString = AppSettings.Database.ConnectionString.MySql.GetValue(),
                 IsAutoCloseConnection = true
             }
         });

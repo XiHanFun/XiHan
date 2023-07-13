@@ -25,6 +25,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj" />
+      <ProjectReference Include="..\XiHan.Utils\XiHan.Utils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Update="LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>

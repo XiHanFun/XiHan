@@ -20,7 +20,7 @@ namespace XiHan.Models.Bases.Entity;
 /// <summary>
 /// 主键基类
 /// </summary>
-public abstract class BaseIdEntity : IBaseEntity<long>
+public abstract class BaseIdEntity : IBaseIdEntity<long>
 {
     /// <summary>
     /// 主键标识
