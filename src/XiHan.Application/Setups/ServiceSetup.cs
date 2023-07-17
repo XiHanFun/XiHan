@@ -47,7 +47,7 @@ public static class ServiceSetup
         services.AddMapsterSetup();
         // Http上下文
         services.AddHttpPollySetup();
-        // Auth，必须在 AddAuthSetup 后才能使用
+        // Auth，必须在 AddHttpPollySetup 后才能使用
         services.AddAuthSetup();
         // Swagger
         services.AddSwaggerSetup();

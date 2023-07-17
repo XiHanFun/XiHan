@@ -21,7 +21,6 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Exceptions;
-using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Operations;
@@ -88,7 +87,7 @@ public class GlobalExceptionMiddleware
                 NotImplementedException => CustomResult.NotImplemented(),
                 // 自定义异常
                 CustomException => CustomResult.BadRequest(ex.Message),
-                // 异常默认返回服务器错误，不直接明文显示
+                // 其他异常默认返回服务器错误，不直接明文显示
                 _ => CustomResult.InternalServerError(),
             };
 

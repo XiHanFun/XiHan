@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using System.ComponentModel;
 using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Posts;
@@ -40,20 +39,4 @@ public class PostPoll : BaseCreateEntity
     /// 赞或踩 赞(true)踩(false)
     /// </summary>
     public bool IsPositive { get; set; } = true;
-}
-
-/// <summary>
-/// 点赞类型
-/// </summary>
-public enum PollTypeEnum
-{
-    /// <summary>
-    /// 文章
-    /// </summary>
-    [Description("文章")] Article = 1,
-
-    /// <summary>
-    /// 评论
-    /// </summary>
-    [Description("评论")] Comment = 2
 }

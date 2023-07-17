@@ -28,7 +28,7 @@ public class AppServiceAttribute : Attribute
     public Type? ServiceType { get; set; }
 
     /// <summary>
-    /// 服务声明周期，默认值注册单例
+    /// 服务声明周期，默认注册单例
     /// </summary>
     public ServiceLifeTimeEnum ServiceLifetime { get; set; } = ServiceLifeTimeEnum.Singleton;
 

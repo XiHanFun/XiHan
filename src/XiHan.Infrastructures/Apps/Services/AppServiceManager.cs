@@ -77,6 +77,7 @@ public static class AppServiceManager
         // 根据程序路径反射出所有引用的程序集
         var referencedTypes = new List<Type>();
         foreach (var library in libraries)
+        {
             try
             {
                 var assemblyTypes = Assembly.Load(library).GetTypes().Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
@@ -84,10 +85,11 @@ public static class AppServiceManager
             }
             catch (Exception ex)
             {
-                var errorMsg = $"找不到{library}组件库！";
+                var errorMsg = $"找不到【{library}】组件库！";
                 Log.Error(ex, errorMsg);
                 errorMsg.WriteLineError();
             }
+        }
 
         // 批量注入
         foreach (var type in referencedTypes)

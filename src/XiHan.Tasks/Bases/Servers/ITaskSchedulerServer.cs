@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 
@@ -27,32 +28,37 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> CreateTaskScheduleAsync(SysTasks sysTasks);
-
-    /// <summary>
-    /// 更新计划任务
-    /// </summary>
-    /// <param name="sysTasks"></param>
-    /// <returns></returns>
-    Task<CustomResult> ModifyTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 删除指定计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> DeleteTaskScheduleAsync(SysTasks sysTasks);
+
+    /// <summary>
+    /// 更新计划任务
+    /// </summary>
+    /// <param name="sysTasks"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+    Task<CustomResult> ModifyTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
     /// 开启计划任务
     /// </summary>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> StartTaskScheduleAsync();
 
     /// <summary>
     /// 停止计划任务
     /// </summary>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> StopTaskScheduleAsync();
 
     /// <summary>
@@ -60,6 +66,7 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> RunTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
@@ -67,6 +74,7 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> PauseTaskScheduleAsync(SysTasks sysTasks);
 
     /// <summary>
@@ -74,5 +82,6 @@ public interface ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     Task<CustomResult> ResumeTaskScheduleAsync(SysTasks sysTasks);
 }

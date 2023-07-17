@@ -104,20 +104,16 @@ public static class EntityExtend
         var types = source?.GetType();
         if (types == null) return source;
 
-        if (propertyInfo.IsHandle != null)
-            if (types.GetProperty(propertyInfo.IsHandle) != null)
-                types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true, null);
-        if (propertyInfo.HandleTime != null)
-            if (types.GetProperty(propertyInfo.HandleTime) != null)
-                types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
+        if (propertyInfo.IsHandle != null && types.GetProperty(propertyInfo.IsHandle) != null)
+            types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true, null);
+        if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
+            types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
 
         var context = AppHttpContextManager.Current;
-        if (propertyInfo.HandleId != null)
-            if (types.GetProperty(propertyInfo.HandleId) != null && context != null)
-                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, context.GetUserId(), null);
-        if (propertyInfo.HandleBy != null)
-            if (types.GetProperty(propertyInfo.HandleBy) != null && context != null)
-                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, context.GetUserName(), null);
+        if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && context != null)
+            types.GetProperty(propertyInfo.HandleId)?.SetValue(source, context.GetUserId(), null);
+        if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && context != null)
+            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, context.GetUserName(), null);
         return source;
     }
 

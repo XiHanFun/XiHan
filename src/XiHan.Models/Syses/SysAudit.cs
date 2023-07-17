@@ -27,7 +27,7 @@ public class SysAudit : BaseDeleteEntity
     /// <summary>
     /// 审核分类
     /// </summary>
-    public long CategoryId { get; set; }
+    public long TypeId { get; set; }
 
     /// <summary>
     /// 审核内容

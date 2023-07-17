@@ -15,10 +15,7 @@
 using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using SqlSugar.IOC;
-using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Models.Bases;
-using XiHan.Models.Bases.Entity;
 using XiHan.Models.Bases.Interface;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;

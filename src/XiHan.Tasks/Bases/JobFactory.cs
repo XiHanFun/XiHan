@@ -27,8 +27,7 @@ public class JobFactory : IJobFactory
     private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
-    /// 构造函数
-    /// 注入反射获取依赖对象
+    /// 构造函数 通过反射注入依赖对象
     /// </summary>
     /// <param name="serviceProvider"></param>
     public JobFactory(IServiceProvider serviceProvider)
@@ -42,7 +41,7 @@ public class JobFactory : IJobFactory
     /// <param name="bundle"></param>
     /// <param name="scheduler"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="CustomException"></exception>
     public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
     {
         try
@@ -50,7 +49,7 @@ public class JobFactory : IJobFactory
             var serviceScope = _serviceProvider.CreateScope();
             var job = serviceScope.ServiceProvider.GetService(bundle.JobDetail.JobType) as IJob;
             if (job == null)
-                throw new InvalidOperationException("Job服务为空或获取失败！");
+                throw new CustomException("Job服务为空或获取失败！");
             else
                 return job;
         }

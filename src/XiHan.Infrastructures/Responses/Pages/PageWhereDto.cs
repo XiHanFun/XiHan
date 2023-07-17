@@ -15,7 +15,7 @@
 namespace XiHan.Infrastructures.Responses.Pages;
 
 /// <summary>
-/// 通用分页实体基类(不含条件)
+/// 通用分页实体基类
 /// </summary>
 public class PageWhereDto
 {

@@ -27,7 +27,7 @@ public class SysUserCollect : BaseCreateEntity
     /// <summary>
     /// 收藏分类
     /// </summary>
-    public long CategoryId { get; set; }
+    public long TypeId { get; set; }
 
     /// <summary>
     /// 收藏文章

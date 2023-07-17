@@ -12,9 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-using System.Net.Mail;
 using Mapster;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Results;
@@ -58,7 +58,8 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         {
             new Attachment(@"")
         };
-        var emailToModel=new EmailToModel {
+        var emailToModel = new EmailToModel
+        {
             Subject = subject,
             Body = body,
             ToMail = toMail,

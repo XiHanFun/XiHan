@@ -29,6 +29,7 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static TKey GetValue<TKey>([DisallowNull] this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
@@ -43,6 +44,7 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="fullName"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static TKey GetSection<TKey>([DisallowNull] this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
@@ -58,6 +60,7 @@ public static class AppConfigExtend
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="fullName"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public static void Set<TKey, TValue>([DisallowNull] this TKey key, TValue value, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
         if (key == null) throw new ArgumentNullException(nameof(key));

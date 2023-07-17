@@ -43,7 +43,7 @@ public class SysTasksLog : BaseDeleteEntity
     public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
-    /// 执行结果（0正常 1失败）
+    /// 执行结果（1正常 0失败）
     /// </summary>
     public bool RunResult { get; set; }
 

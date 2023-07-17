@@ -164,7 +164,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
 
     #endregion
 
-    #region 查找查询
+    #region 查找
 
     /// <summary>
     /// 根据Id查找
@@ -179,6 +179,10 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="whereExpression">自定义条件</param>
     /// <returns></returns>
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> whereExpression);
+
+    #endregion
+
+    #region 查询
 
     /// <summary>
     /// 查询所有

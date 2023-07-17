@@ -17,6 +17,7 @@
 ```
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
 // FileName:BlogArticleTagService
 // Guid:f9b3a059-9beb-4d04-8329-48b390fb1007
 // Author:zhaifanhua
@@ -122,7 +123,7 @@
 
 在准备发起 Pull Request 之前，需要同步原仓库最新的代码，记得检查目前的项目是否是最新的版本。
 
-### 7. 推送到远程仓库（Ppush）
+### 7. 推送到远程仓库（Push）
 
 push 到开发者自己的远程仓库中。
 

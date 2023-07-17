@@ -14,8 +14,8 @@
 
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using XiHan.Infrastructures.Apps.Configs;
@@ -87,22 +87,18 @@ public static class JwtTokenUtil
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
         var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+
         try
         {
             token = token.ParseToString().Replace("Bearer ", "");
             // 读取旧token
             var jwtToken = jwtHandler.ReadJwtToken(token);
-            var verifyResult = jwtToken.RawSignature ==
-                JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload,
-                    credentials);
+            var verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
             return verifyResult;
         }
         catch (Exception ex)
         {
-            var errorMsg = $"Token 被篡改或无效，无法通过安全验证！";
-            Log.Error(ex, errorMsg);
-            errorMsg.WriteLineError();
-            return false;
+            throw new AuthenticationException($"Token 被篡改或无效，无法通过安全验证！", ex);
         }
     }
 
@@ -141,7 +137,7 @@ public static class JwtTokenUtil
     }
 
     /// <summary>
-    /// Token解析
+    /// Token 解析
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
@@ -181,10 +177,7 @@ public static class JwtTokenUtil
         }
         catch (Exception ex)
         {
-            var errorMsg = $"JwtToken 字符串解析失败";
-            Log.Error(ex, errorMsg);
-            errorMsg.WriteLineError();
-            throw;
+            throw new AuthenticationException($"JwtToken 字符串解析失败", ex);
         }
     }
 
@@ -208,16 +201,14 @@ public static class JwtTokenUtil
             // 判断结果
             authJwtSetting.GetPropertyInfos().ForEach(setting =>
             {
-                if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
+                if (setting.PropertyValue.IsNullOrZero())
+                    throw new ArgumentNullException(nameof(setting.PropertyName));
             });
             return authJwtSetting;
         }
         catch (Exception ex)
         {
-            var errorMsg = $"获取 AppSettings.Auth.Jwt 配置出错！";
-            Log.Error(ex, errorMsg);
-            errorMsg.WriteLineError();
-            throw;
+            throw new AuthenticationException($"获取 AppSettings.Auth.Jwt 配置出错！", ex);
         }
     }
 }

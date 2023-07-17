@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
-using XiHan.Services.Bases;
 
 namespace XiHan.Services.Syses.Users.Dtos;
 

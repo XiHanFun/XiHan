@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Apps.Logging;
@@ -29,7 +28,6 @@ namespace XiHan.WebApi.Controllers.Syses.Dicts;
 /// </summary>
 //[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
-[Route("SysDictType")]
 public class SysDictTypeController : BaseApiController
 {
     private readonly ISysDictTypeService _sysDictTypeService;

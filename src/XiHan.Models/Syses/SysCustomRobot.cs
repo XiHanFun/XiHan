@@ -43,21 +43,21 @@ public class SysCustomRobot : BaseModifyEntity
 
     /// <summary>
     /// 访问令牌
-    /// 钉钉 飞书 AccessToken
-    /// 企业微信 Key
+    /// 钉钉、飞书为 AccessToken，企业微信为 Key
     /// </summary>
     [SugarColumn(Length = 100)]
     public string AccessTokenOrKey { get; set; } = string.Empty;
 
     /// <summary>
     /// 机密
-    /// 钉钉 飞书
+    /// 钉钉、飞书用
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
     public string? Secret { get; set; } = string.Empty;
 
     /// <summary>
     /// 上传地址
+    /// 企业微信用
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
     public string? UploadUrl { get; set; } = string.Empty;

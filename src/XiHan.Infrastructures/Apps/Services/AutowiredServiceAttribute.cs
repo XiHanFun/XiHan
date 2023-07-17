@@ -18,7 +18,7 @@ namespace XiHan.Infrastructures.Apps.Services;
 /// AutowiredServiceAttribute
 /// <example> 调用示例：
 /// <code>
-/// // 将属性注入 Service 实例
+/// // 通过属性注入 Service 实例
 /// public class PropertyClass
 /// {
 ///     [AutowiredService]

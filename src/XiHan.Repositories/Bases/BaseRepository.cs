@@ -270,7 +270,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 
     #endregion
 
-    #region 查找查询
+    #region 查找
 
     /// <summary>
     /// 根据Id查找
@@ -291,6 +291,10 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     {
         return await base.GetFirstAsync(whereExpression);
     }
+
+    #endregion
+
+    #region 查询
 
     /// <summary>
     /// 查询所有

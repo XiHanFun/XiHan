@@ -164,12 +164,12 @@ public static class ObjectPropertyExtension
     {
         var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
-            {
-                PropertyName = variance.Name,
-                // 确保不为null
-                ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
-                ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
-            })
+        {
+            PropertyName = variance.Name,
+            // 确保不为null
+            ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
+            ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
+        })
             //调用内置判断
             .Where(variance => !variance.ValueA.Equals(variance.ValueB))
             .ToList();

@@ -19,12 +19,12 @@ namespace XiHan.Services.Bases;
 /// </summary>
 /// <remarks>
 /// 数据传输对象命名规范：
-/// 新增：后缀以 CDto 结尾 CreateDto
-/// 删除：后缀以 DDto 结尾 DeleteDto
-/// 修改：后缀以 MDto 结尾 ModifyDto
-/// 查询：后缀以 GDto 结尾 GetDto
-/// 条件：后缀以 WDto 结尾 WhereDto
-/// 结果：后缀以 RDto 结尾 ResultDto
+/// 新增：后缀以 CDto 结尾，CreateDto
+/// 删除：后缀以 DDto 结尾，DeleteDto
+/// 修改：后缀以 MDto 结尾，ModifyDto
+/// 查询：后缀以 GDto 结尾，GetDto
+/// 条件：后缀以 WDto 结尾，WhereDto
+/// 结果：后缀以 RDto 结尾，ResultDto
 /// </remarks>
 public class BaseIdDto
 {

@@ -68,6 +68,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> CreateTaskScheduleAsync(SysTasks sysTasks)
     {
         try
@@ -114,10 +115,31 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
+    /// 删除指定计划任务
+    /// </summary>
+    /// <param name="sysTasks"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+    public async Task<CustomResult> DeleteTaskScheduleAsync(SysTasks sysTasks)
+    {
+        try
+        {
+            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            await _scheduler.DeleteJob(jobKey);
+            return CustomResult.Success($"删除计划任务【{sysTasks.Name}】成功！");
+        }
+        catch (Exception ex)
+        {
+            throw new CustomException($"删除计划任务【{sysTasks.Name}】失败！", ex);
+        }
+    }
+
+    /// <summary>
     /// 更新计划任务
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> ModifyTaskScheduleAsync(SysTasks sysTasks)
     {
         try
@@ -135,28 +157,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     }
 
     /// <summary>
-    /// 删除指定计划任务
-    /// </summary>
-    /// <param name="sysTasks"></param>
-    /// <returns></returns>
-    public async Task<CustomResult> DeleteTaskScheduleAsync(SysTasks sysTasks)
-    {
-        try
-        {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            await _scheduler.DeleteJob(jobKey);
-            return CustomResult.Success($"删除计划任务【{sysTasks.Name}】成功！");
-        }
-        catch (Exception ex)
-        {
-            throw new CustomException($"删除计划任务【{sysTasks.Name}】失败！", ex);
-        }
-    }
-
-    /// <summary>
     /// 开启计划任务
     /// </summary>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> StartTaskScheduleAsync()
     {
         try
@@ -179,6 +183,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// 停止计划任务
     /// </summary>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> StopTaskScheduleAsync()
     {
         try
@@ -201,6 +206,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> RunTaskScheduleAsync(SysTasks sysTasks)
     {
         try
@@ -227,6 +233,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> PauseTaskScheduleAsync(SysTasks sysTasks)
     {
         try
@@ -248,6 +255,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <param name="sysTasks"></param>
     /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
     public async Task<CustomResult> ResumeTaskScheduleAsync(SysTasks sysTasks)
     {
         try

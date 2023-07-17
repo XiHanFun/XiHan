@@ -77,8 +77,7 @@ public static class AppLogManager
     /// <param name="filePath"></param>
     /// <param name="template"></param>
     /// <returns></returns>
-    private static LoggerConfiguration SinkFileConfig(this LoggerConfiguration config, LogEventLevel level,
-        string filePath, string template)
+    private static LoggerConfiguration SinkFileConfig(this LoggerConfiguration config, LogEventLevel level, string filePath, string template)
     {
         return config.WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == level)
             // 异步输出到文件
