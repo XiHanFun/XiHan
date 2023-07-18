@@ -33,14 +33,14 @@ public class SysPermission : BaseModifyEntity
     /// <summary>
     /// 权限编码
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Code { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string PermissionCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    public string PermissionName { get; set; } = string.Empty;
 
     /// <summary>
     /// 权限类型

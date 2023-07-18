@@ -20,9 +20,9 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 public class SysDictDataWDto
 {
     /// <summary>
-    /// 字典ID
+    /// 字典编码
     ///</summary>
-    public long? DictTypeId { get; set; }
+    public string? TypeCode { get; set; }
 
     /// <summary>
     /// 字典项标签

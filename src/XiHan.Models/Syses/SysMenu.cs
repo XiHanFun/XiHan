@@ -31,16 +31,16 @@ public class SysMenu : BaseModifyEntity
     public long? ParentId { get; set; }
 
     /// <summary>
-    /// 菜单代码
+    /// 菜单编码
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Code { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string MenuCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单名称
     /// </summary>
     [SugarColumn(Length = 10)]
-    public string Name { get; set; } = string.Empty;
+    public string MenuName { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单图标

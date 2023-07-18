@@ -24,18 +24,16 @@ public class SysPermissionWDto
     /// <summary>
     /// 权限代码
     /// </summary>
-    [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string Code { get; set; } = string.Empty;
+    public string? PermissionCode { get; set; }
 
     /// <summary>
     /// 权限名称
     /// </summary>
-    [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string Name { get; set; } = string.Empty;
+    public string? PermissionName { get; set; }
 
     /// <summary>
     /// 权限类型

@@ -94,8 +94,8 @@ public static class ReflectionHelper
     public static List<Type> GetContainsAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
         return GetContainsAttributeTypes<TAttribute>()
-            .Where(t => typeof(T).IsAssignableFrom(t))
             .Where(t => t is { IsAbstract: false, IsClass: true })
+            .Where(t => typeof(T).IsAssignableFrom(t))
             .ToList();
     }
 
@@ -109,13 +109,13 @@ public static class ReflectionHelper
     public static List<Type> GetContainsAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
         return GetContainsAttributeTypes<TAttribute>()
-            .Where(t => type.IsAssignableFrom(t))
             .Where(t => t is { IsAbstract: false, IsClass: true })
+            .Where(t => type.IsAssignableFrom(t))
             .ToList();
     }
 
     /// <summary>
-    /// 获取过滤有某属性的 Type
+    /// 获取不包含有某属性的 Type
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
@@ -146,8 +146,8 @@ public static class ReflectionHelper
     public static List<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
         return GetFilterAttributeTypes<TAttribute>()
-            .Where(t => typeof(T).IsAssignableFrom(t))
             .Where(t => t is { IsAbstract: false, IsClass: true })
+            .Where(t => typeof(T).IsAssignableFrom(t))
             .ToList();
     }
 
@@ -161,8 +161,8 @@ public static class ReflectionHelper
     public static List<Type> GetFilterAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
         return GetFilterAttributeTypes<TAttribute>()
-            .Where(t => type.IsAssignableFrom(t))
             .Where(t => t is { IsAbstract: false, IsClass: true })
+            .Where(t => type.IsAssignableFrom(t))
             .ToList();
     }
 

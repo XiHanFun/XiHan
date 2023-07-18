@@ -28,7 +28,7 @@ public class SysTasks : BaseDeleteEntity
     /// 任务名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    public string JobName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组

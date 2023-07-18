@@ -73,8 +73,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
-            if (await _scheduler.CheckExists(jobKey)) throw new Exception($"该计划任务已经在执行【{sysTasks.Name}】,请勿重复添加！");
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
+            if (await _scheduler.CheckExists(jobKey)) throw new Exception($"该计划任务已经在执行【{sysTasks.JobName}】,请勿重复添加！");
 
             // 判断任务类型，并创建一个任务，用于描述这个后台任务的详细信息
             var job = sysTasks.JobType switch
@@ -106,11 +106,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的触发器重新设置任务执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return CustomResult.Success($"添加计划【{sysTasks.Name}】成功！");
+            return CustomResult.Success($"添加计划【{sysTasks.JobName}】成功！");
         }
         catch (Exception ex)
         {
-            throw new CustomException($"添加计划任务【{sysTasks.Name}】失败！", ex);
+            throw new CustomException($"添加计划任务【{sysTasks.JobName}】失败！", ex);
         }
     }
 
@@ -124,13 +124,13 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
             await _scheduler.DeleteJob(jobKey);
-            return CustomResult.Success($"删除计划任务【{sysTasks.Name}】成功！");
+            return CustomResult.Success($"删除计划任务【{sysTasks.JobName}】成功！");
         }
         catch (Exception ex)
         {
-            throw new CustomException($"删除计划任务【{sysTasks.Name}】失败！", ex);
+            throw new CustomException($"删除计划任务【{sysTasks.JobName}】失败！", ex);
         }
     }
 
@@ -144,15 +144,15 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.DeleteJob(jobKey);
-            return CustomResult.Success($"修改计划【{sysTasks.Name}】成功！");
+            return CustomResult.Success($"修改计划【{sysTasks.JobName}】成功！");
         }
         catch (Exception ex)
         {
-            throw new CustomException($"修改计划任务【{sysTasks.Name}】失败！", ex);
+            throw new CustomException($"修改计划任务【{sysTasks.JobName}】失败！", ex);
         }
     }
 
@@ -211,7 +211,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
             var jobs = await _scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(sysTasks.JobGroup));
             List<JobKey> jobKeys = jobs.ToList();
             if (jobKeys.Any()) await CreateTaskScheduleAsync(sysTasks);
@@ -224,7 +224,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         }
         catch (Exception ex)
         {
-            throw new CustomException($"执行计划任务【{sysTasks.Name}】失败", ex);
+            throw new CustomException($"执行计划任务【{sysTasks.JobName}】失败", ex);
         }
     }
 
@@ -238,15 +238,15 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
             if (await _scheduler.CheckExists(jobKey))
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.PauseJob(jobKey);
-            return CustomResult.Success($"暂停计划任务:【{sysTasks.Name}】成功！");
+            return CustomResult.Success($"暂停计划任务:【{sysTasks.JobName}】成功！");
         }
         catch (Exception ex)
         {
-            throw new CustomException($"暂停计划任务【{sysTasks.Name}】失败！", ex);
+            throw new CustomException($"暂停计划任务【{sysTasks.JobName}】失败！", ex);
         }
     }
 
@@ -260,15 +260,15 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     {
         try
         {
-            var jobKey = new JobKey(sysTasks.Name, sysTasks.JobGroup);
+            var jobKey = new JobKey(sysTasks.JobName, sysTasks.JobGroup);
             if (!await _scheduler.CheckExists(jobKey))
-                return CustomResult.BadRequest($"未找到计划任务【{sysTasks.Name}】！");
+                return CustomResult.BadRequest($"未找到计划任务【{sysTasks.JobName}】！");
             await _scheduler.ResumeJob(jobKey);
-            return CustomResult.Success($"恢复计划任务【{sysTasks.Name}】成功！");
+            return CustomResult.Success($"恢复计划任务【{sysTasks.JobName}】成功！");
         }
         catch (Exception ex)
         {
-            throw new CustomException($"恢复计划任务【{sysTasks.Name}】失败！", ex);
+            throw new CustomException($"恢复计划任务【{sysTasks.JobName}】失败！", ex);
         }
     }
 
@@ -289,7 +289,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         var assembly = Assembly.Load(new AssemblyName(sysTasks.AssemblyName));
         var jobType = assembly.GetType(sysTasks.AssemblyName + "." + sysTasks.ClassName) ?? throw new AggregateException($"未找到该类型的任务计划！");
         // 传入执行程序集
-        IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
+        IJobDetail job = new JobDetailImpl(sysTasks.JobName, sysTasks.JobGroup, jobType);
         if (sysTasks.JobParams != null) job.JobDataMap.Add("JobParam", sysTasks.JobParams);
         return job;
     }
@@ -306,7 +306,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             throw new AggregateException($"任务类型错误或缺少参数！");
         var jobType = typeof(HttpClient);
         // 传入执行程序集
-        IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
+        IJobDetail job = new JobDetailImpl(sysTasks.JobName, sysTasks.JobGroup, jobType);
         return job;
     }
 
@@ -322,7 +322,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             throw new AggregateException($"任务类型错误或缺少参数！");
         var jobType = typeof(SqlSugarClient);
         // 传入执行程序集
-        IJobDetail job = new JobDetailImpl(sysTasks.Name, sysTasks.JobGroup, jobType);
+        IJobDetail job = new JobDetailImpl(sysTasks.JobName, sysTasks.JobGroup, jobType);
         return job;
     }
 
@@ -345,30 +345,30 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         if (sysTasks.EndTime <= DateTime.Now)
             throw new Exception($"结束时间小于当前时间计划将不会被执行！");
         if (sysTasks.CycleRunTimes != 0 && sysTasks.CycleHasRunTimes >= sysTasks.CycleRunTimes)
-            throw new Exception($"该任务计划已完成:【{sysTasks.Name}】,无需重复启动,如需启动请修改已循环次数再提交");
+            throw new Exception($"该任务计划已完成:【{sysTasks.JobName}】,无需重复启动,如需启动请修改已循环次数再提交");
 
         // 触发作业立即运行，然后每N秒重复一次，无限循环
         if (sysTasks.RunTimes > 0)
         {
             var trigger = TriggerBuilder.Create()
-                .WithIdentity(sysTasks.Name, sysTasks.JobGroup)
+                .WithIdentity(sysTasks.JobName, sysTasks.JobGroup)
                 .StartAt(starRunTime)
                 .EndAt(endRunTime)
                 .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysTasks.IntervalSecond)
                     .WithRepeatCount(sysTasks.RunTimes))
-                .ForJob(sysTasks.Name, sysTasks.JobGroup)
+                .ForJob(sysTasks.JobName, sysTasks.JobGroup)
                 .Build();
             return trigger;
         }
         else
         {
             var trigger = TriggerBuilder.Create()
-                .WithIdentity(sysTasks.Name, sysTasks.JobGroup)
+                .WithIdentity(sysTasks.JobName, sysTasks.JobGroup)
                 .StartAt(starRunTime)
                 .EndAt(endRunTime)
                 .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysTasks.IntervalSecond)
                     .RepeatForever())
-                .ForJob(sysTasks.Name, sysTasks.JobGroup)
+                .ForJob(sysTasks.JobName, sysTasks.JobGroup)
                 .Build();
             return trigger;
         }
@@ -394,11 +394,11 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             throw new AggregateException($"触发器类型错误或触发条件未通过验证！");
         // 作业触发器
         var trigger = TriggerBuilder.Create()
-            .WithIdentity(sysTasks.Name, sysTasks.JobGroup)
+            .WithIdentity(sysTasks.JobName, sysTasks.JobGroup)
             .StartAt(starRunTime)
             .EndAt(endRunTime)
             .WithCronSchedule(sysTasks.Cron)
-            .ForJob(sysTasks.Name, sysTasks.JobGroup)
+            .ForJob(sysTasks.JobName, sysTasks.JobGroup)
             .Build();
         // 解决 Quartz 启动后第一次会立即执行的办法
         ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;

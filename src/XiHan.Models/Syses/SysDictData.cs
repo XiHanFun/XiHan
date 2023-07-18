@@ -25,10 +25,10 @@ namespace XiHan.Models.Syses;
 public class SysDictData : BaseModifyEntity
 {
     /// <summary>
-    /// 字典ID
+    /// 字典编码
     ///</summary>
     [SugarColumn(Length = 50)]
-    public long DictTypeId { get; set; }
+    public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项标签

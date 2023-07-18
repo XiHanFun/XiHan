@@ -50,8 +50,8 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     private async Task<bool> CheckRoleUnique(SysRole sysRole)
     {
-        var isUnique = await IsAnyAsync(f => f.Code == sysRole.Code || f.Name == sysRole.Name);
-        if (isUnique) throw new CustomException($"角色【{sysRole.Name}】已存在!");
+        var isUnique = await IsAnyAsync(f => f.RoleCode == sysRole.RoleCode && f.RoleName == sysRole.RoleName);
+        if (isUnique) throw new CustomException($"角色【{sysRole.RoleName}】已存在!");
         return isUnique;
     }
 
@@ -77,7 +77,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     public async Task<bool> DeleteRoleByIds(long[] dictIds)
     {
         var roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        if (roles.Any(r => r.Code == AppGlobalConstant.SysRoleAdmin))
+        if (roles.Any(r => r.RoleCode == AppGlobalConstant.SysRoleAdmin))
         {
             throw new CustomException($"禁止删除系统管理员角色!");
         }
@@ -94,7 +94,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     {
         return await Context.Queryable<SysUserRole>()
             .LeftJoin<SysRole>((ur, r) => ur.RoleId == r.BaseId)
-            .Where((ur, r) => ur.UserId == userId && !r.IsDeleted)
+            .Where((ur, r) => ur.BaseId == userId && !r.IsDeleted)
             .Select((ur, r) => r)
             .ToListAsync();
     }

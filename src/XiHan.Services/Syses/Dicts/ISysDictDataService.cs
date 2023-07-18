@@ -39,7 +39,7 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     Task<bool> DeleteDictDataByIds(long[] dictIds);
 
     /// <summary>
-    /// 修改字典数项
+    /// 修改字典项
     /// </summary>
     /// <param name="dictDataCDto"></param>
     /// <returns></returns>

@@ -22,10 +22,11 @@ namespace XiHan.Services.Syses.Dicts.Dtos;
 public class SysDictDataCDto
 {
     /// <summary>
-    /// 字典ID
+    /// 字典编码
     ///</summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    public long DictTypeId { get; set; }
+    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项标签

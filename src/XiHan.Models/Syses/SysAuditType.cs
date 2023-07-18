@@ -34,7 +34,7 @@ public class SysAuditType : BaseDeleteEntity
     /// 分类名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    public string TypeName { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核等级

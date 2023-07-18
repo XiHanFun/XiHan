@@ -49,8 +49,8 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     private async Task<bool> CheckPermissionUnique(SysPermission sysPermission)
     {
-        var isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code || p.Name == sysPermission.Name);
-        if (isUnique) throw new CustomException($"权限【{sysPermission.Name}】已存在!");
+        var isUnique = await IsAnyAsync(p => p.PermissionCode == sysPermission.PermissionCode && p.PermissionName == sysPermission.PermissionName);
+        if (isUnique) throw new CustomException($"权限【{sysPermission.PermissionName}】已存在!");
         return isUnique;
     }
 
@@ -117,8 +117,8 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     public async Task<List<SysPermission>> GetPermissionList(SysPermissionWDto permissionWDto)
     {
         var whereExpression = Expressionable.Create<SysPermission>();
-        whereExpression.AndIF(permissionWDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(permissionWDto.Name!));
-        whereExpression.AndIF(permissionWDto.Code.IsNotEmptyOrNull(), u => u.Code == permissionWDto.Code);
+        whereExpression.AndIF(permissionWDto.PermissionName.IsNotEmptyOrNull(), u => u.PermissionName.Contains(permissionWDto.PermissionName!));
+        whereExpression.AndIF(permissionWDto.PermissionCode.IsNotEmptyOrNull(), u => u.PermissionCode == permissionWDto.PermissionCode);
         whereExpression.AndIF(permissionWDto.PermissionType != null, u => u.PermissionType == permissionWDto.PermissionType);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder);
@@ -134,8 +134,8 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
         var whereDto = pageWhere.Where;
 
         var whereExpression = Expressionable.Create<SysPermission>();
-        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
-        whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
+        whereExpression.AndIF(whereDto.PermissionName.IsNotEmptyOrNull(), u => u.PermissionName.Contains(whereDto.PermissionName!));
+        whereExpression.AndIF(whereDto.PermissionCode.IsNotEmptyOrNull(), u => u.PermissionCode == whereDto.PermissionCode);
         whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);

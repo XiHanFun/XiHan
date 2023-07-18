@@ -15,6 +15,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using XiHan.Infrastructures.Exceptions;
 using XiHan.Models.Syses;
 using XiHan.Tasks.Bases.Servers;
 using XiHan.Utils.Extensions;
@@ -49,13 +50,13 @@ public static class TaskSetup
                 var result = schedulerServer.CreateTaskScheduleAsync(task);
                 if (result.Result.IsSuccess)
                 {
-                    var info = $"注册任务：{task.Name}成功！";
+                    var info = $"注册任务：{task.JobName}成功！";
                     info.WriteLineSuccess();
                     Log.Information(info);
                 }
                 else
                 {
-                    var info = $"注册任务：{task.Name}失败！";
+                    var info = $"注册任务：{task.JobName}失败！";
                     info.WriteLineError();
                     Log.Error(info);
                 }
@@ -63,9 +64,7 @@ public static class TaskSetup
         }
         catch (Exception ex)
         {
-            const string errorInfo = $"注册定时任务出错！";
-            errorInfo.WriteLineError();
-            Log.Error(ex, errorInfo);
+            throw new CustomException($"注册定时任务出错！", ex);
         }
 
         return app;

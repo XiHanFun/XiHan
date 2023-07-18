@@ -15,17 +15,17 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Syses;
+namespace XiHan.Models.Posts;
 
 /// <summary>
-/// 用户收藏表
+/// 文章收藏表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Sys_User_Collect")]
-public class SysUserCollect : BaseCreateEntity
+[SugarTable(TableName = "Post_Collect")]
+public class PostCollect : BaseCreateEntity
 {
     /// <summary>
-    /// 收藏分类
+    /// 分类编码
     /// </summary>
     public long TypeId { get; set; }
 

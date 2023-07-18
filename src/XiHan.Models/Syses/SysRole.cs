@@ -31,17 +31,17 @@ public class SysRole : BaseDeleteEntity
     public long? ParentId { get; set; }
 
     /// <summary>
-    /// 角色代码
+    /// 角色编码
     /// 如：admin
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Code { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string RoleCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    public string RoleName { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色排序

@@ -29,7 +29,7 @@ public class SysOauth : BaseModifyEntity
     /// OauthTypeEnum
     /// </summary>
     [SugarColumn(Length = 10)]
-    public string OauthType { get; set; } = string.Empty;
+    public int OauthType { get; set; }
 
     /// <summary>
     /// 客户端ID

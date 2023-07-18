@@ -25,16 +25,16 @@ namespace XiHan.Models.Syses;
 public class SysDictType : BaseModifyEntity
 {
     /// <summary>
-    /// 字典名称
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string DictName { get; set; } = string.Empty;
-
-    /// <summary>
     /// 字典编码
     ///</summary>
     [SugarColumn(Length = 50)]
-    public string DictCode { get; set; } = string.Empty;
+    public string TypeCode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 字典名称
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string TypeName { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否启用
