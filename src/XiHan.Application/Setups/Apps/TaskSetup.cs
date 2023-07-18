@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Models.Syses;
-using XiHan.Tasks.Bases.Servers;
+using XiHan.Tasks.QuartzNet.Bases.Servers;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Application.Setups.Apps;

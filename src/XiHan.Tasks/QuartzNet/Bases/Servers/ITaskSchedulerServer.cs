@@ -16,7 +16,7 @@ using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 
-namespace XiHan.Tasks.Bases.Servers;
+namespace XiHan.Tasks.QuartzNet.Bases.Servers;
 
 /// <summary>
 /// ITaskSchedulerServer

@@ -17,7 +17,7 @@ using Quartz;
 using Quartz.Spi;
 using XiHan.Infrastructures.Exceptions;
 
-namespace XiHan.Tasks.Bases;
+namespace XiHan.Tasks.QuartzNet.Bases;
 
 /// <summary>
 /// JobFactory

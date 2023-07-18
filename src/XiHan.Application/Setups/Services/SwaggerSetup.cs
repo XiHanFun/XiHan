@@ -45,6 +45,10 @@ public static class SwaggerSetup
         {
             // 配置Swagger文档信息
             SwaggerInfoConfig(options);
+            // 配置Swagger分组信息
+            SwaggerGroupConfig(options);
+            // 加载Swagger注释文档
+            SwaggerDocLoad(options);
             // 配置Swagger文档请求 带JWT Token
             SwaggerJwtConfig(options);
         });
@@ -87,13 +91,25 @@ public static class SwaggerSetup
             // 根据相对路径排序
             //options.OrderActionsBy(o => o.RelativePath);
         });
+    }
 
-        // 核心逻辑代码，指定分组被加载时回调进入，也就是swagger右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回true就暴露，否则隐藏
+    /// <summary>
+    /// 配置Swagger分组信息
+    /// </summary>
+    /// <param name="options"></param>
+    private static void SwaggerGroupConfig(SwaggerGenOptions options)
+    {
+        // 核心逻辑代码，指定分组被加载时回调进入，也就是 swagger 右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回 true 就暴露，否则隐藏
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
-            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+            var baseControllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo.BaseType?
+                .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
+                .ToList();
+            // 反射获取 ApiController 的 ApiGroupAttribute 信息
+            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+                .ControllerTypeInfo
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
             // 反射获取派生类 Action 的 ApiGroupAttribute 信息
@@ -105,8 +121,9 @@ public static class SwaggerSetup
             var apiGroupAttributeList = new List<ApiGroupAttribute>();
             // 为空时插入空，减少 if 判断
             var emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
+            apiGroupAttributeList.AddRange(baseControllerAttributeList ?? emptyAttribute);
             apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
-            apiGroupAttributeList.AddRange(actionAttributeList);
+            apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
 
             // 判断所有的分组名称是否含有此名称
             if (apiGroupAttributeList.Any())
@@ -118,12 +135,18 @@ public static class SwaggerSetup
                     containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
                 // 若有，则为该分组名称分配此 Action
-                if (containList.Any()) return true;
+                if (containList.Any(c => c)) return true;
             }
-
             return false;
         });
+    }
 
+    /// <summary>
+    /// 加载Swagger注释文档
+    /// </summary>
+    /// <param name="options"></param>
+    private static void SwaggerDocLoad(SwaggerGenOptions options)
+    {
         // 枚举添加摘要
         options.UseInlineDefinitionsForEnums();
 

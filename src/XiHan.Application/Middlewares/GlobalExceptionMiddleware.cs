@@ -70,7 +70,7 @@ public class GlobalExceptionMiddleware
         catch (Exception ex)
         {
             // 记录操作日志
-            await HandleExceptionAsync(context, stopwatch.ElapsedMilliseconds, ex);
+            await RecordOperationLog(context, stopwatch.ElapsedMilliseconds, ex);
 
             // 处理异常
             var exceptionResult = ex switch
@@ -98,13 +98,13 @@ public class GlobalExceptionMiddleware
     }
 
     /// <summary>
-    /// 处理异常
+    /// 记录操作日志
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="elapsedMilliseconds"></param>
+    /// <param name="elapsed"></param>
     /// <param name="ex"></param>
     /// <returns></returns>
-    private async Task HandleExceptionAsync(HttpContext context, long elapsedMilliseconds, Exception ex)
+    private async Task RecordOperationLog(HttpContext context, long elapsed, Exception ex)
     {
         // 获取当前请求上下文信息
         var httpContextInfo = new HttpContextInfoHelper(context);
@@ -125,7 +125,7 @@ public class GlobalExceptionMiddleware
             Ip = clientInfo.RemoteIPv4,
             Status = false,
             ErrorMsg = ex.Message,
-            ElapsedTime = elapsedMilliseconds,
+            ElapsedTime = elapsed,
         };
 
         var endpoint = context.GetEndpoint();

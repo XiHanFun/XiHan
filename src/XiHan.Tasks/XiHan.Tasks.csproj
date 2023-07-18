@@ -21,11 +21,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.3"/>
+        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.Services\XiHan.Services.csproj"/>
+        <ProjectReference Include="..\XiHan.Services\XiHan.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -41,9 +41,5 @@
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Jobs\"/>
     </ItemGroup>
 </Project>

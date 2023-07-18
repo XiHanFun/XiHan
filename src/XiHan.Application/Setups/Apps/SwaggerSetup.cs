@@ -55,7 +55,7 @@ public static class SwaggerSetup
                 typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
                 {
                     // 获取枚举值上的特性
-                    if (publishGroup.All(pGroup => !string.Equals(pGroup.ToLower(), group.Name.ToLower(), StringComparison.Ordinal))) return;
+                    if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
                     var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
                     // 切换分组操作,参数一是使用的哪个json文件,参数二是个名字
                     options.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", info?.Title);

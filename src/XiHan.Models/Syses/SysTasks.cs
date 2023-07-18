@@ -25,22 +25,38 @@ namespace XiHan.Models.Syses;
 public class SysTasks : BaseDeleteEntity
 {
     /// <summary>
-    /// 任务名称
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string JobName { get; set; } = string.Empty;
-
-    /// <summary>
     /// 任务分组
     /// </summary>
     [SugarColumn(Length = 20)]
     public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
+    /// 任务名称
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string JobName { get; set; } = string.Empty;
+
+    /// <summary>
     /// 任务描述
     /// </summary>
     [SugarColumn(Length = 100, IsNullable = true)]
     public string? Description { get; set; }
+
+    /// <summary>
+    /// 执行次数
+    /// </summary>
+    public int RunTimes { get; set; }
+
+    /// <summary>
+    /// 最后运行时间
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public DateTime? LastRunTime { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// 是否启动
+    /// </summary>
+    public bool IsStart { get; set; }
 
     #region 任务类型
 
@@ -116,11 +132,6 @@ public class SysTasks : BaseDeleteEntity
     public int IntervalSecond { get; set; }
 
     /// <summary>
-    /// 执行次数
-    /// </summary>
-    public int RunTimes { get; set; }
-
-    /// <summary>
     /// 循环执行次数
     /// </summary>
     public int CycleRunTimes { get; set; }
@@ -141,17 +152,6 @@ public class SysTasks : BaseDeleteEntity
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public DateTime? EndTime { get; set; }
-
-    /// <summary>
-    /// 最后运行时间
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public DateTime? LastRunTime { get; set; }
-
-    /// <summary>
-    /// 是否启动
-    /// </summary>
-    public bool IsStart { get; set; }
 
     #endregion
 

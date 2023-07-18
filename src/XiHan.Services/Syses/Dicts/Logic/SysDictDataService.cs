@@ -26,7 +26,7 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Services.Syses.Dicts.Logic;
 
 /// <summary>
-/// 系统字典数据服务
+/// 系统字典项服务
 /// </summary>
 [AppService(ServiceType = typeof(ISysDictDataService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService

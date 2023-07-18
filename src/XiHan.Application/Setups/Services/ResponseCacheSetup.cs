@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Infrastructures.Apps.Configs;
 
@@ -34,7 +35,15 @@ public static class ResponseCacheSetup
 
         // 响应缓存
         var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();
-        if (isEnabledResponseCache) services.AddResponseCaching();
+        if (isEnabledResponseCache) services.AddResponseCaching(options =>
+        {
+            // 确定是否将响应缓存在区分大小写的路径上。 默认值是 false
+            options.UseCaseSensitivePaths = false;
+            // 响应正文的最大可缓存大小（以字节为单位）。 默认值为 64 * 1024 * 1024 （64 MB）
+            options.MaximumBodySize = 2 * 1024 * 1024;
+            // 响应缓存中间件的大小限制（以字节为单位）。 默认值为 100 * 1024 * 1024 （100 MB）
+            options.SizeLimit = 100 * 1024 * 1024;
+        });
 
         return services;
     }

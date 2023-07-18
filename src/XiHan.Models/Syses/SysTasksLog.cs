@@ -62,8 +62,8 @@ public class SysTasksLog : BaseDeleteEntity
     /// <summary>
     /// 调用目标字符串
     /// </summary>
-    [SugarColumn(Length = 200)]
-    public string InvokeTarget { get; set; } = string.Empty;
+    [SugarColumn(Length = 200, IsNullable = true)]
+    public string? InvokeTarget { get; set; }
 
     /// <summary>
     /// 执行用时，毫秒

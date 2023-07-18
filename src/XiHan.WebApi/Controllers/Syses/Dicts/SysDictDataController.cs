@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Apps.Logging;
@@ -26,7 +27,7 @@ namespace XiHan.WebApi.Controllers.Syses.Dicts;
 /// <summary>
 /// 系统字典项管理
 /// </summary>
-//[Authorize]
+[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysDictDataController : BaseApiController
 {
@@ -87,6 +88,7 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("Get/ById")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
+    [ApiGroup(ApiGroupNames.Display)]
     public async Task<CustomResult> GetDictDataById([FromBody] long dictDataId)
     {
         var result = await _sysDictDataService.GetDictDataById(dictDataId);
@@ -100,6 +102,7 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetList/ByTypeCode")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
+    [ApiGroup(ApiGroupNames.Display)]
     public async Task<CustomResult> GetDictDataListByTypeCode([FromBody] string dictCode)
     {
         var result = await _sysDictDataService.GetDictDataListByType(dictCode);
@@ -113,6 +116,7 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetList/ByTypes")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
+    [ApiGroup(ApiGroupNames.Display)]
     public async Task<CustomResult> GetDictDataListByTypes([FromBody] string[] dictCodes)
     {
         var result = await _sysDictDataService.GetDictDataListByTypes(dictCodes);

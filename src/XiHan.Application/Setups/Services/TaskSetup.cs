@@ -14,8 +14,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Quartz.Spi;
-using XiHan.Tasks.Bases;
-using XiHan.Tasks.Bases.Servers;
+using XiHan.Tasks.QuartzNet.Bases;
+using XiHan.Tasks.QuartzNet.Bases.Servers;
 
 namespace XiHan.Application.Setups.Services;
 

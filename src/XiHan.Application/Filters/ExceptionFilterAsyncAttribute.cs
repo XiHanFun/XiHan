@@ -35,7 +35,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     // 日志开关
     private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
 
-    private readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
+    private static readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
     /// 当异常发生时
