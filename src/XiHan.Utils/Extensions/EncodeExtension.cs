@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -136,7 +137,7 @@ public static partial class EncodeExtension
     /// <returns>编码后的字符串</returns>
     public static string UrlEncode(this string data)
     {
-        return Uri.EscapeDataString(data);
+        return WebUtility.UrlEncode(data);
     }
 
     /// <summary>
@@ -146,7 +147,7 @@ public static partial class EncodeExtension
     /// <returns>解码后的字符串</returns>
     public static string UrlDecode(this string data)
     {
-        return Uri.UnescapeDataString(data);
+        return WebUtility.UrlDecode(data);
     }
 
     [GeneratedRegex(@"\\u([0-9A-Za-z]{4})")]

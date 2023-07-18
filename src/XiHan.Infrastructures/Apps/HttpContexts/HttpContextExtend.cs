@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -83,8 +84,116 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var request = context.Request;
-        return request.Headers["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        StringValues stringValues = (from headers in context.Request.Headers
+                                     where headers.Key.ToLower() == "X-Requested-With".ToLower()
+                                     select headers.Value).FirstOrDefault();
+        return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
+    }
+
+    /// <summary>
+    ///  是否是 json 请求
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static bool IsJsonRequest(this HttpContext? context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        StringValues stringValues = (from headers in context.Request.Headers
+                                     where headers.Key.ToLower() == "content-type".ToLower()
+                                     select headers.Value).FirstOrDefault();
+        return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
+    }
+
+    /// <summary>
+    /// 是否为 html 网页请求
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static bool IsHtmlRequest(this HttpContext? context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        StringValues stringValues = (from headers in context.Request.Headers
+                                     where headers.Key.ToLower() == "accept".ToLower()
+                                     select headers.Value).FirstOrDefault();
+        return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
+    }
+
+    /// <summary>
+    /// 通过 httpcontext 下载文件
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="fileContents"></param>
+    /// <param name="contentType"></param>
+    /// <param name="fileDownloadName"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void DownLoadFile(this HttpContext? context, byte[] fileContents, string contentType, string fileDownloadName)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+        context.Response.ContentType = contentType;
+        context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileDownloadName.UrlEncode());
+        context.Response.BodyWriter.WriteAsync(fileContents);
+        context.Response.BodyWriter.FlushAsync();
+    }
+
+    /// <summary>
+    /// 验证当前上下文响应内容是否是下载文件
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static bool IsDownLoadFile(this HttpContext? context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
+    }
+
+    /// <summary>
+    /// 设置Cookie值
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="key">名称</param>
+    /// <param name="value">值</param>
+    /// <param name="expires">过期时长</param>
+    public static void SetCookie(this HttpContext context, string key, string value, int? expires = null)
+    {
+        if (!expires.HasValue)
+        {
+            context.Response.Cookies.Append(key, value);
+            return;
+        }
+
+        context.Response.Cookies.Append(key, value, new CookieOptions
+        {
+            Expires = DateTime.Now.AddMinutes(Convert.ToDouble(expires))
+        });
+    }
+
+    /// <summary>
+    /// 读取Cookie值
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="key">名称</param>
+    /// <returns>返回的cookies</returns>
+    public static string? GetCookie(this HttpContext context, string key)
+    {
+        return context.Request.Cookies[key];
+    }
+
+    /// <summary>
+    /// 删除Cookie对象
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="key">名称</param>
+    public static void RemoveCookie(this HttpContext context, string key)
+    {
+        context.Response.Cookies.Delete(key);
     }
 
     /// <summary>

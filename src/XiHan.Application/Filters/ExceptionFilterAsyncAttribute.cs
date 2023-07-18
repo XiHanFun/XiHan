@@ -38,13 +38,6 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
     private readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ExceptionFilterAsyncAttribute()
-    {
-    }
-
-    /// <summary>
     /// 当异常发生时
     /// </summary>
     /// <param name="context"></param>
@@ -77,9 +70,9 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
             var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                $"\t 操作用户：{actionContextInfo.UserId}";
+                       $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                       $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                       $"\t 操作用户：{actionContextInfo.UserId}";
 
             if (_exceptionLogSwitch)
                 _logger.Error(context.Exception, $"系统异常\n{info}");

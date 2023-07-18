@@ -12,13 +12,10 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Caching.Memory;
-using Serilog;
-using System.Text.Json;
-using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Infrastructures.Apps.Caches;
 
 namespace XiHan.Application.Filters;
 
@@ -28,23 +25,17 @@ namespace XiHan.Application.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
-    // 日志开关
-    private readonly bool _resourceLogSwitch = AppSettings.LogConfig.Resource.GetValue();
-
-    private readonly ILogger _logger = Log.ForContext<ResourceFilterAsyncAttribute>();
+    private IAppCacheService? _appCacheService;
 
     // 缓存时间
-    private readonly int _syncTimeout = AppSettings.Cache.SyncTimeout.GetValue();
-
-    private readonly IMemoryCache _memoryCache;
+    private readonly int _syncTimeout;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="memoryCache"></param>
-    public ResourceFilterAsyncAttribute(IMemoryCache memoryCache)
+    public ResourceFilterAsyncAttribute(int syncTimeout = 30)
     {
-        _memoryCache = memoryCache;
+        _syncTimeout = syncTimeout;
     }
 
     /// <summary>
@@ -55,20 +46,14 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        // 控制器信息
-        var actionContextInfo = context.GetActionContextInfo();
-        // 写入日志
-        var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-            $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-            $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-            $"\t 操作用户：{actionContextInfo.UserId}";
+        _appCacheService = context.HttpContext.RequestServices.GetService(typeof(IAppCacheService)) as IAppCacheService;
+
+        var apiResourceCacheKey = GetCacheKey(context.HttpContext);
+
         // 若存在此资源，直接返回缓存资源
-        if (_memoryCache.TryGetValue(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, out var value))
+        if (_appCacheService!.Exists(apiResourceCacheKey))
         {
-            // 请求构造函数和方法
-            context.Result = value as ActionResult;
-            if (_resourceLogSwitch)
-                _logger.Information($"缓存数据\n{info}\n{context.Result}");
+            context.Result = _appCacheService.Get(apiResourceCacheKey) as ActionResult;
         }
         else
         {
@@ -78,10 +63,19 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             if (resourceExecuted.Result != null)
             {
                 var result = resourceExecuted.Result as ActionResult;
-                _memoryCache.Set(actionContextInfo.RequestUrl + actionContextInfo.MethodInfo, result,
-                    TimeSpan.FromMinutes(_syncTimeout));
-                if (_resourceLogSwitch) _logger.Information($"请求缓存\n{info}\n{JsonSerializer.Serialize(result)}");
+                _appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
             }
         }
+    }
+
+    /// <summary>
+    /// 获取每个唯一请求的缓存 key
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    private static string GetCacheKey(HttpContext context)
+    {
+        var requestId = context.TraceIdentifier.Split(':')[0];
+        return $"{requestId}_{context.Request.Path.ToString().ToLowerInvariant()}";
     }
 }

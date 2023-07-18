@@ -43,30 +43,3 @@ public class ValidationDto
     /// </summary>
     public List<ValidationErrorDto>? ValidationErrorDtos { get; }
 }
-
-/// <summary>
-/// 验证出错字段实体
-/// </summary>
-public class ValidationErrorDto
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="property"></param>
-    /// <param name="message"></param>
-    public ValidationErrorDto(string? property, string? message)
-    {
-        Property = property;
-        Message = message;
-    }
-
-    /// <summary>
-    /// 属性
-    /// </summary>
-    public string? Property { get; }
-
-    /// <summary>
-    /// 信息
-    /// </summary>
-    public string? Message { get; }
-}

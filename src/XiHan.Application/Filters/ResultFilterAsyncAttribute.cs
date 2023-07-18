@@ -14,9 +14,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Serilog;
 using System.Text.Json;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses.Results;
 
@@ -28,16 +26,17 @@ namespace XiHan.Application.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
 {
-    // 日志开关
-    private readonly bool _resultLogSwitch = AppSettings.LogConfig.Result.GetValue();
-
-    private readonly ILogger _logger = Log.ForContext<ResultFilterAsyncAttribute>();
+    /// <summary>
+    /// 是否忽略
+    /// </summary>
+    public bool IsIgnore { get; set; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ResultFilterAsyncAttribute()
+    public ResultFilterAsyncAttribute(bool isIgnore = false)
     {
+        IsIgnore = isIgnore;
     }
 
     /// <summary>
@@ -49,6 +48,11 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
+        if (IsIgnore || context.Result == null || context.HttpContext.IsDownLoadFile())
+        {
+            return;
+        }
+
         // 结果不为空就做序列化处理
         context.Result = context.Result switch
         {
@@ -60,21 +64,16 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             ObjectResult objectResult => new JsonResult(objectResult.Value),
             // 如果是 JsonResult，则转换为 JsonResult
             JsonResult jsonResult => new JsonResult(jsonResult.Value),
+            // 如果是 EmptyResult，则转换为 JsonResult
+            EmptyResult => new JsonResult(null),
             // 其他直接返回
             _ => context.Result
         };
         // 请求构造函数和方法,调用下一个过滤器
         var resultExecuted = await next();
-
-        // 控制器信息
-        var actionContextInfo = context.GetActionContextInfo();
-        // 写入日志
-        var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-            $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-            $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-            $"\t 操作用户：{actionContextInfo.UserId}";
         // 执行结果
         var result = JsonSerializer.Serialize(resultExecuted.Result);
-        if (_resultLogSwitch) _logger.Information($"返回数据\n{info}\n{result}");
+
+        await Task.CompletedTask;
     }
 }

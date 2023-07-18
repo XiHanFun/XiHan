@@ -14,10 +14,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Serilog;
-using System.Text.Json;
-using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses.Actions;
 using XiHan.Infrastructures.Responses.Results;
 
@@ -29,18 +25,6 @@ namespace XiHan.Application.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
 {
-    // 日志开关
-    private readonly bool _actionLogSwitch = AppSettings.LogConfig.Action.GetValue();
-
-    private readonly ILogger _logger = Log.ForContext<ActionFilterAsyncAttribute>();
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ActionFilterAsyncAttribute()
-    {
-    }
-
     /// <summary>
     /// 在某请求时执行
     /// </summary>
@@ -59,15 +43,6 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         }
         else
         {
-            // 控制器信息
-            var actionContextInfo = context.GetActionContextInfo();
-            // 写入日志
-            var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                $"\t 操作用户：{actionContextInfo.UserId}";
-            if (_actionLogSwitch)
-                _logger.Information($"发起请求\n{info}");
             // 请求构造函数和方法,调用下一个过滤器
             var actionExecuted = await next();
             if (actionExecuted.Result != null)
@@ -78,12 +53,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
                 var requestException = actionExecuted.Exception;
                 if (requestException != null)
                 {
-                    // 请求成功就写入日志
-                    if (_actionLogSwitch)
-                        _logger.Information($"请求结果\n{info}\n {JsonSerializer.Serialize(returnResult)}");
-                }
-                else
-                {
+                    await Task.CompletedTask;
                 }
             }
         }
