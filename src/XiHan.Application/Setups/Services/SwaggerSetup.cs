@@ -59,22 +59,19 @@ public static class SwaggerSetup
     {
         // 需要暴露的分组
         var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
-        // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo是内置的一个Int值
+        // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo 是内置的一个 Int 值
         typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
-            if (publishGroup.All(
-                pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
+            if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
             // 获取分组信息
-            var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>()
-                .FirstOrDefault();
+            var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
             // 添加文档介绍
             options.SwaggerDoc(group.Name, new OpenApiInfo
             {
                 Title = info?.Title,
                 Version = info?.Version,
-                Description = info?.Description +
-                    $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                 Contact = new OpenApiContact
                 {
                     Name = AppSettings.Syses.Admin.Name.GetValue(),
@@ -116,9 +113,12 @@ public static class SwaggerSetup
             {
                 var containList = new List<bool>();
                 // 遍历判断是否包含这个分组
-                apiGroupAttributeList.ForEach(attribute => { containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName)); });
+                apiGroupAttributeList.ForEach(attribute =>
+                {
+                    containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
+                });
                 // 若有，则为该分组名称分配此 Action
-                if (containList.Any(c => c)) return true;
+                if (containList.Any()) return true;
             }
 
             return false;

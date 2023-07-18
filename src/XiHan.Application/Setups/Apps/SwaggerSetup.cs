@@ -55,10 +55,8 @@ public static class SwaggerSetup
                 typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
                 {
                     // 获取枚举值上的特性
-                    if (publishGroup.All(pGroup =>
-                        !string.Equals(pGroup.ToLower(), group.Name.ToLower(), StringComparison.Ordinal))) return;
-                    var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>()
-                        .FirstOrDefault();
+                    if (publishGroup.All(pGroup => !string.Equals(pGroup.ToLower(), group.Name.ToLower(), StringComparison.Ordinal))) return;
+                    var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
                     // 切换分组操作,参数一是使用的哪个json文件,参数二是个名字
                     options.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", info?.Title);
                 });
@@ -68,20 +66,19 @@ public static class SwaggerSetup
                 {
                     // 将swagger首页，设置成自定义的页面，写法：{ 项目名.index.html}
                     options.IndexStream = streamHtml;
-                    options.HeadContent =
-                        @"<style>.opblock-summary-description{font-weight: bold;text-align: right;}</style>";
+                    options.HeadContent = @"<style>.opblock-summary-description{font-weight: bold;text-align: right;}</style>";
                 }
 
-                // API页面标题
+                // Api页面标题
                 options.DocumentTitle = $"{siteName} - 接口文档";
-                // API文档仅展开标记
+                // Api文档仅展开标记
                 // List：列表式（展开子类），默认值;
                 // Full：完全展开;
                 // None：列表式（不展开子类）
                 options.DocExpansion(DocExpansion.None);
                 // 模型的默认扩展深度，设置为 -1 完全隐藏模型
                 options.DefaultModelsExpandDepth(-1);
-                // API前缀设置
+                // Api前缀设置
                 options.RoutePrefix = routePrefix;
             });
         }
