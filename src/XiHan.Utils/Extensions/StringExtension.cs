@@ -22,7 +22,7 @@ namespace XiHan.Utils.Extensions;
 /// </summary>
 public static class StringExtension
 {
-    #region 分割组装
+    #region 分割
 
     /// <summary>
     /// 把字符串按照分隔符转换成 List
@@ -60,7 +60,7 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 把字符串按照, 分割转换为数组
+    /// 把字符串按照,分割转换为数组
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
@@ -68,6 +68,10 @@ public static class StringExtension
     {
         return str.Split(new char[] { ',' });
     }
+
+    #endregion
+
+    #region 组装
 
     /// <summary>
     /// 把 List 按照分隔符组装成 string 类型
@@ -110,6 +114,28 @@ public static class StringExtension
             {
                 sb.Append(array[i]);
                 sb.Append(speater);
+            }
+
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// 把数组按照,组装成 string 类型
+    /// </summary>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public static string GetArrayStr(this string[] array)
+    {
+        StringBuilder sb = new();
+        for (var i = 0; i < array.Length; i++)
+            if (i == array.Length - 1)
+            {
+                sb.Append(array[i]);
+            }
+            else
+            {
+                sb.Append(array[i]);
+                sb.Append(',');
             }
 
         return sb.ToString();

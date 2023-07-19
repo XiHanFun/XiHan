@@ -22,14 +22,14 @@ using XiHan.Subscriptions.Robots.WeCom;
 using XiHan.Utils.Encryptions;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.Manage.Messages;
+namespace XiHan.WebApi.Controllers.All.Common.Messages;
 
 /// <summary>
-/// 企业微信消息推送
+/// 企业微信消息推送管理
 /// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Manage)]
+[ApiGroup(ApiGroupNames.Common)]
 public class WeComController : BaseApiController
 {
     private readonly IWeComPushService _weComPushService;

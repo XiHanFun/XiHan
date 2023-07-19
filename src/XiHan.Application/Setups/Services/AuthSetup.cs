@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using XiHan.Application.Common.Auth;
+using XiHan.Application.Handlers;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 
@@ -41,7 +41,6 @@ public static class AuthSetup
         // 身份验证（Bearer）
         services.AddAuthentication(options =>
         {
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
@@ -50,27 +49,27 @@ public static class AuthSetup
         {
             // 配置鉴权逻辑，添加JwtBearer服务
             options.SaveToken = true;
-            options.TokenValidationParameters = JwtTokenUtil.TokenVerify();
+            options.TokenValidationParameters = JwtHandler.GetTokenVerifyParams();
             options.Events = new JwtBearerEvents
             {
                 // 认证失败时
-                OnAuthenticationFailed = async context =>
+                OnAuthenticationFailed = context =>
                 {
                     var jwtHandler = new JwtSecurityTokenHandler();
                     var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", "");
-
+                    context.Response.StatusCode = 401;
                     // 若Token为空、伪造无法读取
                     if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
                     {
                         var jwtToken = jwtHandler.ReadJwtToken(token);
 
-                        if (jwtToken.Issuer != JwtTokenUtil.GetAuthJwtSetting().Issuer)
+                        if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
                             context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
 
-                        if (jwtToken.Audiences.FirstOrDefault() != JwtTokenUtil.GetAuthJwtSetting().Audience)
+                        if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
                             context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                         // 返回自定义的未授权模型数据
-                        await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权为空或因伪造无法读取！"));
+                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权为空或因伪造无法读取！"));
                     }
 
                     // 如果过期，则把是否过期添加到返回头信息中
@@ -78,18 +77,19 @@ public static class AuthSetup
                     {
                         context.Response.Headers.Add("Token-Expired", "true");
                         // 返回自定义的未授权模型数据
-                        await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权已过期！"));
+                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权已过期！"));
                     }
 
-                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized());
+                    return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized());
                 },
                 // 未授权时
-                OnChallenge = async context =>
+                OnChallenge = context =>
                 {
+                    context.Response.StatusCode = 401;
                     // 将Token错误添加到返回头信息中
                     context.HttpContext.Response.Headers.Add("Token-Error", context.ErrorDescription);
                     // 返回自定义的未授权模型数据
-                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("未授权！"));
+                    return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("未授权！"));
                 }
             };
         });

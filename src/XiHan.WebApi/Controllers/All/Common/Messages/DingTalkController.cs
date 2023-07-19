@@ -20,14 +20,14 @@ using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.Manage.Messages;
+namespace XiHan.WebApi.Controllers.All.Common.Messages;
 
 /// <summary>
-/// 钉钉消息推送
+/// 钉钉消息推送管理
 /// <code>包含：文本/链接/文档/任务卡片/卡片菜单</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Manage)]
+[ApiGroup(ApiGroupNames.Common)]
 public class DingTalkController : BaseApiController
 {
     private readonly IDingTalkPushService _dingTalkPushService;

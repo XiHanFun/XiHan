@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:JwtTokenUtil
+// FileName:JwtHandler
 // Guid:df38addc-198d-4f69-aca1-5f3cc1c1c01b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,12 +21,12 @@ using System.Text;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Application.Common.Auth;
+namespace XiHan.Application.Handlers;
 
 /// <summary>
-/// JwtToken 工具类
+/// Jwt 处理器
 /// </summary>
-public static class JwtTokenUtil
+public static class JwtHandler
 {
     /// <summary>
     /// Token颁发
@@ -103,10 +103,55 @@ public static class JwtTokenUtil
     }
 
     /// <summary>
-    /// Token验证
+    /// Token 解析
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public static TokenModel TokenSerialize(string token)
+    {
+        try
+        {
+            var jwtHandler = new JwtSecurityTokenHandler();
+            token = token.ParseToString().Replace("Bearer ", "");
+
+            // 开始Token校验
+            if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
+                throw new ArgumentException("token 为空或无法解析！", nameof(token));
+
+            var jwtToken = jwtHandler.ReadJwtToken(token);
+            List<Claim> claims = jwtToken.Claims.ToList();
+
+            // 分离参数
+            var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId");
+            var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName");
+            var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName");
+            var sysRolesClaim = claims.Where(claim => claim.Type == "SysRole").ToList();
+
+            var userId = userIdClaim!.Value.ParseToLong();
+            var userName = userNameClaim!.Value;
+            var nickName = nickNameClaim!.Value;
+            var sysRoles = sysRolesClaim.Select(c => c.Value).ToList();
+
+            var tokenModel = new TokenModel
+            {
+                UserId = userId,
+                UserName = userName,
+                NickName = nickName,
+                SysRoles = string.Join(',', sysRoles)
+            };
+            return tokenModel;
+        }
+        catch (Exception ex)
+        {
+            throw new AuthenticationException($"JwtToken 字符串解析失败", ex);
+        }
+    }
+
+    /// <summary>
+    /// 获取 Token 验证参数
     /// </summary>
     /// <returns></returns>
-    public static TokenValidationParameters TokenVerify()
+    public static TokenValidationParameters GetTokenVerifyParams()
     {
         var authJwtSetting = GetAuthJwtSetting();
         // 签名密钥
@@ -134,51 +179,6 @@ public static class JwtTokenUtil
             RequireExpirationTime = true
         };
         return tokenValidationParameters;
-    }
-
-    /// <summary>
-    /// Token 解析
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    public static TokenModel TokenSerialize(string token)
-    {
-        try
-        {
-            var jwtHandler = new JwtSecurityTokenHandler();
-            token = token.ParseToString().Replace("Bearer ", "");
-
-            // 开始Token校验
-            if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
-                throw new ArgumentException("token 为空或无法解析！", nameof(token));
-
-            var jwtToken = jwtHandler.ReadJwtToken(token);
-            List<Claim> claims = jwtToken.Claims.ToList();
-
-            // 分离参数
-            var userIdClaim = claims.FirstOrDefault(claim => claim.Type == "UserId");
-            var userNameClaim = claims.FirstOrDefault(claim => claim.Type == "UserName");
-            var nickNameClaim = claims.FirstOrDefault(claim => claim.Type == "NickName");
-            var sysRolesClaim = claims.Where(claim => claim.Type == "SysRole").ToList();
-
-            var userId = userIdClaim!.Value.ParseToGuid();
-            var userName = userNameClaim!.Value;
-            var nickName = nickNameClaim!.Value;
-            var sysRoles = sysRolesClaim.Select(c => c.Value).ToList();
-
-            var tokenModel = new TokenModel
-            {
-                UserId = userId,
-                UserName = userName,
-                NickName = nickName,
-                SysRoles = string.Join(',', sysRoles)
-            };
-            return tokenModel;
-        }
-        catch (Exception ex)
-        {
-            throw new AuthenticationException($"JwtToken 字符串解析失败", ex);
-        }
     }
 
     /// <summary>
@@ -252,7 +252,7 @@ public class TokenModel
     /// <summary>
     /// 用户主键
     /// </summary>
-    public Guid UserId { get; init; }
+    public long UserId { get; init; }
 
     /// <summary>
     /// 用户名称

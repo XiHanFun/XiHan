@@ -20,14 +20,14 @@ using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Subscriptions.Robots.Email;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.Manage.Messages;
+namespace XiHan.WebApi.Controllers.All.Common.Messages;
 
 /// <summary>
-/// 邮件推送
+/// 邮件推送管理
 /// <code>包含：SMTP</code>
 /// </summary>
 [AllowAnonymous]
-[ApiGroup(ApiGroupNames.Manage)]
+[ApiGroup(ApiGroupNames.Common)]
 public class EmailController : BaseApiController
 {
     private readonly IEmailPushService _emailPushService;

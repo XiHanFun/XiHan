@@ -13,10 +13,14 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using System.Security.Claims;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructures.Apps;
 
@@ -25,6 +29,16 @@ namespace XiHan.Infrastructures.Apps;
 /// </summary>
 public static class App
 {
+    /// <summary>
+    /// 应用有效程序集
+    /// </summary>
+    public static IEnumerable<Assembly> Assemblies => ReflectionHelper.GetAssemblies();
+
+    /// <summary>
+    /// 有效程序集类型
+    /// </summary>
+    public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllTypes();
+
     /// <summary>
     /// 获取请求上下文
     /// </summary>

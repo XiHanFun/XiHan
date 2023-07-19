@@ -15,6 +15,7 @@
 using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using SqlSugar.IOC;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Models.Bases.Entity;
 using XiHan.Utils.Extensions;

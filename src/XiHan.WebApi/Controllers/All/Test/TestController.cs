@@ -23,10 +23,10 @@ using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.Test;
+namespace XiHan.WebApi.Controllers.All.Test;
 
 /// <summary>
-/// 系统测试
+/// 测试管理
 /// <code>包含：工具/客户端信息/IP信息/授权信息</code>
 /// </summary>
 [EnableCors("AllowAll")]

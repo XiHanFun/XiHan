@@ -176,9 +176,10 @@ public static class SwaggerSetup
         // 定义安全方案
         var securitySchemeOauth2 = new OpenApiSecurityScheme
         {
-            Description = "在下框中输入<code>{token}</code>进行身份验证",
             // JWT默认的参数名称
             Name = "Authorization",
+            // 描述
+            Description = "在下框中输入<code>token</code>进行身份验证",
             // 标识承载令牌的Bearer认证的数据格式，该信息主要是用于文档
             BearerFormat = "JWT",
             // 认证主题，在Type=Http时，只能是Basic和Bearer

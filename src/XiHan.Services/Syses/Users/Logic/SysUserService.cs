@@ -34,7 +34,7 @@ namespace XiHan.Services.Syses.Users.Logic;
 [AppService(ServiceType = typeof(ISysUserService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysUserService : BaseService<SysUser>, ISysUserService
 {
-    private string _secretKey = AppSettings.Syses.Domain.GetValue();
+    private static string _secretKey = AppSettings.Syses.Domain.GetValue();
     private readonly ISysUserRoleService _sysUserRoleService;
     private readonly ISysRoleService _sysRoleService;
 
@@ -184,7 +184,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        if (await IsAnyAsync(u => u.BaseId == userPwdMDto.BaseId && u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
+        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId &&
+                                  u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
         {
             return await UpdateAsync(s => new SysUser()
             {
@@ -195,13 +196,27 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
-    /// 查询用户信息
+    /// 查询用户信息(根据用户主键)
     /// </summary>
-    /// <param name="dictId"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<SysUser> GetDictTypeById(long dictId)
+    public async Task<SysUser> GetUserById(long userId)
     {
-        return await FindAsync(f => f.BaseId == dictId);
+        var sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
+        //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
+        //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
+
+        return sysUser;
+    }
+
+    /// <summary>
+    /// 查询用户信息(登录获取Token使用)
+    /// </summary>
+    /// <param name="account"></param>
+    /// <returns></returns>
+    public async Task<SysUser> GetUserByAccount(string account)
+    {
+        return await FindAsync(u => u.Account == account && !u.IsDeleted);
     }
 
     /// <summary>
@@ -222,19 +237,5 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
-    }
-
-    /// <summary>
-    /// 查询用户(根据用户主键)
-    /// </summary>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    public async Task<SysUser?> GetUserById(long userId)
-    {
-        var sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
-        //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
-        //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
-
-        return sysUser;
     }
 }
