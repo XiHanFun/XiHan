@@ -18,8 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using XiHan.Application.Common.Swagger;
 using XiHan.Application.Filters;
-using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 
@@ -38,11 +38,14 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public HttpContextInfoHelper ClientInfo()
+    public CustomResult ClientInfo()
     {
-        // 获取 HttpContext 和 HttpRequest 对象
-        HttpContextInfoHelper clientInfoHelper = new(App.HttpContext);
-        return clientInfoHelper;
+        return CustomResult.Success(new
+        {
+            HttpContextInfoHelper.ClientInfo,
+            HttpContextInfoHelper.AddressInfo,
+            HttpContextInfoHelper.AuthInfo
+        });
     }
 
     /// <summary>

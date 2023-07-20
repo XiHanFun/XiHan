@@ -12,41 +12,28 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 
-namespace XiHan.Infrastructures.Apps.HttpContexts;
+namespace XiHan.Infrastructures.Infos;
 
 /// <summary>
 /// 请求上下文信息帮助类
 /// </summary>
-public class HttpContextInfoHelper
+public static class HttpContextInfoHelper
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <exception cref="ArgumentNullException"></exception>
-    public HttpContextInfoHelper(HttpContext? httpContext)
-    {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
-
-        ClientInfo = httpContext.GetClientInfo();
-        AddressInfo = httpContext.GetAddressInfo();
-        AuthInfo = httpContext.GetUserAuthInfo();
-    }
-
     /// <summary>
     /// 客户端信息
     /// </summary>
-    public UserClientInfo ClientInfo { get; set; }
+    public static UserClientInfo ClientInfo => App.HttpContextCurrent.GetClientInfo();
 
     /// <summary>
     /// 地址信息
     /// </summary>
-    public UserAddressInfo AddressInfo { get; set; }
+    public static UserAddressInfo AddressInfo => App.HttpContextCurrent.GetAddressInfo();
 
     /// <summary>
     /// 权限信息
     /// </summary>
-    public UserAuthInfo AuthInfo { get; set; }
+    public static UserAuthInfo AuthInfo => App.HttpContextCurrent.GetUserAuthInfo();
 }

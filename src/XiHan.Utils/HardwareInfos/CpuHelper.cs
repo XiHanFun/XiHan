@@ -39,31 +39,26 @@ public static class CpuHelper
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""");
-                var lines = output.Trim().Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
+                var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""").Trim();
+                var lines = output.Split(',', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)[0];
+                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.None)[0];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
                 }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var output = ShellHelper.Bash(@"top -l 1 -F | awk '/CPU usage/ {gsub(""%"", """"); print $7}'");
-                var lines = output.Trim().Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
-                if (lines.Any())
-                {
-                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)[0];
-                    cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
-                }
+                var output = ShellHelper.Bash(@"top -l 1 -F | awk '/CPU usage/ {gsub(""%"", """"); print $7}'").Trim();
+                cpuInfo.CpuRate = output.ParseToLong() + "%";
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage /Value");
-                var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+                var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage /Value").Trim();
+                var lines = output.Split('\n', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    var loadPercentage = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries)[1];
+                    var loadPercentage = lines[0].Split('=', (char)StringSplitOptions.None)[1];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
                 }
             }

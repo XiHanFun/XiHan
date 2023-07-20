@@ -87,38 +87,45 @@ public static class OsPlatformHelper
     }
 
     /// <summary>
-    /// 运行时间
+    /// 系统运行时间
     /// </summary>
     public static string GetRunningTime()
     {
         string runTime = string.Empty;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        try
         {
-            var output = ShellHelper.Bash("uptime -s").Trim();
-            var timeSpan = DateTime.Now - output.Trim().ParseToDate();
-            runTime = timeSpan.FormatTimeSpanToString();
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            var output = ShellHelper.Bash("uptime").Trim();
-            string[] outputArr = output.Split(new[] { "\n" }, StringSplitOptions.None);
-            if (outputArr.Length > 0)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                string runTimeString = outputArr[0].Substring(outputArr[0].IndexOf("up") + 2);
-                var timeSpan = DateTime.Now - runTimeString.ParseToDate();
+                var output = ShellHelper.Bash("uptime -s").Trim();
+                var timeSpan = DateTime.Now - output.Trim().ParseToDate();
                 runTime = timeSpan.FormatTimeSpanToString();
             }
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            var output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime/Value");
-            string[] outputArr = output.Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-            if (outputArr.Length == 2)
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var timeSpan = DateTime.Now - outputArr[1].Split('.')[0].FormatStringToDate();
-                runTime = timeSpan.FormatTimeSpanToString();
+                var output = ShellHelper.Bash("uptime | tail -n -1").Trim();
+                // 提取运行时间部分
+                int startIndex = output.IndexOf("up ") + 3;
+                int endIndex = output.IndexOf(" user");
+                string uptime = output.Substring(startIndex, endIndex - startIndex).Trim();
+                // 解析运行时间并转换为标准格式
+                TimeSpan uptimeSpan = ParseUptime(uptime);
+                runTime = uptimeSpan.FormatTimeSpanToString();
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime/Value").Trim();
+                string[] outputArr = output.Split('=', (char)StringSplitOptions.None);
+                if (outputArr.Length == 2)
+                {
+                    var timeSpan = DateTime.Now - outputArr[1].Split('.')[0].FormatStringToDate();
+                    runTime = timeSpan.FormatTimeSpanToString();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ("获取系统运行时间出错，" + ex.Message).WriteLineError();
         }
 
         return runTime;
@@ -130,5 +137,29 @@ public static class OsPlatformHelper
     public static string GetInteractiveMode()
     {
         return Environment.UserInteractive ? "交互运行" : "非交互运行";
+    }
+
+    private static TimeSpan ParseUptime(string uptime)
+    {
+        string[] parts = uptime.Split(',');
+        int days = 0, hours = 0, minutes = 0;
+
+        foreach (var part in parts)
+        {
+            var trimmedPart = part.Trim();
+
+            if (trimmedPart.Contains("day"))
+            {
+                days = int.Parse(trimmedPart.Split(' ')[0]);
+            }
+            else if (trimmedPart.Contains(":"))
+            {
+                var timeParts = trimmedPart.Split(':');
+                hours = int.Parse(timeParts[0]);
+                minutes = int.Parse(timeParts[1]);
+            }
+        }
+
+        return new TimeSpan(days, hours, minutes, 0);
     }
 }

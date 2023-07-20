@@ -12,10 +12,4 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Utils.Extensions;
-
 Console.WriteLine("Hello, World!");
-
-var lines = "15G (1784M 3249M 843M".Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
-
-Console.WriteLine();

@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Quartz;
-using XiHan.Infrastructures.Filters;
 using XiHan.Services.Syses.Operations;
 using XiHan.Services.Syses.Tasks;
 using XiHan.Tasks.QuartzNet.Bases;

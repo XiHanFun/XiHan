@@ -13,11 +13,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Security.Claims;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Reflections;
@@ -42,17 +40,17 @@ public static class App
     /// <summary>
     /// 获取请求上下文
     /// </summary>
-    public static HttpContext? HttpContext => AppHttpContextManager.Current;
+    public static HttpContext HttpContextCurrent => AppHttpContextManager.Current;
 
     /// <summary>
     /// 获取请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContext?.RequestServices ?? AppServiceManager.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 
     /// <summary>
     /// 获取请求上下文用户
     /// </summary>
-    public static ClaimsPrincipal? User => HttpContext?.User;
+    public static ClaimsPrincipal User => HttpContextCurrent.User;
 
     /// <summary>
     /// 获取请求生命周期服务
@@ -89,7 +87,7 @@ public static class App
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static object GetRequiredService(Type type)
+    public static object? GetRequiredService(Type type)
     {
         return ServiceProvider.GetRequiredService(type);
     }

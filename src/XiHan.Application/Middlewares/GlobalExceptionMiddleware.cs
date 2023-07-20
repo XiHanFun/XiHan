@@ -21,6 +21,7 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Exceptions;
+using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Operations;
@@ -107,10 +108,9 @@ public class GlobalExceptionMiddleware
     private async Task RecordOperationLog(HttpContext context, long elapsed, Exception ex)
     {
         // 获取当前请求上下文信息
-        var httpContextInfo = new HttpContextInfoHelper(context);
-        var clientInfo = httpContextInfo.ClientInfo;
-        var addressInfo = httpContextInfo.AddressInfo;
-        var authInfo = httpContextInfo.AuthInfo;
+        var clientInfo = HttpContextInfoHelper.ClientInfo;
+        var addressInfo = HttpContextInfoHelper.AddressInfo;
+        var authInfo = HttpContextInfoHelper.AuthInfo;
         var requestParameters = await context.GetRequestParameters();
 
         // 记录日志

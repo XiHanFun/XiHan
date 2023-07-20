@@ -19,7 +19,7 @@ namespace XiHan.Infrastructures.Infos;
 /// <summary>
 /// 环境信息帮助类
 /// </summary>
-public class EnvironmentInfoHelper
+public static class EnvironmentInfoHelper
 {
     /// <summary>
     /// 环境框架

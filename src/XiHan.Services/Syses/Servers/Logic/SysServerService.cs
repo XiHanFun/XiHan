@@ -14,7 +14,6 @@
 
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Infos;
-using XiHan.Services.Syses.Servers.Dtos;
 
 namespace XiHan.Services.Syses.Servers.Logic;
 
@@ -28,35 +27,20 @@ public class SysServerService : ISysServerService
     /// 获取服务器信息
     /// </summary>
     /// <returns></returns>
-    public ServerInfoRDto GetServerInfo()
+    public Dictionary<string, object?> GetServerInfo()
     {
-        return new ServerInfoRDto();
-    }
+        var result = new Dictionary<string, object?>();
+        var systemInfoProperties = typeof(SystemInfoHelper).GetProperties().ToList();
+        var applicationInfoProperties = typeof(ApplicationInfoHelper).GetProperties().ToList();
 
-    /// <summary>
-    /// 获取系统信息
-    /// </summary>
-    /// <returns></returns>
-    public SystemInfoHelper GetSystemInfo()
-    {
-        return new SystemInfoHelper();
-    }
-
-    /// <summary>
-    /// 获取环境信息
-    /// </summary>
-    /// <returns></returns>
-    public EnvironmentInfoHelper GetEnvironmentInfo()
-    {
-        return new EnvironmentInfoHelper();
-    }
-
-    /// <summary>
-    /// 获取应用信息
-    /// </summary>
-    /// <returns></returns>
-    public ApplicationInfoHelper GetApplicationInfo()
-    {
-        return new ApplicationInfoHelper();
+        systemInfoProperties.ForEach(property =>
+        {
+            result.Add(property.Name, property.GetValue(null));
+        });
+        applicationInfoProperties.ForEach(property =>
+        {
+            result.Add(property.Name, property.GetValue(null));
+        });
+        return result;
     }
 }

@@ -12,9 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Infos;
-using XiHan.Services.Syses.Servers.Dtos;
-
 namespace XiHan.Services.Syses.Servers;
 
 /// <summary>
@@ -26,23 +23,5 @@ public interface ISysServerService
     /// 获取服务器信息
     /// </summary>
     /// <returns></returns>
-    ServerInfoRDto GetServerInfo();
-
-    /// <summary>
-    /// 获取系统信息
-    /// </summary>
-    /// <returns></returns>
-    SystemInfoHelper GetSystemInfo();
-
-    /// <summary>
-    /// 获取环境信息
-    /// </summary>
-    /// <returns></returns>
-    EnvironmentInfoHelper GetEnvironmentInfo();
-
-    /// <summary>
-    /// 获取应用信息
-    /// </summary>
-    /// <returns></returns>
-    ApplicationInfoHelper GetApplicationInfo();
+    Dictionary<string, object?> GetServerInfo();
 }

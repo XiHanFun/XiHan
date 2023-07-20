@@ -21,6 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 打印欢迎语
 ConsoleHello.SayHello();
+// 打印服务器信息
+ConsoleServerInfo.ConfirmServerInfo();
 
 // 配置日志
 var log = builder.Logging;
@@ -44,8 +46,8 @@ try
     var app = builder.Build();
     app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.WebApi.index.html")!);
 
-    // 打印服务端信息
-    ConsoleServerInfo.ConfirmServerInfo();
+    // 打印配置信息
+    ConsoleConfigInfo.ConfirmConfigInfo();
 
     // 启动应用
     await app.RunAsync();

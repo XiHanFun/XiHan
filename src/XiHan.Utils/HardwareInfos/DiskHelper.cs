@@ -76,7 +76,7 @@ public static class DiskHelper
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2");
+                var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2").Trim();
                 var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (lines.Any())
                 {

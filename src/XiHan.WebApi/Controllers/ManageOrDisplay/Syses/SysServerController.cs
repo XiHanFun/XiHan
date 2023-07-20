@@ -12,13 +12,10 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
-using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Syses.Servers;
-using XiHan.Services.Syses.Servers.Dtos;
 using XiHan.Utils.Serializes;
 using XiHan.WebApi.Controllers.Bases;
 
@@ -49,37 +46,7 @@ public class SysServerController : BaseApiController
     [HttpGet("ServerInfo")]
     public CustomResult GetServerInfo()
     {
-        var result = _sysServerService.GetServerInfo().SerializeToJson();
-        return CustomResult.Success(result);
-    }
-
-    /// <summary>
-    /// 获取系统信息
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("SystemInfo")]
-    public SystemInfoHelper GetSystemInfo()
-    {
-        return _sysServerService.GetSystemInfo();
-    }
-
-    /// <summary>
-    /// 获取环境信息
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("EnvironmentInfo")]
-    public EnvironmentInfoHelper GetEnvironmentInfo()
-    {
-        return _sysServerService.GetEnvironmentInfo();
-    }
-
-    /// <summary>
-    /// 获取应用信息
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("ApplicationInfo")]
-    public ApplicationInfoHelper GetApplicationInfo()
-    {
-        return _sysServerService.GetApplicationInfo();
+        var serverInfo = _sysServerService.GetServerInfo();
+        return CustomResult.Success(serverInfo);
     }
 }

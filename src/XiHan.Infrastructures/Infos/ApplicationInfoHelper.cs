@@ -23,22 +23,37 @@ namespace XiHan.Infrastructures.Infos;
 /// <summary>
 /// 应用信息帮助类
 /// </summary>
-public class ApplicationInfoHelper
+public static class ApplicationInfoHelper
 {
+    /// <summary>
+    /// 启动端口
+    /// </summary>
+    public static string Port => AppSettings.Port.GetValue().ToString();
+
+    /// <summary>
+    /// 启动环境
+    /// </summary>
+    public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
+
     /// <summary>
     /// 应用名称
     /// </summary>
-    public static string? Name => Assembly.GetExecutingAssembly().GetName().Name;
+    public static string Name => Process.GetCurrentProcess().ProcessName;
 
     /// <summary>
     /// 应用版本
     /// </summary>
-    public static string? Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+    public static string Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
 
     /// <summary>
     /// 所在路径
     /// </summary>
     public static string CurrentDirectory => AppContext.BaseDirectory;
+
+    /// <summary>
+    /// 占用空间
+    /// </summary>
+    public static string DirectorySize => FileHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
 
     /// <summary>
     /// 运行路径
@@ -48,7 +63,7 @@ public class ApplicationInfoHelper
     /// <summary>
     /// 当前进程
     /// </summary>
-    public static string CurrentProcessId => Environment.ProcessId.ToString();
+    public static string CurrentProcessId => Process.GetCurrentProcess().Id.ToString();
 
     /// <summary>
     /// 会话标识
@@ -56,17 +71,7 @@ public class ApplicationInfoHelper
     public static string CurrentProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
 
     /// <summary>
-    /// 占用空间
+    /// 运行时间
     /// </summary>
-    public static string DirectorySize => FileHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
-
-    /// <summary>
-    /// 启动环境
-    /// </summary>
-    public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
-
-    /// <summary>
-    /// 启动端口
-    /// </summary>
-    public static string Port => AppSettings.Port.GetValue().ToString();
+    public static string RunTime => (DateTime.Now - Process.GetCurrentProcess().StartTime).FormatTimeSpanToString();
 }

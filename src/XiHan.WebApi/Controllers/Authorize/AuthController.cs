@@ -16,9 +16,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
 using XiHan.Application.Handlers;
-using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logins;
@@ -101,9 +100,8 @@ public class AuthController : BaseApiController
         var token = string.Empty;
         var sysLoginLog = new SysLoginLog();
 
-        var contextInfo = new HttpContextInfoHelper(App.HttpContext);
-        var clientInfo = contextInfo.ClientInfo;
-        var addressInfo = contextInfo.AddressInfo;
+        var clientInfo = HttpContextInfoHelper.ClientInfo;
+        var addressInfo = HttpContextInfoHelper.AddressInfo;
 
         try
         {
