@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Runtime.InteropServices;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Shells;
 
@@ -23,87 +24,75 @@ namespace XiHan.Utils.HardwareInfos;
 public static class RamHelper
 {
     /// <summary>
-    /// Windows 系统获取内存信息
-    /// </summary>
-    /// <returns></returns>
-    public static List<RamInfo> GetWindowsRam()
-    {
-        var ramInfos = new List<RamInfo>();
-        try
-        {
-            var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
-            var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Any())
-            {
-                // 单位是 KB
-                var freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-                var totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-                var ramInfo = new RamInfo
-                {
-                    TotalSpace = (totalMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
-                    UsedSpace = ((totalMemoryParts[1].ParseToLong() - freeMemoryParts[1].ParseToLong()) * 1024).FormatByteToString(),
-                    FreeSpace = (freeMemoryParts[1].ParseToLong() * 1024).FormatByteToString(),
-                    AvailableRate = totalMemoryParts[1].ParseToLong() == 0
-                        ? "0%"
-                        : Math.Round((decimal)freeMemoryParts[1].ParseToLong() / totalMemoryParts[1].ParseToLong() * 100, 3) + "%"
-                };
-                ramInfos.Add(ramInfo);
-            }
-        }
-        catch (Exception ex)
-        {
-            ("获取内存信息出错，" + ex.Message).WriteLineError();
-        }
-
-        return ramInfos;
-    }
-
-    /// <summary>
-    /// Unix 系统获取内存信息
-    /// </summary>
-    /// <returns></returns>
-    public static List<RamInfo> GetUnixRam()
-    {
-        var ramInfos = new List<RamInfo>();
-        try
-        {
-            var output = ShellHelper.Bash("free -k | awk '{print $2,$3,$4,$7}'");
-            var lines = output.Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Any())
-            {
-                // 单位是 KB
-                var memory = lines[1].Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
-                if (memory.Length >= 4)
-                {
-                    var ramInfo = new RamInfo
-                    {
-                        TotalSpace = (memory[0].ParseToLong() * 1024).FormatByteToString(),
-                        UsedSpace = (memory[1].ParseToLong() * 1024).FormatByteToString(),
-                        FreeSpace = (memory[2].ParseToLong() * 1024).FormatByteToString(),
-                        AvailableRate = memory[0].ParseToLong() == 0 ? "0%" : Math.Round((decimal)memory[3].ParseToLong() / memory[0].ParseToLong() * 100, 3) + "%"
-                    };
-                    ramInfos.Add(ramInfo);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            ("获取内存信息出错，" + ex.Message).WriteLineError();
-        }
-
-        return ramInfos;
-    }
-
-    /// <summary>
     /// 获取内存信息
     /// </summary>
     /// <returns></returns>
     public static List<RamInfo> GetRamInfos()
     {
-        if (OsPlatformHelper.GetOsIsUnix())
-            return GetUnixRam();
-        else
-            return GetWindowsRam();
+        var ramInfos = new List<RamInfo>();
+
+        try
+        {
+            // 单位是 Byte
+            var totalMemoryParts = 0.ParseToLong();
+            var usedMemoryParts = 0.ParseToLong();
+            var freeMemoryParts = 0.ParseToLong();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var output = ShellHelper.Bash("free -k | awk '{print $2,$3,$4,$7}'");
+                var lines = output.Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    lines = lines[1].Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+
+                    totalMemoryParts = lines[0].ParseToLong() * 1024;
+                    freeMemoryParts = lines[2].ParseToLong() * 1024;
+                    usedMemoryParts = lines[1].ParseToLong() * 1024;
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var output = ShellHelper.Bash("top -l 1 | head -n 7 | tail -n 1 | awk '{print $2,$4,$6,$8}'");
+                var lines = output.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    var usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.RemoveEmptyEntries).Replace('M', (char)StringSplitOptions.RemoveEmptyEntries).ParseToLong();
+                    var usedMemoryParts2 = lines[1].Replace('M', (char)StringSplitOptions.RemoveEmptyEntries).ParseToLong();
+
+                    totalMemoryParts = lines[0].Replace('G', (char)StringSplitOptions.RemoveEmptyEntries).ParseToLong() * 1024 * 1024 * 1024;
+                    freeMemoryParts = lines[3].Replace('M', (char)StringSplitOptions.RemoveEmptyEntries).ParseToLong() * 1024 * 1024;
+                    usedMemoryParts = (usedMemoryParts1 + usedMemoryParts2) * 1024 * 1024;
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
+                var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries)[1].ParseToLong() * 1024;
+                    freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries)[1].ParseToLong() * 1024;
+                    usedMemoryParts = totalMemoryParts - freeMemoryParts;
+                }
+            }
+            var ramInfo = new RamInfo
+            {
+                TotalSpace = totalMemoryParts.FormatByteToString(),
+                UsedSpace = usedMemoryParts.FormatByteToString(),
+                FreeSpace = freeMemoryParts.FormatByteToString(),
+                AvailableRate = totalMemoryParts == 0
+                           ? "0%"
+                           : Math.Round((decimal)freeMemoryParts / totalMemoryParts * 100, 3) + "%"
+            };
+            ramInfos.Add(ramInfo);
+        }
+        catch (Exception ex)
+        {
+            ("获取内存信息出错，" + ex.Message).WriteLineError();
+        }
+
+        return ramInfos;
     }
 }
 

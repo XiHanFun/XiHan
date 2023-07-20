@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Runtime.InteropServices;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Shells;
 
@@ -23,69 +24,53 @@ namespace XiHan.Utils.HardwareInfos;
 public static class CpuHelper
 {
     /// <summary>
-    /// 获取处理器个数
-    /// </summary>
-    public static string GetCpuCount()
-    {
-        return Environment.ProcessorCount.ToString();
-    }
-
-    /// <summary>
-    /// Windows 系统获取处理器使用率
-    /// </summary>
-    /// <returns></returns>
-    public static string GetWindowsCpuRate()
-    {
-        var result = string.Empty;
-        try
-        {
-            var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage");
-            result = output.Replace("LoadPercentage", string.Empty).Trim() + "%";
-        }
-        catch (Exception ex)
-        {
-            ("获取处理器信息出错，" + ex.Message).WriteLineError();
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Unix 系统获取处理器使用率
-    /// </summary>
-    /// <returns></returns>
-    public static string GetUnixCpuRate()
-    {
-        var result = string.Empty;
-        try
-        {
-            var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)"" | awk '{print $2 + $4}'");
-            result = output.Trim() + "%";
-        }
-        catch (Exception ex)
-        {
-            ("获取处理器信息出错，" + ex.Message).WriteLineError();
-        }
-
-        return result;
-    }
-
-    /// <summary>
     /// 获取处理器信息
     /// </summary>
     /// <returns></returns>
     public static CpuInfo GetCpuInfos()
     {
-        CpuInfo cpuInfo = new();
-        if (OsPlatformHelper.GetOsIsUnix())
+        var cpuInfo = new CpuInfo()
         {
-            cpuInfo.CpuCount = GetCpuCount();
-            cpuInfo.CpuRate = GetUnixCpuRate();
+            CpuCount = Environment.ProcessorCount.ToString(),
+            CpuRate = "0%"
+        };
+
+        try
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""");
+                var lines = output.Trim().Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)[0];
+                    cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var output = ShellHelper.Bash(@"top -l 1 -F | awk '/CPU usage/ {gsub(""%"", """"); print $7}'");
+                var lines = output.Trim().Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)[0];
+                    cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage /Value");
+                var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Any())
+                {
+                    var loadPercentage = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries)[1];
+                    cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            cpuInfo.CpuCount = GetCpuCount();
-            cpuInfo.CpuRate = GetWindowsCpuRate();
+            ("获取处理器信息出错，" + ex.Message).WriteLineError();
         }
 
         return cpuInfo;

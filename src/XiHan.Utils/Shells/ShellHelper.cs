@@ -22,29 +22,28 @@ namespace XiHan.Utils.Shells;
 public static class ShellHelper
 {
     /// <summary>
-    /// Linux 系统命令
+    /// Unix 系统命令
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
     public static string Bash(string command)
     {
+        var output = string.Empty;
         var escapedArgs = command.Replace(@"""", @"\""");
-        var process = new Process
+
+        var info = new ProcessStartInfo
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = @"/bin/bash",
-                Arguments = $@"-c ""{escapedArgs}""",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
+            FileName = @"/bin/bash",
+            Arguments = $@"-c ""{escapedArgs}""",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
         };
-        process.Start();
-        var result = process.StandardOutput.ReadToEnd();
-        process.WaitForExit();
-        process.Dispose();
-        return result;
+
+        using var process = Process.Start(info);
+        if (process == null) return output;
+        output = process.StandardOutput.ReadToEnd();
+        return output;
     }
 
     /// <summary>

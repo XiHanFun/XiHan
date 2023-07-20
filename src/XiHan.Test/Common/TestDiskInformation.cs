@@ -33,11 +33,11 @@ public static class TestDiskInformation
             $@"【C盘】磁盘空余大小：{FormatFileSizeExtension.FormatByteToString(DiskHelper.GetHardDiskFreeSpace(@"C:\"))}；");
         Console.WriteLine($@"【C盘】磁盘空闲占比：{DiskHelper.ProportionOfHardDiskFreeSpace(@"C:\")}；");
         Console.WriteLine(
-            $@"【D:\DataMine\Repository】目录大小：{FormatFileSizeExtension.FormatByteToString(DiskHelper.GetDirectorySize(@"D:\DataMine\Repository"))}；");
+            $@"【D:\DataMine\Repository】目录大小：{FormatFileSizeExtension.FormatByteToString(FileHelper.GetDirectorySize(@"D:\DataMine\Repository"))}；");
         Console.WriteLine(
-            $@"【D:\DataMine\Repository\XiHan.Framework\README.md】文件大小：{FormatFileSizeExtension.FormatByteToString(DiskHelper.GetFileSize(@"D:\DataMine\Repository\XiHan.Framework\README.md"))}；");
+            $@"【D:\DataMine\Repository\XiHan.Framework\README.md】文件大小：{FormatFileSizeExtension.FormatByteToString(FileHelper.GetFileSize(@"D:\DataMine\Repository\XiHan.Framework\README.md"))}；");
 
-        string[]? directories = DiskHelper.GetDirectories(@"D:\");
+        string[]? directories = FileHelper.GetDirectories(@"D:\");
         Console.WriteLine($@"【D:\】目录：");
         foreach (var directory in directories) Console.WriteLine(directory);
     }

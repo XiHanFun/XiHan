@@ -58,7 +58,7 @@ public class ApplicationInfoHelper
     /// <summary>
     /// 占用空间
     /// </summary>
-    public static string DirectorySize => DiskHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
+    public static string DirectorySize => FileHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
 
     /// <summary>
     /// 启动环境

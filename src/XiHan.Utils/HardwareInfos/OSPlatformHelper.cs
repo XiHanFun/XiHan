@@ -92,15 +92,27 @@ public static class OsPlatformHelper
     public static string GetRunningTime()
     {
         string runTime = string.Empty;
-        if (GetOsIsUnix())
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            string output = ShellHelper.Bash("uptime -s").Trim();
-            var timeSpan = DateTime.Now - output.ParseToDate();
+            var output = ShellHelper.Bash("uptime -s").Trim();
+            var timeSpan = DateTime.Now - output.Trim().ParseToDate();
             runTime = timeSpan.FormatTimeSpanToString();
         }
-        else
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            string output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime/Value");
+            var output = ShellHelper.Bash("uptime").Trim();
+            string[] outputArr = output.Split(new[] { "\n" }, StringSplitOptions.None);
+            if (outputArr.Length > 0)
+            {
+                string runTimeString = outputArr[0].Substring(outputArr[0].IndexOf("up") + 2);
+                var timeSpan = DateTime.Now - runTimeString.ParseToDate();
+                runTime = timeSpan.FormatTimeSpanToString();
+            }
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            var output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime/Value");
             string[] outputArr = output.Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
             if (outputArr.Length == 2)
             {
@@ -108,6 +120,7 @@ public static class OsPlatformHelper
                 runTime = timeSpan.FormatTimeSpanToString();
             }
         }
+
         return runTime;
     }
 

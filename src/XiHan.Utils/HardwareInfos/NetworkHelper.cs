@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using System.Net.NetworkInformation;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.HardwareInfos;
 
@@ -22,31 +23,37 @@ namespace XiHan.Utils.HardwareInfos;
 public static class NetworkHelper
 {
     /// <summary>
-    /// 获取本机所有可用网卡信息
+    /// 获取网卡信息
     /// </summary>
     /// <returns></returns>
     public static List<NetworkInfo> GetNetworkInfos()
     {
         var networkInfos = new List<NetworkInfo>();
 
-        // 获取可用网卡
-        var interfaces = NetworkInterface.GetAllNetworkInterfaces()
-            .Where(network => network.OperationalStatus == OperationalStatus.Up);
-
-        foreach (var ni in interfaces)
+        try
         {
-            var properties = ni.GetIPProperties();
-            var networkInfo = new NetworkInfo
+            // 获取可用网卡
+            var interfaces = NetworkInterface.GetAllNetworkInterfaces().Where(network => network.OperationalStatus == OperationalStatus.Up);
+
+            foreach (var ni in interfaces)
             {
-                Name = ni.Name,
-                Description = ni.Description,
-                Type = ni.NetworkInterfaceType.ToString(),
-                Speed = ni.Speed.ToString("#,##0") + " bps",
-                PhysicalAddress = ni.GetPhysicalAddress().ToString(),
-                DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
-                IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
-            };
-            networkInfos.Add(networkInfo);
+                var properties = ni.GetIPProperties();
+                var networkInfo = new NetworkInfo
+                {
+                    Name = ni.Name,
+                    Description = ni.Description,
+                    Type = ni.NetworkInterfaceType.ToString(),
+                    Speed = ni.Speed.ToString("#,##0") + " bps",
+                    PhysicalAddress = ni.GetPhysicalAddress().ToString(),
+                    DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
+                    IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
+                };
+                networkInfos.Add(networkInfo);
+            }
+        }
+        catch (Exception ex)
+        {
+            ("获取网卡信息出错，" + ex.Message).WriteLineError();
         }
 
         return networkInfos;
@@ -79,7 +86,7 @@ public class NetworkInfo
     public string Speed { get; set; } = string.Empty;
 
     /// <summary>
-    /// 物理地址
+    /// 物理地址(mac地址)
     /// </summary>
     public string PhysicalAddress { get; set; } = string.Empty;
 

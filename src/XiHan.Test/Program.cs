@@ -12,9 +12,10 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Test.Common;
+using XiHan.Utils.Extensions;
 
 Console.WriteLine("Hello, World!");
-while (true)
-    // TestChinaDate.ChinaDate();
-    TestRegex.TestCardId();
+
+var lines = "15G (1784M 3249M 843M".Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+
+Console.WriteLine();
