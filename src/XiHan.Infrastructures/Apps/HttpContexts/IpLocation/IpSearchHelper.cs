@@ -68,11 +68,13 @@ public static class IpSearchHelper
             string[] addressArray = modelStr.Replace('0', '-').Split('|');
             UserAddressInfo addressInfo = new()
             {
+                // 长地址信息
+                AddressInfo = modelStr,
                 // 国家 中国
                 Country = addressArray[0],
                 // 省份/自治区/直辖市 浙江省
                 State = addressArray[2],
-                // 地级市 安顺
+                // 地级市 安顺市
                 PrefectureLevelCity = addressArray[3],
                 // 区/县 西秀区
                 DistrictOrCounty = null,

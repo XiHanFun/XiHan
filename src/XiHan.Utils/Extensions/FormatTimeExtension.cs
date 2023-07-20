@@ -151,13 +151,25 @@ public static class FormatTimeExtension
     /// <returns></returns>
     public static string FormatTimeSpanToString(this TimeSpan timeSpan)
     {
-        var result = string.Empty;
-        if (timeSpan.Days >= 1) result = timeSpan.Days + "天";
-        if (timeSpan.Hours >= 1) result += timeSpan.Hours + "小时";
-        if (timeSpan.Minutes >= 1) result += timeSpan.Minutes + "分钟";
-        if (timeSpan.Seconds >= 1) result += timeSpan.Seconds + "秒";
-        if (timeSpan.Milliseconds >= 1) result += timeSpan.Milliseconds + "毫秒";
-        return result;
+        var day = timeSpan.Days;
+        var hour = timeSpan.Hours;
+        var minute = timeSpan.Minutes;
+        var second = timeSpan.Seconds;
+        var milliSecond = timeSpan.Milliseconds;
+
+        // 天
+        var sDay = day < 10 ? "0" + day : "" + day;
+        // 小时
+        var sHour = hour < 10 ? "0" + hour : "" + hour;
+        // 分钟
+        var sMinute = minute < 10 ? "0" + minute : "" + minute;
+        // 秒
+        var sSecond = second < 10 ? "0" + second : "" + second;
+        // 毫秒
+        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;
+        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : "" + sMilliSecond;
+
+        return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
     }
 
     /// <summary>
@@ -230,8 +242,8 @@ public static class FormatTimeExtension
                     8 => DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture),
                     10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture),
                     12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture),
-                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss", System.Globalization.CultureInfo.CurrentCulture),
-                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmm ss", System.Globalization.CultureInfo.CurrentCulture)
+                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture),
+                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture)
                 };
             }
         }

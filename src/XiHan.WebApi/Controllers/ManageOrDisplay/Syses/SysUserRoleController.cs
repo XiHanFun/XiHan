@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.ManageOrDisplay.Syses.Users;
+namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 
 /// <summary>
 /// 系统用户角色管理
@@ -26,4 +26,7 @@ namespace XiHan.WebApi.Controllers.All.ManageOrDisplay.Syses.Users;
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysUserRoleController : BaseApiController
 {
+    public SysUserRoleController()
+    {
+    }
 }

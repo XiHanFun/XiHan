@@ -18,14 +18,14 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统开放授权协议表
+/// 系统三方开放授权协议表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable(TableName = "Sys_Oauth")]
 public class SysOauth : BaseModifyEntity
 {
     /// <summary>
-    /// 开放授权协议类型
+    /// 三方开放授权协议类型
     /// OauthTypeEnum
     /// </summary>
     [SugarColumn(Length = 10)]

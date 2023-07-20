@@ -19,7 +19,7 @@ namespace XiHan.Infrastructures.Infos;
 /// <summary>
 /// 系统信息帮助类
 /// </summary>
-public static class SystemInfoHelper
+public class SystemInfoHelper
 {
     /// <summary>
     /// 操作系统

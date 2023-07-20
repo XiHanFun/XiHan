@@ -20,7 +20,7 @@ using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.Common.Messages;
+namespace XiHan.WebApi.Controllers.Common.Messages;
 
 /// <summary>
 /// 钉钉消息推送管理

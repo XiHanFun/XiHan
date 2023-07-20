@@ -18,21 +18,21 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 用户第三方授权表
+/// 用户三方登录授权表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
 [SugarTable(TableName = "Sys_User_Oauth")]
 public class SysUserOauth : BaseCreateEntity
 {
     /// <summary>
-    /// 第三方登陆类型 weibo、qq、wechat 等
+    /// 三方登陆类型 weibo、qq、wechat 等
     /// OauthTypeEnum
     /// </summary>
     [SugarColumn(Length = 20)]
     public string OauthType { get; set; } = string.Empty;
 
     /// <summary>
-    /// 第三方 uid 、openid 等
+    /// 三方 uid 、openid 等
     /// </summary>
     [SugarColumn(Length = 50)]
     public string OauthId { get; set; } = string.Empty;

@@ -14,6 +14,7 @@
 
 using System.Runtime.InteropServices;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.Shells;
 
 namespace XiHan.Utils.HardwareInfos;
 
@@ -90,7 +91,24 @@ public static class OsPlatformHelper
     /// </summary>
     public static string GetRunningTime()
     {
-        return Environment.TickCount.ParseToLong().FormatMilliSecondsToString();
+        string runTime = string.Empty;
+        if (GetOsIsUnix())
+        {
+            string output = ShellHelper.Bash("uptime -s").Trim();
+            var timeSpan = DateTime.Now - output.ParseToDate();
+            runTime = timeSpan.FormatTimeSpanToString();
+        }
+        else
+        {
+            string output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime/Value");
+            string[] outputArr = output.Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
+            if (outputArr.Length == 2)
+            {
+                var timeSpan = DateTime.Now - outputArr[1].Split('.')[0].FormatStringToDate();
+                runTime = timeSpan.FormatTimeSpanToString();
+            }
+        }
+        return runTime;
     }
 
     /// <summary>

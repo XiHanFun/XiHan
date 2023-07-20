@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysUserLoginByAccountCDto
-// Guid:513585e4-61b7-45b3-b7dc-78c6cd626b70
+// FileName:SysUserLoginByEmailCDto
+// Guid:93262b14-e2a2-461c-9e32-fb12bbe156b8
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-19 下午 02:24:13
+// CreateTime:2023-07-20 上午 10:33:14
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -17,17 +17,17 @@ using System.ComponentModel.DataAnnotations;
 namespace XiHan.Services.Syses.Users.Dtos;
 
 /// <summary>
-/// SysUserLoginByAccountCDto
+/// SysUserLoginByEmailCDto
 /// </summary>
-public class SysUserLoginByAccountCDto
+public class SysUserLoginByEmailCDto
 {
     /// <summary>
-    /// 用户账号
+    /// 电子邮件
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字")]
-    [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字")]
-    public string Account { get; set; } = string.Empty;
+    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", ErrorMessage = "请输入正确的邮箱地址")]
+    public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码

@@ -22,7 +22,7 @@ using XiHan.Services.Syses.Dicts;
 using XiHan.Services.Syses.Dicts.Dtos;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.ManageOrDisplay.Syses.Dicts;
+namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 
 /// <summary>
 /// 系统字典项管理

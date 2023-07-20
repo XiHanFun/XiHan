@@ -14,29 +14,26 @@
 
 using System.Diagnostics;
 using System.Reflection;
+using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.HardwareInfos;
 
 namespace XiHan.Infrastructures.Infos;
 
 /// <summary>
 /// 应用信息帮助类
 /// </summary>
-public static class ApplicationInfoHelper
+public class ApplicationInfoHelper
 {
     /// <summary>
     /// 应用名称
     /// </summary>
-    public static string Name(Assembly assembly)
-    {
-        return assembly.GetName().Name!;
-    }
+    public static string? Name => Assembly.GetExecutingAssembly().GetName().Name;
 
     /// <summary>
     /// 应用版本
     /// </summary>
-    public static string Version(Assembly assembly)
-    {
-        return assembly.GetName().Version!.ToString();
-    }
+    public static string? Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
     /// <summary>
     /// 所在路径
@@ -57,4 +54,19 @@ public static class ApplicationInfoHelper
     /// 会话标识
     /// </summary>
     public static string CurrentProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
+
+    /// <summary>
+    /// 占用空间
+    /// </summary>
+    public static string DirectorySize => DiskHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
+
+    /// <summary>
+    /// 启动环境
+    /// </summary>
+    public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
+
+    /// <summary>
+    /// 启动端口
+    /// </summary>
+    public static string Port => AppSettings.Port.GetValue().ToString();
 }

@@ -12,11 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Infos;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.HardwareInfos;
 using XiHan.Utils.Serializes;
 
 namespace XiHan.WebApi.Consoles;
@@ -53,15 +51,15 @@ public static class ConsoleServerInfo
         $@"用户域名：{EnvironmentInfoHelper.UserDomainName}".WriteLineInfo();
         $@"关联用户：{EnvironmentInfoHelper.UserName}".WriteLineInfo();
         "==============================应用信息==============================".WriteLineInfo();
-        $@"应用名称：{ApplicationInfoHelper.Name(Assembly.GetExecutingAssembly())}".WriteLineInfo();
-        $@"应用版本：{ApplicationInfoHelper.Version(Assembly.GetExecutingAssembly())}".WriteLineInfo();
+        $@"应用名称：{ApplicationInfoHelper.Name}".WriteLineInfo();
+        $@"应用版本：{ApplicationInfoHelper.Version}".WriteLineInfo();
         $@"所在路径：{ApplicationInfoHelper.CurrentDirectory}".WriteLineInfo();
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
-        $@"占用空间：{DiskHelper.GetDirectorySize(ApplicationInfoHelper.CurrentDirectory).FormatByteToString()}".WriteLineInfo();
-        $@"启动环境：{AppSettings.EnvironmentName.GetValue()}".WriteLineInfo();
-        $@"启动端口：{AppSettings.Port.GetValue()}".WriteLineInfo();
+        $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
+        $@"启动环境：{ApplicationInfoHelper.EnvironmentName}".WriteLineInfo();
+        $@"启动端口：{ApplicationInfoHelper.Port}".WriteLineInfo();
         "==============================配置信息==============================".WriteLineInfo();
         "==============数据库==============".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();

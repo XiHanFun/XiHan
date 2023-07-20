@@ -23,7 +23,7 @@ using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.Test;
+namespace XiHan.WebApi.Controllers.Test;
 
 /// <summary>
 /// 测试管理
@@ -41,8 +41,7 @@ public class TestController : BaseApiController
     public HttpContextInfoHelper ClientInfo()
     {
         // 获取 HttpContext 和 HttpRequest 对象
-        var httpContext = App.HttpContext!;
-        HttpContextInfoHelper clientInfoHelper = new(httpContext);
+        HttpContextInfoHelper clientInfoHelper = new(App.HttpContext);
         return clientInfoHelper;
     }
 

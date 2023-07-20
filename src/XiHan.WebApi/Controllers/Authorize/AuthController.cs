@@ -31,11 +31,11 @@ using XiHan.Utils.Encryptions;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.Authorize;
+namespace XiHan.WebApi.Controllers.Authorize;
 
 /// <summary>
 /// 系统登录授权管理
-/// <code>包含：JWT登录授权/第三方登录</code>
+/// <code>包含：JWT登录授权/三方登录</code>
 /// </summary>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNames.Authorize)]
@@ -67,12 +67,36 @@ public class AuthController : BaseApiController
     }
 
     /// <summary>
-    /// 获取Token
+    /// 获取 Token 通过账户
     /// </summary>
     /// <param name="loginByAccountCDto"></param>
     /// <returns></returns>
     [HttpPost("GetToken/ByAccount")]
     public async Task<CustomResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
+    {
+        var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
+        return await GetToken(sysUser, loginByAccountCDto.Password);
+    }
+
+    /// <summary>
+    /// 获取 Token 通过邮箱
+    /// </summary>
+    /// <param name="loginByEmailCDto"></param>
+    /// <returns></returns>
+    [HttpPost("GetToken/ByEmail")]
+    public async Task<CustomResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
+    {
+        var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
+        return await GetToken(sysUser, loginByEmailCDto.Password);
+    }
+
+    /// <summary>
+    /// 获取 Token 并记录登录日志
+    /// </summary>
+    /// <param name="sysUser"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    private async Task<CustomResult> GetToken(SysUser sysUser, string password)
     {
         var token = string.Empty;
         var sysLoginLog = new SysLoginLog();
@@ -83,9 +107,8 @@ public class AuthController : BaseApiController
 
         try
         {
-            var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account) ?? throw new Exception("登录失败，用户不存在！");
-            if (sysUser.Password != Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(loginByAccountCDto.Password, _secretKey)))
-                throw new Exception("登录失败，密码错误！");
+            if (sysUser == null) throw new Exception("登录失败，用户不存在！");
+            if (sysUser.Password != Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey))) throw new Exception("登录失败，密码错误！");
 
             sysLoginLog.Status = true;
             sysLoginLog.Message = "登录成功！";
@@ -107,7 +130,6 @@ public class AuthController : BaseApiController
         {
             sysLoginLog.Status = false;
             sysLoginLog.Message = ex.Message;
-            sysLoginLog.Account = loginByAccountCDto.Account;
         }
         sysLoginLog.LoginIp = clientInfo.RemoteIPv4;
         sysLoginLog.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
@@ -117,10 +139,7 @@ public class AuthController : BaseApiController
 
         await _sysLoginLogService.AddAsync(sysLoginLog);
 
-        if (sysLoginLog.Status)
-        {
-            return CustomResult.Success(token);
-        }
+        if (sysLoginLog.Status) return CustomResult.Success(token);
         return CustomResult.BadRequest(sysLoginLog.Message);
     }
 }

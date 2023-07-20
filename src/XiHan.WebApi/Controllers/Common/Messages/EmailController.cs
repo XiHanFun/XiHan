@@ -20,7 +20,7 @@ using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Subscriptions.Robots.Email;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.Common.Messages;
+namespace XiHan.WebApi.Controllers.Common.Messages;
 
 /// <summary>
 /// 邮件推送管理

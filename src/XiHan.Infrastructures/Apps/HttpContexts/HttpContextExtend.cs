@@ -546,6 +546,11 @@ public class UserClientInfo
 public class UserAddressInfo
 {
     /// <summary>
+    /// 长地址
+    /// </summary>
+    public string? AddressInfo { get; set; }
+
+    /// <summary>
     /// 国家
     /// 中国
     /// </summary>

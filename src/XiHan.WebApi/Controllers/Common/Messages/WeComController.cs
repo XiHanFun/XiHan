@@ -22,7 +22,7 @@ using XiHan.Subscriptions.Robots.WeCom;
 using XiHan.Utils.Encryptions;
 using XiHan.WebApi.Controllers.Bases;
 
-namespace XiHan.WebApi.Controllers.All.Common.Messages;
+namespace XiHan.WebApi.Controllers.Common.Messages;
 
 /// <summary>
 /// 企业微信消息推送管理

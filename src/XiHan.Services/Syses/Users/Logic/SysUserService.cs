@@ -220,6 +220,16 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     }
 
     /// <summary>
+    /// 查询用户信息(登录获取Token使用)
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public async Task<SysUser> GetUserByEmail(string email)
+    {
+        return await FindAsync(u => u.Email == email && !u.IsDeleted);
+    }
+
+    /// <summary>
     /// 查询用户列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>

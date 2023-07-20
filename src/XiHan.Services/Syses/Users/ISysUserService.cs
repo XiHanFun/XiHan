@@ -95,6 +95,13 @@ public interface ISysUserService : IBaseService<SysUser>
     Task<SysUser> GetUserByAccount(string account);
 
     /// <summary>
+    /// 查询用户信息(登录获取Token使用)
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    Task<SysUser> GetUserByEmail(string email);
+
+    /// <summary>
     /// 查询用户列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
