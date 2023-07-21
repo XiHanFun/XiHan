@@ -20,13 +20,14 @@ using XiHan.Models.Syses;
 using XiHan.Services.Syses.Tasks;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Tasks.QuartzNet.Bases;
+namespace XiHan.Tasks.Bases;
 
 /// <summary>
 /// JobBase
 /// </summary>
 public class JobBase
 {
+    private readonly Stopwatch _stopwatch = new();
     private static readonly ILogger _logger = Log.ForContext<JobBase>();
 
     /// <summary>
@@ -37,20 +38,18 @@ public class JobBase
     /// <returns></returns>
     public async Task ExecuteJob(IJobExecutionContext context, Func<Task> job)
     {
-        // 记录Job时间
-        var stopwatch = new Stopwatch();
         // 记录Job日志
         var sysTasksLog = new SysTasksLog();
 
         try
         {
-            stopwatch.Reset();
+            _stopwatch.Reset();
             await job();
-            stopwatch.Stop();
+            _stopwatch.Stop();
 
             sysTasksLog.RunResult = true;
-            sysTasksLog.JobMessage = "执行成功！";
-            sysTasksLog.Elapsed = stopwatch.ElapsedMilliseconds;
+            sysTasksLog.TaskMessage = "执行成功！";
+            sysTasksLog.Elapsed = _stopwatch.ElapsedMilliseconds;
         }
         catch (Exception ex)
         {
@@ -61,7 +60,7 @@ public class JobBase
             };
 
             sysTasksLog.RunResult = false;
-            sysTasksLog.JobMessage = "执行失败！";
+            sysTasksLog.TaskMessage = "执行失败！";
             sysTasksLog.Exception = ex.Message;
         };
 
@@ -85,10 +84,10 @@ public class JobBase
             {
                 // 获取任务详情
                 IJobDetail jobDetail = context.JobDetail;
-                tasksLog.JobId = jobDetail.Key.Name;
+                tasksLog.TaskId = jobDetail.Key.Name.ParseToLong();
                 tasksLog.InvokeTarget = jobDetail.JobType.FullName;
                 tasksLog = await _sysTasksLogService.CreateTasksLog(tasksLog);
-                var logInfo = $"执行任务【{jobDetail.Key.Name}|{tasksLog.JobName}】，执行结果：{tasksLog.JobMessage}";
+                var logInfo = $"执行任务【{jobDetail.Key.Name}|{tasksLog.TaskName}】，执行结果：{tasksLog.TaskMessage}";
 
                 // 若执行成功，则执行次数加一
                 if (tasksLog.RunResult)
@@ -107,7 +106,7 @@ public class JobBase
             }
             else
             {
-                throw new NotImplementedException($"{nameof(ISysTasksService)}或{nameof(ISysTasksLogService)}出错或未实现！");
+                throw new NotImplementedException($"服务【{nameof(ISysTasksService)}】或【{nameof(ISysTasksLogService)}】出错或未实现！");
             }
         }
         catch (Exception ex)

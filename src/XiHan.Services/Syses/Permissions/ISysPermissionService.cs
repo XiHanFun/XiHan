@@ -57,9 +57,9 @@ public interface ISysPermissionService : IBaseService<SysPermission>
     /// <summary>
     /// 查询权限列表
     /// </summary>
-    /// <param name="permissionWDto"></param>
+    /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysPermission>> GetPermissionList(SysPermissionWDto permissionWDto);
+    Task<List<SysPermission>> GetPermissionList(SysPermissionWDto whereDto);
 
     /// <summary>
     /// 查询权限列表(根据分页条件)

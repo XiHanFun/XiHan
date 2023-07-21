@@ -1,0 +1,36 @@
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
+// FileName:SysTasksLogWDto
+// Guid:3fcd7683-0372-44e9-a5be-273ae32aa0e7
+// Author:Administrator
+// Email:me@zhaifanhua.com
+// CreateTime:2023-07-21 下午 05:35:16
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
+
+namespace XiHan.Services.Syses.Tasks.Dtos;
+
+/// <summary>
+/// SysTasksLogWDto
+/// </summary>
+public class SysTasksLogWDto
+{
+    /// <summary>
+    /// 任务名称
+    /// </summary>
+    public string? TaskName { get; set; }
+
+    /// <summary>
+    /// 任务分组
+    /// </summary>
+    public string? TaskGroup { get; set; }
+
+    /// <summary>
+    /// 执行结果（1正常 0失败）
+    /// </summary>
+    public bool? RunResult { get; set; }
+}

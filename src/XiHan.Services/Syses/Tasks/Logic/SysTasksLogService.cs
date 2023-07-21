@@ -12,9 +12,13 @@
 
 #endregion <<版权版本注释>>
 
+using SqlSugar;
+using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Tasks.Dtos;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Tasks.Logic;
@@ -25,33 +29,82 @@ namespace XiHan.Services.Syses.Tasks.Logic;
 [AppService(ServiceType = typeof(ISysTasksLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysTasksLogService : BaseService<SysTasksLog>, ISysTasksLogService
 {
+    private readonly IAppCacheService _appCacheService;
     private readonly ISysTasksService _sysTasksService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="appCacheService"></param>
     /// <param name="sysTasksService"></param>
-    public SysTasksLogService(ISysTasksService sysTasksService)
+    public SysTasksLogService(IAppCacheService appCacheService, ISysTasksService sysTasksService)
     {
+        _appCacheService = appCacheService;
         _sysTasksService = sysTasksService;
     }
 
     /// <summary>
     /// 新增任务日志
     /// </summary>
-    /// <param name="jobId"></param>
     /// <param name="tasksLog"></param>
     /// <returns></returns>
     public async Task<SysTasksLog> CreateTasksLog(SysTasksLog tasksLog)
     {
         //获取任务信息
-        var sysTasks = await _sysTasksService.GetSingleAsync(j => j.BaseId == tasksLog.JobId.ParseToLong());
+        var sysTasks = await _sysTasksService.GetSingleAsync(j => j.BaseId == tasksLog.TaskId);
         if (sysTasks != null)
         {
-            tasksLog.JobName = sysTasks.JobName;
-            tasksLog.JobGroup = sysTasks.JobGroup;
+            tasksLog.TaskName = sysTasks.TaskName;
+            tasksLog.TaskGroup = sysTasks.TaskGroup;
         }
         _ = await AddAsync(tasksLog);
         return tasksLog;
+    }
+
+    /// <summary>
+    /// 查询系统任务日志(根据任务Id)
+    /// </summary>
+    /// <param name="tasksId"></param>
+    /// <returns></returns>
+    public async Task<SysTasksLog> GetTasksLogByTaskId(long tasksId)
+    {
+        var key = $"GetTasksLogByTaskId_{tasksId}";
+        if (_appCacheService.Get(key) is SysTasksLog sysTasksLog) return sysTasksLog;
+        sysTasksLog = await FindAsync(d => d.TaskId == tasksId);
+        _appCacheService.SetWithMinutes(key, sysTasksLog, 30);
+
+        return sysTasksLog;
+    }
+
+    /// <summary>
+    /// 查询系统任务日志列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysTasksLog>> GetTasksLogList(SysTasksLogWDto whereDto)
+    {
+        var whereExpression = Expressionable.Create<SysTasksLog>();
+        whereExpression.AndIF(whereDto.TaskName.IsNotEmptyOrNull(), u => u.TaskName.Contains(whereDto.TaskName!));
+        whereExpression.AndIF(whereDto.TaskGroup.IsNotEmptyOrNull(), u => u.TaskGroup.Contains(whereDto.TaskGroup!));
+        whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
+    }
+
+    /// <summary>
+    /// 查询系统任务日志列表(根据分页条件)
+    /// </summary>
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    public async Task<PageDataDto<SysTasksLog>> GetTasksLogPageList(PageWhereDto<SysTasksLogWDto> pageWhere)
+    {
+        var whereDto = pageWhere.Where;
+
+        var whereExpression = Expressionable.Create<SysTasksLog>();
+        whereExpression.AndIF(whereDto.TaskName.IsNotEmptyOrNull(), u => u.TaskName.Contains(whereDto.TaskName!));
+        whereExpression.AndIF(whereDto.TaskGroup.IsNotEmptyOrNull(), u => u.TaskGroup.Contains(whereDto.TaskGroup!));
+        whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);
+
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
     }
 }

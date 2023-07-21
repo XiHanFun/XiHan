@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Models.Syses;
-using XiHan.Tasks.QuartzNet.Bases.Servers;
+using XiHan.Tasks.Bases.Servers;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Application.Setups.Apps;
@@ -50,13 +50,13 @@ public static class TaskSetup
                 var result = schedulerServer.CreateTaskScheduleAsync(task);
                 if (result.Result.IsSuccess)
                 {
-                    var info = $"注册任务：{task.JobName}成功！";
+                    var info = $"注册任务：{task.TaskName}成功！";
                     info.WriteLineSuccess();
                     Log.Information(info);
                 }
                 else
                 {
-                    var info = $"注册任务：{task.JobName}失败！";
+                    var info = $"注册任务：{task.TaskName}失败！";
                     info.WriteLineError();
                     Log.Error(info);
                 }

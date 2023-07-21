@@ -112,14 +112,14 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <summary>
     /// 查询权限列表
     /// </summary>
-    /// <param name="permissionWDto"></param>
+    /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysPermission>> GetPermissionList(SysPermissionWDto permissionWDto)
+    public async Task<List<SysPermission>> GetPermissionList(SysPermissionWDto whereDto)
     {
         var whereExpression = Expressionable.Create<SysPermission>();
-        whereExpression.AndIF(permissionWDto.PermissionName.IsNotEmptyOrNull(), u => u.PermissionName.Contains(permissionWDto.PermissionName!));
-        whereExpression.AndIF(permissionWDto.PermissionCode.IsNotEmptyOrNull(), u => u.PermissionCode == permissionWDto.PermissionCode);
-        whereExpression.AndIF(permissionWDto.PermissionType != null, u => u.PermissionType == permissionWDto.PermissionType);
+        whereExpression.AndIF(whereDto.PermissionName.IsNotEmptyOrNull(), u => u.PermissionName.Contains(whereDto.PermissionName!));
+        whereExpression.AndIF(whereDto.PermissionCode.IsNotEmptyOrNull(), u => u.PermissionCode == whereDto.PermissionCode);
+        whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder);
     }

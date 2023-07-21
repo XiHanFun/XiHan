@@ -132,15 +132,15 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 查询字典列表
     /// </summary>
-    /// <param name="dictTypeWDto"></param>
+    /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto dictTypeWDto)
+    public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto whereDto)
     {
         var whereExpression = Expressionable.Create<SysDictType>();
-        whereExpression.AndIF(dictTypeWDto.TypeCode.IsNotEmptyOrNull(), u => u.TypeCode == dictTypeWDto.TypeCode);
-        whereExpression.AndIF(dictTypeWDto.TypeName.IsNotEmptyOrNull(), u => u.TypeName.Contains(dictTypeWDto.TypeName!));
-        whereExpression.AndIF(dictTypeWDto.IsEnable != null, u => u.IsEnable == dictTypeWDto.IsEnable);
-        whereExpression.AndIF(dictTypeWDto.IsOfficial != null, u => u.IsOfficial == dictTypeWDto.IsOfficial);
+        whereExpression.AndIF(whereDto.TypeCode.IsNotEmptyOrNull(), u => u.TypeCode == whereDto.TypeCode);
+        whereExpression.AndIF(whereDto.TypeName.IsNotEmptyOrNull(), u => u.TypeName.Contains(whereDto.TypeName!));
+        whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
+        whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.TypeCode);
     }

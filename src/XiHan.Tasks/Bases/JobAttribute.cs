@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Tasks.QuartzNet.Bases;
+namespace XiHan.Tasks.Bases;
 
 /// <summary>
 /// JobAttribute
@@ -21,14 +21,14 @@ namespace XiHan.Tasks.QuartzNet.Bases;
 public class JobAttribute : Attribute
 {
     /// <summary>
-    /// 任务分组
-    /// </summary>
-    public string JobGroup { get; set; } = string.Empty;
-
-    /// <summary>
     /// 任务名称
     /// </summary>
-    public string JobName { get; set; } = string.Empty;
+    public string TaskName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 任务分组
+    /// </summary>
+    public string TaskGroup { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务描述

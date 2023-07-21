@@ -61,9 +61,9 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// <summary>
     /// 查询字典列表
     /// </summary>
-    /// <param name="dictTypeWDto"></param>
+    /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto dictTypeWDto);
+    Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto whereDto);
 
     /// <summary>
     /// 查询字典列表(根据分页条件)

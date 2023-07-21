@@ -27,20 +27,25 @@ public class SysTasksLog : BaseDeleteEntity
     /// <summary>
     /// 所属任务
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string JobId { get; set; } = string.Empty;
+    public long TaskId { get; set; }
 
     /// <summary>
     /// 任务名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string JobName { get; set; } = string.Empty;
+    public string TaskName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string JobGroup { get; set; } = string.Empty;
+    public string TaskGroup { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 任务信息
+    /// </summary>
+    [SugarColumn(Length = 100)]
+    public string TaskMessage { get; set; } = string.Empty;
 
     /// <summary>
     /// 执行结果（1正常 0失败）
@@ -52,12 +57,6 @@ public class SysTasksLog : BaseDeleteEntity
     /// </summary>
     [SugarColumn(Length = 500, IsNullable = true)]
     public string? Exception { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 任务信息
-    /// </summary>
-    [SugarColumn(Length = 100)]
-    public string JobMessage { get; set; } = string.Empty;
 
     /// <summary>
     /// 调用目标字符串

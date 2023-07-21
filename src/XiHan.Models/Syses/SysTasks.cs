@@ -25,16 +25,16 @@ namespace XiHan.Models.Syses;
 public class SysTasks : BaseDeleteEntity
 {
     /// <summary>
-    /// 任务分组
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string JobGroup { get; set; } = string.Empty;
-
-    /// <summary>
     /// 任务名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string JobName { get; set; } = string.Empty;
+    public string TaskName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 任务分组
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string TaskGroup { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务描述
@@ -80,18 +80,13 @@ public class SysTasks : BaseDeleteEntity
     [SugarColumn(Length = 200, IsNullable = true)]
     public string? ClassName { get; set; }
 
-    /// <summary>
-    /// 传入参数
-    /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
-    public string? JobParams { get; set; }
-
     #endregion
 
     #region 网络请求
 
     /// <summary>
     /// 网络请求方式
+    /// RequestMethodEnum
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public int? RequestMethod { get; set; }
@@ -100,7 +95,13 @@ public class SysTasks : BaseDeleteEntity
     /// Api执行地址
     /// </summary>
     [SugarColumn(Length = 500, IsNullable = true)]
-    public string? ApiUrl { get; set; } = string.Empty;
+    public string? ApiUrl { get; set; }
+
+    /// <summary>
+    /// 传入参数
+    /// </summary>
+    [SugarColumn(Length = 500, IsNullable = true)]
+    public string? JobParams { get; set; }
 
     #endregion
 
@@ -110,7 +111,7 @@ public class SysTasks : BaseDeleteEntity
     /// SQL语句
     /// </summary>
     [SugarColumn(Length = 2000, IsNullable = true)]
-    public string? SqlText { get; set; } = string.Empty;
+    public string? SqlText { get; set; }
 
     #endregion
 

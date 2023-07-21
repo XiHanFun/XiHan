@@ -13,15 +13,17 @@
 #endregion <<版权版本注释>>
 
 using Quartz;
+using XiHan.Infrastructures.Apps.Services;
 using XiHan.Services.Syses.Operations;
 using XiHan.Services.Syses.Tasks;
-using XiHan.Tasks.QuartzNet.Bases;
+using XiHan.Tasks.Bases;
 
-namespace XiHan.Tasks.QuartzNet.Jobs;
+namespace XiHan.Tasks.Jobs.Assembly;
 
 /// <summary>
 /// 清理日志任务
 /// </summary>
+[AppService(ServiceType = typeof(ClearLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class ClearLogsJob : JobBase, IJob
 {
     private readonly ISysOperationLogService _sysOperationLogService;
@@ -52,7 +54,7 @@ public class ClearLogsJob : JobBase, IJob
     /// 清理日志
     /// </summary>
     /// <returns></returns>
-    [Job(JobGroup = "系统", JobName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
+    [Job(TaskGroup = "系统", TaskName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
     public async Task ClearLogs()
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
