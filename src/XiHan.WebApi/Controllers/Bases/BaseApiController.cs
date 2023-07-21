@@ -27,7 +27,7 @@ namespace XiHan.WebApi.Controllers.Bases;
 [ApiGroup(ApiGroupNames.All)]
 public class BaseApiController : ControllerBase
 {
-    private string _rootPath = ApplicationInfoHelper.CurrentDirectory;
+    private string _rootPath = ApplicationInfoHelper.BaseDirectory;
 
     ///// <summary>
     ///// 导出Excel

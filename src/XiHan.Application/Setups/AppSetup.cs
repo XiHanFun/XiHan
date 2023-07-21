@@ -48,11 +48,11 @@ public static class AppSetup
         app.UseMiniProfilerSetup();
         // Swagger
         app.UseSwaggerSetup(streamHtml);
-        // 使用静态文件，访问 wwwroot 目录文件，要放在 UseRouting 前面
+        // 使用静态文件，访问 wwwroot 目录文件，必须在 UseRouting 之前
         app.UseStaticFiles();
         // 路由
         app.UseRouting();
-        // 限流
+        // 限流，若作用于特定路由，必须在 UseRouting 之后
         app.UseRateLimiter();
         // 跨域，要放在 UseEndpoints 前
         app.UseCorsSetup();

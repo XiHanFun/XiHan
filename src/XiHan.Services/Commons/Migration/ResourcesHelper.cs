@@ -15,7 +15,7 @@
 using System.Text;
 using XiHan.Services.Commons.Migration.Dtos;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.HardwareInfos;
+using XiHan.Utils.Files;
 
 namespace XiHan.Services.Commons.Migration;
 

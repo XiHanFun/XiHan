@@ -29,12 +29,12 @@ public static class ConsoleConfigInfo
     public static void ConfirmConfigInfo()
     {
         "==============================应用信息==============================".WriteLineInfo();
-        $@"应用名称：{ApplicationInfoHelper.Name}".WriteLineInfo();
+        $@"应用名称：{ApplicationInfoHelper.ProcessName}".WriteLineInfo();
         $@"应用版本：{ApplicationInfoHelper.Version}".WriteLineInfo();
-        $@"所在路径：{ApplicationInfoHelper.CurrentDirectory}".WriteLineInfo();
+        $@"所在路径：{ApplicationInfoHelper.BaseDirectory}".WriteLineInfo();
         $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
-        $@"当前进程：{ApplicationInfoHelper.CurrentProcessId}".WriteLineInfo();
-        $@"会话标识：{ApplicationInfoHelper.CurrentProcessSessionId}".WriteLineInfo();
+        $@"当前进程：{ApplicationInfoHelper.ProcessId}".WriteLineInfo();
+        $@"会话标识：{ApplicationInfoHelper.ProcessSessionId}".WriteLineInfo();
         $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
         $@"启动环境：{ApplicationInfoHelper.EnvironmentName}".WriteLineInfo();
         $@"启动端口：{ApplicationInfoHelper.Port}".WriteLineInfo();

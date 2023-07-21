@@ -43,14 +43,14 @@ public static class App
     public static HttpContext HttpContextCurrent => AppHttpContextManager.Current;
 
     /// <summary>
-    /// 获取请求服务容器
-    /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
-
-    /// <summary>
     /// 获取请求上下文用户
     /// </summary>
     public static ClaimsPrincipal User => HttpContextCurrent.User;
+
+    /// <summary>
+    /// 获取请求服务容器
+    /// </summary>
+    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 
     /// <summary>
     /// 获取请求生命周期服务

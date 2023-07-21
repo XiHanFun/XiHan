@@ -15,7 +15,7 @@
 using System.Text;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Utils.HardwareInfos;
+namespace XiHan.Utils.Files;
 
 /// <summary>
 /// 文件操作帮助类

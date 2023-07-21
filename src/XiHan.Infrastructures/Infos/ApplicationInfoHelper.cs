@@ -13,10 +13,10 @@
 #endregion <<版权版本注释>>
 
 using System.Diagnostics;
-using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.HardwareInfos;
+using XiHan.Utils.Files;
+using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructures.Infos;
 
@@ -36,24 +36,19 @@ public static class ApplicationInfoHelper
     public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
 
     /// <summary>
-    /// 应用名称
+    /// 进程标识
     /// </summary>
-    public static string Name => Process.GetCurrentProcess().ProcessName;
+    public static string ProcessId => Process.GetCurrentProcess().Id.ToString();
 
     /// <summary>
-    /// 应用版本
+    /// 进程名称
     /// </summary>
-    public static string Version => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
+    public static string ProcessName => Process.GetCurrentProcess().ProcessName;
 
     /// <summary>
-    /// 所在路径
+    /// 会话标识
     /// </summary>
-    public static string CurrentDirectory => AppContext.BaseDirectory;
-
-    /// <summary>
-    /// 占用空间
-    /// </summary>
-    public static string DirectorySize => FileHelper.GetDirectorySize(CurrentDirectory).FormatByteToString();
+    public static string ProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
 
     /// <summary>
     /// 运行路径
@@ -61,17 +56,25 @@ public static class ApplicationInfoHelper
     public static string ProcessPath => Environment.ProcessPath ?? string.Empty;
 
     /// <summary>
-    /// 当前进程
-    /// </summary>
-    public static string CurrentProcessId => Process.GetCurrentProcess().Id.ToString();
-
-    /// <summary>
-    /// 会话标识
-    /// </summary>
-    public static string CurrentProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
-
-    /// <summary>
     /// 运行时间
     /// </summary>
     public static string RunTime => (DateTime.Now - Process.GetCurrentProcess().StartTime).FormatTimeSpanToString();
+
+    /// <summary>
+    /// 所在路径
+    /// </summary>
+    public static string BaseDirectory => AppContext.BaseDirectory;
+
+    /// <summary>
+    /// 占用空间
+    /// </summary>
+    public static string DirectorySize => FileHelper.GetDirectorySize(BaseDirectory).FormatByteToString();
+
+    /// <summary>
+    /// 应用版本
+    /// </summary>
+    public static string Version => ReflectionHelper.GetAssemblies()
+        .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
+        .GetName().Version?.ToString()
+        ?? string.Empty;
 }

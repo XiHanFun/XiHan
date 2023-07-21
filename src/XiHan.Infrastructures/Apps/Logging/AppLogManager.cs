@@ -83,7 +83,7 @@ public static class AppLogManager
             // 异步输出到文件
             .WriteTo.Async(newConfig => newConfig.File(
                 // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
-                path: Path.Combine(ApplicationInfoHelper.CurrentDirectory, filePath.ToLowerInvariant()),
+                path: Path.Combine(ApplicationInfoHelper.BaseDirectory, filePath.ToLowerInvariant()),
                 // 生成周期：天
                 rollingInterval: RollingInterval.Day,
                 // 文件大小：10M，默认1GB

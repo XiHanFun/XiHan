@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Utils.Extensions;
+using XiHan.Utils.Files;
 using XiHan.Utils.HardwareInfos;
 
 namespace XiHan.Test.Common;
