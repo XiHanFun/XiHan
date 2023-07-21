@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Security.Claims;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Utils.IdGenerator;
 using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructures.Apps;
@@ -90,5 +91,14 @@ public static class App
     public static object? GetRequiredService(Type type)
     {
         return ServiceProvider.GetRequiredService(type);
+    }
+
+    /// <summary>
+    /// 获取雪花Id
+    /// </summary>
+    /// <returns></returns>
+    public static long GetSnowflakeId()
+    {
+        return IdHelper.NextId();
     }
 }

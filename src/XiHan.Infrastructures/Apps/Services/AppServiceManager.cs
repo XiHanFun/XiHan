@@ -18,6 +18,8 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.IdGenerator;
+using XiHan.Utils.IdGenerator.Contract;
 
 namespace XiHan.Infrastructures.Apps.Services;
 
@@ -47,9 +49,12 @@ public static class AppServiceManager
     /// <param name="services"></param>
     private static void RegisterBaseService(IServiceCollection services)
     {
-        // 属性或字段自动注入服务
+        // 注册雪花Id生成服务
+        var options = new IdGeneratorOptions((ushort)Thread.CurrentThread.ManagedThreadId);
+        IdHelper.SetIdGenerator(options);
+        // 注册属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceManager>();
-        // Ip 查询服务
+        // 注册 Ip 查询服务
         services.AddSingleton<ISearcher, Searcher>();
         IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
     }
