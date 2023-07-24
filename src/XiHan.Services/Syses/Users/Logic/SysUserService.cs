@@ -129,22 +129,6 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         }, f => f.BaseId == sysUser.BaseId);
     }
 
-    /// <summary>
-    /// 修改用户登陆信息
-    /// </summary>
-    /// <param name="userCDto"></param>
-    /// <returns></returns>
-    public async Task<bool> ModifyUserLoginInfo(SysUserCDto userCDto)
-    {
-        var sysUser = userCDto.Adapt<SysUser>();
-        return await UpdateAsync(s => new SysUser()
-        {
-            LastLoginDevice = sysUser.LastLoginDevice,
-            LastLoginIp = sysUser.LastLoginIp,
-            LastLoginTime = DateTime.Now
-        }, f => f.BaseId == sysUser.BaseId);
-    }
-
     ///// <summary>
     ///// 修改用户角色
     ///// </summary>
@@ -153,9 +137,9 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     //public async Task<bool> ModifyUserRole(SysUserCDto userCDto)
     //{
     //    var sysUser = userCDto.Adapt<SysUser>();
-    //    //var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
-    //    //var diffArr1 = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
-    //    //var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
+    //    var roleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+    //    var diffArr1 = roleIds.Where(id => !sysUser.SysRoleIds.Contains(id)).ToList();
+    //    var diffArr2 = sysUser.SysRoleIds.Where(id => !roleIds.Contains(id)).ToList();
 
     //    //if (!diffArr1.Any() && !diffArr2.Any()) return true;
     //    // 删除用户与角色关联并重新关联用户与角色

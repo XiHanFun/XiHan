@@ -118,28 +118,6 @@ public class SysUser : BaseEntity, ISeedData<SysUser>
 
     #endregion
 
-    #region 登录信息
-
-    /// <summary>
-    /// 最新登录设备
-    /// </summary>
-    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true, Length = 128)]
-    public string? LastLoginDevice { get; set; }
-
-    /// <summary>
-    /// 最新登录Ip
-    /// </summary>
-    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true, Length = 64)]
-    public string? LastLoginIp { get; set; }
-
-    /// <summary>
-    /// 最新登录时间
-    /// </summary>
-    [SugarColumn(IsOnlyIgnoreInsert = true, IsNullable = true)]
-    public DateTime? LastLoginTime { get; set; }
-
-    #endregion
-
     /// <summary>
     /// 初始化种子数据
     /// </summary>
@@ -153,6 +131,18 @@ public class SysUser : BaseEntity, ISeedData<SysUser>
             new SysUser{
                 Account="Administrator",
                 Password=Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(_secretKey, _secretKey)),
+                NickName="超级管理员",
+                RealName="超级管理员",
+                Email = "administrator@xihan.fun",
+                RegisterFrom = "系统种子数据"
+            },
+            new SysUser{
+                Account="Admin",
+                Password=Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(_secretKey, _secretKey)),
+                NickName="管理员",
+                RealName="管理员",
+                Email = "admin@xihan.fun",
+                RegisterFrom = "系统种子数据"
             },
         };
 

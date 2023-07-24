@@ -52,13 +52,6 @@ public interface ISysUserService : IBaseService<SysUser>
     /// <returns></returns>
     Task<bool> ModifyUserBaseInfo(SysUserCDto userCDto);
 
-    /// <summary>
-    /// 修改用户登陆信息
-    /// </summary>
-    /// <param name="userCDto"></param>
-    /// <returns></returns>
-    Task<bool> ModifyUserLoginInfo(SysUserCDto userCDto);
-
     ///// <summary>
     ///// 修改用户角色
     ///// </summary>

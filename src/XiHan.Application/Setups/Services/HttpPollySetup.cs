@@ -14,6 +14,9 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 using XiHan.Infrastructures.Requests.Https;
 
 namespace XiHan.Application.Setups.Services;
@@ -33,8 +36,30 @@ public static class HttpPollySetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // 注入 Http 请求
-        services.AddHttpClient();
+        // 若超时则抛出此异常
+        var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError().Or<TimeoutRejectedException>()
+            .WaitAndRetryAsync(new[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10)
+            });
+        // 为每个重试定义超时策略
+        var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
+
+        // 注入 Http 请求,将超时策略放在重试策略之内，每次重试会应用此超时策略
+        services.AddHttpClient(HttpGroupEnum.Common.ToString(), c =>
+        {
+            c.DefaultRequestHeaders.Add("Accept", "application/json");
+        }).AddPolicyHandler(retryPolicy)
+        .AddPolicyHandler(timeoutPolicy);
+
+        services.AddHttpClient(HttpGroupEnum.Local.ToString(), c =>
+        {
+            c.BaseAddress = new Uri("http://www.localhost.com");
+            c.DefaultRequestHeaders.Add("Accept", "application/json");
+        }).AddPolicyHandler(retryPolicy)
+        .AddPolicyHandler(timeoutPolicy);
 
         // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

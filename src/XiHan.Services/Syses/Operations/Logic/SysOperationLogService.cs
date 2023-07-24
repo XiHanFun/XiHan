@@ -51,7 +51,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// <summary>
     /// 清空操作日志
     /// </summary>
-    public async Task<bool> CleanOperationLog()
+    public async Task<bool> ClearOperationLog()
     {
         return await ClearAsync();
     }
@@ -71,11 +71,13 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWDto> pageWhere)
+    public async Task<PageDataDto<SysOperationLog>> GetOperationLogByList(PageWhereDto<SysOperationLogWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
-        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
-        whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
+
+        // 时间为空，默认查询当天
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(0).GetDayMinDate();
+        whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
         var whereExpression = Expressionable.Create<SysOperationLog>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);

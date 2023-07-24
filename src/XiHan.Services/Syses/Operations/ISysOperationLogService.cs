@@ -41,7 +41,7 @@ public interface ISysOperationLogService : IBaseService<SysOperationLog>
     /// <summary>
     /// 清空操作日志
     /// </summary>
-    Task<bool> CleanOperationLog();
+    Task<bool> ClearOperationLog();
 
     /// <summary>
     /// 查询操作日志(根据Id)
@@ -55,5 +55,5 @@ public interface ISysOperationLogService : IBaseService<SysOperationLog>
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysOperationLog>> GetOperationLogBList(PageWhereDto<SysOperationLogWDto> pageWhere);
+    Task<PageDataDto<SysOperationLog>> GetOperationLogByList(PageWhereDto<SysOperationLogWDto> pageWhere);
 }
