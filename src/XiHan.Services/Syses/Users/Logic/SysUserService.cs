@@ -76,7 +76,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
 
         // 新增用户角色信息
         sysUser.BaseId = userId;
-        //await _sysUserRoleService.CreateUserRole(sysUser);
+        await _sysUserRoleService.CreateUserRole(userCDto);
         return userId;
     }
 
@@ -169,7 +169,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
         if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId &&
-                                  u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
+        u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
         {
             return await UpdateAsync(s => new SysUser()
             {

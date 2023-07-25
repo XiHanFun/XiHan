@@ -30,22 +30,11 @@ public class SysUserCDto
     public string Account { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户昵称
-    /// </summary>
-    [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? NickName { get; set; }
-
-    /// <summary>
     /// 姓名
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MaxLength(10, ErrorMessage = "{0}不能多于{1}个字符")]
     public string RealName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 用户性别 男(true)女(false)
-    /// </summary>
-    public bool? Gender { get; set; }
 
     /// <summary>
     /// 邮箱
@@ -56,32 +45,7 @@ public class SysUserCDto
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
-    /// 手机号码
+    /// 角色集合
     /// </summary>
-    [MaxLength(11, ErrorMessage = "{0}不能多于{1}个字符")]
-    [RegularExpression(@"^(\d{3,4})\d{7,8}$", ErrorMessage = "请输入正确的手机号码")]
-    public string? Phone { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 头像路径
-    /// </summary>
-    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? AvatarPath { get; set; }
-
-    /// <summary>
-    /// 用户签名
-    /// </summary>
-    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? Signature { get; set; }
-
-    /// <summary>
-    /// 用户地址
-    /// </summary>
-    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? Address { get; set; }
-
-    /// <summary>
-    /// 出生日期
-    /// </summary>
-    public DateTime? Birthday { get; set; }
+    public List<long>? RoleIds { get; set; }
 }

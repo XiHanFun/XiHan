@@ -14,6 +14,7 @@
 
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Users.Dtos;
 
 namespace XiHan.Services.Syses.Users;
 
@@ -51,12 +52,12 @@ public interface ISysUserRoleService : IBaseService<SysUserRole>
     /// <returns></returns>
     Task<bool> DeleteRoleUserByUserIds(long roleId, List<long> userIds);
 
-    ///// <summary>
-    ///// 新增用户角色信息
-    ///// </summary>
-    ///// <param name="sysUser"></param>
-    ///// <returns></returns>
-    //Task<bool> CreateUserRole(SysUser sysUser);
+    /// <summary>
+    /// 新增用户角色信息
+    /// </summary>
+    /// <param name="userCDto"></param>
+    /// <returns></returns>
+    Task<bool> CreateUserRole(SysUserCDto userCDto);
 
     /// <summary>
     /// 批量新增用户角色

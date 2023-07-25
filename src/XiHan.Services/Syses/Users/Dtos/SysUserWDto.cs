@@ -61,4 +61,27 @@ public class SysUserWDto
     [MaxLength(11, ErrorMessage = "{0}不能多于{1}个字符")]
     [RegularExpression(@"^(\d{3,4})\d{7,8}$", ErrorMessage = "请输入正确的手机号码")]
     public string? Phone { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 头像路径
+    /// </summary>
+    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
+    public string? AvatarPath { get; set; }
+
+    /// <summary>
+    /// 用户签名
+    /// </summary>
+    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
+    public string? Signature { get; set; }
+
+    /// <summary>
+    /// 用户地址
+    /// </summary>
+    [MaxLength(200, ErrorMessage = "{0}不能多于{1}个字符")]
+    public string? Address { get; set; }
+
+    /// <summary>
+    /// 出生日期
+    /// </summary>
+    public DateTime? Birthday { get; set; }
 }
