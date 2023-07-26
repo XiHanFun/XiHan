@@ -14,7 +14,6 @@
 
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Users.Dtos;
 
 namespace XiHan.Services.Syses.Users;
 
@@ -24,18 +23,18 @@ namespace XiHan.Services.Syses.Users;
 public interface ISysUserRoleService : IBaseService<SysUserRole>
 {
     /// <summary>
-    /// 获取所属角色的用户总数量
+    /// 新增用户角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="sysUserRole"></param>
     /// <returns></returns>
-    Task<int> GetSysUsersCountByRoleId(long roleId);
+    Task<bool> CreateUserRole(SysUserRole sysUserRole);
 
     /// <summary>
-    /// 获取所属角色的用户数据
+    /// 批量新增用户角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="sysUserRoles"></param>
     /// <returns></returns>
-    Task<List<SysUser>> GetSysUsersByRoleId(long roleId);
+    Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles);
 
     /// <summary>
     /// 删除用户角色
@@ -53,23 +52,16 @@ public interface ISysUserRoleService : IBaseService<SysUserRole>
     Task<bool> DeleteRoleUserByUserIds(long roleId, List<long> userIds);
 
     /// <summary>
-    /// 新增用户角色信息
+    /// 获取所属角色的用户数据
     /// </summary>
-    /// <param name="userCDto"></param>
+    /// <param name="roleId"></param>
     /// <returns></returns>
-    Task<bool> CreateUserRole(SysUserCDto userCDto);
+    Task<List<SysUser>> GetSysUsersByRoleId(long roleId);
 
     /// <summary>
-    /// 批量新增用户角色
+    /// 获取所属角色的用户总数量
     /// </summary>
-    /// <param name="sysUserRoles"></param>
+    /// <param name="roleId"></param>
     /// <returns></returns>
-    Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles);
-
-    /// <summary>
-    /// 新增用户角色
-    /// </summary>
-    /// <param name="sysUserRole"></param>
-    /// <returns></returns>
-    Task<bool> CreateUserRole(SysUserRole sysUserRole);
+    Task<int> GetSysUsersCountByRoleId(long roleId);
 }

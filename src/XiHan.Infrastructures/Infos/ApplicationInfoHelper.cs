@@ -46,9 +46,14 @@ public static class ApplicationInfoHelper
     public static string ProcessName => Process.GetCurrentProcess().ProcessName;
 
     /// <summary>
-    /// 会话标识
+    /// 进程会话标识
     /// </summary>
     public static string ProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
+
+    /// <summary>
+    /// 进程占用内存
+    /// </summary>
+    public static string ProcessRAM = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
 
     /// <summary>
     /// 运行路径

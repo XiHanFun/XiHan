@@ -14,9 +14,7 @@
 
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
-using XiHan.Repositories.Entities;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Users.Dtos;
 
 namespace XiHan.Services.Syses.Users.Logic;
 
@@ -27,27 +25,23 @@ namespace XiHan.Services.Syses.Users.Logic;
 public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
 {
     /// <summary>
-    /// 获取所属角色的用户总数量
+    /// 新增用户角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="sysUserRole"></param>
     /// <returns></returns>
-    public async Task<int> GetSysUsersCountByRoleId(long roleId)
+    public async Task<bool> CreateUserRole(SysUserRole sysUserRole)
     {
-        return await CountAsync(ur => ur.RoleId == roleId);
+        return await AddAsync(sysUserRole);
     }
 
     /// <summary>
-    /// 获取所属角色的用户数据
+    /// 批量新增用户角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="sysUserRoles"></param>
     /// <returns></returns>
-    public async Task<List<SysUser>> GetSysUsersByRoleId(long roleId)
+    public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
     {
-        return await Context.Queryable<SysUserRole>()
-            .LeftJoin<SysUser>((ur, u) => ur.UserId == u.BaseId)
-            .Where((ur, u) => ur.RoleId == roleId && !u.IsDeleted)
-            .Select((ur, u) => u)
-            .ToListAsync();
+        return await AddAsync(sysUserRoles);
     }
 
     /// <summary>
@@ -72,41 +66,26 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     }
 
     /// <summary>
-    /// 新增用户角色信息
+    /// 获取所属角色的用户数据
     /// </summary>
-    /// <param name="userCDto"></param>
+    /// <param name="roleId"></param>
     /// <returns></returns>
-    public async Task<bool> CreateUserRole(SysUserCDto userCDto)
+    public async Task<List<SysUser>> GetSysUsersByRoleId(long roleId)
     {
-        var sysUserRoles = userCDto.RoleIds.Select(item => new SysUserRole
-        {
-            RoleId = item,
-            UserId = userCDto.BaseId
-        })
-            .Select(sysUserRole => sysUserRole.ToCreated())
-            .ToList();
-
-        return sysUserRoles.Any() && await CreateUserRoles(sysUserRoles);
+        return await Context.Queryable<SysUserRole>()
+            .LeftJoin<SysUser>((ur, u) => ur.UserId == u.BaseId)
+            .Where((ur, u) => ur.RoleId == roleId && !u.IsDeleted)
+            .Select((ur, u) => u)
+            .ToListAsync();
     }
 
     /// <summary>
-    /// 批量新增用户角色
+    /// 获取所属角色的用户总数量
     /// </summary>
-    /// <param name="sysUserRoles"></param>
+    /// <param name="roleId"></param>
     /// <returns></returns>
-    public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
+    public async Task<int> GetSysUsersCountByRoleId(long roleId)
     {
-        return await AddAsync(sysUserRoles);
-    }
-
-    /// <summary>
-    /// 新增用户角色
-    /// </summary>
-    /// <param name="sysUserRole"></param>
-    /// <returns></returns>
-    public async Task<bool> CreateUserRole(SysUserRole sysUserRole)
-    {
-        sysUserRole = sysUserRole.ToCreated();
-        return await AddAsync(sysUserRole);
+        return await CountAsync(ur => ur.RoleId == roleId);
     }
 }
