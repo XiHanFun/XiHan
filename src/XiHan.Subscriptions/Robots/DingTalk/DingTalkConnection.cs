@@ -41,4 +41,9 @@ public class DingTalkConnection
     /// 机密
     /// </summary>
     public string Secret { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 关键字
+    /// </summary>
+    public string KeyWord { get; set; } = string.Empty;
 }

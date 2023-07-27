@@ -30,6 +30,7 @@ public class DingTalkCustomRobot
     private readonly IHttpPollyHelper _httpPolly;
     private readonly string _url;
     private readonly string _secret;
+    private readonly string? _keyWord;
 
     /// <summary>
     /// 构造函数
@@ -41,6 +42,7 @@ public class DingTalkCustomRobot
         _httpPolly = httpPolly;
         _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
         _secret = dingTalkConnection.Secret;
+        _keyWord = dingTalkConnection.KeyWord;
     }
 
     /// <summary>
@@ -60,6 +62,7 @@ public class DingTalkCustomRobot
             AtMobiles = atMobiles,
             IsAtAll = isAtAll
         };
+        text.Content = _keyWord + text.Content;
         // 发送
         var result = await Send(new { msgType, text, at });
         return result;
@@ -73,6 +76,7 @@ public class DingTalkCustomRobot
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
+        link.Title = _keyWord + link.Title;
         // 发送
         var result = await Send(new { msgType, link });
         return result;
@@ -94,6 +98,7 @@ public class DingTalkCustomRobot
             AtMobiles = atMobiles,
             IsAtAll = isAtAll
         };
+        markdown.Title = _keyWord + markdown.Title;
         // 发送
         var result = await Send(new { msgType, markdown, at });
         return result;
@@ -107,6 +112,8 @@ public class DingTalkCustomRobot
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
+        actionCard.Title = _keyWord + actionCard.Title;
+        actionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
         // 发送
         var result = await Send(new { msgType, actionCard });
         return result;
@@ -120,6 +127,7 @@ public class DingTalkCustomRobot
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
+        feedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
         // 发送
         var result = await Send(new { msgType, feedCard });
         return result;
