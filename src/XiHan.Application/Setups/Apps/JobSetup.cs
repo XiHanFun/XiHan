@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TaskSetup
+// FileName:JobSetup
 // Guid:b591b9ea-c246-4aab-b387-659f6cdf07d8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,15 +17,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Models.Syses;
-using XiHan.Tasks.Bases.Servers;
+using XiHan.Jobs.Bases.Servers;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Application.Setups.Apps;
 
 /// <summary>
-/// TaskSetup
+/// JobSetup
 /// </summary>
-public static class TaskSetup
+public static class JobSetup
 {
     /// <summary>
     /// 计划任务
@@ -42,21 +42,21 @@ public static class TaskSetup
             var schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
             var context = SqlSugar.IOC.DbScoped.SugarScope;
 
-            var tasks = context.Queryable<SysTasks>().Where(m => m.IsStart).ToList();
+            var jobs = context.Queryable<SysJobs>().Where(m => m.IsStart).ToList();
 
             // 程序启动后注册所有定时任务
-            foreach (var task in tasks)
+            foreach (var job in jobs)
             {
-                var result = schedulerServer.CreateTaskScheduleAsync(task);
+                var result = schedulerServer.CreateTaskScheduleAsync(job);
                 if (result.Result.IsSuccess)
                 {
-                    var info = $"注册任务：{task.TaskName}成功！";
+                    var info = $"注册任务：{job.JobName}成功！";
                     info.WriteLineSuccess();
                     Log.Information(info);
                 }
                 else
                 {
-                    var info = $"注册任务：{task.TaskName}失败！";
+                    var info = $"注册任务：{job.JobName}失败！";
                     info.WriteLineError();
                     Log.Error(info);
                 }

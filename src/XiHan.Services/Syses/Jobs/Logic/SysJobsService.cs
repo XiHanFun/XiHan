@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysTasksService
+// FileName:SysJobsService
 // Guid:52fd0cf5-e077-4447-b808-bc02e504124d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,19 +12,16 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Exceptions;
-using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
-namespace XiHan.Services.Syses.Tasks.Logic;
+namespace XiHan.Services.Syses.Jobs.Logic;
 
 /// <summary>
 /// 系统任务服务
 /// </summary>
-[AppService(ServiceType = typeof(ISysTasksService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysTasksService : BaseService<SysTasks>, ISysTasksService
+[AppService(ServiceType = typeof(ISysJobsService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysJobsService : BaseService<SysJobs>, ISysJobsService
 {
 }

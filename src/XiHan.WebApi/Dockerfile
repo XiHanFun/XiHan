@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["XiHan.WebApi/XiHan.WebApi.csproj", "XiHan.WebApi/"]
 COPY ["XiHan.Application/XiHan.Application.csproj", "XiHan.Application/"]
-COPY ["XiHan.Tasks/XiHan.Tasks.csproj", "XiHan.Tasks/"]
+COPY ["XiHan.Jobs/XiHan.Jobs.csproj", "XiHan.Jobs/"]
 COPY ["XiHan.Services/XiHan.Services.csproj", "XiHan.Services/"]
 COPY ["XiHan.Repositories/XiHan.Repositories.csproj", "XiHan.Repositories/"]
 COPY ["XiHan.Infrastructures/XiHan.Infrastructures.csproj", "XiHan.Infrastructures/"]

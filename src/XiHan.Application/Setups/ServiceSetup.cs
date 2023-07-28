@@ -62,7 +62,7 @@ public static class ServiceSetup
         // 即时通讯
         services.AddSignalRSetup();
         // 计划任务
-        services.AddTasks();
+        services.AddJobs();
 
         // 服务注册
         AppServiceManager.RegisterService(services);

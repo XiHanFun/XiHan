@@ -17,10 +17,10 @@ using Serilog;
 using System.Diagnostics;
 using XiHan.Infrastructures.Apps;
 using XiHan.Models.Syses;
-using XiHan.Services.Syses.Tasks;
+using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Tasks.Bases;
+namespace XiHan.Jobs.Bases;
 
 /// <summary>
 /// JobBase
@@ -39,7 +39,7 @@ public class JobBase
     public async Task ExecuteJob(IJobExecutionContext context, Func<Task> job)
     {
         // 记录Job日志
-        var sysTasksLog = new SysTasksLog();
+        var sysJobsLog = new SysJobsLog();
 
         try
         {
@@ -47,9 +47,9 @@ public class JobBase
             await job();
             _stopwatch.Stop();
 
-            sysTasksLog.RunResult = true;
-            sysTasksLog.TaskMessage = "执行成功！";
-            sysTasksLog.Elapsed = _stopwatch.ElapsedMilliseconds;
+            sysJobsLog.RunResult = true;
+            sysJobsLog.JobMessage = "执行成功！";
+            sysJobsLog.Elapsed = _stopwatch.ElapsedMilliseconds;
         }
         catch (Exception ex)
         {
@@ -59,40 +59,40 @@ public class JobBase
                 RefireImmediately = true
             };
 
-            sysTasksLog.RunResult = false;
-            sysTasksLog.TaskMessage = "执行失败！";
-            sysTasksLog.Exception = ex.Message;
+            sysJobsLog.RunResult = false;
+            sysJobsLog.JobMessage = "执行失败！";
+            sysJobsLog.Exception = ex.Message;
         };
 
-        await RecordTasksLog(context, sysTasksLog);
+        await RecordTasksLog(context, sysJobsLog);
     }
 
     /// <summary>
     /// 记录任务日志
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="tasksLog"></param>
+    /// <param name="jobsLog"></param>
     /// <returns></returns>
-    private async Task RecordTasksLog(IJobExecutionContext context, SysTasksLog tasksLog)
+    private async Task RecordTasksLog(IJobExecutionContext context, SysJobsLog jobsLog)
     {
         try
         {
-            var _sysTasksService = App.GetRequiredService<ISysTasksService>();
-            var _sysTasksLogService = App.GetRequiredService<ISysTasksLogService>();
+            var _sysJobsService = App.GetRequiredService<ISysJobsService>();
+            var _sysJobsLogService = App.GetRequiredService<ISysJobsLogService>();
 
-            if (_sysTasksService != null && _sysTasksLogService != null)
+            if (_sysJobsService != null && _sysJobsLogService != null)
             {
                 // 获取任务详情
                 IJobDetail jobDetail = context.JobDetail;
-                tasksLog.TaskId = jobDetail.Key.Name.ParseToLong();
-                tasksLog.InvokeTarget = jobDetail.JobType.FullName;
-                tasksLog = await _sysTasksLogService.CreateTasksLog(tasksLog);
-                var logInfo = $"执行任务【{jobDetail.Key.Name}|{tasksLog.TaskName}】，执行结果：{tasksLog.TaskMessage}";
+                jobsLog.JobId = jobDetail.Key.Name.ParseToLong();
+                jobsLog.InvokeTarget = jobDetail.JobType.FullName;
+                jobsLog = await _sysJobsLogService.CreateJobsLog(jobsLog);
+                var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobsLog.JobName}】，执行结果：{jobsLog.JobMessage}";
 
                 // 若执行成功，则执行次数加一
-                if (tasksLog.RunResult)
+                if (jobsLog.RunResult)
                 {
-                    await _sysTasksService.UpdateAsync(j => new SysTasks()
+                    await _sysJobsService.UpdateAsync(j => new SysJobs()
                     {
                         RunTimes = j.RunTimes + 1,
                         LastRunTime = DateTime.Now
@@ -106,7 +106,7 @@ public class JobBase
             }
             else
             {
-                throw new NotImplementedException($"服务【{nameof(ISysTasksService)}】或【{nameof(ISysTasksLogService)}】出错或未实现！");
+                throw new NotImplementedException($"服务【{nameof(ISysJobsService)}】或【{nameof(ISysJobsLogService)}】出错或未实现！");
             }
         }
         catch (Exception ex)

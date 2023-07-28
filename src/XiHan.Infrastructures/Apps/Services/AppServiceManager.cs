@@ -72,7 +72,7 @@ public static class AppServiceManager
             "XiHan.Infrastructures",
             "XiHan.Repositories",
             "XiHan.Services",
-            "XiHan.Tasks"
+            "XiHan.Jobs"
         };
         // 根据程序路径反射出所有引用的程序集
         var referencedTypes = new List<Type>();

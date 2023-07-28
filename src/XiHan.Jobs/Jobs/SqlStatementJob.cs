@@ -18,12 +18,12 @@ using Quartz.Impl;
 using SqlSugar.IOC;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
-using XiHan.Tasks.Bases;
-using XiHan.Services.Syses.Tasks;
+using XiHan.Jobs.Bases;
 using XiHan.Utils.Extensions;
 using Serilog;
+using XiHan.Services.Syses.Jobs;
 
-namespace XiHan.Tasks.Jobs;
+namespace XiHan.Jobs.Jobs;
 
 /// <summary>
 /// 执行SQL任务
@@ -32,15 +32,15 @@ namespace XiHan.Tasks.Jobs;
 public class SqlStatementJob : JobBase, IJob
 {
     private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
-    private readonly ISysTasksService _sysTasksService;
+    private readonly ISysJobsService _sysJobsService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysTasksService"></param>
-    public SqlStatementJob(ISysTasksService sysTasksService)
+    /// <param name="sysJobsService"></param>
+    public SqlStatementJob(ISysJobsService sysJobsService)
     {
-        _sysTasksService = sysTasksService;
+        _sysJobsService = sysJobsService;
     }
 
     /// <summary>
@@ -62,12 +62,12 @@ public class SqlStatementJob : JobBase, IJob
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            var info = await _sysTasksService.GetByIdAsync(trigger.JobName);
+            var info = await _sysJobsService.GetByIdAsync(trigger.JobName);
 
             if (info != null && info.SqlText.IsNotEmptyOrNull())
             {
                 var result = DbScoped.SugarScope.Ado.ExecuteCommandWithGo(info.SqlText);
-                _logger.Information($"执行SQL任务【{info.TaskName}】执行成功，sql请求执行结果为：" + result);
+                _logger.Information($"执行SQL任务【{info.JobName}】执行成功，sql请求执行结果为：" + result);
             }
             else
             {

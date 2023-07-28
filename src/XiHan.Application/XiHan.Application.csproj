@@ -29,7 +29,7 @@
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="7.0.9" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.Tasks\XiHan.Tasks.csproj" />
+        <ProjectReference Include="..\XiHan.Jobs\XiHan.Jobs.csproj" />
     </ItemGroup>
     <ItemGroup>
         <None Update="LICENSE">

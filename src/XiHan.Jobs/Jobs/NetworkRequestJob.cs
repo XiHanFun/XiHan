@@ -19,11 +19,11 @@ using Serilog;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Requests.Https;
-using XiHan.Services.Syses.Tasks;
-using XiHan.Tasks.Bases;
+using XiHan.Jobs.Bases;
 using XiHan.Utils.Extensions;
+using XiHan.Services.Syses.Jobs;
 
-namespace XiHan.Tasks.Jobs;
+namespace XiHan.Jobs.Jobs;
 
 /// <summary>
 /// 网络请求任务
@@ -34,17 +34,17 @@ public class NetworkRequestJob : JobBase, IJob
     private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
 
     private readonly IHttpPollyHelper _httpPollyHelper;
-    private readonly ISysTasksService _sysTasksService;
+    private readonly ISysJobsService _sysJobsService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="httpPollyHelper"></param>
-    /// <param name="sysTasksService"></param>
-    public NetworkRequestJob(IHttpPollyHelper httpPollyHelper, ISysTasksService sysTasksService)
+    /// <param name="sysJobsService"></param>
+    public NetworkRequestJob(IHttpPollyHelper httpPollyHelper, ISysJobsService sysJobsService)
     {
         _httpPollyHelper = httpPollyHelper;
-        _sysTasksService = sysTasksService;
+        _sysJobsService = sysJobsService;
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class NetworkRequestJob : JobBase, IJob
         var result = string.Empty;
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            var info = await _sysTasksService.GetByIdAsync(trigger.JobName);
+            var info = await _sysJobsService.GetByIdAsync(trigger.JobName);
             if (info == null)
                 throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
 
@@ -95,7 +95,7 @@ public class NetworkRequestJob : JobBase, IJob
                 }
                 result = await _httpPollyHelper.GetAsync(HttpGroupEnum.Remote, url);
             }
-            _logger.Information($"网络请求任务【{info.TaskName}】执行成功，请求结果为：" + result);
+            _logger.Information($"网络请求任务【{info.JobName}】执行成功，请求结果为：" + result);
         }
     }
 }

@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Repositories", "XiHan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Services", "XiHan.Services\XiHan.Services.csproj", "{47BE4E1E-03DF-4A63-945D-EDD3C23660D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Tasks", "XiHan.Tasks\XiHan.Tasks.csproj", "{DE7A9141-1CA5-4CCD-9826-8D531C7FFF87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Jobs", "XiHan.Jobs\XiHan.Jobs.csproj", "{DE7A9141-1CA5-4CCD-9826-8D531C7FFF87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Application", "XiHan.Application\XiHan.Application.csproj", "{47825D1C-B0FF-4714-8554-1BE244CB657C}"
 EndProject

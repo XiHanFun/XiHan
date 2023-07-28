@@ -3,40 +3,35 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:JobAttribute
-// Guid:2951a794-45b7-487e-a1c4-ef46f1d23623
-// Author:zhaifanhua
+// FileName:SysJobsLogWDto
+// Guid:3fcd7683-0372-44e9-a5be-273ae32aa0e7
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023/7/19 2:47:03
+// CreateTime:2023-07-21 下午 05:35:16
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Tasks.Bases;
+
+namespace XiHan.Services.Syses.Jobs.Dtos;
 
 /// <summary>
-/// JobAttribute
+/// SysJobsLogWDto
 /// </summary>
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class JobAttribute : Attribute
+public class SysJobsLogWDto
 {
     /// <summary>
     /// 任务名称
     /// </summary>
-    public string TaskName { get; set; } = string.Empty;
+    public string? JobName { get; set; }
 
     /// <summary>
     /// 任务分组
     /// </summary>
-    public string TaskGroup { get; set; } = string.Empty;
+    public string? JobGroup { get; set; }
 
     /// <summary>
-    /// 任务描述
+    /// 执行结果（1正常 0失败）
     /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// 是否启用
-    /// </summary>
-    public bool IsEnable { get; set; } = true;
+    public bool? RunResult { get; set; }
 }

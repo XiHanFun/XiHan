@@ -15,10 +15,10 @@
 using Quartz;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Services.Syses.Operations;
-using XiHan.Services.Syses.Tasks;
-using XiHan.Tasks.Bases;
+using XiHan.Jobs.Bases;
+using XiHan.Services.Syses.Jobs;
 
-namespace XiHan.Tasks.Jobs.Assembly;
+namespace XiHan.Jobs.Jobs.Assembly;
 
 /// <summary>
 /// 清理日志任务
@@ -27,17 +27,17 @@ namespace XiHan.Tasks.Jobs.Assembly;
 public class ClearLogsJob : JobBase, IJob
 {
     private readonly ISysOperationLogService _sysOperationLogService;
-    private readonly ISysTasksLogService _sysTasksLogService;
+    private readonly ISysJobsLogService _sysJobsLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="sysOperationLogService"></param>
-    /// <param name="sysTasksLogService"></param>
-    public ClearLogsJob(ISysOperationLogService sysOperationLogService, ISysTasksLogService sysTasksLogService)
+    /// <param name="sysJobsLogService"></param>
+    public ClearLogsJob(ISysOperationLogService sysOperationLogService, ISysJobsLogService sysJobsLogService)
     {
         _sysOperationLogService = sysOperationLogService;
-        _sysTasksLogService = sysTasksLogService;
+        _sysJobsLogService = sysJobsLogService;
     }
 
     /// <summary>
@@ -54,12 +54,12 @@ public class ClearLogsJob : JobBase, IJob
     /// 清理日志
     /// </summary>
     /// <returns></returns>
-    [Job(TaskGroup = "系统", TaskName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
+    [Job(JobGroup = "系统", JobName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
     public async Task ClearLogs()
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
         await _sysOperationLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
-        await _sysTasksLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        await _sysJobsLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
     }
 }

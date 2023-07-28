@@ -76,7 +76,6 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
 
         // 新增用户角色信息
         sysUser.BaseId = userId;
-        await _sysUserRoleService.CreateUserRole(new SysUserRole { UserId = userId, RoleId =});
         return userId;
     }
 

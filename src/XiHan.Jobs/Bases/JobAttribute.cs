@@ -3,46 +3,40 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysTasksWDto
-// Guid:06225b1c-7cd5-4fd3-bbd7-70c35419a90d
-// Author:Administrator
+// FileName:JobAttribute
+// Guid:2951a794-45b7-487e-a1c4-ef46f1d23623
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-21 下午 05:31:03
+// CreateTime:2023/7/19 2:47:03
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Tasks.Dtos;
+namespace XiHan.Jobs.Bases;
 
 /// <summary>
-/// SysTasksWDto
+/// JobAttribute
 /// </summary>
-public class SysTasksWDto
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+public class JobAttribute : Attribute
 {
     /// <summary>
     /// 任务名称
     /// </summary>
-    public string? TaskName { get; set; }
+    public string JobName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
-    public string? TaskGroup { get; set; }
+    public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
-    /// 任务类型
-    /// JobTypeEnum
+    /// 任务描述
     /// </summary>
-    public int? JobType { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
-    /// 触发器类型
-    /// TriggerTypeEnum
+    /// 是否启用
     /// </summary>
-    public int? TriggerType { get; set; }
-
-    /// <summary>
-    /// 是否启动
-    /// </summary>
-    public bool? IsStart { get; set; }
+    public bool IsEnable { get; set; } = true;
 }

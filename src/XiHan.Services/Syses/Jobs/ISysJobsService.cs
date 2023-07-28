@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysTasksLogService
-// Guid:d8291498-8a92-40a9-a37b-4dd187725363
+// FileName:ISysJobsService
+// Guid:89a6ccae-e128-4c93-baef-27b4b6f4615d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023/7/19 1:14:54
+// CreateTime:2023/7/19 1:20:46
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,17 +15,11 @@
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 
-namespace XiHan.Services.Syses.Tasks;
+namespace XiHan.Services.Syses.Jobs;
 
 /// <summary>
-/// ISysTasksLogService
+/// ISysJobsService
 /// </summary>
-public interface ISysTasksLogService : IBaseService<SysTasksLog>
+public interface ISysJobsService : IBaseService<SysJobs>
 {
-    /// <summary>
-    /// 新增任务日志
-    /// </summary>
-    /// <param name="tasksLog"></param>
-    /// <returns></returns>
-    Task<SysTasksLog> CreateTasksLog(SysTasksLog tasksLog);
 }

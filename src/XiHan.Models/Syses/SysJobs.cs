@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysTasks
+// FileName:SysJobs
 // Guid:cf17417c-79fa-4785-b490-feea07bbf6e3
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,20 +21,20 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SugarTable(TableName = "Sys_Tasks")]
-public class SysTasks : BaseDeleteEntity
+[SugarTable(TableName = "Sys_Jobs")]
+public class SysJobs : BaseDeleteEntity
 {
     /// <summary>
     /// 任务名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string TaskName { get; set; } = string.Empty;
+    public string JobName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string TaskGroup { get; set; } = string.Empty;
+    public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务描述

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysTasksLog
+// FileName:SysJobsLog
 // Guid:238e4849-c954-4aad-955f-db05adadc267
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,31 +21,31 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable("Sys_Tasks_Log")]
-public class SysTasksLog : BaseDeleteEntity
+[SugarTable("Sys_Jobs_Log")]
+public class SysJobsLog : BaseDeleteEntity
 {
     /// <summary>
     /// 所属任务
     /// </summary>
-    public long TaskId { get; set; }
+    public long JobId { get; set; }
 
     /// <summary>
     /// 任务名称
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string TaskName { get; set; } = string.Empty;
+    public string JobName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string TaskGroup { get; set; } = string.Empty;
+    public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务信息
     /// </summary>
     [SugarColumn(Length = 100)]
-    public string TaskMessage { get; set; } = string.Empty;
+    public string JobMessage { get; set; } = string.Empty;
 
     /// <summary>
     /// 执行结果（1正常 0失败）
