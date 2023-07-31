@@ -29,6 +29,7 @@
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
         <PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
         <PackageReference Include="SqlSugarCore" Version="5.1.4.92" />
+        <PackageReference Include="UAParser" Version="3.1.47" />
     </ItemGroup>
 
     <ItemGroup>

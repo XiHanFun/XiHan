@@ -17,9 +17,9 @@ using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using UAParser;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 using XiHan.Infrastructures.Exceptions;
-using XiHan.Utils.Clients;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verifications;
 
@@ -48,7 +48,7 @@ public static class HttpContextExtend
             header.TryGetValue("Accept-Language", out var language);
             header.TryGetValue("Referer", out var referer);
             header.TryGetValue("User-Agent", out var agent);
-            var clientInfo = UserAgentParser.ParseUserAgent(agent);
+            var clientInfo = Parser.GetDefault().Parse(agent);
 
             var clientModel = new UserClientInfo
             {
@@ -58,10 +58,11 @@ public static class HttpContextExtend
                 Language = language.ToString().Split(';')[0],
                 Referer = referer.ToString(),
                 Agent = agent.ToString(),
-                OSName = clientInfo.OSName,
-                OSVersion = clientInfo.OSVersion,
-                BrowserName = clientInfo.BrowserName,
-                BrowserVersion = clientInfo.BrowserVersion,
+                DeviceType = clientInfo.Device.Family,
+                OSName = clientInfo.OS.Family,
+                OSVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
+                BrowserName = clientInfo.UA.Family,
+                BrowserVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
                 RemoteIPv4 = context.GetClientIpV4(),
                 RemoteIPv6 = context.GetClientIpV6(),
             };
