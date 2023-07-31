@@ -30,14 +30,17 @@ public static class ConsoleConfigInfo
     {
         "==============================应用信息==============================".WriteLineInfo();
         $@"应用名称：{ApplicationInfoHelper.ProcessName}".WriteLineInfo();
-        $@"应用版本：{ApplicationInfoHelper.Version}".WriteLineInfo();
-        $@"所在路径：{ApplicationInfoHelper.BaseDirectory}".WriteLineInfo();
-        $@"运行文件：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
-        $@"当前进程：{ApplicationInfoHelper.ProcessId}".WriteLineInfo();
-        $@"会话标识：{ApplicationInfoHelper.ProcessSessionId}".WriteLineInfo();
-        $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
-        $@"启动环境：{ApplicationInfoHelper.EnvironmentName}".WriteLineInfo();
+        $@"当前版本：{ApplicationInfoHelper.Version}".WriteLineInfo();
         $@"启动端口：{ApplicationInfoHelper.Port}".WriteLineInfo();
+        $@"启动环境：{ApplicationInfoHelper.EnvironmentName}".WriteLineInfo();
+        $@"所在路径：{ApplicationInfoHelper.BaseDirectory}".WriteLineInfo();
+        $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
+        $@"运行路径：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
+        $@"运行时间：{ApplicationInfoHelper.RunTime}".WriteLineInfo();
+        $@"占用内存：{ApplicationInfoHelper.ProcessRAM}".WriteLineInfo();
+        $@"进程标识：{ApplicationInfoHelper.ProcessId}".WriteLineInfo();
+        $@"会话标识：{ApplicationInfoHelper.ProcessSessionId}".WriteLineInfo();
+
         "==============================配置信息==============================".WriteLineInfo();
         "数据库：".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();

@@ -37,7 +37,7 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    public WeComPushService(IHttpPollyHelper httpPolly)
+    public WeComPushService(IHttpPollyService httpPolly)
     {
         var weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
         _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);

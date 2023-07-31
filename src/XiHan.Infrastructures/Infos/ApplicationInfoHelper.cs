@@ -26,6 +26,19 @@ namespace XiHan.Infrastructures.Infos;
 public static class ApplicationInfoHelper
 {
     /// <summary>
+    /// 应用名称
+    /// </summary>
+    public static string ProcessName => Process.GetCurrentProcess().ProcessName;
+
+    /// <summary>
+    /// 当前版本
+    /// </summary>
+    public static string Version => ReflectionHelper.GetAssemblies()
+        .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
+        .GetName().Version?.ToString()
+        ?? string.Empty;
+
+    /// <summary>
     /// 启动端口
     /// </summary>
     public static string Port => AppSettings.Port.GetValue().ToString();
@@ -36,24 +49,14 @@ public static class ApplicationInfoHelper
     public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
 
     /// <summary>
-    /// 进程标识
+    /// 所在路径
     /// </summary>
-    public static string ProcessId => Process.GetCurrentProcess().Id.ToString();
+    public static string BaseDirectory => AppContext.BaseDirectory;
 
     /// <summary>
-    /// 进程名称
+    /// 占用空间
     /// </summary>
-    public static string ProcessName => Process.GetCurrentProcess().ProcessName;
-
-    /// <summary>
-    /// 进程会话标识
-    /// </summary>
-    public static string ProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
-
-    /// <summary>
-    /// 进程占用内存
-    /// </summary>
-    public static string ProcessRAM = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
+    public static string DirectorySize => FileHelper.GetDirectorySize(AppContext.BaseDirectory).FormatByteToString();
 
     /// <summary>
     /// 运行路径
@@ -66,20 +69,17 @@ public static class ApplicationInfoHelper
     public static string RunTime => (DateTime.Now - Process.GetCurrentProcess().StartTime).FormatTimeSpanToString();
 
     /// <summary>
-    /// 所在路径
+    /// 占用内存
     /// </summary>
-    public static string BaseDirectory => AppContext.BaseDirectory;
+    public static string ProcessRAM = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
 
     /// <summary>
-    /// 占用空间
+    /// 进程标识
     /// </summary>
-    public static string DirectorySize => FileHelper.GetDirectorySize(BaseDirectory).FormatByteToString();
+    public static string ProcessId => Environment.ProcessId.ToString();
 
     /// <summary>
-    /// 应用版本
+    /// 会话标识
     /// </summary>
-    public static string Version => ReflectionHelper.GetAssemblies()
-        .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
-        .GetName().Version?.ToString()
-        ?? string.Empty;
+    public static string ProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
 }

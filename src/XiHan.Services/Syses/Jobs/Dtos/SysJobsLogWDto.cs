@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysJobsLogWDto
+// FileName:SysJobLogWDto
 // Guid:3fcd7683-0372-44e9-a5be-273ae32aa0e7
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -16,9 +16,9 @@
 namespace XiHan.Services.Syses.Jobs.Dtos;
 
 /// <summary>
-/// SysJobsLogWDto
+/// SysJobLogWDto
 /// </summary>
-public class SysJobsLogWDto
+public class SysJobLogWDto
 {
     /// <summary>
     /// 任务名称

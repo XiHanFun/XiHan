@@ -27,7 +27,7 @@ namespace XiHan.Subscriptions.Robots.DingTalk;
 /// </summary>
 public class DingTalkCustomRobot
 {
-    private readonly IHttpPollyHelper _httpPolly;
+    private readonly IHttpPollyService _httpPollyService;
     private readonly string _url;
     private readonly string _secret;
     private readonly string? _keyWord;
@@ -35,11 +35,11 @@ public class DingTalkCustomRobot
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPolly"></param>
+    /// <param name="httpPollyService"></param>
     /// <param name="dingTalkConnection"></param>
-    public DingTalkCustomRobot(IHttpPollyHelper httpPolly, DingTalkConnection dingTalkConnection)
+    public DingTalkCustomRobot(IHttpPollyService httpPollyService, DingTalkConnection dingTalkConnection)
     {
-        _httpPolly = httpPolly;
+        _httpPollyService = httpPollyService;
         _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
         _secret = dingTalkConnection.Secret;
         _keyWord = dingTalkConnection.KeyWord;
@@ -164,7 +164,7 @@ public class DingTalkCustomRobot
         }
 
         // 发起请求
-        var result = await _httpPolly.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
+        var result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result == null) return CustomResult.InternalServerError();
         if (result.ErrCode == 0 || result.ErrMsg == "ok") return CustomResult.Success("发送成功");

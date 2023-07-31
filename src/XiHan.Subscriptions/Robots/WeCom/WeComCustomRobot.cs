@@ -25,7 +25,7 @@ namespace XiHan.Subscriptions.Robots.WeCom;
 /// </summary>
 public class WeComCustomRobot
 {
-    private readonly IHttpPollyHelper _httpPolly;
+    private readonly IHttpPollyService _httpPollyService;
     private readonly string _messageUrl;
 
     // 正式文件上传地址，调用接口凭证, 机器人 webhook 中的 key 参数
@@ -34,11 +34,11 @@ public class WeComCustomRobot
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPolly"></param>
+    /// <param name="httpPollyService"></param>
     /// <param name="weChatConnection"></param>
-    public WeComCustomRobot(IHttpPollyHelper httpPolly, WeComConnection weChatConnection)
+    public WeComCustomRobot(IHttpPollyService httpPollyService, WeComConnection weChatConnection)
     {
-        _httpPolly = httpPolly;
+        _httpPollyService = httpPollyService;
         _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
         _fileUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key + "&type=file";
     }
@@ -158,7 +158,7 @@ public class WeComCustomRobot
         };
         // 发起请求，上传地址
         var result =
-            await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _fileUrl, fileStream, headers);
+            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _fileUrl, fileStream, headers);
         // 包装返回信息
         if (result != null)
         {
@@ -190,7 +190,7 @@ public class WeComCustomRobot
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        var result = await _httpPolly.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _messageUrl, sendMessage);
+        var result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Common, _messageUrl, sendMessage);
         // 包装返回信息
         if (result != null)
         {

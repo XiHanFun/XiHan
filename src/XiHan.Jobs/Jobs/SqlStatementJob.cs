@@ -32,15 +32,15 @@ namespace XiHan.Jobs.Jobs;
 public class SqlStatementJob : JobBase, IJob
 {
     private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
-    private readonly ISysJobsService _sysJobsService;
+    private readonly ISysJobService _sysJobService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysJobsService"></param>
-    public SqlStatementJob(ISysJobsService sysJobsService)
+    /// <param name="sysJobService"></param>
+    public SqlStatementJob(ISysJobService sysJobService)
     {
-        _sysJobsService = sysJobsService;
+        _sysJobService = sysJobService;
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class SqlStatementJob : JobBase, IJob
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            var info = await _sysJobsService.GetByIdAsync(trigger.JobName);
+            var info = await _sysJobService.GetByIdAsync(trigger.JobName);
 
             if (info != null && info.SqlText.IsNotEmptyOrNull())
             {

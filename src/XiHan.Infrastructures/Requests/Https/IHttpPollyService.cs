@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IHttpPollyHelper
+// FileName:IHttpPollyService
 // Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@
 namespace XiHan.Infrastructures.Requests.Https;
 
 /// <summary>
-/// IHttpPollyHelper
+/// IHttpPollyService
 /// </summary>
-public interface IHttpPollyHelper
+public interface IHttpPollyService
 {
     /// <summary>
     /// Get 请求

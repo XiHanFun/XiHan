@@ -61,10 +61,10 @@ public class SysLoginLog : BaseCreateEntity
     public string? Browser { get; set; }
 
     /// <summary>
-    /// 操作系统名称
+    /// 操作系统
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
-    public string? OsName { get; set; }
+    public string? OS { get; set; }
 
     /// <summary>
     /// 代理信息

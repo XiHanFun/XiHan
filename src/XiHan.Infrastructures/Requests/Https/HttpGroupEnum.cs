@@ -28,14 +28,14 @@ public enum HttpGroupEnum
     Common,
 
     /// <summary>
+    /// 远程
+    /// </summary>
+    [Description("远程")]
+    Remote,
+
+    /// <summary>
     /// 本地
     /// </summary>
     [Description("本地")]
     Local,
-
-    /// <summary>
-    /// 远程
-    /// </summary>
-    [Description("远程")]
-    Remote
 }

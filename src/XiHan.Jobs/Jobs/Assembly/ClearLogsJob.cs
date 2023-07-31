@@ -27,17 +27,17 @@ namespace XiHan.Jobs.Jobs.Assembly;
 public class ClearLogsJob : JobBase, IJob
 {
     private readonly ISysOperationLogService _sysOperationLogService;
-    private readonly ISysJobsLogService _sysJobsLogService;
+    private readonly ISysJobLogService _sysJobLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="sysOperationLogService"></param>
-    /// <param name="sysJobsLogService"></param>
-    public ClearLogsJob(ISysOperationLogService sysOperationLogService, ISysJobsLogService sysJobsLogService)
+    /// <param name="sysJobLogService"></param>
+    public ClearLogsJob(ISysOperationLogService sysOperationLogService, ISysJobLogService sysJobLogService)
     {
         _sysOperationLogService = sysOperationLogService;
-        _sysJobsLogService = sysJobsLogService;
+        _sysJobLogService = sysJobLogService;
     }
 
     /// <summary>
@@ -60,6 +60,6 @@ public class ClearLogsJob : JobBase, IJob
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
         await _sysOperationLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
-        await _sysJobsLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        await _sysJobLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
     }
 }

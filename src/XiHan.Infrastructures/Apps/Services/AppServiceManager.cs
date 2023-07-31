@@ -50,7 +50,7 @@ public static class AppServiceManager
     private static void RegisterBaseService(IServiceCollection services)
     {
         // 注册雪花Id生成服务
-        var options = new IdGeneratorOptions((ushort)Thread.CurrentThread.ManagedThreadId);
+        var options = new IdGeneratorOptions((ushort)Environment.CurrentManagedThreadId);
         IdHelper.SetIdGenerator(options);
         // 注册属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceManager>();

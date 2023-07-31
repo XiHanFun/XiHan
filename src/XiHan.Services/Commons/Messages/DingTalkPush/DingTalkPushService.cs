@@ -37,7 +37,7 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// 构造函数
     /// </summary>
     /// <param name="httpPolly"></param>
-    public DingTalkPushService(IHttpPollyHelper httpPolly)
+    public DingTalkPushService(IHttpPollyService httpPolly)
     {
         var dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
         _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);

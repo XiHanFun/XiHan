@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysJobsLogService
+// FileName:SysJobLogService
 // Guid:65179156-6084-40b4-ace3-0cda5ee49eeb
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,7 +18,6 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Jobs;
 using XiHan.Services.Syses.Jobs.Dtos;
 using XiHan.Utils.Extensions;
 
@@ -27,39 +26,39 @@ namespace XiHan.Services.Syses.Jobs.Logic;
 /// <summary>
 /// 系统任务日志服务
 /// </summary>
-[AppService(ServiceType = typeof(ISysJobsLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysJobsLogService : BaseService<SysJobsLog>, ISysJobsLogService
+[AppService(ServiceType = typeof(ISysJobLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysJobLogService : BaseService<SysJobLog>, ISysJobLogService
 {
     private readonly IAppCacheService _appCacheService;
-    private readonly ISysJobsService _sysJobsService;
+    private readonly ISysJobService _sysJobService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="appCacheService"></param>
-    /// <param name="sysJobsService"></param>
-    public SysJobsLogService(IAppCacheService appCacheService, ISysJobsService sysJobsService)
+    /// <param name="sysJobService"></param>
+    public SysJobLogService(IAppCacheService appCacheService, ISysJobService sysJobService)
     {
         _appCacheService = appCacheService;
-        _sysJobsService = sysJobsService;
+        _sysJobService = sysJobService;
     }
 
     /// <summary>
     /// 新增任务日志
     /// </summary>
-    /// <param name="jobsLog"></param>
+    /// <param name="jobLog"></param>
     /// <returns></returns>
-    public async Task<SysJobsLog> CreateJobsLog(SysJobsLog jobsLog)
+    public async Task<SysJobLog> CreateJobLog(SysJobLog jobLog)
     {
         //获取任务信息
-        var sysJobs = await _sysJobsService.GetSingleAsync(j => j.BaseId == jobsLog.JobId);
-        if (sysJobs != null)
+        var sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == jobLog.JobId);
+        if (sysJob != null)
         {
-            jobsLog.JobName = sysJobs.JobName;
-            jobsLog.JobGroup = sysJobs.JobGroup;
+            jobLog.JobName = sysJob.JobName;
+            jobLog.JobGroup = sysJob.JobGroup;
         }
-        _ = await AddAsync(jobsLog);
-        return jobsLog;
+        _ = await AddAsync(jobLog);
+        return jobLog;
     }
 
     /// <summary>
@@ -85,14 +84,14 @@ public class SysJobsLogService : BaseService<SysJobsLog>, ISysJobsLogService
     /// </summary>
     /// <param name="jobsId"></param>
     /// <returns></returns>
-    public async Task<SysJobsLog> GetJobsLogByJobId(long jobsId)
+    public async Task<SysJobLog> GetJobLogByJobId(long jobsId)
     {
-        var key = $"GetJobsLogByJobId_{jobsId}";
-        if (_appCacheService.Get(key) is SysJobsLog sysJobsLog) return sysJobsLog;
-        sysJobsLog = await FindAsync(d => d.JobId == jobsId);
-        _appCacheService.SetWithMinutes(key, sysJobsLog, 30);
+        var key = $"GetJobLogByJobId_{jobsId}";
+        if (_appCacheService.Get(key) is SysJobLog sysJobLog) return sysJobLog;
+        sysJobLog = await FindAsync(d => d.JobId == jobsId);
+        _appCacheService.SetWithMinutes(key, sysJobLog, 30);
 
-        return sysJobsLog;
+        return sysJobLog;
     }
 
     /// <summary>
@@ -100,9 +99,9 @@ public class SysJobsLogService : BaseService<SysJobsLog>, ISysJobsLogService
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysJobsLog>> GetJobsLogList(SysJobsLogWDto whereDto)
+    public async Task<List<SysJobLog>> GetJobLogList(SysJobLogWDto whereDto)
     {
-        var whereExpression = Expressionable.Create<SysJobsLog>();
+        var whereExpression = Expressionable.Create<SysJobLog>();
         whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
         whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
         whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);
@@ -115,11 +114,11 @@ public class SysJobsLogService : BaseService<SysJobsLog>, ISysJobsLogService
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysJobsLog>> GetJobsLogPageList(PageWhereDto<SysJobsLogWDto> pageWhere)
+    public async Task<PageDataDto<SysJobLog>> GetJobLogPageList(PageWhereDto<SysJobLogWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
-        var whereExpression = Expressionable.Create<SysJobsLog>();
+        var whereExpression = Expressionable.Create<SysJobLog>();
         whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
         whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
         whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);

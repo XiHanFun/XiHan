@@ -131,8 +131,8 @@ public class AuthController : BaseApiController
         }
         sysLoginLog.LoginIp = clientInfo.RemoteIPv4;
         sysLoginLog.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
-        sysLoginLog.Browser = clientInfo.UaName;
-        sysLoginLog.OsName = clientInfo.OsName;
+        sysLoginLog.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
+        sysLoginLog.OS = clientInfo.OSName + clientInfo.OSVersion;
         sysLoginLog.Agent = clientInfo.Agent;
 
         await _sysLoginLogService.AddAsync(sysLoginLog);

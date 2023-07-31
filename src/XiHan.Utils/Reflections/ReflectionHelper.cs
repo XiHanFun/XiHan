@@ -202,23 +202,4 @@ public static class ReflectionHelper
         });
         return result;
     }
-
-    /// <summary>
-    /// 获取表的列
-    /// </summary>
-    /// <param name="tableName"></param>
-    /// <returns></returns>
-    public static List<string> GetTableColumns(string tableName)
-    {
-        List<string> result = new();
-
-        var assemblies = GetAssemblies();
-        assemblies.ForEach(assembly =>
-        {
-            var classType = assembly.GetTypes().FirstOrDefault(a => a.Name == tableName);
-            if (classType != null) result = classType.GetProperties().Where(a => a.Name.Contains("Target")).Select(a => a.Name).ToList();
-        });
-
-        return result;
-    }
 }

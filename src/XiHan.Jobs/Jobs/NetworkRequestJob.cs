@@ -33,18 +33,18 @@ public class NetworkRequestJob : JobBase, IJob
 {
     private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
 
-    private readonly IHttpPollyHelper _httpPollyHelper;
-    private readonly ISysJobsService _sysJobsService;
+    private readonly IHttpPollyService _httpPollyService;
+    private readonly ISysJobService _sysJobService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPollyHelper"></param>
-    /// <param name="sysJobsService"></param>
-    public NetworkRequestJob(IHttpPollyHelper httpPollyHelper, ISysJobsService sysJobsService)
+    /// <param name="httpPollyService"></param>
+    /// <param name="sysJobService"></param>
+    public NetworkRequestJob(IHttpPollyService httpPollyService, ISysJobService sysJobService)
     {
-        _httpPollyHelper = httpPollyHelper;
-        _sysJobsService = sysJobsService;
+        _httpPollyService = httpPollyService;
+        _sysJobService = sysJobService;
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class NetworkRequestJob : JobBase, IJob
         var result = string.Empty;
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            var info = await _sysJobsService.GetByIdAsync(trigger.JobName);
+            var info = await _sysJobService.GetByIdAsync(trigger.JobName);
             if (info == null)
                 throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
 
@@ -80,7 +80,7 @@ public class NetworkRequestJob : JobBase, IJob
             // POST请求
             if (info.RequestMethod != null && info.RequestMethod == RequestMethodEnum.POST.GetEnumValueByKey())
             {
-                result = await _httpPollyHelper.PostAsync(HttpGroupEnum.Remote, url!, parms!);
+                result = await _httpPollyService.PostAsync(HttpGroupEnum.Remote, url!, parms!);
             }
             // GET请求
             else
@@ -93,7 +93,7 @@ public class NetworkRequestJob : JobBase, IJob
                 {
                     url += "?" + parms;
                 }
-                result = await _httpPollyHelper.GetAsync(HttpGroupEnum.Remote, url);
+                result = await _httpPollyService.GetAsync(HttpGroupEnum.Remote, url);
             }
             _logger.Information($"网络请求任务【{info.JobName}】执行成功，请求结果为：" + result);
         }

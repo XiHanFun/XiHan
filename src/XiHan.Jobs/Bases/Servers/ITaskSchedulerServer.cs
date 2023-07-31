@@ -26,26 +26,26 @@ public interface ITaskSchedulerServer
     /// <summary>
     /// 添加一个计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> CreateTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> CreateTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 删除指定计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> DeleteTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> DeleteTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 更新计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> ModifyTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> ModifyTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 开启计划任务
@@ -64,24 +64,24 @@ public interface ITaskSchedulerServer
     /// <summary>
     /// 立即运行指定计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> RunTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> RunTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 暂停指定的计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> PauseTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> PauseTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 恢复指定计划任务
     /// </summary>
-    /// <param name="sysJobs"></param>
+    /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> ResumeTaskScheduleAsync(SysJobs sysJobs);
+    Task<CustomResult> ResumeTaskScheduleAsync(SysJob sysJob);
 }

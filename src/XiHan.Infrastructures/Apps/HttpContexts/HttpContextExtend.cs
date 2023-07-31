@@ -17,9 +17,9 @@ using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using UAParser;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Clients;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verifications;
 
@@ -48,7 +48,7 @@ public static class HttpContextExtend
             header.TryGetValue("Accept-Language", out var language);
             header.TryGetValue("Referer", out var referer);
             header.TryGetValue("User-Agent", out var agent);
-            var clientInfo = Parser.GetDefault().Parse(agent);
+            var clientInfo = UserAgentParser.ParseUserAgent(agent);
 
             var clientModel = new UserClientInfo
             {
@@ -58,11 +58,10 @@ public static class HttpContextExtend
                 Language = language.ToString().Split(';')[0],
                 Referer = referer.ToString(),
                 Agent = agent.ToString(),
-                DeviceType = clientInfo.Device.Family,
-                OsName = clientInfo.OS.Family,
-                OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
-                UaName = clientInfo.UA.Family,
-                UaVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
+                OSName = clientInfo.OSName,
+                OSVersion = clientInfo.OSVersion,
+                BrowserName = clientInfo.BrowserName,
+                BrowserVersion = clientInfo.BrowserVersion,
                 RemoteIPv4 = context.GetClientIpV4(),
                 RemoteIPv6 = context.GetClientIpV6(),
             };
@@ -512,22 +511,22 @@ public class UserClientInfo
     /// <summary>
     /// 系统名称
     /// </summary>
-    public string? OsName { get; set; }
+    public string? OSName { get; set; }
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public string? OsVersion { get; set; }
+    public string? OSVersion { get; set; }
 
     /// <summary>
     /// 浏览器名称
     /// </summary>
-    public string? UaName { get; set; }
+    public string? BrowserName { get; set; }
 
     /// <summary>
     /// 浏览器版本
     /// </summary>
-    public string? UaVersion { get; set; }
+    public string? BrowserVersion { get; set; }
 
     /// <summary>
     /// 远程IPv4

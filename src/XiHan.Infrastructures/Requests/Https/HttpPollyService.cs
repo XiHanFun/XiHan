@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HttpPollyHelper
+// FileName:HttpPollyService
 // Guid:a0813c9d-590b-48e3-90f1-91d62780ea3d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -20,9 +20,9 @@ using System.Text.Json;
 namespace XiHan.Infrastructures.Requests.Https;
 
 /// <summary>
-/// HttpPollyHelper
+/// HttpPollyService
 /// </summary>
-public class HttpPollyHelper : IHttpPollyHelper
+public class HttpPollyService : IHttpPollyService
 {
     private readonly IHttpClientFactory _httpClientFactory;
 
@@ -30,7 +30,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// 构造函数
     /// </summary>
     /// <param name="httpClientFactory"></param>
-    public HttpPollyHelper(IHttpClientFactory httpClientFactory)
+    public HttpPollyService(IHttpClientFactory httpClientFactory)
     {
         _httpClientFactory = httpClientFactory;
     }
@@ -68,8 +68,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url,
-        Dictionary<string, string>? headers = null)
+    public async Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -92,8 +91,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -121,8 +119,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="fileStream"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, FileStream fileStream, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         using var formDataContent = new MultipartFormDataContent();
@@ -152,8 +149,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PostAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -181,8 +177,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
-        Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync<TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -204,8 +199,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request,
-        Dictionary<string, string>? headers = null)
+    public async Task<string> PostAsync(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -229,8 +223,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity, TREntity>(HttpGroupEnum httpGroupEnum, string url, TREntity request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -258,8 +251,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="request"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> PutAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, string request, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)
@@ -286,8 +278,7 @@ public class HttpPollyHelper : IHttpPollyHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    public async Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url,
-        Dictionary<string, string>? headers = null)
+    public async Task<TEntity?> DeleteAsync<TEntity>(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
         if (headers != null)

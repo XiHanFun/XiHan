@@ -27,18 +27,18 @@ namespace XiHan.Subscriptions.Robots.Lark;
 /// </summary>
 public class LarkCustomRobot
 {
-    private readonly IHttpPollyHelper _httpPolly;
+    private readonly IHttpPollyService _httpPollyService;
     private readonly string _url;
     private readonly string _secret;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPolly"></param>
+    /// <param name="httpPollyService"></param>
     /// <param name="larkConnection"></param>
-    public LarkCustomRobot(IHttpPollyHelper httpPolly, LarkConnection larkConnection)
+    public LarkCustomRobot(IHttpPollyService httpPollyService, LarkConnection larkConnection)
     {
-        _httpPolly = httpPolly;
+        _httpPollyService = httpPollyService;
         _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
         _secret = larkConnection.Secret;
     }
@@ -149,7 +149,7 @@ public class LarkCustomRobot
         }
 
         // 发起请求
-        var result = await _httpPolly.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
+        var result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Common, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {

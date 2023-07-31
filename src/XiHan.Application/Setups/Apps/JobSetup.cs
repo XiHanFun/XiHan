@@ -42,7 +42,7 @@ public static class JobSetup
             var schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
             var context = SqlSugar.IOC.DbScoped.SugarScope;
 
-            var jobs = context.Queryable<SysJobs>().Where(m => m.IsStart).ToList();
+            var jobs = context.Queryable<SysJob>().Where(m => m.IsStart).ToList();
 
             // 程序启动后注册所有定时任务
             foreach (var job in jobs)

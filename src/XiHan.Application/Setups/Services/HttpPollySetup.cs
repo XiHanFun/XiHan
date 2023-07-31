@@ -54,6 +54,12 @@ public static class HttpPollySetup
         }).AddPolicyHandler(retryPolicy)
         .AddPolicyHandler(timeoutPolicy);
 
+        services.AddHttpClient(HttpGroupEnum.Remote.ToString(), c =>
+        {
+            c.DefaultRequestHeaders.Add("Accept", "application/json");
+        }).AddPolicyHandler(retryPolicy)
+        .AddPolicyHandler(timeoutPolicy);
+
         services.AddHttpClient(HttpGroupEnum.Local.ToString(), c =>
         {
             c.BaseAddress = new Uri("http://www.localhost.com");
@@ -63,7 +69,7 @@ public static class HttpPollySetup
 
         // 注入 Http 相关实例
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IHttpPollyHelper, HttpPollyHelper>();
+        services.AddSingleton<IHttpPollyService, HttpPollyService>();
 
         return services;
     }

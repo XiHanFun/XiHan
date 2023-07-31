@@ -24,9 +24,9 @@ namespace XiHan.Infrastructures.Apps.Services;
 ///     [AutowiredService]
 ///     public IService Service { get; set; }
 ///
-///     public PropertyClass(AppAutowiredService appAutowiredService)
+///     public PropertyClass(AutowiredServiceManager autowiredServiceManager)
 ///     {
-///         appAutowiredService.Autowired(this);
+///         autowiredServiceManager.Autowired(this);
 ///     }
 /// }
 /// // 通过字段注入 Service 实例
@@ -35,9 +35,9 @@ namespace XiHan.Infrastructures.Apps.Services;
 ///     [AutowiredService]
 ///     public IService _service;
 ///
-///     public FieldClass(AppAutowiredService appAutowiredService)
+///     public FieldClass(AutowiredServiceManager autowiredServiceManager)
 ///     {
-///         appAutowiredService.Autowired(this);
+///         autowiredServiceManager.Autowired(this);
 ///     }
 /// }
 /// </code>
