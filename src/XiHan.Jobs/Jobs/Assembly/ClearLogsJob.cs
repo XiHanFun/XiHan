@@ -14,9 +14,9 @@
 
 using Quartz;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Services.Syses.Operations;
 using XiHan.Jobs.Bases;
 using XiHan.Services.Syses.Jobs;
+using XiHan.Services.Syses.Operations;
 
 namespace XiHan.Jobs.Jobs.Assembly;
 

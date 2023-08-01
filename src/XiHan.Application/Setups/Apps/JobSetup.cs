@@ -16,8 +16,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using XiHan.Infrastructures.Exceptions;
-using XiHan.Models.Syses;
 using XiHan.Jobs.Bases.Servers;
+using XiHan.Models.Syses;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Application.Setups.Apps;

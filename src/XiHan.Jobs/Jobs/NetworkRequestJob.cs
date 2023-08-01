@@ -20,8 +20,8 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Exceptions;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Jobs.Bases;
-using XiHan.Utils.Extensions;
 using XiHan.Services.Syses.Jobs;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Jobs.Jobs;
 

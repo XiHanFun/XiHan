@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using XiHan.Application.Common.Swagger;
 using XiHan.WebApi.Controllers.Bases;
 
@@ -26,6 +25,9 @@ namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysMenuController : BaseApiController
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
     public SysMenuController()
     {
     }
