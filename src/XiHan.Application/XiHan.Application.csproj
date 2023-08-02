@@ -20,6 +20,12 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="AspNet.Security.OAuth.Alipay" Version="7.0.2" />
+        <PackageReference Include="AspNet.Security.OAuth.Gitee" Version="7.0.2" />
+        <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="7.0.2" />
+        <PackageReference Include="AspNet.Security.OAuth.GitLab" Version="7.0.2" />
+        <PackageReference Include="AspNet.Security.OAuth.QQ" Version="7.0.2" />
+        <PackageReference Include="AspNet.Security.OAuth.Weixin" Version="7.0.2" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
         <PackageReference Include="MiniExcel" Version="1.31.0" />
         <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />

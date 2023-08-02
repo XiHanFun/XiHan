@@ -44,6 +44,8 @@ public static class AppSetup
         app.InitDatabase();
         // Http
         app.UseHttpSetup(env);
+        // 添加WebSocket支持，SignalR优先使用WebSocket传输
+        app.UseWebSockets();
         // MiniProfiler
         app.UseMiniProfilerSetup();
         // Swagger

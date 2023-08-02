@@ -29,7 +29,7 @@ public class SysUserOauth : BaseCreateEntity
     /// OauthTypeEnum
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string OauthType { get; set; } = string.Empty;
+    public int OauthType { get; set; }
 
     /// <summary>
     /// 三方 uid 、openid 等
@@ -48,4 +48,73 @@ public class SysUserOauth : BaseCreateEntity
     /// </summary>
     [SugarColumn(Length = 100)]
     public string Credential { get; set; } = string.Empty;
+
+    #region 账号信息
+
+    /// <summary>
+    /// 用户账号
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public virtual string Account { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 用户昵称
+    /// </summary>
+    [SugarColumn(Length = 20)]
+    public string NickName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 头像路径
+    /// </summary>
+    [SugarColumn(Length = 512)]
+    public string AvatarPath { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 签名
+    /// </summary>
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Signature { get; set; }
+
+    #endregion
+
+    #region 基本信息
+
+    /// <summary>
+    /// 姓名
+    /// </summary>
+    [SugarColumn(IsNullable = true, Length = 10)]
+    public virtual string RealName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 性别
+    /// 男(true)女(false)
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public bool? Gender { get; set; }
+
+    /// <summary>
+    /// 邮箱
+    /// </summary>
+    [SugarColumn(Length = 64)]
+    public string Email { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 手机号码
+    /// </summary>
+    [SugarColumn(IsNullable = true, Length = 11)]
+    public string? Phone { get; set; }
+
+    /// <summary>
+    /// 生日
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public DateTime? Birthday { get; set; }
+
+    /// <summary>
+    /// 地址
+    /// </summary>
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Address { get; set; }
+
+    #endregion
 }

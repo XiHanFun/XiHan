@@ -166,8 +166,8 @@ public class ChatHub : Hub<IChatClient>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        await RemoveFromGroup(CommonGroup);
         await Clients.Group(CommonGroup).ReceiveMessage(Disconnected);
+        await RemoveFromGroup(CommonGroup);
         await base.OnDisconnectedAsync(exception);
     }
 

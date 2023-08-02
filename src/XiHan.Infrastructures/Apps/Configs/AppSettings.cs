@@ -360,19 +360,14 @@ public static class AppSettings
         public static class QQ
         {
             /// <summary>
-            /// 获取用户授权得到 code
+            /// 客户端(AppId)
             /// </summary>
-            public static string ApiAuthorize { get; set; } = string.Empty;
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 code 得到 access_token
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiAccessToken { get; set; } = string.Empty;
-
-            /// <summary>
-            /// 根据 access_token 得到用户信息
-            /// </summary>
-            public static string ApiUser { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -381,19 +376,14 @@ public static class AppSettings
         public static class WeChat
         {
             /// <summary>
-            /// 获取用户授权得到 code
+            /// 客户端(AppId)
             /// </summary>
-            public static string ApiAuthorize { get; set; } = string.Empty;
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 code 得到 access_token
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiAccessToken { get; set; } = string.Empty;
-
-            /// <summary>
-            /// 根据 access_token 得到用户信息
-            /// </summary>
-            public static string ApiUser { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -402,19 +392,14 @@ public static class AppSettings
         public static class Alipay
         {
             /// <summary>
-            /// 获取用户授权得到 code
+            /// 客户端(AppId)
             /// </summary>
-            public static string ApiAuthorize { get; set; } = string.Empty;
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 code 得到 access_token
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiAccessToken { get; set; } = string.Empty;
-
-            /// <summary>
-            /// 根据 access_token 得到用户信息
-            /// </summary>
-            public static string ApiUser { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -423,19 +408,30 @@ public static class AppSettings
         public static class Github
         {
             /// <summary>
-            /// 获取用户授权得到 code
+            /// 客户端(AppId)
             /// </summary>
-            public static string ApiAuthorize { get; set; } = string.Empty;
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 code 得到 access_token
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiAccessToken { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// Gitlab 授权配置
+        /// </summary>
+        public static class Gitlab
+        {
+            /// <summary>
+            /// 客户端(AppId)
+            /// </summary>
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 access_token 得到用户信息
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiUser { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -444,19 +440,14 @@ public static class AppSettings
         public static class Gitee
         {
             /// <summary>
-            /// 获取用户授权得到 code
+            /// 客户端(AppId)
             /// </summary>
-            public static string ApiAuthorize { get; set; } = string.Empty;
+            public static string ClientId { get; set; } = string.Empty;
 
             /// <summary>
-            /// 根据 code 得到 access_token
+            /// 客户端密钥(AppKey)
             /// </summary>
-            public static string ApiAccessToken { get; set; } = string.Empty;
-
-            /// <summary>
-            /// 根据 access_token 得到用户信息
-            /// </summary>
-            public static string ApiUser { get; set; } = string.Empty;
+            public static string ClientSecret { get; set; } = string.Empty;
         }
     }
 }

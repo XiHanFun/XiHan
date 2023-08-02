@@ -37,10 +37,10 @@ public static class SignalRSetup
             // 当SignalR连接出现问题时，客户端会收到详细错误信息
             options.EnableDetailedErrors = true;
 #endif
-            // 每隔5秒发送一个心跳包
-            options.KeepAliveInterval = TimeSpan.FromSeconds(5);
-            // 要求5分钟内必须收到客户端发的一条消息，如果没有收到，那么服务器端则认为客户端掉了
-            options.ClientTimeoutInterval = TimeSpan.FromMinutes(5);
+            // 客户端发保持连接请求到服务端最长间隔，默认30秒，改成4分钟，网页需跟着设置connection.keepAliveIntervalInMilliseconds = 12e4;即2分钟
+            options.ClientTimeoutInterval = TimeSpan.FromMinutes(4);
+            // 服务端发保持连接请求到客户端间隔，默认15秒，改成2分钟，网页需跟着设置connection.serverTimeoutInMilliseconds = 24e4;即4分钟
+            options.KeepAliveInterval = TimeSpan.FromMinutes(2);
         });
 
         return services;

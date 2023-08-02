@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using XiHan.Application.Handlers;
+using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 
@@ -38,11 +39,15 @@ public static class AuthSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // 身份验证（Bearer）
+        // 身份验证(默认用JwtBearer认证)
         services.AddAuthentication(options =>
         {
+            // 默认身份验证方案
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            // 默认质询方案
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // 默认禁止方案
+            options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddCookie()
         .AddJwtBearer(options =>
@@ -92,6 +97,37 @@ public static class AuthSetup
                     return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("未授权！"));
                 }
             };
+        })
+        .AddQQ(options =>
+        {
+            options.ClientId = AppSettings.Auth.QQ.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.QQ.ClientSecret.GetValue();
+        })
+        .AddWeixin(options =>
+        {
+            options.ClientId = AppSettings.Auth.WeChat.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.WeChat.ClientSecret.GetValue();
+        })
+        .AddAlipay(options =>
+        {
+            options.ClientId = AppSettings.Auth.Alipay.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.Alipay.ClientSecret.GetValue();
+        })
+        .AddGitHub(options =>
+        {
+            options.ClientId = AppSettings.Auth.Github.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.Github.ClientSecret.GetValue();
+            options.Scope.Add("user:email");
+        })
+        .AddGitLab(options =>
+        {
+            options.ClientId = AppSettings.Auth.Gitlab.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.Gitlab.ClientSecret.GetValue();
+        })
+        .AddGitee(options =>
+        {
+            options.ClientId = AppSettings.Auth.Gitee.ClientId.GetValue();
+            options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
         });
         // 认证授权
         services.AddAuthorization();

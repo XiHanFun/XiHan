@@ -24,25 +24,36 @@ public enum OauthTypeEnum
     /// <summary>
     /// QQ
     /// </summary>
-    [Description("QQ")] QQ = 1,
+    [Description("QQ")]
+    QQ = 1,
 
     /// <summary>
     /// 微信
     /// </summary>
-    [Description("微信")] WeChat = 2,
+    [Description("微信")]
+    WeChat = 2,
 
     /// <summary>
     /// 支付宝
     /// </summary>
-    [Description("支付宝")] Alipay = 3,
+    [Description("支付宝")]
+    Alipay = 3,
 
     /// <summary>
     /// Github
     /// </summary>
-    [Description("Github")] Github = 4,
+    [Description("Github")]
+    Github = 4,
+
+    /// <summary>
+    /// Gitlub
+    /// </summary>
+    [Description("Gitlub")]
+    Gitlub = 5,
 
     /// <summary>
     /// Gitee
     /// </summary>
-    [Description("Gitee")] Gitee = 5
+    [Description("Gitee")]
+    Gitee = 6
 }

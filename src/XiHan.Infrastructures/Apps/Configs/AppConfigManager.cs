@@ -76,7 +76,7 @@ public static class AppConfigManager
     public static TKey GetValue<TKey>(string key)
     {
         var result = ConfigurationRoot.GetValue<TKey>(GetPropertyName(key));
-        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】或配置出错！");
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public static class AppConfigManager
     public static TKey GetSection<TKey>(string key)
     {
         var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TKey>();
-        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】");
+        return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】或配置出错！");
     }
 
     /// <summary>
