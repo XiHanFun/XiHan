@@ -107,7 +107,7 @@ public static class OsPlatformHelper
                 // 提取运行时间部分
                 int startIndex = output.IndexOf("up ") + 3;
                 int endIndex = output.IndexOf(" user");
-                string uptime = output.Substring(startIndex, endIndex - startIndex).Trim();
+                string uptime = output[startIndex..endIndex].Trim();
                 // 解析运行时间并转换为标准格式
                 TimeSpan uptimeSpan = ParseUptime(uptime);
                 runTime = uptimeSpan.FormatTimeSpanToString();
@@ -152,7 +152,7 @@ public static class OsPlatformHelper
             {
                 days = int.Parse(trimmedPart.Split(' ')[0]);
             }
-            else if (trimmedPart.Contains(":"))
+            else if (trimmedPart.Contains(':'))
             {
                 var timeParts = trimmedPart.Split(':');
                 hours = int.Parse(timeParts[0]);
