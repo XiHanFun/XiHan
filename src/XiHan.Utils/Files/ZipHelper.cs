@@ -24,8 +24,8 @@ public class ZipHelper
     /// <summary>
     /// 提取
     /// </summary>
-    /// <param name="archivePath"></param>
-    /// <param name="extractPath"></param>
+    /// <param name="archivePath">存档路径</param>
+    /// <param name="extractPath">提取路径</param>
     /// <exception cref="FileNotFoundException"></exception>
     public static void Extract(string archivePath, string extractPath)
     {
@@ -45,8 +45,8 @@ public class ZipHelper
     /// <summary>
     /// 压缩
     /// </summary>
-    /// <param name="sourceDirectory"></param>
-    /// <param name="archivePath"></param>
+    /// <param name="sourceDirectory">源目录</param>
+    /// <param name="archivePath">存档路径</param>
     /// <exception cref="DirectoryNotFoundException"></exception>
     public static void Compress(string sourceDirectory, string archivePath)
     {

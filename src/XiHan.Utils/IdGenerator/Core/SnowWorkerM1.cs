@@ -141,10 +141,11 @@ internal class SnowWorkerM1 : ISnowWorker
 
     private void DoGenIdAction(OverCostActionArg arg)
     {
-        //return;
         _ = Task.Run(() =>
         {
+#pragma warning disable CS8602 // 解引用可能出现空引用。
             GenAction(arg);
+#pragma warning restore CS8602 // 解引用可能出现空引用。
         });
     }
 

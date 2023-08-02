@@ -20,7 +20,7 @@ using Quartz.Spi;
 using SqlSugar;
 using System.Collections.Specialized;
 using System.Reflection;
-using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;

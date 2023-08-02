@@ -15,7 +15,7 @@
 using System.Runtime.Serialization;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Infrastructures.Exceptions;
+namespace XiHan.Utils.Exceptions;
 
 /// <summary>
 /// 自定义异常

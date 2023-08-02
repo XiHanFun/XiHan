@@ -39,8 +39,17 @@ public class EmailRobot
     /// </summary>
     public async Task<bool> Send(EmailToModel toModel)
     {
+        // 初始化连接实例
+        using var client = new SmtpClient(_fromModel.Host, _fromModel.Port)
+        {
+            Credentials = new NetworkCredential(_fromModel.FromMail, _fromModel.FromPassword),
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            EnableSsl = _fromModel.UseSsl,
+            Timeout = 5 * 1000
+        };
+
         // 初始化邮件实例
-        using MailMessage message = new()
+        using var message = new MailMessage()
         {
             // 来源或发送者
             From = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
@@ -65,20 +74,12 @@ public class EmailRobot
         // 在有附件的情况下添加附件
         toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
 
-        // 初始化连接实例
-        using SmtpClient client = new(_fromModel.Host, _fromModel.Port)
-        {
-            Credentials = new NetworkCredential(_fromModel.FromMail, _fromModel.FromPassword),
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            EnableSsl = _fromModel.UseSsl,
-            Timeout = 5 * 1000
-        };
         try
         {
             // 解决远程证书验证无效
             //client.ServerCertificateValidationCallback = (sender, cert, chain, error) => true;
             // 将邮件发送到SMTP邮件服务器
-            client.Send(message);
+            await client.SendMailAsync(message);
             return true;
         }
         catch (SmtpFailedRecipientsException ex)
@@ -90,7 +91,7 @@ public class EmailRobot
                 {
                     "Delivery failed - retrying in 5 seconds.".WriteLineError();
                     await Task.Delay(5000);
-                    client.Send(message);
+                    await client.SendMailAsync(message);
                 }
                 else
                 {

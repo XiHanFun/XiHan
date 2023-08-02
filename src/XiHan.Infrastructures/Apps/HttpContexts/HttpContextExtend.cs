@@ -19,7 +19,7 @@ using System.Security.Claims;
 using System.Text;
 using UAParser;
 using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
-using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verifications;
 

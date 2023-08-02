@@ -16,6 +16,12 @@ using XiHan.Test.Common;
 
 Console.WriteLine("Hello, World!");
 
-TestZip.Extract();
+//TestZip.Extract();
+//TestZip.Compress();
 
-TestZip.Compress();
+//TestEncryption.EncryptionDes();
+//TestEncryption.EncryptionAes();
+//TestEncryption.EncryptionMd5();
+//TestEncryption.EncryptionRsa();
+//TestEncryption.EncryptionSha();
+//TestVerificationCode.RunVerificationCode();

@@ -14,7 +14,7 @@
 
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Exceptions;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;

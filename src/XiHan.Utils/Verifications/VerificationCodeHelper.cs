@@ -60,7 +60,7 @@ public static class VerificationCodeHelper
     /// <param name="length">生成长度</param>
     /// <param name="source">自定义随机的字符源</param>
     /// <returns></returns>
-    public static string RandomTo(int length, string source)
+    private static string RandomTo(int length, string source)
     {
         if (length <= 0) throw new ArgumentOutOfRangeException(nameof(length));
         if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));

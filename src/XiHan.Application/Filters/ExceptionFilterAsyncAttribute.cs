@@ -19,7 +19,7 @@ using System.Security.Authentication;
 using XiHan.Application.Middlewares;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Exceptions;
 using XiHan.Infrastructures.Responses.Results;
 
 namespace XiHan.Application.Filters;

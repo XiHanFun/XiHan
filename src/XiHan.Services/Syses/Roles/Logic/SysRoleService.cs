@@ -15,7 +15,7 @@
 using Mapster;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Exceptions;
+using XiHan.Utils.Exceptions;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Roles.Dtos;
