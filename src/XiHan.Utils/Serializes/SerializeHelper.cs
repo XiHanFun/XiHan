@@ -28,7 +28,7 @@ public static class SerializeHelper
     /// <summary>
     /// 公共参数
     /// </summary>
-    public static readonly JsonSerializerOptions JsonSerializerOptionsInstance = GetJsonSerializerOptions();
+    public static JsonSerializerOptions JsonSerializerOptionsInstance { get; set; } = GetJsonSerializerOptions();
 
     /// <summary>
     /// 获取默认序列化参数

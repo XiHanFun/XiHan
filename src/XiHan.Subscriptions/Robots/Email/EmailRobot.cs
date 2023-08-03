@@ -52,8 +52,8 @@ public class EmailRobot
         using var message = new MailMessage()
         {
             // 来源或发送者
-            From = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
-            Sender = new MailAddress(_fromModel.FromMail, _fromModel.FromName, _fromModel.Coding),
+            From = new MailAddress(_fromModel.FromMail, _fromModel.FromUserName, _fromModel.Coding),
+            Sender = new MailAddress(_fromModel.FromMail, _fromModel.FromUserName, _fromModel.Coding),
             // 邮件主题
             Subject = toModel.Subject,
             SubjectEncoding = _fromModel.Coding,
@@ -71,8 +71,18 @@ public class EmailRobot
         toModel.CcMail.ForEach(cc => message.CC.Add(cc));
         // 密送人地址集合
         toModel.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
-        // 在有附件的情况下添加附件
-        toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
+        //在有附件的情况下添加附件
+        try
+        {
+            if (toModel.AttachmentsPath != null && toModel.AttachmentsPath.Count > 0)
+            {
+                toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"在添加附件时有错误:{ex}");
+        }
 
         try
         {

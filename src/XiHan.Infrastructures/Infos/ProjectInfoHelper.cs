@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HelloInfoHelper
+// FileName:ProjectInfoHelper
 // Guid:d32ec338-c3a6-4fac-85e5-b76de49d6f6c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@
 namespace XiHan.Infrastructures.Infos;
 
 /// <summary>
-/// 欢迎语帮助类
+/// 项目信息帮助类
 /// </summary>
-public static class HelloInfoHelper
+public static class ProjectInfoHelper
 {
     /// <summary>
     /// Logo

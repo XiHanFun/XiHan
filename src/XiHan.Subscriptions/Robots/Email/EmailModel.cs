@@ -33,29 +33,29 @@ public class EmailFromModel
     public int Port { get; set; } = 587;
 
     /// <summary>
-    /// 发送者邮箱
+    /// SSL
+    /// </summary>
+    public bool UseSsl { get; set; } = true;
+
+    /// <summary>
+    /// 发自邮箱
     /// </summary>
     public string FromMail { get; set; } = string.Empty;
 
     /// <summary>
-    /// 发送者名称
-    /// </summary>
-    public string FromName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 发送者邮箱密码
+    /// 发自密码
     /// </summary>
     public string FromPassword { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 发自名称
+    /// </summary>
+    public string FromUserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 内容编码
     /// </summary>
     public Encoding Coding { get; set; } = Encoding.UTF8;
-
-    /// <summary>
-    /// SSL
-    /// </summary>
-    public bool UseSsl { get; set; } = true;
 }
 
 /// <summary>

@@ -62,10 +62,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-    </ItemGroup>
-
-    <ItemGroup>
         <None Update="IpDatabases\ip2region.xdb">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>

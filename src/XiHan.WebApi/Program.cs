@@ -20,7 +20,7 @@ using XiHan.WebCore.Setups;
 var builder = WebApplication.CreateBuilder(args);
 
 // 打印欢迎语
-ConsoleHello.SayHello();
+ConsoleProjectInfo.SayHello();
 // 打印服务器信息
 ConsoleServerInfo.ConfirmServerInfo();
 

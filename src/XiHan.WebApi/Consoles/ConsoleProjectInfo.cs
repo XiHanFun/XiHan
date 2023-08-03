@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConsoleHello
+// FileName:ConsoleProjectInfo
 // Guid:5cf676a5-01b1-4135-90d2-976b1f491419
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,20 +18,20 @@ using XiHan.Utils.Extensions;
 namespace XiHan.WebApi.Consoles;
 
 /// <summary>
-/// ConsoleHello
+/// ConsoleProjectInfo
 /// </summary>
-public static class ConsoleHello
+public static class ConsoleProjectInfo
 {
     /// <summary>
     /// 欢迎使用曦寒
     /// </summary>
     public static void SayHello()
     {
-        HelloInfoHelper.Logo.WriteLineHandle();
-        HelloInfoHelper.SendWord.WriteLineHandle();
-        HelloInfoHelper.Copyright.WriteLineHandle();
-        $@"官方文档：{HelloInfoHelper.OfficialDocuments}".WriteLineHandle();
-        $@"官方组织：{HelloInfoHelper.OfficialOrganization}".WriteLineHandle();
-        $@"源码仓库：{HelloInfoHelper.SourceCodeRepository}".WriteLineHandle();
+        ProjectInfoHelper.Logo.WriteLineHandle();
+        ProjectInfoHelper.SendWord.WriteLineHandle();
+        ProjectInfoHelper.Copyright.WriteLineHandle();
+        $@"官方文档：{ProjectInfoHelper.OfficialDocuments}".WriteLineHandle();
+        $@"官方组织：{ProjectInfoHelper.OfficialOrganization}".WriteLineHandle();
+        $@"源码仓库：{ProjectInfoHelper.SourceCodeRepository}".WriteLineHandle();
     }
 }

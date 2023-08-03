@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
@@ -42,9 +42,9 @@ public class TestController : BaseApiController
     {
         return CustomResult.Success(new
         {
-            HttpContextInfoHelper.ClientInfo,
-            HttpContextInfoHelper.AddressInfo,
-            HttpContextInfoHelper.AuthInfo
+            App.ClientInfo,
+            App.AddressInfo,
+            App.AuthInfo
         });
     }
 

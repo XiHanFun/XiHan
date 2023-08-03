@@ -25,6 +25,11 @@ namespace XiHan.Models.Syses;
 public class SysEmail : BaseModifyEntity
 {
     /// <summary>
+    /// 是否可用
+    /// </summary>
+    public bool IsEnabled { get; set; }
+
+    /// <summary>
     /// 主机服务器
     /// </summary>
     [SugarColumn(Length = 20)]
@@ -41,10 +46,10 @@ public class SysEmail : BaseModifyEntity
     public bool UseSsl { get; set; }
 
     /// <summary>
-    /// 发自名称
+    /// 发自邮箱
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string FromUserName { get; set; } = string.Empty;
+    [SugarColumn(Length = 50)]
+    public string FromMail { get; set; } = string.Empty;
 
     /// <summary>
     /// 发自密码
@@ -53,8 +58,8 @@ public class SysEmail : BaseModifyEntity
     public string FromPassword { get; set; } = string.Empty;
 
     /// <summary>
-    /// 发自地址
+    /// 发自名称
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string FromAddress { get; set; } = string.Empty;
+    [SugarColumn(Length = 20)]
+    public string FromUserName { get; set; } = string.Empty;
 }

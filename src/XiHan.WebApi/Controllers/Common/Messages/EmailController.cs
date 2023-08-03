@@ -48,6 +48,6 @@ public class EmailController : BaseApiController
     [HttpPost("Send")]
     public async Task<CustomResult> SendEmail(EmailToModel emailTo)
     {
-        return await _emailPushService.SendEmail(emailTo);
+        return await _emailPushService.SendRegisterEmail("", "", "");
     }
 }

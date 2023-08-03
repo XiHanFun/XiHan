@@ -17,6 +17,7 @@ using Serilog;
 using System.Diagnostics;
 using System.Security.Authentication;
 using System.Text;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
@@ -108,9 +109,9 @@ public class GlobalExceptionMiddleware
     private async Task RecordOperationLog(HttpContext context, long elapsed, Exception ex)
     {
         // 获取当前请求上下文信息
-        var clientInfo = HttpContextInfoHelper.ClientInfo;
-        var addressInfo = HttpContextInfoHelper.AddressInfo;
-        var authInfo = HttpContextInfoHelper.AuthInfo;
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
+        var authInfo = App.AuthInfo;
         var requestParameters = await context.GetRequestParameters();
 
         // 记录日志

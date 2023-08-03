@@ -14,13 +14,14 @@
 
 using Mapster;
 using Microsoft.Extensions.Logging;
-using System.Net.Mail;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Users;
 using XiHan.Subscriptions.Robots.Email;
+using XiHan.Utils.Exceptions;
 
 namespace XiHan.Services.Commons.Messages.EmailPush;
 
@@ -31,53 +32,105 @@ namespace XiHan.Services.Commons.Messages.EmailPush;
 public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 {
     private readonly ILogger<EmailPushService> _logger;
+    private readonly ISysUserService _sysUserService;
+    private readonly EmailRobot _emailRobot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public EmailPushService(ILogger<EmailPushService> logger)
+    /// <param name="logger"></param>
+    /// <param name="sysUserService"></param>
+    /// <exception cref="CustomException"></exception>
+    public EmailPushService(ILogger<EmailPushService> logger, ISysUserService sysUserService)
     {
         _logger = logger;
+        _sysUserService = sysUserService;
+        var emailFrom = GetEmailFrom().Result ?? throw new CustomException("未添加邮件推送配置或配置不可用！");
+        _emailRobot = new EmailRobot(emailFrom);
+    }
+
+    /// <summary>
+    /// 获取连接对象
+    /// </summary>
+    /// <returns></returns>
+    private async Task<EmailFromModel> GetEmailFrom()
+    {
+        var sysEmail = await GetFirstAsync(e => e.IsEnabled);
+        var emailFromModel = sysEmail.Adapt<EmailFromModel>();
+        return emailFromModel;
+    }
+
+    #region Email
+
+    /// <summary>
+    /// userEmail
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="userEmail"></param>
+    /// <param name="verificationCode"></param>
+    /// <returns></returns>
+    [AppLog(Module = "发送注册邮件", BusinessType = BusinessTypeEnum.Other)]
+    public async Task<CustomResult> SendRegisterEmail(string userName, string userEmail, string verificationCode)
+    {
+        var body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
+							<section style='border-style: solid;border-width: 1px;border-color: #afafaf;box-sizing: border-box;'>
+								<section style='border-style:solid;border-left:none;border-top:none;border-width:1px;border-color:#afafaf;padding:0px 5px 5px 0px;display:inline-block;float:left;'>
+									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #ef0c0c;'></section>
+								</section>
+								<section style='border-style:solid;border-right:none;border-top:none;border-width:1px;border-color:#afafaf;padding:0px 0px 5px 5px;display:inline-block;float:right;'>
+									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #3e3e3e;'><br/></section>
+								</section>
+								<section style='clear: both;box-sizing: border-box;'></section>
+								<section style='background: linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -o-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -ms-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -moz-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -webkit-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);margin: -5px 5px; border-style: solid; border-width: 1px; border-color: #afafaf; box-sizing: border-box; padding: 10px 15px; text-align: left;'>
+									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 10px; color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>亲爱的【<span style='font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 10px; color: #0052ff;'>" + userName + @"</span></span><span style='font-size: 10px;'>】：</span></p>
+									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 10px;  color: #4c4c4c;'>&nbsp;&nbsp;&nbsp;&nbsp;感谢您注册和使用曦寒。</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 10px;'>您的帐号正在进行身份验证，请将以下内容填入对应的邮箱验证码输入框。</span>
+									</p>
+									<p style='letter-spacing: 2px; line-height: normal; text-align: center;'><span style='font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 20px; color: #ff2941;'>" + verificationCode + @"</span></p>
+									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 12px; text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;&nbsp;</span><span style='font-size: 10px;'><span style='text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;<span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>为了保障您帐号的安全性，</span>请您尽快完成验证</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>确认</span><span style='color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>。</span></span>
+									</p>
+									<p style='letter-spacing: 2px; text-align: right; line-height: normal;'><span style='font-size: 10px;'>曦寒</span></p>
+									<p style='letter-spacing: 2px; text-align: right; line-height: normal;'><span style='font-size: 10px;'>" + DateTime.Now.ToShortDateString() + "," + DateTime.Now.ToShortTimeString() + @"</span></p>
+								</section>
+								<section style='border-style:solid;border-left:none;border-bottom:none;border-width:1px;border-color:#afafaf;padding:5px 5px 0px 0px;display:inline-block;float:left;'>
+									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #3e3e3e;'></section>
+								</section>
+								<section style='border-style:solid;border-right:none;border-bottom:none;border-width:1px;border-color:#afafaf;padding:5px 0px 0px 5px;display:inline-block;float:right;'>
+									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #3e3e3e;'></section>
+								</section>
+								<section style='clear: both;box-sizing: border-box;'></section>
+							</section>
+						</section>
+						<section class='_editor'>
+							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright&copy;2019&nbsp;&nbsp;</span><span style=';color: #0052ff;;font-size: 10px;'>摘繁华</span><span style='font-size: 10px; color: #ffda51;'>&nbsp;</span><span style='font-size: 10px;'>&nbsp;All rights reserved.</span></p>
+						</section>";
+
+        var emailTo = new EmailToModel
+        {
+            Subject = "欢迎注册曦寒",
+            Body = body,
+            ToMail = new List<string>() { userEmail },
+        };
+        return await SendEmail(emailTo);
     }
 
     /// <summary>
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    [AppLog(Module = "发送邮件", BusinessType = BusinessTypeEnum.Other)]
-    public async Task<CustomResult> SendEmail(EmailToModel emailTo)
+    private async Task<CustomResult> SendEmail(EmailToModel emailTo)
     {
-        var sysEmail = await GetFirstAsync(e => e.CreatedBy != null);
-        var emailFrom = sysEmail.Adapt<EmailFromModel>();
-        var subject = "测试";
-        var body = "测试";
-        List<string> toMail = new() { "" };
-        List<string> ccMail = new() { "" };
-        List<string> bccMail = new() { "" };
-        List<Attachment> attachmentsPath = new()
+        string? logoInfo;
+        if (await _emailRobot.Send(emailTo))
         {
-            new Attachment(@"")
-        };
-        var emailToModel = new EmailToModel
-        {
-            Subject = subject,
-            Body = body,
-            ToMail = toMail,
-            CcMail = ccMail,
-            BccMail = bccMail,
-            AttachmentsPath = attachmentsPath,
-        };
-        var emailRobot = new EmailRobot(emailFrom);
-        var logoInfo = string.Empty;
-        if (await emailRobot.Send(emailTo))
-        {
-            logoInfo = "邮件发送成功";
+            logoInfo = "邮件发送成功！";
             _logger.LogInformation(logoInfo);
             return CustomResult.Success(logoInfo);
         }
 
-        logoInfo = "邮件发送失败";
+        logoInfo = "邮件发送失败！";
         _logger.LogError(logoInfo);
-        return CustomResult.BadRequest("邮件发送失败");
+        return CustomResult.BadRequest(logoInfo);
     }
+
+    #endregion
 }

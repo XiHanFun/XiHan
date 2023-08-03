@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.Subscriptions.Robots.Email;
 
 namespace XiHan.Services.Commons.Messages.EmailPush;
 
@@ -23,8 +23,12 @@ namespace XiHan.Services.Commons.Messages.EmailPush;
 public interface IEmailPushService
 {
     /// <summary>
-    /// 发送邮件
+    /// userEmail
     /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="userEmail"></param>
+    /// <param name="verificationCode"></param>
     /// <returns></returns>
-    Task<CustomResult> SendEmail(EmailToModel emailTo);
+    [AppLog(Module = "发送注册邮件", BusinessType = BusinessTypeEnum.Other)]
+    Task<CustomResult> SendRegisterEmail(string userName, string userEmail, string verificationCode);
 }

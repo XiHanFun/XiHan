@@ -38,11 +38,11 @@ public class HelloController : BaseApiController
         return CustomResult.Success(new
         {
             Hello = "欢迎使用曦寒，一款新型全场景应用软件，基于 DotNet 和 Vue 构建。",
-            HelloInfoHelper.SendWord,
-            HelloInfoHelper.Copyright,
-            HelloInfoHelper.OfficialDocuments,
-            HelloInfoHelper.OfficialOrganization,
-            HelloInfoHelper.SourceCodeRepository,
+            ProjectInfoHelper.SendWord,
+            ProjectInfoHelper.Copyright,
+            ProjectInfoHelper.OfficialDocuments,
+            ProjectInfoHelper.OfficialOrganization,
+            ProjectInfoHelper.SourceCodeRepository,
         });
     }
 }

@@ -44,6 +44,21 @@ public static class App
     public static HttpContext HttpContextCurrent => AppHttpContextManager.Current;
 
     /// <summary>
+    /// 客户端信息
+    /// </summary>
+    public static UserClientInfo ClientInfo => HttpContextCurrent.GetClientInfo();
+
+    /// <summary>
+    /// 地址信息
+    /// </summary>
+    public static UserAddressInfo AddressInfo => HttpContextCurrent.GetAddressInfo();
+
+    /// <summary>
+    /// 权限信息
+    /// </summary>
+    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
+
+    /// <summary>
     /// 获取请求上下文用户
     /// </summary>
     public static ClaimsPrincipal User => HttpContextCurrent.User;

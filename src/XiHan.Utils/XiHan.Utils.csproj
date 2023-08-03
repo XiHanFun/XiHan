@@ -19,6 +19,7 @@
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <SignAssembly>False</SignAssembly>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
