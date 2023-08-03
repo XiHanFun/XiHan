@@ -14,6 +14,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Subscriptions.Hubs;
 using XiHan.Utils.Extensions;
@@ -78,6 +79,8 @@ public static class AppSetup
             endpoints.MapHub<ChatHub>("/Chathub");
         });
 
+        // 注入全局宿主环境
+        AppEnvironmentManager.WebHostEnvironment = env;
         // 注入全局服务
         AppServiceManager.ServiceProvider = app.ApplicationServices;
 

@@ -21,6 +21,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MailKit" Version="4.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj" />
     </ItemGroup>
 

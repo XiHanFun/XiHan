@@ -14,9 +14,9 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Commons.Messages.EmailPush;
-using XiHan.Subscriptions.Robots.Email;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
 
@@ -45,9 +45,10 @@ public class EmailController : BaseApiController
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    [HttpPost("Send")]
-    public async Task<CustomResult> SendEmail(EmailToModel emailTo)
+    [HttpPost("SendEmail")]
+    [AppLog("发送邮件", BusinessTypeEnum.Other)]
+    public async Task<CustomResult> SendEmail()
     {
-        return await _emailPushService.SendRegisterEmail("", "", "");
+        return await _emailPushService.SendVerificationCodeEmail("zhaifanhua", "xxxxxx@qq.com", "325948");
     }
 }

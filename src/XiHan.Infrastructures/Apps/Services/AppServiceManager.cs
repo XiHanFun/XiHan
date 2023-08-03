@@ -29,7 +29,7 @@ namespace XiHan.Infrastructures.Apps.Services;
 public static class AppServiceManager
 {
     /// <summary>
-    /// 全局应用服务
+    /// 全局应用服务容器
     /// </summary>
     public static IServiceProvider ServiceProvider { get; set; } = null!;
 

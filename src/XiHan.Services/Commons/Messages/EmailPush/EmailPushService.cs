@@ -14,7 +14,6 @@
 
 using Mapster;
 using Microsoft.Extensions.Logging;
-using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
@@ -63,14 +62,13 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     #region Email
 
     /// <summary>
-    /// userEmail
+    /// 发送验证邮件
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="userEmail"></param>
     /// <param name="verificationCode"></param>
     /// <returns></returns>
-    [AppLog(Module = "发送注册邮件", BusinessType = BusinessTypeEnum.Other)]
-    public async Task<CustomResult> SendRegisterEmail(string userName, string userEmail, string verificationCode)
+    public async Task<CustomResult> SendVerificationCodeEmail(string userName, string userEmail, string verificationCode)
     {
         var body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
 							<section style='border-style: solid;border-width: 1px;border-color: #afafaf;box-sizing: border-box;'>
@@ -86,7 +84,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 10px;  color: #4c4c4c;'>&nbsp;&nbsp;&nbsp;&nbsp;感谢您注册和使用曦寒。</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 10px;'>您的帐号正在进行身份验证，请将以下内容填入对应的邮箱验证码输入框。</span>
 									</p>
 									<p style='letter-spacing: 2px; line-height: normal; text-align: center;'><span style='font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 20px; color: #ff2941;'>" + verificationCode + @"</span></p>
-									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 12px; text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;&nbsp;</span><span style='font-size: 10px;'><span style='text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;<span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>为了保障您帐号的安全性，</span>请您尽快完成验证</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>确认</span><span style='color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>。</span></span>
+									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 12px; text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;&nbsp;&nbsp;</span><span style='font-size: 10px;'><span style='text-align: center; color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>&nbsp;<span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>为了保障您帐号的安全性，</span>请您尽快完成验证</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>确认</span><span style='color: #000000; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; text-align: center;'>。</span></span>
 									</p>
 									<p style='letter-spacing: 2px; text-align: right; line-height: normal;'><span style='font-size: 10px;'>曦寒</span></p>
 									<p style='letter-spacing: 2px; text-align: right; line-height: normal;'><span style='font-size: 10px;'>" + DateTime.Now.ToShortDateString() + "," + DateTime.Now.ToShortTimeString() + @"</span></p>
@@ -101,14 +99,15 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 							</section>
 						</section>
 						<section class='_editor'>
-							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright&copy;2019&nbsp;&nbsp;</span><span style=';color: #0052ff;;font-size: 10px;'>摘繁华</span><span style='font-size: 10px; color: #ffda51;'>&nbsp;</span><span style='font-size: 10px;'>&nbsp;All rights reserved.</span></p>
+							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright &copy;<time>2016-" + DateTime.Now.Year + @"</time>&nbsp;&nbsp;<a href=""https://www.zhaifanhua.com"">ZhaiFanhua</a>&nbsp;All Rights Reserved.</span></p>
 						</section>";
 
         var emailTo = new EmailToModel
         {
-            Subject = "欢迎注册曦寒",
+            Subject = "曦寒账号验证",
             Body = body,
-            ToMail = new List<string>() { userEmail },
+            IsBodyHtml = true,
+            ToMail = new List<string>() { userEmail }
         };
         return await SendEmail(emailTo);
     }
@@ -120,7 +119,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     private async Task<CustomResult> SendEmail(EmailToModel emailTo)
     {
         string? logoInfo;
-        if (await _emailRobot.Send(emailTo))
+        if (await _emailRobot.SendMail(emailTo))
         {
             logoInfo = "邮件发送成功！";
             _logger.LogInformation(logoInfo);

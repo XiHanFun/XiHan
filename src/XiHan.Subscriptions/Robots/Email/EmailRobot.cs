@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using System.Net;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Subscriptions.Robots.Email;
@@ -37,81 +37,75 @@ public class EmailRobot
     /// <summary>
     /// 发送邮件
     /// </summary>
-    public async Task<bool> Send(EmailToModel toModel)
+    public async Task<bool> SendMail(EmailToModel toModel)
     {
-        // 初始化连接实例
-        using var client = new SmtpClient(_fromModel.Host, _fromModel.Port)
+        var message = new MimeMessage
         {
-            Credentials = new NetworkCredential(_fromModel.FromMail, _fromModel.FromPassword),
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            EnableSsl = _fromModel.UseSsl,
-            Timeout = 5 * 1000
+            // 来源
+            Sender = new MailboxAddress(_fromModel.FromMail, _fromModel.FromMail)
         };
-
-        // 初始化邮件实例
-        using var message = new MailMessage()
-        {
-            // 来源或发送者
-            From = new MailAddress(_fromModel.FromMail, _fromModel.FromUserName, _fromModel.Coding),
-            Sender = new MailAddress(_fromModel.FromMail, _fromModel.FromUserName, _fromModel.Coding),
-            // 邮件主题
-            Subject = toModel.Subject,
-            SubjectEncoding = _fromModel.Coding,
-            // 邮件正文
-            Body = toModel.Body,
-            BodyEncoding = _fromModel.Coding,
-            // 优先级（高）
-            Priority = MailPriority.High,
-            // 网页形式
-            IsBodyHtml = true
-        };
+        // 发件人地址集合
+        message.From.Add(new MailboxAddress(_fromModel.FromMail, _fromModel.FromMail));
         // 收件人地址集合
-        toModel.ToMail.ForEach(to => message.To.Add(to));
+        toModel.ToMail.ForEach(to => message.To.Add(new MailboxAddress(to, to)));
         // 抄送人地址集合
-        toModel.CcMail.ForEach(cc => message.CC.Add(cc));
+        toModel.CcMail.ForEach(cc => message.Cc.Add(new MailboxAddress(cc, cc)));
         // 密送人地址集合
-        toModel.BccMail.ForEach(bcc => message.Bcc.Add(bcc));
+        toModel.BccMail.ForEach(bcc => message.Bcc.Add(new MailboxAddress(bcc, bcc)));
+        // 邮件主题
+        message.Subject = toModel.Subject;
+        // 邮件日期
+        message.Date = DateTime.Now;
+        // 邮件正文
+        var bodyBuilder = new BodyBuilder
+        {
+            HtmlBody = toModel.IsBodyHtml ? toModel.Body : null,
+            TextBody = toModel.IsBodyHtml ? null : toModel.Body
+        };
         //在有附件的情况下添加附件
         try
         {
             if (toModel.AttachmentsPath != null && toModel.AttachmentsPath.Count > 0)
             {
-                toModel.AttachmentsPath.ForEach(path => message.Attachments.Add(path));
+                toModel.AttachmentsPath.ForEach(attachmentFile =>
+                {
+                    var attachment = new MimePart()
+                    {
+                        Content = new MimeContent(attachmentFile.ContentStream),
+                        // 读取文件只能用绝对路径
+                        ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                        ContentTransferEncoding = ContentEncoding.Base64,
+                        FileName = attachmentFile.Name
+                    };
+                    bodyBuilder.Attachments.Add(attachment);
+                });
             }
         }
         catch (Exception ex)
         {
             throw new Exception($"在添加附件时有错误:{ex}");
         }
+        message.Body = bodyBuilder.ToMessageBody();
 
         try
         {
+            using var client = new SmtpClient();
             // 解决远程证书验证无效
-            //client.ServerCertificateValidationCallback = (sender, cert, chain, error) => true;
-            // 将邮件发送到SMTP邮件服务器
-            await client.SendMailAsync(message);
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            // 异步连接
+            await client.ConnectAsync(_fromModel.SmtpHost, _fromModel.SmtpPort, _fromModel.UseSsl);
+            // 异步登录
+            await client.AuthenticateAsync(_fromModel.FromUserName, _fromModel.FromPassword);
+            // 异步发送
+            var result = await client.SendAsync(message);
+            // 异步断连
+            await client.DisconnectAsync(true);
+
             return true;
-        }
-        catch (SmtpFailedRecipientsException ex)
-        {
-            foreach (var t in ex.InnerExceptions)
-            {
-                var status = t.StatusCode;
-                if (status == SmtpStatusCode.MailboxBusy || status == SmtpStatusCode.MailboxUnavailable)
-                {
-                    "Delivery failed - retrying in 5 seconds.".WriteLineError();
-                    await Task.Delay(5000);
-                    await client.SendMailAsync(message);
-                }
-                else
-                {
-                    $"Failed to deliver message to {t.FailedRecipient}".WriteLineError();
-                }
-            }
         }
         catch (Exception ex)
         {
-            throw new Exception($"Exception caught in RetryIfBusy(): {ex}");
+            $"Failed to send email:{ex.Message}".WriteLineError();
         }
 
         return false;

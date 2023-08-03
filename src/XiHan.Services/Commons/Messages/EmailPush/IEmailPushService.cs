@@ -14,21 +14,22 @@
 
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
+using XiHan.Models.Syses;
+using XiHan.Services.Bases;
 
 namespace XiHan.Services.Commons.Messages.EmailPush;
 
 /// <summary>
 /// IEmailPushService
 /// </summary>
-public interface IEmailPushService
+public interface IEmailPushService : IBaseService<SysEmail>
 {
     /// <summary>
-    /// userEmail
+    /// 发送验证邮件
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="userEmail"></param>
     /// <param name="verificationCode"></param>
     /// <returns></returns>
-    [AppLog(Module = "发送注册邮件", BusinessType = BusinessTypeEnum.Other)]
-    Task<CustomResult> SendRegisterEmail(string userName, string userEmail, string verificationCode);
+    Task<CustomResult> SendVerificationCodeEmail(string userName, string userEmail, string verificationCode);
 }

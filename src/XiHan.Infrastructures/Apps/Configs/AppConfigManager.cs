@@ -26,7 +26,7 @@ namespace XiHan.Infrastructures.Apps.Configs;
 public static class AppConfigManager
 {
     /// <summary>
-    /// 配置文件的根节点
+    /// 全局配置
     /// </summary>
     public static IConfiguration ConfigurationRoot { get; set; } = null!;
 

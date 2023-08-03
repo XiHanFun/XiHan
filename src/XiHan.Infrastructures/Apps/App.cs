@@ -12,10 +12,14 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Security.Claims;
+using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.IdGenerator;
@@ -39,32 +43,42 @@ public static class App
     public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllTypes();
 
     /// <summary>
-    /// 获取请求上下文
+    /// 全局宿主环境
     /// </summary>
-    public static HttpContext HttpContextCurrent => AppHttpContextManager.Current;
+    public static IWebHostEnvironment WebHostEnvironment => AppEnvironmentManager.WebHostEnvironment;
 
     /// <summary>
-    /// 客户端信息
+    /// 全局配置构建器
+    /// </summary>
+    public static IConfiguration Configuration => AppConfigManager.ConfigurationRoot;
+
+    /// <summary>
+    /// 全局请求上下文
+    /// </summary>
+    public static HttpContext HttpContextCurrent => AppHttpContextManager.HttpContextCurrent;
+
+    /// <summary>
+    /// 请求上下文客户端信息
     /// </summary>
     public static UserClientInfo ClientInfo => HttpContextCurrent.GetClientInfo();
 
     /// <summary>
-    /// 地址信息
+    /// 请求上下文地址信息
     /// </summary>
     public static UserAddressInfo AddressInfo => HttpContextCurrent.GetAddressInfo();
 
     /// <summary>
-    /// 权限信息
+    /// 请求上下文权限信息
     /// </summary>
     public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
 
     /// <summary>
-    /// 获取请求上下文用户
+    /// 请求上下文用户
     /// </summary>
     public static ClaimsPrincipal User => HttpContextCurrent.User;
 
     /// <summary>
-    /// 获取请求服务容器
+    /// 全局请求服务容器
     /// </summary>
     public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 

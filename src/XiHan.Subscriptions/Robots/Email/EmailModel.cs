@@ -25,12 +25,12 @@ public class EmailFromModel
     /// <summary>
     /// 服务器
     /// </summary>
-    public string Host { get; set; } = string.Empty;
+    public string SmtpHost { get; set; } = string.Empty;
 
     /// <summary>
-    /// 端口
+    /// 服务器端口
     /// </summary>
-    public int Port { get; set; } = 587;
+    public int SmtpPort { get; set; } = 587;
 
     /// <summary>
     /// SSL
@@ -72,6 +72,11 @@ public class EmailToModel
     /// 发送内容
     /// </summary>
     public string Body { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否网页形式
+    /// </summary>
+    public bool IsBodyHtml { get; set; } = true;
 
     /// <summary>
     /// 接收者邮箱

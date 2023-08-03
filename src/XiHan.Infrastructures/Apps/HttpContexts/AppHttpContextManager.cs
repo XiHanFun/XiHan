@@ -30,7 +30,7 @@ public static class AppHttpContextManager
     /// <summary>
     /// 当前上下文
     /// </summary>
-    public static HttpContext Current => GetHttpContextCurrent();
+    public static HttpContext HttpContextCurrent => GetHttpContextCurrent();
 
     /// <summary>
     /// 获取当前 HttpContext 对象

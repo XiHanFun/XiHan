@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Repositories.Entities;
@@ -109,7 +110,7 @@ public static class EntityExtend
         if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
 
-        var context = AppHttpContextManager.Current;
+        var context = App.HttpContextCurrent;
         if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && context != null)
             types.GetProperty(propertyInfo.HandleId)?.SetValue(source, context.GetUserId(), null);
         if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && context != null)

@@ -33,12 +33,12 @@ public class SysEmail : BaseModifyEntity
     /// 主机服务器
     /// </summary>
     [SugarColumn(Length = 20)]
-    public string Host { get; set; } = string.Empty;
+    public string SmtpHost { get; set; } = string.Empty;
 
     /// <summary>
     /// 端口
     /// </summary>
-    public int Port { get; set; }
+    public int SmtpPort { get; set; }
 
     /// <summary>
     /// 是否SSL加密
@@ -48,7 +48,7 @@ public class SysEmail : BaseModifyEntity
     /// <summary>
     /// 发自邮箱
     /// </summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 64)]
     public string FromMail { get; set; } = string.Empty;
 
     /// <summary>
@@ -60,6 +60,6 @@ public class SysEmail : BaseModifyEntity
     /// <summary>
     /// 发自名称
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 64)]
     public string FromUserName { get; set; } = string.Empty;
 }
