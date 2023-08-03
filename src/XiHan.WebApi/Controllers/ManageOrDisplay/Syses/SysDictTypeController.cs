@@ -14,13 +14,13 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Syses.Dicts;
 using XiHan.Services.Syses.Dicts.Dtos;
 using XiHan.WebApi.Controllers.Bases;
+using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 

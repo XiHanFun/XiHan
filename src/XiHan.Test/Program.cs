@@ -12,8 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Test.Common;
-
 Console.WriteLine("Hello, World!");
 
 //TestZip.Extract();

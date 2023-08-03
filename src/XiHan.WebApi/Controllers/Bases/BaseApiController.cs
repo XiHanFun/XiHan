@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Infos;
+using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebApi.Controllers.Bases;
 

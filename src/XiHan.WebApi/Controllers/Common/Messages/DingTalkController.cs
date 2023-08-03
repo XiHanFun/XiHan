@@ -14,11 +14,11 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Application.Common.Swagger;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.Robots.DingTalk;
 using XiHan.WebApi.Controllers.Bases;
+using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebApi.Controllers.Common.Messages;
 

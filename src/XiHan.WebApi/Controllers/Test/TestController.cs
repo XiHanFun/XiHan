@@ -16,12 +16,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using XiHan.Application.Common.Swagger;
-using XiHan.Application.Filters;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
+using XiHan.WebCore.Common.Swagger;
+using XiHan.WebCore.Filters;
 
 namespace XiHan.WebApi.Controllers.Test;
 

@@ -14,8 +14,8 @@
 
 using Serilog;
 using System.Reflection;
-using XiHan.Application.Setups;
 using XiHan.WebApi.Consoles;
+using XiHan.WebCore.Setups;
 
 var builder = WebApplication.CreateBuilder(args);
 

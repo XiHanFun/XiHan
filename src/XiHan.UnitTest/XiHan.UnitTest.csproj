@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.Application\XiHan.Application.csproj" />
+        <ProjectReference Include="..\XiHan.WebCore\XiHan.WebCore.csproj" />
     </ItemGroup>
 
 </Project>

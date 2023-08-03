@@ -18,9 +18,9 @@ using Quartz.Impl.Triggers;
 using Serilog;
 using SqlSugar.IOC;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Utils.Exceptions;
 using XiHan.Jobs.Bases;
 using XiHan.Services.Syses.Jobs;
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Jobs.Jobs;

@@ -14,8 +14,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Application.Common.Swagger;
-using XiHan.Application.Handlers;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
@@ -29,6 +27,8 @@ using XiHan.Services.Syses.Users.Dtos;
 using XiHan.Utils.Encryptions;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
+using XiHan.WebCore.Common.Swagger;
+using XiHan.WebCore.Handlers;
 
 namespace XiHan.WebApi.Controllers.Authorize;
 
