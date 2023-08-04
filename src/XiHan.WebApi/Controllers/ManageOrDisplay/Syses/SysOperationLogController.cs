@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysOperationLogController
+// FileName:SysLogOperationController
 // Guid:a6b72a71-814c-43ca-b83c-3313cf432b83
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
-using XiHan.Services.Syses.Operations;
-using XiHan.Services.Syses.Operations.Dtos;
+using XiHan.Services.Syses.Logging;
+using XiHan.Services.Syses.Logging.Dtos;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
 
@@ -29,17 +29,17 @@ namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 /// </summary>
 [Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
-public class SysOperationLogController : BaseApiController
+public class SysLogOperationController : BaseApiController
 {
-    private readonly ISysOperationLogService _sysOperationLogService;
+    private readonly ISysLogOperationService _sysLogOperationService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysOperationLogService"></param>
-    public SysOperationLogController(ISysOperationLogService sysOperationLogService)
+    /// <param name="sysLogOperationService"></param>
+    public SysLogOperationController(ISysLogOperationService sysLogOperationService)
     {
-        _sysOperationLogService = sysOperationLogService;
+        _sysLogOperationService = sysLogOperationService;
     }
 
     /// <summary>
@@ -49,9 +49,9 @@ public class SysOperationLogController : BaseApiController
     /// <returns></returns>
     [HttpDelete("Delete")]
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<bool> DeleteOperationLog(long[] logIds)
+    public async Task<bool> DeleteLogOperation(long[] logIds)
     {
-        return await _sysOperationLogService.DeleteOperationLogByIds(logIds);
+        return await _sysLogOperationService.DeleteLogOperationByIds(logIds);
     }
 
     /// <summary>
@@ -59,9 +59,9 @@ public class SysOperationLogController : BaseApiController
     /// </summary>
     [HttpDelete("Clear")]
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<bool> ClearOperationLog()
+    public async Task<bool> ClearLogOperation()
     {
-        return await _sysOperationLogService.ClearOperationLog();
+        return await _sysLogOperationService.ClearLogOperation();
     }
 
     /// <summary>
@@ -70,9 +70,9 @@ public class SysOperationLogController : BaseApiController
     /// <param name="logId"></param>
     /// <returns></returns>
     [HttpGet("Get/ById")]
-    public async Task<SysOperationLog> GetOperationLogById(long logId)
+    public async Task<SysLogOperation> GetLogOperationById(long logId)
     {
-        return await _sysOperationLogService.GetOperationLogById(logId);
+        return await _sysLogOperationService.GetLogOperationById(logId);
     }
 
     /// <summary>
@@ -81,8 +81,8 @@ public class SysOperationLogController : BaseApiController
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [HttpGet("GetPageList")]
-    public async Task<PageDataDto<SysOperationLog>> GetOperationLogByList(PageWhereDto<SysOperationLogWDto> pageWhere)
+    public async Task<PageDataDto<SysLogOperation>> GetLogOperationByList(PageWhereDto<SysLogOperationWDto> pageWhere)
     {
-        return await _sysOperationLogService.GetOperationLogByList(pageWhere);
+        return await _sysLogOperationService.GetLogOperationByList(pageWhere);
     }
 }

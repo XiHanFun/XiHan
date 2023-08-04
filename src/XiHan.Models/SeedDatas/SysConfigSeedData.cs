@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Interface;
 using XiHan.Models.Syses;
 
@@ -26,10 +27,25 @@ public class SysConfigSeedData : ISeedData<SysConfig>
     /// 种子数据
     /// </summary>
     /// <returns></returns>
+    [IgnoreUpdate]
     public IEnumerable<SysConfig> HasData()
     {
         var result = new List<SysConfig>();
 
+        // 模式配置
+        var modeConfig = new List<SysConfig>
+        {
+             new SysConfig{
+                BaseId = 0,
+                GroupCode="ModeConfig",
+                ConfigCode="IsDemoMode",
+                ConfigName="是否演示模式",
+                ConfigValue="false",
+                IsOfficial=true,
+                Description="网站是否为演示模式"
+            },
+        };
+        // 站点配置
         var siteConfig = new List<SysConfig>
         {
             new SysConfig{
@@ -95,9 +111,9 @@ public class SysConfigSeedData : ISeedData<SysConfig>
                 ConfigValue="",
                 IsOfficial=true,
                 Description="网站版本升级时间"
-            },
+            }
         };
-
+        // 日志配置
         var logConfig = new List<SysConfig>
         {
             new SysConfig{
@@ -129,6 +145,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
         };
 
+        result.AddRange(modeConfig);
         result.AddRange(siteConfig);
         result.AddRange(logConfig);
 

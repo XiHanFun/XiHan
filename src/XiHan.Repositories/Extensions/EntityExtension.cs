@@ -13,14 +13,13 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.HttpContexts;
 
-namespace XiHan.Repositories.Entities;
+namespace XiHan.Repositories.Extensions;
 
 /// <summary>
 /// 实体拓展
 /// </summary>
-public static class EntityExtend
+public static class EntityExtension
 {
     /// <summary>
     /// 转化为新增实体
@@ -110,11 +109,11 @@ public static class EntityExtend
         if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
 
-        var context = App.HttpContextCurrent;
-        if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && context != null)
-            types.GetProperty(propertyInfo.HandleId)?.SetValue(source, context.GetUserId(), null);
-        if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && context != null)
-            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, context.GetUserName(), null);
+        var user = App.AuthInfo;
+        if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && user != null)
+            types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
+        if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && user != null)
+            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.UserName, null);
         return source;
     }
 

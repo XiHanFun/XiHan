@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PageExtend
+// FileName:PageExtension
 // Guid:a345ade2-5c23-474d-b6b5-ea29490d57b0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,14 +12,12 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
-
 namespace XiHan.Infrastructures.Responses.Pages;
 
 /// <summary>
 /// 分页拓展
 /// </summary>
-public static class PageExtend
+public static class PageExtension
 {
     /// <summary>
     /// 获取List的分页后的数据
@@ -222,49 +220,4 @@ public static class PageExtend
         pageDataDto.PageInfo.PageCount = 1;
         return pageDataDto;
     }
-
-    #region SqlSugar拓展
-
-    /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
-    /// 推荐针对部分列的增改
-    /// </summary>
-    /// <typeparam name="TEntity">数据类型</typeparam>
-    /// <param name="entities">数据源</param>
-    /// <param name="currentIndex">当前页标</param>
-    /// <param name="pageSize">每页大小</param>
-    /// <returns>分页后的List数据</returns>
-    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
-    {
-        RefAsync<int> totalCount = 0;
-        var data = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
-        PageDataDto<TEntity> pageDataDto = new()
-        {
-            PageInfo = new PageInfoDto(currentIndex, pageSize, totalCount),
-            Data = data
-        };
-        return pageDataDto;
-    }
-
-    /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
-    /// 推荐针对部分列的增改
-    /// </summary>
-    /// <typeparam name="TEntity">数据类型</typeparam>
-    /// <param name="entities">数据源</param>
-    /// <param name="pageDto">分页传入实体</param>
-    /// <returns>分页后的List数据</returns>
-    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, PageDto pageDto) where TEntity : class, new()
-    {
-        RefAsync<int> totalCount = 0;
-        var data = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
-        PageDataDto<TEntity> pageDataDto = new()
-        {
-            PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, totalCount),
-            Data = data
-        };
-        return pageDataDto;
-    }
-
-    #endregion SqlSugar拓展
 }

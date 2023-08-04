@@ -15,8 +15,7 @@
 using Quartz;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Jobs.Bases;
-using XiHan.Services.Syses.Jobs;
-using XiHan.Services.Syses.Operations;
+using XiHan.Services.Syses.Logging;
 
 namespace XiHan.Jobs.Jobs.Assembly;
 
@@ -26,18 +25,18 @@ namespace XiHan.Jobs.Jobs.Assembly;
 [AppService(ServiceType = typeof(ClearLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class ClearLogsJob : JobBase, IJob
 {
-    private readonly ISysOperationLogService _sysOperationLogService;
-    private readonly ISysJobLogService _sysJobLogService;
+    private readonly ISysLogOperationService _sysLogOperationService;
+    private readonly ISysLogJobService _sysLogJobService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysOperationLogService"></param>
-    /// <param name="sysJobLogService"></param>
-    public ClearLogsJob(ISysOperationLogService sysOperationLogService, ISysJobLogService sysJobLogService)
+    /// <param name="sysLogOperationService"></param>
+    /// <param name="sysLogJobService"></param>
+    public ClearLogsJob(ISysLogOperationService sysLogOperationService, ISysLogJobService sysLogJobService)
     {
-        _sysOperationLogService = sysOperationLogService;
-        _sysJobLogService = sysJobLogService;
+        _sysLogOperationService = sysLogOperationService;
+        _sysLogJobService = sysLogJobService;
     }
 
     /// <summary>
@@ -59,7 +58,7 @@ public class ClearLogsJob : JobBase, IJob
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
-        await _sysOperationLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
-        await _sysJobLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        await _sysLogOperationService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        await _sysLogJobService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
     }
 }

@@ -22,7 +22,7 @@ using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
-using XiHan.Services.Syses.Operations;
+using XiHan.Services.Syses.Logging;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
@@ -64,7 +64,7 @@ public class GlobalLogMiddleware
         catch (Exception ex)
         {
             // 记录操作日志
-            await RecordOperationLog(context, stopwatch.ElapsedMilliseconds, ex);
+            await RecordLogOperation(context, stopwatch.ElapsedMilliseconds, ex);
 
             // 处理异常
             var exceptionResult = ex switch
@@ -98,9 +98,9 @@ public class GlobalLogMiddleware
     /// <param name="elapsed"></param>
     /// <param name="ex"></param>
     /// <returns></returns>
-    private async Task RecordOperationLog(HttpContext context, long elapsed, Exception ex)
+    private async Task RecordLogOperation(HttpContext context, long elapsed, Exception ex)
     {
-        var sysOperationLogService = App.GetRequiredService<ISysOperationLogService>();
+        var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
         // 获取当前请求上下文信息
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
@@ -108,7 +108,7 @@ public class GlobalLogMiddleware
         var requestParameters = await context.GetRequestParameters();
 
         // 记录日志
-        var sysOperationLog = new SysOperationLog
+        var sysLogOperation = new SysLogOperation
         {
             IsAjaxRequest = clientInfo.IsAjaxRequest,
             RequestMethod = clientInfo.RequestMethod,
@@ -128,13 +128,13 @@ public class GlobalLogMiddleware
             var logAttribute = endpoint.Metadata.GetMetadata<AppLogAttribute>();
             if (logAttribute != null)
             {
-                sysOperationLog.BusinessType = logAttribute.BusinessType.GetEnumValueByKey();
-                sysOperationLog.Module = logAttribute.Module;
-                sysOperationLog.RequestParameters = logAttribute.IsSaveRequestData ? requestParameters : string.Empty;
+                sysLogOperation.BusinessType = logAttribute.BusinessType.GetEnumValueByKey();
+                sysLogOperation.Module = logAttribute.Module;
+                sysLogOperation.RequestParameters = logAttribute.IsSaveRequestData ? requestParameters : string.Empty;
             }
         }
 
-        await sysOperationLogService.CreateOperationLog(sysOperationLog);
+        await sysLogOperationService.CreateLogOperation(sysLogOperation);
         _logger.Error(ex, ex.Message);
     }
 }

@@ -16,6 +16,7 @@ namespace XiHan.Models.Bases.Interface;
 
 /// <summary>
 /// 软删除接口
+/// 只有实现了该接口的类才可以调用 Repository 的软删除方法
 /// </summary>
 public interface ISoftDelete
 {

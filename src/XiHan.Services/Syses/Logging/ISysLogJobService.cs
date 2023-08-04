@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysJobLogService
+// FileName:ISysLogJobService
 // Guid:d8291498-8a92-40a9-a37b-4dd187725363
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,52 +15,53 @@
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Jobs.Dtos;
+using XiHan.Services.Syses.Logging.Dtos;
 
-namespace XiHan.Services.Syses.Jobs;
+namespace XiHan.Services.Syses.Logging;
 
 /// <summary>
-/// ISysJobLogService
+/// ISysLogJobService
 /// </summary>
-public interface ISysJobLogService : IBaseService<SysJobLog>
+public interface ISysLogJobService : IBaseService<SysLogJob>
 {
     /// <summary>
     /// 新增任务日志
     /// </summary>
-    /// <param name="jobLog"></param>
+    /// <param name="logJob"></param>
     /// <returns></returns>
-    Task<SysJobLog> CreateJobLog(SysJobLog jobLog);
+    Task<SysLogJob> CreateLogJob(SysLogJob logJob);
 
     /// <summary>
-    /// 批量删除操作日志
+    /// 批量删除任务日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
-    Task<bool> DeleteOperationLogByIds(long[] logIds);
+    Task<bool> DeleteLogJobByIds(long[] logIds);
 
     /// <summary>
-    /// 清空操作日志
+    /// 清空任务日志
     /// </summary>
-    Task<bool> ClearOperationLog();
+    /// <returns></returns>
+    Task<bool> ClearLogJob();
 
     /// <summary>
     /// 查询系统任务日志(根据任务Id)
     /// </summary>
     /// <param name="jobsId"></param>
     /// <returns></returns>
-    Task<SysJobLog> GetJobLogByJobId(long jobsId);
+    Task<SysLogJob> GetLogJobByJobId(long jobsId);
 
     /// <summary>
     /// 查询系统任务日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysJobLog>> GetJobLogList(SysJobLogWDto whereDto);
+    Task<List<SysLogJob>> GetLogJobList(SysLogJobWDto whereDto);
 
     /// <summary>
     /// 查询系统任务日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysJobLog>> GetJobLogPageList(PageWhereDto<SysJobLogWDto> pageWhere);
+    Task<PageDataDto<SysLogJob>> GetLogJobPageList(PageWhereDto<SysLogJobWDto> pageWhere);
 }

@@ -91,7 +91,6 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         var sysDictData = dictDataCDto.Adapt<SysDictData>();
 
         _ = await CheckDictDataUnique(sysDictData);
-
         return await UpdateAsync(sysDictData);
     }
 

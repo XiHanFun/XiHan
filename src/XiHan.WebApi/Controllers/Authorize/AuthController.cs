@@ -18,7 +18,7 @@ using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
-using XiHan.Services.Syses.Logins;
+using XiHan.Services.Syses.Logging;
 using XiHan.Services.Syses.Menus;
 using XiHan.Services.Syses.Permissions;
 using XiHan.Services.Syses.Roles;
@@ -44,7 +44,7 @@ public class AuthController : BaseApiController
     private readonly ISysRoleService _sysRoleService;
     private readonly ISysPermissionService _sysPermissionService;
     private readonly ISysMenuService _sysMenuService;
-    private readonly ISysLoginLogService _sysLoginLogService;
+    private readonly ISysLogLoginService _sysLogLoginService;
 
     /// <summary>
     /// 构造函数
@@ -53,15 +53,15 @@ public class AuthController : BaseApiController
     /// <param name="sysRoleService"></param>
     /// <param name="sysPermissionService"></param>
     /// <param name="sysMenuService"></param>
-    /// <param name="sysLoginLogService"></param>
+    /// <param name="sysLogLoginService"></param>
     public AuthController(ISysUserService sysUserService, ISysRoleService sysRoleService, ISysPermissionService sysPermissionService,
-        ISysMenuService sysMenuService, ISysLoginLogService sysLoginLogService)
+        ISysMenuService sysMenuService, ISysLogLoginService sysLogLoginService)
     {
         _sysUserService = sysUserService;
         _sysRoleService = sysRoleService;
         _sysPermissionService = sysPermissionService;
         _sysMenuService = sysMenuService;
-        _sysLoginLogService = sysLoginLogService;
+        _sysLogLoginService = sysLogLoginService;
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class AuthController : BaseApiController
     private async Task<CustomResult> GetToken(SysUser sysUser, string password)
     {
         var token = string.Empty;
-        var sysLoginLog = new SysLoginLog();
+        var sysLogLogin = new SysLogLogin();
 
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
@@ -107,10 +107,10 @@ public class AuthController : BaseApiController
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
             if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
-            sysLoginLog.Status = true;
-            sysLoginLog.Message = "登录成功！";
-            sysLoginLog.Account = sysUser.Account;
-            sysLoginLog.RealName = sysUser.RealName;
+            sysLogLogin.Status = true;
+            sysLogLogin.Message = "登录成功！";
+            sysLogLogin.Account = sysUser.Account;
+            sysLogLogin.RealName = sysUser.RealName;
 
             var userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
 
@@ -125,18 +125,18 @@ public class AuthController : BaseApiController
         }
         catch (Exception ex)
         {
-            sysLoginLog.Status = false;
-            sysLoginLog.Message = ex.Message;
+            sysLogLogin.Status = false;
+            sysLogLogin.Message = ex.Message;
         }
-        sysLoginLog.LoginIp = clientInfo.RemoteIPv4;
-        sysLoginLog.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
-        sysLoginLog.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
-        sysLoginLog.OS = clientInfo.OSName + clientInfo.OSVersion;
-        sysLoginLog.Agent = clientInfo.Agent;
+        sysLogLogin.LoginIp = clientInfo.RemoteIPv4;
+        sysLogLogin.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
+        sysLogLogin.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
+        sysLogLogin.OS = clientInfo.OSName + clientInfo.OSVersion;
+        sysLogLogin.Agent = clientInfo.Agent;
 
-        await _sysLoginLogService.AddAsync(sysLoginLog);
+        await _sysLogLoginService.AddAsync(sysLogLogin);
 
-        if (sysLoginLog.Status) return CustomResult.Success(token);
-        return CustomResult.BadRequest(sysLoginLog.Message);
+        if (sysLogLogin.Status) return CustomResult.Success(token);
+        return CustomResult.BadRequest(sysLogLogin.Message);
     }
 }

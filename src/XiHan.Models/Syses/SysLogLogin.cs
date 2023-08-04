@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLoginLog
+// FileName:SysLogLogin
 // Guid:30e63ed1-9f89-4676-8aa6-9521f6ab3d6d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,8 +21,8 @@ namespace XiHan.Models.Syses;
 /// 系统登录日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Sys_Login_Log")]
-public class SysLoginLog : BaseCreateEntity
+[SugarTable(TableName = "Sys_Log_Login")]
+public class SysLogLogin : BaseCreateEntity
 {
     /// <summary>
     /// 用户账号

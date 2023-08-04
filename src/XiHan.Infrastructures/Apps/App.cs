@@ -73,11 +73,6 @@ public static class App
     public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
 
     /// <summary>
-    /// 请求上下文用户
-    /// </summary>
-    public static ClaimsPrincipal User => HttpContextCurrent.User;
-
-    /// <summary>
     /// 全局请求服务容器
     /// </summary>
     public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;

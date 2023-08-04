@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Apps;
+using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Interface;
 using XiHan.Models.Syses;
 using XiHan.Utils.Encryptions;
@@ -28,6 +29,7 @@ public class SysUserSeedData : ISeedData<SysUser>
     /// 种子数据
     /// </summary>
     /// <returns></returns>
+    [IgnoreUpdate]
     public IEnumerable<SysUser> HasData()
     {
         var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(AppGlobalConstant.DefaultPassword));

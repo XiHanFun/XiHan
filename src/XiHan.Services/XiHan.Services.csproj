@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
-        <AssemblyVersion>0.3.0</AssemblyVersion>
-        <FileVersion>0.3.0</FileVersion>
+        <AssemblyVersion>0.3.1</AssemblyVersion>
+        <FileVersion>0.3.1</FileVersion>
         <Title>XiHan.Services</Title>
-        <Version>0.3.0</Version>
+        <Version>0.3.1</Version>
         <Authors>ZhaiFanhua</Authors>
         <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -21,8 +21,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.Repositories\XiHan.Repositories.csproj" />
-        <ProjectReference Include="..\XiHan.Subscriptions\XiHan.Subscriptions.csproj" />
+      <ProjectReference Include="..\XiHan.Repositories\XiHan.Repositories.csproj" />
+      <ProjectReference Include="..\XiHan.Subscriptions\XiHan.Subscriptions.csproj" />
     </ItemGroup>
 
     <ItemGroup>

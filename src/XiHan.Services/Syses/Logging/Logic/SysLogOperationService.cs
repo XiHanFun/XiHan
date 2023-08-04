@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysOperationLogService
+// FileName:SysLogOperationService
 // Guid:8bab505b-cf3a-4778-ae9c-df04b00f66a0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,25 +17,25 @@ using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Operations.Dtos;
+using XiHan.Services.Syses.Logging.Dtos;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Services.Syses.Operations.Logic;
+namespace XiHan.Services.Syses.Logging.Logic;
 
 /// <summary>
 /// 系统操作日志服务
 /// </summary>
-[AppService(ServiceType = typeof(ISysOperationLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperationLogService
+[AppService(ServiceType = typeof(ISysLogOperationService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOperationService
 {
     /// <summary>
     /// 新增操作日志
     /// </summary>
-    /// <param name="operationLog"></param>
+    /// <param name="logOperation"></param>
     /// <returns></returns>
-    public async Task CreateOperationLog(SysOperationLog operationLog)
+    public async Task CreateLogOperation(SysLogOperation logOperation)
     {
-        await AddAsync(operationLog);
+        await AddAsync(logOperation);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteOperationLogByIds(long[] logIds)
+    public async Task<bool> DeleteLogOperationByIds(long[] logIds)
     {
         return await RemoveAsync(logIds);
     }
@@ -51,7 +51,8 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// <summary>
     /// 清空操作日志
     /// </summary>
-    public async Task<bool> ClearOperationLog()
+    /// <returns></returns>
+    public async Task<bool> ClearLogOperation()
     {
         return await ClearAsync();
     }
@@ -61,7 +62,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// </summary>
     /// <param name="logId"></param>
     /// <returns></returns>
-    public async Task<SysOperationLog> GetOperationLogById(long logId)
+    public async Task<SysLogOperation> GetLogOperationById(long logId)
     {
         return await FindAsync(logId);
     }
@@ -71,7 +72,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysOperationLog>> GetOperationLogByList(PageWhereDto<SysOperationLogWDto> pageWhere)
+    public async Task<PageDataDto<SysLogOperation>> GetLogOperationByList(PageWhereDto<SysLogOperationWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
@@ -79,7 +80,7 @@ public class SysOperationLogService : BaseService<SysOperationLog>, ISysOperatio
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(0).GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysOperationLog>();
+        var whereExpression = Expressionable.Create<SysLogOperation>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
         whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
         whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);

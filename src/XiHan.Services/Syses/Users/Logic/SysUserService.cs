@@ -87,7 +87,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         var user = await FindAsync(u => u.BaseId == sysUser.BaseId && !u.IsDeleted);
         // 删除用户角色
         await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
-        return await SoftRemoveAsync(user);
+        return await SoftRemoveAsync<SysUser>(user);
     }
 
     /// <summary>

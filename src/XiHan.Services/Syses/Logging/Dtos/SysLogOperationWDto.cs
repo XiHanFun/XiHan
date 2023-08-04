@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysOperationLogWDto
+// FileName:SysLogOperationWDto
 // Guid:3f7ca12f-9a86-4e07-b304-1a0f951a133c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,12 +12,12 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Operations.Dtos;
+namespace XiHan.Services.Syses.Logging.Dtos;
 
 /// <summary>
-/// SysOperationLogWDto
+/// SysLogOperationWDto
 /// </summary>
-public class SysOperationLogWDto
+public class SysLogOperationWDto
 {
     /// <summary>
     /// 开始时间
