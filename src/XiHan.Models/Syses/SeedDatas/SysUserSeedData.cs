@@ -15,10 +15,9 @@
 using XiHan.Infrastructures.Apps;
 using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Interface;
-using XiHan.Models.Syses;
 using XiHan.Utils.Encryptions;
 
-namespace XiHan.Models.SeedDatas;
+namespace XiHan.Models.Syses.SeedDatas;
 
 /// <summary>
 /// SysUserSeedData

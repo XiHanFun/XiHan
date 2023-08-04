@@ -14,9 +14,8 @@
 
 using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Interface;
-using XiHan.Models.Syses;
 
-namespace XiHan.Models.SeedDatas;
+namespace XiHan.Models.Syses.SeedDatas;
 
 /// <summary>
 /// 系统配置表种子数据
