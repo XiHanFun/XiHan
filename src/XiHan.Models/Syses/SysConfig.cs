@@ -25,44 +25,37 @@ namespace XiHan.Models.Syses;
 public class SysConfig : BaseModifyEntity
 {
     /// <summary>
-    /// 网站名称
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Name { get; set; } = string.Empty;
+    /// 分组编码
+    ///</summary>
+    [SugarColumn(Length = 64)]
+    public string GroupCode { get; set; } = string.Empty;
 
     /// <summary>
-    /// 网站描述
+    /// 配置编码
+    ///</summary>
+    [SugarColumn(Length = 64)]
+    public string ConfigCode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 配置名称
+    /// </summary>
+    [SugarColumn(Length = 64)]
+    public string ConfigName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 配置项值
+    /// </summary>
+    [SugarColumn(Length = 10)]
+    public string ConfigValue { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否系统内置
+    /// </summary>
+    public bool IsOfficial { get; set; } = false;
+
+    /// <summary>
+    /// 字典描述
     /// </summary>
     [SugarColumn(Length = 200, IsNullable = true)]
     public string? Description { get; set; }
-
-    /// <summary>
-    /// 网站关键字
-    /// </summary>
-    [SugarColumn(Length = 200)]
-    public string KeyWord { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 网站域名
-    /// </summary>
-    [SugarColumn(Length = 50)]
-    public string Domain { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 站长名称
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string AdminName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 站长邮箱
-    /// </summary>
-    [SugarColumn(Length = 50)]
-    public string AdminEmail { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 升级时间
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public DateTime? UpdateTime { get; set; }
 }

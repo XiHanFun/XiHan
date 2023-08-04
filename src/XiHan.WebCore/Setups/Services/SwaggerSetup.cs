@@ -78,9 +78,9 @@ public static class SwaggerSetup
                 Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                 Contact = new OpenApiContact
                 {
-                    Name = AppSettings.Syses.Admin.Name.GetValue(),
-                    Email = AppSettings.Syses.Admin.Email.GetValue(),
-                    Url = new Uri(AppSettings.Syses.Domain.GetValue())
+                    Name = "ZhaiFanhua",
+                    Email = "me@zhaifanhua.com",
+                    Url = new Uri("http://127.0.0.1:9708")
                 },
                 License = new OpenApiLicense
                 {

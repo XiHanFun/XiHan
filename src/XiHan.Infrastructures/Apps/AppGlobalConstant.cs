@@ -22,10 +22,10 @@ public static class AppGlobalConstant
     /// <summary>
     /// 默认角色
     /// </summary>
-    public const string SysRoleAdmin = "sys_role_admin";
+    public const string DefaultRole = "sys_role_user";
 
     /// <summary>
     /// 默认密码
     /// </summary>
-    public const string SysPassword = "XH_password_123";
+    public const string DefaultPassword = "XH_password_123";
 }

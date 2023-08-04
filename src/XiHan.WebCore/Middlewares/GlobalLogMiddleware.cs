@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:GlobalExceptionMiddleware
+// FileName:GlobalLogMiddleware
 // Guid:a43904c8-cd77-4c25-bcde-5262c3b263ed
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,10 +18,8 @@ using System.Diagnostics;
 using System.Security.Authentication;
 using System.Text;
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
-using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Operations;
@@ -32,26 +30,20 @@ using XiHan.Utils.Serializes;
 namespace XiHan.WebCore.Middlewares;
 
 /// <summary>
-/// 全局异常中间件
+/// 全局日志中间件
 /// </summary>
-public class GlobalExceptionMiddleware
+public class GlobalLogMiddleware
 {
-    // 日志开关
-    private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
-
     private readonly RequestDelegate _next;
-    private readonly ISysOperationLogService _sysOperationLogService;
-    private readonly ILogger _logger = Log.ForContext<GlobalExceptionMiddleware>();
+    private readonly ILogger _logger = Log.ForContext<GlobalLogMiddleware>();
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="next"></param>
-    /// <param name="sysOperationLogService"></param>
-    public GlobalExceptionMiddleware(RequestDelegate next, ISysOperationLogService sysOperationLogService)
+    public GlobalLogMiddleware(RequestDelegate next)
     {
         _next = next;
-        _sysOperationLogService = sysOperationLogService;
     }
 
     /// <summary>
@@ -108,6 +100,7 @@ public class GlobalExceptionMiddleware
     /// <returns></returns>
     private async Task RecordOperationLog(HttpContext context, long elapsed, Exception ex)
     {
+        var sysOperationLogService = App.GetRequiredService<ISysOperationLogService>();
         // 获取当前请求上下文信息
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
@@ -120,7 +113,7 @@ public class GlobalExceptionMiddleware
             IsAjaxRequest = clientInfo.IsAjaxRequest,
             RequestMethod = clientInfo.RequestMethod,
             RequestUrl = clientInfo.RequestUrl,
-            Location = addressInfo.Country + " " + addressInfo.State + " " + addressInfo.PrefectureLevelCity,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
             Referrer = clientInfo.Referer,
             Agent = clientInfo.Agent,
             Ip = clientInfo.RemoteIPv4,
@@ -141,9 +134,7 @@ public class GlobalExceptionMiddleware
             }
         }
 
-        await _sysOperationLogService.CreateOperationLog(sysOperationLog);
-
-        if (_exceptionLogSwitch)
-            _logger.Error(ex, ex.Message);
+        await sysOperationLogService.CreateOperationLog(sysOperationLog);
+        _logger.Error(ex, ex.Message);
     }
 }

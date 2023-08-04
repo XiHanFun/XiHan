@@ -15,7 +15,6 @@
 using Mapster;
 using SqlSugar;
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
@@ -34,7 +33,6 @@ namespace XiHan.Services.Syses.Users.Logic;
 [AppService(ServiceType = typeof(ISysUserService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysUserService : BaseService<SysUser>, ISysUserService
 {
-    private static string _secretKey = AppSettings.Syses.Domain.GetValue();
     private readonly ISysUserRoleService _sysUserRoleService;
     private readonly ISysRoleService _sysRoleService;
 
@@ -70,8 +68,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
 
         _ = await GetAccountUnique(sysUser);
 
-        string password = AppGlobalConstant.SysPassword;
-        sysUser.Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey));
+        var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(AppGlobalConstant.DefaultPassword));
+        sysUser.Password = encryptPasswod;
         var userId = await AddReturnIdAsync(sysUser);
 
         // 新增用户角色信息
@@ -167,12 +165,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId &&
-        u.Password == Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.OldPassword, _secretKey))))
+        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword))))
         {
             return await UpdateAsync(s => new SysUser()
             {
-                Password = Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(userPwdMDto.NewPassword, _secretKey))
+                Password = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
             }, f => f.BaseId == userPwdMDto.BaseId);
         }
         throw new CustomException("重置密码出错，旧密码有误！");

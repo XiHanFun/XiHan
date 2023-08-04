@@ -15,6 +15,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Caches;
 
 namespace XiHan.WebCore.Filters;
@@ -25,8 +26,6 @@ namespace XiHan.WebCore.Filters;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
 {
-    private IAppCacheService? _appCacheService;
-
     // 缓存时间
     private readonly int _syncTimeout;
 
@@ -46,14 +45,14 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        _appCacheService = context.HttpContext.RequestServices.GetService(typeof(IAppCacheService)) as IAppCacheService;
+        var appCacheService = App.GetRequiredService<IAppCacheService>();
 
         var apiResourceCacheKey = GetCacheKey(context.HttpContext);
 
         // 若存在此资源，直接返回缓存资源
-        if (_appCacheService!.Exists(apiResourceCacheKey))
+        if (appCacheService.Exists(apiResourceCacheKey))
         {
-            context.Result = _appCacheService.Get(apiResourceCacheKey) as ActionResult;
+            context.Result = appCacheService.Get(apiResourceCacheKey) as ActionResult;
         }
         else
         {
@@ -63,7 +62,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
             if (resourceExecuted.Result != null)
             {
                 var result = resourceExecuted.Result as ActionResult;
-                _appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
+                appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
             }
         }
     }

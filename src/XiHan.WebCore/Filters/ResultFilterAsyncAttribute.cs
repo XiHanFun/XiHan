@@ -29,14 +29,14 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <summary>
     /// 是否忽略
     /// </summary>
-    public bool IsIgnore { get; set; }
+    public bool _isIgnore { get; set; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public ResultFilterAsyncAttribute(bool isIgnore = false)
     {
-        IsIgnore = isIgnore;
+        _isIgnore = isIgnore;
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (IsIgnore || context.Result == null || context.HttpContext.IsDownLoadFile())
+        if (_isIgnore || context.Result == null || context.HttpContext.IsDownLoadFile())
         {
             return;
         }

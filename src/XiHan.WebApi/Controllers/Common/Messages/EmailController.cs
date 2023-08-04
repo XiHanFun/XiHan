@@ -49,6 +49,6 @@ public class EmailController : BaseApiController
     [AppLog("发送邮件", BusinessTypeEnum.Other)]
     public async Task<CustomResult> SendEmail()
     {
-        return await _emailPushService.SendVerificationCodeEmail("zhaifanhua", "xxxxxx@qq.com", "325948");
+        return await _emailPushService.SendVerificationMail("zhaifanhua", "xxxxxx@qq.com", "325948");
     }
 }

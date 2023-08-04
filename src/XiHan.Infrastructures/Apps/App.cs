@@ -87,9 +87,10 @@ public static class App
     /// </summary>
     /// <typeparam name="TService"></typeparam>
     /// <returns></returns>
-    public static TService? GetService<TService>() where TService : class
+    public static TService GetService<TService>() where TService : class
     {
-        return GetService(typeof(TService)) as TService;
+        var service = GetService(typeof(TService)) as TService;
+        return service!;
     }
 
     /// <summary>
@@ -97,9 +98,10 @@ public static class App
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static object? GetService(Type type)
+    public static object GetService(Type type)
     {
-        return ServiceProvider.GetService(type);
+        var service = ServiceProvider.GetService(type);
+        return service!;
     }
 
     /// <summary>
@@ -107,9 +109,10 @@ public static class App
     /// </summary>
     /// <typeparam name="TService"></typeparam>
     /// <returns></returns>
-    public static TService? GetRequiredService<TService>() where TService : class
+    public static TService GetRequiredService<TService>() where TService : class
     {
-        return GetRequiredService(typeof(TService)) as TService;
+        var service = GetRequiredService(typeof(TService)) as TService;
+        return service!;
     }
 
     /// <summary>
@@ -117,9 +120,10 @@ public static class App
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static object? GetRequiredService(Type type)
+    public static object GetRequiredService(Type type)
     {
-        return ServiceProvider.GetRequiredService(type);
+        var service = ServiceProvider.GetRequiredService(type);
+        return service!;
     }
 
     /// <summary>

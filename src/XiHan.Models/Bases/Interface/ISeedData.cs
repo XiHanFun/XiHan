@@ -12,18 +12,16 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
-
 namespace XiHan.Models.Bases.Interface;
 
 /// <summary>
 /// 种子数据接口
 /// </summary>
-public interface ISeedData<T> where T : class
+public interface ISeedData<TEntity> where TEntity : class, new()
 {
     /// <summary>
-    /// 初始化种子数据
+    /// 种子数据
     /// </summary>
-    /// <param name="sugarClient"></param>
-    public Task InitSeedData(ISqlSugarClient sugarClient);
+    /// <returns></returns>
+    IEnumerable<TEntity> HasData();
 }

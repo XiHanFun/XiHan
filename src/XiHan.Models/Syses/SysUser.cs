@@ -13,10 +13,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Models.Bases;
-using XiHan.Models.Bases.Interface;
-using XiHan.Utils.Encryptions;
 
 namespace XiHan.Models.Syses;
 
@@ -25,7 +22,7 @@ namespace XiHan.Models.Syses;
 /// </summary>
 /// <remarks> 记录新增，修改，删除，审核，状态信息</remarks>
 [SugarTable(TableName = "Sys_User")]
-public class SysUser : BaseEntity, ISeedData<SysUser>
+public class SysUser : BaseEntity
 {
     #region 账号信息
 
@@ -117,35 +114,4 @@ public class SysUser : BaseEntity, ISeedData<SysUser>
     public string? RegisterIp { get; set; }
 
     #endregion
-
-    /// <summary>
-    /// 初始化种子数据
-    /// </summary>
-    /// <param name="sugarClient"></param>
-    /// <returns></returns>
-    public async Task InitSeedData(ISqlSugarClient sugarClient)
-    {
-        string _secretKey = AppSettings.Syses.Domain.GetValue();
-        var list = new List<SysUser>
-        {
-            new SysUser{
-                Account="Administrator",
-                Password=Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(_secretKey, _secretKey)),
-                NickName="超级管理员",
-                RealName="超级管理员",
-                Email = "administrator@xihan.fun",
-                RegisterFrom = "系统种子数据"
-            },
-            new SysUser{
-                Account="Admin",
-                Password=Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(_secretKey, _secretKey)),
-                NickName="管理员",
-                RealName="管理员",
-                Email = "admin@xihan.fun",
-                RegisterFrom = "系统种子数据"
-            },
-        };
-
-        await sugarClient.Ado.Context.Insertable<SysUser>(list).ExecuteCommandAsync();
-    }
 }

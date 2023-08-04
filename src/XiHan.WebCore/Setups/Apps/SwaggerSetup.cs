@@ -42,8 +42,6 @@ public static class SwaggerSetup
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                // 系统名称
-                var siteName = AppSettings.Syses.Name.GetValue();
                 // 路由前缀
                 var routePrefix = AppSettings.Swagger.RoutePrefix.GetValue();
                 // 性能分析开关
@@ -70,7 +68,7 @@ public static class SwaggerSetup
                 }
 
                 // Api页面标题
-                options.DocumentTitle = $"{siteName} - 接口文档";
+                options.DocumentTitle = $"曦寒 - 接口文档";
                 // Api文档仅展开标记
                 // List：列表式（展开子类），默认值;
                 // Full：完全展开;

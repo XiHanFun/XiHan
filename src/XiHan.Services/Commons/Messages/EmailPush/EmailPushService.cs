@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Mapster;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
@@ -30,19 +30,17 @@ namespace XiHan.Services.Commons.Messages.EmailPush;
 [AppService(ServiceType = typeof(IEmailPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 {
-    private readonly ILogger<EmailPushService> _logger;
+    private readonly ILogger _logger = Log.ForContext<EmailPushService>();
     private readonly ISysUserService _sysUserService;
     private readonly EmailRobot _emailRobot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="logger"></param>
     /// <param name="sysUserService"></param>
     /// <exception cref="CustomException"></exception>
-    public EmailPushService(ILogger<EmailPushService> logger, ISysUserService sysUserService)
+    public EmailPushService(ISysUserService sysUserService)
     {
-        _logger = logger;
         _sysUserService = sysUserService;
         var emailFrom = GetEmailFrom().Result ?? throw new CustomException("未添加邮件推送配置或配置不可用！");
         _emailRobot = new EmailRobot(emailFrom);
@@ -68,7 +66,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// <param name="userEmail"></param>
     /// <param name="verificationCode"></param>
     /// <returns></returns>
-    public async Task<CustomResult> SendVerificationCodeEmail(string userName, string userEmail, string verificationCode)
+    public async Task<CustomResult> SendVerificationMail(string userName, string userEmail, string verificationCode)
     {
         var body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
 							<section style='border-style: solid;border-width: 1px;border-color: #afafaf;box-sizing: border-box;'>
@@ -122,12 +120,12 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
         if (await _emailRobot.SendMail(emailTo))
         {
             logoInfo = "邮件发送成功！";
-            _logger.LogInformation(logoInfo);
+            _logger.Information(logoInfo);
             return CustomResult.Success(logoInfo);
         }
 
         logoInfo = "邮件发送失败！";
-        _logger.LogError(logoInfo);
+        _logger.Error(logoInfo);
         return CustomResult.BadRequest(logoInfo);
     }
 

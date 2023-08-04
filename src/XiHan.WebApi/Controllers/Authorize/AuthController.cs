@@ -40,7 +40,6 @@ namespace XiHan.WebApi.Controllers.Authorize;
 [ApiGroup(ApiGroupNames.Authorize)]
 public class AuthController : BaseApiController
 {
-    private static string _secretKey = AppSettings.Syses.Domain.GetValue();
     private readonly ISysUserService _sysUserService;
     private readonly ISysRoleService _sysRoleService;
     private readonly ISysPermissionService _sysPermissionService;
@@ -106,7 +105,7 @@ public class AuthController : BaseApiController
         try
         {
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
-            if (sysUser.Password != Md5EncryptionHelper.Encrypt(AesEncryptionHelper.Encrypt(password, _secretKey))) throw new Exception("登录失败，密码错误！");
+            if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
             sysLoginLog.Status = true;
             sysLoginLog.Message = "登录成功！";

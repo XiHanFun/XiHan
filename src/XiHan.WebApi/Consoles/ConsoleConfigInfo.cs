@@ -53,12 +53,6 @@ public static class ConsoleConfigInfo
         $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}".WriteLineInfo();
         "跨域：".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}".WriteLineInfo();
-        "日志：".WriteLineInfo();
-        $@"授权日志：{AppSettings.LogConfig.Authorization.GetValue()}".WriteLineInfo();
-        $@"资源日志：{AppSettings.LogConfig.Resource.GetValue()}".WriteLineInfo();
-        $@"请求日志：{AppSettings.LogConfig.Action.GetValue()}".WriteLineInfo();
-        $@"结果日志：{AppSettings.LogConfig.Result.GetValue()}".WriteLineInfo();
-        $@"异常日志：{AppSettings.LogConfig.Exception.GetValue()}".WriteLineInfo();
         "==============================任务信息==============================".WriteLineInfo();
         "==============================运行信息==============================".WriteLineInfo();
     }

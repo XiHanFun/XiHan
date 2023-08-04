@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLog
+// FileName:SysExceptionLog
 // Guid:0b64e03b-c87c-4c6e-9262-7e4f5e507ce2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,11 +18,11 @@ using XiHan.Models.Bases.Entity;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统日志表
+/// 系统异常日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Sys_Log")]
-public class SysLog : BaseCreateEntity
+[SugarTable(TableName = "Sys_Exception_Log")]
+public class SysExceptionLog : BaseCreateEntity
 {
     /// <summary>
     /// 日志级别

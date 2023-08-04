@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
 using System.Security.Authentication;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Exceptions;
@@ -27,14 +26,11 @@ namespace XiHan.WebCore.Filters;
 /// <summary>
 /// 异步异常处理过滤器属性（一般用于捕捉异常）
 /// </summary>
-/// <remarks>已弃用(2023-07-03)，推荐<see cref="GlobalExceptionMiddleware" />全局异常中间件</remarks>
-[Obsolete("已弃用，推荐 GlobalExceptionMiddleware 全局异常中间件")]
+/// <remarks>已弃用(2023-07-03)，推荐<see cref="GlobalLogMiddleware" />全局日志中间件</remarks>
+[Obsolete("已弃用，推荐 GlobalExceptionMiddleware 全局日志中间件")]
 [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
-    // 日志开关
-    private readonly bool _exceptionLogSwitch = AppSettings.LogConfig.Exception.GetValue();
-
     private static readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
@@ -73,9 +69,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                        $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
                        $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
                        $"\t 操作用户：{actionContextInfo.UserId}";
-
-            if (_exceptionLogSwitch)
-                _logger.Error(context.Exception, $"系统异常\n{info}");
+            _logger.Error(context.Exception, $"系统异常\n{info}");
         }
 
         // 标记异常已经处理过了

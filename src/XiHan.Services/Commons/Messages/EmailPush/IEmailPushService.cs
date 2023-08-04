@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -31,5 +30,5 @@ public interface IEmailPushService : IBaseService<SysEmail>
     /// <param name="userEmail"></param>
     /// <param name="verificationCode"></param>
     /// <returns></returns>
-    Task<CustomResult> SendVerificationCodeEmail(string userName, string userEmail, string verificationCode);
+    Task<CustomResult> SendVerificationMail(string userName, string userEmail, string verificationCode);
 }
