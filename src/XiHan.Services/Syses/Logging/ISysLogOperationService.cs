@@ -25,36 +25,43 @@ namespace XiHan.Services.Syses.Logging;
 public interface ISysLogOperationService : IBaseService<SysLogOperation>
 {
     /// <summary>
-    /// 新增操作日志
+    /// 新增系统操作日志
     /// </summary>
     /// <param name="logOperation"></param>
     /// <returns></returns>
     Task CreateLogOperation(SysLogOperation logOperation);
 
     /// <summary>
-    /// 批量删除操作日志
+    /// 批量删除系统操作日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
     Task<bool> DeleteLogOperationByIds(long[] logIds);
 
     /// <summary>
-    /// 清空操作日志
+    /// 清空系统操作日志
     /// </summary>
     /// <returns></returns>
     Task<bool> ClearLogOperation();
 
     /// <summary>
-    /// 查询操作日志(根据Id)
+    /// 查询系统操作日志(根据Id)
     /// </summary>
     /// <param name="logId"></param>
     /// <returns></returns>
     Task<SysLogOperation> GetLogOperationById(long logId);
 
     /// <summary>
-    /// 查询操作日志列表(根据分页条件)
+    /// 查询系统操作日志列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    Task<List<SysLogOperation>> GetLogOperationList(SysLogOperationWDto whereDto);
+
+    /// <summary>
+    /// 查询系统操作日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysLogOperation>> GetLogOperationByList(PageWhereDto<SysLogOperationWDto> pageWhere);
+    Task<PageDataDto<SysLogOperation>> GetLogOperationPageList(PageWhereDto<SysLogOperationWDto> pageWhere);
 }

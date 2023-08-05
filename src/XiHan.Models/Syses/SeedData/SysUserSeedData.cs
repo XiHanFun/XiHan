@@ -17,7 +17,7 @@ using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Interface;
 using XiHan.Utils.Encryptions;
 
-namespace XiHan.Models.Syses.SeedDatas;
+namespace XiHan.Models.Syses.SeedData;
 
 /// <summary>
 /// SysUserSeedData
@@ -31,45 +31,49 @@ public class SysUserSeedData : ISeedData<SysUser>
     [IgnoreUpdate]
     public IEnumerable<SysUser> HasData()
     {
-        var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(AppGlobalConstant.DefaultPassword));
+        var encryptPassword = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(AppGlobalConstant.DefaultPassword));
         return new List<SysUser>
         {
-            new SysUser{
-                BaseId=1,
-                Account="administrator",
-                Password=encryptPasswod,
-                NickName="超级管理员",
-                RealName="超级管理员",
+            new()
+            {
+                BaseId = 1,
+                Account = "administrator",
+                Password = encryptPassword,
+                NickName = "超级管理员",
+                RealName = "超级管理员",
                 Email = "administrator@xihan.fun",
-                RegisterFrom = "系统种子数据",
+                RegisterFrom = "系统种子数据"
             },
-            new SysUser{
-                BaseId=2,
-                Account="admin",
-                Password=encryptPasswod,
-                NickName="管理员",
-                RealName="管理员",
+            new()
+            {
+                BaseId = 2,
+                Account = "admin",
+                Password = encryptPassword,
+                NickName = "管理员",
+                RealName = "管理员",
                 Email = "admin@xihan.fun",
                 RegisterFrom = "系统种子数据"
             },
-            new SysUser{
-                BaseId=3,
-                Account="user",
-                Password=encryptPasswod,
-                NickName="普通用户",
-                RealName="普通用户",
+            new()
+            {
+                BaseId = 3,
+                Account = "user",
+                Password = encryptPassword,
+                NickName = "普通用户",
+                RealName = "普通用户",
                 Email = "user@xihan.fun",
                 RegisterFrom = "系统种子数据"
             },
-            new SysUser{
-                BaseId=4,
-                Account="test",
-                Password=encryptPasswod,
-                NickName="测试用户",
-                RealName="测试用户",
+            new()
+            {
+                BaseId = 4,
+                Account = "test",
+                Password = encryptPassword,
+                NickName = "测试用户",
+                RealName = "测试用户",
                 Email = "test@xihan.fun",
                 RegisterFrom = "系统种子数据"
-            },
+            }
         };
     }
 }

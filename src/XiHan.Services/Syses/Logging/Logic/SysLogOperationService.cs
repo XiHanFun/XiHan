@@ -29,7 +29,7 @@ namespace XiHan.Services.Syses.Logging.Logic;
 public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOperationService
 {
     /// <summary>
-    /// 新增操作日志
+    /// 新增系统操作日志
     /// </summary>
     /// <param name="logOperation"></param>
     /// <returns></returns>
@@ -39,7 +39,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     }
 
     /// <summary>
-    /// 批量删除操作日志
+    /// 批量删除系统操作日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
@@ -49,7 +49,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     }
 
     /// <summary>
-    /// 清空操作日志
+    /// 清空系统操作日志
     /// </summary>
     /// <returns></returns>
     public async Task<bool> ClearLogOperation()
@@ -58,7 +58,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     }
 
     /// <summary>
-    /// 查询操作日志(根据Id)
+    /// 查询系统操作日志(根据Id)
     /// </summary>
     /// <param name="logId"></param>
     /// <returns></returns>
@@ -68,11 +68,32 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     }
 
     /// <summary>
-    /// 查询操作日志列表(根据分页条件)
+    /// 查询系统操作日志列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysLogOperation>> GetLogOperationList(SysLogOperationWDto whereDto)
+    {
+        // 时间为空，默认查询当天
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
+        whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
+
+        var whereExpression = Expressionable.Create<SysLogOperation>();
+        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
+        whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
+        whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
+        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
+    }
+
+    /// <summary>
+    /// 查询系统操作日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysLogOperation>> GetLogOperationByList(PageWhereDto<SysLogOperationWDto> pageWhere)
+    public async Task<PageDataDto<SysLogOperation>> GetLogOperationPageList(PageWhereDto<SysLogOperationWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
@@ -87,6 +108,6 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
         whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
     }
 }

@@ -76,13 +76,24 @@ public class SysLogOperationController : BaseApiController
     }
 
     /// <summary>
+    /// 查询操作日志列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    [HttpGet("GetList")]
+    public async Task<List<SysLogOperation>> GetLogOperationList(SysLogOperationWDto whereDto)
+    {
+        return await _sysLogOperationService.GetLogOperationList(whereDto);
+    }
+
+    /// <summary>
     /// 查询操作日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [HttpGet("GetPageList")]
-    public async Task<PageDataDto<SysLogOperation>> GetLogOperationByList(PageWhereDto<SysLogOperationWDto> pageWhere)
+    public async Task<PageDataDto<SysLogOperation>> GetLogOperationPageList(PageWhereDto<SysLogOperationWDto> pageWhere)
     {
-        return await _sysLogOperationService.GetLogOperationByList(pageWhere);
+        return await _sysLogOperationService.GetLogOperationPageList(pageWhere);
     }
 }

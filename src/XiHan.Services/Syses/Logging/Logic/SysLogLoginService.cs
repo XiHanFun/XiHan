@@ -23,13 +23,13 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Services.Syses.Logging.Logic;
 
 /// <summary>
-/// 系统登录日志服务
+/// 系统登陆日志服务
 /// </summary>
 [AppService(ServiceType = typeof(ISysLogLoginService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
 {
     /// <summary>
-    /// 新增登录日志
+    /// 新增系统登陆日志
     /// </summary>
     /// <param name="logLogin"></param>
     /// <returns></returns>
@@ -39,7 +39,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     }
 
     /// <summary>
-    /// 批量删除登录日志
+    /// 批量删除系统登陆日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
@@ -49,7 +49,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     }
 
     /// <summary>
-    /// 清空登录日志
+    /// 清空系统登陆日志
     /// </summary>
     /// <returns></returns>
     public async Task<bool> CleanLogLogin()
@@ -58,7 +58,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     }
 
     /// <summary>
-    /// 查询登录日志(根据Id)
+    /// 查询系统登陆日志(根据Id)
     /// </summary>
     /// <param name="logId"></param>
     /// <returns></returns>
@@ -68,13 +68,34 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     }
 
     /// <summary>
-    /// 查询登录日志列表(根据分页条件)
+    /// 查询系统登陆日志列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysLogLogin>> GetLogLoginList(SysLogLoginWDto whereDto)
+    {
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
+        whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
+
+        var whereExpression = Expressionable.Create<SysLogLogin>();
+        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        whereExpression.AndIF(whereDto.LoginIp.IsNotEmptyOrNull(), l => l.LoginIp!.Contains(whereDto.LoginIp!));
+        whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
+        whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
+        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
+    }
+
+    /// <summary>
+    /// 查询系统登陆日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysLogLogin>> GetLogLoginBList(PageWhereDto<SysLogLoginWDto> pageWhere)
+    public async Task<PageDataDto<SysLogLogin>> GetLogLoginPageList(PageWhereDto<SysLogLoginWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
+
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
         whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
 
