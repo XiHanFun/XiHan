@@ -64,7 +64,7 @@ public class SysLogLogin : BaseCreateEntity
     /// 操作系统
     /// </summary>
     [SugarColumn(Length = 50, IsNullable = true)]
-    public string? OS { get; set; }
+    public string? Os { get; set; }
 
     /// <summary>
     /// 代理信息

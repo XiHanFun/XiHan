@@ -43,7 +43,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="context"></param>
     protected BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
-        base.Context = DbScoped.SugarScope;
+        Context = DbScoped.SugarScope;
     }
 
     #region 新增
@@ -188,7 +188,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<DeleteEntity>(long id) where DeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDelete
     {
         var entity = await GetByIdAsync(id);
         entity.ToDeleted();
@@ -200,7 +200,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<DeleteEntity>(TEntity entity) where DeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDelete
     {
         entity.ToDeleted();
         return await base.UpdateAsync(entity);
@@ -211,7 +211,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<DeleteEntity>(IEnumerable<TEntity> entities) where DeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDelete
     {
         var entityList = entities.ToList();
         entityList.ForEach(entity => entity.ToDeleted());
@@ -223,7 +223,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<DeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where DeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDelete
     {
         var entities = await GetListAsync(whereExpression);
         entities.ForEach(entity => entity.ToDeleted());

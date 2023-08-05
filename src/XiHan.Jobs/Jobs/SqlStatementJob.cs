@@ -31,7 +31,7 @@ namespace XiHan.Jobs.Jobs;
 [AppService(ServiceType = typeof(SqlStatementJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class SqlStatementJob : JobBase, IJob
 {
-    private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
+    private static readonly ILogger Logger = Log.ForContext<SqlStatementJob>();
     private readonly ISysJobService _sysJobService;
 
     /// <summary>
@@ -50,7 +50,7 @@ public class SqlStatementJob : JobBase, IJob
     /// <returns></returns>
     public async Task Execute(IJobExecutionContext context)
     {
-        await base.ExecuteJob(context, async () => await SqlExecute(context));
+        await ExecuteJob(context, async () => await SqlExecute(context));
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class SqlStatementJob : JobBase, IJob
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task SqlExecute(IJobExecutionContext context)
+    private async Task SqlExecute(IJobExecutionContext context)
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
@@ -67,11 +67,11 @@ public class SqlStatementJob : JobBase, IJob
             if (info != null && info.SqlText.IsNotEmptyOrNull())
             {
                 var result = DbScoped.SugarScope.Ado.ExecuteCommandWithGo(info.SqlText);
-                _logger.Information($"执行SQL任务【{info.JobName}】执行成功，sql请求执行结果为：" + result);
+                Logger.Information($"执行SQL任务【{info.JobName}】执行成功，sql请求执行结果为：" + result);
             }
             else
             {
-                throw new CustomException($"执行SQL任务【{trigger?.JobName}】执行失败，任务不存在！");
+                throw new CustomException($"执行SQL任务【{trigger.JobName}】执行失败，任务不存在！");
             }
         }
     }

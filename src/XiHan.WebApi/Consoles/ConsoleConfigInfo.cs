@@ -37,7 +37,7 @@ public static class ConsoleConfigInfo
         $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
         $@"运行路径：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"运行时间：{ApplicationInfoHelper.RunTime}".WriteLineInfo();
-        $@"占用内存：{ApplicationInfoHelper.ProcessRAM}".WriteLineInfo();
+        $@"占用内存：{ApplicationInfoHelper.ProcessRam}".WriteLineInfo();
         $@"进程标识：{ApplicationInfoHelper.ProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.ProcessSessionId}".WriteLineInfo();
 

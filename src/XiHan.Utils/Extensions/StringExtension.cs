@@ -66,7 +66,10 @@ public static class StringExtension
     /// <returns></returns>
     public static string[] GetStrArray(this string str)
     {
-        return str.Split(new char[] { ',' });
+        return str.Split(new[]
+        {
+            ','
+        });
     }
 
     #endregion
@@ -77,9 +80,9 @@ public static class StringExtension
     /// 把 List 按照分隔符组装成 string 类型
     /// </summary>
     /// <param name="list"></param>
-    /// <param name="speater"></param>
+    /// <param name="sepeater"></param>
     /// <returns></returns>
-    public static string GetListStr(this List<string> list, string speater)
+    public static string GetListStr(this List<string> list, string sepeater)
     {
         StringBuilder sb = new();
         for (var i = 0; i < list.Count; i++)
@@ -90,7 +93,7 @@ public static class StringExtension
             else
             {
                 sb.Append(list[i]);
-                sb.Append(speater);
+                sb.Append(sepeater);
             }
 
         return sb.ToString();
@@ -100,9 +103,9 @@ public static class StringExtension
     /// 把数组按照分隔符组装成 string 类型
     /// </summary>
     /// <param name="array"></param>
-    /// <param name="speater"></param>
+    /// <param name="sepeater"></param>
     /// <returns></returns>
-    public static string GetArrayStr(this string[] array, string speater)
+    public static string GetArrayStr(this string[] array, string sepeater)
     {
         StringBuilder sb = new();
         for (var i = 0; i < array.Length; i++)
@@ -113,7 +116,7 @@ public static class StringExtension
             else
             {
                 sb.Append(array[i]);
-                sb.Append(speater);
+                sb.Append(sepeater);
             }
 
         return sb.ToString();
@@ -176,6 +179,8 @@ public static class StringExtension
     /// <summary>
     /// 删除最后结尾的一个逗号
     /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
     public static string DelLastComma(this string str)
     {
         return str[..str.LastIndexOf(",", StringComparison.Ordinal)];
@@ -184,9 +189,12 @@ public static class StringExtension
     /// <summary>
     /// 删除最后结尾的指定字符后的字符
     /// </summary>
-    public static string DelLastChar(this string str, string strchar)
+    /// <param name="str"></param>
+    /// <param name="strChar"></param>
+    /// <returns></returns>
+    public static string DelLastChar(this string str, string strChar)
     {
-        return str[..str.LastIndexOf(strchar, StringComparison.Ordinal)];
+        return str[..str.LastIndexOf(strChar, StringComparison.Ordinal)];
     }
 
     #endregion
@@ -279,7 +287,7 @@ public static class StringExtension
     /// <param name="splitString"></param>
     /// <param name="error"></param>
     /// <returns></returns>
-    public static string? GetNewStyle(this string? strList, string? newStyle, string splitString, out string error)
+    public static string GetNewStyle(this string? strList, string? newStyle, string splitString, out string error)
     {
         string? returnValue;
         // 如果输入空值，返回空，并给出错误提示
@@ -301,16 +309,16 @@ public static class StringExtension
             else
             {
                 // 检查新样式中分隔符的位置
-                StringBuilder lengstr = new();
+                StringBuilder newStr = new();
                 if (newStyle != null)
                     for (var i = 0; i < newStyle.Length; i++)
                         if (newStyle.Substring(i, 1) == splitString)
-                            lengstr.Append(i + ",");
+                            newStr.Append(i + ",");
 
-                if (!string.IsNullOrWhiteSpace(lengstr.ToString()))
+                if (!string.IsNullOrWhiteSpace(newStr.ToString()))
                 {
                     // 将分隔符放在新样式中的位置
-                    var str = lengstr.ToString().Split(',');
+                    var str = newStr.ToString().Split(',');
                     strList = str.Aggregate(strList, (current, bb) => current.Insert(int.Parse(bb), splitString));
                 }
 
@@ -455,8 +463,8 @@ public static class StringExtension
                 break;
         }
 
-        var mybyte = Encoding.Default.GetBytes(inputString);
-        if (isShowFix && mybyte.Length > len)
+        var myByte = Encoding.Default.GetBytes(inputString);
+        if (isShowFix && myByte.Length > len)
             tempString.Append('…');
         return tempString.ToString();
     }
@@ -474,21 +482,7 @@ public static class StringExtension
     {
         string[] aryReg =
         {
-            @"<script[^>]*?>.*?</script>",
-            @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
-            @"([\r\n])[\s]+",
-            @"&(quot|#34);",
-            @"&(amp|#38);",
-            @"&(lt|#60);",
-            @"&(gt|#62);",
-            @"&(nbsp|#160);",
-            @"&(iexcl|#161);",
-            @"&(cent|#162);",
-            @"&(pound|#163);",
-            @"&(copy|#169);",
-            @"&#(\d+);",
-            @"-->",
-            @"<!--.*\n"
+            @"<script[^>]*?>.*?</script>", @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>", @"([\r\n])[\s]+", @"&(quot|#34);", @"&(amp|#38);", @"&(lt|#60);", @"&(gt|#62);", @"&(nbsp|#160);", @"&(iexcl|#161);", @"&(cent|#162);", @"&(pound|#163);", @"&(copy|#169);", @"&#(\d+);", @"-->", @"<!--.*\n"
         };
 
         var newReg = aryReg[0];

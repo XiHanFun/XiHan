@@ -279,7 +279,7 @@ public static class AppSettings
         /// <summary>
         /// QQ 授权配置
         /// </summary>
-        public static class QQ
+        public static class Qq
         {
             /// <summary>
             /// 客户端(AppId)

@@ -46,7 +46,7 @@ public class ClearLogsJob : JobBase, IJob
     /// <returns></returns>
     public async Task Execute(IJobExecutionContext context)
     {
-        await base.ExecuteJob(context, async () => await ClearLogs());
+        await ExecuteJob(context, async () => await ClearLogs());
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class ClearLogsJob : JobBase, IJob
     /// </summary>
     /// <returns></returns>
     [Job(JobGroup = "系统", JobName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
-    public async Task ClearLogs()
+    private async Task ClearLogs()
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 

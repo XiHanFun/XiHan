@@ -59,12 +59,12 @@ public static class HttpContextExtend
                 Referer = referer.ToString(),
                 Agent = agent.ToString(),
                 DeviceType = clientInfo.Device.Family,
-                OSName = clientInfo.OS.Family,
-                OSVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
+                OsName = clientInfo.OS.Family,
+                OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
                 BrowserName = clientInfo.UA.Family,
                 BrowserVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
                 RemoteIPv4 = context.GetClientIpV4(),
-                RemoteIPv6 = context.GetClientIpV6(),
+                RemoteIPv6 = context.GetClientIpV6()
             };
             return clientModel;
         }
@@ -84,9 +84,9 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        StringValues stringValues = (from headers in context.Request.Headers
-                                     where headers.Key.ToLower() == "X-Requested-With".ToLower()
-                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "X-Requested-With".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
     }
 
@@ -100,9 +100,9 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        StringValues stringValues = (from headers in context.Request.Headers
-                                     where headers.Key.ToLower() == "content-type".ToLower()
-                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "content-type".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
     }
 
@@ -116,9 +116,9 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        StringValues stringValues = (from headers in context.Request.Headers
-                                     where headers.Key.ToLower() == "accept".ToLower()
-                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "accept".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
     }
 
@@ -283,7 +283,7 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        string requestParameters = string.Empty;
+        var requestParameters = string.Empty;
         var request = context.Request;
         var method = request.Method;
         if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsPatch(method))
@@ -293,12 +293,13 @@ public static class HttpContextExtend
             using var reader = new StreamReader(request.Body, Encoding.UTF8);
             var requestBody = await reader.ReadToEndAsync();
             // 为空则取请求字符串里的参数
-            requestParameters = requestBody.IsEmptyOrNull() ? (request.QueryString.Value ?? string.Empty) : requestBody;
+            requestParameters = requestBody.IsEmptyOrNull() ? request.QueryString.Value ?? string.Empty : requestBody;
         }
         else if (HttpMethods.IsGet(method) || HttpMethods.IsDelete(method))
         {
             requestParameters = request.QueryString.Value ?? string.Empty;
         }
+
         return requestParameters;
     }
 
@@ -312,7 +313,7 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        string responseResult = string.Empty;
+        var responseResult = string.Empty;
         var response = context.Response;
         // 使用异步获取请求实体
         using var reader = new StreamReader(response.Body, Encoding.UTF8);
@@ -512,12 +513,12 @@ public class UserClientInfo
     /// <summary>
     /// 系统名称
     /// </summary>
-    public string? OSName { get; set; }
+    public string? OsName { get; set; }
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public string? OSVersion { get; set; }
+    public string? OsVersion { get; set; }
 
     /// <summary>
     /// 浏览器名称

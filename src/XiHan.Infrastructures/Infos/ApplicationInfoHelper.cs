@@ -34,8 +34,8 @@ public static class ApplicationInfoHelper
     /// 当前版本
     /// </summary>
     public static string Version => ReflectionHelper.GetAssemblies()
-        .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
-        .GetName().Version?.ToString()
+            .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
+            .GetName().Version?.ToString()
         ?? string.Empty;
 
     /// <summary>
@@ -71,7 +71,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 占用内存
     /// </summary>
-    public static string ProcessRAM = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
+    public static string ProcessRam = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
 
     /// <summary>
     /// 进程标识

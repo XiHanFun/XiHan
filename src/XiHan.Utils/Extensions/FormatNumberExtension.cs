@@ -48,13 +48,13 @@ public static class FormatNumberExtension
     /// <summary>
     /// 金额字符串加逗号格式化
     /// </summary>
-    /// <param name="numint"></param>
+    /// <param name="numInt"></param>
     /// <returns></returns>
-    private static string FormatStringComma(string numint)
+    private static string FormatStringComma(string numInt)
     {
-        if (numint.Length <= 4) return numint;
-        var numNoFormat = numint[..^4];
-        var numFormat = numint.Substring(numint.Length - 4, 4);
+        if (numInt.Length <= 4) return numInt;
+        var numNoFormat = numInt[..^4];
+        var numFormat = numInt.Substring(numInt.Length - 4, 4);
         if (numNoFormat.Length > 4) return FormatStringComma(numNoFormat) + "," + numFormat;
 
         return numNoFormat + "," + numFormat;

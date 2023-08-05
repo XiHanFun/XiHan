@@ -31,7 +31,7 @@ namespace XiHan.Jobs.Jobs;
 [AppService(ServiceType = typeof(NetworkRequestJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class NetworkRequestJob : JobBase, IJob
 {
-    private static readonly ILogger _logger = Log.ForContext<SqlStatementJob>();
+    private static readonly ILogger Logger = Log.ForContext<SqlStatementJob>();
 
     private readonly IHttpPollyService _httpPollyService;
     private readonly ISysJobService _sysJobService;
@@ -54,7 +54,7 @@ public class NetworkRequestJob : JobBase, IJob
     /// <returns></returns>
     public async Task Execute(IJobExecutionContext context)
     {
-        await base.ExecuteJob(context, async () => await NetworkRequest(context));
+        await ExecuteJob(context, async () => await NetworkRequest(context));
     }
 
     /// <summary>
@@ -62,37 +62,39 @@ public class NetworkRequestJob : JobBase, IJob
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task NetworkRequest(IJobExecutionContext context)
+    private async Task NetworkRequest(IJobExecutionContext context)
     {
-        var result = string.Empty;
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
             var info = await _sysJobService.GetByIdAsync(trigger.JobName) ?? throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
             var url = info.ApiUrl;
-            var parms = info.JobParams;
+            var paras = info.JobParams;
 
-            if (url.IsNullOrEmpty() && parms.IsNullOrEmpty())
-                throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，参数为空！");
+            if (url.IsNullOrEmpty() && paras.IsNullOrEmpty())
+                throw new CustomException($"网络请求任务【{trigger.JobName}】执行失败，参数为空！");
 
             // POST请求
-            if (info.RequestMethod != null && info.RequestMethod == RequestMethodEnum.POST.GetEnumValueByKey())
+            string result;
+            if (info.RequestMethod != null && info.RequestMethod == RequestMethodEnum.Post.GetEnumValueByKey())
             {
-                result = await _httpPollyService.PostAsync(HttpGroupEnum.Remote, url!, parms!);
+                result = await _httpPollyService.PostAsync(HttpGroupEnum.Remote, url!, paras!);
             }
             // GET请求
             else
             {
-                if (url!.IndexOf("?") > -1)
+                if (url!.IndexOf("?", StringComparison.Ordinal) > -1)
                 {
-                    url += "&" + parms;
+                    url += "&" + paras;
                 }
                 else
                 {
-                    url += "?" + parms;
+                    url += "?" + paras;
                 }
+
                 result = await _httpPollyService.GetAsync(HttpGroupEnum.Remote, url);
             }
-            _logger.Information($"网络请求任务【{info.JobName}】执行成功，请求结果为：" + result);
+
+            Logger.Information($"网络请求任务【{info.JobName}】执行成功，请求结果为：" + result);
         }
     }
 }

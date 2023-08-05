@@ -23,10 +23,10 @@ namespace XiHan.Utils.Encryptions;
 public static class DesEncryptionHelper
 {
     // 加密所需的密钥
-    private static readonly byte[] _keyBytes;
+    private static readonly byte[] KeyBytes;
 
     // 加密所需的密钥
-    private static readonly byte[] _ivBytes;
+    private static readonly byte[] IvBytes;
 
     /// <summary>
     /// 构造函数
@@ -36,8 +36,8 @@ public static class DesEncryptionHelper
         // 构造函数，初始化密钥和向量
         var password = "XiHan_ZhaiFanhua";
         var pdb = new PasswordDeriveBytes(password, null);
-        _keyBytes = pdb.GetBytes(8);
-        _ivBytes = pdb.GetBytes(8);
+        KeyBytes = pdb.GetBytes(8);
+        IvBytes = pdb.GetBytes(8);
     }
 
     /// <summary>
@@ -50,8 +50,8 @@ public static class DesEncryptionHelper
         // 创建加密算法实例
         using var des = DES.Create();
         // 设置加密算法的密钥和向量
-        des.Key = _keyBytes;
-        des.IV = _ivBytes;
+        des.Key = KeyBytes;
+        des.IV = IvBytes;
 
         // 创建内存流，并使用 CryptoStream 对象包装它
         using var ms = new MemoryStream();
@@ -81,8 +81,8 @@ public static class DesEncryptionHelper
         // 创建解密算法实例
         using var des = DES.Create();
         // 设置解密算法的密钥和向量
-        des.Key = _keyBytes;
-        des.IV = _ivBytes;
+        des.Key = KeyBytes;
+        des.IV = IvBytes;
 
         // 创建内存流，并使用 CryptoStream 对象包装它
         using var ms = new MemoryStream();

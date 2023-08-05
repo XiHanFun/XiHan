@@ -104,20 +104,16 @@ public static class DiskHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var driv = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
-                foreach (var item in driv)
+                var drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
+                diskInfos.AddRange(drives.Select(item => new DiskInfo
                 {
-                    var info = new DiskInfo
-                    {
-                        DiskName = item.Name,
-                        TypeName = item.DriveType.ToString(),
-                        TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
-                        FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
-                        UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
-                        AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
-                    };
-                    diskInfos.Add(info);
-                }
+                    DiskName = item.Name,
+                    TypeName = item.DriveType.ToString(),
+                    TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
+                    FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
+                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
+                    AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
+                }));
             }
         }
         catch (Exception ex)

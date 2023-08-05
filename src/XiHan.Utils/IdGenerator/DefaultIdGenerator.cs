@@ -31,7 +31,7 @@ namespace XiHan.Utils.IdGenerator;
 /// </summary>
 public class DefaultIdGenerator : IIdGenerator
 {
-    private ISnowWorker _SnowWorker { get; set; }
+    private ISnowWorker SnowWorker { get; set; }
 
     /// <summary>
     /// 构造函数
@@ -52,11 +52,12 @@ public class DefaultIdGenerator : IIdGenerator
         }
 
         // 2.WorkerIdBitLength
-        int maxLength = options.TimestampType == 0 ? 22 : 31; // （秒级时间戳时放大到31位）
+        var maxLength = options.TimestampType == 0 ? 22 : 31; // （秒级时间戳时放大到31位）
         if (options.WorkerIdBitLength <= 0)
         {
             throw new ArgumentException("WorkerIdBitLength error.(range:[1, 21])");
         }
+
         if (options.DataCenterIdBitLength + options.WorkerIdBitLength + options.SeqBitLength > maxLength)
         {
             throw new ArgumentException("error：DataCenterIdBitLength + WorkerIdBitLength + SeqBitLength <= " + maxLength);
@@ -68,6 +69,7 @@ public class DefaultIdGenerator : IIdGenerator
         {
             maxWorkerIdNumber = 63;
         }
+
         if (options.WorkerId < 0 || options.WorkerId > maxWorkerIdNumber)
         {
             throw new ArgumentException("WorkerId error. (range:[0, " + maxWorkerIdNumber + "]");
@@ -91,6 +93,7 @@ public class DefaultIdGenerator : IIdGenerator
         {
             maxSeqNumber = 63;
         }
+
         if (options.MaxSeqNumber < 0 || options.MaxSeqNumber > maxSeqNumber)
         {
             throw new ArgumentException("MaxSeqNumber error. (range:[1, " + maxSeqNumber + "]");
@@ -111,18 +114,12 @@ public class DefaultIdGenerator : IIdGenerator
         switch (options.Method)
         {
             case 2:
-                _SnowWorker = new SnowWorkerM2(options);
+                SnowWorker = new SnowWorkerM2(options);
                 break;
 
             default:
-                if (options.DataCenterIdBitLength == 0 && options.TimestampType == 0)
-                {
-                    _SnowWorker = new SnowWorkerM1(options);
-                }
-                else
-                {
-                    _SnowWorker = new SnowWorkerM3(options);
-                }
+                SnowWorker = options is { DataCenterIdBitLength: 0, TimestampType: 0 } ? new SnowWorkerM1(options) : new SnowWorkerM3(options);
+
                 break;
         }
 
@@ -138,6 +135,6 @@ public class DefaultIdGenerator : IIdGenerator
     /// <returns></returns>
     public long NewLong()
     {
-        return _SnowWorker.NextId();
+        return SnowWorker.NextId();
     }
 }

@@ -193,28 +193,28 @@ public static class FormatTimeExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-                {
-                    if (dep.TotalHours < 24)
-                        return dep.TotalHours.ParseToInt() + "小时前";
-                    else
-                        switch (dep.TotalDays)
-                        {
-                            case < 7:
-                                return dep.TotalDays.ParseToInt() + "天前";
+            {
+                if (dep.TotalHours < 24)
+                    return dep.TotalHours.ParseToInt() + "小时前";
+                else
+                    switch (dep.TotalDays)
+                    {
+                        case < 7:
+                            return dep.TotalDays.ParseToInt() + "天前";
 
-                            case >= 7 and < 30:
-                                {
-                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                                    return defaultWeek + "周前";
-                                }
-                            default:
-                                {
-                                    if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
-                                        return value.Month.ParseToInt() + "个月前";
-                                    else return now.Year - value.Year + "年前";
-                                }
+                        case >= 7 and < 30:
+                        {
+                            var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                            return defaultWeek + "周前";
                         }
-                }
+                        default:
+                        {
+                            if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
+                                return value.Month.ParseToInt() + "个月前";
+                            else return now.Year - value.Year + "年前";
+                        }
+                    }
+            }
         }
     }
 

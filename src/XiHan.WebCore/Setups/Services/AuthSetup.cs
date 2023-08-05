@@ -41,94 +41,94 @@ public static class AuthSetup
 
         // 身份验证(默认用JwtBearer认证)
         services.AddAuthentication(options =>
-        {
-            // 默认身份验证方案
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            // 默认质询方案
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // 默认禁止方案
-            options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddCookie()
-        .AddJwtBearer(options =>
-        {
-            // 配置鉴权逻辑，添加JwtBearer服务
-            options.SaveToken = true;
-            options.TokenValidationParameters = JwtHandler.GetTokenVerifyParams();
-            options.Events = new JwtBearerEvents
             {
-                // 认证失败时
-                OnAuthenticationFailed = context =>
+                // 默认身份验证方案
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // 默认质询方案
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // 默认禁止方案
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddJwtBearer(options =>
+            {
+                // 配置鉴权逻辑，添加JwtBearer服务
+                options.SaveToken = true;
+                options.TokenValidationParameters = JwtHandler.GetTokenVerifyParams();
+                options.Events = new JwtBearerEvents
                 {
-                    var jwtHandler = new JwtSecurityTokenHandler();
-                    var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", "");
-                    context.Response.StatusCode = 401;
-                    // 若Token为空、伪造无法读取
-                    if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
+                    // 认证失败时
+                    OnAuthenticationFailed = context =>
                     {
-                        var jwtToken = jwtHandler.ReadJwtToken(token);
+                        var jwtHandler = new JwtSecurityTokenHandler();
+                        var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", "");
+                        context.Response.StatusCode = 401;
+                        // 若Token为空、伪造无法读取
+                        if (token.IsNotEmptyOrNull() && jwtHandler.CanReadToken(token))
+                        {
+                            var jwtToken = jwtHandler.ReadJwtToken(token);
 
-                        if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
-                            context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
+                            if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
+                                context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
 
-                        if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
-                            context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
-                        // 返回自定义的未授权模型数据
-                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权为空或因伪造无法读取！"));
-                    }
+                            if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
+                                context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
+                            // 返回自定义的未授权模型数据
+                            return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权为空或因伪造无法读取！"));
+                        }
 
-                    // 如果过期，则把是否过期添加到返回头信息中
-                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        // 如果过期，则把是否过期添加到返回头信息中
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                            // 返回自定义的未授权模型数据
+                            return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权已过期！"));
+                        }
+
+                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized());
+                    },
+                    // 未授权时
+                    OnChallenge = context =>
                     {
-                        context.Response.Headers.Add("Token-Expired", "true");
+                        context.Response.StatusCode = 401;
+                        // 将Token错误添加到返回头信息中
+                        context.HttpContext.Response.Headers.Add("Token-Error", context.ErrorDescription);
                         // 返回自定义的未授权模型数据
-                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("授权已过期！"));
+                        return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("未授权！"));
                     }
-
-                    return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized());
-                },
-                // 未授权时
-                OnChallenge = context =>
-                {
-                    context.Response.StatusCode = 401;
-                    // 将Token错误添加到返回头信息中
-                    context.HttpContext.Response.Headers.Add("Token-Error", context.ErrorDescription);
-                    // 返回自定义的未授权模型数据
-                    return context.HttpContext.Response.WriteAsJsonAsync(CustomResult.Unauthorized("未授权！"));
-                }
-            };
-        })
-        .AddQQ(options =>
-        {
-            options.ClientId = AppSettings.Auth.QQ.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.QQ.ClientSecret.GetValue();
-        })
-        .AddWeixin(options =>
-        {
-            options.ClientId = AppSettings.Auth.WeChat.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.WeChat.ClientSecret.GetValue();
-        })
-        .AddAlipay(options =>
-        {
-            options.ClientId = AppSettings.Auth.Alipay.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Alipay.ClientSecret.GetValue();
-        })
-        .AddGitHub(options =>
-        {
-            options.ClientId = AppSettings.Auth.Github.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Github.ClientSecret.GetValue();
-            options.Scope.Add("user:email");
-        })
-        .AddGitLab(options =>
-        {
-            options.ClientId = AppSettings.Auth.Gitlab.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Gitlab.ClientSecret.GetValue();
-        })
-        .AddGitee(options =>
-        {
-            options.ClientId = AppSettings.Auth.Gitee.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
-        });
+                };
+            })
+            .AddQQ(options =>
+            {
+                options.ClientId = AppSettings.Auth.Qq.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Qq.ClientSecret.GetValue();
+            })
+            .AddWeixin(options =>
+            {
+                options.ClientId = AppSettings.Auth.WeChat.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.WeChat.ClientSecret.GetValue();
+            })
+            .AddAlipay(options =>
+            {
+                options.ClientId = AppSettings.Auth.Alipay.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Alipay.ClientSecret.GetValue();
+            })
+            .AddGitHub(options =>
+            {
+                options.ClientId = AppSettings.Auth.Github.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Github.ClientSecret.GetValue();
+                options.Scope.Add("user:email");
+            })
+            .AddGitLab(options =>
+            {
+                options.ClientId = AppSettings.Auth.Gitlab.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Gitlab.ClientSecret.GetValue();
+            })
+            .AddGitee(options =>
+            {
+                options.ClientId = AppSettings.Auth.Gitee.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
+            });
         // 认证授权
         services.AddAuthorization();
         return services;

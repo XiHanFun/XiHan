@@ -114,28 +114,28 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<DeleteEntity>(long id) where DeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDelete;
 
     /// <summary>
     /// 逻辑删除
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<DeleteEntity>(TEntity entity) where DeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDelete;
 
     /// <summary>
     /// 批量逻辑删除
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<DeleteEntity>(IEnumerable<TEntity> entities) where DeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDelete;
 
     /// <summary>
     /// 自定义条件逻辑删除
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<DeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where DeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDelete;
 
     #endregion
 

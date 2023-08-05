@@ -31,7 +31,7 @@ namespace XiHan.WebCore.Filters;
 [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
 public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
 {
-    private static readonly ILogger _logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
+    private static readonly ILogger Logger = Log.ForContext<ExceptionFilterAsyncAttribute>();
 
     /// <summary>
     /// 当异常发生时
@@ -59,17 +59,17 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 // 自定义异常
                 CustomException => new JsonResult(CustomResult.BadRequest(context.Exception.Message)),
                 // 异常默认返回服务器错误，不直接明文显示
-                _ => new JsonResult(CustomResult.InternalServerError()),
+                _ => new JsonResult(CustomResult.InternalServerError())
             };
 
             // 控制器信息
             var actionContextInfo = context.GetActionContextInfo();
             // 写入日志
             var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                       $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                       $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                       $"\t 操作用户：{actionContextInfo.UserId}";
-            _logger.Error(context.Exception, $"系统异常\n{info}");
+                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
+                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
+                $"\t 操作用户：{actionContextInfo.UserId}";
+            Logger.Error(context.Exception, $"系统异常\n{info}");
         }
 
         // 标记异常已经处理过了

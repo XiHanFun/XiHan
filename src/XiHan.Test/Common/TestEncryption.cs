@@ -71,8 +71,8 @@ public static class TestEncryption
 
         Console.WriteLine("请输入要Md5加密的文件路径：");
         var file = Console.ReadLine();
-        var strMd5file = file != null ? Md5EncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
-        Console.WriteLine($@"文件【{file}】Md5加密后：{strMd5file}；");
+        var strMd5File = file != null ? Md5EncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
+        Console.WriteLine($@"文件【{file}】Md5加密后：{strMd5File}；");
     }
 
     /// <summary>

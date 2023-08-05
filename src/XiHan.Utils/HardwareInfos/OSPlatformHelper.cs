@@ -91,7 +91,7 @@ public static class OsPlatformHelper
     /// </summary>
     public static string GetRunningTime()
     {
-        string runTime = string.Empty;
+        var runTime = string.Empty;
 
         try
         {
@@ -105,11 +105,11 @@ public static class OsPlatformHelper
             {
                 var output = ShellHelper.Bash("uptime | tail -n -1").Trim();
                 // 提取运行时间部分
-                int startIndex = output.IndexOf("up ") + 3;
-                int endIndex = output.IndexOf(" user");
-                string uptime = output[startIndex..endIndex].Trim();
+                var startIndex = output.IndexOf("up ", StringComparison.Ordinal) + 3;
+                var endIndex = output.IndexOf(" user", StringComparison.Ordinal);
+                var uptime = output[startIndex..endIndex].Trim();
                 // 解析运行时间并转换为标准格式
-                TimeSpan uptimeSpan = ParseUptime(uptime);
+                var uptimeSpan = ParseUptime(uptime);
                 runTime = uptimeSpan.FormatTimeSpanToString();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

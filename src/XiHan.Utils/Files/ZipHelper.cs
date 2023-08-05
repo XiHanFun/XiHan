@@ -19,7 +19,7 @@ namespace XiHan.Utils.Files;
 /// <summary>
 /// 压缩解压帮助类
 /// </summary>
-public class ZipHelper
+public static class ZipHelper
 {
     /// <summary>
     /// 提取

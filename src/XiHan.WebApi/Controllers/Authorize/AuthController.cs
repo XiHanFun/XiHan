@@ -128,10 +128,11 @@ public class AuthController : BaseApiController
             sysLogLogin.Status = false;
             sysLogLogin.Message = ex.Message;
         }
+
         sysLogLogin.LoginIp = clientInfo.RemoteIPv4;
         sysLogLogin.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
         sysLogLogin.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
-        sysLogLogin.OS = clientInfo.OSName + clientInfo.OSVersion;
+        sysLogLogin.Os = clientInfo.OsName + clientInfo.OsVersion;
         sysLogLogin.Agent = clientInfo.Agent;
 
         await _sysLogLoginService.AddAsync(sysLogLogin);
