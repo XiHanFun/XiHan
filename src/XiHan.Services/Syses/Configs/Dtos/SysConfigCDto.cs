@@ -22,12 +22,12 @@ namespace XiHan.Services.Syses.Configs.Dtos;
 public class SysConfigCDto
 {
     /// <summary>
-    /// 分组编码
+    /// 分类编码
     ///</summary>
     [Required]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string GroupCode { get; set; } = string.Empty;
+    public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 配置编码

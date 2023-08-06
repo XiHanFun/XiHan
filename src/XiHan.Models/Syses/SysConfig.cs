@@ -25,10 +25,10 @@ namespace XiHan.Models.Syses;
 public class SysConfig : BaseModifyEntity
 {
     /// <summary>
-    /// 分组编码
+    /// 分类编码
     ///</summary>
     [SugarColumn(Length = 64)]
-    public string GroupCode { get; set; } = string.Empty;
+    public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 配置编码

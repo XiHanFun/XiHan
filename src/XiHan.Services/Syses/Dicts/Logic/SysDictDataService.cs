@@ -91,6 +91,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         var sysDictData = dictDataCDto.Adapt<SysDictData>();
 
         _ = await CheckDictDataUnique(sysDictData);
+
         return await UpdateAsync(sysDictData);
     }
 
@@ -104,8 +105,8 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         var key = $"GetDictDataById_{dictDataId}";
         if (_appCacheService.Get(key) is SysDictData sysDictData) return sysDictData;
         sysDictData = await FindAsync(d => d.BaseId == dictDataId && d.IsEnable);
-        _appCacheService.SetWithMinutes(key, sysDictData, 30);
 
+        _appCacheService.SetWithMinutes(key, sysDictData, 30);
         return sysDictData;
     }
 
@@ -124,8 +125,8 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
             .Select((t, d) => d)
             .ToListAsync();
         list = list.OrderBy(d => d.SortOrder).ToList();
-        _appCacheService.SetWithMinutes(key, list, 30);
 
+        _appCacheService.SetWithMinutes(key, list, 30);
         return list;
     }
 
@@ -144,8 +145,8 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
            .Select((t, d) => d)
            .ToListAsync();
         list = list.OrderBy(d => d.SortOrder).ToList();
-        _appCacheService.SetWithMinutes(key, list, 30);
 
+        _appCacheService.SetWithMinutes(key, list, 30);
         return list;
     }
 
