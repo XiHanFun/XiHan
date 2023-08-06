@@ -83,7 +83,7 @@ public class SysLogOperation : BaseCreateEntity
     /// <summary>
     /// 请求类型 GET、POST等
     /// </summary>
-    [SugarColumn(Length = 10, IsNullable = true)]
+    [SugarColumn(Length = 16, IsNullable = true)]
     public string? RequestMethod { get; set; }
 
     /// <summary>

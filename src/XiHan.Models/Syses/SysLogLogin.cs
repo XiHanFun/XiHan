@@ -39,37 +39,37 @@ public class SysLogLogin : BaseCreateEntity
     /// <summary>
     /// 提示消息
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Message { get; set; }
 
     /// <summary>
     /// 登录Ip
     /// </summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string? LoginIp { get; set; }
+    [SugarColumn(Length = 64, IsNullable = true)]
+    public string? Ip { get; set; }
 
     /// <summary>
     /// 登录地点
     ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Location { get; set; }
 
     /// <summary>
     /// 浏览器
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Browser { get; set; }
 
     /// <summary>
     /// 操作系统
     /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 32, IsNullable = true)]
     public string? Os { get; set; }
 
     /// <summary>
     /// 代理信息
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 56, IsNullable = true)]
     public string? Agent { get; set; }
 
     /// <summary>
