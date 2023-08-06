@@ -36,7 +36,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
         {
              new SysConfig{
                 BaseId = 0,
-                GroupCode="ModeConfig",
+                TypeCode="ModeConfig",
                 Code="IsDemoMode",
                 Name="是否演示模式",
                 Value="false",
@@ -49,7 +49,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
         {
             new SysConfig{
                 BaseId = 1,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="Name",
                 Name="网站名称",
                 Value="曦寒",
@@ -58,7 +58,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 2,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="Description",
                 Name="网站描述",
                 Value="高效快速 拥抱开源 用心创作 探索未知",
@@ -67,7 +67,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 3,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="KeyWord",
                 Name="网站关键字",
                 Value="曦寒,元宇宙,个人知识产权,全场景应用软件,XiHan,Metaverse",
@@ -76,7 +76,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 4,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="Domain",
                 Name="网站域名",
                 Value="https://xihan.fun",
@@ -85,7 +85,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 5,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="IcpRegistrationNumber",
                 Name="ICP备案号",
                 Value="",
@@ -95,7 +95,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
 
             new SysConfig{
                 BaseId = 6,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="PublicSecurityRegistrationNumber",
                 Name="公安备案号",
                 Value="",
@@ -104,7 +104,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 7,
-                GroupCode="SiteConfig",
+                TypeCode="SiteConfig",
                 Code="UpdateTime",
                 Name="升级时间",
                 Value="",
@@ -117,7 +117,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
         {
             new SysConfig{
                 BaseId = 11,
-                GroupCode="LogConfig",
+                TypeCode="LogConfig",
                 Code="Login",
                 Name="登录日志配置",
                 Value="true",
@@ -126,7 +126,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 12,
-                GroupCode="LogConfig",
+                TypeCode="LogConfig",
                 Code="Operation",
                 Name="操作日志配置",
                 Value="true",
@@ -135,7 +135,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
             },
             new SysConfig{
                 BaseId = 13,
-                GroupCode="LogConfig",
+                TypeCode="LogConfig",
                 Code="Exception",
                 Name="异常日志配置",
                 Value="true",

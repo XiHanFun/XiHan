@@ -42,7 +42,7 @@ public class SysLogLoginWDto
     /// <summary>
     /// 登录Ip
     /// </summary>
-    public string? LoginIp { get; set; }
+    public string? Ip { get; set; }
 
     /// <summary>
     /// 登录是否成功

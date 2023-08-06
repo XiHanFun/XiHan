@@ -79,7 +79,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
 
         var whereExpression = Expressionable.Create<SysLogLogin>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.LoginIp.IsNotEmptyOrNull(), l => l.LoginIp!.Contains(whereDto.LoginIp!));
+        whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
         whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
         whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
         whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
@@ -101,7 +101,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
 
         var whereExpression = Expressionable.Create<SysLogLogin>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.LoginIp.IsNotEmptyOrNull(), l => l.LoginIp!.Contains(whereDto.LoginIp!));
+        whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
         whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
         whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
         whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);

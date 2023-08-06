@@ -127,7 +127,7 @@ public class AuthController : BaseApiController
 
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
-        sysLogLogin.LoginIp = clientInfo.RemoteIPv4;
+        sysLogLogin.Ip = clientInfo.RemoteIPv4;
         sysLogLogin.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
         sysLogLogin.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
         sysLogLogin.Os = clientInfo.OsName + clientInfo.OsVersion;
