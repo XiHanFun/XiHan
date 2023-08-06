@@ -25,7 +25,8 @@ public class SysDictDataCDto
     /// 字典编码
     ///</summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
+    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
@@ -33,7 +34,7 @@ public class SysDictDataCDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Label { get; set; } = string.Empty;
 
     /// <summary>
@@ -41,13 +42,12 @@ public class SysDictDataCDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(10, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 自定义 SQL
     /// </summary>
-    [MaxLength(2000, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? CustomSql { get; set; }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class SysDictDataCDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string CssClass { get; set; } = string.Empty;
 
     /// <summary>
@@ -79,6 +79,6 @@ public class SysDictDataCDto
     /// <summary>
     /// 字典项描述
     /// </summary>
-    [MaxLength(100, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? Description { get; set; }
 }

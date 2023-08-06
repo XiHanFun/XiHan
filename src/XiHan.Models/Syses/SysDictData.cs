@@ -27,25 +27,25 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 字典编码
     ///</summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 64)]
     public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项标签
     /// </summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 64)]
     public string Label { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典项值
     /// </summary>
-    [SugarColumn(Length = 10)]
+    [SugarColumn(Length = 64)]
     public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 自定义 SQL
     /// </summary>
-    [SugarColumn(Length = 2000, IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string? CustomSql { get; set; }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 字典项样式
     /// </summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 64)]
     public string CssClass { get; set; } = string.Empty;
 
     /// <summary>
@@ -72,6 +72,6 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 字典项描述
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

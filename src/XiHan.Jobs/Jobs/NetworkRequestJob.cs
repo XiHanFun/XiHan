@@ -68,7 +68,7 @@ public class NetworkRequestJob : JobBase, IJob
         {
             var info = await _sysJobService.GetByIdAsync(trigger.JobName) ?? throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
             var url = info.ApiUrl;
-            var paras = info.JobParams;
+            var paras = info.Params;
 
             if (url.IsNullOrEmpty() && paras.IsNullOrEmpty())
                 throw new CustomException($"网络请求任务【{trigger.JobName}】执行失败，参数为空！");
@@ -94,7 +94,7 @@ public class NetworkRequestJob : JobBase, IJob
                 result = await _httpPollyService.GetAsync(HttpGroupEnum.Remote, url);
             }
 
-            Logger.Information($"网络请求任务【{info.JobName}】执行成功，请求结果为：" + result);
+            Logger.Information($"网络请求任务【{info.Name}】执行成功，请求结果为：" + result);
         }
     }
 }

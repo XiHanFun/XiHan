@@ -22,12 +22,12 @@ public class SysJobsWDto
     /// <summary>
     /// 任务名称
     /// </summary>
-    public string? JobName { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// 任务分组
     /// </summary>
-    public string? JobGroup { get; set; }
+    public string? Group { get; set; }
 
     /// <summary>
     /// 任务类型

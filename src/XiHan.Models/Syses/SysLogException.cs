@@ -27,48 +27,48 @@ public class SysLogException : BaseCreateEntity
     /// <summary>
     /// 日志级别
     /// </summary>
-    [SugarColumn(Length = 10, IsNullable = true)]
-    public string? LogLevel { get; set; }
+    [SugarColumn(Length = 16, IsNullable = true)]
+    public string? Level { get; set; }
 
     /// <summary>
     /// 触发线程
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public int? LogThread { get; set; }
+    public int? Thread { get; set; }
 
     /// <summary>
     /// 出错文件
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? LogFile { get; set; }
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? File { get; set; }
 
     /// <summary>
     /// 出错行号
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public int LogLine { get; set; }
+    public int Line { get; set; }
 
     /// <summary>
     /// 请求类名
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? LogClass { get; set; }
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Class { get; set; }
 
     /// <summary>
     /// 事件对象
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
-    public string? LogEvent { get; set; }
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Event { get; set; }
 
     /// <summary>
     /// 消息描述
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
-    public string? LogMessage { get; set; }
+    [SugarColumn(Length = 512, IsNullable = true)]
+    public string? Message { get; set; }
 
     /// <summary>
     /// 错误详情
     /// </summary>
-    [SugarColumn(Length = 4000, IsNullable = true)]
-    public string? LogException { get; set; }
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
+    public string? Exception { get; set; }
 }

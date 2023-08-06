@@ -32,7 +32,7 @@ public abstract class BaseModifyEntity : BaseCreateEntity
     /// 修改用户名称
     /// </summary>
     /// <remarks>新增不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改用户名称")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, Length = 32, ColumnDescription = "修改用户名称")]
     public virtual string? ModifiedBy { get; set; }
 
     /// <summary>

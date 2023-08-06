@@ -27,12 +27,12 @@ public class SysSkin : BaseModifyEntity
     /// <summary>
     /// 皮肤名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string SkinName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 皮肤路径
     /// </summary>
-    [SugarColumn(Length = 200)]
+    [SugarColumn(Length = 256)]
     public string Path { get; set; } = string.Empty;
 }

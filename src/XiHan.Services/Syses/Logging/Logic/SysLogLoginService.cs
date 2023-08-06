@@ -82,7 +82,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
         whereExpression.AndIF(whereDto.LoginIp.IsNotEmptyOrNull(), l => l.LoginIp!.Contains(whereDto.LoginIp!));
         whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
         whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
-        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+        whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -104,7 +104,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
         whereExpression.AndIF(whereDto.LoginIp.IsNotEmptyOrNull(), l => l.LoginIp!.Contains(whereDto.LoginIp!));
         whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
         whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
-        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+        whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
     }

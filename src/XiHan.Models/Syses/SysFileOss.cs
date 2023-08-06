@@ -28,19 +28,18 @@ public class SysFileOss : BaseModifyEntity
     /// 存储类型
     /// StoredTypeEnum
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string StoredType { get; set; } = string.Empty;
+    public int StoredType { get; set; }
 
     /// <summary>
     /// 机密Id
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 128)]
     public string SecretId { get; set; } = string.Empty;
 
     /// <summary>
     /// 机密密匙
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 128)]
     public string SecretKey { get; set; } = string.Empty;
 
     /// <summary>

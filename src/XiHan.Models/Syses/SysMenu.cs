@@ -33,37 +33,37 @@ public class SysMenu : BaseModifyEntity
     /// <summary>
     /// 菜单编码
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string MenuCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单名称
     /// </summary>
-    [SugarColumn(Length = 10)]
-    public string MenuName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 菜单图标
     /// </summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 64)]
     public string Icon { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由地址
     /// </summary>
-    [SugarColumn(Length = 200)]
+    [SugarColumn(Length = 256)]
     public string Route { get; set; } = string.Empty;
 
     /// <summary>
     /// 路由参数
     ///</summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Query { get; set; }
 
     /// <summary>
     /// 组件路径
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? ComponentPath { get; set; }
 
     /// <summary>
@@ -89,6 +89,6 @@ public class SysMenu : BaseModifyEntity
     /// <summary>
     /// 菜单描述
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 50)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Description { get; set; }
 }

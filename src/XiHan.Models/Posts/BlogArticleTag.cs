@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostArticleTag
+// FileName:BlogArticleTag
 // Guid:7f74e0d5-2c12-492c-b849-9651624ef6ae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章标签关联表
+/// 博客文章标签关联表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Post_Article_Tag")]
-public class PostArticleTag : BaseModifyEntity
+[SugarTable(TableName = "Blog_Article_Tag")]
+public class BlogArticleTag : BaseModifyEntity
 {
     /// <summary>
     /// 关联文章

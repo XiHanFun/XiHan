@@ -27,12 +27,12 @@ public class SysUserNotice : BaseDeleteEntity
     /// <summary>
     /// 通知标题
     /// </summary>
-    [SugarColumn(Length = 200)]
-    public string NoticeTitle { get; set; } = string.Empty;
+    [SugarColumn(Length = 256)]
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 通知内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "text")]
-    public string NoticeContent { get; set; } = string.Empty;
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
+    public string Content { get; set; } = string.Empty;
 }

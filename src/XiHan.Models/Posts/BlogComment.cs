@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostComment
+// FileName:BlogComment
 // Guid:60383ed1-8cd3-43d1-85e8-8b3dc45cdc7e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章评论表
+/// 博客评论表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Post_Comment")]
-public class PostComment : BaseEntity
+[SugarTable(TableName = "Blog_Comment")]
+public class BlogComment : BaseEntity
 {
     /// <summary>
     /// 父级评论
@@ -38,7 +38,7 @@ public class PostComment : BaseEntity
     /// <summary>
     /// 评论内容
     /// </summary>
-    [SugarColumn(Length = 4000)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Content { get; set; } = string.Empty;
 
     /// <summary>
@@ -54,6 +54,6 @@ public class PostComment : BaseEntity
     /// <summary>
     /// 评论者Ip
     /// </summary>
-    [SugarColumn(IsNullable = true)]
+    [SugarColumn(Length = 128, IsNullable = true)]
     public string? Ip { get; set; }
 }

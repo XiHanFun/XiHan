@@ -97,7 +97,7 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
 
         var whereExpression = Expressionable.Create<SysLogException>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.LogLevel.IsNotEmptyOrNull(), u => u.LogLevel == whereDto.LogLevel!);
+        whereExpression.AndIF(whereDto.Level.IsNotEmptyOrNull(), u => u.Level == whereDto.Level!);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -117,7 +117,7 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
 
         var whereExpression = Expressionable.Create<SysLogException>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.LogLevel.IsNotEmptyOrNull(), u => u.LogLevel == whereDto.LogLevel!);
+        whereExpression.AndIF(whereDto.Level.IsNotEmptyOrNull(), u => u.Level == whereDto.Level!);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
     }

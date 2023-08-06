@@ -27,36 +27,14 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 任务名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string JobName { get; set; } = string.Empty;
+    [SugarColumn(Length = 32)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string JobGroup { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 任务描述
-    /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// 执行次数
-    /// </summary>
-    public int RunTimes { get; set; }
-
-    /// <summary>
-    /// 最后运行时间
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public DateTime? LastRunTime { get; set; } = DateTime.Now;
-
-    /// <summary>
-    /// 是否启动
-    /// </summary>
-    public bool IsStart { get; set; }
+    [SugarColumn(Length = 32)]
+    public string Group { get; set; } = string.Empty;
 
     #region 任务类型
 
@@ -71,13 +49,13 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 程序集名称
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? AssemblyName { get; set; }
 
     /// <summary>
     /// 任务所在类
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? ClassName { get; set; }
 
     #endregion
@@ -94,14 +72,14 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// Api执行地址
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? ApiUrl { get; set; }
 
     /// <summary>
     /// 传入参数
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
-    public string? JobParams { get; set; }
+    [SugarColumn(Length = 512, IsNullable = true)]
+    public string? Params { get; set; }
 
     #endregion
 
@@ -110,7 +88,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// SQL语句
     /// </summary>
-    [SugarColumn(Length = 2000, IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string? SqlText { get; set; }
 
     #endregion
@@ -161,10 +139,32 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 运行时间表达式
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Cron { get; set; }
 
     #endregion
 
     #endregion
+
+    /// <summary>
+    /// 执行次数
+    /// </summary>
+    public int RunTimes { get; set; }
+
+    /// <summary>
+    /// 最后运行时间
+    /// </summary>
+    [SugarColumn(IsNullable = true)]
+    public DateTime? LastRunTime { get; set; }
+
+    /// <summary>
+    /// 是否启动
+    /// </summary>
+    public bool IsStart { get; set; }
+
+    /// <summary>
+    /// 任务描述
+    /// </summary>
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Description { get; set; }
 }

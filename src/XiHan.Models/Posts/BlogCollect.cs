@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章收藏表
+/// 博客收藏表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Post_Collect")]
-public class PostCollect : BaseCreateEntity
+[SugarTable(TableName = "Blog_Collect")]
+public class BlogCollect : BaseCreateEntity
 {
     /// <summary>
     /// 分类编码

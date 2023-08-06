@@ -27,24 +27,24 @@ public class SysFriendlyLink : BaseEntity
     /// <summary>
     /// 友链名称
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 64)]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
     /// </summary>
-    [SugarColumn(Length = 200)]
+    [SugarColumn(Length = 256)]
     public string AvatarPath { get; set; } = "/Images/SysFriendlyLink/Avatar/default.png";
 
     /// <summary>
     /// 友链地址
     /// </summary>
-    [SugarColumn(Length = 200)]
+    [SugarColumn(Length = 256)]
     public string Url { get; set; } = string.Empty;
 
     /// <summary>
     /// 友链描述
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string? Description { get; set; }
 }

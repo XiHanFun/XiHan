@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostTag
+// FileName:BlogTag
 // Guid:fa23fa92-d511-41b1-ac8d-1574fa01a3af
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章标签表
+/// 博客标签表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Post_Tag")]
-public class PostTag : BaseModifyEntity
+[SugarTable(TableName = "Blog_Tag")]
+public class BlogTag : BaseModifyEntity
 {
     /// <summary>
     /// 标签别名
@@ -49,13 +49,13 @@ public class PostTag : BaseModifyEntity
     public string Color { get; set; } = string.Empty;
 
     /// <summary>
-    /// 标签描述
-    /// </summary>
-    [SugarColumn(Length = 50)]
-    public string Description { get; set; } = string.Empty;
-
-    /// <summary>
     /// 文章总数
     /// </summary>
     public int ArticleCount { get; set; }
+
+    /// <summary>
+    /// 标签描述
+    /// </summary>
+    [SugarColumn(Length = 50, IsNullable = true)]
+    public string? Description { get; set; } = string.Empty;
 }

@@ -30,15 +30,15 @@ public class SysEmail : BaseModifyEntity
     public bool IsEnabled { get; set; }
 
     /// <summary>
-    /// 主机服务器
+    /// 服务器
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string SmtpHost { get; set; } = string.Empty;
+    [SugarColumn(Length = 32)]
+    public string Host { get; set; } = string.Empty;
 
     /// <summary>
     /// 端口
     /// </summary>
-    public int SmtpPort { get; set; }
+    public int Port { get; set; }
 
     /// <summary>
     /// 是否SSL加密

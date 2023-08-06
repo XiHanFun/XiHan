@@ -45,7 +45,7 @@ public class SysLogLoginWDto
     public string? LoginIp { get; set; }
 
     /// <summary>
-    /// 登录状态
+    /// 登录是否成功
     /// </summary>
-    public bool? Status { get; set; }
+    public bool? IsSuccess { get; set; }
 }

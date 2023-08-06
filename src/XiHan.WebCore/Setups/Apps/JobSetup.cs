@@ -50,13 +50,13 @@ public static class JobSetup
                 var result = schedulerServer.CreateTaskScheduleAsync(job);
                 if (result.Result.IsSuccess)
                 {
-                    var info = $"注册任务：{job.JobName}成功！";
+                    var info = $"注册任务：{job.Name}成功！";
                     info.WriteLineSuccess();
                     Log.Information(info);
                 }
                 else
                 {
-                    var info = $"注册任务：{job.JobName}失败！";
+                    var info = $"注册任务：{job.Name}失败！";
                     info.WriteLineError();
                     Log.Error(info);
                 }

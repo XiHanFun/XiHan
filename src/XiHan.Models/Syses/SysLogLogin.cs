@@ -27,13 +27,13 @@ public class SysLogLogin : BaseCreateEntity
     /// <summary>
     /// 用户账号
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 32)]
     public string Account { get; set; } = string.Empty;
 
     /// <summary>
     /// 姓名
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 10)]
+    [SugarColumn(Length = 32, IsNullable = true)]
     public string? RealName { get; set; }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class SysLogLogin : BaseCreateEntity
     public string? Agent { get; set; }
 
     /// <summary>
-    /// 登录状态
+    /// 登录是否成功
     /// </summary>
-    public bool Status { get; set; }
+    public bool IsSuccess { get; set; }
 }

@@ -39,7 +39,7 @@ public abstract class BaseDeleteEntity : BaseModifyEntity, ISoftDelete
     /// 删除用户名称
     /// </summary>
     /// <remarks>新增不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "删除用户名称")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, Length = 32, ColumnDescription = "删除用户名称")]
     public virtual string? DeletedBy { get; set; }
 
     /// <summary>

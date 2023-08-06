@@ -33,25 +33,25 @@ public class SysOrganization : BaseDeleteEntity
     /// <summary>
     /// 机构编码
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string OrganizationCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 机构名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string OrganizationName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 负责人
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 10)]
+    [SugarColumn(IsNullable = true, Length = 64)]
     public string Leader { get; set; } = string.Empty;
 
     /// <summary>
     /// 手机号码
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 11)]
+    [SugarColumn(IsNullable = true, Length = 32)]
     public string? Phone { get; set; }
 
     /// <summary>
@@ -68,6 +68,6 @@ public class SysOrganization : BaseDeleteEntity
     /// <summary>
     /// 机构描述
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

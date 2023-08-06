@@ -118,7 +118,7 @@ public class GlobalLogMiddleware
             Agent = clientInfo.Agent,
             Ip = clientInfo.RemoteIPv4,
             Status = false,
-            ErrorMsg = ex.Message,
+            ErrorMessage = ex.Message,
             ElapsedTime = elapsed,
         };
 

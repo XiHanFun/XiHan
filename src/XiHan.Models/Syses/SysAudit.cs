@@ -32,12 +32,12 @@ public class SysAudit : BaseDeleteEntity
     /// <summary>
     /// 审核内容
     /// </summary>
-    [SugarColumn(Length = 2000)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核结果
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Result { get; set; }
 }

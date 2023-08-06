@@ -33,8 +33,8 @@ public class SysAuditType : BaseDeleteEntity
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string TypeName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 审核等级
@@ -44,6 +44,6 @@ public class SysAuditType : BaseDeleteEntity
     /// <summary>
     /// 分类描述
     /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

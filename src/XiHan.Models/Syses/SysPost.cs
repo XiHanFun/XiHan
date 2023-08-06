@@ -27,14 +27,14 @@ public class SysPost : BaseDeleteEntity
     /// <summary>
     /// 岗位编码
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string PostCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 岗位名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string PostName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 岗位排序
@@ -44,6 +44,6 @@ public class SysPost : BaseDeleteEntity
     /// <summary>
     /// 岗位描述
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

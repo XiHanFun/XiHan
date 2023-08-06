@@ -34,12 +34,12 @@ public class SysPermissionResource : BaseModifyEntity
     /// 资源编码
     /// 用于在系统中进行权限控制，表示一个具体的功能模块、操作按钮、数据字段等权限资源
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 64)]
     public string ResourceCode { get; set; } = string.Empty;
 
     /// <summary>
     /// 操作编码
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 64)]
     public string OperationCode { get; set; } = string.Empty;
 }

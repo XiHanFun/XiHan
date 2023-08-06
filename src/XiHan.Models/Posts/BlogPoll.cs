@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostPoll
+// FileName:BlogPoll
 // Guid:2fcf240c-8218-497c-aae9-83f9c5791dfe
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章点赞表
+/// 博客点赞表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Post_Poll")]
-public class PostPoll : BaseCreateEntity
+[SugarTable(TableName = "Blog_Poll")]
+public class BlogPoll : BaseCreateEntity
 {
     /// <summary>
     /// 点赞类型(文章或评论)

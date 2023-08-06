@@ -28,31 +28,30 @@ public class SysOauth : BaseModifyEntity
     /// 三方开放授权协议类型
     /// OauthTypeEnum
     /// </summary>
-    [SugarColumn(Length = 10)]
     public int OauthType { get; set; }
 
     /// <summary>
     /// 客户端ID
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 128)]
     public string ClientId { get; set; } = string.Empty;
 
     /// <summary>
     /// 客户端机密
     /// </summary>
-    [SugarColumn(Length = 100)]
-    public string ClientSecret { get; set; } = string.Empty;
+    [SugarColumn(Length = 128)]
+    public string Secret { get; set; } = string.Empty;
 
     /// <summary>
     /// 授权范围
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string Scope { get; set; } = string.Empty;
 
     /// <summary>
     /// 重定向地址
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string RedirectUri { get; set; } = string.Empty;
 
     /// <summary>

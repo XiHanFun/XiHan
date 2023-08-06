@@ -26,14 +26,14 @@ public class SysPermissionWDto
     /// </summary>
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? PermissionCode { get; set; }
+    public string? Code { get; set; }
 
     /// <summary>
     /// 权限名称
     /// </summary>
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(20, ErrorMessage = "{0}不能多于{1}个字符")]
-    public string? PermissionName { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// 权限类型

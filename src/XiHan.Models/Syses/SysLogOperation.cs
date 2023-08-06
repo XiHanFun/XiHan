@@ -27,13 +27,13 @@ public class SysLogOperation : BaseCreateEntity
     /// <summary>
     /// 操作方法
     ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Method { get; set; }
 
     /// <summary>
     /// 操作模块
     ///</summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
+    [SugarColumn(Length = 32, IsNullable = true)]
     public string? Module { get; set; }
 
     /// <summary>
@@ -47,13 +47,13 @@ public class SysLogOperation : BaseCreateEntity
     /// <summary>
     /// 请求参数
     ///</summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? RequestParameters { get; set; }
 
     /// <summary>
     /// 响应结果
     ///</summary>
-    [SugarColumn(Length = 4000, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? ResponseResult { get; set; }
 
     /// <summary>
@@ -64,8 +64,8 @@ public class SysLogOperation : BaseCreateEntity
     /// <summary>
     /// 错误消息
     /// </summary>
-    [SugarColumn(Length = 4000, IsNullable = true)]
-    public string? ErrorMsg { get; set; }
+    [SugarColumn(Length = 512, IsNullable = true)]
+    public string? ErrorMessage { get; set; }
 
     /// <summary>
     /// 操作用时
@@ -95,25 +95,25 @@ public class SysLogOperation : BaseCreateEntity
     /// <summary>
     /// 操作地点
     ///</summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? Location { get; set; }
 
     /// <summary>
     /// 来源页面
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Referrer { get; set; }
 
     /// <summary>
     /// 代理信息
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Agent { get; set; }
 
     /// <summary>
     /// 操作Ip
     ///</summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
+    [SugarColumn(Length = 32, IsNullable = true)]
     public string? Ip { get; set; }
 
     #endregion

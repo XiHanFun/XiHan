@@ -24,15 +24,18 @@ public enum PubStatusEnum
     /// <summary>
     /// 回收站
     /// </summary>
-    [Description("回收站")] Recycle = 0,
+    [Description("回收站")]
+    Recycle = 0,
 
     /// <summary>
     /// 已发布
     /// </summary>
-    [Description("已发布")] Published = 1,
+    [Description("已发布")]
+    Published = 1,
 
     /// <summary>
     /// 草稿箱
     /// </summary>
-    [Description("草稿箱")] Drafts = 2
+    [Description("草稿箱")]
+    Drafts = 2
 }

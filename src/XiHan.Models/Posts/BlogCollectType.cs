@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostCollectType
+// FileName:BlogCollectType
 // Guid:8d28b4f1-d0cc-4857-9150-353deffa880d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章收藏分类表
+/// 博客收藏分类表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Post_Collect_Type")]
-public class PostCollectType : BaseEntity
+[SugarTable(TableName = "Blog_Collect_Type")]
+public class BlogCollectType : BaseEntity
 {
     /// <summary>
     /// 父级收藏分类
@@ -33,23 +33,23 @@ public class PostCollectType : BaseEntity
     /// <summary>
     /// 分类编码
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string TypeCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
-    public string TypeName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 收藏分类描述
-    /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Remark { get; set; }
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 收藏总数
     /// </summary>
     public int CollectCount { get; set; }
+
+    /// <summary>
+    /// 收藏分类描述
+    /// </summary>
+    [SugarColumn(Length = 512, IsNullable = true)]
+    public string? Description { get; set; }
 }

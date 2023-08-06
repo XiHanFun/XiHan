@@ -34,14 +34,14 @@ public class SysRole : BaseDeleteEntity
     /// 角色编码
     /// 如：admin
     /// </summary>
-    [SugarColumn(Length = 50)]
-    public string RoleCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string RoleName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 角色排序
@@ -49,18 +49,14 @@ public class SysRole : BaseDeleteEntity
     public int SortOrder { get; set; }
 
     /// <summary>
-    /// 角色描述
-    /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
-    public string? Description { get; set; }
-
-    #region 其他字段
-
-    /// <summary>
     /// 用户个数
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     public int UserCount { get; set; }
 
-    #endregion
+    /// <summary>
+    /// 角色描述
+    /// </summary>
+    [SugarColumn(Length = 512, IsNullable = true)]
+    public string? Description { get; set; }
 }

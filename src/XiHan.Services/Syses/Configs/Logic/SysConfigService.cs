@@ -38,6 +38,11 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
         _appCacheService = appCacheService;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="configCDto"></param>
+    /// <returns></returns>
     public async Task<long> CeateSysConfig(SysConfigCDto configCDto)
     {
         var sysConfig = configCDto.Adapt<SysConfig>();

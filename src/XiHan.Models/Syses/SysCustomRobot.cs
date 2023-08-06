@@ -25,11 +25,6 @@ namespace XiHan.Models.Syses;
 public class SysCustomRobot : BaseModifyEntity
 {
     /// <summary>
-    /// 是否可用
-    /// </summary>
-    public bool IsEnabled { get; set; }
-
-    /// <summary>
     /// 自定义机器人类型
     /// CustomRobotTypeEnum
     /// </summary>
@@ -38,27 +33,32 @@ public class SysCustomRobot : BaseModifyEntity
     /// <summary>
     /// 网络挂钩地址
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string WebHookUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 访问令牌
     /// 钉钉、飞书为 AccessToken，企业微信为 Key
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 128)]
     public string AccessTokenOrKey { get; set; } = string.Empty;
 
     /// <summary>
     /// 机密
     /// 钉钉、飞书用
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 128, IsNullable = true)]
     public string? Secret { get; set; } = string.Empty;
 
     /// <summary>
     /// 上传地址
     /// 企业微信用
     /// </summary>
-    [SugarColumn(Length = 100, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? UploadUrl { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否可用
+    /// </summary>
+    public bool IsEnabled { get; set; }
 }

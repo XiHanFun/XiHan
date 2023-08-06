@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostCategory
+// FileName:BlogCategory
 // Guid:73eb779d-74f7-40ad-a7bd-79617d20c4f2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,14 +15,14 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entity;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章分类表
+/// 博客分类表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Post_Category")]
-public class PostCategory : BaseModifyEntity
+[SugarTable(TableName = "Blog_Category")]
+public class BlogCategory : BaseModifyEntity
 {
     /// <summary>
     /// 父级分类
@@ -33,17 +33,17 @@ public class PostCategory : BaseModifyEntity
     /// <summary>
     /// 分类名称
     /// </summary>
-    [SugarColumn(Length = 10)]
+    [SugarColumn(Length = 64)]
     public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 分类描述
-    /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Description { get; set; }
 
     /// <summary>
     /// 文章总数
     /// </summary>
     public int ArticleCount { get; set; }
+
+    /// <summary>
+    /// 分类描述
+    /// </summary>
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Description { get; set; }
 }

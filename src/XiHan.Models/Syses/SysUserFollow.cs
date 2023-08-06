@@ -32,6 +32,6 @@ public class SysUserFollow : BaseCreateEntity
     /// <summary>
     /// 备注名称
     /// </summary>
-    [SugarColumn(Length = 20, IsNullable = true)]
+    [SugarColumn(Length = 64, IsNullable = true)]
     public string? RemarkName { get; set; }
 }

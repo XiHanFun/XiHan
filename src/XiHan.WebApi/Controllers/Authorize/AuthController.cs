@@ -15,7 +15,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
@@ -104,7 +103,7 @@ public class AuthController : BaseApiController
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
             if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
-            sysLogLogin.Status = true;
+            sysLogLogin.IsSuccess = true;
             sysLogLogin.Message = "登录成功！";
             sysLogLogin.Account = sysUser.Account;
             sysLogLogin.RealName = sysUser.RealName;
@@ -122,7 +121,7 @@ public class AuthController : BaseApiController
         }
         catch (Exception ex)
         {
-            sysLogLogin.Status = false;
+            sysLogLogin.IsSuccess = false;
             sysLogLogin.Message = ex.Message;
         }
 
@@ -136,6 +135,6 @@ public class AuthController : BaseApiController
 
         await _sysLogLoginService.AddAsync(sysLogLogin);
 
-        return sysLogLogin.Status ? CustomResult.Success(token) : CustomResult.BadRequest(sysLogLogin.Message);
+        return sysLogLogin.IsSuccess ? CustomResult.Success(token) : CustomResult.BadRequest(sysLogLogin.Message);
     }
 }

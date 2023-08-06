@@ -32,36 +32,36 @@ public class SysLogJob : BaseDeleteEntity
     /// <summary>
     /// 任务名称
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 32)]
     public string JobName { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务分组
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 32)]
     public string JobGroup { get; set; } = string.Empty;
 
     /// <summary>
-    /// 任务信息
+    /// 执行信息
     /// </summary>
-    [SugarColumn(Length = 100)]
-    public string JobMessage { get; set; } = string.Empty;
+    [SugarColumn(Length = 256)]
+    public string Message { get; set; } = string.Empty;
 
     /// <summary>
-    /// 执行结果（1正常 0失败）
+    /// 是否执行成功（1正常 0失败）
     /// </summary>
-    public bool RunResult { get; set; }
+    public bool IsSuccess { get; set; }
 
     /// <summary>
-    /// 异常
+    /// 异常信息
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Exception { get; set; } = string.Empty;
 
     /// <summary>
     /// 调用目标字符串
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? InvokeTarget { get; set; }
 
     /// <summary>

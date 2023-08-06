@@ -48,8 +48,8 @@ public class JobBase
             await job();
             _stopwatch.Stop();
 
-            sysLogJob.RunResult = true;
-            sysLogJob.JobMessage = "执行成功！";
+            sysLogJob.IsSuccess = true;
+            sysLogJob.Message = "执行成功！";
             sysLogJob.Elapsed = _stopwatch.ElapsedMilliseconds;
         }
         catch (Exception ex)
@@ -60,8 +60,8 @@ public class JobBase
                 RefireImmediately = true
             };
 
-            sysLogJob.RunResult = false;
-            sysLogJob.JobMessage = "执行失败！";
+            sysLogJob.IsSuccess = false;
+            sysLogJob.Message = "执行失败！";
             sysLogJob.Exception = ex.Message;
         }
 
@@ -86,10 +86,10 @@ public class JobBase
             jobLog.JobId = jobDetail.Key.Name.ParseToLong();
             jobLog.InvokeTarget = jobDetail.JobType.FullName;
             jobLog = await sysLogJobService.CreateLogJob(jobLog);
-            var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.JobMessage}";
+            var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
 
             // 若执行成功，则执行次数加一
-            if (jobLog.RunResult)
+            if (jobLog.IsSuccess)
             {
                 await sysJobService.UpdateAsync(j => new SysJob()
                 {

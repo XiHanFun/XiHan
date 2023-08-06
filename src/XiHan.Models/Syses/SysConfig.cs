@@ -34,19 +34,19 @@ public class SysConfig : BaseModifyEntity
     /// 配置编码
     ///</summary>
     [SugarColumn(Length = 64)]
-    public string ConfigCode { get; set; } = string.Empty;
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 配置名称
     /// </summary>
     [SugarColumn(Length = 64)]
-    public string ConfigName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 配置项值
     /// </summary>
-    [SugarColumn(Length = 10)]
-    public string ConfigValue { get; set; } = string.Empty;
+    [SugarColumn(Length = 512)]
+    public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否系统内置
@@ -54,8 +54,13 @@ public class SysConfig : BaseModifyEntity
     public bool IsOfficial { get; set; } = false;
 
     /// <summary>
+    /// 配置排序
+    /// </summary>
+    public int SortOrder { get; set; }
+
+    /// <summary>
     /// 字典描述
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

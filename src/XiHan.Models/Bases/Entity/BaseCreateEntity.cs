@@ -32,7 +32,7 @@ public abstract class BaseCreateEntity : BaseIdEntity
     /// 新增用户名称
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增用户名称")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, Length = 32, ColumnDescription = "新增用户名称")]
     public virtual string? CreatedBy { get; set; }
 
     /// <summary>

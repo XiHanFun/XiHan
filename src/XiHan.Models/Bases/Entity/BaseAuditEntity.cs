@@ -32,7 +32,7 @@ public abstract class BaseAuditEntity : BaseDeleteEntity
     /// 审核用户名称
     /// </summary>
     /// <remarks>新增不会有此字段</remarks>
-    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "审核用户名称")]
+    [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, Length = 32, ColumnDescription = "审核用户名称")]
     public virtual string? AuditedBy { get; set; }
 
     /// <summary>

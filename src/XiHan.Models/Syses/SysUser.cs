@@ -29,7 +29,7 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 用户账号
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 64)]
     public virtual string Account { get; set; } = string.Empty;
 
     /// <summary>
@@ -41,19 +41,19 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 用户昵称
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 64)]
     public string NickName { get; set; } = string.Empty;
 
     /// <summary>
     /// 头像路径
     /// </summary>
-    [SugarColumn(Length = 512)]
+    [SugarColumn(Length = 256)]
     public string AvatarPath { get; set; } = @"/Images/Accounts/Avatar/default.png";
 
     /// <summary>
     /// 签名
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Signature { get; set; }
 
     #endregion
@@ -63,7 +63,7 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 姓名
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 10)]
+    [SugarColumn(IsNullable = true, Length = 64)]
     public virtual string RealName { get; set; } = string.Empty;
 
     /// <summary>
@@ -82,7 +82,7 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 手机号码
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 11)]
+    [SugarColumn(IsNullable = true, Length = 32)]
     public string? Phone { get; set; }
 
     /// <summary>

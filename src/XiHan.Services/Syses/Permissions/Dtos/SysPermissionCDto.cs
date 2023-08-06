@@ -51,6 +51,6 @@ public class SysPermissionCDto
     /// <summary>
     /// 权限描述
     /// </summary>
-    [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? Description { get; set; }
 }

@@ -27,14 +27,14 @@ public class SysDictType : BaseModifyEntity
     /// <summary>
     /// 字典编码
     ///</summary>
-    [SugarColumn(Length = 50)]
-    public string TypeCode { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// 字典名称
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string TypeName { get; set; } = string.Empty;
+    [SugarColumn(Length = 64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否启用
@@ -49,6 +49,6 @@ public class SysDictType : BaseModifyEntity
     /// <summary>
     /// 字典描述
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
 }

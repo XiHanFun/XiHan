@@ -55,8 +55,8 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
         var sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == logJob.JobId);
         if (sysJob != null)
         {
-            logJob.JobName = sysJob.JobName;
-            logJob.JobGroup = sysJob.JobGroup;
+            logJob.JobName = sysJob.Name;
+            logJob.JobGroup = sysJob.Group;
         }
         _ = await AddAsync(logJob);
         return logJob;
@@ -106,7 +106,7 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
         var whereExpression = Expressionable.Create<SysLogJob>();
         whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
         whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
-        whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);
+        whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -123,7 +123,7 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
         var whereExpression = Expressionable.Create<SysLogJob>();
         whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
         whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
-        whereExpression.AndIF(whereDto.RunResult != null, u => u.RunResult == whereDto.RunResult);
+        whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
     }

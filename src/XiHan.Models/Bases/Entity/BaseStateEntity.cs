@@ -24,12 +24,12 @@ public abstract class BaseStateEntity : BaseAuditEntity
     /// <summary>
     /// 状态项
     /// </summary>
-    [SugarColumn(IsIgnore = true, ColumnDescription = "状态项")]
+    [SugarColumn(IsIgnore = true, Length = 64, ColumnDescription = "状态项")]
     public virtual string? StateKey { get; init; }
 
     /// <summary>
     /// 状态值
     /// </summary>
-    [SugarColumn(IsIgnore = true, ColumnDescription = "状态值")]
+    [SugarColumn(IsIgnore = true, Length = 64, ColumnDescription = "状态值")]
     public virtual string? StateValue { get; init; }
 }

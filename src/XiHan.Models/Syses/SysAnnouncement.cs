@@ -27,19 +27,19 @@ public class SysAnnouncement : BaseDeleteEntity
     /// <summary>
     /// 公告标题
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告内容
     /// </summary>
-    [SugarColumn(Length = 4000)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// 公告链接
     /// </summary>
-    [SugarColumn(Length = 200, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Url { get; set; }
 
     /// <summary>

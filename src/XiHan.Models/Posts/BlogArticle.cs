@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PostArticle
+// FileName:BlogArticle
 // Guid:dbe0832e-7ed3-41ff-bda4-2a2206174fae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,49 +15,49 @@
 using SqlSugar;
 using XiHan.Models.Bases;
 
-namespace XiHan.Models.Posts;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 文章表
+/// 博客文章表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Post_Article")]
-public class PostArticle : BaseEntity
+[SugarTable(TableName = "Blog_Article")]
+public class BlogArticle : BaseEntity
 {
     /// <summary>
     /// 文章别名
     /// </summary>
-    [SugarColumn(Length = 50)]
+    [SugarColumn(Length = 256)]
     public string Alias { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章标题
     /// </summary>
-    [SugarColumn(Length = 100)]
+    [SugarColumn(Length = 256)]
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章关键词
     /// </summary>
-    [SugarColumn(Length = 500)]
+    [SugarColumn(Length = 128)]
     public string Keyword { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章概要
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
+    [SugarColumn(Length = 512, IsNullable = true)]
     public string? Summary { get; set; }
 
     /// <summary>
     /// 封面地址
     /// </summary>
-    [SugarColumn(Length = 500)]
+    [SugarColumn(Length = 256)]
     public string CoverUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章内容
     /// </summary>
-    [SugarColumn(ColumnDataType = "text")]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Content { get; set; } = string.Empty;
 
     #region 文章设置
@@ -100,7 +100,7 @@ public class PostArticle : BaseEntity
     /// <summary>
     /// 转载链接
     /// </summary>
-    [SugarColumn(Length = 500, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? ReprintUrl { get; set; }
 
     /// <summary>

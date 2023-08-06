@@ -32,5 +32,5 @@ public class SysLogExceptionWDto
     /// <summary>
     /// 日志级别
     /// </summary>
-    public string? LogLevel { get; set; }
+    public string? Level { get; set; }
 }
