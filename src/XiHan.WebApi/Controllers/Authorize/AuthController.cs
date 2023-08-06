@@ -99,9 +99,6 @@ public class AuthController : BaseApiController
         var token = string.Empty;
         var sysLogLogin = new SysLogLogin();
 
-        var clientInfo = App.ClientInfo;
-        var addressInfo = App.AddressInfo;
-
         try
         {
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
@@ -129,6 +126,8 @@ public class AuthController : BaseApiController
             sysLogLogin.Message = ex.Message;
         }
 
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
         sysLogLogin.LoginIp = clientInfo.RemoteIPv4;
         sysLogLogin.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
         sysLogLogin.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
@@ -137,7 +136,6 @@ public class AuthController : BaseApiController
 
         await _sysLogLoginService.AddAsync(sysLogLogin);
 
-        if (sysLogLogin.Status) return CustomResult.Success(token);
-        return CustomResult.BadRequest(sysLogLogin.Message);
+        return sysLogLogin.Status ? CustomResult.Success(token) : CustomResult.BadRequest(sysLogLogin.Message);
     }
 }

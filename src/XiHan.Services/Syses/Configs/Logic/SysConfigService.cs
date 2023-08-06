@@ -12,10 +12,12 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
 using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Configs.Dtos;
 
 namespace XiHan.Services.Syses.Configs.Logic;
 
@@ -34,5 +36,12 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     public SysConfigService(IAppCacheService appCacheService)
     {
         _appCacheService = appCacheService;
+    }
+
+    public async Task<long> CeateSysConfig(SysConfigCDto configCDto)
+    {
+        var sysConfig = configCDto.Adapt<SysConfig>();
+
+        return await AddReturnIdAsync(sysConfig);
     }
 }
