@@ -66,9 +66,14 @@ public static class AppSettings
     public static class Database
     {
         /// <summary>
-        /// 是否已经初始化
+        /// 是否初始化数据库
         /// </summary>
-        public static bool Initialized { get; set; }
+        public static bool EnableInitDb { get; set; }
+
+        /// <summary>
+        /// 是否初始化种子数据
+        /// </summary>
+        public static bool EnableInitSeed { get; set; }
 
         /// <summary>
         /// 类型

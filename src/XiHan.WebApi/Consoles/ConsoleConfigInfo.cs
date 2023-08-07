@@ -44,7 +44,8 @@ public static class ConsoleConfigInfo
         "==============================配置信息==============================".WriteLineInfo();
         "数据库：".WriteLineInfo();
         $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();
-        $@"是否初始化：{AppSettings.Database.Initialized.GetValue()}".WriteLineInfo();
+        $@"初始化数据库：{AppSettings.Database.EnableInitDb.GetValue()}".WriteLineInfo();
+        $@"初始化种子数据：{AppSettings.Database.EnableInitSeed.GetValue()}".WriteLineInfo();
         "分析：".WriteLineInfo();
         $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}".WriteLineInfo();
         "缓存：".WriteLineInfo();

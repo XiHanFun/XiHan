@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar;
@@ -20,7 +19,9 @@ using SqlSugar.IOC;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Models.Bases.Entity;
+using XiHan.Models.Bases.Interface;
 using XiHan.Models.Syses;
+using XiHan.Services.Syses.Configs;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
@@ -129,7 +130,7 @@ public static class SqlSugarSetup
             // 数据审计
             client.Aop.DataExecuting = (oldValue, entityInfo) =>
             {
-                //var isDemoMode = App.GetService<SysConfigService>().GetConfigValue<bool>(CommonConst.SysDemoEnv).GetAwaiter().GetResult();
+                var isDemoMode = App.GetService<ISysConfigService>().GetSysConfigValueByCode<bool>("IsDemoMode").GetAwaiter().GetResult();
                 // 演示环境判断
                 if (entityInfo.EntityColumnInfo.IsPrimarykey)
                 {
@@ -149,44 +150,5 @@ public static class SqlSugarSetup
             };
         });
         return services;
-    }
-
-    /// <summary>
-    /// 初始化数据库
-    /// </summary>
-    /// <param name="app"></param>
-    public static void InitDatabase(this IApplicationBuilder app)
-    {
-        var db = DbScoped.SugarScope;
-        var databaseInitialized = AppSettings.Database.Initialized.GetValue();
-        // 若数据库已经初始化，则跳过，否则初始化数据库
-        "正在从配置中检测是否需要数据库初始化……".WriteLineInfo();
-        if (databaseInitialized)
-            "数据库已初始化。".WriteLineSuccess();
-        else
-            try
-            {
-                "数据库正在初始化……".WriteLineInfo();
-
-                // 创建数据库
-                "创建数据库……".WriteLineInfo();
-                db.DbMaintenance.CreateDatabase();
-                "数据库创建成功！".WriteLineSuccess();
-
-                // 创建数据表
-                "创建数据表……".WriteLineInfo();
-
-                // 获取含有 SugarTable 的所有 Models 的实体
-                var entities = ReflectionHelper.GetContainsAttributeSubClass<SugarTable>(typeof(BaseIdEntity)).ToArray();
-
-                db.CodeFirst.SetStringDefaultLength(256).InitTables(entities);
-
-                "数据表创建成功！".WriteLineSuccess();
-                "数据库初始化已完成！".WriteLineSuccess();
-            }
-            catch (Exception ex)
-            {
-                ex.ThrowAndConsoleError("数据库初始化或数据表初始化失败，请检查数据库连接字符是否正确！");
-            }
     }
 }

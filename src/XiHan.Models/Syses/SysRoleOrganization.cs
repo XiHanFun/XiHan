@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Models.Bases.Entity;
 
 namespace XiHan.Models.Syses;
 
@@ -20,8 +21,8 @@ namespace XiHan.Models.Syses;
 /// 系统角色机构关联表(为某角色分配机构)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Sys_Role_Department")]
-public class SysRoleOrganization
+[SugarTable(TableName = "Sys_Role_Organization")]
+public class SysRoleOrganization : BaseModifyEntity
 {
     /// <summary>
     /// 系统角色

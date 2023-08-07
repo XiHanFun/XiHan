@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.VisualBasic;
 using System.Reflection;
 using XiHan.Utils.Extensions;
 
@@ -45,7 +46,7 @@ public static class ReflectionHelper
     }
 
     /// <summary>
-    /// 获取所有的Type
+    /// 获取所有类
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<Type> GetAllTypes()
@@ -56,88 +57,156 @@ public static class ReflectionHelper
         assemblies.ForEach(assembly =>
         {
             // 取并集去重
-            types = types.Union(assembly.GetTypes().ToList()).ToList();
+            types = types.Union(assembly.GetTypes()).ToList();
         });
 
         return types;
     }
 
+    #region 获取包含有某属性的类
+
     /// <summary>
-    /// 获取包含有某属性的 Type
+    /// 获取包含有某属性的类
+    /// 第一种实现
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
     public static IEnumerable<Type> GetContainsAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        List<Type> types = new();
-
-        var assemblies = GetAssemblies();
-        assemblies.ForEach(assembly =>
-        {
-            // 取并集去重
-            types = types.Union(assembly.GetTypes()
-                .Where(e => e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute)))
-                .ToList())
-            .ToList();
-        });
-
-        return types;
+        return GetAllTypes()
+           .Where(e => e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute)))
+           .ToList();
     }
 
     /// <summary>
-    /// 获取继承自某 Type 的包含有某属性的接口、类的子类(非抽象类)
-    /// 第一种实现
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TAttribute"></typeparam>
-    /// <returns></returns>
-    public static List<Type> GetContainsAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
-    {
-        return GetContainsAttributeTypes<TAttribute>()
-            .Where(t => t is { IsAbstract: false, IsClass: true })
-            .Where(t => typeof(T).IsAssignableFrom(t))
-            .ToList();
-    }
-
-    /// <summary>
-    /// 获取继承自某 Type 的包含有某属性的接口、类的子类(非抽象类)
+    /// 获取包含有某属性的类
     /// 第二种实现
     /// </summary>
-    /// <typeparam name="TAttribute"></typeparam>
-    /// <param name="type"></param>
+    /// <param name="attribute"></param>
     /// <returns></returns>
-    public static List<Type> GetContainsAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
+    public static IEnumerable<Type> GetContainsAttributeTypes(Attribute attribute)
     {
-        return GetContainsAttributeTypes<TAttribute>()
-            .Where(t => t is { IsAbstract: false, IsClass: true })
-            .Where(t => type.IsAssignableFrom(t))
-            .ToList();
+        return GetAllTypes()
+           .Where(e => e.CustomAttributes.Any(g => g.AttributeType == attribute.GetType()))
+           .ToList();
     }
 
+    #endregion
+
+    #region 获取不包含有某属性的类
+
     /// <summary>
-    /// 获取不包含有某属性的 Type
+    /// 获取不包含有某属性的类
+    /// 第一种实现
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
     public static IEnumerable<Type> GetFilterAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        List<Type> types = new();
-
-        var assemblies = GetAssemblies();
-        assemblies.ForEach(assembly =>
-        {
-            // 取并集去重
-            types = types.Union(assembly.GetTypes()
-                .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute)))
-                .ToList())
+        return GetAllTypes()
+            .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute)))
             .ToList();
-        });
-
-        return types;
     }
 
     /// <summary>
-    /// 获取继承自某 Type 的过滤有某属性的接口、类的子类(非抽象类)
+    /// 获取包含有某属性的类
+    /// 第二种实现
+    /// </summary>
+    /// <param name="attribute"></param>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetFilterAttributeTypes(Attribute attribute)
+    {
+        return GetAllTypes()
+           .Where(e => e.CustomAttributes.All(g => g.AttributeType != attribute.GetType()))
+           .ToList();
+    }
+
+    #endregion
+
+    #region 获取某类的子类(非抽象类)
+
+    /// <summary>
+    /// 获取某类的子类(非抽象类)
+    /// 第一种实现
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetSubClasses<T>() where T : class
+    {
+        return GetAllTypes()
+           .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
+           .Where(t => typeof(T).IsAssignableFrom(t))
+           .ToList();
+    }
+
+    /// <summary>
+    /// 获取某类的子类(非抽象类)
+    /// 第二种实现
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetSubClasses(Type type)
+    {
+        return GetAllTypes()
+            .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
+            .Where(type.IsAssignableFrom)
+            .ToList();
+    }
+
+    /// <summary>
+    /// 获取某泛型接口的子类(非抽象类)
+    /// </summary>
+    /// <param name="interfaceType"></param>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetSubClassesByGenericInterface(Type interfaceType)
+    {
+        List<Type> implementingTypes = new();
+
+        foreach (Type type in GetAllTypes())
+        {
+            if (type.IsClass && !type.IsAbstract && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
+            {
+                implementingTypes.Add(type);
+            }
+        }
+
+        return implementingTypes;
+    }
+
+    #endregion
+
+    #region 获取继承自某类的包含有某属性的接口、类的子类(非抽象类)
+
+    /// <summary>
+    /// 获取继承自某类的包含有某属性的接口、类的子类(非抽象类)
+    /// 第一种实现
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <returns></returns>
+    public static List<Type> GetContainsAttributeSubClasses<T, TAttribute>() where T : class where TAttribute : Attribute
+    {
+        return GetSubClasses<T>().Intersect(GetContainsAttributeTypes<TAttribute>()).ToList();
+    }
+
+    /// <summary>
+    /// 获取继承自某类的包含有某属性的接口、类的子类(非抽象类)
+    /// 第二种实现
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static List<Type> GetContainsAttributeSubClasses<TAttribute>(Type type) where TAttribute : Attribute
+    {
+        return GetSubClasses(type).Intersect(GetContainsAttributeTypes<TAttribute>()).ToList();
+    }
+
+    #endregion
+
+    #region 获取继承自某类的不包含有某属性的接口、类的子类(非抽象类)
+
+    /// <summary>
+    /// 获取继承自某类的不包含有某属性的接口、类的子类(非抽象类)
     /// 第一种实现
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -145,14 +214,11 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
-        return GetFilterAttributeTypes<TAttribute>()
-            .Where(t => t is { IsAbstract: false, IsClass: true })
-            .Where(t => typeof(T).IsAssignableFrom(t))
-            .ToList();
+        return GetSubClasses<T>().Intersect(GetFilterAttributeTypes<TAttribute>()).ToList();
     }
 
     /// <summary>
-    /// 获取继承自某 Type 的过滤有某属性的接口、类的子类(非抽象类)
+    /// 获取继承自某类的不包含有某属性的接口、类的子类(非抽象类)
     /// 第二种实现
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
@@ -160,27 +226,13 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static List<Type> GetFilterAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
-        return GetFilterAttributeTypes<TAttribute>()
-            .Where(t => t is { IsAbstract: false, IsClass: true })
-            .Where(t => type.IsAssignableFrom(t))
-            .ToList();
+        return GetSubClasses(type).Intersect(GetFilterAttributeTypes<TAttribute>()).ToList();
     }
 
-    /// <summary>
-    /// 获取 Type 的非抽象子类(无视属性)
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public static List<Type> GetSubClass(Type type)
-    {
-        return GetAllTypes()
-            .Where(type.IsAssignableFrom)
-            .Where(t => t is { IsAbstract: false, IsClass: true })
-            .ToList();
-    }
+    #endregion
 
     /// <summary>
-    /// 对象转换成字典 过滤某特性
+    /// 对象转换成字典(过滤某特性)
     /// </summary>
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="obj"></param>
