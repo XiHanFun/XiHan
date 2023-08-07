@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
-using Quartz.Impl.AdoJobStore.Common;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Collections;
@@ -113,25 +112,28 @@ public static class InitDatabaseSetup
         {
             var instance = Activator.CreateInstance(seedType);
 
-            var hasDataMethod = seedType.GetMethod("HasData");
+            var hasDataMethod = seedType.GetMethods().First();
             var seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
             if (seedData == null) return;
 
             var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
             var entityInfo = dbProvider.EntityMaintenance.GetEntityInfo(entityType);
-            if (entityInfo.Columns.Any(u => u.IsPrimarykey))
+
+            if (!dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
             {
-                // 按主键进行批量增加和更新
-                var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
-                storage.AsInsertable.ExecuteCommand();
-                var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
-                if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
-            }
-            else
-            {
-                // 无主键则只进行插入
-                if (!dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
+                if (entityInfo.Columns.Any(u => u.IsPrimarykey))
+                {
+                    // 按主键进行批量增加和更新
+                    var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
+                    storage.AsInsertable.ExecuteCommand();
+                    var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                    if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
+                }
+                else
+                {
+                    // 无主键则只进行插入
                     dbProvider.InsertableByObject(seedData.ToList()).ExecuteCommand();
+                }
             }
         });
     }

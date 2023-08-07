@@ -59,6 +59,7 @@
     <ItemGroup>
         <Folder Include="Properties\PublishProfiles\" />
         <Folder Include="Uploads\" />
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <ItemGroup>

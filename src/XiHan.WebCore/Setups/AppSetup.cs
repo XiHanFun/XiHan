@@ -41,9 +41,13 @@ public static class AppSetup
         "XiHan Application Start……".WriteLineInfo();
         if (app == null) throw new ArgumentNullException(nameof(app));
 
+        // 注入全局宿主环境
+        AppEnvironmentManager.WebHostEnvironment = env;
+        // 注入全局服务
+        AppServiceManager.ServiceProvider = app.ApplicationServices;
+
         // 初始化数据库
         app.InitDatabase();
-
         // Http
         app.UseHttpSetup(env);
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
@@ -79,11 +83,6 @@ public static class AppSetup
             // 即时通讯
             endpoints.MapHub<ChatHub>("/Chathub");
         });
-
-        // 注入全局宿主环境
-        AppEnvironmentManager.WebHostEnvironment = env;
-        // 注入全局服务
-        AppServiceManager.ServiceProvider = app.ApplicationServices;
 
         "XiHan Application Started Successfully！".WriteLineSuccess();
         return app;

@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -85,8 +84,8 @@ public static class HttpContextExtend
         if (context == null) throw new ArgumentNullException(nameof(context));
 
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "X-Requested-With".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "X-Requested-With".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
     }
 
@@ -101,8 +100,8 @@ public static class HttpContextExtend
         if (context == null) throw new ArgumentNullException(nameof(context));
 
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "content-type".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "content-type".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
     }
 
@@ -117,8 +116,8 @@ public static class HttpContextExtend
         if (context == null) throw new ArgumentNullException(nameof(context));
 
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "accept".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "accept".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
     }
 
@@ -370,6 +369,7 @@ public static class HttpContextExtend
         {
             var userAuthInfo = new UserAuthInfo
             {
+                IsAuthenticated = context.IsAuthenticated(),
                 UserId = context.GetUserId(),
                 UserName = context.GetUserName(),
                 UserRole = context.GetUserRole(),
@@ -386,6 +386,19 @@ public static class HttpContextExtend
     }
 
     /// <summary>
+    /// 是否已鉴权
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static bool? IsAuthenticated(this HttpContext? context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+
+        return context.User.Identity?.IsAuthenticated;
+    }
+
+    /// <summary>
     /// 获取登录用户 Id
     /// </summary>
     /// <param name="context"></param>
@@ -395,7 +408,7 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var uid = context.User.FindFirstValue(ClaimTypes.PrimarySid);
+        var uid = context.User.FindFirstValue("UserId");
         return uid.ParseToLong();
     }
 
@@ -409,7 +422,7 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var uname = context.User.Identity?.Name;
+        var uname = context.User.FindFirstValue("UserName");
         return uname;
     }
 
@@ -423,8 +436,8 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        var roleId = context.User.FindFirstValue(ClaimTypes.Role);
-        return roleId.ParseToString();
+        var roleIds = context.User.FindAll("SysRole").Select(r => r.Value).ToList();
+        return roleIds.GetListStr(",");
     }
 
     /// <summary>
@@ -437,7 +450,7 @@ public static class HttpContextExtend
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
 
-        return context.Request.Headers["Authorization"].ToString();
+        return context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
     }
 
     ///// <summary>
@@ -599,6 +612,11 @@ public class UserAddressInfo
 /// </summary>
 public class UserAuthInfo
 {
+    /// <summary>
+    /// 是否已鉴权
+    /// </summary>
+    public bool? IsAuthenticated { get; set; }
+
     /// <summary>
     /// 用户ID
     /// </summary>

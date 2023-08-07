@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Security.Claims;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
@@ -60,22 +59,22 @@ public static class App
     /// <summary>
     /// 请求上下文客户端信息
     /// </summary>
-    public static UserClientInfo ClientInfo => HttpContextCurrent.GetClientInfo();
+    public static UserClientInfo ClientInfo => AppHttpContextManager.HttpContextCurrent.GetClientInfo();
 
     /// <summary>
     /// 请求上下文地址信息
     /// </summary>
-    public static UserAddressInfo AddressInfo => HttpContextCurrent.GetAddressInfo();
+    public static UserAddressInfo AddressInfo => AppHttpContextManager.HttpContextCurrent.GetAddressInfo();
 
     /// <summary>
     /// 请求上下文权限信息
     /// </summary>
-    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
+    public static UserAuthInfo AuthInfo => AppHttpContextManager.HttpContextCurrent.GetUserAuthInfo();
 
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
+    public static IServiceProvider ServiceProvider => AppHttpContextManager.HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 
     /// <summary>
     /// 获取请求生命周期服务
@@ -95,7 +94,7 @@ public static class App
     /// <returns></returns>
     public static object GetService(Type type)
     {
-        var service = ServiceProvider.GetService(type);
+        var service = AppServiceManager.ServiceProvider.GetService(type);
         return service!;
     }
 
@@ -117,7 +116,7 @@ public static class App
     /// <returns></returns>
     public static object GetRequiredService(Type type)
     {
-        var service = ServiceProvider.GetRequiredService(type);
+        var service = AppHttpContextManager.HttpContextCurrent.RequestServices.GetRequiredService(type);
         return service!;
     }
 

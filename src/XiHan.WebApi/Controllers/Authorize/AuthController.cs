@@ -115,7 +115,7 @@ public class AuthController : BaseApiController
                 UserId = sysUser.BaseId,
                 UserName = sysUser.Account,
                 NickName = sysUser.NickName,
-                SysRoles = userRoleIds.Select(e => e.ToString()).ToArray().GetArrayStr()
+                SysRoles = userRoleIds.Select(x => x.ToString()).ToList(),
             };
             token = JwtHandler.TokenIssue(tokenModel);
         }
