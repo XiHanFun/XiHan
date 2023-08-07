@@ -46,7 +46,7 @@ public class SysConfig : BaseModifyEntity
     /// 配置项值
     /// </summary>
     [SugarColumn(Length = 512)]
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否系统内置
