@@ -100,7 +100,6 @@ public class GlobalLogMiddleware
     /// <returns></returns>
     private async Task RecordLogOperation(HttpContext context, long elapsed, Exception ex)
     {
-        var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
         // 获取当前请求上下文信息
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
@@ -134,6 +133,7 @@ public class GlobalLogMiddleware
             }
         }
 
+        var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
         await sysLogOperationService.CreateLogOperation(sysLogOperation);
         _logger.Error(ex, ex.Message);
     }

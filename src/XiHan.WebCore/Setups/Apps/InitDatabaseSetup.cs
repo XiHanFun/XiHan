@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
+using Quartz.Impl.AdoJobStore.Common;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Collections;
@@ -40,7 +41,7 @@ public static class InitDatabaseSetup
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 
-        var db = DbScoped.SugarScope;
+        var dbProvider = DbScoped.SugarScope;
 
         try
         {
@@ -48,35 +49,90 @@ public static class InitDatabaseSetup
             var enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
             if (!enableInitDb) return;
             "数据库正在初始化……".WriteLineInfo();
-
-            "创建数据库……".WriteLineInfo();
-            db.DbMaintenance.CreateDatabase();
-            "数据库创建成功！".WriteLineSuccess();
-
-            "创建数据表……".WriteLineInfo();
-            // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
-            var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
-            if (!dbEntities.Any()) return;
-            db.CodeFirst.SetStringDefaultLength(256).InitTables(dbEntities);
-            "数据表创建成功！".WriteLineSuccess();
-
-            "正在从配置中检测是否需要初始化种子数据……".WriteLineInfo();
-            var enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
-            if (!enableInitSeed) return;
-            "种子数据正在初始化……".WriteLineInfo();
-            // 获取继承自泛型接口 ISeedData<> 的所有类
-            var seedEntities = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedData<>)).ToArray();
-            if (!seedEntities.Any()) return;
-
-            // todo
-
-            "种子数据初始化成功！".WriteLineSuccess();
-
+            InitDatabase(dbProvider);
+            InitTables(dbProvider);
             "数据库初始化已完成！".WriteLineSuccess();
         }
         catch (Exception ex)
         {
             ex.ThrowAndConsoleError("数据库初始化或数据表初始化失败，请检查数据库连接字符是否正确！");
         }
+
+        try
+        {
+            "正在从配置中检测是否需要初始化种子数据……".WriteLineInfo();
+            var enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
+            if (!enableInitSeed) return;
+            "种子数据正在初始化……".WriteLineInfo();
+            InitSeedData(dbProvider);
+            "种子数据初始化成功！".WriteLineSuccess();
+        }
+        catch (Exception ex)
+        {
+            ex.ThrowAndConsoleError("种子数据初始化失败，请检查数据库连接或种子数据是否符合规范！");
+        }
+    }
+
+    /// <summary>
+    /// 初始化数据库
+    /// </summary>
+    /// <param name="dbProvider"></param>
+    private static void InitDatabase(SqlSugarScope dbProvider)
+    {
+        "创建数据库……".WriteLineInfo();
+        dbProvider.DbMaintenance.CreateDatabase();
+        "数据库创建成功！".WriteLineSuccess();
+    }
+
+    /// <summary>
+    /// 初始化数据表
+    /// </summary>
+    /// <param name="dbProvider"></param>
+    private static void InitTables(SqlSugarScope dbProvider)
+    {
+        "创建数据表……".WriteLineInfo();
+        // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
+        var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
+        if (!dbEntities.Any()) return;
+
+        dbProvider.CodeFirst.SetStringDefaultLength(256).InitTables(dbEntities);
+        "数据表创建成功！".WriteLineSuccess();
+    }
+
+    /// <summary>
+    /// 初始化种子数据
+    /// </summary>
+    /// <param name="dbProvider"></param>
+    private static void InitSeedData(SqlSugarScope dbProvider)
+    {
+        // 获取继承自泛型接口 ISeedData<> 的所有类
+        var seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedData<>)).ToList();
+        if (!seedTypes.Any()) return;
+
+        seedTypes.ForEach(seedType =>
+        {
+            var instance = Activator.CreateInstance(seedType);
+
+            var hasDataMethod = seedType.GetMethod("HasData");
+            var seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
+            if (seedData == null) return;
+
+            var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
+            var entityInfo = dbProvider.EntityMaintenance.GetEntityInfo(entityType);
+            if (entityInfo.Columns.Any(u => u.IsPrimarykey))
+            {
+                // 按主键进行批量增加和更新
+                var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
+                storage.AsInsertable.ExecuteCommand();
+                var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
+            }
+            else
+            {
+                // 无主键则只进行插入
+                if (!dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
+                    dbProvider.InsertableByObject(seedData.ToList()).ExecuteCommand();
+            }
+        });
     }
 }

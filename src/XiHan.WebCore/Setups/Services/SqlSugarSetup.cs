@@ -22,6 +22,7 @@ using XiHan.Models.Bases.Entity;
 using XiHan.Models.Bases.Interface;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Configs;
+using XiHan.Services.Syses.Configs.Logic;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
@@ -130,7 +131,6 @@ public static class SqlSugarSetup
             // 数据审计
             client.Aop.DataExecuting = (oldValue, entityInfo) =>
             {
-                var isDemoMode = App.GetService<ISysConfigService>().GetSysConfigValueByCode<bool>("IsDemoMode").GetAwaiter().GetResult();
                 // 演示环境判断
                 if (entityInfo.EntityColumnInfo.IsPrimarykey)
                 {
@@ -141,10 +141,10 @@ public static class SqlSugarSetup
                         nameof(SysLogLogin),
                         nameof(SysLogOperation)
                     };
-
-                    if (entityNames.Any(name => name.Contains(entityInfo.EntityName)))
+                    if (entityNames.Any(name => !name.Contains(entityInfo.EntityName)))
                     {
-                        throw new CustomException("演示环境禁止修改数据！");
+                        var isDemoMode = App.GetRequiredService<ISysConfigService>().GetSysConfigValueByCode<bool>(AppGlobalConstant.IsDemoMode).GetAwaiter().GetResult();
+                        if (isDemoMode) throw new CustomException("演示环境禁止修改数据！");
                     }
                 }
             };

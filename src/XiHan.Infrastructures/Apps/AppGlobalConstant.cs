@@ -20,12 +20,22 @@ namespace XiHan.Infrastructures.Apps;
 public static class AppGlobalConstant
 {
     /// <summary>
-    /// 默认角色
+    /// 是否演示模式
     /// </summary>
-    public const string DefaultRole = "sys_role_user";
+    public const string IsDemoMode = "IsDemoMode";
 
     /// <summary>
     /// 默认密码
     /// </summary>
     public const string DefaultPassword = "XH_password_123";
+
+    /// <summary>
+    /// 默认角色编码
+    /// </summary>
+    public const string DefaultRole = "sys_role_user";
+
+    /// <summary>
+    /// 系统管理员角色编码
+    /// </summary>
+    public const string SysAdminRole = "sys_role_admin";
 }
