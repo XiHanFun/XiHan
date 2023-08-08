@@ -36,7 +36,7 @@ public class WeComResultInfoDto
     public string ErrMsg { get; set; } = string.Empty;
 
     /// <summary>
-    /// 媒体文件类型，分别有图片（image）、语音（voice）、视频（video），普通文件(file)
+    /// 媒体文件类型，分别有图片(image)、语音(voice)、视频(video)，普通文件(file)
     /// </summary>
     [JsonPropertyName("type")]
     public string Type { get; set; } = string.Empty;

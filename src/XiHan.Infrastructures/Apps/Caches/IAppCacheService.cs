@@ -45,7 +45,7 @@ public interface IAppCacheService
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
-    /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
+    /// <param name="expiresSliding">滑动过期时长(如果在过期时间内有操作，则以当前时间点延长过期时间)</param>
     /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
     bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute);
@@ -56,7 +56,7 @@ public interface IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
     /// <param name="expiresIn">缓存时长</param>
-    /// <param name="isSliding">是否滑动过期（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
+    /// <param name="isSliding">是否滑动过期(如果在过期时间内有操作，则以当前时间点延长过期时间)</param>
     /// <returns></returns>
     bool Set(string key, object value, TimeSpan expiresIn, bool isSliding = false);
 
@@ -123,7 +123,7 @@ public interface IAppCacheService
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">新的缓存Value</param>
-    /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
+    /// <param name="expiresSliding">滑动过期时长(如果在过期时间内有操作，则以当前时间点延长过期时间)</param>
     /// <param name="expiresAbsolute">绝对过期时长</param>
     /// <returns></returns>
     bool Update(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute);
@@ -134,7 +134,7 @@ public interface IAppCacheService
     /// <param name="key">缓存Key</param>
     /// <param name="value">新的缓存Value</param>
     /// <param name="expiresIn">缓存时长</param>
-    /// <param name="isSliding">是否滑动过期（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
+    /// <param name="isSliding">是否滑动过期(如果在过期时间内有操作，则以当前时间点延长过期时间)</param>
     /// <returns></returns>
     bool Update(string key, object value, TimeSpan expiresIn, bool isSliding = false);
 

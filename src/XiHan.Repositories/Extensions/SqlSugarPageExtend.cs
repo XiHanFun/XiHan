@@ -23,7 +23,7 @@ namespace XiHan.Repositories.Extensions;
 public static class SqlSugarPageExtend
 {
     /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据(还未在数据库中查询)
     /// 推荐针对部分列的增改
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
@@ -44,7 +44,7 @@ public static class SqlSugarPageExtend
     }
 
     /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据(还未在数据库中查询)
     /// 推荐针对部分列的增改
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>

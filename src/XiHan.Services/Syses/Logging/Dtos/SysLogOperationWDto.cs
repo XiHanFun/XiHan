@@ -47,7 +47,7 @@ public class SysLogOperationWDto
     public string? RequestMethod { get; set; }
 
     /// <summary>
-    /// 操作状态（true 正常 false异常）
+    /// 操作状态(true 正常 false异常)
     /// </summary>
     public bool? Status { get; set; }
 }

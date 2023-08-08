@@ -28,8 +28,8 @@ public static class ObjectJudgeExtension
     /// <param name="value"> 动态类型对象 </param>
     /// <param name="start"> 范围起点 </param>
     /// <param name="end"> 范围终点 </param>
-    /// <param name="leftEqual"> 是否可等于上限（默认等于） </param>
-    /// <param name="rightEqual"> 是否可等于下限（默认等于） </param>
+    /// <param name="leftEqual"> 是否可等于上限(默认等于) </param>
+    /// <param name="rightEqual"> 是否可等于下限(默认等于) </param>
     /// <returns> 是否介于 </returns>
     public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = true, bool rightEqual = true) where T : IComparable
     {
@@ -44,8 +44,8 @@ public static class ObjectJudgeExtension
     /// <param name="value"> 动态类型对象 </param>
     /// <param name="min">范围小值</param>
     /// <param name="max">范围大值</param>
-    /// <param name="minEqual">是否可等于小值（默认等于）</param>
-    /// <param name="maxEqual">是否可等于大值（默认等于）</param>
+    /// <param name="minEqual">是否可等于小值(默认等于)</param>
+    /// <param name="maxEqual">是否可等于大值(默认等于)</param>
     public static bool IsInRange<T>(this IComparable<T> value, T min, T max, bool minEqual = true, bool maxEqual = true) where T : IComparable
     {
         var flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;

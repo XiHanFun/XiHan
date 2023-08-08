@@ -49,7 +49,7 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 分割字符串按分割器转换为列表
+    /// 分割字符串按分割器转换为枚举数
     /// </summary>
     /// <param name="sourceStr">源字符串</param>
     /// <param name="sepeater">分割器</param>
@@ -70,7 +70,7 @@ public static class StringExtension
     #region 组装
 
     /// <summary>
-    /// 组装字典按分割器转换为字符串
+    /// 组装列表按分割器转换为字符串
     /// </summary>
     /// <param name="sourceList">源列表</param>
     /// <param name="sepeater">分割器</param>
@@ -83,7 +83,7 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 组装字典按分割器转换为字符串
+    /// 组装数组按分割器转换为字符串
     /// </summary>
     /// <param name="sourceArray">源数组</param>
     /// <param name="sepeater">分割器</param>
@@ -109,9 +109,9 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 组装列表按分割器转换为字符串
+    /// 组装枚举数按分割器转换为字符串
     /// </summary>
-    /// <param name="sourceEnumerable">源列表</param>
+    /// <param name="sourceEnumerable">源枚举数</param>
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
@@ -136,27 +136,17 @@ public static class StringExtension
 
     #endregion
 
-    #region 删除结尾字符后的字符
-
-    /// <summary>
-    /// 删除最后结尾的一个逗号
-    /// </summary>
-    /// <param name="str"></param>
-    /// <returns></returns>
-    public static string DelLastComma(this string str)
-    {
-        return str[..str.LastIndexOf(",", StringComparison.Ordinal)];
-    }
+    #region 删除结尾分割器
 
     /// <summary>
     /// 删除最后结尾的指定字符后的字符
     /// </summary>
-    /// <param name="str"></param>
-    /// <param name="strChar"></param>
+    /// <param name="sourceStr">源字符串</param>
+    /// <param name="sepeater">分割器</param>
     /// <returns></returns>
-    public static string DelLastChar(this string str, string strChar)
+    public static string DelLastChar(this string sourceStr, char sepeater = ',')
     {
-        return str[..str.LastIndexOf(strChar, StringComparison.Ordinal)];
+        return sourceStr[..sourceStr.LastIndexOf(sepeater)];
     }
 
     #endregion
@@ -166,11 +156,11 @@ public static class StringExtension
     /// <summary>
     /// 半角转全角的函数(SBC case)
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="sourceStr">源字符串</param>
     /// <returns></returns>
-    public static string ToSbc(this string input)
+    public static string ToSbc(this string sourceStr)
     {
-        var c = input.ToCharArray();
+        var c = sourceStr.ToCharArray();
         for (var i = 0; i < c.Length; i++)
         {
             if (c[i] == 32)
@@ -178,22 +168,20 @@ public static class StringExtension
                 c[i] = (char)12288;
                 continue;
             }
-
             if (c[i] < 127)
                 c[i] = (char)(c[i] + 65248);
         }
-
         return new string(c);
     }
 
     /// <summary>
     /// 全角转半角的函数(SBC case)
     /// </summary>
-    /// <param name="input">输入</param>
+    /// <param name="sourceStr">源字符串</param>
     /// <returns></returns>
-    public static string ToDbc(this string input)
+    public static string ToDbc(this string sourceStr)
     {
-        var c = input.ToCharArray();
+        var c = sourceStr.ToCharArray();
         for (var i = 0; i < c.Length; i++)
         {
             if (c[i] == 12288)
@@ -201,11 +189,9 @@ public static class StringExtension
                 c[i] = (char)32;
                 continue;
             }
-
             if (c[i] > 65280 && c[i] < 65375)
                 c[i] = (char)(c[i] - 65248);
         }
-
         return new string(c);
     }
 
@@ -214,23 +200,23 @@ public static class StringExtension
     #region 转换为纯字符串
 
     /// <summary>
-    ///  将字符串样式转换为纯字符串
+    /// 将字符串样式转换为纯字符串
     /// </summary>
-    /// <param name="strList"></param>
+    /// <param name="sourceStr"></param>
     /// <param name="splitString"></param>
     /// <returns></returns>
-    public static string GetCleanStyle(this string? strList, string splitString)
+    public static string GetCleanStyle(this string? sourceStr, string splitString)
     {
         string? result;
-        //如果为空，返回空值
-        if (strList == null)
+        // 如果为空，返回空值
+        if (sourceStr == null)
         {
-            result = "";
+            result = string.Empty;
         }
         else
         {
-            //返回去掉分隔符
-            var newString = strList.Replace(splitString, "");
+            // 返回去掉分隔符
+            var newString = sourceStr.Replace(splitString, string.Empty);
             result = newString;
         }
 
@@ -244,28 +230,28 @@ public static class StringExtension
     /// <summary>
     /// 将字符串转换为新样式
     /// </summary>
-    /// <param name="strList"></param>
+    /// <param name="sourceStr"></param>
     /// <param name="newStyle"></param>
     /// <param name="splitString"></param>
     /// <param name="error"></param>
     /// <returns></returns>
-    public static string GetNewStyle(this string? strList, string? newStyle, string splitString, out string error)
+    public static string GetNewStyle(this string? sourceStr, string? newStyle, string splitString, out string error)
     {
         string? returnValue;
         // 如果输入空值，返回空，并给出错误提示
-        if (strList == null)
+        if (sourceStr == null)
         {
-            returnValue = "";
+            returnValue = string.Empty;
             error = "请输入需要划分格式的字符串";
         }
         else
         {
             //检查传入的字符串长度和样式是否匹配,如果不匹配，则说明使用错误，给出错误信息并返回空值
-            var strListLength = strList.Length;
+            var sourceStrLength = sourceStr.Length;
             var newStyleLength = GetCleanStyle(newStyle, splitString).Length;
-            if (strListLength != newStyleLength)
+            if (sourceStrLength != newStyleLength)
             {
-                returnValue = "";
+                returnValue = string.Empty;
                 error = "样式格式的长度与输入的字符长度不符，请重新输入";
             }
             else
@@ -281,13 +267,13 @@ public static class StringExtension
                 {
                     // 将分隔符放在新样式中的位置
                     var str = newStr.ToString().Split(',');
-                    strList = str.Aggregate(strList, (current, bb) => current.Insert(int.Parse(bb), splitString));
+                    sourceStr = str.Aggregate(sourceStr, (current, bb) => current.Insert(int.Parse(bb), splitString));
                 }
 
                 // 给出最后的结果
-                returnValue = strList;
+                returnValue = sourceStr;
                 // 因为是正常的输出，没有错误
-                error = "";
+                error = string.Empty;
             }
         }
 
@@ -301,36 +287,21 @@ public static class StringExtension
     /// <summary>
     /// 是否SQL安全字符串
     /// </summary>
-    /// <param name="str"></param>
+    /// <param name="sourceStr"></param>
     /// <param name="isDel"></param>
     /// <returns></returns>
-    public static string SqlSafeString(this string str, bool isDel)
+    public static string SqlSafeString(this string sourceStr, bool isDel)
     {
         if (isDel)
         {
-            str = str.Replace(@"'", "");
-            str = str.Replace(@"""", "");
-            return str;
+            sourceStr = sourceStr.Replace(@"'", string.Empty);
+            sourceStr = sourceStr.Replace(@"""", string.Empty);
+            return sourceStr;
         }
 
-        str = str.Replace(@"'", "&#39;");
-        str = str.Replace(@"""", "&#34;");
-        return str;
-    }
-
-    #endregion
-
-    #region 获取正确的Id，如果不是正整数，返回0
-
-    /// <summary>
-    /// 获取正确的Id，如果不是正整数，返回0
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns>返回正确的整数ID，失败返回0</returns>
-    public static int StrToId(this string? value)
-    {
-        if (!IsNumberId(value)) return 0;
-        return value != null ? int.Parse(value) : 0;
+        sourceStr = sourceStr.Replace(@"'", "&#39;");
+        sourceStr = sourceStr.Replace(@"""", "&#34;");
+        return sourceStr;
     }
 
     #endregion
@@ -340,7 +311,7 @@ public static class StringExtension
     /// <summary>
     /// 检查一个字符串是否是纯数字构成的，一般用于查询字符串参数的有效性验证(0除外)
     /// </summary>
-    /// <param name="value">需验证的字符串。。</param>
+    /// <param name="value">需验证的字符串</param>
     /// <returns>是否合法的bool值。</returns>
     public static bool IsNumberId(this string? value)
     {
@@ -362,10 +333,10 @@ public static class StringExtension
 
     #endregion
 
-    #region 得到字符串长度，一个汉字长度为2
+    #region 得到字符串长度
 
     /// <summary>
-    /// 得到字符串长度，一个汉字长度为2
+    /// 得到字符串长度(一个汉字长度为2)
     /// </summary>
     /// <param name="inputString">参数字符串</param>
     /// <returns></returns>
@@ -403,7 +374,7 @@ public static class StringExtension
 
         ASCIIEncoding ascii = new();
         var tempLen = 0;
-        StringBuilder tempString = new();
+        StringBuilder sb = new();
         var s = ascii.GetBytes(inputString);
         for (var i = 0; i < s.Length; i++)
         {
@@ -414,7 +385,7 @@ public static class StringExtension
 
             try
             {
-                tempString.Append(inputString.AsSpan(i, 1));
+                sb.Append(inputString.AsSpan(i, 1));
             }
             catch
             {
@@ -424,11 +395,9 @@ public static class StringExtension
             if (tempLen > len)
                 break;
         }
-
         var myByte = Encoding.Default.GetBytes(inputString);
-        if (isShowFix && myByte.Length > len)
-            tempString.Append('…');
-        return tempString.ToString();
+        if (isShowFix && myByte.Length > len) sb.Append('…');
+        return sb.ToString();
     }
 
     #endregion
@@ -449,11 +418,7 @@ public static class StringExtension
 
         var newReg = aryReg[0];
         var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
-
-        var replace = strOutput.Replace("<", "");
-        var s = strOutput.Replace(">", "");
-        var replace1 = strOutput.Replace("\r\n", "");
-
+        strOutput = strOutput.Replace("<", string.Empty).Replace(">", string.Empty).Replace("\r\n", string.Empty);
         return strOutput;
     }
 
@@ -479,6 +444,41 @@ public static class StringExtension
     public static string FirstToLower(this string value)
     {
         return value[..1].ToLower() + value[1..];
+    }
+
+    #endregion
+
+    #region 整体替换
+
+    /// <summary>
+    /// 字符串整体替换
+    /// </summary>
+    /// <param name="content"></param>
+    /// <param name="oldStr"></param>
+    /// <param name="newStr"></param>
+    /// <returns></returns>
+    public static string FormatReplaceStr(this string content, string oldStr, string newStr)
+    {
+        // 没有替换字符串直接返回源字符串
+        if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
+        // 有替换字符串开始替换
+        StringBuilder strBuffer = new();
+        var start = 0;
+        var end = 0;
+        // 查找替换内容，把它之前和上一个替换内容之后的字符串拼接起来
+        while (true)
+        {
+            start = content.IndexOf(oldStr, start, StringComparison.Ordinal);
+            if (start == -1) break;
+            strBuffer.Append(content[end..start]);
+            strBuffer.Append(newStr);
+            start += oldStr.Length;
+            end = start;
+        }
+
+        // 查找到最后一个位置之后，把剩下的字符串拼接进去
+        strBuffer.Append(content[end..]);
+        return strBuffer.ToString();
     }
 
     #endregion

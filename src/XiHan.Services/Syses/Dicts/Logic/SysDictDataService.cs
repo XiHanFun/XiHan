@@ -90,8 +90,6 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     {
         var sysDictData = dictDataCDto.Adapt<SysDictData>();
 
-        _ = await CheckDictDataUnique(sysDictData);
-
         return await UpdateAsync(sysDictData);
     }
 
@@ -137,7 +135,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataListByTypes(string[] dictCodes)
     {
-        var key = $"GetDictDataByType_{dictCodes.GetArrayStr(",")}";
+        var key = $"GetDictDataByType_{dictCodes.GetArrayStr(',')}";
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
         list = await Context.Queryable<SysDictType>()
            .LeftJoin<SysDictData>((t, d) => t.Code == d.TypeCode)

@@ -400,7 +400,7 @@ public static class HttpContextExtend
     public static string GetUserRole(this HttpContext context)
     {
         var roleIds = context.User.FindAll("UserRole").Select(r => r.Value).ToList();
-        return roleIds.GetListStr(",");
+        return roleIds.GetListStr(',');
     }
 
     /// <summary>
@@ -410,7 +410,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetUserToken(this HttpContext context)
     {
-        return context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        return context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
     }
 
     /// <summary>

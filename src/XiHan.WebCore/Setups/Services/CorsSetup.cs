@@ -53,7 +53,7 @@ public static class CorsSetup
                     .AllowAnyHeader()
                     // 允许任何方法
                     .AllowAnyMethod()
-                    // 允许凭据（cookie）
+                    // 允许凭据(cookie)
                     .AllowCredentials()
                     // 允许请求头 (SignalR 用此请求头)
                     .WithExposedHeaders(headers);

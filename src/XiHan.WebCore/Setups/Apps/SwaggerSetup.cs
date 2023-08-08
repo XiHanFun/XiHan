@@ -70,9 +70,9 @@ public static class SwaggerSetup
                 // Api页面标题
                 options.DocumentTitle = $"曦寒 - 接口文档";
                 // Api文档仅展开标记
-                // List：列表式（展开子类），默认值;
+                // List：列表式(展开子类)，默认值;
                 // Full：完全展开;
-                // None：列表式（不展开子类）
+                // None：列表式(不展开子类)
                 options.DocExpansion(DocExpansion.None);
                 // 模型的默认扩展深度，设置为 -1 完全隐藏模型
                 options.DefaultModelsExpandDepth(-1);

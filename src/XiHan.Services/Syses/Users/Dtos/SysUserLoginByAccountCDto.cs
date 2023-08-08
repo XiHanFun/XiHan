@@ -33,6 +33,5 @@ public class SysUserLoginByAccountCDto
     /// 用户密码
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}", ErrorMessage = "密码至少为8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符")]
     public string Password { get; set; } = string.Empty;
 }

@@ -113,6 +113,6 @@ public static class AppConfigManager
     /// <returns></returns>
     private static string GetPropertyName(string key)
     {
-        return key.Replace("AppSettings.", "").Replace(".", ":");
+        return key.Replace("AppSettings.", string.Empty).Replace(".", ":");
     }
 }

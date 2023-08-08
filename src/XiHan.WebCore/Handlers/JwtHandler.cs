@@ -30,7 +30,7 @@ namespace XiHan.WebCore.Handlers;
 public static class JwtHandler
 {
     /// <summary>
-    /// Token颁发
+    /// Token 颁发
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
@@ -38,22 +38,21 @@ public static class JwtHandler
     {
         var authJwtSetting = GetAuthJwtSetting();
 
+        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+
         // Nuget引入：Microsoft.IdentityModel.Tokens
         var claims = new List<Claim>
         {
             new("UserId", tokenModel.UserId.ToString()),
-            new("UserAccount", tokenModel.UserName),
-            new("UserNickName", tokenModel.NickName),
-            new("UserRole", tokenModel.SysRoles.GetListStr(",")),
+            new("UserAccount", tokenModel.UserAccount),
+            new("UserNickName", tokenModel.UserNickName),
             new("Issuer", authJwtSetting.Issuer),
             new("Audience", authJwtSetting.Audience),
         };
         // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-        //claims.AddRange(tokenModel.SysRoles.Select(role => new Claim("SysRole", role)));
-
-        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
-        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+        tokenModel.UserRole.ForEach(role => claims.Add(new Claim("UserRole", role.ParseToString())));
 
         // Nuget引入：System.IdentityModel.Tokens.Jwt
         JwtSecurityToken securityToken = new(
@@ -75,66 +74,56 @@ public static class JwtHandler
     }
 
     /// <summary>
-    /// Token安全验证，刷新Token用
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    public static bool TokenIsSafeVerify(string token)
-    {
-        var authJwtSetting = GetAuthJwtSetting();
-        var jwtHandler = new JwtSecurityTokenHandler();
-        var symmetricKey = authJwtSetting.SymmetricKey;
-
-        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricKey));
-        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
-
-        try
-        {
-            token = token.ParseToString().Replace("Bearer ", "");
-            // 读取旧token
-            var jwtToken = jwtHandler.ReadJwtToken(token);
-            var verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
-            return verifyResult;
-        }
-        catch (Exception ex)
-        {
-            throw new AuthenticationException($"Token 被篡改或无效，无法通过安全验证！", ex);
-        }
-    }
-
-    /// <summary>
     /// Token 解析
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
     public static TokenModel TokenSerialize(string token)
     {
+        // Token安全验证
+        if (!TokenIsSafeVerify(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
+
+        token = token.ParseToString().Replace("Bearer ", string.Empty);
+        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+        List<Claim> claims = jwtToken.Claims.ToList();
+        var tokenModel = new TokenModel
+        {
+            UserId = claims.First(claim => claim.Type == "UserId").Value.ParseToLong(),
+            UserAccount = claims.First(claim => claim.Type == "UserAccount").Value,
+            UserNickName = claims.First(claim => claim.Type == "UserNickName").Value,
+            UserRealName = claims.First(claim => claim.Type == "UserRealName").Value,
+            UserRole = claims.First(claim => claim.Type == "UserRole").Value.GetStrList(',').Select(s => s.ParseToLong()).ToList(),
+        };
+        return tokenModel;
+    }
+
+    /// <summary>
+    /// Token 安全验证(刷新Token用)
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public static bool TokenIsSafeVerify(string token)
+    {
+        var authJwtSetting = GetAuthJwtSetting();
+
+        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+
         try
         {
-            var jwtHandler = new JwtSecurityTokenHandler();
-            token = token.ParseToString().Replace("Bearer ", "");
-
+            token = token.ParseToString().Replace("Bearer ", string.Empty);
             // 开始Token校验
-            if (token.IsEmptyOrNull() || !jwtHandler.CanReadToken(token))
-                throw new ArgumentException("token 为空或无法解析！", nameof(token));
-
-            var jwtToken = jwtHandler.ReadJwtToken(token);
-            List<Claim> claims = jwtToken.Claims.ToList();
-
-            var tokenModel = new TokenModel
-            {
-                UserId = claims.First(claim => claim.Type == "UserId").Value.ParseToLong(),
-                UserAccount = claims.First(claim => claim.Type == "UserAccount").Value,
-                UserNickName = claims.First(claim => claim.Type == "UserNickName").Value,
-                UserRealName = claims.First(claim => claim.Type == "UserRealName").Value,
-                UserRole = claims.First(claim => claim.Type == "UserRole").Value.GetStrList(','),
-            };
-            return tokenModel;
+            if (token.IsEmptyOrNull() || !new JwtSecurityTokenHandler().CanReadToken(token)) throw new ArgumentException("token 为空或无法解析！", nameof(token));
+            // 读取旧token
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            var verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
+            return verifyResult;
         }
         catch (Exception ex)
         {
-            throw new AuthenticationException($"JwtToken 字符串解析失败", ex);
+            throw new AuthenticationException($"Token 被篡改或无效，无法通过安全验证！", ex);
         }
     }
 

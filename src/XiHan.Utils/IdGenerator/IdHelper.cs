@@ -29,7 +29,7 @@ namespace XiHan.Utils.IdGenerator;
 /// 这是一个调用的例子，默认情况下，单机集成者可以直接使用 NextId()。
 /// </summary>
 /// <remarks>
-/// 第1步，全局 初始化（应用程序启动时执行一次）：
+/// 第1步，全局 初始化(应用程序启动时执行一次)：
 /// <code>
 /// // 创建 IdGeneratorOptions 对象，可在构造函数中输入 WorkerId：
 /// var options = new IdGeneratorOptions((ushort)Thread.CurrentThread.ManagedThreadId);
@@ -41,7 +41,7 @@ namespace XiHan.Utils.IdGenerator;
 /// // options.BaseTime = Your_Base_Time;
 /// // ...... 其它参数参考 IdGeneratorOptions 定义。
 ///
-/// // 保存参数（务必调用，否则参数设置不生效）：
+/// // 保存参数(务必调用，否则参数设置不生效)：
 /// IdHelper.SetIdGenerator(options);
 ///
 /// // 以上过程只需全局一次，且应在生成ID之前完成。

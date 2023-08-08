@@ -20,7 +20,7 @@ using XiHan.Infrastructures.Apps.HttpContexts;
 namespace XiHan.WebCore.Filters;
 
 /// <summary>
-/// 异步授权过滤器属性（一般用于验证授权）
+/// 异步授权过滤器属性(一般用于验证授权)
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationFilter

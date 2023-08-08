@@ -49,7 +49,7 @@ public static partial class RegexHelper
     #region 是否GUID
 
     /// <summary>
-    /// Guid格式验证（a480500f-a181-4d3d-8ada-461f69eecfdd）
+    /// Guid格式验证(a480500f-a181-4d3d-8ada-461f69eecfdd)
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -63,7 +63,7 @@ public static partial class RegexHelper
     #region 是否中国电话
 
     /// <summary>
-    /// 电话号码（正确格式为：xxxxxxxxxx或xxxxxxxxxxxx）
+    /// 电话号码(正确格式为：xxxxxxxxxx或xxxxxxxxxxxx)
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -101,7 +101,7 @@ public static partial class RegexHelper
     }
 
     /// <summary>
-    /// 身份证号（18位数字）
+    /// 身份证号(18位数字)
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -129,7 +129,7 @@ public static partial class RegexHelper
     }
 
     /// <summary>
-    /// 身份证号（15位数字）
+    /// 身份证号(15位数字)
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -444,7 +444,7 @@ public static partial class RegexHelper
     }
 
     /// <summary>
-    /// 一年的12个月（正确格式为："01"～"09"和"1"～"12"）
+    /// 一年的12个月(正确格式为："01"～"09"和"1"～"12")
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>
@@ -454,7 +454,7 @@ public static partial class RegexHelper
     }
 
     /// <summary>
-    /// 一月的31天（正确格式为："01"～"09"和"1"～"31"）
+    /// 一月的31天(正确格式为："01"～"09"和"1"～"31")
     /// </summary>
     /// <param name="checkValue"></param>
     /// <returns></returns>

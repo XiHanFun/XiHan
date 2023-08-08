@@ -79,7 +79,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
                 TypeCode="SysSiteConfig",
                 Code="IcpRegistrationNumber",
                 Name="ICP备案号",
-                Value="",
+                Value=string.Empty,
                 IsOfficial=true,
                 SortOrder=5,
                 Description="网站被访问时底部显示的ICP备案号"
@@ -90,7 +90,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
                 TypeCode="SysSiteConfig",
                 Code="PublicSecurityRegistrationNumber",
                 Name="公安备案号",
-                Value="",
+                Value=string.Empty,
                 IsOfficial=true,
                 SortOrder=6,
                 Description="网站被访问时底部显示的公安备案号"
@@ -100,7 +100,7 @@ public class SysConfigSeedData : ISeedData<SysConfig>
                 TypeCode="SysSiteConfig",
                 Code="UpdateTime",
                 Name="升级时间",
-                Value="",
+                Value=string.Empty,
                 IsOfficial=true,
                 SortOrder=7,
                 Description="网站版本升级时间"

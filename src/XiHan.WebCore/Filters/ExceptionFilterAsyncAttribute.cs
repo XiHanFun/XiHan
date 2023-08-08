@@ -24,7 +24,7 @@ using XiHan.WebCore.Middlewares;
 namespace XiHan.WebCore.Filters;
 
 /// <summary>
-/// 异步异常处理过滤器属性（一般用于捕捉异常）
+/// 异步异常处理过滤器属性(一般用于捕捉异常)
 /// </summary>
 /// <remarks>已弃用(2023-07-03)，推荐<see cref="GlobalLogMiddleware" />全局日志中间件</remarks>
 [Obsolete("已弃用，推荐 GlobalExceptionMiddleware 全局日志中间件")]

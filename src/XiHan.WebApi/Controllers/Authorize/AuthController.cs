@@ -14,6 +14,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetTaste;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
@@ -24,7 +25,6 @@ using XiHan.Services.Syses.Roles;
 using XiHan.Services.Syses.Users;
 using XiHan.Services.Syses.Users.Dtos;
 using XiHan.Utils.Encryptions;
-using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Handlers;
@@ -64,7 +64,7 @@ public class AuthController : BaseApiController
     }
 
     /// <summary>
-    /// 获取 Token 通过账户
+    /// 获取 Token(通过账户)
     /// </summary>
     /// <param name="loginByAccountCDto"></param>
     /// <returns></returns>
@@ -72,11 +72,11 @@ public class AuthController : BaseApiController
     public async Task<CustomResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     {
         var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
-        return await GetToken(sysUser, loginByAccountCDto.Password);
+        return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
     }
 
     /// <summary>
-    /// 获取 Token 通过邮箱
+    /// 获取 Token(通过邮箱)
     /// </summary>
     /// <param name="loginByEmailCDto"></param>
     /// <returns></returns>
@@ -84,7 +84,7 @@ public class AuthController : BaseApiController
     public async Task<CustomResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
     {
         var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
-        return await GetToken(sysUser, loginByEmailCDto.Password);
+        return await GetTokenAndRecordLogLogin(sysUser, loginByEmailCDto.Password);
     }
 
     /// <summary>
@@ -93,10 +93,21 @@ public class AuthController : BaseApiController
     /// <param name="sysUser"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    private async Task<CustomResult> GetToken(SysUser sysUser, string password)
+    private async Task<CustomResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
     {
         var token = string.Empty;
-        var sysLogLogin = new SysLogLogin();
+
+        // 获取当前请求上下文信息
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
+        var sysLogLogin = new SysLogLogin
+        {
+            Ip = clientInfo.RemoteIPv4,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
+            Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
+            Os = clientInfo.OsName + clientInfo.OsVersion,
+            Agent = clientInfo.Agent
+        };
 
         try
         {
@@ -104,20 +115,19 @@ public class AuthController : BaseApiController
             if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
             sysLogLogin.IsSuccess = true;
-            sysLogLogin.Message = "登录成功！";
+            sysLogLogin.Account = sysUser.Account;
+            sysLogLogin.RealName = sysUser.RealName;
             sysLogLogin.Account = sysUser.Account;
             sysLogLogin.RealName = sysUser.RealName;
 
             var userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
-
-            TokenModel tokenModel = new()
+            token = JwtHandler.TokenIssue(new TokenModel()
             {
                 UserId = sysUser.BaseId,
-                UserName = sysUser.Account,
-                NickName = sysUser.NickName,
-                SysRoles = userRoleIds.Select(x => x.ToString()).ToList(),
-            };
-            token = JwtHandler.TokenIssue(tokenModel);
+                UserAccount = sysUser.Account,
+                UserNickName = sysUser.NickName,
+                UserRole = userRoleIds,
+            });
         }
         catch (Exception ex)
         {
@@ -125,16 +135,7 @@ public class AuthController : BaseApiController
             sysLogLogin.Message = ex.Message;
         }
 
-        var clientInfo = App.ClientInfo;
-        var addressInfo = App.AddressInfo;
-        sysLogLogin.Ip = clientInfo.RemoteIPv4;
-        sysLogLogin.Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator;
-        sysLogLogin.Browser = clientInfo.BrowserName + clientInfo.BrowserVersion;
-        sysLogLogin.Os = clientInfo.OsName + clientInfo.OsVersion;
-        sysLogLogin.Agent = clientInfo.Agent;
-
         await _sysLogLoginService.AddAsync(sysLogLogin);
-
         return sysLogLogin.IsSuccess ? CustomResult.Success(token) : CustomResult.BadRequest(sysLogLogin.Message);
     }
 }

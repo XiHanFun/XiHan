@@ -49,7 +49,7 @@ public class WeComMarkdown
 public class WeComImage
 {
     /// <summary>
-    /// 图片内容（base64编码前）的md5值
+    /// 图片内容(base64编码前)的md5值
     /// </summary>
     [JsonPropertyName("md5")]
     public string Md5 { get; set; } = string.Empty;
@@ -385,7 +385,7 @@ public class WeComHorizontalContent
     public string KeyName { get; set; } = string.Empty;
 
     /// <summary>
-    /// 二级文本，如果horizontal_content_list.type是2，该字段代表文件名称（要包含文件类型），建议不超过26个字
+    /// 二级文本，如果horizontal_content_list.type是2，该字段代表文件名称(要包含文件类型)，建议不超过26个字
     /// </summary>
     [JsonPropertyName("value")]
     public string? Value { get; set; }

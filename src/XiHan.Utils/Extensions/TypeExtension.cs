@@ -278,7 +278,7 @@ public static class TypeExtension
     /// </summary>
     public static string GetFullNameWithModule(this Type type)
     {
-        return $"{type.FullName},{type.Module.Name.Replace(".dll", "").Replace(".exe", "")}";
+        return $"{type.FullName},{type.Module.Name.Replace(".dll", string.Empty).Replace(".exe", string.Empty)}";
     }
 
     /// <summary>

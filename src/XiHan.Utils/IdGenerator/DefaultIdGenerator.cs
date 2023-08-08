@@ -52,7 +52,7 @@ public class DefaultIdGenerator : IIdGenerator
         }
 
         // 2.WorkerIdBitLength
-        var maxLength = options.TimestampType == 0 ? 22 : 31; // （秒级时间戳时放大到31位）
+        var maxLength = options.TimestampType == 0 ? 22 : 31; // (秒级时间戳时放大到31位)
         if (options.WorkerIdBitLength <= 0)
         {
             throw new ArgumentException("WorkerIdBitLength error.(range:[1, 21])");

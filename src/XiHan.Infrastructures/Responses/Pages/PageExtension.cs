@@ -47,7 +47,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// IQueryable数据进行分页（IQueryable：还未在数据库中查询）
+    /// IQueryable数据进行分页(还未在数据库中查询)
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>
@@ -61,7 +61,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// IQueryable数据进行分页（IQueryable：还未在数据库中查询）
+    /// IQueryable数据进行分页(还未在数据库中查询)
     /// </summary>
     /// <typeparam name="TEntity">数据源类型</typeparam>
     /// <param name="entities">数据源</param>
@@ -73,7 +73,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// 处理IQueryable数据后分页数据，无Data数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据，无Data数据(还未在数据库中查询)
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>
@@ -90,7 +90,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// 处理IQueryable数据后分页数据，无Data数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据，无Data数据(还未在数据库中查询)
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>
@@ -143,7 +143,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据(还未在数据库中查询)
     /// 推荐针对部分列的增改
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
@@ -163,7 +163,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// 处理IQueryable数据后分页数据（IQueryable：还未在数据库中查询）
+    /// 处理IQueryable数据后分页数据(还未在数据库中查询)
     /// 推荐针对部分列的增改
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
@@ -182,7 +182,7 @@ public static class PageExtension
     }
 
     /// <summary>
-    /// 获取全部信息，该信息被分页器包裹 [IEnumerable]
+    /// 获取全部信息，该信息被分页器包裹
     /// </summary>
     /// <typeparam name="TEntity">数据类型</typeparam>
     /// <param name="entities">数据源</param>

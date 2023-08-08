@@ -38,36 +38,6 @@ public static class ObjectConvertExtension
 
     #endregion
 
-    #region Int
-
-    /// <summary>
-    /// 对象转数字
-    /// </summary>
-    /// <param name="thisValue"></param>
-    /// <returns></returns>
-    public static int ParseToInt(this object? thisValue)
-    {
-        var reveal = 0;
-        if (thisValue == null) return 0;
-        if (thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reveal)) return reveal;
-        return reveal;
-    }
-
-    /// <summary>
-    /// 对象转数字
-    /// </summary>
-    /// <param name="thisValue"></param>
-    /// <param name="errorValue"></param>
-    /// <returns></returns>
-    public static int ParseToInt(this object? thisValue, int errorValue)
-    {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            int.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
-    }
-
-    #endregion
-
     #region Short
 
     /// <summary>
@@ -219,14 +189,44 @@ public static class ObjectConvertExtension
 
     #endregion
 
-    #region Num
+    #region Int
+
+    /// <summary>
+    /// 对象转数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <returns></returns>
+    public static int ParseToInt(this object? thisValue)
+    {
+        var reveal = 0;
+        if (thisValue == null) return 0;
+        if (thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reveal)) return reveal;
+        return reveal;
+    }
+
+    /// <summary>
+    /// 对象转数字
+    /// </summary>
+    /// <param name="thisValue"></param>
+    /// <param name="errorValue"></param>
+    /// <returns></returns>
+    public static int ParseToInt(this object? thisValue, int errorValue)
+    {
+        if (thisValue != null && thisValue != DBNull.Value &&
+            int.TryParse(thisValue.ToString(), out var reveal)) return reveal;
+        return errorValue;
+    }
+
+    #endregion
+
+    #region Money
 
     /// <summary>
     /// 对象转金额
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static double ParseToNum(this object? thisValue)
+    public static double ParseToMoney(this object? thisValue)
     {
         if (thisValue != null && thisValue != DBNull.Value &&
             double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
@@ -239,7 +239,7 @@ public static class ObjectConvertExtension
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static double ParseToNum(this object? thisValue, double errorValue)
+    public static double ParseToMoney(this object? thisValue, double errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value &&
             double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
@@ -288,7 +288,7 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static bool IsNotEmptyOrNull(this object? thisValue)
     {
-        return thisValue != null && thisValue.ParseToString() != string.Empty && thisValue.ParseToString() != "" &&
+        return thisValue != null && thisValue.ParseToString() != string.Empty && thisValue.ParseToString() != string.Empty &&
             thisValue.ParseToString() != "undefined" && thisValue.ParseToString() != "null";
     }
 
@@ -314,14 +314,14 @@ public static class ObjectConvertExtension
 
     #endregion
 
-    #region Date
+    #region DateTime
 
     /// <summary>
     /// 对象转日期
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static DateTime ParseToDate(this object? thisValue)
+    public static DateTime ParseToDateTime(this object? thisValue)
     {
         var reveal = DateTime.MinValue;
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reveal))
@@ -335,7 +335,7 @@ public static class ObjectConvertExtension
     /// <param name="thisValue"></param>
     /// <param name="errorValue"></param>
     /// <returns></returns>
-    public static DateTime ParseToDate(this object? thisValue, DateTime errorValue)
+    public static DateTime ParseToDateTime(this object? thisValue, DateTime errorValue)
     {
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reveal))
             return reveal;
@@ -352,11 +352,11 @@ public static class ObjectConvertExtension
     /// </summary>
     /// <param name="thisValue"></param>
     /// <returns></returns>
-    public static Guid ParseToGuid(this string thisValue)
+    public static Guid ParseToGuid(this object? thisValue)
     {
         try
         {
-            return new Guid(thisValue);
+            return new Guid(thisValue.ParseToString());
         }
         catch
         {
@@ -367,53 +367,6 @@ public static class ObjectConvertExtension
     #endregion
 
     #region 强制转换类型
-
-    /// <summary>
-    /// 把对象类型转换为指定类型
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="conversionType"></param>
-    /// <returns></returns>
-    public static object? CastTo(this object? value, Type conversionType)
-    {
-        if (value == null)
-        {
-            return null;
-        }
-        else
-        {
-            if (conversionType.IsNullableType())
-            {
-                conversionType = conversionType.GetUnNullableType();
-
-                if (value.ToString().IsNullOrEmpty())
-                {
-                    return default;
-                }
-                else
-                {
-                    if (conversionType.IsEnum) return Enum.Parse(conversionType, value.ToString()!);
-                    if (conversionType == typeof(Guid)) return value.ToString()!;
-                }
-            }
-        }
-
-        return Convert.ChangeType(value, conversionType);
-    }
-
-    /// <summary>
-    /// 把对象类型转化为指定类型
-    /// </summary>
-    /// <typeparam name="T"> 动态类型 </typeparam>
-    /// <param name="value"> 要转化的源对象 </param>
-    /// <returns> 转化后的指定类型的对象，转化失败引发异常。 </returns>
-    public static T? CastTo<T>(this object? value)
-    {
-        if (value == null && default(T) == null) return default;
-        if (value?.GetType() == typeof(T)) return (T)value;
-        var result = value.CastTo(typeof(T));
-        return (T?)result;
-    }
 
     /// <summary>
     /// 把对象类型转化为指定类型，转化失败时返回指定的默认值
@@ -435,6 +388,47 @@ public static class ObjectConvertExtension
     }
 
     /// <summary>
+    /// 把对象类型转化为指定类型
+    /// </summary>
+    /// <typeparam name="T">动态类型</typeparam>
+    /// <param name="value">要转化的源对象</param>
+    /// <returns> 转化后的指定类型的对象，转化失败引发异常。</returns>
+    public static T? CastTo<T>(this object? value)
+    {
+        if (value == null && default(T) == null) return default;
+        if (value?.GetType() == typeof(T)) return (T)value;
+        var result = value.CastTo(typeof(T));
+        return (T?)result;
+    }
+
+    /// <summary>
+    /// 把对象类型转换为指定类型
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="conversionType"></param>
+    /// <returns></returns>
+    public static object? CastTo(this object? value, Type conversionType)
+    {
+        if (conversionType.IsNullableType() || value == null || value.ToString().IsNullOrEmpty()) return null;
+
+        // 常规类型
+        return conversionType switch
+        {
+            Type t when t == typeof(bool) => value.ParseToBool(),
+            Type t when t == typeof(short) => value.ParseToShort(),
+            Type t when t == typeof(long) => value.ParseToLong(),
+            Type t when t == typeof(float) => value.ParseToFloat(),
+            Type t when t == typeof(double) => value.ParseToDouble(),
+            Type t when t == typeof(decimal) => value.ParseToDecimal(),
+            Type t when t == typeof(int) => value.ParseToInt(),
+            Type t when t == typeof(string) => value.ParseToString(),
+            Type t when t == typeof(DateTime) => value.ParseToDateTime(),
+            Type t when t == typeof(Guid) => value.ParseToGuid(),
+            _ => Convert.ChangeType(value, conversionType),// 处理未知类型的情况
+        };
+    }
+
+    /// <summary>
     /// 强制转换类型
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
@@ -442,7 +436,8 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static IEnumerable<TResult> CastSuper<TResult>(this IEnumerable source)
     {
-        return from object? item in source select (TResult)Convert.ChangeType(item, typeof(TResult));
+        return from object? item in source
+               select (TResult)Convert.ChangeType(item, typeof(TResult));
     }
 
     #endregion

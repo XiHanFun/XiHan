@@ -97,7 +97,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 							</section>
 						</section>
 						<section class='_editor'>
-							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright &copy;<time>2016-" + DateTime.Now.Year + @"</time>&nbsp;&nbsp;<a href=""https://www.zhaifanhua.com"">ZhaiFanhua</a>&nbsp;All Rights Reserved.</span></p>
+							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright &copy;<time>2016-" + DateTime.Now.Year + @"</time>&nbsp;&nbsp;<a href=string.Emptyhttps://www.zhaifanhua.comstring.Empty>ZhaiFanhua</a>&nbsp;All Rights Reserved.</span></p>
 						</section>";
 
         var emailTo = new EmailToModel

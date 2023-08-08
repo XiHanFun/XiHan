@@ -130,16 +130,16 @@ public static class FormatTimeExtension
         var milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
 
         // 天
-        var sDay = day < 10 ? "0" + day : "" + day;
+        var sDay = day < 10 ? "0" + day : string.Empty + day;
         // 小时
-        var sHour = hour < 10 ? "0" + hour : "" + hour;
+        var sHour = hour < 10 ? "0" + hour : string.Empty + hour;
         // 分钟
-        var sMinute = minute < 10 ? "0" + minute : "" + minute;
+        var sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
         // 秒
-        var sSecond = second < 10 ? "0" + second : "" + second;
+        var sSecond = second < 10 ? "0" + second : string.Empty + second;
         // 毫秒
-        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;
-        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : "" + sMilliSecond;
+        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
+        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : string.Empty + sMilliSecond;
 
         return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
     }
@@ -158,16 +158,16 @@ public static class FormatTimeExtension
         var milliSecond = timeSpan.Milliseconds;
 
         // 天
-        var sDay = day < 10 ? "0" + day : "" + day;
+        var sDay = day < 10 ? "0" + day : string.Empty + day;
         // 小时
-        var sHour = hour < 10 ? "0" + hour : "" + hour;
+        var sHour = hour < 10 ? "0" + hour : string.Empty + hour;
         // 分钟
-        var sMinute = minute < 10 ? "0" + minute : "" + minute;
+        var sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
         // 秒
-        var sSecond = second < 10 ? "0" + second : "" + second;
+        var sSecond = second < 10 ? "0" + second : string.Empty + second;
         // 毫秒
-        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;
-        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : "" + sMilliSecond;
+        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
+        sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : string.Empty + sMilliSecond;
 
         return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
     }

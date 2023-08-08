@@ -33,7 +33,7 @@ public class SysUser : BaseEntity
     public virtual string Account { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户密码（MD5加密）
+    /// 用户密码(MD5加密)
     /// </summary>
     [SugarColumn(Length = 64)]
     public virtual string Password { get; set; } = string.Empty;

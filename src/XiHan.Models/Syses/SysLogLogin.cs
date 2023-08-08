@@ -25,6 +25,11 @@ namespace XiHan.Models.Syses;
 public class SysLogLogin : BaseCreateEntity
 {
     /// <summary>
+    /// 登录是否成功
+    /// </summary>
+    public bool IsSuccess { get; set; }
+
+    /// <summary>
     /// 用户账号
     /// </summary>
     [SugarColumn(Length = 32)]
@@ -39,8 +44,8 @@ public class SysLogLogin : BaseCreateEntity
     /// <summary>
     /// 提示消息
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Message { get; set; }
+    [SugarColumn(Length = 256)]
+    public string Message { get; set; } = string.Empty;
 
     /// <summary>
     /// 登录Ip
@@ -69,11 +74,6 @@ public class SysLogLogin : BaseCreateEntity
     /// <summary>
     /// 代理信息
     /// </summary>
-    [SugarColumn(Length = 56, IsNullable = true)]
+    [SugarColumn(Length = 256, IsNullable = true)]
     public string? Agent { get; set; }
-
-    /// <summary>
-    /// 登录是否成功
-    /// </summary>
-    public bool IsSuccess { get; set; }
 }

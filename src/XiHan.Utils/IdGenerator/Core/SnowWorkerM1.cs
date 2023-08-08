@@ -51,17 +51,17 @@ internal class SnowWorkerM1 : ISnowWorker
     protected readonly byte SeqBitLength = 0;
 
     /// <summary>
-    /// 最大序列数（含）
+    /// 最大序列数(含)
     /// </summary>
     protected readonly int MaxSeqNumber = 0;
 
     /// <summary>
-    /// 最小序列数（含）
+    /// 最小序列数(含)
     /// </summary>
     protected readonly ushort MinSeqNumber = 0;
 
     /// <summary>
-    /// 最大漂移次数（含）
+    /// 最大漂移次数(含)
     /// </summary>
     protected int TopOverCostCount = 0;
 
@@ -215,7 +215,7 @@ internal class SnowWorkerM1 : ISnowWorker
             EndOverCostAction(currentTimeTick);
             _GenCountInOneTerm = 0;
 #endif
-            // TODO: 在漂移终止，等待时间对齐时，如果发生时间回拨较长，则此处可能等待较长时间。可优化为：在漂移终止时增加时间回拨应对逻辑。（该情况发生概率低，暂不处理）
+            // TODO: 在漂移终止，等待时间对齐时，如果发生时间回拨较长，则此处可能等待较长时间。可优化为：在漂移终止时增加时间回拨应对逻辑。(该情况发生概率低，暂不处理)
 
             _LastTimeTick = GetNextTimeTick();
             _CurrentSeqNumber = MinSeqNumber;
@@ -256,7 +256,7 @@ internal class SnowWorkerM1 : ISnowWorker
 
                 _TurnBackIndex++;
                 // 每毫秒序列数的前5位是预留位，0用于手工新值，1-4是时间回拨次序
-                // 支持4次回拨次序（避免回拨重叠导致ID重复），可无限次回拨（次序循环使用）。
+                // 支持4次回拨次序(避免回拨重叠导致ID重复)，可无限次回拨(次序循环使用)。
                 if (_TurnBackIndex > 4)
                 {
                     _TurnBackIndex = 1;

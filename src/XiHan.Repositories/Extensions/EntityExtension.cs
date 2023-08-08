@@ -113,7 +113,7 @@ public static class EntityExtension
         if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && user != null)
             types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
         if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && user != null)
-            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.UserName, null);
+            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.UserAccount, null);
         return source;
     }
 

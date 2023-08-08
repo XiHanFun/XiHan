@@ -21,7 +21,7 @@ using XiHan.Infrastructures.Apps.Caches;
 namespace XiHan.WebCore.Filters;
 
 /// <summary>
-/// 异步资源过滤器属性（一般用于缓存、阻止模型（值）绑定操作等）
+/// 异步资源过滤器属性(一般用于缓存、阻止模型(值)绑定操作等)
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
@@ -58,7 +58,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         {
             // 请求构造函数和方法,调用下一个过滤器
             var resourceExecuted = await next();
-            // 执行结果，若不存在此资源，缓存请求后的资源（请求构造函数和方法）
+            // 执行结果，若不存在此资源，缓存请求后的资源(请求构造函数和方法)
             if (resourceExecuted.Result != null)
             {
                 var result = resourceExecuted.Result as ActionResult;

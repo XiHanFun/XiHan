@@ -86,7 +86,7 @@ public class BlogArticle : BaseEntity
     public int ExposedType { get; set; }
 
     /// <summary>
-    /// 私密密码（MD5加密）
+    /// 私密密码(MD5加密)
     /// </summary>
     [SugarColumn(Length = 64, IsNullable = true)]
     public string? Password { get; set; }

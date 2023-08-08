@@ -45,9 +45,9 @@ public static class ActionContextExtend
             : httpContext.Connection.RemoteIpAddress.ToString();
         // 获取请求的 Url 地址(域名、路径、参数)
         var requestUrl = httpRequest.Host.Value + httpRequest.Path + httpRequest.QueryString.Value;
-        // 获取请求参数（写入日志，需序列化成字符串后存储），可以自由篡改
+        // 获取请求参数(写入日志，需序列化成字符串后存储)，可以自由篡改
         //var parameters = context.ActionArguments;
-        // 获取操作人（必须授权访问才有值）"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
+        // 获取操作人(必须授权访问才有值)"UserId" 为你存储的 claims type，jwt 授权对应的是 payload 中存储的键名
         var userId = httpContext.User.FindFirstValue("UserId");
 
         var actionContextInfo = new ActionContextInfo

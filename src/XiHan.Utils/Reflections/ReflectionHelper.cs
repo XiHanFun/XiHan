@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.VisualBasic;
 using System.Reflection;
 using XiHan.Utils.Extensions;
 
@@ -46,7 +45,7 @@ public static class ReflectionHelper
     }
 
     /// <summary>
-    /// 获取所有类
+    /// 获取所有符合条件的的程序集所有类
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<Type> GetAllTypes()

@@ -98,7 +98,7 @@ public static class OsPlatformHelper
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 var output = ShellHelper.Bash("uptime -s").Trim();
-                var timeSpan = DateTime.Now - output.Trim().ParseToDate();
+                var timeSpan = DateTime.Now - output.Trim().ParseToDateTime();
                 runTime = timeSpan.FormatTimeSpanToString();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))

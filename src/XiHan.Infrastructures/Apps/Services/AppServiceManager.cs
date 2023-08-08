@@ -104,10 +104,10 @@ public static class AppServiceManager
             // 如果有值的话，它就是注册服务的类型；如果没有的话，看是否允许从接口中获取服务类型；
             var serviceType = serviceAttribute.ServiceType;
 
-            // 情况1 适用于依赖抽象编程（如果允许，便尝试获取第一个作为服务类型）
+            // 情况1 适用于依赖抽象编程(如果允许，便尝试获取第一个作为服务类型)
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
                 serviceType = type.GetInterfaces().FirstOrDefault();
-            // 情况2 特殊情况下才会指定（如果还没获取到，就把自身的类型作为服务类型）
+            // 情况2 特殊情况下才会指定(如果还没获取到，就把自身的类型作为服务类型)
             serviceType ??= type;
 
             switch (serviceAttribute.ServiceLifetime)

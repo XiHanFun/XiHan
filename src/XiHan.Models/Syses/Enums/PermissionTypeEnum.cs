@@ -32,7 +32,7 @@ public enum PermissionTypeEnum
     [Description("操作权限(按钮级)")] Operation = 2,
 
     /// <summary>
-    /// 数据权限(访问响应级）
+    /// 数据权限(访问响应级)
     /// </summary>
     [Description("数据权限(访问响应级)")] Data = 3
 }

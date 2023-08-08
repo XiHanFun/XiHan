@@ -48,7 +48,7 @@ public class SysLogJob : BaseDeleteEntity
     public string Message { get; set; } = string.Empty;
 
     /// <summary>
-    /// 是否执行成功（1正常 0失败）
+    /// 是否执行成功(1正常 0失败)
     /// </summary>
     public bool IsSuccess { get; set; }
 

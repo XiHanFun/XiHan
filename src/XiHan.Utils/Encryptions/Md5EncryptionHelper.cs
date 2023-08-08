@@ -26,7 +26,7 @@ public static class Md5EncryptionHelper
     /// 对字符串进行 MD5 加密
     /// </summary>
     /// <param name="input">待加密的明文字符串</param>
-    /// <returns>加密后的字符串（32位或64位）</returns>
+    /// <returns>加密后的字符串(32位或64位)</returns>
     public static string Encrypt(string input)
     {
         // 计算32位MD5值
@@ -55,7 +55,7 @@ public static class Md5EncryptionHelper
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var md5 = MD5.Create();
         var hashBytes = md5.ComputeHash(stream);
-        return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        return BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
     }
 
     /// <summary>

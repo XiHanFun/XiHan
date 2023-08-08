@@ -30,7 +30,7 @@ public class SysLogJobWDto
     public string? JobGroup { get; set; }
 
     /// <summary>
-    /// 执行是否成功（1正常 0失败）
+    /// 执行是否成功(1正常 0失败)
     /// </summary>
     public bool? IsSuccess { get; set; }
 }
