@@ -87,7 +87,6 @@ public class SysDictDataController : BaseApiController
     /// <param name="dictDataId"></param>
     /// <returns></returns>
     [HttpPost("Get/ById")]
-    [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
     [ApiGroup(ApiGroupNames.Display)]
     public async Task<CustomResult> GetDictDataById([FromBody] long dictDataId)
     {

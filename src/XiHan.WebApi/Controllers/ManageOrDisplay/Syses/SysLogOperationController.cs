@@ -70,6 +70,7 @@ public class SysLogOperationController : BaseApiController
     /// <param name="logId"></param>
     /// <returns></returns>
     [HttpGet("Get/ById")]
+    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<SysLogOperation> GetLogOperationById(long logId)
     {
         return await _sysLogOperationService.GetLogOperationById(logId);
@@ -80,8 +81,9 @@ public class SysLogOperationController : BaseApiController
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    [HttpGet("GetList")]
-    public async Task<List<SysLogOperation>> GetLogOperationList(SysLogOperationWDto whereDto)
+    [HttpPost("GetList")]
+    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
+    public async Task<List<SysLogOperation>> GetLogOperationList([FromBody] SysLogOperationWDto whereDto)
     {
         return await _sysLogOperationService.GetLogOperationList(whereDto);
     }
@@ -91,8 +93,9 @@ public class SysLogOperationController : BaseApiController
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    [HttpGet("GetPageList")]
-    public async Task<PageDataDto<SysLogOperation>> GetLogOperationPageList(PageWhereDto<SysLogOperationWDto> pageWhere)
+    [HttpPost("GetPageList")]
+    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
+    public async Task<PageDataDto<SysLogOperation>> GetLogOperationPageList([FromBody] PageWhereDto<SysLogOperationWDto> pageWhere)
     {
         return await _sysLogOperationService.GetLogOperationPageList(pageWhere);
     }

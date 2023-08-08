@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using System.Diagnostics;
+using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
@@ -28,15 +29,12 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 应用名称
     /// </summary>
-    public static string ProcessName => Process.GetCurrentProcess().ProcessName;
+    public static string ProcessName => Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
 
     /// <summary>
     /// 当前版本
     /// </summary>
-    public static string Version => ReflectionHelper.GetAssemblies()
-            .First(assembly => assembly.GetName().Name!.Contains(ProcessName))
-            .GetName().Version?.ToString()
-        ?? string.Empty;
+    public static string Version => Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
 
     /// <summary>
     /// 启动端口
@@ -51,7 +49,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 所在路径
     /// </summary>
-    public static string BaseDirectory => AppContext.BaseDirectory;
+    public static string BaseDirectory => Assembly.GetEntryAssembly()?.Location ?? string.Empty;
 
     /// <summary>
     /// 占用空间
@@ -61,7 +59,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Environment.ProcessPath ?? string.Empty;
+    public static string ProcessPath => Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName) ?? string.Empty;
 
     /// <summary>
     /// 运行时间
@@ -71,12 +69,12 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 占用内存
     /// </summary>
-    public static string ProcessRam = Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
+    public static string ProcessRam => Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
 
     /// <summary>
     /// 进程标识
     /// </summary>
-    public static string ProcessId => Environment.ProcessId.ToString();
+    public static string ProcessId => Process.GetCurrentProcess().Id.ToString();
 
     /// <summary>
     /// 会话标识

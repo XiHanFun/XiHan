@@ -14,6 +14,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.WebApi.Controllers.Bases;
@@ -33,6 +34,7 @@ public class HelloController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("SayHello")]
+    [AppLog(Module = "快速开始", BusinessType = BusinessTypeEnum.Get)]
     public CustomResult SayHello()
     {
         return CustomResult.Success(new

@@ -15,7 +15,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetTaste;
+using System.Reflection;
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
@@ -69,6 +71,7 @@ public class AuthController : BaseApiController
     /// <param name="loginByAccountCDto"></param>
     /// <returns></returns>
     [HttpPost("GetToken/ByAccount")]
+    [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<CustomResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     {
         var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
@@ -81,6 +84,7 @@ public class AuthController : BaseApiController
     /// <param name="loginByEmailCDto"></param>
     /// <returns></returns>
     [HttpPost("GetToken/ByEmail")]
+    [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<CustomResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
     {
         var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
@@ -115,6 +119,7 @@ public class AuthController : BaseApiController
             if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
             sysLogLogin.IsSuccess = true;
+            sysLogLogin.Message = "登录成功！";
             sysLogLogin.Account = sysUser.Account;
             sysLogLogin.RealName = sysUser.RealName;
             sysLogLogin.Account = sysUser.Account;

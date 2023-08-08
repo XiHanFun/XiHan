@@ -12,7 +12,10 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Syses.Servers;
 using XiHan.WebApi.Controllers.Bases;
@@ -23,7 +26,7 @@ namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 /// <summary>
 /// 系统服务器监控管理
 /// </summary>
-//[Authorize]
+[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysServerController : BaseApiController
 {
@@ -43,6 +46,7 @@ public class SysServerController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ServerInfo")]
+    [AppLog(Module = "系统服务器监控", BusinessType = BusinessTypeEnum.Get)]
     public CustomResult GetServerInfo()
     {
         var serverInfo = _sysServerService.GetServerInfo();
