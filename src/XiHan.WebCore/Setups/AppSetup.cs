@@ -81,7 +81,7 @@ public static class AppSetup
             // 健康检查
             endpoints.MapHealthChecks("/Health");
             // 即时通讯
-            endpoints.MapHub<ChatHub>("/Chathub");
+            endpoints.MapHub<OnlineUserHub>("/OnlineUserHub");
         });
 
         "XiHan Application Started Successfully！".WriteLineSuccess();

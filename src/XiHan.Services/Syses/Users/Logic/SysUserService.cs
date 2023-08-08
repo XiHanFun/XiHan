@@ -14,8 +14,8 @@
 
 using Mapster;
 using SqlSugar;
-using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
@@ -68,7 +68,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
 
         _ = await GetAccountUnique(sysUser);
 
-        var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(AppGlobalConstant.DefaultPassword));
+        var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
         sysUser.Password = encryptPasswod;
         var userId = await AddReturnIdAsync(sysUser);
 

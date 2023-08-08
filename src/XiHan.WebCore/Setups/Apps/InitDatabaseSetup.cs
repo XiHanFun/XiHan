@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Collections;
@@ -36,10 +35,8 @@ public static class InitDatabaseSetup
     /// </summary>
     /// <param name="app"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public static void InitDatabase(this IApplicationBuilder app)
+    public static async Task InitDatabase()
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
-
         var dbProvider = DbScoped.SugarScope;
 
         try
@@ -48,8 +45,8 @@ public static class InitDatabaseSetup
             var enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
             if (!enableInitDb) return;
             "数据库正在初始化……".WriteLineInfo();
-            InitDatabase(dbProvider);
-            InitTables(dbProvider);
+            await InitDatabase(dbProvider);
+            await InitTables(dbProvider);
             "数据库初始化已完成！".WriteLineSuccess();
         }
         catch (Exception ex)
@@ -63,7 +60,7 @@ public static class InitDatabaseSetup
             var enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
             if (!enableInitSeed) return;
             "种子数据正在初始化……".WriteLineInfo();
-            InitSeedData(dbProvider);
+            await InitSeedData(dbProvider);
             "种子数据初始化成功！".WriteLineSuccess();
         }
         catch (Exception ex)
@@ -76,10 +73,13 @@ public static class InitDatabaseSetup
     /// 初始化数据库
     /// </summary>
     /// <param name="dbProvider"></param>
-    private static void InitDatabase(SqlSugarScope dbProvider)
+    private static async Task InitDatabase(SqlSugarScope dbProvider)
     {
         "创建数据库……".WriteLineInfo();
-        dbProvider.DbMaintenance.CreateDatabase();
+        await Task.Run(() =>
+        {
+            dbProvider.DbMaintenance.CreateDatabase();
+        });
         "数据库创建成功！".WriteLineSuccess();
     }
 
@@ -87,14 +87,17 @@ public static class InitDatabaseSetup
     /// 初始化数据表
     /// </summary>
     /// <param name="dbProvider"></param>
-    private static void InitTables(SqlSugarScope dbProvider)
+    private static async Task InitTables(SqlSugarScope dbProvider)
     {
         "创建数据表……".WriteLineInfo();
         // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
         var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
         if (!dbEntities.Any()) return;
 
-        dbProvider.CodeFirst.SetStringDefaultLength(256).InitTables(dbEntities);
+        await Task.Run(() =>
+        {
+            dbProvider.CodeFirst.SetStringDefaultLength(256).InitTables(dbEntities);
+        });
         "数据表创建成功！".WriteLineSuccess();
     }
 
@@ -102,39 +105,42 @@ public static class InitDatabaseSetup
     /// 初始化种子数据
     /// </summary>
     /// <param name="dbProvider"></param>
-    private static void InitSeedData(SqlSugarScope dbProvider)
+    private static async Task InitSeedData(SqlSugarScope dbProvider)
     {
         // 获取继承自泛型接口 ISeedData<> 的所有类
         var seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedData<>)).ToList();
         if (!seedTypes.Any()) return;
 
-        seedTypes.ForEach(seedType =>
+        await Task.Run(() =>
         {
-            var instance = Activator.CreateInstance(seedType);
-
-            var hasDataMethod = seedType.GetMethods().First();
-            var seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
-            if (seedData == null) return;
-
-            var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
-            var entityInfo = dbProvider.EntityMaintenance.GetEntityInfo(entityType);
-
-            if (!dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
+            seedTypes.ForEach(async seedType =>
             {
-                if (entityInfo.Columns.Any(u => u.IsPrimarykey))
+                var instance = Activator.CreateInstance(seedType);
+
+                var hasDataMethod = seedType.GetMethods().First();
+                var seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
+                if (seedData == null) return;
+
+                var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
+                var entityInfo = dbProvider.EntityMaintenance.GetEntityInfo(entityType);
+
+                if (await dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).AnyAsync())
                 {
-                    // 按主键进行批量增加和更新
-                    var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
-                    storage.AsInsertable.ExecuteCommand();
-                    var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
-                    if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
+                    if (entityInfo.Columns.Any(u => u.IsPrimarykey))
+                    {
+                        // 按主键进行批量增加和更新
+                        var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
+                        await storage.AsInsertable.ExecuteCommandAsync();
+                        var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                        if (ignoreUpdate == null) await storage.AsUpdateable.ExecuteCommandAsync();
+                    }
+                    else
+                    {
+                        // 无主键则只进行插入
+                        await dbProvider.InsertableByObject(seedData.ToList()).ExecuteCommandAsync();
+                    }
                 }
-                else
-                {
-                    // 无主键则只进行插入
-                    dbProvider.InsertableByObject(seedData.ToList()).ExecuteCommand();
-                }
-            }
+            });
         });
     }
 }

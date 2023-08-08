@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Mapster;
-using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Consts;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Roles.Dtos;
@@ -77,7 +77,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     public async Task<bool> DeleteRoleByIds(long[] dictIds)
     {
         var roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        if (roles.Any(r => r.Code == AppGlobalConstant.DefaultRole))
+        if (roles.Any(r => r.Code == GlobalConst.DefaultRole))
         {
             throw new CustomException($"禁止删除系统管理员角色!");
         }

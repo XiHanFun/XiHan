@@ -36,11 +36,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static UserClientInfo GetClientInfo(this HttpContext? context)
+    public static UserClientInfo GetClientInfo(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         try
         {
             var header = context.Request.Headers;
@@ -78,11 +75,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsAjaxRequest(this HttpContext? context)
+    public static bool IsAjaxRequest(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var stringValues = (from headers in context.Request.Headers
                             where headers.Key.ToLower() == "X-Requested-With".ToLower()
                             select headers.Value).FirstOrDefault();
@@ -94,11 +88,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsJsonRequest(this HttpContext? context)
+    public static bool IsJsonRequest(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var stringValues = (from headers in context.Request.Headers
                             where headers.Key.ToLower() == "content-type".ToLower()
                             select headers.Value).FirstOrDefault();
@@ -110,15 +101,22 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsHtmlRequest(this HttpContext? context)
+    public static bool IsHtmlRequest(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var stringValues = (from headers in context.Request.Headers
                             where headers.Key.ToLower() == "accept".ToLower()
                             select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
+    }
+
+    /// <summary>
+    /// 验证当前上下文响应内容是否是下载文件
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static bool IsDownLoadFile(this HttpContext context)
+    {
+        return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
     }
 
     /// <summary>
@@ -128,29 +126,13 @@ public static class HttpContextExtend
     /// <param name="fileContents"></param>
     /// <param name="contentType"></param>
     /// <param name="fileDownloadName"></param>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static void DownLoadFile(this HttpContext? context, byte[] fileContents, string contentType, string fileDownloadName)
+    public static void DownLoadFile(this HttpContext context, byte[] fileContents, string contentType, string fileDownloadName)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.ContentType = contentType;
         context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileDownloadName.UrlEncode());
         context.Response.BodyWriter.WriteAsync(fileContents);
         context.Response.BodyWriter.FlushAsync();
-    }
-
-    /// <summary>
-    /// 验证当前上下文响应内容是否是下载文件
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool IsDownLoadFile(this HttpContext? context)
-    {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
-        return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
     }
 
     /// <summary>
@@ -210,11 +192,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string GetClientIpV4(this HttpContext? context)
+    public static string GetClientIpV4(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         return context.GetClientIpAddressInfo().MapToIPv4().ToString();
     }
 
@@ -223,11 +202,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string GetClientIpV6(this HttpContext? context)
+    public static string GetClientIpV6(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         return context.GetClientIpAddressInfo().MapToIPv6().ToString();
     }
 
@@ -236,11 +212,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static IPAddress GetClientIpAddressInfo(this HttpContext? context)
+    public static IPAddress GetClientIpAddressInfo(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var result = "0.0.0.0";
         var header = context.Request.Headers;
 
@@ -264,11 +237,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetRequestUrl(this HttpContext? context)
+    public static string? GetRequestUrl(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         return context.Request.Path.Value;
     }
 
@@ -277,11 +247,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static async Task<string> GetRequestParameters(this HttpContext? context)
+    public static async Task<string> GetRequestParameters(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var requestParameters = string.Empty;
         var request = context.Request;
         var method = request.Method;
@@ -307,11 +274,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static async Task<string> GetResponseResult(this HttpContext? context)
+    public static async Task<string> GetResponseResult(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         var responseResult = string.Empty;
         var response = context.Response;
         // 使用异步获取请求实体
@@ -331,15 +295,10 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static UserAddressInfo GetAddressInfo(this HttpContext? context)
+    public static UserAddressInfo GetAddressInfo(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         try
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
-
             var addressInfo = new UserAddressInfo();
             var addressInfoResult = IpSearchHelper.Search(context.GetClientIpV4());
             if (addressInfoResult != null) addressInfo = addressInfoResult;
@@ -360,22 +319,20 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static UserAuthInfo GetUserAuthInfo(this HttpContext? context)
+    public static UserAuthInfo GetUserAuthInfo(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         try
         {
             var userAuthInfo = new UserAuthInfo
             {
                 IsAuthenticated = context.IsAuthenticated(),
                 UserId = context.GetUserId(),
-                UserName = context.GetUserName(),
+                UserAccount = context.GetUserAccount(),
+                UserNickName = context.GetUserNickName(),
+                UserRealName = context.GetUserRealName(),
                 UserRole = context.GetUserRole(),
                 UserToken = context.GetUserToken(),
-                //IsAdmin = context.IsAdmin(),
-                Claims = context.GetClaims()
+                UserClaims = context.GetUserClaims()
             };
             return userAuthInfo;
         }
@@ -390,12 +347,9 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool? IsAuthenticated(this HttpContext? context)
+    public static bool IsAuthenticated(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
-        return context.User.Identity?.IsAuthenticated;
+        return context.User.Identity?.IsAuthenticated ?? false;
     }
 
     /// <summary>
@@ -403,80 +357,69 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static long? GetUserId(this HttpContext? context)
+    public static long GetUserId(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
-        var uid = context.User.FindFirstValue("UserId");
-        return uid.ParseToLong();
+        return context.User.FindFirstValue("UserId").ParseToLong();
     }
 
     /// <summary>
-    /// 获取登录用户名
+    /// 获取登录账户名称
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string? GetUserName(this HttpContext? context)
+    public static string GetUserAccount(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
-        var uname = context.User.FindFirstValue("UserName");
-        return uname;
+        return context.User.FindFirstValue("UserAccount") ?? string.Empty;
     }
 
     /// <summary>
-    /// 获取登录用户权限
+    /// 获取登录账户姓名
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string GetUserRole(this HttpContext? context)
+    public static string GetUserRealName(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        return context.User.FindFirstValue("UserRealName") ?? string.Empty;
+    }
 
-        var roleIds = context.User.FindAll("SysRole").Select(r => r.Value).ToList();
+    /// <summary>
+    /// 获取登录账户昵称
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetUserNickName(this HttpContext context)
+    {
+        return context.User.FindFirstValue("UserNickName") ?? string.Empty;
+    }
+
+    /// <summary>
+    /// 获取登录账户权限
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetUserRole(this HttpContext context)
+    {
+        var roleIds = context.User.FindAll("UserRole").Select(r => r.Value).ToList();
         return roleIds.GetListStr(",");
     }
 
     /// <summary>
-    /// 获取请求令牌
+    /// 获取登录账户令牌
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static string GetUserToken(this HttpContext? context)
+    public static string GetUserToken(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         return context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
     }
-
-    ///// <summary>
-    ///// 判断是否是管理员
-    ///// </summary>
-    ///// <param name="context"></param>
-    ///// <returns></returns>
-    ///// <exception cref="ArgumentNullException"></exception>
-    //public static bool IsAdmin(this HttpContext? context)
-    //{
-    //    if (context == null) throw new ArgumentNullException(nameof(context));
-
-    //    var userName = context.GetUserName();
-    //    return userName == AppGlobalConstant.AdminRole;
-    //}
 
     /// <summary>
     /// ClaimsIdentity
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static IEnumerable<ClaimsIdentity> GetClaims(this HttpContext? context)
+    public static IEnumerable<ClaimsIdentity> GetUserClaims(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-
         return context.User.Identities;
     }
 
@@ -491,67 +434,67 @@ public class UserClientInfo
     /// <summary>
     /// 是否是 ajax 请求
     /// </summary>
-    public bool? IsAjaxRequest { get; set; }
+    public bool IsAjaxRequest { get; set; }
 
     /// <summary>
     /// 请求方式
     /// </summary>
-    public string? RequestMethod { get; set; }
+    public string RequestMethod { get; set; } = string.Empty;
 
     /// <summary>
     /// 请求地址
     /// </summary>
-    public string? RequestUrl { get; set; }
+    public string? RequestUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// 语言
     /// </summary>
-    public string? Language { get; set; }
+    public string Language { get; set; } = string.Empty;
 
     /// <summary>
     /// 引荐
     /// </summary>
-    public string? Referer { get; set; }
+    public string Referer { get; set; } = string.Empty;
 
     /// <summary>
     /// 代理信息
     /// </summary>
-    public string? Agent { get; set; }
+    public string Agent { get; set; } = string.Empty;
 
     /// <summary>
     /// 设备类型
     /// </summary>
-    public string? DeviceType { get; set; }
+    public string DeviceType { get; set; } = string.Empty;
 
     /// <summary>
     /// 系统名称
     /// </summary>
-    public string? OsName { get; set; }
+    public string OsName { get; set; } = string.Empty;
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public string? OsVersion { get; set; }
+    public string OsVersion { get; set; } = string.Empty;
 
     /// <summary>
     /// 浏览器名称
     /// </summary>
-    public string? BrowserName { get; set; }
+    public string BrowserName { get; set; } = string.Empty;
 
     /// <summary>
     /// 浏览器版本
     /// </summary>
-    public string? BrowserVersion { get; set; }
+    public string BrowserVersion { get; set; } = string.Empty;
 
     /// <summary>
     /// 远程IPv4
     /// </summary>
-    public string? RemoteIPv4 { get; set; }
+    public string RemoteIPv4 { get; set; } = string.Empty;
 
     /// <summary>
     /// 远程IPv6
     /// </summary>
-    public string? RemoteIPv6 { get; set; }
+    public string RemoteIPv6 { get; set; } = string.Empty;
 }
 
 /// <summary>
@@ -562,7 +505,7 @@ public class UserAddressInfo
     /// <summary>
     /// 长地址
     /// </summary>
-    public string? AddressInfo { get; set; }
+    public string AddressInfo { get; set; } = string.Empty;
 
     /// <summary>
     /// 国家
@@ -615,35 +558,40 @@ public class UserAuthInfo
     /// <summary>
     /// 是否已鉴权
     /// </summary>
-    public bool? IsAuthenticated { get; set; }
+    public bool IsAuthenticated { get; set; }
 
     /// <summary>
-    /// 用户ID
+    /// 用户Id
     /// </summary>
-    public long? UserId { get; set; }
+    public long UserId { get; set; }
 
     /// <summary>
-    /// 用户名称
+    /// 账号
     /// </summary>
-    public string? UserName { get; set; }
+    public string UserAccount { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 昵称
+    /// </summary>
+    public string UserNickName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 姓名
+    /// </summary>
+    public string? UserRealName { get; set; }
 
     /// <summary>
     /// 用户权限
     /// </summary>
-    public string? UserRole { get; set; }
+    public string UserRole { get; set; } = string.Empty;
 
     /// <summary>
     /// 请求令牌
     /// </summary>
-    public string? UserToken { get; set; }
-
-    /// <summary>
-    /// 是否管理员
-    /// </summary>
-    public bool? IsAdmin { get; set; }
+    public string UserToken { get; set; } = string.Empty;
 
     /// <summary>
     /// ClaimsIdentity
     /// </summary>
-    public IEnumerable<ClaimsIdentity>? Claims { get; set; }
+    public IEnumerable<ClaimsIdentity> UserClaims { get; set; } = Enumerable.Empty<ClaimsIdentity>();
 }

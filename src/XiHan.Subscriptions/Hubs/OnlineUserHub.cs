@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ChatHub
+// FileName:OnlineUserHub
 // Guid:ee669dee-30c7-4d21-8eb4-f24d8dc0f44c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,38 +13,71 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.SignalR;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.Caches;
+using XiHan.Infrastructures.Consts;
 
 namespace XiHan.Subscriptions.Hubs;
 
 /// <summary>
-/// 即时通讯
+/// 在线用户集线器
 /// </summary>
-public class ChatHub : Hub<IChatClient>
+public class OnlineUserHub : Hub<IOnlineUserHub>
 {
-    /// <summary>
-    /// 公共组
-    /// </summary>
-    private const string CommonGroup = "CommonGroup";
+    private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
+    private readonly IAppCacheService _appCacheService;
 
     /// <summary>
-    /// 加入群组
+    /// 构造函数
     /// </summary>
-    private const string GroupAdded = "加入群组";
+    /// <param name="onlineUserHubContext"></param>
+    /// <param name="appCacheService"></param>
+    public OnlineUserHub(IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext, IAppCacheService appCacheService)
+    {
+        _onlineUserHubContext = onlineUserHubContext;
+        _appCacheService = appCacheService;
+    }
+
+    #region 链接新建与断开
 
     /// <summary>
-    /// 退出群组
+    /// 连接方法重写
     /// </summary>
-    private const string GroupRemoved = "退出群组";
+    /// <returns></returns>
+    public override async Task OnConnectedAsync()
+    {
+        var content = Context.GetHttpContext();
+        // 获取当前请求上下文信息
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
+        var authInfo = App.AuthInfo;
+
+        var onlineUser = new OnlineUser
+        {
+            ConnectionId = Context.ConnectionId,
+            UserId = authInfo.UserId,
+            Account = authInfo.Account,
+            RealName = authInfo.re
+        };
+
+        await AddToGroup(HubConst.CommonGroup);
+        await Clients.Group(HubConst.CommonGroup).ReceiveMessage(HubConst.Connected);
+        await base.OnConnectedAsync();
+    }
 
     /// <summary>
-    /// 新建连接
+    /// 断连方法重写
     /// </summary>
-    private const string Connected = "新建连接";
+    /// <param name="exception"></param>
+    /// <returns></returns>
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        await Clients.Group(HubConst.CommonGroup).ReceiveMessage(HubConst.Disconnected);
+        await RemoveFromGroup(HubConst.CommonGroup);
+        await base.OnDisconnectedAsync(exception);
+    }
 
-    /// <summary>
-    /// 断开连接
-    /// </summary>
-    private const string Disconnected = "断开连接";
+    #endregion
 
     #region 发送消息给用户或群组
 
@@ -102,7 +135,7 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("SendMessageToCommonGroup")]
     public async Task SendMessageToCommonGroup(string message)
     {
-        await Clients.Group(CommonGroup).ReceiveMessage(message);
+        await Clients.Group(HubConst.CommonGroup).ReceiveMessage(message);
     }
 
     /// <summary>
@@ -128,7 +161,7 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("AddToGroup")]
     public async Task AddToGroup(string groupNameName)
     {
-        await SendMessageToGroup(groupNameName, GroupAdded);
+        await SendMessageToGroup(groupNameName, HubConst.GroupAdded);
         await Groups.AddToGroupAsync(Context.ConnectionId, groupNameName);
     }
 
@@ -140,35 +173,8 @@ public class ChatHub : Hub<IChatClient>
     [HubMethodName("RemoveFromGroup")]
     public async Task RemoveFromGroup(string groupNameName)
     {
-        await SendMessageToGroup(groupNameName, GroupRemoved);
+        await SendMessageToGroup(groupNameName, HubConst.GroupRemoved);
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupNameName);
-    }
-
-    #endregion
-
-    #region 链接新建与断开
-
-    /// <summary>
-    /// 连接方法重写
-    /// </summary>
-    /// <returns></returns>
-    public override async Task OnConnectedAsync()
-    {
-        await AddToGroup(CommonGroup);
-        await Clients.Group(CommonGroup).ReceiveMessage(Connected);
-        await base.OnConnectedAsync();
-    }
-
-    /// <summary>
-    /// 断连方法重写
-    /// </summary>
-    /// <param name="exception"></param>
-    /// <returns></returns>
-    public override async Task OnDisconnectedAsync(Exception? exception)
-    {
-        await Clients.Group(CommonGroup).ReceiveMessage(Disconnected);
-        await RemoveFromGroup(CommonGroup);
-        await base.OnDisconnectedAsync(exception);
     }
 
     #endregion

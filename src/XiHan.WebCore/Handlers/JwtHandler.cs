@@ -42,9 +42,9 @@ public static class JwtHandler
         var claims = new List<Claim>
         {
             new("UserId", tokenModel.UserId.ToString()),
-            new("UserName", tokenModel.UserName),
-            new("NickName", tokenModel.NickName),
-            new("SysRole", tokenModel.SysRoles.GetListStr(",")),
+            new("UserAccount", tokenModel.UserName),
+            new("UserNickName", tokenModel.NickName),
+            new("UserRole", tokenModel.SysRoles.GetListStr(",")),
             new("Issuer", authJwtSetting.Issuer),
             new("Audience", authJwtSetting.Audience),
         };
@@ -122,18 +122,13 @@ public static class JwtHandler
             var jwtToken = jwtHandler.ReadJwtToken(token);
             List<Claim> claims = jwtToken.Claims.ToList();
 
-            // 分离参数
-            var userIdClaim = claims.First(claim => claim.Type == "UserId").Value.ParseToLong();
-            var userNameClaim = claims.First(claim => claim.Type == "UserName").Value;
-            var nickNameClaim = claims.First(claim => claim.Type == "NickName").Value;
-            var sysRolesClaim = claims.First(claim => claim.Type == "SysRole").Value;
-
             var tokenModel = new TokenModel
             {
-                UserId = userIdClaim,
-                UserName = userNameClaim,
-                NickName = nickNameClaim,
-                SysRoles = sysRolesClaim.GetSubStringList(',')
+                UserId = claims.First(claim => claim.Type == "UserId").Value.ParseToLong(),
+                UserAccount = claims.First(claim => claim.Type == "UserAccount").Value,
+                UserNickName = claims.First(claim => claim.Type == "UserNickName").Value,
+                UserRealName = claims.First(claim => claim.Type == "UserRealName").Value,
+                UserRole = claims.First(claim => claim.Type == "UserRole").Value.GetStrList(','),
             };
             return tokenModel;
         }
@@ -246,22 +241,27 @@ public class AuthJwtSetting
 public class TokenModel
 {
     /// <summary>
-    /// 用户主键
+    /// 用户Id
     /// </summary>
-    public long UserId { get; init; }
+    public long UserId { get; set; }
 
     /// <summary>
-    /// 用户名称
+    /// 账号
     /// </summary>
-    public string UserName { get; init; } = string.Empty;
+    public string UserAccount { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户昵称
+    /// 昵称
     /// </summary>
-    public string NickName { get; init; } = string.Empty;
+    public string UserNickName { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户角色
+    /// 姓名
     /// </summary>
-    public List<string> SysRoles { get; init; } = new();
+    public string? UserRealName { get; set; }
+
+    /// <summary>
+    /// 用户权限
+    /// </summary>
+    public List<long> UserRole { get; set; } = new();
 }

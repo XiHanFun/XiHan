@@ -25,51 +25,44 @@ public static class StringExtension
     #region 分割
 
     /// <summary>
-    /// 把字符串按照分隔符转换成 List
+    /// 分割字符串按分割器转换为列表
     /// </summary>
-    /// <param name="str">源字符串</param>
-    /// <param name="separator">分隔符</param>
-    /// <param name="toLower">是否转换为小写</param>
+    /// <param name="sourceStr">源字符串</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static List<string> GetStrList(this string str, char separator, bool toLower)
+    public static List<string> GetStrList(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        List<string> list = new();
-        var sStr = str.Split(separator);
-        foreach (var s in sStr)
+        return sourceStr.GetStrEnumerable(sepeater, isAllowsDuplicates).ToList();
+    }
+
+    /// <summary>
+    /// 分割字符串按分割器转换为数组
+    /// </summary>
+    /// <param name="sourceStr">源字符串</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
+    /// <returns></returns>
+    public static string[] GetStrArray(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
+    {
+        return sourceStr.GetStrEnumerable(sepeater, isAllowsDuplicates).ToArray();
+    }
+
+    /// <summary>
+    /// 分割字符串按分割器转换为列表
+    /// </summary>
+    /// <param name="sourceStr">源字符串</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
+    /// <returns></returns>
+    public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
+    {
+        var result = sourceStr.Split(sepeater) as IEnumerable<string>;
+        if (isAllowsDuplicates)
         {
-            if (string.IsNullOrEmpty(s) || s == separator.ToString()) continue;
-            var strVal = s;
-            if (toLower) strVal = s.ToLowerInvariant();
-            list.Add(strVal);
+            return result;
         }
-
-        return list;
-    }
-
-    /// <summary>
-    /// 把字符串按照分隔符转换成数组
-    /// </summary>
-    /// <param name="str"></param>
-    /// <param name="splitter"></param>
-    /// <returns></returns>
-    public static string[]? GetStrArray(this string? str, string splitter)
-    {
-        string[]? strArray = null;
-        if (!string.IsNullOrEmpty(str)) strArray = new Regex(splitter).Split(str);
-        return strArray;
-    }
-
-    /// <summary>
-    /// 把字符串按照,分割转换为数组
-    /// </summary>
-    /// <param name="str"></param>
-    /// <returns></returns>
-    public static string[] GetStrArray(this string str)
-    {
-        return str.Split(new[]
-        {
-            ','
-        });
+        return result.Distinct();
     }
 
     #endregion
@@ -77,99 +70,68 @@ public static class StringExtension
     #region 组装
 
     /// <summary>
-    /// 把 List 按照分隔符组装成 string 类型
+    /// 组装字典按分割器转换为字符串
     /// </summary>
-    /// <param name="list"></param>
-    /// <param name="sepeater"></param>
+    /// <param name="sourceList">源列表</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetListStr(this List<string> list, string sepeater)
+    public static string GetListStr(this List<string> sourceList, char sepeater = ',', bool isAllowsDuplicates = true)
+    {
+        var sourceEnumerable = sourceList as IEnumerable<string>;
+        return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
+    }
+
+    /// <summary>
+    /// 组装字典按分割器转换为字符串
+    /// </summary>
+    /// <param name="sourceArray">源数组</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
+    /// <returns></returns>
+    public static string GetArrayStr(this string[] sourceArray, char sepeater = ',', bool isAllowsDuplicates = true)
+    {
+        var sourceEnumerable = sourceArray as IEnumerable<string>;
+        return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
+    }
+
+    /// <summary>
+    /// 组装字典按分割器转换为字符串
+    /// </summary>
+    /// <param name="sourceDictionary">源字典</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
+    /// <returns></returns>
+    public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',', bool isAllowsDuplicates = true)
+    {
+        var sourceEnumerable = sourceDictionary.Values as IEnumerable<string>;
+        return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
+    }
+
+    /// <summary>
+    /// 组装列表按分割器转换为字符串
+    /// </summary>
+    /// <param name="sourceEnumerable">源列表</param>
+    /// <param name="sepeater">分割器</param>
+    /// <param name="isAllowsDuplicates">是否允许重复</param>
+    /// <returns></returns>
+    public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         StringBuilder sb = new();
-        for (var i = 0; i < list.Count; i++)
-            if (i == list.Count - 1)
+        if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
+        foreach (var item in sourceEnumerable)
+        {
+            if (item == sourceEnumerable.LastOrDefault())
             {
-                sb.Append(list[i]);
+                sb.Append(item);
             }
             else
             {
-                sb.Append(list[i]);
+                sb.Append(item);
                 sb.Append(sepeater);
             }
-
+        }
         return sb.ToString();
-    }
-
-    /// <summary>
-    /// 把数组按照分隔符组装成 string 类型
-    /// </summary>
-    /// <param name="array"></param>
-    /// <param name="sepeater"></param>
-    /// <returns></returns>
-    public static string GetArrayStr(this string[] array, string sepeater)
-    {
-        StringBuilder sb = new();
-        for (var i = 0; i < array.Length; i++)
-            if (i == array.Length - 1)
-            {
-                sb.Append(array[i]);
-            }
-            else
-            {
-                sb.Append(array[i]);
-                sb.Append(sepeater);
-            }
-
-        return sb.ToString();
-    }
-
-    /// <summary>
-    /// 把数组按照,组装成 string 类型
-    /// </summary>
-    /// <param name="array"></param>
-    /// <returns></returns>
-    public static string GetArrayStr(this string[] array)
-    {
-        StringBuilder sb = new();
-        for (var i = 0; i < array.Length; i++)
-            if (i == array.Length - 1)
-            {
-                sb.Append(array[i]);
-            }
-            else
-            {
-                sb.Append(array[i]);
-                sb.Append(',');
-            }
-
-        return sb.ToString();
-    }
-
-    /// <summary>
-    /// 得到字典以逗号分隔的字符串
-    /// </summary>
-    /// <param name="list"></param>
-    /// <returns></returns>
-    public static string GetDictionaryValueStr(this Dictionary<int, int> list)
-    {
-        var sb = new StringBuilder();
-        foreach (var kvp in list)
-            sb.Append(kvp.Value + ",");
-        if (list.Count > 0) return DelLastComma(sb.ToString());
-
-        return "";
-    }
-
-    /// <summary>
-    /// 把字符串按照指定分隔符装成 List 去除重复
-    /// </summary>
-    /// <param name="str"></param>
-    /// <param name="sepeater"></param>
-    /// <returns></returns>
-    public static List<string> GetSubStringList(this string str, char sepeater)
-    {
-        var sStr = str.Split(sepeater);
-        return sStr.Where(s => !string.IsNullOrEmpty(s) && s != sepeater.ToString())
-            .ToList();
     }
 
     #endregion

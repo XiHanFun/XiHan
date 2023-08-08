@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IChatClient
+// FileName:IOnlineUserHub
 // Guid:4e4bd472-94b5-4e53-a02e-9f39156f5961
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@
 namespace XiHan.Subscriptions.Hubs;
 
 /// <summary>
-/// IChatClient
+/// IOnlineUserHub
 /// </summary>
-public interface IChatClient
+public interface IOnlineUserHub
 {
     /// <summary>
     /// 接收信息

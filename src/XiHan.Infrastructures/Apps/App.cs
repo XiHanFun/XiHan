@@ -47,6 +47,11 @@ public static class App
     public static IWebHostEnvironment WebHostEnvironment => AppEnvironmentManager.WebHostEnvironment;
 
     /// <summary>
+    /// 全局请求服务容器
+    /// </summary>
+    public static IServiceProvider ServiceProvider => AppHttpContextManager.HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
+
+    /// <summary>
     /// 全局配置构建器
     /// </summary>
     public static IConfiguration Configuration => AppConfigManager.ConfigurationRoot;
@@ -70,11 +75,6 @@ public static class App
     /// 请求上下文权限信息
     /// </summary>
     public static UserAuthInfo AuthInfo => AppHttpContextManager.HttpContextCurrent.GetUserAuthInfo();
-
-    /// <summary>
-    /// 全局请求服务容器
-    /// </summary>
-    public static IServiceProvider ServiceProvider => AppHttpContextManager.HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 
     /// <summary>
     /// 获取请求生命周期服务

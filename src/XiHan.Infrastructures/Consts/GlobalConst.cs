@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AppGlobalConstant
+// FileName:GlobalConst
 // Guid:6c5799dd-8d27-4fb0-9a12-59857ee66c84
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,12 +12,12 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructures.Apps;
+namespace XiHan.Infrastructures.Consts;
 
 /// <summary>
 /// 全局静态常量
 /// </summary>
-public static class AppGlobalConstant
+public static class GlobalConst
 {
     /// <summary>
     /// 是否演示模式
