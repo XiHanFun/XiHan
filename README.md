@@ -4,9 +4,9 @@
 
 ![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
-这是基于DotNet7的打造个人知识产权的新型全场景应用型软件项目。
+基于DotNet7的打造个人知识产权的新型全场景应用型软件项目。
 
-高效快速 返哺开源 用心创作 探索未知
+### 高效快速 返哺开源 用心创作 探索未知
 
 
 
@@ -35,15 +35,15 @@
 
 - [x] 项目启动，支持自动生成种子数据；
 
-- [x] 五种日志记录，审计/异常/请求响应/服务操作/Sql记录等；
+- [x] 三种日志记录，异常/请求响应操作/登录等；
 
 - [x] 搭配全套前端项目：
 
   - 后端：XiHan.Framework；
 
-  - 前端：XiHan.Manage（后台管理）、XiHan.Display（前台展示）；
+  - 前端：XiHan.Display；
 
-  - 文档：XiHan.Docs
+  - 文档：XiHan.Docs；
 
 - [x] 统一集成授权鉴权；
 
@@ -67,7 +67,7 @@
 >
 > 支持批量注入服务（自定义生命周期）、属性和字段注入（类似 Java 的 Autowired）；
 
-- [x] 支持全局请求管理器（）；
+- [x] 支持全局请求管理器；
 
 > 使用 `Microsoft.AspNetCore.Http` 核心库处理HTTP请求和响应；
 >
@@ -75,18 +75,19 @@
 
 - [x] 支持系统、环境、应用、客户端信息获取；
 - [x] 支持参数验证、规范相应、分页组件；
-- [x] 提供 Redis 做缓存处理；
+- [x] 提供 Redis 做缓存处理，默认开启内存缓存；
 - [x] 使用 Swagger 做API文档；
 - [x] 使用 MiniProfiler 做接口性能分析 ；
 - [x] 使用 Mapster 处理对象映射；
 - [x] 支持 CORS 跨域；
 - [x] 封装 JWT 自定义策略授权；
-- [x] 使用 SignalR 双工通讯；
+- [x] 使用 SignalR 双工即时通讯；
 - [x] 添加 RateLimiting 做 API 限流；
 - [x] 使用 Quartz.Net 做任务调度；
 - [x] 支持健康检查；
 - [x] 支持 数据库`读写分离`和多库操作；
 - [x] 支持邮件通知、群机器人通知（钉钉、飞书、企业微信）和自定义Webhook通知；
+- [ ] 支持QQ、微信、支付宝、Github、Gitlab、Gitee三方登录；
 - [ ] 新增 Redis 消息队列；
 - [ ] 新增 RabbitMQ 消息队列；
 - [ ] 新增 EventBus 事件总线；
@@ -111,9 +112,9 @@
 - [ ] 权限管理；
 - [ ] 菜单管理；
 - [ ] 文件存储；
-- [ ] 后台任务管理；
-- [ ] 系统日志管理；
-- [ ] 系统监控；
+- [x] 后台任务管理；
+- [x] 系统日志管理；
+- [x] 系统监控；
 
 ### 博文模块
 

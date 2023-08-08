@@ -29,6 +29,12 @@
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Test' " />
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' " />
     <ItemGroup>
+      <Compile Remove="Xftp7DragDropSupportDir502608843\**" />
+      <Content Remove="Xftp7DragDropSupportDir502608843\**" />
+      <EmbeddedResource Remove="Xftp7DragDropSupportDir502608843\**" />
+      <None Remove="Xftp7DragDropSupportDir502608843\**" />
+    </ItemGroup>
+    <ItemGroup>
         <None Remove="index.html" />
     </ItemGroup>
 

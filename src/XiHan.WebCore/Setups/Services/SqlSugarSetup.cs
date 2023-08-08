@@ -125,27 +125,27 @@ public static class SqlSugarSetup
                 if (databaseConsole) errorInfo.WriteLineError();
                 if (databaseLogError) Log.Error(exp, errorInfo);
             };
-            // 数据审计
-            client.Aop.DataExecuting = (oldValue, entityInfo) =>
-            {
-                // 演示环境判断
-                if (entityInfo.EntityColumnInfo.IsPrimarykey)
-                {
-                    var entityNames = new List<string>() {
-                        nameof(SysJob),
-                        nameof(SysLogException),
-                        nameof(SysLogJob),
-                        nameof(SysLogLogin),
-                        nameof(SysLogOperation)
-                    };
-                    if (entityNames.Any(name => !name.Contains(entityInfo.EntityName)))
-                    {
-                        var sysConfigService = App.GetService<ISysConfigService>();
-                        var isDemoMode = sysConfigService.GetSysConfigValueByCode<bool>(GlobalConst.IsDemoMode).GetAwaiter().GetResult();
-                        if (isDemoMode) throw new CustomException("演示环境禁止修改数据！");
-                    }
-                }
-            };
+            //// 数据审计
+            //client.Aop.DataExecuting = (oldValue, entityInfo) =>
+            //{
+            //    // 演示环境判断
+            //    if (entityInfo.EntityColumnInfo.IsPrimarykey)
+            //    {
+            //        var entityNames = new List<string>() {
+            //            nameof(SysJob),
+            //            nameof(SysLogException),
+            //            nameof(SysLogJob),
+            //            nameof(SysLogLogin),
+            //            nameof(SysLogOperation)
+            //        };
+            //        if (entityNames.Any(name => !name.Contains(entityInfo.EntityName)))
+            //        {
+            //            var sysConfigService = App.GetService<ISysConfigService>();
+            //            var isDemoMode = sysConfigService.GetSysConfigValueByCode<bool>(GlobalConst.IsDemoMode).GetAwaiter().GetResult();
+            //            if (isDemoMode) throw new CustomException("演示环境禁止修改数据！");
+            //        }
+            //    }
+            //};
         });
         return services;
     }

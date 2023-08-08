@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Collections;
@@ -33,8 +34,12 @@ public static class InitDatabaseSetup
     /// <summary>
     /// 初始化数据库
     /// </summary>
-    public static void InitDatabase()
+    /// <param name="app"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void InitDatabase(this IApplicationBuilder app)
     {
+        if (app == null) throw new ArgumentNullException(nameof(app));
+
         var dbProvider = DbScoped.SugarScope;
 
         try
@@ -114,14 +119,20 @@ public static class InitDatabaseSetup
             var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
             var entityInfo = dbProvider.EntityMaintenance.GetEntityInfo(entityType);
 
+            $"种子数据【{entityInfo.DbTableName}】初始化，共【{seedData.Count()}】条数据。".WriteLineInfo();
+
+            var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
             if (dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
+            {
+                $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineInfo();
+            }
+            else
             {
                 if (entityInfo.Columns.Any(u => u.IsPrimarykey))
                 {
                     // 按主键进行批量增加和更新
                     var storage = dbProvider.StorageableByObject(seedData.ToList()).ToStorage();
                     storage.AsInsertable.ExecuteCommand();
-                    var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
                     if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
                 }
                 else
