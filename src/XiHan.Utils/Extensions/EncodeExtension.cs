@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:EncodeExtensions
+// FileName:EncodeExtension
 // Guid:66fecdbc-ef3d-4694-86a1-704b500f3029
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

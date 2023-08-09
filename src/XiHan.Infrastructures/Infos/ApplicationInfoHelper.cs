@@ -54,7 +54,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 占用空间
     /// </summary>
-    public static string DirectorySize => FileHelper.GetDirectorySize(AppContext.BaseDirectory).FormatByteToString();
+    public static string DirectorySize => FileHelper.GetDirectorySize(AppContext.BaseDirectory).FormatFileSizeToString();
 
     /// <summary>
     /// 运行路径
@@ -69,7 +69,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 占用内存
     /// </summary>
-    public static string ProcessRam => Process.GetCurrentProcess().WorkingSet64.FormatByteToString();
+    public static string ProcessRam => Process.GetCurrentProcess().WorkingSet64.FormatFileSizeToString();
 
     /// <summary>
     /// 进程标识

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:EnumExtensions
+// FileName:EnumExtension
 // Guid:23f4fdd1-650e-49f7-bdc6-7ba00110a2ac
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

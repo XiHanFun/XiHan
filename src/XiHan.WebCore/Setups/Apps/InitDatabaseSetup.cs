@@ -124,7 +124,7 @@ public static class InitDatabaseSetup
             var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
             if (dbProvider.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
             {
-                $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineInfo();
+                $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineSuccess();
             }
             else
             {

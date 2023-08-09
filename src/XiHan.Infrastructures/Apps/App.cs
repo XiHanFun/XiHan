@@ -32,14 +32,19 @@ namespace XiHan.Infrastructures.Apps;
 public static class App
 {
     /// <summary>
-    /// 应用有效程序集
+    /// 有效程序集
     /// </summary>
-    public static IEnumerable<Assembly> Assemblies => ReflectionHelper.GetAssemblies();
+    public static IEnumerable<Assembly> EffectiveAssemblies => ReflectionHelper.GetAllEffectiveAssemblies();
 
     /// <summary>
-    /// 有效程序集类型
+    /// 有效类型
     /// </summary>
-    public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllTypes();
+    public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllEffectiveTypes();
+
+    /// <summary>
+    /// 入口程序集
+    /// </summary>
+    public static Assembly EntryAssembly => Assembly.GetEntryAssembly()!;
 
     /// <summary>
     /// 全局宿主环境

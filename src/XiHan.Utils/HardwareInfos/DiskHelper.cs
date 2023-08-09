@@ -90,9 +90,9 @@ public static class DiskHelper
                             {
                                 DiskName = rootDisk[4].Trim(),
                                 TypeName = rootDisk[0].Trim(),
-                                TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatByteToString(),
-                                UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatByteToString(),
-                                FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatByteToString(),
+                                TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatFileSizeToString(),
+                                UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatFileSizeToString(),
+                                FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatFileSizeToString(),
                                 AvailableRate = rootDisk[1].ParseToLong() == 0
                                     ? "0%"
                                     : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%"
@@ -109,9 +109,9 @@ public static class DiskHelper
                 {
                     DiskName = item.Name,
                     TypeName = item.DriveType.ToString(),
-                    TotalSpace = GetHardDiskTotalSpace(item.Name).FormatByteToString(),
-                    FreeSpace = GetHardDiskFreeSpace(item.Name).FormatByteToString(),
-                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatByteToString(),
+                    TotalSpace = GetHardDiskTotalSpace(item.Name).FormatFileSizeToString(),
+                    FreeSpace = GetHardDiskFreeSpace(item.Name).FormatFileSizeToString(),
+                    UsedSpace = (GetHardDiskTotalSpace(item.Name) - GetHardDiskFreeSpace(item.Name)).FormatFileSizeToString(),
                     AvailableRate = ProportionOfHardDiskFreeSpace(item.Name)
                 }));
             }

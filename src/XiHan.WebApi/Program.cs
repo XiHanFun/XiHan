@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Serilog;
-using System.Reflection;
 using XiHan.WebApi.Consoles;
 using XiHan.WebCore.Setups;
 
@@ -44,7 +43,7 @@ try
 
     // 配置中间件
     var app = builder.Build();
-    app.UseApplicationSetup(app.Environment, () => Assembly.GetExecutingAssembly().GetManifestResourceStream("XiHan.WebApi.index.html")!);
+    app.UseApplicationSetup(app.Environment);
 
     // 打印配置信息
     ConsoleConfigInfo.ConfirmConfigInfo();

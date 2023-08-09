@@ -18,7 +18,7 @@ using System.Text.RegularExpressions;
 namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// StringExtensions
+/// 字符串拓展类
 /// </summary>
 public static class StringExtension
 {
@@ -49,7 +49,7 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 分割字符串按分割器转换为枚举数
+    /// 分割字符串按分割器转换为序列
     /// </summary>
     /// <param name="sourceStr">源字符串</param>
     /// <param name="sepeater">分割器</param>
@@ -109,9 +109,9 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 组装枚举数按分割器转换为字符串
+    /// 组装序列按分割器转换为字符串
     /// </summary>
-    /// <param name="sourceEnumerable">源枚举数</param>
+    /// <param name="sourceEnumerable">源序列</param>
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>

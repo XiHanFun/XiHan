@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TypeExtensions
+// FileName:TypeExtension
 // Guid:2647b4c3-1cf7-4aeb-8eea-dd070a76fd73
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -104,6 +104,8 @@ public static class TypeExtension
     /// <summary>
     /// 方法是否是异步
     /// </summary>
+    /// <param name="method"></param>
+    /// <returns></returns>
     public static bool IsAsync(this MethodInfo method)
     {
         return method.ReturnType == typeof(Task) || (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>));
@@ -146,6 +148,8 @@ public static class TypeExtension
     /// <summary>
     /// 返回当前属性信息是否为virtual
     /// </summary>
+    /// <param name="property"></param>
+    /// <returns></returns>
     public static bool IsVirtual(this PropertyInfo property)
     {
         var accessor = property.GetAccessors().FirstOrDefault();
@@ -180,7 +184,6 @@ public static class TypeExtension
             NullableConverter nullableConverter = new(type);
             return nullableConverter.UnderlyingType;
         }
-
         return type;
     }
 

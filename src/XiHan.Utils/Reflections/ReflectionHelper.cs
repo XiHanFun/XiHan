@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Utils.Reflections;
 
@@ -28,38 +27,26 @@ public static class ReflectionHelper
     /// <param name="prefix">前缀名</param>
     /// <param name="suffix">后缀名</param>
     /// <returns></returns>
-    public static List<Assembly> GetAssemblies(string prefix = "XiHan", string suffix = "dll")
+    public static IEnumerable<Assembly> GetAllEffectiveAssemblies(string prefix = "XiHan", string suffix = "dll")
     {
-        List<Assembly> result = new();
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        var currentDomain = AppDomain.CurrentDomain.BaseDirectory;
-        var rootDirectory = new DirectoryInfo(currentDomain);
-        var files = rootDirectory.GetFiles().ToList();
-        var dlls = files.Where(e => e.Name.ToLowerInvariant().Contains($"{prefix}.".ToLowerInvariant()) &&
-                                    e.Name.ToLowerInvariant().Contains($".{suffix}".ToLowerInvariant()))
-                        .Select(e => e.FullName).ToList();
+        var filteredAssemblies = assemblies
+            .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().StartsWith(prefix.ToLowerInvariant()))
+            .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().EndsWith(suffix.ToLowerInvariant()));
 
-        dlls.ForEach(dll => result.Add(Assembly.LoadFrom(dll)));
-
-        return result;
+        return filteredAssemblies;
     }
 
     /// <summary>
     /// 获取所有符合条件的的程序集所有类
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<Type> GetAllTypes()
+    public static IEnumerable<Type> GetAllEffectiveTypes()
     {
-        List<Type> types = new();
-
-        var assemblies = GetAssemblies();
-        assemblies.ForEach(assembly =>
-        {
-            // 取并集去重
-            types = types.Union(assembly.GetTypes()).ToList();
-        });
-
-        return types;
+        return GetAllEffectiveAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Distinct();
     }
 
     #region 获取包含有某属性的类
@@ -72,9 +59,8 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetContainsAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        return GetAllTypes()
-           .Where(e => e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute)))
-           .ToList();
+        return GetAllEffectiveTypes()
+            .Where(e => e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute)));
     }
 
     /// <summary>
@@ -85,9 +71,8 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetContainsAttributeTypes(Attribute attribute)
     {
-        return GetAllTypes()
-           .Where(e => e.CustomAttributes.Any(g => g.AttributeType == attribute.GetType()))
-           .ToList();
+        return GetAllEffectiveTypes()
+            .Where(e => e.CustomAttributes.Any(g => g.AttributeType == attribute.GetType()));
     }
 
     #endregion
@@ -102,9 +87,8 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetFilterAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        return GetAllTypes()
-            .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute)))
-            .ToList();
+        return GetAllEffectiveTypes()
+            .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute)));
     }
 
     /// <summary>
@@ -115,9 +99,8 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetFilterAttributeTypes(Attribute attribute)
     {
-        return GetAllTypes()
-           .Where(e => e.CustomAttributes.All(g => g.AttributeType != attribute.GetType()))
-           .ToList();
+        return GetAllEffectiveTypes()
+            .Where(e => e.CustomAttributes.All(g => g.AttributeType != attribute.GetType()));
     }
 
     #endregion
@@ -132,10 +115,9 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClasses<T>() where T : class
     {
-        return GetAllTypes()
+        return GetAllEffectiveTypes()
            .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
-           .Where(t => typeof(T).IsAssignableFrom(t))
-           .ToList();
+           .Where(t => typeof(T).IsAssignableFrom(t));
     }
 
     /// <summary>
@@ -146,10 +128,9 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClasses(Type type)
     {
-        return GetAllTypes()
+        return GetAllEffectiveTypes()
             .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
-            .Where(type.IsAssignableFrom)
-            .ToList();
+            .Where(type.IsAssignableFrom);
     }
 
     /// <summary>
@@ -161,7 +142,7 @@ public static class ReflectionHelper
     {
         List<Type> implementingTypes = new();
 
-        foreach (Type type in GetAllTypes())
+        foreach (Type type in GetAllEffectiveTypes())
         {
             if (type.IsClass && !type.IsAbstract && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
             {
@@ -183,9 +164,9 @@ public static class ReflectionHelper
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static List<Type> GetContainsAttributeSubClasses<T, TAttribute>() where T : class where TAttribute : Attribute
+    public static IEnumerable<Type> GetContainsAttributeSubClasses<T, TAttribute>() where T : class where TAttribute : Attribute
     {
-        return GetSubClasses<T>().Intersect(GetContainsAttributeTypes<TAttribute>()).ToList();
+        return GetSubClasses<T>().Intersect(GetContainsAttributeTypes<TAttribute>());
     }
 
     /// <summary>
@@ -195,9 +176,9 @@ public static class ReflectionHelper
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static List<Type> GetContainsAttributeSubClasses<TAttribute>(Type type) where TAttribute : Attribute
+    public static IEnumerable<Type> GetContainsAttributeSubClasses<TAttribute>(Type type) where TAttribute : Attribute
     {
-        return GetSubClasses(type).Intersect(GetContainsAttributeTypes<TAttribute>()).ToList();
+        return GetSubClasses(type).Intersect(GetContainsAttributeTypes<TAttribute>());
     }
 
     #endregion
@@ -211,9 +192,9 @@ public static class ReflectionHelper
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static List<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
+    public static IEnumerable<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
-        return GetSubClasses<T>().Intersect(GetFilterAttributeTypes<TAttribute>()).ToList();
+        return GetSubClasses<T>().Intersect(GetFilterAttributeTypes<TAttribute>());
     }
 
     /// <summary>
@@ -223,34 +204,10 @@ public static class ReflectionHelper
     /// <typeparam name="TAttribute"></typeparam>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static List<Type> GetFilterAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
+    public static IEnumerable<Type> GetFilterAttributeSubClass<TAttribute>(Type type) where TAttribute : Attribute
     {
-        return GetSubClasses(type).Intersect(GetFilterAttributeTypes<TAttribute>()).ToList();
+        return GetSubClasses(type).Intersect(GetFilterAttributeTypes<TAttribute>());
     }
 
     #endregion
-
-    /// <summary>
-    /// 对象转换成字典(过滤某特性)
-    /// </summary>
-    /// <typeparam name="TAttribute"></typeparam>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    public static List<Dictionary<string, dynamic>> FiltrationProp<TAttribute>(object? obj) where TAttribute : Attribute
-    {
-        var result = new List<Dictionary<string, dynamic>>();
-        if (obj == null) return result;
-        if (obj is not IEnumerable<dynamic> objDynamics) return result;
-        var objDynamicList = objDynamics.ToList();
-        objDynamicList.ForEach(objDynamic =>
-        {
-            // 找到所有的没有此特性、或有此特性但忽略字段的属性
-            var item = (objDynamic as object).GetType().GetProperties()
-                .Where(prop => !prop.HasAttribute<TAttribute>() || (prop.HasAttribute<TAttribute>() &&
-                               !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>("IsIgnore")))
-                .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
-            result.Add(item);
-        });
-        return result;
-    }
 }

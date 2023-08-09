@@ -15,6 +15,7 @@
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.WebCore.Common.Swagger;
 
@@ -29,11 +30,10 @@ public static class SwaggerSetup
     /// Swagger应用扩展
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="streamHtml"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="Exception"></exception>
-    public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app, Func<Stream> streamHtml)
+    public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app)
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 
@@ -62,8 +62,10 @@ public static class SwaggerSetup
                 // 性能分析
                 if (isEnabledMiniprofiler)
                 {
+                    // 入口程序集
+                    var entryAssembly = App.EntryAssembly;
                     // 将swagger首页，设置成自定义的页面，写法：{ 项目名.index.html}
-                    options.IndexStream = streamHtml;
+                    options.IndexStream = () => entryAssembly.GetManifestResourceStream($"{entryAssembly.GetName().Name}.index.html");
                     options.HeadContent = @"<style>.opblock-summary-description{font-weight: bold;text-align: right;}</style>";
                 }
 

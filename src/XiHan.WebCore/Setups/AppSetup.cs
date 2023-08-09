@@ -33,10 +33,9 @@ public static class AppSetup
     /// </summary>
     /// <param name="app"></param>
     /// <param name="env"></param>
-    /// <param name="streamHtml"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env, Func<Stream> streamHtml)
+    public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env)
     {
         "XiHan Application Start……".WriteLineInfo();
         if (app == null) throw new ArgumentNullException(nameof(app));
@@ -55,7 +54,7 @@ public static class AppSetup
         // MiniProfiler
         app.UseMiniProfilerSetup();
         // Swagger
-        app.UseSwaggerSetup(streamHtml);
+        app.UseSwaggerSetup();
         // 使用静态文件，访问 wwwroot 目录文件，必须在 UseRouting 之前
         app.UseStaticFiles();
         // 路由
@@ -71,6 +70,7 @@ public static class AppSetup
         app.UseResponseCaching();
         // 恢复或启动任务
         app.UseTaskSchedulers();
+
         // 全局日志中间件
         app.UseMiddleware<GlobalLogMiddleware>();
 

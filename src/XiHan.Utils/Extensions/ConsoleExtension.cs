@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConsoleExtensions
+// FileName:ConsoleExtension
 // Guid:824ca05d-f5be-49a9-96f9-8a6502e5b064
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

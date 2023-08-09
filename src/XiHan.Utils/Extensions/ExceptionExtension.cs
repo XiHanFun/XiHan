@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ExceptionExtensions
+// FileName:ExceptionExtension
 // Guid:25adaec8-dba5-4b9d-a48f-c508b0810a3a
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

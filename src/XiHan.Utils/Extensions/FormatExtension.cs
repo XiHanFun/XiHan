@@ -1,24 +1,184 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:FormatTimeExtensions
-// Guid:4598f6e0-78b7-46d3-9eb5-834f6699d7c6
-// Author:zhaifanhua
+// FileName:FormatExtension
+// Guid:9941a751-01b8-4fdf-9471-7deba795ed61
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-05-08 下午 03:36:28
+// CreateTime:2023-08-09 下午 05:26:43
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
+using System.Globalization;
+using System.Net;
+
 namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// 时间格式化拓展类
+/// 格式化拓展类
 /// </summary>
-public static class FormatTimeExtension
+public static class FormatExtension
 {
+    #region FileSize
+
+    private static readonly string[] Suffixes = new string[]
+    {
+        "B", "KB", "MB", "GB", "TB", "PB"
+    };
+
+    /// <summary>
+    /// 格式化文件大小显示为字符串
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static string FormatFileSizeToString(this long bytes)
+    {
+        double last = 1;
+        for (var i = 0; i < Suffixes.Length; i++)
+        {
+            var current = Math.Pow(1024, i + 1);
+            var temp = bytes / current;
+            if (temp < 1) return (bytes / last).ToString("f3") + Suffixes[i];
+            last = current;
+        }
+
+        return bytes.ToString();
+    }
+
+    #endregion
+
+    #region Ip
+
+    /// <summary>
+    /// IPAddress转String
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
+    public static string FormatIpToString(this IPAddress address)
+    {
+        return address.ToString();
+    }
+
+    /// <summary>
+    /// byte[]转String
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static string FormatIpToString(this byte[] bytes)
+    {
+        return new IPAddress(bytes).ToString();
+    }
+
+    /// <summary>
+    /// ip转ipV4
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
+    public static string FormatIpToV4String(this IPAddress address)
+    {
+        return address.MapToIPv4().ToString();
+    }
+
+    /// <summary>
+    /// ip转ipV4
+    /// </summary>
+    /// <param name="ipStr"></param>
+    /// <returns></returns>
+    public static string FormatIpToV4String(this string ipStr)
+    {
+        return IPAddress.Parse(ipStr).MapToIPv4().ToString();
+    }
+
+    /// <summary>
+    /// ip转ipV6
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
+    public static string FormatIpToV6String(this IPAddress address)
+    {
+        return address.MapToIPv6().ToString();
+    }
+
+    /// <summary>
+    /// IPAddress转byte[]
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
+    public static byte[] FormatIpToByte(this IPAddress address)
+    {
+        return address.GetAddressBytes();
+    }
+
+    /// <summary>
+    /// byte[]转IPAddress
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static IPAddress FormatIpToAddress(this byte[] bytes)
+    {
+        return new IPAddress(bytes);
+    }
+
+    /// <summary>
+    /// String转IPAddress
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static IPAddress FormatIpToAddress(this string str)
+    {
+        return IPAddress.Parse(str);
+    }
+
+    #endregion
+
+    #region Money
+
+    /// <summary>
+    /// 格式化金额(由千位转万位，如 12,345,678.90=>1234,5678.90 )
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public static string FormatMoneyToString(this decimal num)
+    {
+        var numStr = num.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
+        string numRes;
+        var numDecimal = string.Empty;
+        if (numStr.Contains('.'))
+        {
+            var numInt = numStr.Split('.')[0];
+            numDecimal = "." + numStr.Split('.')[1];
+            numRes = FormatMoneyStringComma(numInt);
+        }
+        else
+        {
+            numRes = FormatMoneyStringComma(numStr);
+        }
+
+        return numRes + numDecimal;
+    }
+
+    /// <summary>
+    /// 金额字符串加逗号格式化
+    /// </summary>
+    /// <param name="numInt"></param>
+    /// <returns></returns>
+    private static string FormatMoneyStringComma(string numInt)
+    {
+        if (numInt.Length <= 4) return numInt;
+        var numNoFormat = numInt[..^4];
+        var numFormat = numInt.Substring(numInt.Length - 4, 4);
+        if (numNoFormat.Length > 4) return FormatMoneyStringComma(numNoFormat) + "," + numFormat;
+
+        return numNoFormat + "," + numFormat;
+    }
+
+    #endregion
+
+    #region Time
+
     /// <summary>
     /// 获取当前时间的时间戳
     /// </summary>
@@ -193,28 +353,28 @@ public static class FormatTimeExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-            {
-                if (dep.TotalHours < 24)
-                    return dep.TotalHours.ParseToInt() + "小时前";
-                else
-                    switch (dep.TotalDays)
-                    {
-                        case < 7:
-                            return dep.TotalDays.ParseToInt() + "天前";
+                {
+                    if (dep.TotalHours < 24)
+                        return dep.TotalHours.ParseToInt() + "小时前";
+                    else
+                        switch (dep.TotalDays)
+                        {
+                            case < 7:
+                                return dep.TotalDays.ParseToInt() + "天前";
 
-                        case >= 7 and < 30:
-                        {
-                            var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                            return defaultWeek + "周前";
+                            case >= 7 and < 30:
+                                {
+                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                                    return defaultWeek + "周前";
+                                }
+                            default:
+                                {
+                                    if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
+                                        return value.Month.ParseToInt() + "个月前";
+                                    else return now.Year - value.Year + "年前";
+                                }
                         }
-                        default:
-                        {
-                            if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
-                                return value.Month.ParseToInt() + "个月前";
-                            else return now.Year - value.Year + "年前";
-                        }
-                    }
-            }
+                }
         }
     }
 
@@ -237,13 +397,13 @@ public static class FormatTimeExtension
                 var length = thisValue.Length;
                 return length switch
                 {
-                    4 => DateTime.ParseExact(thisValue, "yyyy", System.Globalization.CultureInfo.CurrentCulture),
-                    6 => DateTime.ParseExact(thisValue, "yyyyMM", System.Globalization.CultureInfo.CurrentCulture),
-                    8 => DateTime.ParseExact(thisValue, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture),
-                    10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", System.Globalization.CultureInfo.CurrentCulture),
-                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", System.Globalization.CultureInfo.CurrentCulture),
-                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture),
-                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", System.Globalization.CultureInfo.CurrentCulture)
+                    4 => DateTime.ParseExact(thisValue, "yyyy", CultureInfo.CurrentCulture),
+                    6 => DateTime.ParseExact(thisValue, "yyyyMM", CultureInfo.CurrentCulture),
+                    8 => DateTime.ParseExact(thisValue, "yyyyMMdd", CultureInfo.CurrentCulture),
+                    10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", CultureInfo.CurrentCulture),
+                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", CultureInfo.CurrentCulture),
+                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture),
+                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture)
                 };
             }
         }
@@ -252,4 +412,6 @@ public static class FormatTimeExtension
             return DateTime.MinValue;
         }
     }
+
+    #endregion
 }

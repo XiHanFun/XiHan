@@ -81,7 +81,7 @@ public static class JwtHandler
     public static TokenModel TokenSerialize(string token)
     {
         // Token安全验证
-        if (!TokenIsSafeVerify(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
+        if (!IsSafeVerifyToken(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
 
         token = token.ParseToString().Replace("Bearer ", string.Empty);
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -103,7 +103,7 @@ public static class JwtHandler
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public static bool TokenIsSafeVerify(string token)
+    public static bool IsSafeVerifyToken(string token)
     {
         var authJwtSetting = GetAuthJwtSetting();
 
@@ -179,7 +179,7 @@ public static class JwtHandler
                 Expires = AppSettings.Auth.Jwt.Expires.GetValue()
             };
             // 判断结果
-            authJwtSetting.GetPropertyInfos().ForEach(setting =>
+            authJwtSetting.GetProperties().ForEach(setting =>
             {
                 if (setting.PropertyValue.IsNullOrZero())
                     throw new ArgumentNullException(nameof(setting.PropertyName));

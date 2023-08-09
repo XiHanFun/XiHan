@@ -76,9 +76,9 @@ public static class RamHelper
             }
             var ramInfo = new RamInfo
             {
-                TotalSpace = totalMemoryParts.FormatByteToString(),
-                UsedSpace = usedMemoryParts.FormatByteToString(),
-                FreeSpace = freeMemoryParts.FormatByteToString(),
+                TotalSpace = totalMemoryParts.FormatFileSizeToString(),
+                UsedSpace = usedMemoryParts.FormatFileSizeToString(),
+                FreeSpace = freeMemoryParts.FormatFileSizeToString(),
                 AvailableRate = totalMemoryParts == 0
                            ? "0%"
                            : Math.Round((decimal)freeMemoryParts / totalMemoryParts * 100, 3) + "%"

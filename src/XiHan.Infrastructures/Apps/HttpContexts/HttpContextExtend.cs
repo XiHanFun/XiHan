@@ -194,7 +194,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetClientIpV4(this HttpContext context)
     {
-        return context.GetClientIpAddressInfo().MapToIPv4().ToString();
+        return context.GetClientIpAddressInfo().FormatIpToV4String();
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetClientIpV6(this HttpContext context)
     {
-        return context.GetClientIpAddressInfo().MapToIPv6().ToString();
+        return context.GetClientIpAddressInfo().FormatIpToV6String();
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public static class HttpContextExtend
         }
 
         if (string.IsNullOrEmpty(result)) result = "0.0.0.0";
-        return result.FormatStringToIpAddress();
+        return result.FormatIpToAddress();
     }
 
     /// <summary>

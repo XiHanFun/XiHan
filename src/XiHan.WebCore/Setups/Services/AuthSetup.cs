@@ -61,7 +61,7 @@ public static class AuthSetup
             options.Events = new JwtBearerEvents
             {
                 // 认证失败时
-                OnAuthenticationFailed = async context =>
+                OnAuthenticationFailed = context =>
                 {
                     var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", string.Empty);
 
@@ -92,17 +92,19 @@ public static class AuthSetup
                         failedResult = CustomResult.Unauthorized("授权已过期！");
                         context.Response.Headers.Add("Token-Expired", "true");
                     }
-                    await context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    return Task.CompletedTask;
                 },
                 // 未授权时
-                OnChallenge = async context =>
+                OnChallenge = context =>
                 {
                     // 将Token错误添加到返回头信息中，返回自定义的未授权模型数据
                     var failedResult = CustomResult.Unauthorized("未授权！");
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
                     context.Response.Headers.Add("Token-Error", context.ErrorDescription);
-                    await context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    return Task.CompletedTask;
                 }
             };
         })

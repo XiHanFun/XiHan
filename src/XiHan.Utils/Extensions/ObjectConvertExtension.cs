@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ObjectConvertExtensions
+// FileName:ObjectConvertExtension
 // Guid:53530b50-ea0a-4f9e-b05a-af39735a6bc0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -361,6 +361,54 @@ public static class ObjectConvertExtension
         catch
         {
             return Guid.Empty;
+        }
+    }
+
+    #endregion
+
+    #region Dictionary
+
+    /// <summary>
+    /// 对象转换成字典
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static IEnumerable<Dictionary<string, dynamic>> ParseToDictionary(this object? obj)
+    {
+        if (obj is not IEnumerable<dynamic> objDynamics)
+            yield break;
+
+        foreach (var objDynamic in objDynamics)
+        {
+            // 找到所有的没有此特性、或有此特性但忽略字段的属性
+            var item = (objDynamic as object).GetType().GetProperties()
+                .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
+
+            yield return item;
+        }
+    }
+
+    /// <summary>
+    /// 对象转换成字典(过滤某特性)
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static IEnumerable<Dictionary<string, dynamic>> ParseToDictionaryFilterAttribute<TAttribute>(this object? obj) where TAttribute : Attribute
+    {
+        if (obj is not IEnumerable<dynamic> objDynamics)
+            yield break;
+
+        foreach (var objDynamic in objDynamics)
+        {
+            // 找到所有的没有此特性、或有此特性但忽略字段的属性
+            var item = (objDynamic as object).GetType().GetProperties()
+                .Where(prop => !prop.HasAttribute<TAttribute>() ||
+                               (prop.HasAttribute<TAttribute>() &&
+                               !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>("IsIgnore")))
+                .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
+
+            yield return item;
         }
     }
 

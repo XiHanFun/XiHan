@@ -1,83 +1,28 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ObjectPropertyExtensions
-// Guid:3c22cdf5-2be0-4377-9412-322dcc2ab5e3
-// Author:zhaifanhua
+// FileName:GenericityInfoExtension
+// Guid:a5574e0a-f226-4b0a-89bc-4bd9e9618a3d
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-09-28 下午 06:58:18
+// CreateTime:2023-08-09 下午 05:23:37
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// 对象属性拓展类
+/// 泛型信息拓展类
 /// </summary>
-public static class ObjectPropertyExtension
+public static class GenericityInfoExtension
 {
-    /// <summary>
-    /// 获取属性全名
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="entity"></param>
-    /// <param name="fullName"></param>
-    /// <returns></returns>
-    public static string GetFullNameOf<TEntity>([DisallowNull] this TEntity entity, [CallerArgumentExpression(nameof(entity))] string fullName = "")
-    {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
-        if (fullName == null) throw new ArgumentNullException(nameof(fullName));
-        return fullName;
-    }
-
-    /// <summary>
-    /// 利用反射来判断对象是否包含某个字段
-    /// </summary>
-    /// <param name="instance">object</param>
-    /// <param name="fieldName">需要判断的字段</param>
-    /// <returns>是否包含</returns>
-    public static bool IsContainField(this object? instance, string fieldName)
-    {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) return false;
-        var foundFieldInfo = instance.GetType().GetField(fieldName);
-        return foundFieldInfo != null;
-    }
-
-    /// <summary>
-    /// 利用反射来获取字段信息
-    /// </summary>
-    /// <param name="instance">object</param>
-    /// <param name="fieldName">字段名称</param>
-    /// <returns>是否包含</returns>
-    public static FieldInfo GetField(this object? instance, string fieldName)
-    {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) throw new NotImplementedException(nameof(fieldName));
-        var foundFieldInfo = instance.GetType().GetField(fieldName);
-        if (foundFieldInfo != null) return foundFieldInfo;
-        throw new NotImplementedException(nameof(fieldName));
-    }
-
-    /// <summary>
-    /// 利用反射来判断对象是否包含某个属性
-    /// </summary>
-    /// <param name="instance">object</param>
-    /// <param name="propertyName">需要判断的属性</param>
-    /// <returns>是否包含</returns>
-    public static bool IsContainProperty(this object? instance, string propertyName)
-    {
-        if (instance == null || string.IsNullOrEmpty(propertyName)) return false;
-        var foundPropertyInfo = instance.GetType().GetProperty(propertyName);
-        return foundPropertyInfo != null;
-    }
+    #region 属性信息
 
     /// <summary>
     /// 获取对象属性值
@@ -141,7 +86,7 @@ public static class ObjectPropertyExtension
     /// 获取对象属性信息列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetPropertyInfos<TEntity>(this TEntity entity) where TEntity : class
+    public static List<CustomPropertyInfo> GetProperties<TEntity>(this TEntity entity) where TEntity : class
     {
         var type = typeof(TEntity);
         var properties = type.GetProperties();
@@ -160,7 +105,7 @@ public static class ObjectPropertyExtension
     /// <param name="entity1">对象实例1</param>
     /// <param name="entity2">对象实例2</param>
     /// <returns></returns>
-    public static IEnumerable<CustomPropertyVariance> GetPropertyDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
+    public static IEnumerable<CustomPropertyVariance> GetPropertiesDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
     {
         var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
@@ -176,17 +121,17 @@ public static class ObjectPropertyExtension
     }
 
     /// <summary>
-    /// 把两个对象的差异信息转换为 Json 格式
+    /// 把两个对象的属性差异信息转换为 Json 格式
     /// </summary>
     /// <typeparam name="TEntity">对象类型</typeparam>
     /// <param name="oldVal">对象实例1</param>
     /// <param name="newVal">对象实例2</param>
     /// <param name="specialList">要排除某些特殊属性</param>
     /// <returns></returns>
-    public static string GetPropertyChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
+    public static string GetPropertiesChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
-        var list = GetPropertyDetailedCompare(oldVal, newVal);
+        var list = GetPropertiesDetailedCompare(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,
@@ -197,12 +142,67 @@ public static class ObjectPropertyExtension
 
         var enumerable = newList.ToList();
         if (!enumerable.ToList().Any()) return string.Empty;
-        JsonSerializerOptions options = new()
-        {
-            WriteIndented = true
-        };
-        return JsonSerializer.Serialize(enumerable, options);
+        return SerializeHelper.SerializeToJson(enumerable);
     }
+
+    #endregion
+
+    #region 判断为空
+
+    /// <summary>
+    /// 判断对象是否为空，为空返回true
+    /// </summary>
+    /// <typeparam name="T">要验证的对象的类型</typeparam>
+    /// <param name="data">要验证的对象</param>
+    public static bool IsNullOrEmpty<T>(this T? data)
+    {
+        // 如果为null
+        if (data == null) return true;
+
+        // 如果为""
+        if (data is not string) return data is DBNull;
+        if (string.IsNullOrEmpty(data.ToString()?.Trim())) return true;
+
+        // 如果为DBNull
+        return data is DBNull;
+    }
+
+    #endregion
+
+    #region 判断范围
+
+    /// <summary>
+    /// 判断当前值是否介于指定范围内
+    /// </summary>
+    /// <typeparam name="T">泛型</typeparam>
+    /// <param name="value">泛型对象</param>
+    /// <param name="start">范围起点</param>
+    /// <param name="end">范围终点</param>
+    /// <param name="leftEqual">是否可等于上限(默认等于)</param>
+    /// <param name="rightEqual">是否可等于下限(默认等于)</param>
+    /// <returns> 是否介于 </returns>
+    public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = true, bool rightEqual = true) where T : IComparable
+    {
+        var flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
+        return flag && (rightEqual ? value.CompareTo(end) <= 0 : value.CompareTo(end) < 0);
+    }
+
+    /// <summary>
+    /// 判断当前值是否介于指定范围内
+    /// </summary>
+    /// <typeparam name="T">泛型</typeparam>
+    /// <param name="value">泛型对象</param>
+    /// <param name="min">范围小值</param>
+    /// <param name="max">范围大值</param>
+    /// <param name="minEqual">是否可等于小值(默认等于)</param>
+    /// <param name="maxEqual">是否可等于大值(默认等于)</param>
+    public static bool IsInRange<T>(this IComparable<T> value, T min, T max, bool minEqual = true, bool maxEqual = true) where T : IComparable
+    {
+        var flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;
+        return flag && (maxEqual ? value.CompareTo(max) <= 0 : value.CompareTo(max) < 0);
+    }
+
+    #endregion
 }
 
 /// <summary>
