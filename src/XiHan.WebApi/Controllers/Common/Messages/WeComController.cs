@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Commons.Messages.WeComPush;
-using XiHan.Subscriptions.Robots.WeCom;
+using XiHan.Subscriptions.WebHooks.WeCom;
 using XiHan.Utils.Encryptions;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;

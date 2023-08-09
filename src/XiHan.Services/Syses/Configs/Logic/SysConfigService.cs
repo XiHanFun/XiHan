@@ -20,6 +20,7 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Configs.Dtos;
+using XiHan.Utils;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 

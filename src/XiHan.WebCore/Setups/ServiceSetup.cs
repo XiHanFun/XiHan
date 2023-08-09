@@ -35,10 +35,8 @@ public static class ServiceSetup
         "Services Start……".WriteLineInfo();
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        // 内存缓存
-        services.AddMemoryCacheSetup();
         // 分布式缓存
-        services.AddRedisCacheSetup();
+        services.AddCacheSetup();
         // 响应缓存
         services.AddResponseCacheSetup();
         // SqlSugar

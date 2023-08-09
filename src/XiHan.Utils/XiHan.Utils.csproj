@@ -23,10 +23,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SkiaSharp" Version="2.88.3" />
-    </ItemGroup>
-
-    <ItemGroup>
         <None Update="LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>

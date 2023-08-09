@@ -17,7 +17,6 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
-using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructures.Infos;
 

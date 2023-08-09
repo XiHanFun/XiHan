@@ -19,6 +19,7 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Logging.Dtos;
+using XiHan.Utils;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Logging.Logic;

@@ -177,17 +177,27 @@ public static class FormatExtension
 
     #endregion
 
-    #region Time
+    #region DateTime
+
+    /// <summary>
+    /// 获取 Unix 时间戳
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static long GetUnixTimeStamp(this DateTime dateTime)
+    {
+        return ((DateTimeOffset)dateTime).ToUnixTimeMilliseconds();
+    }
 
     /// <summary>
     /// 获取当前时间的时间戳
     /// </summary>
-    /// <param name="thisValue"></param>
+    /// <param name="dateTime"></param>
     /// <returns></returns>
-    public static string GetDateToTimeStamp(this DateTime thisValue)
+    public static long GetDateToTimeStamp(this DateTime dateTime)
     {
-        var ts = thisValue - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        return Convert.ToInt64(ts.TotalSeconds).ToString();
+        var ts = dateTime - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        return Convert.ToInt64(ts.TotalSeconds);
     }
 
     /// <summary>
@@ -211,6 +221,20 @@ public static class FormatExtension
     }
 
     /// <summary>
+    /// 获取一天的范围
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static List<DateTime> GetDayDateRange(this DateTime dateTime)
+    {
+        return new List<DateTime>
+        {
+            dateTime.GetDayMinDate(),
+            dateTime.GetDayMaxDate()
+        };
+    }
+
+    /// <summary>
     /// 获取日期开始时间
     /// </summary>
     /// <param name="dateTime"></param>
@@ -227,13 +251,45 @@ public static class FormatExtension
     }
 
     /// <summary>
+    /// 获取星期几
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
+    public static string GetWeekByDate(this DateTime dateTime)
+    {
+        var day = new[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        return day[Convert.ToInt32(dateTime.DayOfWeek.ToString("d"))];
+    }
+
+    /// <summary>
+    /// 获取这个月的第几周
+    /// </summary>
+    /// <param name="daytime"></param>
+    /// <returns></returns>
+    public static int GetWeekNumInMonth(this DateTime daytime)
+    {
+        int dayInMonth = daytime.Day;
+        // 本月第一天
+        DateTime firstDay = daytime.AddDays(1 - daytime.Day);
+        // 本月第一天是周几
+        int weekday = (int)firstDay.DayOfWeek == 0 ? 7 : (int)firstDay.DayOfWeek;
+        // 本月第一周有几天
+        int firstWeekEndDay = 7 - (weekday - 1);
+        // 当前日期和第一周之差
+        int diffday = dayInMonth - firstWeekEndDay;
+        diffday = diffday > 0 ? diffday : 1;
+        // 当前是第几周，若整除7就减一天
+        return ((diffday % 7) == 0 ? (diffday / 7 - 1) : (diffday / 7)) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
+    }
+
+    /// <summary>
     /// 时间转换字符串
     /// </summary>
     /// <param name="dateTime"></param>
     /// <returns></returns>
-    public static string FormatDateTimeToString(this DateTime? dateTime)
+    public static string FormatDateTimeToString(this DateTime dateTime)
     {
-        return dateTime != null ? dateTime.Value.ToString(dateTime.Value.Year == DateTime.Now.Year ? "MM-dd HH:mm" : "yyyy-MM-dd HH:mm") : string.Empty;
+        return dateTime.ToString(dateTime.Year == DateTime.Now.Year ? "MM-dd HH:mm" : "yyyy-MM-dd HH:mm");
     }
 
     /// <summary>

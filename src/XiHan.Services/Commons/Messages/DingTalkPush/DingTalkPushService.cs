@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
-using XiHan.Subscriptions.Robots.DingTalk;
+using XiHan.Subscriptions.WebHooks.DingTalk;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
@@ -29,7 +29,7 @@ namespace XiHan.Services.Commons.Messages.DingTalkPush;
 /// DingTalkMessagePush
 /// </summary>
 [AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushService
+public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
 {
     private readonly DingTalkCustomRobot _dingTalkRobot;
 
@@ -49,8 +49,8 @@ public class DingTalkPushService : BaseService<SysCustomRobot>, IDingTalkPushSer
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.DingTalk.GetEnumValueByKey());
-        var config = new TypeAdapterConfig().ForType<SysCustomRobot, DingTalkConnection>()
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.DingTalk.GetEnumValueByKey());
+        var config = new TypeAdapterConfig().ForType<SysRobot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
         var dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);

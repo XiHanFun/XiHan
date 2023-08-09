@@ -14,8 +14,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetTaste;
-using System.Reflection;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses.Results;
@@ -106,7 +104,7 @@ public class AuthController : BaseApiController
         var addressInfo = App.AddressInfo;
         var sysLogLogin = new SysLogLogin
         {
-            Ip = clientInfo.RemoteIPv4,
+            Ip = addressInfo.RemoteIPv4,
             Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
             Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
             Os = clientInfo.OsName + clientInfo.OsVersion,

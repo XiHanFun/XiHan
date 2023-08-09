@@ -3,33 +3,33 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HttpGroupEnum
-// Guid:f06f7e72-341f-43bf-80b0-375eecb05957
+// FileName:DingTalkResultInfoDto
+// Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-10-08 下午 10:28:41
+// CreatedTime:2022-11-08 下午 08:49:29
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel;
+using System.Text.Json.Serialization;
 
-namespace XiHan.Infrastructures.Requests.Https;
+namespace XiHan.Subscriptions.WebHooks.DingTalk;
 
 /// <summary>
-/// 网络请求组别
+/// 结果信息
 /// </summary>
-public enum HttpGroupEnum
+public class DingTalkResultInfoDto
 {
     /// <summary>
-    /// 远程
+    /// 结果代码
     /// </summary>
-    [Description("远程")]
-    Remote,
+    [JsonPropertyName("errcode")]
+    public int ErrCode { get; set; }
 
     /// <summary>
-    /// 本地
+    /// 结果消息
     /// </summary>
-    [Description("本地")]
-    Local,
+    [JsonPropertyName("errmsg")]
+    public string ErrMsg { get; set; } = string.Empty;
 }

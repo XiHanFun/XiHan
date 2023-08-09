@@ -42,32 +42,32 @@ public static class ExcelHelper
             for (var i = 0; i < properties.Length; i++)
             {
                 var property = properties[i];
-                var cellValue = row[i]?.ToString();
+                var propertyType = property.PropertyType;
+                var cellValue = row[i];
 
                 if (string.IsNullOrEmpty(cellValue)) continue;
 
-                if (property.PropertyType == typeof(string))
+                var value = propertyType switch
                 {
-                    property.SetValue(item, cellValue);
-                }
-                else if (property.PropertyType == typeof(int))
-                {
-                    if (int.TryParse(cellValue, out int value)) property.SetValue(item, value);
-                }
-                else if (property.PropertyType == typeof(double))
-                {
-                    if (double.TryParse(cellValue, out double value)) property.SetValue(item, value);
-                }
-                else if (property.PropertyType == typeof(DateTime))
-                {
-                    if (DateTime.TryParse(cellValue, out DateTime value)) property.SetValue(item, value);
-                }
-                // TODO: 支持更多的数据类型转换
-            }
+                    // 常规类型
+                    Type t when t == typeof(bool) => cellValue.ParseToBool(),
+                    Type t when t == typeof(short) => cellValue.ParseToShort(),
+                    Type t when t == typeof(long) => cellValue.ParseToLong(),
+                    Type t when t == typeof(float) => cellValue.ParseToFloat(),
+                    Type t when t == typeof(double) => cellValue.ParseToDouble(),
+                    Type t when t == typeof(decimal) => cellValue.ParseToDecimal(),
+                    Type t when t == typeof(int) => cellValue.ParseToInt(),
+                    Type t when t == typeof(string) => cellValue.ParseToString(),
+                    Type t when t == typeof(DateTime) => cellValue.ParseToDateTime(),
+                    Type t when t == typeof(Guid) => cellValue.ParseToGuid(),
+                    // 处理未知类型的情况
+                    _ => Convert.ChangeType(cellValue, propertyType),
+                };
 
+                property.SetValue(item, value);
+            }
             result.Add(item);
         }
-
         return result;
     }
 
@@ -102,16 +102,6 @@ public static class ExcelHelper
     }
 
     /// <summary>
-    /// 获取指定属性的 Excel 列名称
-    /// </summary>
-    /// <param name="property">属性</param>
-    /// <returns>Excel 列名称</returns>
-    public static string GetExcelColumnName(PropertyInfo property)
-    {
-        return property.GetCustomAttribute<ExcelColumnAttribute>()?.Name ?? property.Name;
-    }
-
-    /// <summary>
     /// 将指定类型的对象列表导出为 Excel 文件，并返回文件路径
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
@@ -119,34 +109,22 @@ public static class ExcelHelper
     /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>Excel 文件路径</returns>
-    public static async Task<string> ExportToExcelAsync<T>(IEnumerable<T> data, string fileName, string sheetName)
+    public static string ExportToExcel<T>(IEnumerable<T> data, string fileName, string sheetName)
     {
+        // 临时文件夹
         var filePath = Path.Combine(Path.GetTempPath(), $"{fileName}.xlsx");
-
         // 将数据写入 Excel 文件
-        await Task.Run(() => WriteToExcel(data, filePath, sheetName));
-
+        WriteToExcel(data, filePath, sheetName);
         return filePath;
     }
-}
-
-/// <summary>
-/// Excel 列属性
-/// </summary>
-[AttributeUsage(AttributeTargets.Property)]
-public class ExcelColumnAttribute : Attribute
-{
-    /// <summary>
-    /// 列名称
-    /// </summary>
-    public string Name { get; set; }
 
     /// <summary>
-    /// 构造函数
+    /// 获取指定属性的 Excel 列名称
     /// </summary>
-    /// <param name="name">列名称</param>
-    public ExcelColumnAttribute(string name)
+    /// <param name="property">属性</param>
+    /// <returns>Excel 列名称</returns>
+    public static string GetExcelColumnName(PropertyInfo property)
     {
-        Name = name;
+        return property.GetCustomAttribute<ExcelColumnAttribute>()?.Name ?? property.Name;
     }
 }

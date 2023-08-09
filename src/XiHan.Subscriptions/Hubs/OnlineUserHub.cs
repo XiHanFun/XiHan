@@ -15,7 +15,6 @@
 using Microsoft.AspNetCore.SignalR;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Caches;
-using XiHan.Infrastructures.Consts;
 
 namespace XiHan.Subscriptions.Hubs;
 

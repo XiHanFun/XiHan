@@ -114,7 +114,7 @@ public class GlobalLogMiddleware
             Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
             Referrer = clientInfo.Referer,
             Agent = clientInfo.Agent,
-            Ip = clientInfo.RemoteIPv4,
+            Ip = addressInfo.RemoteIPv4,
             Status = false,
             ErrorMessage = ex.Message,
             ElapsedTime = elapsed,

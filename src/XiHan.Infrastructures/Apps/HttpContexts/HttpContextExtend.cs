@@ -12,12 +12,12 @@
 
 #endregion <<版权版本注释>>
 
+using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
 using UAParser;
-using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verifications;
@@ -59,8 +59,6 @@ public static class HttpContextExtend
                 OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
                 BrowserName = clientInfo.UA.Family,
                 BrowserVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
-                RemoteIPv4 = context.GetClientIpV4(),
-                RemoteIPv6 = context.GetClientIpV6()
             };
             return clientModel;
         }
@@ -110,27 +108,27 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 验证当前上下文响应内容是否是下载文件
+    /// 验证当前上下文响应内容是否是导出文件
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static bool IsDownLoadFile(this HttpContext context)
+    public static bool IsExportFile(this HttpContext context)
     {
         return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
     }
 
     /// <summary>
-    /// 通过 httpcontext 下载文件
+    /// 通过 httpcontext 导出文件
     /// </summary>
     /// <param name="context"></param>
     /// <param name="fileContents"></param>
     /// <param name="contentType"></param>
-    /// <param name="fileDownloadName"></param>
-    public static void DownLoadFile(this HttpContext context, byte[] fileContents, string contentType, string fileDownloadName)
+    /// <param name="fileExportName"></param>
+    public static void ExportFile(this HttpContext context, byte[] fileContents, string contentType, string fileExportName)
     {
         context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+        context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
         context.Response.ContentType = contentType;
-        context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileDownloadName.UrlEncode());
         context.Response.BodyWriter.WriteAsync(fileContents);
         context.Response.BodyWriter.FlushAsync();
     }
@@ -175,61 +173,6 @@ public static class HttpContextExtend
     public static void RemoveCookie(this HttpContext context, string key)
     {
         context.Response.Cookies.Delete(key);
-    }
-
-    /// <summary>
-    /// 判断是否IP
-    /// </summary>
-    /// <param name="ip"></param>
-    /// <returns></returns>
-    public static bool IsIp(string ip)
-    {
-        return RegexHelper.IsIpRegex(ip);
-    }
-
-    /// <summary>
-    /// 取得客户端 IP4
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string GetClientIpV4(this HttpContext context)
-    {
-        return context.GetClientIpAddressInfo().FormatIpToV4String();
-    }
-
-    /// <summary>
-    /// 取得客户端 IP6
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string GetClientIpV6(this HttpContext context)
-    {
-        return context.GetClientIpAddressInfo().FormatIpToV6String();
-    }
-
-    /// <summary>
-    /// 取得客户端 IP
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static IPAddress GetClientIpAddressInfo(this HttpContext context)
-    {
-        var result = "0.0.0.0";
-        var header = context.Request.Headers;
-
-        if (context.Connection.RemoteIpAddress != null)
-        {
-            result = context.Connection.RemoteIpAddress.ToString();
-        }
-        else
-        {
-            // 取代理 IP
-            if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
-                result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
-        }
-
-        if (string.IsNullOrEmpty(result)) result = "0.0.0.0";
-        return result.FormatIpToAddress();
     }
 
     /// <summary>
@@ -299,15 +242,97 @@ public static class HttpContextExtend
     {
         try
         {
-            var addressInfo = new UserAddressInfo();
-            var addressInfoResult = IpSearchHelper.Search(context.GetClientIpV4());
-            if (addressInfoResult != null) addressInfo = addressInfoResult;
+            var ip = context.GetClientIpV4();
+            if (ip.IsNullOrEmpty()) throw new ArgumentException(nameof(ip));
+
+            // 中国|0|浙江省|杭州市|电信
+            var searcher = App.GetRequiredService<ISearcher>();
+            var searchResult = searcher.Search(ip);
+            if (searchResult == null) throw new ArgumentException("Ip地址信息查询出错", nameof(searchResult));
+
+            string[] addressArray = searchResult.Replace('0', '-').Split('|');
+            var addressInfo = new UserAddressInfo()
+            {
+                RemoteIPv4 = context.GetClientIpV4(),
+                RemoteIPv6 = context.GetClientIpV6(),
+                // 长地址信息
+                AddressInfo = searchResult,
+                // 国家 中国
+                Country = addressArray[0],
+                // 省份/自治区/直辖市 浙江省
+                State = addressArray[2],
+                // 地级市 安顺市
+                PrefectureLevelCity = addressArray[3],
+                // 区/县 西秀区
+                DistrictOrCounty = null,
+                // 运营商 联通
+                Operator = addressArray[4],
+                // 邮政编码 561000
+                PostalCode = null,
+                // 地区区号 0851
+                AreaCode = null
+            };
             return addressInfo;
         }
         catch (Exception ex)
         {
             throw new CustomException("获取地址信息出错！", ex);
         }
+    }
+
+    /// <summary>
+    /// 判断是否IP
+    /// </summary>
+    /// <param name="ip"></param>
+    /// <returns></returns>
+    public static bool IsIp(string ip)
+    {
+        return RegexHelper.IsIpRegex(ip);
+    }
+
+    /// <summary>
+    /// 取得客户端 IP4
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetClientIpV4(this HttpContext context)
+    {
+        return context.GetClientIpAddressInfo().FormatIpToV4String();
+    }
+
+    /// <summary>
+    /// 取得客户端 IP6
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetClientIpV6(this HttpContext context)
+    {
+        return context.GetClientIpAddressInfo().FormatIpToV6String();
+    }
+
+    /// <summary>
+    /// 取得客户端 IP
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static IPAddress GetClientIpAddressInfo(this HttpContext context)
+    {
+        var result = "0.0.0.0";
+        var header = context.Request.Headers;
+
+        if (context.Connection.RemoteIpAddress != null)
+        {
+            result = context.Connection.RemoteIpAddress.ToString();
+        }
+        else
+        {
+            // 取代理 IP
+            if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
+                result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
+        }
+
+        if (string.IsNullOrEmpty(result)) result = "0.0.0.0";
+        return result.FormatIpToAddress();
     }
 
     #endregion
@@ -485,7 +510,13 @@ public class UserClientInfo
     /// 浏览器版本
     /// </summary>
     public string BrowserVersion { get; set; } = string.Empty;
+}
 
+/// <summary>
+/// 地址信息
+/// </summary>
+public class UserAddressInfo
+{
     /// <summary>
     /// 远程IPv4
     /// </summary>
@@ -495,13 +526,7 @@ public class UserClientInfo
     /// 远程IPv6
     /// </summary>
     public string RemoteIPv6 { get; set; } = string.Empty;
-}
 
-/// <summary>
-/// 地址信息
-/// </summary>
-public class UserAddressInfo
-{
     /// <summary>
     /// 长地址
     /// </summary>

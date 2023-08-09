@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Responses.Results;
-using XiHan.Subscriptions.Robots.DingTalk;
+using XiHan.Subscriptions.WebHooks.DingTalk;
 
 namespace XiHan.Services.Commons.Messages.DingTalkPush;
 

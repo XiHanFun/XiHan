@@ -21,8 +21,8 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Utils.IdGenerator;
 using XiHan.Utils.Reflections;
+using Yitter.IdGenerator;
 
 namespace XiHan.Infrastructures.Apps;
 
@@ -42,11 +42,6 @@ public static class App
     public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllEffectiveTypes();
 
     /// <summary>
-    /// 入口程序集
-    /// </summary>
-    public static Assembly EntryAssembly => Assembly.GetEntryAssembly()!;
-
-    /// <summary>
     /// 全局宿主环境
     /// </summary>
     public static IWebHostEnvironment WebHostEnvironment => AppEnvironmentManager.WebHostEnvironment;
@@ -54,12 +49,17 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => AppHttpContextManager.HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
     /// </summary>
     public static IConfiguration Configuration => AppConfigManager.ConfigurationRoot;
+
+    /// <summary>
+    /// 入口程序集
+    /// </summary>
+    public static Assembly EntryAssembly => Assembly.GetEntryAssembly()!;
 
     /// <summary>
     /// 全局请求上下文
@@ -69,17 +69,17 @@ public static class App
     /// <summary>
     /// 请求上下文客户端信息
     /// </summary>
-    public static UserClientInfo ClientInfo => AppHttpContextManager.HttpContextCurrent.GetClientInfo();
+    public static UserClientInfo ClientInfo => HttpContextCurrent.GetClientInfo();
 
     /// <summary>
     /// 请求上下文地址信息
     /// </summary>
-    public static UserAddressInfo AddressInfo => AppHttpContextManager.HttpContextCurrent.GetAddressInfo();
+    public static UserAddressInfo AddressInfo => HttpContextCurrent.GetAddressInfo();
 
     /// <summary>
     /// 请求上下文权限信息
     /// </summary>
-    public static UserAuthInfo AuthInfo => AppHttpContextManager.HttpContextCurrent.GetUserAuthInfo();
+    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
 
     /// <summary>
     /// 获取请求生命周期服务
@@ -99,7 +99,7 @@ public static class App
     /// <returns></returns>
     public static object GetService(Type type)
     {
-        var service = AppServiceManager.ServiceProvider.GetService(type);
+        var service = ServiceProvider.GetService(type);
         return service!;
     }
 
@@ -121,7 +121,7 @@ public static class App
     /// <returns></returns>
     public static object GetRequiredService(Type type)
     {
-        var service = AppHttpContextManager.HttpContextCurrent.RequestServices.GetRequiredService(type);
+        var service = ServiceProvider.GetRequiredService(type);
         return service!;
     }
 
@@ -131,6 +131,6 @@ public static class App
     /// <returns></returns>
     public static long GetSnowflakeId()
     {
-        return IdHelper.NextId();
+        return YitIdHelper.NextId();
     }
 }

@@ -48,12 +48,6 @@ public static class HttpPollySetup
         var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
         // 注入 Http 请求,将超时策略放在重试策略之内，每次重试会应用此超时策略
-        services.AddHttpClient(HttpGroupEnum.Common.ToString(), c =>
-        {
-            c.DefaultRequestHeaders.Add("Accept", "application/json");
-        }).AddPolicyHandler(retryPolicy)
-        .AddPolicyHandler(timeoutPolicy);
-
         services.AddHttpClient(HttpGroupEnum.Remote.ToString(), c =>
         {
             c.DefaultRequestHeaders.Add("Accept", "application/json");

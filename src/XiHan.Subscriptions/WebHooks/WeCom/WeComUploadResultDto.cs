@@ -1,35 +1,31 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HttpGroupEnum
-// Guid:f06f7e72-341f-43bf-80b0-375eecb05957
+// FileName:WeComUploadResultDto
+// Guid:9385c398-2a75-4259-9328-c0039cd26823
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-10-08 下午 10:28:41
+// CreateTime:2023/8/10 2:20:16
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel;
-
-namespace XiHan.Infrastructures.Requests.Https;
+namespace XiHan.Subscriptions.WebHooks.WeCom;
 
 /// <summary>
-/// 网络请求组别
+/// 文件上传返回结果
 /// </summary>
-public enum HttpGroupEnum
+public class WeComUploadResultDto
 {
     /// <summary>
-    /// 远程
+    /// 返回消息
     /// </summary>
-    [Description("远程")]
-    Remote,
+    public string Message { get; set; } = string.Empty;
 
     /// <summary>
-    /// 本地
+    /// 介质ID
     /// </summary>
-    [Description("本地")]
-    Local,
+    public string MediaId { get; set; } = string.Empty;
 }

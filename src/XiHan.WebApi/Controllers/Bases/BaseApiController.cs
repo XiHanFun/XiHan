@@ -13,7 +13,11 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Infos;
+using XiHan.Utils.Extensions;
+using XiHan.Utils.Files;
 using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebApi.Controllers.Bases;
@@ -27,21 +31,22 @@ namespace XiHan.WebApi.Controllers.Bases;
 [ApiGroup(ApiGroupNames.All)]
 public class BaseApiController : ControllerBase
 {
-    private string _rootPath = ApplicationInfoHelper.BaseDirectory;
+    private readonly string RootExportPath = Path.Combine(ApplicationInfoHelper.BaseDirectory, "Export");
 
     ///// <summary>
-    ///// 导出Excel
+    ///// 导出文件
     ///// </summary>
     ///// <param name="path">完整文件路径</param>
     ///// <param name="fileName">带扩展文件名</param>
     ///// <returns></returns>
-    //protected FileStreamResult ExportExcel(string path, string fileName)
+    //protected FileStreamResult ExportFile(string path, string fileName)
     //{
     //    // 创建文件流
+    //    HttpContext.ExportFile();
+
     //    Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-    //    var stream = System.IO.File.OpenRead(path);
-    //    var mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    //    return File(stream, mimeType, HttpUtility.UrlEncode(fileName));
+    //    var fileStream = System.IO.File.OpenRead(path);
+    //    return File(fileStream, fileName.UrlEncode());
     //}
 
     ///// <summary>
@@ -66,11 +71,10 @@ public class BaseApiController : ControllerBase
     ///// <returns></returns>
     //private (string, string) ExportExcelMini<T>(List<T> list, string sheetName, string fileName)
     //{
-    //    var rootpath = ApplicationInfoHelper.CurrentDirectory;
-    //    var sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
-    //    var fullPath = Path.Combine(rootpath, "export", sFileName);
-
-    //    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+    //    var rootpath = ApplicationInfoHelper.BaseDirectory;
+    //    var sFileName = $"{fileName}-{DateTime.Now.FormatDateTimeToString()}.xlsx";
+    //    var fullPath = Path.Combine(rootpath, "Export", sFileName);
+    //    FileHelper.CreateDirectory(fullPath);
 
     //    MiniExcel.SaveAs(fullPath, list, sheetName: sheetName);
     //    return (sFileName, fullPath);

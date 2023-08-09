@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Responses.Results;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
-using XiHan.Subscriptions.Robots.WeCom;
+using XiHan.Subscriptions.WebHooks.WeCom;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
@@ -29,7 +29,7 @@ namespace XiHan.Services.Commons.Messages.WeComPush;
 /// WeComMessagePushService
 /// </summary>
 [AppService(ServiceType = typeof(IWeComPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
+public class WeComPushService : BaseService<SysRobot>, IWeComPushService
 {
     private readonly WeComCustomRobot _weComRobot;
 
@@ -49,9 +49,8 @@ public class WeComPushService : BaseService<SysCustomRobot>, IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        var sysCustomRobot = await GetFirstAsync(e =>
-            e.IsEnabled && e.CustomRobotType == CustomRobotTypeEnum.WeCom.GetEnumValueByKey());
-        var config = new TypeAdapterConfig().ForType<SysCustomRobot, WeComConnection>()
+        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.WeCom.GetEnumValueByKey());
+        var config = new TypeAdapterConfig().ForType<SysRobot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
         var weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);

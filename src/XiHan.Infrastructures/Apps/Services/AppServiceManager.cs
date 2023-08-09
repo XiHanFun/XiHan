@@ -12,14 +12,13 @@
 
 #endregion <<版权版本注释>>
 
+using IP2Region.Net.Abstractions;
+using IP2Region.Net.XDB;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Reflection;
-using XiHan.Infrastructures.Apps.HttpContexts.IpLocation;
-using XiHan.Infrastructures.Apps.HttpContexts.IpLocation.Ip2region;
 using XiHan.Utils.Extensions;
-using XiHan.Utils.IdGenerator;
-using XiHan.Utils.IdGenerator.Contract;
+using Yitter.IdGenerator;
 
 namespace XiHan.Infrastructures.Apps.Services;
 
@@ -49,18 +48,19 @@ public static class AppServiceManager
     /// <param name="services"></param>
     private static void RegisterBaseService(IServiceCollection services)
     {
-        // 注册雪花Id生成服务
+        // 雪花 Id 生成服务
         var options = new IdGeneratorOptions
         {
-            // 取值范围0~63,默认1
-            WorkerId = 1
+            WorkerId = 1,
+            WorkerIdBitLength = 1,
+            SeqBitLength = 6,
         };
-        IdHelper.SetIdGenerator(options);
-        // 注册属性或字段自动注入服务
-        services.AddSingleton<AutowiredServiceManager>();
-        // 注册 Ip 查询服务
-        services.AddSingleton<ISearcher, Searcher>();
-        IpSearchHelper.IpDbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
+        YitIdHelper.SetIdGenerator(options);
+        // 属性或字段自动注入服务
+        services.AddSingleton<AutowiredServiceHandler>();
+        // Ip 查询服务
+        var dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
+        services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
     }
 
     /// <summary>
@@ -73,8 +73,6 @@ public static class AppServiceManager
         // 所有涉及服务的组件库
         var libraries = new string[]
         {
-            "XiHan.Infrastructures",
-            "XiHan.Repositories",
             "XiHan.Services",
             "XiHan.Jobs"
         };
