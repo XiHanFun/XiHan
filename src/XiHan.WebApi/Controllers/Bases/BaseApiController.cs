@@ -13,11 +13,11 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
-using MiniExcelLibs;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Consts;
-using XiHan.Utils.Extensions;
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Files;
+using XiHan.WebCore.Common.Excels;
 using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebApi.Controllers.Bases;
@@ -34,74 +34,114 @@ public class BaseApiController : ControllerBase
     /// <summary>
     /// 导出文件
     /// </summary>
-    /// <param name="path">完整文件路径</param>
-    /// <param name="fileName">带扩展文件名</param>
+    /// <param name="fileName">带扩展的文件名</param>
+    /// <param name="fullPath">完整文件路径</param>
+    /// <param name="contentType">文件类型</param>
     /// <returns></returns>
-    protected void ExportFile(string path, string fileName)
+    protected async Task ExportFile(string fileName, string fullPath, ContentTypeEnum contentType)
+    {
+        if (!FileHelper.IsExistFile(fullPath))
+        {
+            throw new CustomException(fileName + "文件不存在！");
+        }
+        await HttpContext.ExportFile(fileName, GetFileBytes(fullPath), contentType);
+    }
+
+    /// <summary>
+    /// 导出 Excel
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <param name="dataSource">对象源序列</param>
+    /// <param name="sheetName">工作表名称</param>
+    /// <returns></returns>
+    protected async Task ExportExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+    {
+        // 临时文件路径
+        var tempPath = ExcelHelper.ExportToExcel(fileName, dataSource, sheetName);
+        // 导出文件路径
+        var fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
+        // 将临时文件从临时文件路径复制到导出文件路径
+        FileHelper.CopyFile(tempPath, fullPath);
+        // 删除临时文件
+        FileHelper.DeleteFile(tempPath);
+        await HttpContext.ExportFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+    }
+
+    /// <summary>
+    /// 导出 Excel(多个工作表)
+    /// </summary>
+    /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <param name="sheetsSource">表格数据源</param>
+    /// <returns></returns>
+    protected async Task ExportExcelMultipleSheets(string fileName, IDictionary<string, object> sheetsSource)
+    {
+        // 临时文件路径
+        var tempPath = ExcelHelper.ExportToExcel(fileName, sheetsSource);
+        // 导出文件路径
+        var fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
+        // 将临时文件从临时文件路径复制到导出文件路径
+        FileHelper.CopyFile(tempPath, fullPath);
+        // 删除临时文件
+        FileHelper.DeleteFile(tempPath);
+        await HttpContext.ExportFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+    }
+
+    /// <summary>
+    /// 下载指定源导入模板(默认保存在模板目录)
+    /// </summary>
+    /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <returns></returns>
+    protected async Task DownloadExcelImportTemplate(string fileName)
+    {
+        fileName = $"{fileName}-模板.xlsx";
+        // 导入模板文件路径
+        var fullPath = Path.Combine(App.RootImportTemplatePath, fileName);
+        if (FileHelper.IsExistDirectory(fullPath))
+            await HttpContext.ExportFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+        throw new CustomException(fileName + "文件不存在！");
+    }
+
+    /// <summary>
+    /// 下载自定义源导入模板(默认保存在模板目录)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <param name="dataSource">数据源</param>
+    /// <param name="sheetName">工作表名称</param>
+    /// <returns></returns>
+    protected async Task DownloadExcelImportTemplate<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+    {
+        fileName = $"{fileName}-模板.xlsx";
+        // 导入模板文件路径
+        var fullPath = Path.Combine(App.RootImportTemplatePath, fileName);
+        // 存在模板就删除重新写入
+        if (FileHelper.IsExistDirectory(fullPath))
+        {
+            // 删除原导入模板文件
+            FileHelper.DeleteFile(fullPath);
+            dataSource.ToList().Clear();
+            // 临时文件路径
+            var tempPath = ExcelHelper.ExportToExcel(fileName, dataSource, sheetName);
+            // 将临时文件从临时文件路径复制到导入模板文件路径
+            FileHelper.CopyFile(tempPath, fullPath);
+            // 删除临时文件
+            FileHelper.DeleteFile(tempPath);
+            await HttpContext.ExportFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+        }
+    }
+
+    /// <summary>
+    /// 获取文件字节数组
+    /// </summary>
+    /// <param name="path">完整文件路径</param>
+    /// <returns></returns>
+    private static byte[] GetFileBytes(string path)
     {
         // 创建文件流
-        var fullPath = Path.Combine(GlobalConst.RootExportPath, fileName);
-        var fileStream = System.IO.File.OpenRead(path);
-        using MemoryStream memoryStream = new();
-        HttpContext.ExportFile(memoryStream.ToArray(), ContentTypeEnum.ApplicationStream, fullPath);
-    }
-
-    /// <summary>
-    /// 导出工作表
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    /// <param name="sheetName"></param>
-    /// <param name="fileName"></param>
-    protected (string, string) ExportExcel<T>(List<T> list, string sheetName, string fileName)
-    {
-        var exportFileName = $"{fileName}.xlsx";
-        var fullPath = Path.Combine(GlobalConst.RootExportPath, exportFileName);
-        FileHelper.CreateDirectory(GlobalConst.RootExportPath);
-        MiniExcel.SaveAs(path: fullPath, value: list, sheetName: sheetName, overwriteFile: true);
-        return (exportFileName, fullPath);
-    }
-
-    /// <summary>
-    /// 导出多个工作表(Sheet)
-    /// </summary>
-    /// <param name="sheets"></param>
-    /// <param name="fileName"></param>
-    /// <returns></returns>
-    protected (string, string) ExportExcelMini(Dictionary<string, object> sheets, string fileName)
-    {
-        var exportFileName = $"{fileName}.xlsx";
-        var fullPath = Path.Combine(GlobalConst.RootExportPath, exportFileName);
-        FileHelper.CreateDirectory(fullPath);
-        MiniExcel.SaveAs(path: fullPath, value: sheets, overwriteFile: true);
-        return (exportFileName, fullPath);
-    }
-
-    /// <summary>
-    /// 下载导入模板
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    /// <param name="fileName">下载文件名</param>
-    /// <returns></returns>
-    protected string DownloadImportTemplate<T>(List<T> list, string fileName)
-    {
-        var templateFileName = $"{fileName}模板.xlsx";
-        var fullPath = Path.Combine(GlobalConst.RootImportTemplatePath, templateFileName);
-        FileHelper.CreateDirectory(fullPath);
-        MiniExcel.SaveAs(path: fullPath, value: list, overwriteFile: true);
-        return fullPath;
-    }
-
-    /// <summary>
-    /// 下载指定文件模板
-    /// </summary>
-    /// <param name="fileName">下载文件名</param>
-    /// <returns></returns>
-    protected (string, string) DownloadImportTemplate(string fileName)
-    {
-        var templateFileName = $"{fileName}模板.xlsx";
-        var fullPath = Path.Combine(GlobalConst.RootImportTemplatePath, templateFileName);
-        return (templateFileName, fullPath);
+        using var fileStream = new FileStream(path, FileMode.Open);
+        using var memoryStream = new MemoryStream();
+        fileStream.CopyTo(memoryStream);
+        return memoryStream.ToArray();
     }
 }

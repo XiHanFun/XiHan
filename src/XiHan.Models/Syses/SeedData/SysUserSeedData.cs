@@ -20,7 +20,7 @@ using XiHan.Utils.Encryptions;
 namespace XiHan.Models.Syses.SeedData;
 
 /// <summary>
-/// SysUserSeedData
+/// 系统用户表种子数据
 /// </summary>
 public class SysUserSeedData : ISeedData<SysUser>
 {

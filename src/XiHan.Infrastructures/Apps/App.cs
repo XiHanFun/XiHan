@@ -21,6 +21,7 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Infos;
 using XiHan.Utils.Reflections;
 using Yitter.IdGenerator;
 
@@ -80,6 +81,31 @@ public static class App
     /// 请求上下文权限信息
     /// </summary>
     public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
+
+    /// <summary>
+    /// 上传根路径
+    /// </summary>
+    public static string WebRootPath => WebHostEnvironment.WebRootPath;
+
+    /// <summary>
+    /// 上传根路径
+    /// </summary>
+    public static string RootUploadPath => Path.Combine(WebRootPath, "Uploads");
+
+    /// <summary>
+    /// 导出根路径
+    /// </summary>
+    public static string RootExportPath => Path.Combine(WebRootPath, "Exports");
+
+    /// <summary>
+    /// 导入根路径
+    /// </summary>
+    public static string RootImportPath => Path.Combine(WebRootPath, "Imports");
+
+    /// <summary>
+    /// 导入模板根路径
+    /// </summary>
+    public static string RootImportTemplatePath => Path.Combine(WebRootPath, "Imports", "Templates");
 
     /// <summary>
     /// 获取请求生命周期服务

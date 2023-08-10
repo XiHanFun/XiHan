@@ -29,9 +29,13 @@
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Test' " />
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' " />
     <ItemGroup>
+      <Compile Remove="Uploads\**" />
       <Compile Remove="Xftp7DragDropSupportDir502608843\**" />
+      <Content Remove="Uploads\**" />
       <Content Remove="Xftp7DragDropSupportDir502608843\**" />
+      <EmbeddedResource Remove="Uploads\**" />
       <EmbeddedResource Remove="Xftp7DragDropSupportDir502608843\**" />
+      <None Remove="Uploads\**" />
       <None Remove="Xftp7DragDropSupportDir502608843\**" />
     </ItemGroup>
     <ItemGroup>
@@ -63,9 +67,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="wwwroot\Imports\Templates\" />
         <Folder Include="Properties\PublishProfiles\" />
-        <Folder Include="Uploads\" />
-        <Folder Include="wwwroot\" />
+        <Folder Include="wwwroot\Exports\" />
+        <Folder Include="wwwroot\Uploads\" />
     </ItemGroup>
 
     <ItemGroup>

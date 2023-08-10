@@ -384,7 +384,7 @@ public static class FileHelper
     #region 检测文件或目录
 
     /// <summary>
-    /// 检测指定目录中是否存在指定的文件,若要搜索子目录请使用重载方法
+    /// 检测指定目录中是否存在指定的文件
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <param name="searchPattern">模式字符串，"*"代表0或N个字符，"?"代表1个字符。范例："Log*.xml"表示搜索所有以Log开头的Xml文件。</param>
@@ -408,7 +408,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 检测指定目录中是否存在指定的文件
+    /// 检测指定目录中是否存在指定的文件(搜索子目录)
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <param name="searchPattern">模式字符串，"*"代表0或N个字符，"?"代表1个字符。范例："Log*.xml"表示搜索所有以Log开头的Xml文件。</param>
@@ -439,19 +439,13 @@ public static class FileHelper
     /// <returns></returns>
     public static bool IsEmptyDirectory(string directoryPath)
     {
-        try
-        {
-            // 判断是否存在文件
-            var fileNames = GetFiles(directoryPath);
-            if (fileNames.Length > 0) return false;
-            // 判断是否存在文件夹
-            var directoryNames = GetDirectories(directoryPath);
-            return directoryNames.Length <= 0;
-        }
-        catch
-        {
-            return true;
-        }
+        // 判断是否存在文件
+        var fileNames = GetFiles(directoryPath);
+        if (fileNames.Any()) return false;
+        // 判断是否存在文件夹
+        var directoryNames = GetDirectories(directoryPath);
+        if (directoryNames.Any()) return false;
+        return true;
     }
 
     /// <summary>

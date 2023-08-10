@@ -17,7 +17,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses.Results;
+using XiHan.Models.Syses;
+using XiHan.Models.Syses.SeedData;
+using XiHan.Models.Syses.SeedDatas;
 using XiHan.Utils.Extensions;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
@@ -135,5 +139,60 @@ public class TestController : BaseApiController
     public string Base64Decode(string password)
     {
         return password.Base64Decode();
+    }
+
+    /// <summary>
+    /// 导出文件
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Export/File")]
+    public async Task ExportFile()
+    {
+        string path = @"E:\Repository\XiHanFun\Other\架构设计\系统设计\日志管理\image-20210409150248593.png";
+        string fileName = @"image-20210409150248593.png";
+        await ExportFile(fileName, path, ContentTypeEnum.ImagePng);
+    }
+
+    /// <summary>
+    /// 导出工作表
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Export/Excel")]
+    public async Task ExportExcel()
+    {
+        var sysUserSeedData = new SysUserSeedData();
+        var dataSource = sysUserSeedData.HasData();
+        await ExportExcel<SysUser>("系统用户种子数据", dataSource, "SysUser");
+    }
+
+    /// <summary>
+    /// 导出多个工作表
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Export/Excel/MultipleSheets")]
+    public async Task ExportExcelMultipleSheets()
+    {
+        var sysUserSeedData = new SysUserSeedData();
+        var sysConfigSeedData = new SysConfigSeedData();
+        var dataSourceSysUser = sysUserSeedData.HasData();
+        var dataSourceSysConfig = sysConfigSeedData.HasData();
+        var dataSource = new Dictionary<string, object>()
+        {
+            {"SysUserSeedData",dataSourceSysUser },
+            {"SysConfigSeedData",dataSourceSysConfig },
+        };
+        await ExportExcelMultipleSheets("系统种子数据", dataSource);
+    }
+
+    /// <summary>
+    /// 下载导入模板
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Download/Excel/ImportTemplate")]
+    public async Task DownloadExcelImportTemplate()
+    {
+        var sysUserSeedData = new SysUserSeedData();
+        var dataSource = sysUserSeedData.HasData();
+        await DownloadExcelImportTemplate<SysUser>("系统用户种子数据", dataSource, "SysUser");
     }
 }

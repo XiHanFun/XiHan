@@ -129,7 +129,7 @@ public class SysDictTypeController : BaseApiController
     public async Task<CustomResult> ExportDict()
     {
         var result = await _sysDictTypeService.GetListAsync();
-        var fileName = ExportExcel(result, "SysDictType", "字典");
-        return CustomResult.Success($"导出成功，文件名称【{fileName.Item1}】，原路径【{fileName.Item2}】");
+        await ExportExcel("系统字典", result, "SysDictType");
+        return CustomResult.Success($"系统字典导出成功！");
     }
 }

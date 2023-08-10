@@ -18,13 +18,13 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
 /// <summary>
-/// 数据媒体类型常数
+/// 文件的 MIME 类型扩展
 /// 通常由两部分组成：主类型和子类型，用斜杠分隔。主类型表示数据的大类，子类型表示主类型下的具体细分。
 /// </summary>
 public static class ContentTypeExtend
 {
     /// <summary>
-    /// 获取 ContentType 的值
+    /// 获取文件的 MIME 类型的值
     /// </summary>
     /// <param name="contentType"></param>
     /// <returns></returns>
@@ -94,7 +94,7 @@ public static class ContentTypeExtend
 }
 
 /// <summary>
-/// 数据媒体类型
+/// 文件的 MIME 类型
 /// </summary>
 public enum ContentTypeEnum
 {

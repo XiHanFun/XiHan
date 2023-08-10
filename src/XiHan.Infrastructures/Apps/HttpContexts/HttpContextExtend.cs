@@ -121,16 +121,16 @@ public static class HttpContextExtend
     /// 通过 httpcontext 导出文件
     /// </summary>
     /// <param name="context"></param>
+    /// <param name="fileExportName"></param>
     /// <param name="fileContents"></param>
     /// <param name="contentType"></param>
-    /// <param name="fileExportName"></param>
-    public static void ExportFile(this HttpContext context, byte[] fileContents, ContentTypeEnum contentType, string fileExportName)
+    public static async Task ExportFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
     {
         context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
         context.Response.ContentType = contentType.GetValue();
-        context.Response.BodyWriter.WriteAsync(fileContents);
-        context.Response.BodyWriter.FlushAsync();
+        await context.Response.BodyWriter.WriteAsync(fileContents);
+        await context.Response.BodyWriter.FlushAsync();
     }
 
     /// <summary>

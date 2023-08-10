@@ -22,18 +22,19 @@ namespace XiHan.WebCore.Common.Excels;
 /// </summary>
 public static class ExcelHelper
 {
+    #region 读取
+
     /// <summary>
-    /// 从 Excel 文件中读取数据到指定类型的对象列表中
+    /// 从 Excel 文件中读取数据到指定类型的对象序列
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
-    /// <param name="filePath">Excel 文件路径</param>
+    /// <param name="fullPath">Excel 文件全路径</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>对象列表</returns>
-    public static List<T> ReadFromExcel<T>(string filePath, string sheetName)
+    public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName)
     {
-        var data = MiniExcel.Query(filePath, true, sheetName).ToList();
+        var data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
         var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        var result = new List<T>();
 
         foreach (var row in data.Skip(1))
         {
@@ -66,25 +67,46 @@ public static class ExcelHelper
 
                 property.SetValue(item, value);
             }
-            result.Add(item);
+            yield return item;
         }
-        return result;
     }
 
     /// <summary>
-    /// 将指定类型的对象列表写入 Excel 文件中
+    /// 从 Excel 文件中读取多个 Sheet 数据到字典
+    /// </summary>
+    /// <param name="fullPath">Excel 文件全路径</param>
+    /// <returns></returns>
+    public static IDictionary<string, object> ReadFromExcel(string fullPath)
+    {
+        var resultData = new Dictionary<string, object>();
+
+        var sheetNames = MiniExcel.GetSheetNames(fullPath);
+        foreach (var sheetName in sheetNames)
+        {
+            var data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
+            resultData.Add(sheetName, data);
+        }
+        return resultData;
+    }
+
+    #endregion
+
+    #region 写入
+
+    /// <summary>
+    /// 将指定类型的对象序列写入 Excel 文件
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
-    /// <param name="data">对象列表</param>
-    /// <param name="filePath">Excel 文件路径</param>
+    /// <param name="fullPath">Excel 文件全路径</param>
+    /// <param name="dataSource">序列对象源</param>
     /// <param name="sheetName">工作表名称</param>
-    public static void WriteToExcel<T>(IEnumerable<T> data, string filePath, string sheetName)
+    public static void WriteToExcel<T>(string fullPath, IEnumerable<T> dataSource, string sheetName)
     {
         var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var header = properties.Select(p => p.GetCustomAttribute<ExcelColumnAttribute>()?.Name ?? p.Name).ToArray();
         var rows = new List<object[]>();
 
-        foreach (var item in data)
+        foreach (var item in dataSource)
         {
             var row = new object[properties.Length];
             for (var i = 0; i < properties.Length; i++)
@@ -98,25 +120,57 @@ public static class ExcelHelper
         var result = new List<object[]> { header }.Concat(rows);
 
         // 写入数据到 Excel 文件
-        MiniExcel.SaveAs(filePath, result, true, sheetName);
+        MiniExcel.SaveAs(path: fullPath, value: result, printHeader: true, sheetName: sheetName, overwriteFile: true);
     }
 
     /// <summary>
-    /// 将指定类型的对象列表导出为 Excel 文件，并返回文件路径
+    /// 将多个类型的对象写入 Excel 文件
+    /// </summary>
+    /// <param name="fullPath">Excel 文件全路径</param>
+    /// <param name="sheetsSource">表格数据源</param>
+    public static void WriteToExcel(string fullPath, IDictionary<string, object> sheetsSource)
+    {
+        MiniExcel.SaveAs(path: fullPath, value: sheetsSource, overwriteFile: true);
+    }
+
+    #endregion
+
+    #region 导出
+
+    /// <summary>
+    /// 将指定类型的对象序列导出为 Excel 文件，并返回临时文件路径
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
-    /// <param name="data">对象列表</param>
     /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <param name="dataSource">对象源序列</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>Excel 文件路径</returns>
-    public static string ExportToExcel<T>(IEnumerable<T> data, string fileName, string sheetName)
+    public static string ExportToExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
     {
+        fileName = $"{fileName}.xlsx";
         // 临时文件夹
-        var filePath = Path.Combine(Path.GetTempPath(), $"{fileName}.xlsx");
+        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
         // 将数据写入 Excel 文件
-        WriteToExcel(data, filePath, sheetName);
-        return filePath;
+        WriteToExcel(tempPath, dataSource, sheetName);
+        return tempPath;
     }
+
+    /// <summary>
+    /// 将多个类型的对象导出为 Excel 文件，并返回临时文件路径
+    /// </summary>
+    /// <param name="fileName">Excel 文件名(不包含扩展名)</param>
+    /// <param name="sheetsSource">表格数据源</param>
+    public static string ExportToExcel(string fileName, IDictionary<string, object> sheetsSource)
+    {
+        fileName = $"{fileName}.xlsx";
+        // 临时文件夹
+        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+        // 将数据写入 Excel 文件
+        WriteToExcel(tempPath, sheetsSource);
+        return tempPath;
+    }
+
+    #endregion
 
     /// <summary>
     /// 获取指定属性的 Excel 列名称
