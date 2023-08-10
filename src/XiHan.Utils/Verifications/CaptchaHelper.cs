@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:VerificationCodeHelper
+// FileName:CaptchaHelper
 // Guid:b18b6086-49ff-45f2-abb9-86a7a8505db4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Utils.Verifications;
 /// <summary>
 /// 验证码帮助类
 /// </summary>
-public static class VerificationCodeHelper
+public static class CaptchaHelper
 {
     /// <summary>
     /// 随机数字

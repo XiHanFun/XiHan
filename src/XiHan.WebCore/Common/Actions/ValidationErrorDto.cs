@@ -12,7 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructures.Responses.Actions;
+
+namespace XiHan.WebCore.Common.Actions;
 
 /// <summary>
 /// 验证出错字段实体

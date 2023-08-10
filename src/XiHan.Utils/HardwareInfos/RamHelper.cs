@@ -24,6 +24,12 @@ namespace XiHan.Utils.HardwareInfos;
 public static class RamHelper
 {
     /// <summary>
+    /// 内存信息
+    /// </summary>
+    /// <returns></returns>
+    public static List<RamInfo> RamInfos => GetRamInfos();
+
+    /// <summary>
     /// 获取内存信息
     /// </summary>
     /// <returns></returns>

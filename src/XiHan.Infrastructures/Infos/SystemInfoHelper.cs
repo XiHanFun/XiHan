@@ -24,60 +24,60 @@ public static class SystemInfoHelper
     /// <summary>
     /// 操作系统
     /// </summary>
-    public static string OperatingSystem => OsPlatformHelper.GetOperatingSystem();
+    public static string OperatingSystem => OsPlatformHelper.OperatingSystem;
 
     /// <summary>
     /// 系统描述
     /// </summary>
-    public static string OsDescription => OsPlatformHelper.GetOsDescription();
+    public static string OsDescription => OsPlatformHelper.OsDescription;
 
     /// <summary>
     /// 系统版本
     /// </summary>
-    public static string OsVersion => OsPlatformHelper.GetOsVersion();
+    public static string OsVersion => OsPlatformHelper.OsVersion;
 
     /// <summary>
     /// 系统平台
     /// </summary>
-    public static string Platform => OsPlatformHelper.GetPlatform();
+    public static string Platform => OsPlatformHelper.Platform;
 
     /// <summary>
     /// 系统架构
     /// </summary>
-    public static string OsArchitecture => OsPlatformHelper.GetOsArchitecture();
+    public static string OsArchitecture => OsPlatformHelper.OsArchitecture;
 
     /// <summary>
     /// 系统目录
     /// </summary>
-    public static string SystemDirectory => OsPlatformHelper.GetSystemDirectory();
+    public static string SystemDirectory => OsPlatformHelper.SystemDirectory;
 
     /// <summary>
     /// 运行时间
     /// </summary>
-    public static string RunningTime => OsPlatformHelper.GetRunningTime();
+    public static string RunningTime => OsPlatformHelper.RunningTime;
 
     /// <summary>
     /// 交互模式
     /// </summary>
-    public static string InteractiveMode => OsPlatformHelper.GetInteractiveMode();
+    public static string InteractiveMode => OsPlatformHelper.InteractiveMode;
 
     /// <summary>
     /// 处理器信息
     /// </summary>
-    public static CpuInfo CpuInfo => CpuHelper.GetCpuInfos();
+    public static CpuInfo CpuInfo => CpuHelper.CpuInfos;
 
     /// <summary>
     /// 内存信息
     /// </summary>
-    public static List<RamInfo> RamInfo => RamHelper.GetRamInfos();
+    public static List<RamInfo> RamInfo => RamHelper.RamInfos;
 
     /// <summary>
     /// 磁盘信息
     /// </summary>
-    public static List<DiskInfo> DiskInfo => DiskHelper.GetDiskInfos();
+    public static List<DiskInfo> DiskInfo => DiskHelper.DiskInfos;
 
     /// <summary>
     /// 网卡信息
     /// </summary>
-    public static List<NetworkInfo> NetworkInfo => NetworkHelper.GetNetworkInfos();
+    public static List<NetworkInfo> NetworkInfo => NetworkHelper.NetworkInfos;
 }

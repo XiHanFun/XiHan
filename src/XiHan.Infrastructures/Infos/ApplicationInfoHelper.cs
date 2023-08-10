@@ -46,9 +46,14 @@ public static class ApplicationInfoHelper
     public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
 
     /// <summary>
-    /// 所在路径
+    /// 文件路径
     /// </summary>
-    public static string BaseDirectory => Assembly.GetEntryAssembly()?.Location ?? string.Empty;
+    public static string BaseDirectory => AppContext.BaseDirectory;
+
+    /// <summary>
+    /// 文件地址
+    /// </summary>
+    public static string FileLocation => Assembly.GetEntryAssembly()?.Location ?? string.Empty;
 
     /// <summary>
     /// 占用空间

@@ -27,7 +27,7 @@ namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 /// <summary>
 /// 系统字典管理
 /// </summary>
-[Authorize]
+//[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysDictTypeController : BaseApiController
 {
@@ -120,17 +120,16 @@ public class SysDictTypeController : BaseApiController
         return CustomResult.Success(result);
     }
 
-    ///// <summary>
-    ///// 字典导出
-    ///// </summary>
-    ///// <returns></returns>
-    //[HttpGet("Export/Data")]
-    //[AppLog(Module = "字典导出", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
-    //public async Task<FileStreamResult> ExportDict()
-    //{
-    //    var result = await _sysDictTypeService.GetAllDictType();
-    //    var fileName = ExportExcel(result, "SysDictType", "字典");
-    //    return ExportExcel(fileName.Item2, fileName.Item1);
-    //    //return ResultDto.Success(new { path = "/Export/" + fileName, fileName = fileName.Item1 });
-    //}
+    /// <summary>
+    /// 字典导出
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Export/Data")]
+    [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
+    public async Task<CustomResult> ExportDict()
+    {
+        var result = await _sysDictTypeService.GetListAsync();
+        var fileName = ExportExcel(result, "SysDictType", "字典");
+        return CustomResult.Success($"导出成功，文件名称【{fileName.Item1}】，原路径【{fileName.Item2}】");
+    }
 }

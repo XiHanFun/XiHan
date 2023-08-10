@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Infos;
+
 namespace XiHan.Infrastructures.Consts;
 
 /// <summary>
@@ -38,4 +40,24 @@ public static class GlobalConst
     /// 系统管理员角色编码
     /// </summary>
     public const string SysAdminRole = "sys_role_admin";
+
+    /// <summary>
+    /// 上传根路径
+    /// </summary>
+    public static string RootUploadPath => Path.Combine(ApplicationInfoHelper.BaseDirectory, "Uploads");
+
+    /// <summary>
+    /// 导出根路径
+    /// </summary>
+    public static string RootExportPath => Path.Combine(ApplicationInfoHelper.BaseDirectory, "Exports");
+
+    /// <summary>
+    /// 导入根路径
+    /// </summary>
+    public static string RootImportPath => Path.Combine(ApplicationInfoHelper.BaseDirectory, "Imports");
+
+    /// <summary>
+    /// 导入模板根路径
+    /// </summary>
+    public static string RootImportTemplatePath => Path.Combine(ApplicationInfoHelper.BaseDirectory, "Imports", "Templates");
 }

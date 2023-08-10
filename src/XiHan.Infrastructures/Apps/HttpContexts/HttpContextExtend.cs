@@ -124,11 +124,11 @@ public static class HttpContextExtend
     /// <param name="fileContents"></param>
     /// <param name="contentType"></param>
     /// <param name="fileExportName"></param>
-    public static void ExportFile(this HttpContext context, byte[] fileContents, string contentType, string fileExportName)
+    public static void ExportFile(this HttpContext context, byte[] fileContents, ContentTypeEnum contentType, string fileExportName)
     {
         context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
-        context.Response.ContentType = contentType;
+        context.Response.ContentType = contentType.GetValue();
         context.Response.BodyWriter.WriteAsync(fileContents);
         context.Response.BodyWriter.FlushAsync();
     }

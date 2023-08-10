@@ -14,6 +14,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Services.Commons.Messages.WeComPush;
@@ -343,7 +344,7 @@ public class WeComController : BaseApiController
     {
         if (formFile.Length <= 0) return CustomResult.InternalServerError();
         var fileName = formFile.FileName;
-        var path = Path.Combine(ApplicationInfoHelper.BaseDirectory, "Uploads", fileName);
+        var path = Path.Combine(GlobalConst.RootUploadPath, fileName);
 
         FileStream fs = new(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         await formFile.CopyToAsync(fs);

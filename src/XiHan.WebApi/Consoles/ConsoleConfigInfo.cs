@@ -33,7 +33,8 @@ public static class ConsoleConfigInfo
         $@"当前版本：{ApplicationInfoHelper.Version}".WriteLineInfo();
         $@"启动端口：{ApplicationInfoHelper.Port}".WriteLineInfo();
         $@"启动环境：{ApplicationInfoHelper.EnvironmentName}".WriteLineInfo();
-        $@"所在路径：{ApplicationInfoHelper.BaseDirectory}".WriteLineInfo();
+        $@"文件路径：{ApplicationInfoHelper.BaseDirectory}".WriteLineInfo();
+        $@"文件地址：{ApplicationInfoHelper.FileLocation}".WriteLineInfo();
         $@"占用空间：{ApplicationInfoHelper.DirectorySize}".WriteLineInfo();
         $@"运行路径：{ApplicationInfoHelper.ProcessPath}".WriteLineInfo();
         $@"运行时间：{ApplicationInfoHelper.RunTime}".WriteLineInfo();

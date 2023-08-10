@@ -31,9 +31,9 @@ public static class TestVerificationCode
         while (true)
         {
             stopwatch.Restart();
-            Console.WriteLine(VerificationCodeHelper.CodeNumber(20));
-            Console.WriteLine(VerificationCodeHelper.CodeLetter(20));
-            Console.WriteLine(VerificationCodeHelper.CodeNumberOrLetter(20));
+            Console.WriteLine(CaptchaHelper.CodeNumber(20));
+            Console.WriteLine(CaptchaHelper.CodeLetter(20));
+            Console.WriteLine(CaptchaHelper.CodeNumberOrLetter(20));
             stopwatch.Stop();
             Console.WriteLine($"用时：{stopwatch.ElapsedMilliseconds}ms");
         }

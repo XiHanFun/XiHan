@@ -24,11 +24,11 @@ namespace XiHan.Services.Commons.Messages.EmailPush;
 public interface IEmailPushService : IBaseService<SysEmail>
 {
     /// <summary>
-    /// 发送验证邮件
+    /// 发送验证码邮件
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="userEmail"></param>
-    /// <param name="verificationCode"></param>
+    /// <param name="captcha"></param>
     /// <returns></returns>
-    Task<CustomResult> SendVerificationMail(string userName, string userEmail, string verificationCode);
+    Task<CustomResult> SendCaptchaMail(string userName, string userEmail, string captcha);
 }

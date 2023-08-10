@@ -14,8 +14,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Infrastructures.Responses.Actions;
 using XiHan.Infrastructures.Responses.Results;
+using XiHan.WebCore.Common.Actions;
 
 namespace XiHan.WebCore.Filters;
 
@@ -39,6 +39,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         {
             // 获取模型验证出错字段
             var validationErrors = new ValidationDto(modelState);
+
             context.Result = new JsonResult(CustomResult.UnprocessableEntity(validationErrors));
         }
         else

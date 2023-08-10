@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Infrastructures.Apps;
+using MiniExcelLibs;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Infos;
+using XiHan.Infrastructures.Consts;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
 using XiHan.WebCore.Common.Swagger;
@@ -31,100 +31,77 @@ namespace XiHan.WebApi.Controllers.Bases;
 [ApiGroup(ApiGroupNames.All)]
 public class BaseApiController : ControllerBase
 {
-    private readonly string RootExportPath = Path.Combine(ApplicationInfoHelper.BaseDirectory, "Export");
+    /// <summary>
+    /// 导出文件
+    /// </summary>
+    /// <param name="path">完整文件路径</param>
+    /// <param name="fileName">带扩展文件名</param>
+    /// <returns></returns>
+    protected void ExportFile(string path, string fileName)
+    {
+        // 创建文件流
+        var fullPath = Path.Combine(GlobalConst.RootExportPath, fileName);
+        var fileStream = System.IO.File.OpenRead(path);
+        using MemoryStream memoryStream = new();
+        HttpContext.ExportFile(memoryStream.ToArray(), ContentTypeEnum.ApplicationStream, fullPath);
+    }
 
-    ///// <summary>
-    ///// 导出文件
-    ///// </summary>
-    ///// <param name="path">完整文件路径</param>
-    ///// <param name="fileName">带扩展文件名</param>
-    ///// <returns></returns>
-    //protected FileStreamResult ExportFile(string path, string fileName)
-    //{
-    //    // 创建文件流
-    //    HttpContext.ExportFile();
+    /// <summary>
+    /// 导出工作表
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="sheetName"></param>
+    /// <param name="fileName"></param>
+    protected (string, string) ExportExcel<T>(List<T> list, string sheetName, string fileName)
+    {
+        var exportFileName = $"{fileName}.xlsx";
+        var fullPath = Path.Combine(GlobalConst.RootExportPath, exportFileName);
+        FileHelper.CreateDirectory(GlobalConst.RootExportPath);
+        MiniExcel.SaveAs(path: fullPath, value: list, sheetName: sheetName, overwriteFile: true);
+        return (exportFileName, fullPath);
+    }
 
-    //    Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-    //    var fileStream = System.IO.File.OpenRead(path);
-    //    return File(fileStream, fileName.UrlEncode());
-    //}
+    /// <summary>
+    /// 导出多个工作表(Sheet)
+    /// </summary>
+    /// <param name="sheets"></param>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    protected (string, string) ExportExcelMini(Dictionary<string, object> sheets, string fileName)
+    {
+        var exportFileName = $"{fileName}.xlsx";
+        var fullPath = Path.Combine(GlobalConst.RootExportPath, exportFileName);
+        FileHelper.CreateDirectory(fullPath);
+        MiniExcel.SaveAs(path: fullPath, value: sheets, overwriteFile: true);
+        return (exportFileName, fullPath);
+    }
 
-    ///// <summary>
-    ///// 导出Excel
-    ///// </summary>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="list"></param>
-    ///// <param name="sheetName"></param>
-    ///// <param name="fileName"></param>
-    //protected (string, string) ExportExcel<T>(List<T> list, string sheetName, string fileName)
-    //{
-    //    return ExportExcelMini(list, sheetName, fileName);
-    //}
+    /// <summary>
+    /// 下载导入模板
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="fileName">下载文件名</param>
+    /// <returns></returns>
+    protected string DownloadImportTemplate<T>(List<T> list, string fileName)
+    {
+        var templateFileName = $"{fileName}模板.xlsx";
+        var fullPath = Path.Combine(GlobalConst.RootImportTemplatePath, templateFileName);
+        FileHelper.CreateDirectory(fullPath);
+        MiniExcel.SaveAs(path: fullPath, value: list, overwriteFile: true);
+        return fullPath;
+    }
 
-    ///// <summary>
-    /////
-    ///// </summary>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="list"></param>
-    ///// <param name="sheetName"></param>
-    ///// <param name="fileName"></param>
-    ///// <returns></returns>
-    //private (string, string) ExportExcelMini<T>(List<T> list, string sheetName, string fileName)
-    //{
-    //    var rootpath = ApplicationInfoHelper.BaseDirectory;
-    //    var sFileName = $"{fileName}-{DateTime.Now.FormatDateTimeToString()}.xlsx";
-    //    var fullPath = Path.Combine(rootpath, "Export", sFileName);
-    //    FileHelper.CreateDirectory(fullPath);
-
-    //    MiniExcel.SaveAs(fullPath, list, sheetName: sheetName);
-    //    return (sFileName, fullPath);
-    //}
-
-    ///// <summary>
-    ///// 导出多个工作表(Sheet)
-    ///// </summary>
-    ///// <param name="sheets"></param>
-    ///// <param name="fileName"></param>
-    ///// <returns></returns>
-    //protected (string, string) ExportExcelMini(Dictionary<string, object> sheets, string fileName)
-    //{
-    //    var sFileName = $"{fileName}{DateTime.Now:MM-dd-HHmmss}.xlsx";
-    //    var fullPath = Path.Combine(_rootPath, "export", sFileName);
-
-    //    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-
-    //    MiniExcel.SaveAs(fullPath, sheets);
-    //    return (sFileName, fullPath);
-    //}
-
-    ///// <summary>
-    ///// 下载导入模板
-    ///// </summary>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="list"></param>
-    ///// <param name="stream"></param>
-    ///// <param name="fileName">下载文件名</param>
-    ///// <returns></returns>
-    //protected string DownloadImportTemplate<T>(List<T> list, Stream stream, string fileName)
-    //{
-    //    var sFileName = $"{fileName}模板.xlsx";
-    //    var newFileName = Path.Combine(_rootPath, "ImportTemplate", sFileName);
-
-    //    if (!Directory.Exists(newFileName)) Directory.CreateDirectory(Path.GetDirectoryName(newFileName));
-    //    MiniExcel.SaveAs(newFileName, list);
-    //    return sFileName;
-    //}
-
-    ///// <summary>
-    ///// 下载指定文件模板
-    ///// </summary>
-    ///// <param name="fileName">下载文件名</param>
-    ///// <returns></returns>
-    //protected (string, string) DownloadImportTemplate(string fileName)
-    //{
-    //    var sFileName = $"{fileName}.xlsx";
-    //    var fullPath = Path.Combine(_rootPath, "ImportTemplate", sFileName);
-
-    //    return (sFileName, fullPath);
-    //}
+    /// <summary>
+    /// 下载指定文件模板
+    /// </summary>
+    /// <param name="fileName">下载文件名</param>
+    /// <returns></returns>
+    protected (string, string) DownloadImportTemplate(string fileName)
+    {
+        var templateFileName = $"{fileName}模板.xlsx";
+        var fullPath = Path.Combine(GlobalConst.RootImportTemplatePath, templateFileName);
+        return (templateFileName, fullPath);
+    }
 }

@@ -14,7 +14,7 @@
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace XiHan.Infrastructures.Responses.Actions;
+namespace XiHan.WebCore.Common.Actions;
 
 /// <summary>
 /// 验证实体

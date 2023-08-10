@@ -24,6 +24,11 @@ namespace XiHan.Utils.HardwareInfos;
 public static class CpuHelper
 {
     /// <summary>
+    /// 处理器信息
+    /// </summary>
+    public static CpuInfo CpuInfos => GetCpuInfos();
+
+    /// <summary>
     /// 获取处理器信息
     /// </summary>
     /// <returns></returns>

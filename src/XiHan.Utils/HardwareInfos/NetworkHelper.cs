@@ -23,6 +23,11 @@ namespace XiHan.Utils.HardwareInfos;
 public static class NetworkHelper
 {
     /// <summary>
+    /// 网卡信息
+    /// </summary>
+    public static List<NetworkInfo> NetworkInfos => GetNetworkInfos();
+
+    /// <summary>
     /// 获取网卡信息
     /// </summary>
     /// <returns></returns>

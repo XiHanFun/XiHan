@@ -24,45 +24,9 @@ namespace XiHan.Utils.HardwareInfos;
 public static class DiskHelper
 {
     /// <summary>
-    /// 指定驱动器剩余空间大小与总空间大小占比
+    /// 磁盘信息
     /// </summary>
-    /// <param name="hardDiskName"></param>
-    /// <returns></returns>
-    public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
-    {
-        return GetHardDiskTotalSpace(hardDiskName) == 0
-            ? "0%"
-            : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
-    }
-
-    /// <summary>
-    /// 磁盘分区
-    /// </summary>
-    /// <returns></returns>
-    public static string GetDiskPartition()
-    {
-        return string.Join("；", Environment.GetLogicalDrives());
-    }
-
-    /// <summary>
-    /// 获取指定驱动器剩余空间大小
-    /// </summary>
-    /// <param name="hardDiskName"></param>
-    /// <returns></returns>
-    public static long GetHardDiskFreeSpace(string hardDiskName)
-    {
-        return new DriveInfo(hardDiskName).TotalFreeSpace;
-    }
-
-    /// <summary>
-    /// 获取指定驱动器总空间大小
-    /// </summary>
-    /// <param name="hardDiskName"></param>
-    /// <returns></returns>
-    public static long GetHardDiskTotalSpace(string hardDiskName)
-    {
-        return new DriveInfo(hardDiskName).TotalSize;
-    }
+    public static List<DiskInfo> DiskInfos => GetDiskInfos();
 
     /// <summary>
     /// 获取磁盘信息
@@ -122,6 +86,38 @@ public static class DiskHelper
         }
 
         return diskInfos;
+    }
+
+    /// <summary>
+    /// 指定驱动器剩余空间大小与总空间大小占比
+    /// </summary>
+    /// <param name="hardDiskName"></param>
+    /// <returns></returns>
+    public static string ProportionOfHardDiskFreeSpace(string hardDiskName)
+    {
+        return GetHardDiskTotalSpace(hardDiskName) == 0
+            ? "0%"
+            : Math.Round((decimal)GetHardDiskFreeSpace(hardDiskName) / GetHardDiskTotalSpace(hardDiskName) * 100, 3) + "%";
+    }
+
+    /// <summary>
+    /// 获取指定驱动器剩余空间大小
+    /// </summary>
+    /// <param name="hardDiskName"></param>
+    /// <returns></returns>
+    public static long GetHardDiskFreeSpace(string hardDiskName)
+    {
+        return new DriveInfo(hardDiskName).TotalFreeSpace;
+    }
+
+    /// <summary>
+    /// 获取指定驱动器总空间大小
+    /// </summary>
+    /// <param name="hardDiskName"></param>
+    /// <returns></returns>
+    public static long GetHardDiskTotalSpace(string hardDiskName)
+    {
+        return new DriveInfo(hardDiskName).TotalSize;
     }
 }
 
