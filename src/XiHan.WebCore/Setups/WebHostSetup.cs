@@ -42,7 +42,8 @@ public static class WebHostSetup
         {
             u.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
             u.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
-            u.Limits.MaxRequestBodySize = null;
+            // 文件上传最大限制 100M
+            u.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
         });
 
         "Host Started Successfully！".WriteLineSuccess();

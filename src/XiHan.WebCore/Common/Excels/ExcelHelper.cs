@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using MiniExcelLibs;
-using System.Reflection;
 
 namespace XiHan.WebCore.Common.Excels;
 
@@ -31,44 +30,9 @@ public static class ExcelHelper
     /// <param name="fullPath">Excel 文件全路径</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>对象列表</returns>
-    public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName)
+    public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName) where T : class, new()
     {
-        var data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
-        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-        foreach (var row in data.Skip(1))
-        {
-            var item = Activator.CreateInstance<T>();
-
-            for (var i = 0; i < properties.Length; i++)
-            {
-                var property = properties[i];
-                var propertyType = property.PropertyType;
-                var cellValue = row[i];
-
-                if (string.IsNullOrEmpty(cellValue)) continue;
-
-                var value = propertyType switch
-                {
-                    // 常规类型
-                    Type t when t == typeof(bool) => cellValue.ParseToBool(),
-                    Type t when t == typeof(short) => cellValue.ParseToShort(),
-                    Type t when t == typeof(long) => cellValue.ParseToLong(),
-                    Type t when t == typeof(float) => cellValue.ParseToFloat(),
-                    Type t when t == typeof(double) => cellValue.ParseToDouble(),
-                    Type t when t == typeof(decimal) => cellValue.ParseToDecimal(),
-                    Type t when t == typeof(int) => cellValue.ParseToInt(),
-                    Type t when t == typeof(string) => cellValue.ParseToString(),
-                    Type t when t == typeof(DateTime) => cellValue.ParseToDateTime(),
-                    Type t when t == typeof(Guid) => cellValue.ParseToGuid(),
-                    // 处理未知类型的情况
-                    _ => Convert.ChangeType(cellValue, propertyType),
-                };
-
-                property.SetValue(item, value);
-            }
-            yield return item;
-        }
+        return MiniExcel.Query<T>(path: fullPath, sheetName: sheetName);
     }
 
     /// <summary>
@@ -100,27 +64,10 @@ public static class ExcelHelper
     /// <param name="fullPath">Excel 文件全路径</param>
     /// <param name="dataSource">序列对象源</param>
     /// <param name="sheetName">工作表名称</param>
-    public static void WriteToExcel<T>(string fullPath, IEnumerable<T> dataSource, string sheetName)
+    public static void WriteToExcel<T>(string fullPath, IEnumerable<T> dataSource, string sheetName) where T : class, new()
     {
-        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        var header = properties.Select(p => p.GetCustomAttribute<ExcelColumnAttribute>()?.Name ?? p.Name).ToArray();
-        var rows = new List<object[]>();
-
-        foreach (var item in dataSource)
-        {
-            var row = new object[properties.Length];
-            for (var i = 0; i < properties.Length; i++)
-            {
-                var property = properties[i];
-                var value = property.GetValue(item);
-                row[i] = value ?? DBNull.Value;
-            }
-            rows.Add(row);
-        }
-        var result = new List<object[]> { header }.Concat(rows);
-
         // 写入数据到 Excel 文件
-        MiniExcel.SaveAs(path: fullPath, value: result, printHeader: true, sheetName: sheetName, overwriteFile: true);
+        MiniExcel.SaveAs(path: fullPath, value: dataSource, printHeader: true, sheetName: sheetName, overwriteFile: true);
     }
 
     /// <summary>
@@ -135,6 +82,34 @@ public static class ExcelHelper
 
     #endregion
 
+    #region 导入
+
+    /// <summary>
+    /// 将 Excel 文件导入为指定类型的对象序列，并返回该序列
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <param name="fullPath">Excel 文件名(包含扩展名)</param>
+    /// <param name="sheetName">工作表名称</param>
+    /// <returns>指定类型的对象序列</returns>
+    public static IEnumerable<T> ImportToExcel<T>(string fullPath, string sheetName) where T : class, new()
+    {
+        // 读取 Excel 文件
+        return ReadFromExcel<T>(fullPath: fullPath, sheetName: sheetName);
+    }
+
+    /// <summary>
+    /// 将 Excel 文件导入为多个类型的对象字典，并返回该字典
+    /// </summary>
+    /// <param name="fullPath">Excel 文件名(包含扩展名)</param>
+    /// <returns>多个类型的对象字典</returns>
+    public static IDictionary<string, object> ImportToExcel(string fullPath)
+    {
+        // 读取 Excel 文件
+        return ReadFromExcel(fullPath: fullPath);
+    }
+
+    #endregion
+
     #region 导出
 
     /// <summary>
@@ -145,7 +120,7 @@ public static class ExcelHelper
     /// <param name="dataSource">对象源序列</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>Excel 文件路径</returns>
-    public static string ExportToExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+    public static string ExportToExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName) where T : class, new()
     {
         fileName = $"{fileName}.xlsx";
         // 临时文件夹
@@ -171,14 +146,4 @@ public static class ExcelHelper
     }
 
     #endregion
-
-    /// <summary>
-    /// 获取指定属性的 Excel 列名称
-    /// </summary>
-    /// <param name="property">属性</param>
-    /// <returns>Excel 列名称</returns>
-    public static string GetExcelColumnName(PropertyInfo property)
-    {
-        return property.GetCustomAttribute<ExcelColumnAttribute>()?.Name ?? property.Name;
-    }
 }

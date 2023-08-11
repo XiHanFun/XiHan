@@ -23,6 +23,7 @@ using XiHan.Models.Syses;
 using XiHan.Models.Syses.SeedData;
 using XiHan.Models.Syses.SeedDatas;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.Serializes;
 using XiHan.WebApi.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Filters;
@@ -142,15 +143,64 @@ public class TestController : BaseApiController
     }
 
     /// <summary>
-    /// 导出文件
+    /// 上传文件
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns>完整文件路径</returns>
+    [HttpPost("Upload/File")]
+    public new async Task<CustomResult> UploadFile(IFormFile file)
+    {
+        var path = await base.UploadFile(file);
+        return CustomResult.Success($"上传成功！文件路径：{path}");
+    }
+
+    /// <summary>
+    /// 下载文件
     /// </summary>
     /// <returns></returns>
-    [HttpGet("Export/File")]
-    public async Task ExportFile()
+    [HttpGet("Download/File")]
+    public async Task DownloadFile()
     {
         string path = @"E:\Repository\XiHanFun\Other\架构设计\系统设计\日志管理\image-20210409150248593.png";
         string fileName = @"image-20210409150248593.png";
-        await ExportFile(fileName, path, ContentTypeEnum.ImagePng);
+        await DownloadFile(fileName, path, ContentTypeEnum.ImagePng);
+    }
+
+    /// <summary>
+    /// 下载导入模板
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("Download/ImportTemplate")]
+    public async Task DownloadImportTemplate()
+    {
+        var sysUserSeedData = new SysUserSeedData();
+        var dataSource = sysUserSeedData.HasData();
+        await DownloadImportTemplate<SysUser>("系统用户种子数据", dataSource, "SysUser");
+    }
+
+    /// <summary>
+    /// 导入工作表
+    /// </summary>
+    /// <param name="file">文件流</param>
+    /// <param name="sheetName">工作表名称</param>
+    /// <returns></returns>
+    [HttpPost("Import/Excel")]
+    public async Task<CustomResult> ImportExcel(IFormFile file, string sheetName)
+    {
+        var userData = await ImportExcel<SysUser>(file, sheetName);
+        return CustomResult.Success(userData.SerializeToJson());
+    }
+
+    /// <summary>
+    /// 导入多个工作表
+    /// </summary>
+    /// <param name="file">文件流</param>
+    /// <returns></returns>
+    [HttpPost("Import/Excel/MultipleSheets")]
+    public async Task<CustomResult> ImportExcelMultipleSheets(IFormFile file)
+    {
+        var data = await ImportExcel(file);
+        return CustomResult.Success(data.SerializeToJson());
     }
 
     /// <summary>
@@ -181,18 +231,6 @@ public class TestController : BaseApiController
             {"SysUserSeedData",dataSourceSysUser },
             {"SysConfigSeedData",dataSourceSysConfig },
         };
-        await ExportExcelMultipleSheets("系统种子数据", dataSource);
-    }
-
-    /// <summary>
-    /// 下载导入模板
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("Download/Excel/ImportTemplate")]
-    public async Task DownloadExcelImportTemplate()
-    {
-        var sysUserSeedData = new SysUserSeedData();
-        var dataSource = sysUserSeedData.HasData();
-        await DownloadExcelImportTemplate<SysUser>("系统用户种子数据", dataSource, "SysUser");
+        await ExportExcel("系统种子数据", dataSource);
     }
 }

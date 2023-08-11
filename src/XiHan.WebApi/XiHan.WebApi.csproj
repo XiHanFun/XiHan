@@ -67,7 +67,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="wwwroot\Imports\Templates\" />
+        <Folder Include="wwwroot\Imports\" />
+        <Folder Include="wwwroot\Templates\" />
         <Folder Include="Properties\PublishProfiles\" />
         <Folder Include="wwwroot\Exports\" />
         <Folder Include="wwwroot\Uploads\" />

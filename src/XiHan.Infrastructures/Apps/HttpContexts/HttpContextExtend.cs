@@ -112,19 +112,19 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static bool IsExportFile(this HttpContext context)
+    public static bool IsDownloadFile(this HttpContext context)
     {
         return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
     }
 
     /// <summary>
-    /// 通过 httpcontext 导出文件
+    /// 通过 httpcontext 下载文件
     /// </summary>
     /// <param name="context"></param>
     /// <param name="fileExportName"></param>
     /// <param name="fileContents"></param>
     /// <param name="contentType"></param>
-    public static async Task ExportFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
+    public static async Task DownloadFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
     {
         context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());

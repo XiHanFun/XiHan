@@ -93,19 +93,19 @@ public static class App
     public static string RootUploadPath => Path.Combine(WebRootPath, "Uploads");
 
     /// <summary>
-    /// 导出根路径
-    /// </summary>
-    public static string RootExportPath => Path.Combine(WebRootPath, "Exports");
-
-    /// <summary>
     /// 导入根路径
     /// </summary>
     public static string RootImportPath => Path.Combine(WebRootPath, "Imports");
 
     /// <summary>
-    /// 导入模板根路径
+    /// 模板根路径
     /// </summary>
-    public static string RootImportTemplatePath => Path.Combine(WebRootPath, "Imports", "Templates");
+    public static string RootTemplatePath => Path.Combine(WebRootPath, "Templates");
+
+    /// <summary>
+    /// 导出根路径
+    /// </summary>
+    public static string RootExportPath => Path.Combine(WebRootPath, "Exports");
 
     /// <summary>
     /// 获取请求生命周期服务

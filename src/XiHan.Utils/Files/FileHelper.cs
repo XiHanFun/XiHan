@@ -139,12 +139,15 @@ public static class FileHelper
     #region 创建文件或目录
 
     /// <summary>
-    /// 创建目录
+    /// 创建包含文件名完整路径的文件夹
     /// </summary>
-    /// <param name="dir">要创建的目录路径包括目录名</param>
-    public static void CreateDirectory(string dir)
+    /// <param name="filePath">包含文件名完整路径</param>
+    public static void CreateDirectory(string filePath)
     {
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+        if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? string.Empty);
+        }
     }
 
     /// <summary>
@@ -229,15 +232,22 @@ public static class FileHelper
     }
 
     /// <summary>
+    /// 获取随机文件名
+    /// </summary>
+    /// <returns></returns>
+    public static string GetRandomFileName()
+    {
+        return Path.GetRandomFileName();
+    }
+
+    /// <summary>
     /// 从文件的绝对路径中获取扩展名
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
     public static string GetFileExtension(string filePath)
     {
-        // 获取文件的名称
-        FileInfo fi = new(filePath);
-        return fi.Extension;
+        return Path.GetExtension(filePath);
     }
 
     /// <summary>
@@ -245,11 +255,9 @@ public static class FileHelper
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
-    public static string GetFileNameNoExtension(string filePath)
+    public static string GetFileNameWithoutExtension(string filePath)
     {
-        // 获取文件的名称
-        FileInfo fi = new(filePath);
-        return fi.Name.Split('.')[0];
+        return Path.GetFileNameWithoutExtension(filePath);
     }
 
     /// <summary>
@@ -259,9 +267,7 @@ public static class FileHelper
     /// <returns></returns>
     public static string GetFileNameWithExtension(string filePath)
     {
-        // 获取文件的名称
-        FileInfo fi = new(filePath);
-        return fi.Name;
+        return Path.GetFileName(filePath);
     }
 
     #endregion

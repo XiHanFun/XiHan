@@ -48,7 +48,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (IsIgnore || context.Result == null || context.HttpContext.IsExportFile())
+        if (IsIgnore || context.Result == null || context.HttpContext.IsDownloadFile())
         {
             return;
         }
