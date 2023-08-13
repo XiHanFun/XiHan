@@ -18,6 +18,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using UAParser;
+using XiHan.Infrastructures.Consts;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Verifications;
@@ -351,10 +352,13 @@ public static class HttpContextExtend
             var userAuthInfo = new UserAuthInfo
             {
                 IsAuthenticated = context.IsAuthenticated(),
+                IsSuperAdmin = context.IsSuperAdmin(),
                 UserId = context.GetUserId(),
-                UserAccount = context.GetUserAccount(),
-                UserNickName = context.GetUserNickName(),
-                UserRealName = context.GetUserRealName(),
+                TenantId = context.GetTenantId(),
+                OrgId = context.GetOrgId(),
+                Account = context.GetAccount(),
+                NickName = context.GetNickName(),
+                RealName = context.GetRealName(),
                 UserRole = context.GetUserRole(),
                 UserToken = context.GetUserToken(),
                 UserClaims = context.GetUserClaims()
@@ -378,13 +382,43 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 获取登录用户 Id
+    /// 获取登录账户是否为超级管理员
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static bool IsSuperAdmin(this HttpContext context)
+    {
+        return context.User.FindFirstValue(ClaimConst.IsSuperAdmin) == null ? false : context.User.FindFirstValue(ClaimConst.IsSuperAdmin).ParseToBool();
+    }
+
+    /// <summary>
+    /// 获取登录用户标识
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
     public static long GetUserId(this HttpContext context)
     {
-        return context.User.FindFirstValue("UserId").ParseToLong();
+        return context.User.FindFirstValue(ClaimConst.UserId).ParseToLong();
+    }
+
+    /// <summary>
+    /// 获取登录用户租户标识
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static long GetTenantId(this HttpContext context)
+    {
+        return context.User.FindFirstValue(ClaimConst.TenantId).ParseToLong();
+    }
+
+    /// <summary>
+    /// 获取登录用户组织机构标识
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static long GetOrgId(this HttpContext context)
+    {
+        return context.User.FindFirstValue(ClaimConst.OrgId).ParseToLong();
     }
 
     /// <summary>
@@ -392,9 +426,9 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string GetUserAccount(this HttpContext context)
+    public static string GetAccount(this HttpContext context)
     {
-        return context.User.FindFirstValue("UserAccount") ?? string.Empty;
+        return context.User.FindFirstValue(ClaimConst.Account) ?? string.Empty;
     }
 
     /// <summary>
@@ -402,9 +436,9 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string GetUserRealName(this HttpContext context)
+    public static string GetRealName(this HttpContext context)
     {
-        return context.User.FindFirstValue("UserRealName") ?? string.Empty;
+        return context.User.FindFirstValue(ClaimConst.RealName) ?? string.Empty;
     }
 
     /// <summary>
@@ -412,9 +446,9 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static string GetUserNickName(this HttpContext context)
+    public static string GetNickName(this HttpContext context)
     {
-        return context.User.FindFirstValue("UserNickName") ?? string.Empty;
+        return context.User.FindFirstValue(ClaimConst.NickName) ?? string.Empty;
     }
 
     /// <summary>
@@ -424,7 +458,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetUserRole(this HttpContext context)
     {
-        var roleIds = context.User.FindAll("UserRole").Select(r => r.Value).ToList();
+        var roleIds = context.User.FindAll(ClaimConst.UserRole).Select(r => r.Value).ToList();
         return roleIds.GetListStr(',');
     }
 
@@ -435,7 +469,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetUserToken(this HttpContext context)
     {
-        return context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+        return context.Request.Headers["Authorization"].ToString().Replace(ClaimConst.TokenReplace, string.Empty);
     }
 
     /// <summary>
@@ -533,44 +567,37 @@ public class UserAddressInfo
     public string AddressInfo { get; set; } = string.Empty;
 
     /// <summary>
-    /// 国家
-    /// 中国
+    /// 国家 中国
     /// </summary>
     public string? Country { get; set; }
 
     /// <summary>
-    /// 省份/自治区/直辖市
-    /// 贵州
+    /// 省份/自治区/直辖市 贵州
     /// </summary>
     public string? State { get; set; }
 
     /// <summary>
-    /// 地级市
-    /// 安顺
+    /// 地级市 安顺
     /// </summary>
     public string? PrefectureLevelCity { get; set; }
 
     /// <summary>
-    /// 区/县
-    /// 西秀区
+    /// 区/县 西秀区
     /// </summary>
     public string? DistrictOrCounty { get; set; }
 
     /// <summary>
-    /// 运营商
-    /// 联通
+    /// 运营商 联通
     /// </summary>
     public string? Operator { get; set; }
 
     /// <summary>
-    /// 邮政编码
-    /// 561000
+    /// 邮政编码 561000
     /// </summary>
     public long? PostalCode { get; set; }
 
     /// <summary>
-    /// 地区区号
-    /// 0851
+    /// 地区区号 0851
     /// </summary>
     public int? AreaCode { get; set; }
 }
@@ -586,24 +613,39 @@ public class UserAuthInfo
     public bool IsAuthenticated { get; set; }
 
     /// <summary>
-    /// 用户Id
+    /// 是否为超级管理员
+    /// </summary>
+    public bool IsSuperAdmin { get; set; }
+
+    /// <summary>
+    /// 用户标识
     /// </summary>
     public long UserId { get; set; }
 
     /// <summary>
+    /// 租户标识
+    /// </summary>
+    public long TenantId { get; set; }
+
+    /// <summary>
+    /// 组织机构标识
+    /// </summary>
+    public long OrgId { get; set; }
+
+    /// <summary>
     /// 账号
     /// </summary>
-    public string UserAccount { get; set; } = string.Empty;
+    public string Account { get; set; } = string.Empty;
 
     /// <summary>
     /// 昵称
     /// </summary>
-    public string UserNickName { get; set; } = string.Empty;
+    public string NickName { get; set; } = string.Empty;
 
     /// <summary>
     /// 姓名
     /// </summary>
-    public string? UserRealName { get; set; }
+    public string RealName { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户权限

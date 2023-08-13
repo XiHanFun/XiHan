@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AppHttpContextManager
+// FileName:AppHttpContextProvider
 // Guid:620d8a3e-e2ba-4e99-99ec-51fa46c521be
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,9 +19,9 @@ using System.Reflection;
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
 /// <summary>
-/// 全局请求上下文管理器
+/// 全局请求上下文供应器
 /// </summary>
-public static class AppHttpContextManager
+public static class AppHttpContextProvider
 {
     private static Func<object>? _asyncLocalAccessor;
     private static Func<object, object>? _holderAccessor;

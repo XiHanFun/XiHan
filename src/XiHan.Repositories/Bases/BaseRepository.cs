@@ -12,11 +12,14 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Identity;
 using SqlSugar;
-using SqlSugar.IOC;
 using System.Linq.Expressions;
+using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Models.Bases.Interface;
+using XiHan.Models.Bases;
+using XiHan.Models.Bases.Attributes;
 using XiHan.Repositories.Extensions;
 
 namespace XiHan.Repositories.Bases;
@@ -38,12 +41,36 @@ namespace XiHan.Repositories.Bases;
 public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
 {
     /// <summary>
+    /// 多租户事务
+    /// </summary>
+    protected ITenant? _tenant = null;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="context"></param>
     protected BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
-        Context = DbScoped.SugarScope;
+        // 设置租户接口
+        _tenant = App.GetRequiredService<ISqlSugarClient>().AsTenant();
+
+        // 若实体贴有多库特性，则返回指定的连接
+        if (typeof(TEntity).IsDefined(typeof(TenantAttribute), false))
+        {
+            Context = _tenant.GetConnectionScopeWithAttr<TEntity>();
+            return;
+        }
+
+        // 若实体贴有系统表特性，则返回默认的连接
+        if (typeof(TEntity).IsDefined(typeof(SystemTableAttribute), false))
+        {
+            Context = _tenant.GetConnectionScope(SqlSugarConst.DefaultTenantId);
+            return;
+        }
+
+        // 若当前未登录或是默认租户Id，则返回默认的连接
+        var tenantId = App.AuthInfo.TenantId;
+        if (tenantId < 1 || tenantId == SqlSugarConst.DefaultTenantId) return;
     }
 
     #region 新增
@@ -188,7 +215,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDeleteFilter
     {
         var entity = await GetByIdAsync(id);
         entity.ToDeleted();
@@ -200,7 +227,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDeleteFilter
     {
         entity.ToDeleted();
         return await base.UpdateAsync(entity);
@@ -211,7 +238,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDeleteFilter
     {
         var entityList = entities.ToList();
         entityList.ForEach(entity => entity.ToDeleted());
@@ -223,7 +250,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDelete
+    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDeleteFilter
     {
         var entities = await GetListAsync(whereExpression);
         entities.ForEach(entity => entity.ToDeleted());

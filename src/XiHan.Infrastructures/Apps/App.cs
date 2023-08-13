@@ -45,17 +45,17 @@ public static class App
     /// <summary>
     /// 全局宿主环境
     /// </summary>
-    public static IWebHostEnvironment WebHostEnvironment => AppEnvironmentManager.WebHostEnvironment;
+    public static IWebHostEnvironment WebHostEnvironment => AppEnvironmentProvider.WebHostEnvironment;
 
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceManager.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
     /// </summary>
-    public static IConfiguration Configuration => AppConfigManager.ConfigurationRoot;
+    public static IConfiguration Configuration => AppConfigProvider.ConfigurationRoot;
 
     /// <summary>
     /// 入口程序集
@@ -65,7 +65,7 @@ public static class App
     /// <summary>
     /// 全局请求上下文
     /// </summary>
-    public static HttpContext HttpContextCurrent => AppHttpContextManager.HttpContextCurrent;
+    public static HttpContext HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
 
     /// <summary>
     /// 请求上下文客户端信息

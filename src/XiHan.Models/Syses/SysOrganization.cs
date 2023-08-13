@@ -13,14 +13,16 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases.Entity;
+using XiHan.Models.Bases;
+using XiHan.Models.Bases.Attributes;
 
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统机构表
+/// 系统机构部门表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
+[SystemTable]
 [SugarTable(TableName = "Sys_Organization")]
 public class SysOrganization : BaseDeleteEntity
 {

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AppConfigManager
+// FileName:AppConfigProvider
 // Guid:9e4bb8b4-adfd-4c8b-a519-e4b0dc1706a1
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,9 +21,9 @@ using XiHan.Utils.Serializes;
 namespace XiHan.Infrastructures.Apps.Configs;
 
 /// <summary>
-/// 全局配置管理器
+/// 全局配置供应器
 /// </summary>
-public static class AppConfigManager
+public static class AppConfigProvider
 {
     /// <summary>
     /// 全局配置

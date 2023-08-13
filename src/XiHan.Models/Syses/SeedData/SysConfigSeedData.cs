@@ -12,15 +12,15 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Models.Bases;
 using XiHan.Models.Bases.Attributes;
-using XiHan.Models.Bases.Interface;
 
 namespace XiHan.Models.Syses.SeedDatas;
 
 /// <summary>
 /// 系统配置表种子数据
 /// </summary>
-public class SysConfigSeedData : ISeedData<SysConfig>
+public class SysConfigSeedData : ISeedDataFilter<SysConfig>
 {
     /// <summary>
     /// 种子数据

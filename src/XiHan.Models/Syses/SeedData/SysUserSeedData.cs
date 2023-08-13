@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Consts;
+using XiHan.Models.Bases;
 using XiHan.Models.Bases.Attributes;
-using XiHan.Models.Bases.Interface;
 using XiHan.Utils.Encryptions;
 
 namespace XiHan.Models.Syses.SeedData;
@@ -22,7 +22,7 @@ namespace XiHan.Models.Syses.SeedData;
 /// <summary>
 /// 系统用户表种子数据
 /// </summary>
-public class SysUserSeedData : ISeedData<SysUser>
+public class SysUserSeedData : ISeedDataFilter<SysUser>
 {
     /// <summary>
     /// 种子数据

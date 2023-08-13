@@ -3,25 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISeedData
-// Guid:e6e582b4-d6c8-46fc-a88a-96c54e730d35
-// Author:Administrator
+// FileName:SqlSugarConst
+// Guid:7dd837c5-be47-4c0f-a7d9-e0736f5d0b81
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-13 上午 10:36:55
+// CreateTime:2023/8/14 5:20:58
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Models.Bases.Interface;
+namespace XiHan.Infrastructures.Consts;
 
 /// <summary>
-/// 种子数据接口
+/// SqlSugarConst
 /// </summary>
-public interface ISeedData<TEntity> where TEntity : class, new()
+public class SqlSugarConst
 {
     /// <summary>
-    /// 种子数据
+    /// 默认数据库标识(默认租户)
     /// </summary>
-    /// <returns></returns>
-    IEnumerable<TEntity> HasData();
+    public const int DefaultTenantId = 0;
 }

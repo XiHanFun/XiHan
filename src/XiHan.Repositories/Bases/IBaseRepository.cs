@@ -15,7 +15,7 @@
 using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Models.Bases.Interface;
+using XiHan.Models.Bases;
 
 namespace XiHan.Repositories.Bases;
 
@@ -114,28 +114,28 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDeleteFilter;
 
     /// <summary>
     /// 逻辑删除
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDeleteFilter;
 
     /// <summary>
     /// 批量逻辑删除
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDeleteFilter;
 
     /// <summary>
     /// 自定义条件逻辑删除
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDelete;
+    Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDeleteFilter;
 
     #endregion
 

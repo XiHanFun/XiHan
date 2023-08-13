@@ -19,7 +19,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Results;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
@@ -63,7 +65,7 @@ public static class AuthSetup
                 // 认证失败时
                 OnAuthenticationFailed = context =>
                 {
-                    var token = context.Request.Headers["Authorization"].ParseToString().Replace("Bearer ", string.Empty);
+                    var token = App.AuthInfo.UserToken;
 
                     var failedResult = CustomResult.Unauthorized();
                     context.Response.ContentType = "text/json;charset=utf-8";

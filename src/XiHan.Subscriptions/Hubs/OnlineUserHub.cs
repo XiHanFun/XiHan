@@ -55,9 +55,9 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
         {
             ConnectionId = Context.ConnectionId,
             UserId = authInfo.UserId,
-            Account = authInfo.UserAccount,
-            NickName = authInfo.UserNickName,
-            RealName = authInfo.UserRealName,
+            Account = authInfo.Account,
+            NickName = authInfo.NickName,
+            RealName = authInfo.RealName,
         };
 
         await AddToGroup(HubConst.CommonGroup);

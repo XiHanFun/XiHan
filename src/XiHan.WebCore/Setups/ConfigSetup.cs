@@ -35,7 +35,7 @@ public static class ConfigSetup
         if (configs == null) throw new ArgumentNullException(nameof(configs));
 
         // 配置创建
-        AppConfigManager.RegisterConfig(configs);
+        AppConfigProvider.RegisterConfig(configs);
 
         "Configuration Started Successfully！".WriteLineSuccess();
         return configs;

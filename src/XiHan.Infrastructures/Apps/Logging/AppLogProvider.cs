@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AppLogManager
+// FileName:AppLogProvider
 // Guid:3cb34283-30a3-45cf-8cdb-599bb722a211
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -22,9 +22,9 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Infrastructures.Apps.Logging;
 
 /// <summary>
-/// 全局日志管理器
+/// 全局日志供应器
 /// </summary>
-public static class AppLogManager
+public static class AppLogProvider
 {
     /// <summary>
     /// 注册日志

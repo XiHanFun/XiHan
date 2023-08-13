@@ -13,7 +13,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases.Entity;
+using XiHan.Models.Bases;
+using XiHan.Models.Bases.Attributes;
 
 namespace XiHan.Models.Syses;
 
@@ -21,6 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统权限资源关联表(为某权限分配资源)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
+[SystemTable]
 [SugarTable(TableName = "Sys_Permission_Resource")]
 public class SysPermissionResource : BaseModifyEntity
 {

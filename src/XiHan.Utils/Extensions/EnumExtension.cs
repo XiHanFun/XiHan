@@ -23,6 +23,17 @@ namespace XiHan.Utils.Extensions;
 public static class EnumExtension
 {
     /// <summary>
+    /// 根据名称匹配枚举
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static TEnum GetEnumByName<TEnum>(this string name) where TEnum : struct
+    {
+        var tEnum = Enum.Parse<TEnum>(name, true);
+        return tEnum;
+    }
+
+    /// <summary>
     /// 根据键获取单个枚举的值
     /// </summary>
     /// <param name="keyEnum"></param>
@@ -54,12 +65,12 @@ public static class EnumExtension
     /// </summary>
     /// <param name="enumValue"></param>
     /// <returns></returns>
-    public static string GetEnumDescriptionByValue<T>(this object enumValue)
+    public static string GetEnumDescriptionByValue<TEnum>(this object enumValue)
     {
         var description = string.Empty;
         try
         {
-            var tEnum = Enum.Parse(typeof(T), enumValue.ParseToString()) as Enum;
+            var tEnum = Enum.Parse(typeof(TEnum), enumValue.ParseToString()) as Enum;
             description = tEnum!.GetEnumDescriptionByKey();
         }
         catch (Exception ex)

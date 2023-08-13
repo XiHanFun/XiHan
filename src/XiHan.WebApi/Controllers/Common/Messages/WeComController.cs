@@ -339,9 +339,10 @@ public class WeComController : BaseApiController
     /// <summary>
     /// 上传文件
     /// </summary>
+    /// <param name="formFile"></param>
     /// <returns></returns>
     [HttpPost("UploadFile")]
-    public async Task<CustomResult> UploadFile(IFormFile formFile)
+    public new async Task<CustomResult> UploadFile(IFormFile formFile)
     {
         if (formFile.Length <= 0) return CustomResult.InternalServerError();
         var fileName = formFile.FileName;

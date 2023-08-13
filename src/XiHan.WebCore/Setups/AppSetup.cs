@@ -41,12 +41,10 @@ public static class AppSetup
         if (app == null) throw new ArgumentNullException(nameof(app));
 
         // 注入全局宿主环境
-        AppEnvironmentManager.WebHostEnvironment = env;
+        AppEnvironmentProvider.WebHostEnvironment = env;
         // 注入全局服务
-        AppServiceManager.ServiceProvider = app.ApplicationServices;
+        AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
-        // 初始化数据库
-        app.InitDatabase();
         // Http
         app.UseHttpSetup(env);
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
@@ -55,25 +53,27 @@ public static class AppSetup
         app.UseMiniProfilerSetup();
         // Swagger
         app.UseSwaggerSetup();
-        // 使用静态文件，访问 wwwroot 目录文件，必须在 UseRouting 之前
+        // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
         app.UseStaticFiles();
-        // 路由
+        // 添加路由中间件
         app.UseRouting();
         // 限流，若作用于特定路由，必须在 UseRouting 之后
         app.UseRateLimiter();
         // 跨域，要放在 UseEndpoints 前
         app.UseCorsSetup();
-        // 鉴权授权
+        // 添加认证中间件
         app.UseAuthentication();
+        // 添加授权中间件
         app.UseAuthorization();
         // 开启响应缓存
         app.UseResponseCaching();
         // 恢复或启动任务
-        app.UseTaskSchedulers();
+        app.UseTaskSchedulers(env);
 
         // 全局日志中间件
         app.UseMiddleware<GlobalLogMiddleware>();
 
+        // 添加终端中间件
         app.UseEndpoints(endpoints =>
         {
             // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由

@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel.DataAnnotations;
+
 namespace XiHan.Infrastructures.Apps.Configs;
 
 /// <summary>
@@ -66,50 +68,9 @@ public static class AppSettings
     public static class Database
     {
         /// <summary>
-        /// 是否初始化数据库
+        /// 连接配置
         /// </summary>
-        public static bool EnableInitDb { get; set; }
-
-        /// <summary>
-        /// 是否初始化种子数据
-        /// </summary>
-        public static bool EnableInitSeed { get; set; }
-
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public static string Type { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 连接字符串
-        /// </summary>
-        public static class ConnectionString
-        {
-            /// <summary>
-            /// MySql
-            /// </summary>
-            public static string MySql { get; set; } = string.Empty;
-
-            /// <summary>
-            /// SqlServer
-            /// </summary>
-            public static string SqlServer { get; set; } = string.Empty;
-
-            /// <summary>
-            /// Sqlite
-            /// </summary>
-            public static string Sqlite { get; set; } = string.Empty;
-
-            /// <summary>
-            /// Oracle
-            /// </summary>
-            public static string Oracle { get; set; } = string.Empty;
-
-            /// <summary>
-            /// PostgreSql
-            /// </summary>
-            public static string PostgreSql { get; set; } = string.Empty;
-        }
+        public static DatabaseConfig[] DatabaseConfigs { get; set; } = Array.Empty<DatabaseConfig>();
 
         /// <summary>
         /// 控制台打印
@@ -131,6 +92,16 @@ public static class AppSettings
             /// </summary>
             public static bool Error { get; set; }
         }
+
+        /// <summary>
+        /// 是否初始化数据库
+        /// </summary>
+        public static bool EnableInitDb { get; set; }
+
+        /// <summary>
+        /// 是否初始化种子数据
+        /// </summary>
+        public static bool EnableInitSeed { get; set; }
     }
 
     /// <summary>
@@ -377,4 +348,67 @@ public static class AppSettings
             public static string ClientSecret { get; set; } = string.Empty;
         }
     }
+}
+
+/// <summary>
+/// 数据库配置
+/// </summary>
+public class DatabaseConfig
+{
+    /// <summary>
+    /// 连接Id
+    /// </summary>
+    public int ConfigId { get; set; }
+
+    /// <summary>
+    /// 数据库类型
+    /// DataBaseTypeEnum
+    /// </summary>
+    public string DataBaseType { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 连接字符串
+    /// </summary>
+    public string ConnectionString { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否自动关闭连接
+    /// </summary>
+    public bool IsAutoCloseConnection { get; set; }
+}
+
+/// <summary>
+/// 数据库类型
+/// </summary>
+public enum DataBaseTypeEnum
+{
+    /// <summary>
+    /// MySql
+    /// </summary>
+    [Display(Name = "MySql")]
+    MySql = 0,
+
+    /// <summary>
+    /// SqlServer
+    /// </summary>
+    [Display(Name = "SqlServer")]
+    SqlServer = 1,
+
+    /// <summary>
+    /// Sqlite
+    /// </summary>
+    [Display(Name = "Sqlite")]
+    Sqlite = 2,
+
+    /// <summary>
+    /// Oracle
+    /// </summary>
+    [Display(Name = "Oracle")]
+    Oracle = 3,
+
+    /// <summary>
+    /// PostgreSql
+    /// </summary>
+    [Display(Name = "PostgreSql")]
+    PostgreSql = 4,
 }

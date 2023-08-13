@@ -13,7 +13,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases.Entity;
+using XiHan.Models.Bases;
+using XiHan.Models.Bases.Attributes;
 
 namespace XiHan.Models.Syses;
 
@@ -21,6 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
+[SystemTable]
 [SugarTable("Sys_Log_Job")]
 public class SysLogJob : BaseDeleteEntity
 {

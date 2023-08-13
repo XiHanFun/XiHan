@@ -34,7 +34,7 @@ public static class AppConfigExtend
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
 
-        return AppConfigManager.GetValue<TKey>(fullName);
+        return AppConfigProvider.GetValue<TKey>(fullName);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public static class AppConfigExtend
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
 
-        return AppConfigManager.GetSection<TKey>(fullName);
+        return AppConfigProvider.GetSection<TKey>(fullName);
     }
 
     /// <summary>
@@ -65,6 +65,6 @@ public static class AppConfigExtend
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
 
-        AppConfigManager.Set<TKey, TValue>(fullName, value);
+        AppConfigProvider.Set<TKey, TValue>(fullName, value);
     }
 }

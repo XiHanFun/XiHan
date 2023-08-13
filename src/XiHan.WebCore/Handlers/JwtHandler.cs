@@ -20,6 +20,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Consts;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.WebCore.Handlers;
@@ -45,14 +46,14 @@ public static class JwtHandler
         // Nuget引入：Microsoft.IdentityModel.Tokens
         var claims = new List<Claim>
         {
-            new("UserId", tokenModel.UserId.ToString()),
-            new("UserAccount", tokenModel.UserAccount),
-            new("UserNickName", tokenModel.UserNickName),
-            new("Issuer", authJwtSetting.Issuer),
-            new("Audience", authJwtSetting.Audience),
+            new(ClaimConst.UserId, tokenModel.UserId.ToString()),
+            new(ClaimConst.Account, tokenModel.Account),
+            new(ClaimConst.NickName, tokenModel.NickName),
+            new(ClaimConst.Issuer, authJwtSetting.Issuer),
+            new(ClaimConst.Audience, authJwtSetting.Audience),
         };
         // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
-        tokenModel.UserRole.ForEach(role => claims.Add(new Claim("UserRole", role.ParseToString())));
+        tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
 
         // Nuget引入：System.IdentityModel.Tokens.Jwt
         JwtSecurityToken securityToken = new(
@@ -82,18 +83,17 @@ public static class JwtHandler
     {
         // Token安全验证
         if (!IsSafeVerifyToken(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
-
-        token = token.ParseToString().Replace("Bearer ", string.Empty);
+        token = token.ParseToString().Replace(ClaimConst.TokenReplace, string.Empty);
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
         List<Claim> claims = jwtToken.Claims.ToList();
         var tokenModel = new TokenModel
         {
-            UserId = claims.First(claim => claim.Type == "UserId").Value.ParseToLong(),
-            UserAccount = claims.First(claim => claim.Type == "UserAccount").Value,
-            UserNickName = claims.First(claim => claim.Type == "UserNickName").Value,
-            UserRealName = claims.First(claim => claim.Type == "UserRealName").Value,
-            UserRole = claims.First(claim => claim.Type == "UserRole").Value.GetStrList(',').Select(s => s.ParseToLong()).ToList(),
+            UserId = claims.First(claim => claim.Type == ClaimConst.UserId).Value.ParseToLong(),
+            Account = claims.First(claim => claim.Type == ClaimConst.Account).Value,
+            NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
+            RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
+            UserRole = claims.First(claim => claim.Type == ClaimConst.UserRole).Value.GetStrList(',').Select(s => s.ParseToLong()).ToList(),
         };
         return tokenModel;
     }
@@ -237,17 +237,17 @@ public class TokenModel
     /// <summary>
     /// 账号
     /// </summary>
-    public string UserAccount { get; set; } = string.Empty;
+    public string Account { get; set; } = string.Empty;
 
     /// <summary>
     /// 昵称
     /// </summary>
-    public string UserNickName { get; set; } = string.Empty;
+    public string NickName { get; set; } = string.Empty;
 
     /// <summary>
     /// 姓名
     /// </summary>
-    public string? UserRealName { get; set; }
+    public string? RealName { get; set; }
 
     /// <summary>
     /// 用户权限

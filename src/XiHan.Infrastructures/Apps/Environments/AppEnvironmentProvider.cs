@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AppEnvironmentManager
+// FileName:AppEnvironmentProvider
 // Guid:0c12544c-db5e-4ae4-adf6-4dfe62bda0ec
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Hosting;
 namespace XiHan.Infrastructures.Apps.Environments;
 
 /// <summary>
-/// 全局宿主环境管理器
+/// 全局宿主环境供应器
 /// </summary>
-public static class AppEnvironmentManager
+public static class AppEnvironmentProvider
 {
     /// <summary>
     /// 全局宿主环境

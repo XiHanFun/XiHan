@@ -44,9 +44,14 @@ public static class ConsoleConfigInfo
 
         "==============================配置信息==============================".WriteLineInfo();
         "数据库：".WriteLineInfo();
-        $@"连接类型：{AppSettings.Database.Type.GetValue()}".WriteLineInfo();
         $@"初始化数据库：{AppSettings.Database.EnableInitDb.GetValue()}".WriteLineInfo();
         $@"初始化种子数据：{AppSettings.Database.EnableInitSeed.GetValue()}".WriteLineInfo();
+        AppSettings.Database.DatabaseConfigs.GetSection().ToList().ForEach(config =>
+        {
+            $@"连接序号：{config.ConfigId}".WriteLineInfo();
+            $@"连接类型：{config.DataBaseType}".WriteLineInfo();
+            $@"是否自动关闭连接：{config.IsAutoCloseConnection}".WriteLineInfo();
+        });
         "分析：".WriteLineInfo();
         $@"是否启用：{AppSettings.Miniprofiler.IsEnabled.GetValue()}".WriteLineInfo();
         "缓存：".WriteLineInfo();

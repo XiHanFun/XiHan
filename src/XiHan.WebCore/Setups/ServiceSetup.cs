@@ -59,12 +59,12 @@ public static class ServiceSetup
         services.AddHealthChecks();
         // 即时通讯
         services.AddSignalRSetup();
-        // 计划任务
-        services.AddJobs();
 
         // 服务注册
-        AppServiceManager.RegisterService(services);
+        AppServiceProvider.RegisterService(services);
 
+        // 计划任务
+        services.AddJobs();
         // Route
         services.AddRouteSetup();
         // Cors

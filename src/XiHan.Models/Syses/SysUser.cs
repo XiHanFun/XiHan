@@ -14,6 +14,7 @@
 
 using SqlSugar;
 using XiHan.Models.Bases;
+using XiHan.Models.Bases.Attributes;
 
 namespace XiHan.Models.Syses;
 
@@ -21,6 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统用户表
 /// </summary>
 /// <remarks> 记录新增，修改，删除，审核，状态信息</remarks>
+[SystemTable]
 [SugarTable(TableName = "Sys_User")]
 public class SysUser : BaseEntity
 {
