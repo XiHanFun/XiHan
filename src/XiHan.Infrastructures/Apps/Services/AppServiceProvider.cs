@@ -48,14 +48,6 @@ public static class AppServiceProvider
     /// <param name="services"></param>
     private static void RegisterBaseService(IServiceCollection services)
     {
-        // 雪花 Id 生成服务
-        var options = new IdGeneratorOptions
-        {
-            WorkerId = 1,
-            WorkerIdBitLength = 1,
-            SeqBitLength = 6,
-        };
-        YitIdHelper.SetIdGenerator(options);
         // 属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceHandler>();
         // Ip 查询服务

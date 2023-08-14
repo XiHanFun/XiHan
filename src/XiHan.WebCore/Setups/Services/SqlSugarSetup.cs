@@ -31,6 +31,7 @@ using XiHan.Services.Syses.Configs;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
+using Yitter.IdGenerator;
 
 namespace XiHan.WebCore.Setups.Services;
 
@@ -49,6 +50,19 @@ public static class SqlSugarSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
+        // 雪花 Id 生成服务
+        var options = new IdGeneratorOptions
+        {
+            WorkerId = 1,
+            WorkerIdBitLength = 1,
+            SeqBitLength = 6,
+        };
+        YitIdHelper.SetIdGenerator(options);
+        StaticConfig.CustomSnowFlakeFunc = () =>
+        {
+            return YitIdHelper.NextId();
+        };
+
         var dbConfigs = AppSettings.Database.DatabaseConfigs.GetSection();
 
         // 注入参考，官方文档 https://www.donet5.com/Home/Doc?typeId=2405
@@ -66,15 +80,20 @@ public static class SqlSugarSetup
             {
                 var dbProvider = client.GetConnectionScope(config.ConfigId);
                 SetSugarAop(config, dbProvider);
-                InitDatabase(dbProvider);
-                InitSeedData(dbProvider);
             });
         });
 
         // 单例注册
-        services.AddSingleton<ISqlSugarClient>(o => sqlSugar);
+        services.AddSingleton<ISqlSugarClient>(sqlSugar);
         // 仓储注册
         services.AddScoped(typeof(BaseRepository<>));
+
+        connConfigs.ForEach(config =>
+        {
+            var dbProvider = sqlSugar.GetConnectionScope(config.ConfigId);
+            InitDatabase(dbProvider);
+            InitSeedData(dbProvider);
+        });
 
         return services;
     }

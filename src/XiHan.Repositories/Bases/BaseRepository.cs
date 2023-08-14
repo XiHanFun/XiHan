@@ -106,7 +106,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<long> AddReturnIdAsync(TEntity entity)
     {
         entity.ToCreated();
-        return await base.InsertReturnBigIdentityAsync(entity);
+        return await base.InsertReturnSnowflakeIdAsync(entity);
     }
 
     #endregion
