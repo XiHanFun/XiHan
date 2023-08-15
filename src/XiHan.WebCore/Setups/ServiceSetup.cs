@@ -64,14 +64,14 @@ public static class ServiceSetup
         AppServiceProvider.RegisterService(services);
 
         // 计划任务
-        services.AddJobs();
+        services.AddJobSetup();
         // Route
         services.AddRouteSetup();
         // Cors
         services.AddCorsSetup();
         // Controllers
         services.AddControllersSetup();
-        // 用于最小API
+        // 终端
         services.AddEndpointsApiExplorer();
 
         "Services Started Successfully！".WriteLineSuccess();

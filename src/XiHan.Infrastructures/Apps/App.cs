@@ -21,7 +21,6 @@ using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Infos;
 using XiHan.Utils.Reflections;
 using Yitter.IdGenerator;
 
@@ -38,7 +37,7 @@ public static class App
     public static IEnumerable<Assembly> EffectiveAssemblies => ReflectionHelper.GetAllEffectiveAssemblies();
 
     /// <summary>
-    /// 有效类型
+    /// 有效程序集类型
     /// </summary>
     public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetAllEffectiveTypes();
 

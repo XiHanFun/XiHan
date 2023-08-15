@@ -33,7 +33,8 @@ public static class EntityExtension
         {
             HandleId = "CreatedId",
             HandleBy = "CreatedBy",
-            HandleTime = "CreatedTime"
+            HandleTime = "CreatedTime",
+            TenantId = "TenantId",
         };
         return source.CommonTo(propertyInfo);
     }
@@ -50,7 +51,8 @@ public static class EntityExtension
         {
             HandleId = "ModifiedId",
             HandleBy = "ModifiedBy",
-            HandleTime = "ModifiedTime"
+            HandleTime = "ModifiedTime",
+            TenantId = "TenantId",
         };
         return source.CommonTo(propertyInfo);
     }
@@ -68,7 +70,8 @@ public static class EntityExtension
             IsHandle = "IsDeleted",
             HandleId = "DeletedId",
             HandleBy = "DeletedBy",
-            HandleTime = "DeletedTime"
+            HandleTime = "DeletedTime",
+            TenantId = "TenantId",
         };
         return source.CommonTo(propertyInfo);
     }
@@ -85,7 +88,8 @@ public static class EntityExtension
         {
             HandleId = "AuditedId",
             HandleBy = "AuditedBy",
-            HandleTime = "AuditedTime"
+            HandleTime = "AuditedTime",
+            TenantId = "TenantId",
         };
         return source.CommonTo(propertyInfo);
     }
@@ -110,10 +114,15 @@ public static class EntityExtension
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
 
         var user = App.AuthInfo;
-        if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null && user != null)
-            types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
-        if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null && user != null)
-            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account, null);
+        if (user.IsAuthenticated)
+        {
+            if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
+                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
+            if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
+                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account, null);
+            if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
+                types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId, null);
+        }
         return source;
     }
 
@@ -141,6 +150,11 @@ public static class EntityExtension
         /// 处理时间
         /// </summary>
         public string? HandleTime { get; init; }
+
+        /// <summary>
+        /// 租户主键
+        /// </summary>
+        public string? TenantId { get; init; }
     }
 
     #endregion

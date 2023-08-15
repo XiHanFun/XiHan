@@ -29,7 +29,7 @@ public static class JobSetup
     /// </summary>
     /// <param name="services"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddJobs(this IServiceCollection services)
+    public static IServiceCollection AddJobSetup(this IServiceCollection services)
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 

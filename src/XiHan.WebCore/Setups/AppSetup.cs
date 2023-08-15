@@ -45,6 +45,8 @@ public static class AppSetup
         // 注入全局服务
         AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
+        // 数据库初始化
+        app.UseSqlSugarSetup();
         // Http
         app.UseHttpSetup(env);
         // 添加WebSocket支持，SignalR优先使用WebSocket传输

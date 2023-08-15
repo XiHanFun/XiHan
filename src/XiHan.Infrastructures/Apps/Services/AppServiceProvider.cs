@@ -53,6 +53,14 @@ public static class AppServiceProvider
         // Ip 查询服务
         var dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
         services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
+        // 雪花 Id 生成服务
+        var options = new IdGeneratorOptions
+        {
+            WorkerId = 1,
+            WorkerIdBitLength = 1,
+            SeqBitLength = 6,
+        };
+        YitIdHelper.SetIdGenerator(options);
     }
 
     /// <summary>

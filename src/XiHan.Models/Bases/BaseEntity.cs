@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using Yitter.IdGenerator;
 
 namespace XiHan.Models.Bases;
 
@@ -25,7 +26,7 @@ public abstract class BaseIdEntity : IBaseIdEntity<long>
     /// 主键标识(雪花ID)
     /// </summary>
     [SugarColumn(IsPrimaryKey = true, IsIdentity = false, ColumnDescription = "主键标识")]
-    public virtual long BaseId { get; set; }
+    public virtual long BaseId { get; set; } = YitIdHelper.NextId();
 }
 
 /// <summary>

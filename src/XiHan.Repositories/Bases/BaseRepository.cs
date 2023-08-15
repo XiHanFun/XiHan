@@ -12,13 +12,11 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Identity;
 using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Models.Bases;
 using XiHan.Models.Bases.Attributes;
 using XiHan.Repositories.Extensions;
 
@@ -33,7 +31,6 @@ namespace XiHan.Repositories.Bases;
 /// 新增 Add
 /// 新增或更新 AddOrUpdate
 /// 删除 Remove
-/// 逻辑删除 SoftRemove
 /// 修改 Update
 /// 查找 Find
 /// 查询 Query
@@ -82,7 +79,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(TEntity entity)
     {
-        entity.ToCreated();
         return await base.InsertAsync(entity);
     }
 
@@ -94,7 +90,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        entityList.ForEach(entity => entity.ToCreated());
         return await base.InsertRangeAsync(entityList);
     }
 
@@ -105,7 +100,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<long> AddReturnIdAsync(TEntity entity)
     {
-        entity.ToCreated();
         return await base.InsertReturnSnowflakeIdAsync(entity);
     }
 
@@ -120,8 +114,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddOrUpdateAsync(TEntity entity)
     {
-        entity.ToCreated();
-        entity.ToModified();
         return await base.InsertOrUpdateAsync(entity);
     }
 
@@ -133,11 +125,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> AddOrUpdateAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        entityList.ForEach(entity =>
-        {
-            entity.ToCreated();
-            entity.ToModified();
-        });
         return await base.InsertOrUpdateAsync(entityList);
     }
 
@@ -208,57 +195,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 
     #endregion
 
-    #region 逻辑删除
-
-    /// <summary>
-    /// 根据Id逻辑删除
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(long id) where TDeleteEntity : ISoftDeleteFilter
-    {
-        var entity = await GetByIdAsync(id);
-        entity.ToDeleted();
-        return await base.UpdateAsync(entity);
-    }
-
-    /// <summary>
-    /// 逻辑删除
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(TEntity entity) where TDeleteEntity : ISoftDeleteFilter
-    {
-        entity.ToDeleted();
-        return await base.UpdateAsync(entity);
-    }
-
-    /// <summary>
-    /// 批量逻辑删除
-    /// </summary>
-    /// <param name="entities"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(IEnumerable<TEntity> entities) where TDeleteEntity : ISoftDeleteFilter
-    {
-        var entityList = entities.ToList();
-        entityList.ForEach(entity => entity.ToDeleted());
-        return await base.UpdateRangeAsync(entityList);
-    }
-
-    /// <summary>
-    /// 自定义条件逻辑删除
-    /// </summary>
-    /// <param name="whereExpression"></param>
-    /// <returns></returns>
-    public virtual async Task<bool> SoftRemoveAsync<TDeleteEntity>(Expression<Func<TEntity, bool>> whereExpression) where TDeleteEntity : ISoftDeleteFilter
-    {
-        var entities = await GetListAsync(whereExpression);
-        entities.ForEach(entity => entity.ToDeleted());
-        return await base.UpdateRangeAsync(entities);
-    }
-
-    #endregion
-
     #region 修改
 
     /// <summary>
@@ -268,7 +204,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
-        entity.ToModified();
         return await base.UpdateAsync(entity);
     }
 
@@ -280,7 +215,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
     {
-        columns.ToModified();
         return await base.UpdateAsync(columns, whereExpression);
     }
 
@@ -292,7 +226,6 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     public virtual async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
     {
         var entityList = entities.ToList();
-        entityList.ForEach(entity => entity.ToModified());
         return await base.UpdateRangeAsync(entityList);
     }
 
