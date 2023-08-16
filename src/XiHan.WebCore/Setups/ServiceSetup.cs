@@ -35,6 +35,9 @@ public static class ServiceSetup
         "Services Start……".WriteLineInfo();
         if (services == null) throw new ArgumentNullException(nameof(services));
 
+        // 服务注册
+        AppServiceProvider.RegisterService(services);
+
         // 分布式缓存
         services.AddCacheSetup();
         // 响应缓存
@@ -59,10 +62,6 @@ public static class ServiceSetup
         services.AddHealthChecks();
         // 即时通讯
         services.AddSignalRSetup();
-
-        // 服务注册
-        AppServiceProvider.RegisterService(services);
-
         // 计划任务
         services.AddJobSetup();
         // Route

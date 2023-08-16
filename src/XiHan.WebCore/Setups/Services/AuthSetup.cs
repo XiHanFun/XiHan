@@ -14,15 +14,14 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Results;
+using XiHan.Services.Syses.Oauths;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 using XiHan.WebCore.Handlers;
@@ -44,6 +43,7 @@ public static class AuthSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
+        var sysOauthService = App.GetRequiredService<ISysOauthService>();
         // 身份验证(默认用JwtBearer认证)
         services.AddAuthentication(options =>
         {
