@@ -43,7 +43,6 @@ public static class AuthSetup
     {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
-        var sysOauthService = App.GetRequiredService<ISysOauthService>();
         // 身份验证(默认用JwtBearer认证)
         services.AddAuthentication(options =>
         {

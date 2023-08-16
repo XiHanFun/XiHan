@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
-        <AssemblyVersion>0.3.1</AssemblyVersion>
-        <FileVersion>0.3.1</FileVersion>
+        <AssemblyVersion>0.3.2</AssemblyVersion>
+        <FileVersion>0.3.2</FileVersion>
         <Title>XiHan.Infrastructures</Title>
-        <Version>0.3.1</Version>
+        <Version>0.3.2</Version>
         <Authors>ZhaiFanhua</Authors>
         <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -30,7 +30,6 @@
 		<PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
 		<PackageReference Include="IP2Region.Net" Version="2.0.1" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
-		<PackageReference Include="SkiaSharp" Version="2.88.3" />
     </ItemGroup>
 
     <ItemGroup>

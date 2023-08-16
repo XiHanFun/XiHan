@@ -59,7 +59,7 @@ public static class SqlSugarSetup
         });
 
         // 单例注册
-        services.AddSingleton<ISqlSugarClient>(o => sqlSugar);
+        services.AddSingleton<ISqlSugarClient>(sqlSugar);
         // 仓储注册
         services.AddScoped(typeof(BaseRepository<>));
 

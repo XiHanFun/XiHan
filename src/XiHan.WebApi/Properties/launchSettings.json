@@ -46,8 +46,20 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "environmentVariables": {},
-      "publishAllPorts": true
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://127.0.0.1:9708"
+      },
+      "publishAllPorts": true,
+      "dockerOptions": {
+        "image": "xihan",
+        "ports": [
+          {
+            "hostPort": 9708,
+            "containerPort": 9708
+          }
+        ]
+      }
     }
   }
 }
