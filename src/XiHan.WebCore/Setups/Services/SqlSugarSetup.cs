@@ -15,6 +15,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar;
+using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
@@ -99,6 +100,7 @@ public static class SqlSugarSetup
             var errorInfo = $"【数据库{configId}】执行SQL出错：" + Environment.NewLine +
                             exp.Message + Environment.NewLine +
                             UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+            MiniProfiler.Current.CustomTiming("执行SQL出错", errorInfo);
             if (databaseConsole) errorInfo.WriteLineError();
             if (databaseLogError) Log.Error(exp, errorInfo);
         };
@@ -109,6 +111,7 @@ public static class SqlSugarSetup
             var param = dbProvider.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
             var sqlInfo = $"【数据库{configId}】执行SQL语句：" + Environment.NewLine +
                           UtilMethods.GetSqlString(config.DbType, sql, pars);
+            MiniProfiler.Current.CustomTiming("执行SQL日志", sqlInfo);
             // SQL控制台打印
             if (databaseConsole)
             {
@@ -128,6 +131,7 @@ public static class SqlSugarSetup
         {
             var handleInfo = $"【数据库{configId}】执行SQL时间：" + Environment.NewLine +
                              dbProvider.Ado.SqlExecutionTime;
+            MiniProfiler.Current.CustomTiming("执行SQL时间", handleInfo);
             if (databaseConsole) handleInfo.WriteLineHandle();
             if (databaseLogInfo) Log.Information(handleInfo);
         };

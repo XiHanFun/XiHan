@@ -46,7 +46,7 @@ public class ClearLogsJob : JobBase, IJob
     /// <returns></returns>
     public async Task Execute(IJobExecutionContext context)
     {
-        await ExecuteJob(context, async () => await ClearLogs());
+        await ExecuteJob(context, ClearLogs);
     }
 
     /// <summary>

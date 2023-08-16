@@ -7,5 +7,5 @@ services:
       context: .
       dockerfile: XiHan.WebApi/Dockerfile
     ports:
-      - "9708:9708"
+      - "9708"
 

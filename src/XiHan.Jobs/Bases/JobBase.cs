@@ -17,6 +17,7 @@ using Serilog;
 using System.Diagnostics;
 using XiHan.Infrastructures.Apps;
 using XiHan.Models.Syses;
+using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Services.Syses.Jobs;
 using XiHan.Services.Syses.Logging;
 using XiHan.Utils.Extensions;
@@ -80,6 +81,7 @@ public class JobBase
         {
             var sysJobService = App.GetRequiredService<ISysJobService>();
             var sysLogJobService = App.GetRequiredService<ISysLogJobService>();
+            var emailPushService = App.GetRequiredService<IEmailPushService>();
 
             // 获取任务详情
             var jobDetail = context.JobDetail;
@@ -91,9 +93,9 @@ public class JobBase
             // 若执行成功，则执行次数加一
             if (jobLog.IsSuccess)
             {
-                await sysJobService.UpdateAsync(j => new SysJob()
+                await sysJobService.UpdateAsync(job => new SysJob()
                 {
-                    RunTimes = j.RunTimes + 1,
+                    RunTimes = job.RunTimes + 1,
                     LastRunTime = DateTime.Now
                 }, f => f.BaseId == jobDetail.Key.Name.ParseToLong());
                 Logger.Information(logInfo);
@@ -101,11 +103,13 @@ public class JobBase
             else
             {
                 Logger.Error(logInfo);
+                // 发送邮件
             }
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
+            // 发送邮件
         }
     }
 }

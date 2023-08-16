@@ -42,36 +42,36 @@ public static class ServiceSetup
         services.AddCacheSetup();
         // 响应缓存
         services.AddResponseCacheSetup();
-        // SqlSugar
-        services.AddSqlSugarSetup();
         // Mapster
         services.AddMapsterSetup();
+        // 性能分析
+        services.AddMiniProfilerSetup();
+        // SqlSugar，必须在 AddMiniProfilerSetup 后才能使用
+        services.AddSqlSugarSetup();
         // Http上下文
         services.AddHttpPollySetup();
-        // Auth，必须在 AddHttpPollySetup 后才能使用
-        services.AddAuthSetup();
+        // 即时通讯
+        services.AddSignalRSetup();
         // Swagger
         services.AddSwaggerSetup();
         // RabbitMQ
         services.AddRabbitMqSetup();
+        // Auth，必须在 AddHttpPollySetup 后才能使用
+        services.AddAuthSetup();
         // 限流
         services.AddRateLimiterSetup();
-        // 性能分析
-        services.AddMiniProfilerSetup();
-        // 健康检查
-        services.AddHealthChecks();
-        // 即时通讯
-        services.AddSignalRSetup();
-        // 计划任务
-        services.AddJobSetup();
-        // Route
-        services.AddRouteSetup();
         // Cors
         services.AddCorsSetup();
+        // 健康检查
+        services.AddHealthChecks();
         // Controllers
         services.AddControllersSetup();
+        // Route
+        services.AddRouteSetup();
         // 终端
         services.AddEndpointsApiExplorer();
+        // 计划任务
+        services.AddJobSetup();
 
         "Services Started Successfully！".WriteLineSuccess();
         return services;
