@@ -50,26 +50,26 @@ public static class ServiceSetup
         services.AddSqlSugarSetup();
         // Http上下文
         services.AddHttpPollySetup();
-        // 即时通讯
-        services.AddSignalRSetup();
+        // Auth，必须在 AddHttpPollySetup 后才能使用
+        services.AddAuthSetup();
         // Swagger
         services.AddSwaggerSetup();
         // RabbitMQ
         services.AddRabbitMqSetup();
-        // Auth，必须在 AddHttpPollySetup 后才能使用
-        services.AddAuthSetup();
         // 限流
         services.AddRateLimiterSetup();
         // Cors
         services.AddCorsSetup();
-        // 健康检查
-        services.AddHealthChecks();
         // Controllers
         services.AddControllersSetup();
         // Route
         services.AddRouteSetup();
         // 终端
         services.AddEndpointsApiExplorer();
+        // 即时通讯
+        services.AddSignalRSetup();
+        // 健康检查
+        services.AddHealthChecks();
         // 计划任务
         services.AddJobSetup();
 

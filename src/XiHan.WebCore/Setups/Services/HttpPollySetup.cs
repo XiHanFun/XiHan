@@ -47,18 +47,28 @@ public static class HttpPollySetup
         // 为每个重试定义超时策略
         var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
-        // 注入 Http 请求,将超时策略放在重试策略之内，每次重试会应用此超时策略
+        // 注入 Http 请求
         services.AddHttpClient(HttpGroupEnum.Remote.ToString(), c =>
         {
             c.DefaultRequestHeaders.Add("Accept", "application/json");
-        }).AddPolicyHandler(retryPolicy)
+        })
+        // 忽略 SSL 不安全检查，或 HTTPS 不安全或 HTTPS 证书有误
+        .ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+        })
+        // 设置客户端生存期为 5 分钟
+        .SetHandlerLifetime(TimeSpan.FromSeconds(5))
+        // 将超时策略放在重试策略之内，每次重试会应用此超时策略
+        .AddPolicyHandler(retryPolicy)
         .AddPolicyHandler(timeoutPolicy);
 
         services.AddHttpClient(HttpGroupEnum.Local.ToString(), c =>
         {
             c.BaseAddress = new Uri("http://www.localhost.com");
             c.DefaultRequestHeaders.Add("Accept", "application/json");
-        }).AddPolicyHandler(retryPolicy)
+        })
+        .AddPolicyHandler(retryPolicy)
         .AddPolicyHandler(timeoutPolicy);
 
         // 注入 Http 相关实例

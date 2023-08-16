@@ -37,6 +37,7 @@ public static class WebHostSetup
         // 端口
         var port = AppSettings.Port.GetValue();
         host.UseUrls($"http://*:{port}");
+
         // 设置接口超时时间和上传大小
         host.ConfigureKestrel(u =>
         {

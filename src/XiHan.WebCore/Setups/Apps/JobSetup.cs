@@ -16,9 +16,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
 using Serilog;
+using SqlSugar.IOC;
+using XiHan.Infrastructures.Apps;
 using XiHan.Jobs.Bases.Servers;
 using XiHan.Models.Syses;
+using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
@@ -44,37 +48,46 @@ public static class JobSetup
         // 环境变量，生产环境
         if (env.IsProduction())
         {
-            try
-            {
-                var schedulerServer = app.ApplicationServices.GetRequiredService<ITaskSchedulerServer>();
-                var context = SqlSugar.IOC.DbScoped.SugarScope;
-
-                var jobs = context.Queryable<SysJob>().Where(m => m.IsStart).ToList();
-
-                // 程序启动后注册所有定时任务
-                foreach (var job in jobs)
-                {
-                    var result = schedulerServer.CreateTaskScheduleAsync(job);
-                    if (result.Result.IsSuccess)
-                    {
-                        var info = $"注册任务：{job.Name}成功！";
-                        info.WriteLineSuccess();
-                        Log.Information(info);
-                    }
-                    else
-                    {
-                        var info = $"注册任务：{job.Name}失败！";
-                        info.WriteLineError();
-                        Log.Error(info);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new CustomException($"注册定时任务出错！", ex);
-            }
+            RegisterScheduledTasks();
         }
 
         return app;
+    }
+
+    /// <summary>
+    /// 注册定时任务
+    /// </summary>
+    /// <exception cref="CustomException"></exception>
+    private static void RegisterScheduledTasks()
+    {
+        //try
+        //{
+        //    var schedulerServer = App.GetRequiredService<ITaskSchedulerServer>();
+        //    var sysJobService = App.GetRequiredService<ISysJobService>();
+
+        //    var jobs = context.Queryable<SysJob>().Where(m => m.IsStart).ToList();
+
+        //    // 程序启动后注册所有定时任务
+        //    foreach (var job in jobs)
+        //    {
+        //        var result = schedulerServer.CreateTaskScheduleAsync(job);
+        //        if (result.Result.IsSuccess)
+        //        {
+        //            var info = $"注册任务：{job.Name}成功！";
+        //            info.WriteLineSuccess();
+        //            Log.Information(info);
+        //        }
+        //        else
+        //        {
+        //            var info = $"注册任务：{job.Name}失败！";
+        //            info.WriteLineError();
+        //            Log.Error(info);
+        //        }
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    throw new CustomException($"注册定时任务出错！", ex);
+        //}
     }
 }

@@ -43,7 +43,7 @@ public static class HttpSetup
         }
         else
         {
-            app.UseExceptionHandler("/Error");
+            app.UseExceptionHandler("/Home/Error");
             // 使用HSTS的中间件，该中间件添加了严格传输安全头
             app.UseHsts();
         }

@@ -59,10 +59,10 @@ public static class AppSetup
         app.UseStaticFiles();
         // 添加路由中间件
         app.UseRouting();
-        // 限流，若作用于特定路由，必须在 UseRouting 之后
-        app.UseRateLimiter();
         // 跨域，要放在 UseEndpoints 前
         app.UseCorsSetup();
+        // 限流，若作用于特定路由，必须在 UseRouting 之后
+        app.UseRateLimiter();
         // 添加认证中间件
         app.UseAuthentication();
         // 添加授权中间件
@@ -82,7 +82,7 @@ public static class AppSetup
             endpoints.MapControllers();
             // 健康检查
             endpoints.MapHealthChecks("/Health");
-            // 即时通讯
+            // 即时通讯集线器
             endpoints.MapHub<OnlineUserHub>("/OnlineUserHub");
         });
 
