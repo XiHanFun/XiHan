@@ -1,4 +1,4 @@
-![banner_back](.\assets\banner_back.png)
+![banner_back](assets\banner_back.png)
 
 ![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square) 
 
