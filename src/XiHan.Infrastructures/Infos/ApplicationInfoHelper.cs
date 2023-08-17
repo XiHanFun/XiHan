@@ -17,6 +17,7 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
+using XiHan.Utils.Reflections;
 
 namespace XiHan.Infrastructures.Infos;
 
@@ -84,4 +85,9 @@ public static class ApplicationInfoHelper
     /// 会话标识
     /// </summary>
     public static string ProcessSessionId => Process.GetCurrentProcess().SessionId.ToString();
+
+    /// <summary>
+    /// 自身依赖的所有包
+    /// </summary>
+    public static List<string> InstalledNuGetPackages => ReflectionHelper.GetInstalledNuGetPackages();
 }

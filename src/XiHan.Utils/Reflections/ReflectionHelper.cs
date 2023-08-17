@@ -49,6 +49,47 @@ public static class ReflectionHelper
             .Distinct();
     }
 
+    /// <summary>
+    /// 获取自身依赖的所有包
+    /// </summary>
+    /// <returns></returns>
+    public static List<string> GetInstalledNuGetPackages()
+    {
+        List<string> nugetPackages = new();
+
+        // 获取当前应用程序集引用的所有程序集
+        var assemblies = GetAllEffectiveAssemblies();
+
+        // 查找被引用程序集中的 NuGet 库依赖项
+        foreach (Assembly assembly in assemblies)
+        {
+            var referencedAssemblies = assembly.GetReferencedAssemblies()
+                .Where(s => !s.FullName!.StartsWith("Microsoft"))
+                .Where(s => !s.FullName!.StartsWith("System"));
+            foreach (AssemblyName referencedAssembly in referencedAssemblies)
+            {
+                // 检查引用的程序集是否来自 NuGet
+                if (referencedAssembly.FullName.Contains("Version="))
+                {
+                    // 获取 NuGet 包的名称和版本号
+                    string packageName = referencedAssembly.Name!;
+                    string packageVersion = new AssemblyName(referencedAssembly.FullName).Version!.ToString();
+
+                    // 拼接成 NuGet 包的标识（名称:版本）
+                    string packageIdentifier = $"{packageName}:{packageVersion}";
+
+                    // 避免重复添加相同的 NuGet 包标识
+                    if (!nugetPackages.Contains(packageIdentifier))
+                    {
+                        nugetPackages.Add(packageIdentifier);
+                    }
+                }
+            }
+        }
+
+        return nugetPackages;
+    }
+
     #region 获取包含有某属性的类
 
     /// <summary>

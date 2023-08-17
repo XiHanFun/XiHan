@@ -26,7 +26,6 @@ namespace XiHan.WebApi.Controllers.ManageOrDisplay.Syses;
 /// <summary>
 /// 系统服务器监控管理
 /// </summary>
-[Authorize]
 [ApiGroup(ApiGroupNames.Manage)]
 public class SysServerController : BaseApiController
 {
