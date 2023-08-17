@@ -69,7 +69,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> CreateTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> CreateTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
@@ -106,7 +106,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             // 按新的触发器重新设置任务执行
             await _scheduler.ResumeTrigger(trigger.Key);
 
-            return CustomResult.Success($"添加计划【{sysJob.Name}】成功！");
+            return ApiResult.Success($"添加计划【{sysJob.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -120,13 +120,13 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> DeleteTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> DeleteTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
             var jobKey = new JobKey(sysJob.BaseId.ToString(), sysJob.Group);
             await _scheduler.DeleteJob(jobKey);
-            return CustomResult.Success($"删除计划任务【{sysJob.Name}】成功！");
+            return ApiResult.Success($"删除计划任务【{sysJob.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -140,7 +140,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> ModifyTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> ModifyTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
@@ -148,7 +148,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             if (await _scheduler.CheckExists(jobKey))
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.DeleteJob(jobKey);
-            return CustomResult.Success($"修改计划【{sysJob.Name}】成功！");
+            return ApiResult.Success($"修改计划【{sysJob.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -161,17 +161,17 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> StartTaskScheduleAsync()
+    public async Task<ApiResult> StartTaskScheduleAsync()
     {
         try
         {
             _scheduler.JobFactory = _jobFactory;
             // 计划任务已经开启
-            if (_scheduler.IsStarted) return CustomResult.Continue();
+            if (_scheduler.IsStarted) return ApiResult.Continue();
 
             // 等待任务运行完成
             await _scheduler.Start();
-            return CustomResult.Success("开启计划任务成功！");
+            return ApiResult.Success("开启计划任务成功！");
         }
         catch (Exception ex)
         {
@@ -184,16 +184,16 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// </summary>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> StopTaskScheduleAsync()
+    public async Task<ApiResult> StopTaskScheduleAsync()
     {
         try
         {
             _scheduler.JobFactory = _jobFactory;
             // 计划任务已经停止
-            if (_scheduler.IsShutdown) return CustomResult.Continue();
+            if (_scheduler.IsShutdown) return ApiResult.Continue();
             // 等待任务运行停止
             await _scheduler.Shutdown();
-            return CustomResult.Success($"停止计划任务成功！");
+            return ApiResult.Success($"停止计划任务成功！");
         }
         catch (Exception ex)
         {
@@ -207,7 +207,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> RunTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> RunTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
@@ -217,10 +217,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             if (jobKeys.Any()) await CreateTaskScheduleAsync(sysJob);
 
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);
-            if (triggers.Count <= 0) return CustomResult.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
+            if (triggers.Count <= 0) return ApiResult.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");
 
             await _scheduler.TriggerJob(jobKey);
-            return CustomResult.Success($"计划任务[{jobKey.Name}]运行成功！");
+            return ApiResult.Success($"计划任务[{jobKey.Name}]运行成功！");
         }
         catch (Exception ex)
         {
@@ -234,7 +234,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> PauseTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> PauseTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
@@ -242,7 +242,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
             if (await _scheduler.CheckExists(jobKey))
                 // 防止创建时存在数据问题 先移除，然后在执行创建操作
                 await _scheduler.PauseJob(jobKey);
-            return CustomResult.Success($"暂停计划任务:【{sysJob.Name}】成功！");
+            return ApiResult.Success($"暂停计划任务:【{sysJob.Name}】成功！");
         }
         catch (Exception ex)
         {
@@ -256,15 +256,15 @@ public class TaskSchedulerServer : ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<CustomResult> ResumeTaskScheduleAsync(SysJob sysJob)
+    public async Task<ApiResult> ResumeTaskScheduleAsync(SysJob sysJob)
     {
         try
         {
             var jobKey = new JobKey(sysJob.BaseId.ToString(), sysJob.Group);
             if (!await _scheduler.CheckExists(jobKey))
-                return CustomResult.BadRequest($"未找到计划任务【{sysJob.Name}】！");
+                return ApiResult.BadRequest($"未找到计划任务【{sysJob.Name}】！");
             await _scheduler.ResumeJob(jobKey);
-            return CustomResult.Success($"恢复计划任务【{sysJob.Name}】成功！");
+            return ApiResult.Success($"恢复计划任务【{sysJob.Name}】成功！");
         }
         catch (Exception ex)
         {

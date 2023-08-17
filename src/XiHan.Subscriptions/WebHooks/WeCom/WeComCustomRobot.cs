@@ -48,7 +48,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="text">内容</param>
     /// <returns></returns>
-    public async Task<CustomResult> TextMessage(WeComText text)
+    public async Task<ApiResult> TextMessage(WeComText text)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
@@ -62,7 +62,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="markdown">文档</param>
     /// <returns></returns>
-    public async Task<CustomResult> MarkdownMessage(WeComMarkdown markdown)
+    public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
@@ -76,7 +76,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="image">图片</param>
     /// <returns></returns>
-    public async Task<CustomResult> ImageMessage(WeComImage image)
+    public async Task<ApiResult> ImageMessage(WeComImage image)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
@@ -90,7 +90,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="news">图文</param>
     /// <returns></returns>
-    public async Task<CustomResult> NewsMessage(WeComNews news)
+    public async Task<ApiResult> NewsMessage(WeComNews news)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
@@ -104,7 +104,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="file">文件</param>
     /// <returns></returns>
-    public async Task<CustomResult> FileMessage(WeComFile file)
+    public async Task<ApiResult> FileMessage(WeComFile file)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
@@ -118,7 +118,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
-    public async Task<CustomResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
+    public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
@@ -133,7 +133,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="templateCard">模版卡片</param>
     /// <returns></returns>
-    public async Task<CustomResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
+    public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
     {
         // 消息类型
         var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
@@ -149,7 +149,7 @@ public class WeComCustomRobot
     /// <remarks>素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用</remarks>
     /// <remarks>文件大小在5B~20M之间</remarks>
     /// <returns></returns>
-    public async Task<CustomResult> UploadFile(FileStream fileStream)
+    public async Task<ApiResult> UploadFile(FileStream fileStream)
     {
         Dictionary<string, string> headers = new()
         {
@@ -169,15 +169,15 @@ public class WeComCustomRobot
                     Message = "上传成功",
                     MediaId = result.MediaId
                 };
-                return CustomResult.Success(uploadResult);
+                return ApiResult.Success(uploadResult);
             }
             else
             {
-                return CustomResult.BadRequest("上传失败");
+                return ApiResult.BadRequest("上传失败");
             }
         }
 
-        return CustomResult.InternalServerError();
+        return ApiResult.InternalServerError();
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public class WeComCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<CustomResult> SendMessage(object objSend)
+    private async Task<ApiResult> SendMessage(object objSend)
     {
         // 发送对象
         var sendMessage = objSend.SerializeToJson();
@@ -195,11 +195,11 @@ public class WeComCustomRobot
         if (result != null)
         {
             if (result.ErrCode == 0 || result.ErrMsg == "ok")
-                return CustomResult.Success("发送成功");
+                return ApiResult.Success("发送成功");
             else
-                return CustomResult.BadRequest("发送失败");
+                return ApiResult.BadRequest("发送失败");
         }
 
-        return CustomResult.InternalServerError();
+        return ApiResult.InternalServerError();
     }
 }

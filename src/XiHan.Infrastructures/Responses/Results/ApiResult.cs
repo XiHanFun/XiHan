@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ResultDto
+// FileName:ApiResult
 // Guid:4abbac7e-e91a-4ad2-a048-9f4c16a43464
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Infrastructures.Responses.Results;
 
 /// <summary>
-/// 通用结果实体
+/// 通用响应结果
 /// </summary>
-public class CustomResult
+public class ApiResult
 {
     /// <summary>
     /// 是否成功
@@ -50,9 +50,9 @@ public class CustomResult
     /// 继续响应 100
     /// </summary>
     /// <returns></returns>
-    public static CustomResult Continue()
+    public static ApiResult Continue()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = true,
             Code = ResponseCodeEnum.Continue,
@@ -65,9 +65,9 @@ public class CustomResult
     /// 响应成功 200
     /// </summary>
     /// <returns></returns>
-    public static CustomResult Success()
+    public static ApiResult Success()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
@@ -81,9 +81,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult Success(string messageData)
+    public static ApiResult Success(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
@@ -97,9 +97,9 @@ public class CustomResult
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static CustomResult Success(dynamic data)
+    public static ApiResult Success(dynamic data)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
@@ -113,9 +113,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult BadRequest(string messageData)
+    public static ApiResult BadRequest(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.BadRequest,
@@ -129,9 +129,9 @@ public class CustomResult
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static CustomResult BadRequest(dynamic data)
+    public static ApiResult BadRequest(dynamic data)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.BadRequest,
@@ -144,9 +144,9 @@ public class CustomResult
     /// 响应失败，访问未授权 401
     /// </summary>
     /// <returns></returns>
-    public static CustomResult Unauthorized()
+    public static ApiResult Unauthorized()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.Unauthorized,
@@ -160,9 +160,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult Unauthorized(string messageData)
+    public static ApiResult Unauthorized(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.Unauthorized,
@@ -175,9 +175,9 @@ public class CustomResult
     /// 响应失败，内容禁止访问 403
     /// </summary>
     /// <returns></returns>
-    public static CustomResult Forbidden()
+    public static ApiResult Forbidden()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.Forbidden,
@@ -190,9 +190,9 @@ public class CustomResult
     /// 响应失败，数据未找到 404
     /// </summary>
     /// <returns></returns>
-    public static CustomResult NotFound()
+    public static ApiResult NotFound()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.NotFound,
@@ -206,9 +206,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult NotFound(string messageData)
+    public static ApiResult NotFound(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.NotFound,
@@ -221,9 +221,9 @@ public class CustomResult
     ///  响应失败，参数不合法 422
     /// </summary>
     /// <returns></returns>
-    public static CustomResult UnprocessableEntity()
+    public static ApiResult UnprocessableEntity()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
@@ -237,9 +237,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult UnprocessableEntity(string messageData)
+    public static ApiResult UnprocessableEntity(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
@@ -253,9 +253,9 @@ public class CustomResult
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static CustomResult UnprocessableEntity(dynamic data)
+    public static ApiResult UnprocessableEntity(dynamic data)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
@@ -269,9 +269,9 @@ public class CustomResult
     /// </summary>
     /// <param name="messageData"></param>
     /// <returns></returns>
-    public static CustomResult TooManyRequests(string messageData)
+    public static ApiResult TooManyRequests(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.TooManyRequests,
@@ -284,9 +284,9 @@ public class CustomResult
     /// 响应出错，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static CustomResult InternalServerError()
+    public static ApiResult InternalServerError()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.InternalServerError,
@@ -299,9 +299,9 @@ public class CustomResult
     /// 响应出错，服务器内部错误 500
     /// </summary>
     /// <returns></returns>
-    public static CustomResult InternalServerError(string messageData)
+    public static ApiResult InternalServerError(string messageData)
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.InternalServerError,
@@ -314,9 +314,9 @@ public class CustomResult
     /// 响应出错，功能未实施 501
     /// </summary>
     /// <returns></returns>
-    public static CustomResult NotImplemented()
+    public static ApiResult NotImplemented()
     {
-        return new CustomResult
+        return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.NotImplemented,

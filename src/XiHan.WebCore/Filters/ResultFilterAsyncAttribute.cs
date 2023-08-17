@@ -57,7 +57,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
         context.Result = context.Result switch
         {
             // 如果是 CustomResult，则转换为 JsonResult
-            CustomResult customResult => new JsonResult(customResult),
+            ApiResult customResult => new JsonResult(customResult),
             // 如果是 ContentResult，则转换为 JsonResult
             ContentResult contentResult => new JsonResult(contentResult.Content),
             // 如果是 ObjectResult，则转换为 JsonResult

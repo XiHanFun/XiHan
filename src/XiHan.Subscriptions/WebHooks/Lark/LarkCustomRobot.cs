@@ -48,7 +48,7 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="content">内容</param>
     /// <returns></returns>
-    public async Task<CustomResult> TextMessage(LarkText content)
+    public async Task<ApiResult> TextMessage(LarkText content)
     {
         // 消息类型
         var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
@@ -61,7 +61,7 @@ public class LarkCustomRobot
     /// 发送富文本消息
     /// </summary>
     /// <param name="post"></param>
-    public async Task<CustomResult> PostMessage(LarkPost post)
+    public async Task<ApiResult> PostMessage(LarkPost post)
     {
         // 消息类型
         var msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
@@ -76,7 +76,7 @@ public class LarkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<CustomResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null,
+    public async Task<ApiResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atMobiles = null,
         bool isAtAll = false)
     {
         // 消息类型
@@ -96,7 +96,7 @@ public class LarkCustomRobot
     /// 发送图片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<CustomResult> ImageMessage(LarkActionCard actionCard)
+    public async Task<ApiResult> ImageMessage(LarkActionCard actionCard)
     {
         // 消息类型
         var msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
@@ -109,7 +109,7 @@ public class LarkCustomRobot
     /// 发送消息卡片
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<CustomResult> InterActiveMessage(LarkFeedCard feedCard)
+    public async Task<ApiResult> InterActiveMessage(LarkFeedCard feedCard)
     {
         // 消息类型
         var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
@@ -123,7 +123,7 @@ public class LarkCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<CustomResult> Send(object objSend)
+    private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
         var sendMessage = objSend.SerializeToJson();
@@ -153,12 +153,12 @@ public class LarkCustomRobot
         // 包装返回信息
         if (result != null)
         {
-            if (result.Code == 0 || result.Msg == "success") return CustomResult.Success("发送成功");
+            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功");
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
             var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
-            return CustomResult.BadRequest("发送失败，" + info?.Label);
+            return ApiResult.BadRequest("发送失败，" + info?.Label);
         }
 
-        return CustomResult.InternalServerError();
+        return ApiResult.InternalServerError();
     }
 }

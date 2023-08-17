@@ -70,19 +70,19 @@ public class GlobalLogMiddleware
             var exceptionResult = ex switch
             {
                 // 参数异常
-                ArgumentException => CustomResult.UnprocessableEntity(),
+                ArgumentException => ApiResult.UnprocessableEntity(),
                 // 认证授权异常
-                AuthenticationException => CustomResult.Unauthorized(),
+                AuthenticationException => ApiResult.Unauthorized(),
                 // 禁止访问异常
-                UnauthorizedAccessException => CustomResult.Forbidden(),
+                UnauthorizedAccessException => ApiResult.Forbidden(),
                 // 数据未找到异常
-                FileNotFoundException => CustomResult.NotFound(),
+                FileNotFoundException => ApiResult.NotFound(),
                 // 未实现异常
-                NotImplementedException => CustomResult.NotImplemented(),
+                NotImplementedException => ApiResult.NotImplemented(),
                 // 自定义异常
-                CustomException => CustomResult.BadRequest(ex.Message),
+                CustomException => ApiResult.BadRequest(ex.Message),
                 // 其他异常默认返回服务器错误，不直接明文显示
-                _ => CustomResult.InternalServerError(),
+                _ => ApiResult.InternalServerError(),
             };
 
             context.Response.ContentType = "text/json;charset=utf-8";

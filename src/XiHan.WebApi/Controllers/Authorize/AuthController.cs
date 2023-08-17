@@ -70,7 +70,7 @@ public class AuthController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetToken/ByAccount")]
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<CustomResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
+    public async Task<ApiResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     {
         var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
         return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
@@ -83,7 +83,7 @@ public class AuthController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetToken/ByEmail")]
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<CustomResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
+    public async Task<ApiResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
     {
         var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
         return await GetTokenAndRecordLogLogin(sysUser, loginByEmailCDto.Password);
@@ -95,7 +95,7 @@ public class AuthController : BaseApiController
     /// <param name="sysUser"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    private async Task<CustomResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
+    private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
     {
         var token = string.Empty;
 
@@ -139,6 +139,6 @@ public class AuthController : BaseApiController
         }
 
         await _sysLogLoginService.AddAsync(sysLogLogin);
-        return sysLogLogin.IsSuccess ? CustomResult.Success(token) : CustomResult.BadRequest(sysLogLogin.Message);
+        return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
     }
 }

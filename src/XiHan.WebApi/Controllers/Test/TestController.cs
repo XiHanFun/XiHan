@@ -43,9 +43,9 @@ public class TestController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("ClientInfo")]
-    public CustomResult ClientInfo()
+    public ApiResult ClientInfo()
     {
-        return CustomResult.Success(new
+        return ApiResult.Success(new
         {
             App.ClientInfo,
             App.AddressInfo,
@@ -148,10 +148,10 @@ public class TestController : BaseApiController
     /// <param name="file"></param>
     /// <returns>完整文件路径</returns>
     [HttpPost("Upload/File")]
-    public new async Task<CustomResult> UploadFile(IFormFile file)
+    public new async Task<ApiResult> UploadFile(IFormFile file)
     {
         var path = await base.UploadFile(file);
-        return CustomResult.Success($"上传成功！文件路径：{path}");
+        return ApiResult.Success($"上传成功！文件路径：{path}");
     }
 
     /// <summary>
@@ -185,10 +185,10 @@ public class TestController : BaseApiController
     /// <param name="sheetName">工作表名称</param>
     /// <returns></returns>
     [HttpPost("Import/Excel")]
-    public async Task<CustomResult> ImportExcel(IFormFile file, string sheetName)
+    public async Task<ApiResult> ImportExcel(IFormFile file, string sheetName)
     {
         var userData = await ImportExcel<SysUser>(file, sheetName);
-        return CustomResult.Success(userData.SerializeToJson());
+        return ApiResult.Success(userData.SerializeToJson());
     }
 
     /// <summary>
@@ -197,10 +197,10 @@ public class TestController : BaseApiController
     /// <param name="file">文件流</param>
     /// <returns></returns>
     [HttpPost("Import/Excel/MultipleSheets")]
-    public async Task<CustomResult> ImportExcelMultipleSheets(IFormFile file)
+    public async Task<ApiResult> ImportExcelMultipleSheets(IFormFile file)
     {
         var data = await ImportExcel(file);
-        return CustomResult.Success(data.SerializeToJson());
+        return ApiResult.Success(data.SerializeToJson());
     }
 
     /// <summary>

@@ -46,9 +46,9 @@ public class SysServerController : BaseApiController
     /// <returns></returns>
     [HttpGet("ServerInfo")]
     [AppLog(Module = "系统服务器监控", BusinessType = BusinessTypeEnum.Get)]
-    public CustomResult GetServerInfo()
+    public ApiResult GetServerInfo()
     {
         var serverInfo = _sysServerService.GetServerInfo();
-        return CustomResult.Success(serverInfo);
+        return ApiResult.Success(serverInfo);
     }
 }

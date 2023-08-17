@@ -46,9 +46,9 @@ public static class RateLimiterSetup
                 // 返回自定义的并发请求过多模型数据
                 context.HttpContext.Response.StatusCode = 429;
                 if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
-                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.TooManyRequests($"请求过多，请在{retryAfter.FormatTimeSpanToString()}后重试。"), token);
+                    await context.HttpContext.Response.WriteAsJsonAsync(ApiResult.TooManyRequests($"请求过多，请在{retryAfter.FormatTimeSpanToString()}后重试。"), token);
                 else
-                    await context.HttpContext.Response.WriteAsJsonAsync(CustomResult.TooManyRequests("请求过多，请稍后重试。"), token);
+                    await context.HttpContext.Response.WriteAsJsonAsync(ApiResult.TooManyRequests("请求过多，请稍后重试。"), token);
             };
 
             // 自定义限流策略

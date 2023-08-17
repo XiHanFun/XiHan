@@ -40,7 +40,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
             // 获取模型验证出错字段
             var validationErrors = new ValidationDto(modelState);
 
-            context.Result = new JsonResult(CustomResult.UnprocessableEntity(validationErrors));
+            context.Result = new JsonResult(ApiResult.UnprocessableEntity(validationErrors));
         }
         else
         {

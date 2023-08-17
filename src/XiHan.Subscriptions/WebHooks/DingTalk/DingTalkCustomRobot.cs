@@ -52,7 +52,7 @@ public class DingTalkCustomRobot
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
     /// <returns></returns>
-    public async Task<CustomResult> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
@@ -72,7 +72,7 @@ public class DingTalkCustomRobot
     /// 发送链接消息
     /// </summary>
     /// <param name="link"></param>
-    public async Task<CustomResult> LinkMessage(DingTalkLink link)
+    public async Task<ApiResult> LinkMessage(DingTalkLink link)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
@@ -88,7 +88,7 @@ public class DingTalkCustomRobot
     /// <param name="markdown">Markdown内容</param>
     /// <param name="atMobiles">被@的人群</param>
     /// <param name="isAtAll">是否@全员</param>
-    public async Task<CustomResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
@@ -108,7 +108,7 @@ public class DingTalkCustomRobot
     /// 发送任务卡片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
-    public async Task<CustomResult> ActionCardMessage(DingTalkActionCard actionCard)
+    public async Task<ApiResult> ActionCardMessage(DingTalkActionCard actionCard)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
@@ -123,7 +123,7 @@ public class DingTalkCustomRobot
     /// 发送卡片菜单消息
     /// </summary>
     /// <param name="feedCard">FeedCard内容</param>
-    public async Task<CustomResult> FeedCardMessage(DingTalkFeedCard feedCard)
+    public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard feedCard)
     {
         // 消息类型
         var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
@@ -138,7 +138,7 @@ public class DingTalkCustomRobot
     /// </summary>
     /// <param name="objSend"></param>
     /// <returns></returns>
-    private async Task<CustomResult> Send(object objSend)
+    private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
         var sendMessage = objSend.SerializeToJson();
@@ -166,10 +166,10 @@ public class DingTalkCustomRobot
         // 发起请求
         var result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
-        if (result == null) return CustomResult.InternalServerError();
-        if (result.ErrCode == 0 || result.ErrMsg == "ok") return CustomResult.Success("发送成功");
+        if (result == null) return ApiResult.InternalServerError();
+        if (result.ErrCode == 0 || result.ErrMsg == "ok") return ApiResult.Success("发送成功");
         var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
         var info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
-        return CustomResult.BadRequest("发送失败，" + info?.Label);
+        return ApiResult.BadRequest("发送失败，" + info?.Label);
     }
 }

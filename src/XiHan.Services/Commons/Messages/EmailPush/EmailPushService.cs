@@ -66,7 +66,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// <param name="userEmail"></param>
     /// <param name="captcha"></param>
     /// <returns></returns>
-    public async Task<CustomResult> SendCaptchaMail(string userName, string userEmail, string captcha)
+    public async Task<ApiResult> SendCaptchaMail(string userName, string userEmail, string captcha)
     {
         var body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
 							<section style='border-style: solid;border-width: 1px;border-color: #afafaf;box-sizing: border-box;'>
@@ -114,19 +114,19 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// 发送邮件
     /// </summary>
     /// <returns></returns>
-    private async Task<CustomResult> SendEmail(EmailToModel emailTo)
+    private async Task<ApiResult> SendEmail(EmailToModel emailTo)
     {
         string? logoInfo;
         if (await _emailRobot.SendMail(emailTo))
         {
             logoInfo = "邮件发送成功！";
             _logger.Information(logoInfo);
-            return CustomResult.Success(logoInfo);
+            return ApiResult.Success(logoInfo);
         }
 
         logoInfo = "邮件发送失败！";
         _logger.Error(logoInfo);
-        return CustomResult.BadRequest(logoInfo);
+        return ApiResult.BadRequest(logoInfo);
     }
 
     #endregion

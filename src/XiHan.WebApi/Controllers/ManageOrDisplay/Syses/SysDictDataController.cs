@@ -49,10 +49,10 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("Create")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Create)]
-    public async Task<CustomResult> CreateDictData([FromBody] SysDictDataCDto dictDataCDto)
+    public async Task<ApiResult> CreateDictData([FromBody] SysDictDataCDto dictDataCDto)
     {
         var result = await _sysDictDataService.CreateDictData(dictDataCDto);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -62,10 +62,10 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpDelete("Delete")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<CustomResult> DeleteDictData([FromBody] long[] dictDataIds)
+    public async Task<ApiResult> DeleteDictData([FromBody] long[] dictDataIds)
     {
         var result = await _sysDictDataService.DeleteDictDataByIds(dictDataIds);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -75,10 +75,10 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPut("Modify")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Modify)]
-    public async Task<CustomResult> ModifyDictData([FromBody] SysDictDataCDto dictDataCDto)
+    public async Task<ApiResult> ModifyDictData([FromBody] SysDictDataCDto dictDataCDto)
     {
         var result = await _sysDictDataService.ModifyDictData(dictDataCDto);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -88,10 +88,10 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("Get/ById")]
     [ApiGroup(ApiGroupNames.Display)]
-    public async Task<CustomResult> GetDictDataById([FromBody] long dictDataId)
+    public async Task<ApiResult> GetDictDataById([FromBody] long dictDataId)
     {
         var result = await _sysDictDataService.GetDictDataById(dictDataId);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -102,10 +102,10 @@ public class SysDictDataController : BaseApiController
     [HttpPost("GetList/ByTypeCode")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
     [ApiGroup(ApiGroupNames.Display)]
-    public async Task<CustomResult> GetDictDataListByTypeCode([FromBody] string dictCode)
+    public async Task<ApiResult> GetDictDataListByTypeCode([FromBody] string dictCode)
     {
         var result = await _sysDictDataService.GetDictDataListByType(dictCode);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -116,10 +116,10 @@ public class SysDictDataController : BaseApiController
     [HttpPost("GetList/ByTypes")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
     [ApiGroup(ApiGroupNames.Display)]
-    public async Task<CustomResult> GetDictDataListByTypes([FromBody] string[] dictCodes)
+    public async Task<ApiResult> GetDictDataListByTypes([FromBody] string[] dictCodes)
     {
         var result = await _sysDictDataService.GetDictDataListByTypes(dictCodes);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 
     /// <summary>
@@ -129,9 +129,9 @@ public class SysDictDataController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetPageList")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<CustomResult> GetDictDataPageList([FromBody] PageWhereDto<SysDictDataWDto> pageWhere)
+    public async Task<ApiResult> GetDictDataPageList([FromBody] PageWhereDto<SysDictDataWDto> pageWhere)
     {
         var result = await _sysDictDataService.GetDictDataPageList(pageWhere);
-        return CustomResult.Success(result);
+        return ApiResult.Success(result);
     }
 }

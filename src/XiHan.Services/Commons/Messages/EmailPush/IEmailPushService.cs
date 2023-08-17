@@ -30,5 +30,5 @@ public interface IEmailPushService : IBaseService<SysEmail>
     /// <param name="userEmail"></param>
     /// <param name="captcha"></param>
     /// <returns></returns>
-    Task<CustomResult> SendCaptchaMail(string userName, string userEmail, string captcha);
+    Task<ApiResult> SendCaptchaMail(string userName, string userEmail, string captcha);
 }

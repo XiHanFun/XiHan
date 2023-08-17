@@ -66,7 +66,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
     }
@@ -76,7 +76,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToLink(DingTalkLink link)
+    public async Task<ApiResult> DingTalkToLink(DingTalkLink link)
     {
         return await _dingTalkRobot.LinkMessage(link);
     }
@@ -88,7 +88,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <param name="atMobiles"></param>
     /// <param name="isAtAll"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
     {
         return await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
     }
@@ -98,7 +98,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// </summary>
     /// <param name="actionCard"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToActionCard(DingTalkActionCard actionCard)
+    public async Task<ApiResult> DingTalkToActionCard(DingTalkActionCard actionCard)
     {
         return await _dingTalkRobot.ActionCardMessage(actionCard);
     }
@@ -108,7 +108,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// </summary>
     /// <param name="feedCard"></param>
     /// <returns></returns>
-    public async Task<CustomResult> DingTalkToFeedCard(DingTalkFeedCard feedCard)
+    public async Task<ApiResult> DingTalkToFeedCard(DingTalkFeedCard feedCard)
     {
         return await _dingTalkRobot.FeedCardMessage(feedCard);
     }

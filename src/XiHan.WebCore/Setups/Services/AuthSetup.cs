@@ -66,7 +66,7 @@ public static class AuthSetup
                 {
                     var token = App.AuthInfo.UserToken;
 
-                    var failedResult = CustomResult.Unauthorized();
+                    var failedResult = ApiResult.Unauthorized();
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
 
@@ -77,12 +77,12 @@ public static class AuthSetup
 
                         if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
                         {
-                            failedResult = CustomResult.Unauthorized("授权因颁发者伪造无法读取！");
+                            failedResult = ApiResult.Unauthorized("授权因颁发者伪造无法读取！");
                             context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
                         }
                         if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
                         {
-                            failedResult = CustomResult.Unauthorized("授权因签收者伪造无法读取！");
+                            failedResult = ApiResult.Unauthorized("授权因签收者伪造无法读取！");
                             context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                         }
                     }
@@ -90,7 +90,7 @@ public static class AuthSetup
                     // 如果过期，则把是否过期添加到返回头信息中
                     if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                     {
-                        failedResult = CustomResult.Unauthorized("授权已过期！");
+                        failedResult = ApiResult.Unauthorized("授权已过期！");
                         context.Response.Headers.Add("Token-Expired", "true");
                     }
                     context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
@@ -100,7 +100,7 @@ public static class AuthSetup
                 OnChallenge = context =>
                 {
                     // 将Token错误添加到返回头信息中，返回自定义的未授权模型数据
-                    var failedResult = CustomResult.Unauthorized("未授权！");
+                    var failedResult = ApiResult.Unauthorized("未授权！");
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
                     context.Response.Headers.Add("Token-Error", context.ErrorDescription);

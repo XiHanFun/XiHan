@@ -47,19 +47,19 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
             context.Result = context.Exception switch
             {
                 // 参数异常
-                ArgumentException => new JsonResult(CustomResult.UnprocessableEntity()),
+                ArgumentException => new JsonResult(ApiResult.UnprocessableEntity()),
                 // 认证授权异常
-                AuthenticationException => new JsonResult(CustomResult.Unauthorized()),
+                AuthenticationException => new JsonResult(ApiResult.Unauthorized()),
                 // 禁止访问异常
-                UnauthorizedAccessException => new JsonResult(CustomResult.Forbidden()),
+                UnauthorizedAccessException => new JsonResult(ApiResult.Forbidden()),
                 // 数据未找到异常
-                FileNotFoundException => new JsonResult(CustomResult.NotFound()),
+                FileNotFoundException => new JsonResult(ApiResult.NotFound()),
                 // 未实现异常
-                NotImplementedException => new JsonResult(CustomResult.NotImplemented()),
+                NotImplementedException => new JsonResult(ApiResult.NotImplemented()),
                 // 自定义异常
-                CustomException => new JsonResult(CustomResult.BadRequest(context.Exception.Message)),
+                CustomException => new JsonResult(ApiResult.BadRequest(context.Exception.Message)),
                 // 异常默认返回服务器错误，不直接明文显示
-                _ => new JsonResult(CustomResult.InternalServerError())
+                _ => new JsonResult(ApiResult.InternalServerError())
             };
 
             // 控制器信息

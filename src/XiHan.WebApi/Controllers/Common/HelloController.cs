@@ -35,9 +35,9 @@ public class HelloController : BaseApiController
     /// <returns></returns>
     [HttpGet("SayHello")]
     [AppLog(Module = "快速开始", BusinessType = BusinessTypeEnum.Get)]
-    public CustomResult SayHello()
+    public ApiResult SayHello()
     {
-        return CustomResult.Success(new
+        return ApiResult.Success(new
         {
             Hello = "欢迎使用曦寒，一款新型全场景应用软件，基于 DotNet 和 Vue 构建。",
             ProjectInfoHelper.SendWord,

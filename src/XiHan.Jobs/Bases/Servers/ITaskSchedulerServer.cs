@@ -29,7 +29,7 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> CreateTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> CreateTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 删除指定计划任务
@@ -37,7 +37,7 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> DeleteTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> DeleteTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 更新计划任务
@@ -45,21 +45,21 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> ModifyTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> ModifyTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 开启计划任务
     /// </summary>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> StartTaskScheduleAsync();
+    Task<ApiResult> StartTaskScheduleAsync();
 
     /// <summary>
     /// 停止计划任务
     /// </summary>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> StopTaskScheduleAsync();
+    Task<ApiResult> StopTaskScheduleAsync();
 
     /// <summary>
     /// 立即运行指定计划任务
@@ -67,7 +67,7 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> RunTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> RunTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 暂停指定的计划任务
@@ -75,7 +75,7 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> PauseTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> PauseTaskScheduleAsync(SysJob sysJob);
 
     /// <summary>
     /// 恢复指定计划任务
@@ -83,5 +83,5 @@ public interface ITaskSchedulerServer
     /// <param name="sysJob"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    Task<CustomResult> ResumeTaskScheduleAsync(SysJob sysJob);
+    Task<ApiResult> ResumeTaskScheduleAsync(SysJob sysJob);
 }

@@ -52,7 +52,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
-    public async Task<CustomResult> WeComToText()
+    public async Task<ApiResult> WeComToText()
     {
         List<string> atMobiles = new() { "@all" };
         var text = new WeComText
@@ -68,7 +68,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
-    public async Task<CustomResult> WeComToMarkdown()
+    public async Task<ApiResult> WeComToMarkdown()
     {
         var markdown = new WeComMarkdown
         {
@@ -85,7 +85,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Image")]
-    public async Task<CustomResult> WeComToImage()
+    public async Task<ApiResult> WeComToImage()
     {
         const string filePath = @"D:\ServerData\系统信息\摘繁华\图片\avatar\zhaifanhua.png";
         var md5 = Md5EncryptionHelper.EncryptStream(filePath);
@@ -104,7 +104,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("News")]
-    public async Task<CustomResult> WeComToNews()
+    public async Task<ApiResult> WeComToNews()
     {
         List<WeComArticle> articles = new()
         {
@@ -129,7 +129,7 @@ public class WeComController : BaseApiController
     /// <param name="mediaId"></param>
     /// <returns></returns>
     [HttpPost("File")]
-    public async Task<CustomResult> WeComToFile(string mediaId)
+    public async Task<ApiResult> WeComToFile(string mediaId)
     {
         var file = new WeComFile
         {
@@ -143,7 +143,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("TextNotice")]
-    public async Task<CustomResult> WeComToTextNotice(string mediaId)
+    public async Task<ApiResult> WeComToTextNotice(string mediaId)
     {
         // 来源
         var source = new WeComSource
@@ -236,7 +236,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("NewsNotice")]
-    public async Task<CustomResult> WeComToNewsNotice()
+    public async Task<ApiResult> WeComToNewsNotice()
     {
         // 来源
         var source = new WeComSource
@@ -342,9 +342,9 @@ public class WeComController : BaseApiController
     /// <param name="formFile"></param>
     /// <returns></returns>
     [HttpPost("UploadFile")]
-    public new async Task<CustomResult> UploadFile(IFormFile formFile)
+    public new async Task<ApiResult> UploadFile(IFormFile formFile)
     {
-        if (formFile.Length <= 0) return CustomResult.InternalServerError();
+        if (formFile.Length <= 0) return ApiResult.InternalServerError();
         var fileName = formFile.FileName;
         var path = Path.Combine(App.RootUploadPath, fileName);
 

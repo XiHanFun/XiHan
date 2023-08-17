@@ -46,7 +46,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Text")]
-    public async Task<CustomResult> DingTalkToText()
+    public async Task<ApiResult> DingTalkToText()
     {
         var text = new DingTalkText
         {
@@ -62,7 +62,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Link")]
-    public async Task<CustomResult> DingTalkToLink()
+    public async Task<ApiResult> DingTalkToLink()
     {
         var link = new DingTalkLink
         {
@@ -80,7 +80,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("Markdown")]
-    public async Task<CustomResult> DingTalkToMarkdown()
+    public async Task<ApiResult> DingTalkToMarkdown()
     {
         var markdown = new DingTalkMarkdown
         {
@@ -100,7 +100,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("WholeActionCard")]
-    public async Task<CustomResult> DingTalkToWholeActionCard()
+    public async Task<ApiResult> DingTalkToWholeActionCard()
     {
         var actionCard = new DingTalkActionCard
         {
@@ -120,7 +120,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("PartActionCard")]
-    public async Task<CustomResult> DingTalkToPartActionCard()
+    public async Task<ApiResult> DingTalkToPartActionCard()
     {
         var actionCard = new DingTalkActionCard
         {
@@ -152,7 +152,7 @@ public class DingTalkController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("FeedCard")]
-    public async Task<CustomResult> DingTalkToFeedCard()
+    public async Task<ApiResult> DingTalkToFeedCard()
     {
         var feedCard = new DingTalkFeedCard
         {

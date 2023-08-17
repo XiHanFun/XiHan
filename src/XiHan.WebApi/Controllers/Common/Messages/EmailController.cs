@@ -47,7 +47,7 @@ public class EmailController : BaseApiController
     /// <returns></returns>
     [HttpPost("SendEmail")]
     [AppLog("发送验证码邮件", BusinessTypeEnum.Other)]
-    public async Task<CustomResult> SendEmail()
+    public async Task<ApiResult> SendEmail()
     {
         return await _emailPushService.SendCaptchaMail("zhaifanhua", "xxxxxx@qq.com", "325948");
     }
