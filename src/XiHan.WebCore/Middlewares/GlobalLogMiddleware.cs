@@ -20,7 +20,7 @@ using System.Text;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
 using XiHan.Utils.Exceptions;

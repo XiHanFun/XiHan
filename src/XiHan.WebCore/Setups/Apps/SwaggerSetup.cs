@@ -50,7 +50,7 @@ public static class SwaggerSetup
                 var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
 
                 // 根据分组遍历展示
-                typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
+                typeof(ApiGroupNameEnum).GetFields().Skip(1).ToList().ForEach(group =>
                 {
                     // 获取枚举值上的特性
                     if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;

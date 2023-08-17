@@ -24,7 +24,7 @@ public class ApiGroupAttribute : Attribute
     /// 构造函数
     /// </summary>
     /// <param name="names"></param>
-    public ApiGroupAttribute(params ApiGroupNames[] names)
+    public ApiGroupAttribute(params ApiGroupNameEnum[] names)
     {
         GroupNames = names;
     }
@@ -32,7 +32,7 @@ public class ApiGroupAttribute : Attribute
     /// <summary>
     /// 分组名
     /// </summary>
-    public ApiGroupNames[] GroupNames { get; set; }
+    public ApiGroupNameEnum[] GroupNames { get; set; }
 }
 
 /// <summary>

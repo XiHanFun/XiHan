@@ -64,7 +64,7 @@ public static class SwaggerSetup
         // 需要暴露的分组
         var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
         // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo 是内置的一个 Int 值
-        typeof(ApiGroupNames).GetFields().Skip(1).ToList().ForEach(group =>
+        typeof(ApiGroupNameEnum).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
             if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
@@ -80,12 +80,12 @@ public static class SwaggerSetup
                 {
                     Name = "ZhaiFanhua",
                     Email = "me@zhaifanhua.com",
-                    Url = new Uri("http://127.0.0.1:9708")
+                    Url = new Uri("https://www.zhaifanhua.com")
                 },
                 License = new OpenApiLicense
                 {
-                    Name = "MIT",
-                    Url = new Uri("https://opensource.org/licenses/MIT")
+                    Name = "MulanPSL2",
+                    Url = new Uri("http://license.coscl.org.cn/MulanPSL2")
                 }
             });
             // 根据相对路径排序
@@ -99,10 +99,10 @@ public static class SwaggerSetup
     /// <param name="options"></param>
     private static void SwaggerGroupConfig(SwaggerGenOptions options)
     {
-        // 核心逻辑代码，指定分组被加载时回调进入，也就是 swagger 右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回 true 就暴露，否则隐藏
+        // 核心逻辑代码，指定分组被加载时回调进入。也就是 swagger 右上角下拉框内的分组加载时，每一个分组加载时都会遍历所有控制器的 action 进入一次这个方法体内，返回 true 就暴露，否则隐藏
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
-            // 反射获取基类 ApiController 的 ApiGroupAttribute 信息
+            // 反射获取基类 BaseApiController 的 ApiGroupAttribute 信息
             var baseControllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo.BaseType?
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()

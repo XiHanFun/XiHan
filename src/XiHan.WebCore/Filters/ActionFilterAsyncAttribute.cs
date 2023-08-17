@@ -14,7 +14,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.WebCore.Common.Actions;
 
 namespace XiHan.WebCore.Filters;

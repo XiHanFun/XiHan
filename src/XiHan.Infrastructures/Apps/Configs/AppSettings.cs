@@ -21,6 +21,8 @@ namespace XiHan.Infrastructures.Apps.Configs;
 /// </summary>
 public static class AppSettings
 {
+    #region 公共配置
+
     /// <summary>
     /// 是否演示模式
     /// </summary>
@@ -60,133 +62,6 @@ public static class AppSettings
         /// 请求头
         /// </summary>
         public static string[] Headers { get; set; } = Array.Empty<string>();
-    }
-
-    /// <summary>
-    /// 数据库
-    /// </summary>
-    public static class Database
-    {
-        /// <summary>
-        /// 连接配置
-        /// </summary>
-        public static DatabaseConfig[] DatabaseConfigs { get; set; } = Array.Empty<DatabaseConfig>();
-
-        /// <summary>
-        /// 控制台打印
-        /// </summary>
-        public static bool Console { get; set; }
-
-        /// <summary>
-        /// 日志打印
-        /// </summary>
-        public static class Logging
-        {
-            /// <summary>
-            /// 普通日志
-            /// </summary>
-            public static bool Info { get; set; }
-
-            /// <summary>
-            /// 错误日志
-            /// </summary>
-            public static bool Error { get; set; }
-        }
-
-        /// <summary>
-        /// 是否初始化数据库
-        /// </summary>
-        public static bool EnableInitDb { get; set; }
-
-        /// <summary>
-        /// 是否初始化种子数据
-        /// </summary>
-        public static bool EnableInitSeed { get; set; }
-    }
-
-    /// <summary>
-    /// RabbitMq
-    /// </summary>
-    public static class RabbitMq
-    {
-        /// <summary>
-        /// 是否可用
-        /// </summary>
-        public static bool Enabled { get; set; }
-
-        /// <summary>
-        /// 主机名称
-        /// </summary>
-        public static string HostName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public static string UserName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public static string Password { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 端口
-        /// </summary>
-        public static int Port { get; set; }
-
-        /// <summary>
-        /// 重试次数
-        /// </summary>
-        public static int RetryCount { get; set; }
-    }
-
-    /// <summary>
-    /// 缓存
-    /// </summary>
-    public static class Cache
-    {
-        /// <summary>
-        /// 同步时间
-        /// </summary>
-        public static int SyncTimeout { get; set; }
-
-        /// <summary>
-        /// 分布式
-        /// </summary>
-        public static class RedisCache
-        {
-            /// <summary>
-            /// 是否可用
-            /// </summary>
-            public static bool IsEnabled { get; set; }
-
-            /// <summary>
-            /// Redis
-            /// </summary>
-            public static class Redis
-            {
-                /// <summary>
-                /// 连接字符串
-                /// </summary>
-                public static string ConnectionString { get; set; } = string.Empty;
-
-                /// <summary>
-                /// 前辍
-                /// </summary>
-                public static string Prefix { get; set; } = string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 响应缓存
-        /// </summary>
-        public static class ResponseCache
-        {
-            /// <summary>
-            /// 是否可用
-            /// </summary>
-            public static bool IsEnabled { get; set; }
-        }
     }
 
     /// <summary>
@@ -348,6 +223,133 @@ public static class AppSettings
             public static string ClientSecret { get; set; } = string.Empty;
         }
     }
+
+    #endregion
+
+    #region 特定配置
+
+    /// <summary>
+    /// 数据库
+    /// </summary>
+    public static class Database
+    {
+        /// <summary>
+        /// 连接配置
+        /// </summary>
+        public static DatabaseConfig[] DatabaseConfigs { get; set; } = Array.Empty<DatabaseConfig>();
+
+        /// <summary>
+        /// 控制台打印
+        /// </summary>
+        public static bool Console { get; set; }
+
+        /// <summary>
+        /// 日志打印
+        /// </summary>
+        public static class Logging
+        {
+            /// <summary>
+            /// 普通日志
+            /// </summary>
+            public static bool Info { get; set; }
+
+            /// <summary>
+            /// 错误日志
+            /// </summary>
+            public static bool Error { get; set; }
+        }
+
+        /// <summary>
+        /// 是否初始化数据库
+        /// </summary>
+        public static bool EnableInitDb { get; set; }
+
+        /// <summary>
+        /// 是否初始化种子数据
+        /// </summary>
+        public static bool EnableInitSeed { get; set; }
+    }
+
+    /// <summary>
+    /// RabbitMq
+    /// </summary>
+    public static class RabbitMq
+    {
+        /// <summary>
+        /// 是否可用
+        /// </summary>
+        public static bool Enabled { get; set; }
+
+        /// <summary>
+        /// 主机名称
+        /// </summary>
+        public static string HostName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public static string UserName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public static string Password { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 端口
+        /// </summary>
+        public static int Port { get; set; }
+
+        /// <summary>
+        /// 重试次数
+        /// </summary>
+        public static int RetryCount { get; set; }
+    }
+
+    /// <summary>
+    /// 缓存
+    /// </summary>
+    public static class Cache
+    {
+        /// <summary>
+        /// 同步时间
+        /// </summary>
+        public static int SyncTimeout { get; set; }
+
+        /// <summary>
+        /// 分布式
+        /// </summary>
+        public static class RedisCache
+        {
+            /// <summary>
+            /// 是否可用
+            /// </summary>
+            public static bool IsEnabled { get; set; }
+
+            /// <summary>
+            /// 连接字符串
+            /// </summary>
+            public static string ConnectionString { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 前辍
+            /// </summary>
+            public static string Prefix { get; set; } = string.Empty;
+        }
+
+        /// <summary>
+        /// 响应缓存
+        /// </summary>
+        public static class ResponseCache
+        {
+            /// <summary>
+            /// 是否可用
+            /// </summary>
+            public static bool IsEnabled { get; set; }
+        }
+    }
+
+    #endregion
 }
 
 /// <summary>

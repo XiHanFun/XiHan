@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
 using System.Security.Authentication;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Exceptions;
 using XiHan.WebCore.Middlewares;
 

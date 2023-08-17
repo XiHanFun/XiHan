@@ -45,8 +45,8 @@ public static class CacheSetup
         if (isEnabledRedisCache)
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.RedisCache.Redis.ConnectionString.GetValue();
-            var prefix = AppSettings.Cache.RedisCache.Redis.Prefix.GetValue();
+            var connectionString = AppSettings.Cache.RedisCache.ConnectionString.GetValue();
+            var prefix = AppSettings.Cache.RedisCache.Prefix.GetValue();
             var redisStr = $"{connectionString}, prefix = {prefix}";
             var redisClient = new CSRedisClient(redisStr);
             // 用法一：基于 Redis 初始化 IDistributedCache

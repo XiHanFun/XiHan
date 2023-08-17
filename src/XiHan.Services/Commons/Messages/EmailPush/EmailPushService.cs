@@ -15,7 +15,7 @@
 using Mapster;
 using Serilog;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Users;

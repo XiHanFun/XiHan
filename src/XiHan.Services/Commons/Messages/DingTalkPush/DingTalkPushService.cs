@@ -15,7 +15,7 @@
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Requests.Https;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;

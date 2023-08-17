@@ -15,7 +15,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using XiHan.Infrastructures.Requests.Https;
-using XiHan.Infrastructures.Responses.Results;
+using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 
