@@ -41,9 +41,9 @@ public interface ISysDictDataService : IBaseService<SysDictData>
     /// <summary>
     /// 修改字典项
     /// </summary>
-    /// <param name="dictDataCDto"></param>
+    /// <param name="dictDataMDto"></param>
     /// <returns></returns>
-    Task<bool> ModifyDictData(SysDictDataCDto dictDataCDto);
+    Task<bool> ModifyDictData(SysDictDataMDto dictDataMDto);
 
     /// <summary>
     /// 查询字典项(根据Id)

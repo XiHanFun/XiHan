@@ -41,9 +41,9 @@ public interface ISysDictTypeService : IBaseService<SysDictType>
     /// <summary>
     /// 修改字典
     /// </summary>
-    /// <param name="dictTypeCDto"></param>
+    /// <param name="dictTypeMDto"></param>
     /// <returns></returns>
-    Task<bool> ModifyDictType(SysDictTypeCDto dictTypeCDto);
+    Task<bool> ModifyDictType(SysDictTypeMDto dictTypeMDto);
 
     /// <summary>
     /// 查询字典

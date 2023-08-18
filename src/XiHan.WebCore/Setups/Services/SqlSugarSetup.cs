@@ -16,7 +16,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar;
 using StackExchange.Profiling;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Models.Bases.Entities;
+using XiHan.Models.Bases.Interface;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
 using XiHan.Utils.Extensions;
@@ -86,23 +89,26 @@ public static class SqlSugarSetup
         // 执行SQL数据
         dbProvider.Aop.DataExecuting = (value, entity) =>
         {
-            // 新增操作
-            if (entity.OperationType == DataFilterType.InsertByObject) entity.EntityValue.ToCreated();
-            // 更新操作
-            if (entity.OperationType == DataFilterType.UpdateByObject) entity.EntityValue.ToModified();
-            // 删除操作
-            if (entity.OperationType == DataFilterType.DeleteByObject) entity.EntityValue.ToDeleted();
-        };
-
-        // 执行SQL出错
-        dbProvider.Aop.OnError = exp =>
-        {
-            var errorInfo = $"【数据库{configId}】执行SQL出错：" + Environment.NewLine +
-                            exp.Message + Environment.NewLine +
-                            UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
-            MiniProfiler.Current.CustomTiming("执行SQL出错", errorInfo);
-            if (databaseConsole) errorInfo.WriteLineError();
-            if (databaseLogError) Log.Error(exp, errorInfo);
+            switch (entity.OperationType)
+            {
+                // 新增操作
+                case DataFilterType.InsertByObject:
+                    //自动设置主键
+                    if (entity.EntityColumnInfo.IsPrimarykey && entity.EntityValue is IBaseIdEntity<long> { BaseId: 0 } entityInfo)
+                    {
+                        entityInfo.BaseId = App.GetSnowflakeId();
+                    }
+                    entity.EntityValue.ToCreated();
+                    break;
+                // 更新操作
+                case DataFilterType.UpdateByObject:
+                    entity.EntityValue.ToModified();
+                    break;
+                // 删除操作
+                case DataFilterType.DeleteByObject:
+                    entity.EntityValue.ToDeleted();
+                    break;
+            }
         };
 
         // 执行SQL日志
@@ -134,6 +140,17 @@ public static class SqlSugarSetup
             MiniProfiler.Current.CustomTiming("执行SQL时间", handleInfo);
             if (databaseConsole) handleInfo.WriteLineHandle();
             if (databaseLogInfo) Log.Information(handleInfo);
+        };
+
+        // 执行SQL出错
+        dbProvider.Aop.OnError = exp =>
+        {
+            var errorInfo = $"【数据库{configId}】执行SQL出错：" + Environment.NewLine +
+                            exp.Message + Environment.NewLine +
+                            UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+            MiniProfiler.Current.CustomTiming("执行SQL出错", errorInfo);
+            if (databaseConsole) errorInfo.WriteLineError();
+            if (databaseLogError) Log.Error(exp, errorInfo);
         };
     }
 }

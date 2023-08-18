@@ -71,13 +71,13 @@ public class SysDictDataController : BaseApiController
     /// <summary>
     /// 修改字典项
     /// </summary>
-    /// <param name="dictDataCDto"></param>
+    /// <param name="dictDataMDto"></param>
     /// <returns></returns>
     [HttpPut("Modify")]
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Modify)]
-    public async Task<ApiResult> ModifyDictData([FromBody] SysDictDataCDto dictDataCDto)
+    public async Task<ApiResult> ModifyDictData([FromBody] SysDictDataMDto dictDataMDto)
     {
-        var result = await _sysDictDataService.ModifyDictData(dictDataCDto);
+        var result = await _sysDictDataService.ModifyDictData(dictDataMDto);
         return ApiResult.Success(result);
     }
 

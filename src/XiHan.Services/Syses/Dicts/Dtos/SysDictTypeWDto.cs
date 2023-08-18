@@ -24,16 +24,11 @@ public class SysDictTypeWDto
     /// <summary>
     /// 字典编码
     ///</summary>
-    [MinLength(5, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
-    [RegularExpression("^[a-z][a-z0-9_]*$", ErrorMessage = "{0}必须以字母开头,且只能由小写字母、加下划线、数字组成")]
     public string? Code { get; set; }
 
     /// <summary>
     /// 字典名称
     /// </summary>
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? Name { get; set; }
 
     /// <summary>

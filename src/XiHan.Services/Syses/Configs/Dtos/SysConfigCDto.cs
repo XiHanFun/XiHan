@@ -24,7 +24,7 @@ public class SysConfigCDto
     /// <summary>
     /// 分类编码
     ///</summary>
-    [Required]
+    [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string TypeCode { get; set; } = string.Empty;
@@ -32,7 +32,7 @@ public class SysConfigCDto
     /// <summary>
     /// 配置编码
     ///</summary>
-    [Required]
+    [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Code { get; set; } = string.Empty;
@@ -40,7 +40,7 @@ public class SysConfigCDto
     /// <summary>
     /// 配置名称
     /// </summary>
-    [Required]
+    [Required(ErrorMessage = "{0}不能为空")]
     [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
     [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Name { get; set; } = string.Empty;
@@ -48,14 +48,14 @@ public class SysConfigCDto
     /// <summary>
     /// 配置项值
     /// </summary>
-    [Required]
+    [Required(ErrorMessage = "{0}不能为空")]
     [MaxLength(512, ErrorMessage = "{0}不能多于{1}个字符")]
     public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否系统内置
     /// </summary>
-    [Required]
+    [Required(ErrorMessage = "{0}不能为空")]
     public bool IsOfficial { get; set; } = false;
 
     /// <summary>

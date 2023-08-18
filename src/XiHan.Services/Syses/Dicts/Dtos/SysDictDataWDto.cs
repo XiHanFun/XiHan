@@ -24,15 +24,11 @@ public class SysDictDataWDto
     /// <summary>
     /// 字典编码
     ///</summary>
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? TypeCode { get; set; }
 
     /// <summary>
     /// 字典项标签
     /// </summary>
-    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字符")]
-    [MaxLength(64, ErrorMessage = "{0}不能多于{1}个字符")]
     public string? Label { get; set; }
 
     /// <summary>

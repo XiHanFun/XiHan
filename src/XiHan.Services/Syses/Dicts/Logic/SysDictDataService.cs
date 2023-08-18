@@ -20,7 +20,6 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Dicts.Dtos;
-using XiHan.Utils;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
@@ -63,8 +62,9 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     public async Task<long> CreateDictData(SysDictDataCDto dictDataCDto)
     {
         var sysDictData = dictDataCDto.Adapt<SysDictData>();
+
         if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
-            throw new CustomException($"该字典不存在!");
+            throw new CustomException($"该字典不存在或不可用!");
 
         _ = await CheckDictDataUnique(sysDictData);
 
@@ -85,11 +85,16 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <summary>
     /// 修改字典项
     /// </summary>
-    /// <param name="dictDataCDto"></param>
+    /// <param name="dictDataMDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyDictData(SysDictDataCDto dictDataCDto)
+    public async Task<bool> ModifyDictData(SysDictDataMDto dictDataMDto)
     {
-        var sysDictData = dictDataCDto.Adapt<SysDictData>();
+        var sysDictData = dictDataMDto.Adapt<SysDictData>();
+
+        if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
+            throw new CustomException($"该字典不存在或不可用!");
+
+        _ = await CheckDictDataUnique(sysDictData);
 
         return await UpdateAsync(sysDictData);
     }

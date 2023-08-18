@@ -13,15 +13,20 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
-using XiHan.Services.Bases;
+using XiHan.Services.Bases.Dtos;
 
 namespace XiHan.Services.Syses.Users.Dtos;
 
 /// <summary>
 /// SysUserPwdMDto
 /// </summary>
-public class SysUserPwdMDto : BaseIdDto
+public class SysUserPwdMDto : IBaseIdDto
 {
+    /// <summary>
+    /// 主键标识
+    /// </summary>
+    public long BaseId { get; set; }
+
     /// <summary>
     /// 当前密码(MD5加密)
     /// </summary>

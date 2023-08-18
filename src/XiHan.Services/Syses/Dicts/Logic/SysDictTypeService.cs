@@ -96,17 +96,16 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <summary>
     /// 修改字典
     /// </summary>
-    /// <param name="dictTypeCDto"></param>
+    /// <param name="dictTypeMDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifyDictType(SysDictTypeCDto dictTypeCDto)
+    public async Task<bool> ModifyDictType(SysDictTypeMDto dictTypeMDto)
     {
-        var sysDictType = dictTypeCDto.Adapt<SysDictType>();
-
-        _ = await CheckDictTypeUnique(sysDictType);
+        var sysDictType = dictTypeMDto.Adapt<SysDictType>();
 
         var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
+        if (sysDictType.Code != oldDictType.Code || sysDictType.Name != oldDictType.Name)
+            _ = await CheckDictTypeUnique(sysDictType);
 
-        if (sysDictType.Code != oldDictType.Code) await CheckDictTypeUnique(sysDictType);
         return await UpdateAsync(sysDictType);
     }
 
