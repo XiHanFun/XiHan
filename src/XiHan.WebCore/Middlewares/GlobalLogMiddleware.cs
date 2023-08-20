@@ -14,12 +14,11 @@
 
 using Microsoft.AspNetCore.Http;
 using Serilog;
+using Serilog.Events;
 using System.Diagnostics;
 using System.Security.Authentication;
 using System.Text;
 using XiHan.Infrastructures.Apps;
-using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
@@ -35,7 +34,7 @@ namespace XiHan.WebCore.Middlewares;
 public class GlobalLogMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger _logger = Log.ForContext<GlobalLogMiddleware>();
+    private static readonly ILogger _logger = Log.ForContext<GlobalLogMiddleware>();
 
     /// <summary>
     /// 构造函数
@@ -54,17 +53,23 @@ public class GlobalLogMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         var stopwatch = new Stopwatch();
+        var status = true;
 
         try
         {
+            // 记录访问日志
+            await RecordLogVisit();
+
             stopwatch.Reset();
             await _next(context);
             stopwatch.Stop();
         }
         catch (Exception ex)
         {
-            // 记录操作日志
-            await RecordLogOperation(context, stopwatch.ElapsedMilliseconds, ex);
+            // 记录异常日志
+            status = false;
+            _logger.Error(ex, ex.Message);
+            await RecordLogException(ex);
 
             // 处理异常
             var exceptionResult = ex switch
@@ -84,56 +89,133 @@ public class GlobalLogMiddleware
                 // 其他异常默认返回服务器错误，不直接明文显示
                 _ => ApiResult.InternalServerError(),
             };
-
             context.Response.ContentType = "text/json;charset=utf-8";
             context.Response.StatusCode = exceptionResult.Code.GetEnumValueByKey();
             await context.Response.WriteAsync(exceptionResult.SerializeToJson(), Encoding.UTF8);
         }
+        finally
+        {
+            // 记录操作日志
+            await RecordLogOperation(stopwatch.ElapsedMilliseconds, status);
+        }
+    }
+
+    /// <summary>
+    /// 记录访问日志
+    /// </summary>
+    /// <returns></returns>
+    private async Task RecordLogVisit()
+    {
+        // 获取当前请求上下文信息
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
+        var authInfo = App.AuthInfo;
+        var actionInfo = App.ActionInfo;
+
+        // 记录日志
+        var sysLogVisit = new SysLogVisit
+        {
+            IsAjaxRequest = clientInfo.IsAjaxRequest,
+            Language = clientInfo.Language,
+            Referrer = clientInfo.Referer,
+            Agent = clientInfo.Agent,
+            DeviceType = clientInfo.DeviceType,
+            Os = clientInfo.OsName + clientInfo.OsVersion,
+            Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
+            Ip = addressInfo.RemoteIPv4,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
+            RealName = authInfo.RealName,
+            RequestMethod = actionInfo.RequestMethod,
+            RequestUrl = actionInfo.RequestUrl,
+        };
+        var sysLogVisitService = App.GetRequiredService<ISysLogVisitService>();
+        await sysLogVisitService.CreateLogVisit(sysLogVisit);
+    }
+
+    /// <summary>
+    /// 记录异常日志
+    /// </summary>
+    /// <param name="ex"></param>
+    /// <returns></returns>
+    private async Task RecordLogException(Exception ex)
+    {
+        // 获取当前请求上下文信息
+        var clientInfo = App.ClientInfo;
+        var addressInfo = App.AddressInfo;
+        var authInfo = App.AuthInfo;
+        var actionInfo = App.ActionInfo;
+        var stackFrame = new StackTrace(ex, true).GetFrame(0);
+        var targetSite = ex.TargetSite;
+
+        // 记录日志
+        var sysLogException = new SysLogException
+        {
+            IsAjaxRequest = clientInfo.IsAjaxRequest,
+            Language = clientInfo.Language,
+            Referrer = clientInfo.Referer,
+            Agent = clientInfo.Agent,
+            DeviceType = clientInfo.DeviceType,
+            Os = clientInfo.OsName + clientInfo.OsVersion,
+            Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
+            Ip = addressInfo.RemoteIPv4,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
+            RealName = authInfo.RealName,
+            RequestMethod = actionInfo.RequestMethod,
+            RequestUrl = actionInfo.RequestUrl,
+            // 异常信息
+            Level = LogEventLevel.Error.ToString(),
+            Thread = Environment.CurrentManagedThreadId,
+            FileName = stackFrame?.GetFileName(),
+            LineNumber = stackFrame?.GetFileLineNumber() ?? 0,
+            ClassName = stackFrame?.GetMethod()?.DeclaringType?.FullName?.Split('+')[0],
+            Event = targetSite?.DeclaringType?.FullName,
+            Message = ex.Message,
+            StackTrace = ex.StackTrace
+        };
+
+        var sysLogExceptionService = App.GetRequiredService<ISysLogExceptionService>();
+        await sysLogExceptionService.CreateLogException(sysLogException);
+        _logger.Error(ex, ex.Message);
     }
 
     /// <summary>
     /// 记录操作日志
     /// </summary>
-    /// <param name="context"></param>
     /// <param name="elapsed"></param>
-    /// <param name="ex"></param>
+    /// <param name="status"></param>
     /// <returns></returns>
-    private async Task RecordLogOperation(HttpContext context, long elapsed, Exception ex)
+    private async Task RecordLogOperation(long elapsed, bool status)
     {
         // 获取当前请求上下文信息
         var clientInfo = App.ClientInfo;
         var addressInfo = App.AddressInfo;
-        var requestParameters = await context.GetRequestParameters();
+        var authInfo = App.AuthInfo;
+        var actionInfo = App.ActionInfo;
 
         // 记录日志
         var sysLogOperation = new SysLogOperation
         {
             IsAjaxRequest = clientInfo.IsAjaxRequest,
-            RequestMethod = clientInfo.RequestMethod,
-            RequestUrl = clientInfo.RequestUrl,
-            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
+            Language = clientInfo.Language,
             Referrer = clientInfo.Referer,
             Agent = clientInfo.Agent,
+            DeviceType = clientInfo.DeviceType,
+            Os = clientInfo.OsName + clientInfo.OsVersion,
+            Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
             Ip = addressInfo.RemoteIPv4,
-            Status = false,
-            ErrorMessage = ex.Message,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
+            RealName = authInfo.RealName,
+            Status = status,
             ElapsedTime = elapsed,
+            RequestMethod = actionInfo.RequestMethod,
+            RequestUrl = actionInfo.RequestUrl,
+            Module = actionInfo.Module,
+            BusinessType = actionInfo.BusinessType,
+            RequestParameters = actionInfo.RequestParameters,
+            ResponseResult = actionInfo.ResponseResult,
         };
-
-        var endpoint = context.GetEndpoint();
-        if (endpoint != null)
-        {
-            var logAttribute = endpoint.Metadata.GetMetadata<AppLogAttribute>();
-            if (logAttribute != null)
-            {
-                sysLogOperation.BusinessType = logAttribute.BusinessType.GetEnumValueByKey();
-                sysLogOperation.Module = logAttribute.Module;
-                sysLogOperation.RequestParameters = logAttribute.IsSaveRequestData ? requestParameters : string.Empty;
-            }
-        }
 
         var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
         await sysLogOperationService.CreateLogOperation(sysLogOperation);
-        _logger.Error(ex, ex.Message);
     }
 }

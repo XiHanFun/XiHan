@@ -41,9 +41,9 @@ public interface ISysConfigService : IBaseService<SysConfig>
     /// <summary>
     /// 修改系统配置
     /// </summary>
-    /// <param name="sysConfigCDto"></param>
+    /// <param name="configMDto"></param>
     /// <returns></returns>
-    Task<bool> ModifySysConfig(SysConfigCDto sysConfigCDto);
+    Task<bool> ModifySysConfig(SysConfigMDto configMDto);
 
     /// <summary>
     /// 查询系统配置(根据Id)
@@ -64,6 +64,13 @@ public interface ISysConfigService : IBaseService<SysConfig>
     /// </summary>
     /// <returns></returns>
     Task<List<string>> GetSysConfigTypeList();
+
+    /// <summary>
+    /// 查询系统配置列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    Task<List<SysConfig>> GetSysConfigList(SysConfigWDto whereDto);
 
     /// <summary>
     /// 查询系统配置列表(根据分页条件)

@@ -14,7 +14,6 @@
 
 using SqlSugar;
 using XiHan.Models.Bases.Attributes;
-using XiHan.Models.Bases.Entities;
 
 namespace XiHan.Models.Syses;
 
@@ -24,7 +23,7 @@ namespace XiHan.Models.Syses;
 /// <remarks>记录新增信息</remarks>
 [SystemTable]
 [SugarTable(TableName = "Sys_Log_Exception")]
-public class SysLogException : BaseCreateEntity
+public class SysLogException : SysLogVisit
 {
     /// <summary>
     /// 日志级别
@@ -42,19 +41,19 @@ public class SysLogException : BaseCreateEntity
     /// 出错文件
     /// </summary>
     [SugarColumn(Length = 256, IsNullable = true)]
-    public string? File { get; set; }
+    public string? FileName { get; set; }
 
     /// <summary>
     /// 出错行号
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public int Line { get; set; }
+    public int LineNumber { get; set; }
 
     /// <summary>
     /// 请求类名
     /// </summary>
     [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Class { get; set; }
+    public string? ClassName { get; set; }
 
     /// <summary>
     /// 事件对象
@@ -69,8 +68,8 @@ public class SysLogException : BaseCreateEntity
     public string? Message { get; set; }
 
     /// <summary>
-    /// 错误详情
+    /// 堆栈跟踪
     /// </summary>
     [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
-    public string? Exception { get; set; }
+    public string? StackTrace { get; set; }
 }

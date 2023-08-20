@@ -159,6 +159,6 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Code);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Code, pageWhere.IsAsc);
     }
 }

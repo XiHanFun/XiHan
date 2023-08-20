@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Authentication;
 using XiHan.Infrastructures.Apps.HttpContexts;
@@ -34,29 +35,32 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         // 控制器信息
-        var actionContextInfo = context.GetActionContextInfo();
-        // 是否授权访问
-        var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
-            || actionContextInfo.ControllerType!.IsDefined(typeof(AuthorizeAttribute), true)
-            || actionContextInfo.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
-        // 授权访问就进行权限检查
-        if (isAuthorize)
+        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+        if (actionDescriptor != null)
         {
-            var identities = context.HttpContext.User.Identities;
-            // 验证权限
-            if (identities == null)
+            // 是否授权访问
+            var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
+                || actionDescriptor.ControllerTypeInfo!.IsDefined(typeof(AuthorizeAttribute), true)
+                || actionDescriptor.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
+            // 授权访问就进行权限检查
+            if (isAuthorize)
             {
-                // 认证参数异常
-                throw new AuthenticationException();
+                var identities = context.HttpContext.User.Identities;
+                // 验证权限
+                if (identities == null)
+                {
+                    // 认证参数异常
+                    throw new AuthenticationException();
+                }
+                else
+                {
+                }
             }
+            // 匿名访问直接跳过处理
             else
             {
+                await Task.CompletedTask;
             }
-        }
-        // 匿名访问直接跳过处理
-        else
-        {
-            await Task.CompletedTask;
         }
     }
 }

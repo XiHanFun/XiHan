@@ -108,6 +108,6 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
         whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }
 }

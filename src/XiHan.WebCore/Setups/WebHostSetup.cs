@@ -13,6 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Options;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 
@@ -36,15 +38,21 @@ public static class WebHostSetup
 
         // 端口
         var port = AppSettings.Port.GetValue();
-        host.UseUrls($"http://*:{port}");
+        host.UseUrls($"https://*:{port}");
 
         // 设置接口超时时间和上传大小
-        host.ConfigureKestrel(u =>
+        host.ConfigureKestrel(options =>
         {
-            u.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
-            u.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
+            options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
+            options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
             // 文件上传最大限制 100M
-            u.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
+            options.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
+            // 启用 HTTP/3
+            options.ListenAnyIP(port, listenOptions =>
+            {
+                listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+                listenOptions.UseHttps();
+            });
         });
 
         "Host Started Successfully！".WriteLineSuccess();

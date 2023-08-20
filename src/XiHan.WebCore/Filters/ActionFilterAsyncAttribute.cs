@@ -46,16 +46,11 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         {
             // 请求构造函数和方法,调用下一个过滤器
             var actionExecuted = await next();
-            if (actionExecuted.Result != null)
+            // 判断是否请求成功，没有异常就是请求成功
+            var requestException = actionExecuted.Exception;
+            if (requestException != null)
             {
-                // 获取返回的结果
-                var returnResult = actionExecuted.Result as ActionResult;
-                // 判断是否请求成功，没有异常就是请求成功
-                var requestException = actionExecuted.Exception;
-                if (requestException != null)
-                {
-                    await Task.CompletedTask;
-                }
+                await Task.CompletedTask;
             }
         }
     }

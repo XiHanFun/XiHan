@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
 using System.Security.Authentication;
-using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Exceptions;
 using XiHan.WebCore.Middlewares;
@@ -62,14 +61,7 @@ public class ExceptionFilterAsyncAttribute : Attribute, IAsyncExceptionFilter
                 _ => new JsonResult(ApiResult.InternalServerError())
             };
 
-            // 控制器信息
-            var actionContextInfo = context.GetActionContextInfo();
-            // 写入日志
-            var info = $"\t 请求Ip：{actionContextInfo.RemoteIp}\n" +
-                $"\t 请求地址：{actionContextInfo.RequestUrl}\n" +
-                $"\t 请求方法：{actionContextInfo.MethodInfo}\n" +
-                $"\t 操作用户：{actionContextInfo.UserId}";
-            Logger.Error(context.Exception, $"系统异常\n{info}");
+            Logger.Error(context.Exception, "系统异常");
         }
 
         // 标记异常已经处理过了

@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Polly;
 using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Responses.Pages;
@@ -214,6 +215,25 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="page">分页实体</param>
     /// <returns></returns>
     Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page);
+
+    /// <summary>
+    /// 分页排序查询
+    /// </summary>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
+
+    /// <summary>
+    /// 分页排序查询
+    /// </summary>
+    /// <param name="page">分页实体</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true);
 
     /// <summary>
     /// 自定义条件分页查询

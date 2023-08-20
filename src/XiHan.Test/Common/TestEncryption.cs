@@ -66,12 +66,12 @@ public static class TestEncryption
     {
         Console.WriteLine("请输入要Md5加密的文本：");
         var plainText = Console.ReadLine();
-        var strMd5 = plainText != null ? Md5EncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
+        var strMd5 = plainText != null ? Md5HashEncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{plainText}】Md5加密后：{strMd5}；");
 
         Console.WriteLine("请输入要Md5加密的文件路径：");
         var file = Console.ReadLine();
-        var strMd5File = file != null ? Md5EncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
+        var strMd5File = file != null ? Md5HashEncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
         Console.WriteLine($@"文件【{file}】Md5加密后：{strMd5File}；");
     }
 

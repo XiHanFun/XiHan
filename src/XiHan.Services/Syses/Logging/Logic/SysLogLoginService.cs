@@ -106,6 +106,6 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
         whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
         whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, false);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }
 }

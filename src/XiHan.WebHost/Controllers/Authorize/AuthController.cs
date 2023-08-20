@@ -114,7 +114,7 @@ public class AuthController : BaseApiController
         try
         {
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
-            if (sysUser.Password != Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
+            if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
 
             sysLogLogin.IsSuccess = true;
             sysLogLogin.Message = "登录成功！";

@@ -14,10 +14,13 @@
 
 using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using UAParser;
+using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Consts;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
@@ -50,8 +53,6 @@ public static class HttpContextExtend
             var clientModel = new UserClientInfo
             {
                 IsAjaxRequest = context.IsAjaxRequest(),
-                RequestMethod = context.Request.Method.ToUpperInvariant(),
-                RequestUrl = context.GetRequestUrl(),
                 Language = language.ToString().Split(';')[0],
                 Referer = referer.ToString(),
                 Agent = agent.ToString(),
@@ -135,7 +136,7 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 设置Cookie值
+    /// 设置 Cookie 值
     /// </summary>
     /// <param name="context"></param>
     /// <param name="key">名称</param>
@@ -156,7 +157,7 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 读取Cookie值
+    /// 读取 Cookie 值
     /// </summary>
     /// <param name="context"></param>
     /// <param name="key">名称</param>
@@ -167,67 +168,13 @@ public static class HttpContextExtend
     }
 
     /// <summary>
-    /// 删除Cookie对象
+    /// 删除 Cookie 对象
     /// </summary>
     /// <param name="context"></param>
     /// <param name="key">名称</param>
     public static void RemoveCookie(this HttpContext context, string key)
     {
         context.Response.Cookies.Delete(key);
-    }
-
-    /// <summary>
-    /// 获取请求Url
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static string? GetRequestUrl(this HttpContext context)
-    {
-        return context.Request.Path.Value;
-    }
-
-    /// <summary>
-    /// 获取请求参数
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static async Task<string> GetRequestParameters(this HttpContext context)
-    {
-        var requestParameters = string.Empty;
-        var request = context.Request;
-        var method = request.Method;
-        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsPatch(method))
-        {
-            // 使用异步获取请求实体
-            request.EnableBuffering();
-            using var reader = new StreamReader(request.Body, Encoding.UTF8);
-            var requestBody = await reader.ReadToEndAsync();
-            // 为空则取请求字符串里的参数
-            requestParameters = requestBody.IsEmptyOrNull() ? request.QueryString.Value ?? string.Empty : requestBody;
-        }
-        else if (HttpMethods.IsGet(method) || HttpMethods.IsDelete(method))
-        {
-            requestParameters = request.QueryString.Value ?? string.Empty;
-        }
-
-        return requestParameters;
-    }
-
-    /// <summary>
-    /// 获取响应结果
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public static async Task<string> GetResponseResult(this HttpContext context)
-    {
-        var responseResult = string.Empty;
-        var response = context.Response;
-        // 使用异步获取请求实体
-        using var reader = new StreamReader(response.Body, Encoding.UTF8);
-        var requestBody = await reader.ReadToEndAsync();
-        // 为空则取请求字符串里的参数
-        responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
-        return responseResult;
     }
 
     #endregion
@@ -256,21 +203,13 @@ public static class HttpContextExtend
             {
                 RemoteIPv4 = context.GetClientIpV4(),
                 RemoteIPv6 = context.GetClientIpV6(),
-                // 长地址信息
                 AddressInfo = searchResult,
-                // 国家 中国
                 Country = addressArray[0],
-                // 省份/自治区/直辖市 浙江省
                 State = addressArray[2],
-                // 地级市 安顺市
                 PrefectureLevelCity = addressArray[3],
-                // 区/县 西秀区
                 DistrictOrCounty = null,
-                // 运营商 联通
                 Operator = addressArray[4],
-                // 邮政编码 561000
                 PostalCode = null,
-                // 地区区号 0851
                 AreaCode = null
             };
             return addressInfo;
@@ -345,7 +284,7 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static UserAuthInfo GetUserAuthInfo(this HttpContext context)
+    public static UserAuthInfo GetAuthInfo(this HttpContext context)
     {
         try
         {
@@ -483,6 +422,122 @@ public static class HttpContextExtend
     }
 
     #endregion
+
+    #region 控制器信息
+
+    /// <summary>
+    /// 获取控制器信息
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static async Task<UserActionInfo> GetActionInfo(this HttpContext context)
+    {
+        var actionInfo = new UserActionInfo
+        {
+            RequestMethod = context.GetRequestMethod(),
+            RequestUrl = context.GetRequestUrl(),
+        };
+
+        var endpoint = context.GetEndpoint();
+        if (endpoint != null)
+        {
+            // 获取控制器、路由信息
+            var actionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
+            if (actionDescriptor != null)
+            {
+                actionInfo.ControllerName = actionDescriptor.ControllerName;
+                actionInfo.ActionName = actionDescriptor.ActionName;
+                actionInfo.MethodName = actionDescriptor.MethodInfo.Name;
+            }
+
+            // 获取模块信息
+            var logAttribute = endpoint.Metadata.GetMetadata<AppLogAttribute>();
+            if (logAttribute != null)
+            {
+                actionInfo.Module = logAttribute.Module;
+                actionInfo.BusinessType = logAttribute.BusinessType.GetEnumValueByKey();
+            }
+
+            actionInfo.RequestParameters = await context.GetRequestParameters();
+            actionInfo.ResponseResult = await context.GetResponseResult();
+        }
+
+        return actionInfo;
+    }
+
+    /// <summary>
+    /// 请求方式
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetRequestMethod(this HttpContext context)
+    {
+        // 获取 HttpRequest 对象
+        var httpRequest = context.Request;
+        return httpRequest.Method;
+    }
+
+    /// <summary>
+    /// 获取请求 Url 地址(域名、路径、参数)
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static string GetRequestUrl(this HttpContext context)
+    {
+        // 获取 HttpRequest 对象
+        var httpRequest = context.Request;
+        var url = httpRequest.Host.Value + httpRequest.Path.Value + httpRequest.QueryString.Value;
+        return url ?? string.Empty;
+    }
+
+    /// <summary>
+    /// 获取请求参数
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static async Task<string> GetRequestParameters(this HttpContext context)
+    {
+        var requestParameters = string.Empty;
+        var request = context.Request;
+        var method = request.Method;
+        if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsPatch(method))
+        {
+            // 启用请求缓冲
+            request.EnableBuffering();
+            // 使用异步获取请求实体
+            using var reader = new StreamReader(request.Body, Encoding.UTF8, true, 1024, true);
+            var requestBody = await reader.ReadToEndAsync();
+            request.Body.Seek(0, SeekOrigin.Begin);
+            // 为空则取请求字符串里的参数
+            requestParameters = requestBody.IsEmptyOrNull() ? request.QueryString.Value ?? string.Empty : requestBody;
+        }
+        else if (HttpMethods.IsGet(method) || HttpMethods.IsDelete(method))
+        {
+            requestParameters = request.QueryString.Value ?? string.Empty;
+        }
+
+        return requestParameters;
+    }
+
+    /// <summary>
+    /// 获取响应结果
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public static async Task<string> GetResponseResult(this HttpContext context)
+    {
+        var responseResult = string.Empty;
+        //var response = context.Response;
+        //// 使用异步获取请求实体
+        //using var reader = new StreamReader(response.Body, Encoding.UTF8, true, 1024, true);
+        //var requestBody = await reader.ReadToEndAsync();
+        //response.Body.Seek(0, SeekOrigin.Begin);
+        //// 为空则取请求字符串里的参数
+        //responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
+        return responseResult;
+    }
+
+    #endregion
 }
 
 /// <summary>
@@ -496,22 +551,12 @@ public class UserClientInfo
     public bool IsAjaxRequest { get; set; }
 
     /// <summary>
-    /// 请求方式
-    /// </summary>
-    public string RequestMethod { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 请求地址
-    /// </summary>
-    public string? RequestUrl { get; set; } = string.Empty;
-
-    /// <summary>
     /// 语言
     /// </summary>
     public string Language { get; set; } = string.Empty;
 
     /// <summary>
-    /// 引荐
+    /// 来源页面
     /// </summary>
     public string Referer { get; set; } = string.Empty;
 
@@ -661,4 +706,57 @@ public class UserAuthInfo
     /// ClaimsIdentity
     /// </summary>
     public IEnumerable<ClaimsIdentity> UserClaims { get; set; } = Enumerable.Empty<ClaimsIdentity>();
+}
+
+/// <summary>
+/// 控制器信息
+/// </summary>
+public class UserActionInfo
+{
+    /// <summary>
+    /// 请求方式
+    /// </summary>
+    public string RequestMethod { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 请求地址
+    /// </summary>
+    public string RequestUrl { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 请求参数
+    /// </summary>
+    public string RequestParameters { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 响应结果
+    /// </summary>
+    public string ResponseResult { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 控制器名称
+    /// </summary>
+    public string ControllerName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 操作名称
+    /// </summary>
+    public string ActionName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 方法名称
+    /// </summary>
+    public string MethodName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 操作模块
+    ///</summary>
+    public string Module { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 业务类型
+    /// BusinessTypeEnum
+    /// 0其它 1新增 2修改 3删除 4授权 5导出 6导入 7强退 8生成代码 9清空数据
+    /// </summary>
+    public int BusinessType { get; set; }
 }

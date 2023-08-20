@@ -51,9 +51,11 @@ public class AppLogAttribute : Attribute
     /// 构造函数
     /// </summary>
     /// <param name="module"></param>
-    public AppLogAttribute(string module)
+    /// <param name="businessType"></param>
+    public AppLogAttribute(string module, BusinessTypeEnum businessType)
     {
         Module = module;
+        BusinessType = businessType;
     }
 
     /// <summary>

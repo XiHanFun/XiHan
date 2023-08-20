@@ -40,5 +40,5 @@ public abstract class BaseModifyEntity : BaseCreateEntity
     /// </summary>
     /// <remarks>新增不会有此字段</remarks>
     [SugarColumn(IsNullable = true, IsOnlyIgnoreInsert = true, ColumnDescription = "修改时间")]
-    public virtual DateTime? ModifiedTime { get; set; } = DateTime.Now;
+    public virtual DateTime? ModifiedTime { get; set; }
 }

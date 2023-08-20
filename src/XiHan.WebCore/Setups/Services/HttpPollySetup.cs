@@ -24,6 +24,9 @@ namespace XiHan.WebCore.Setups.Services;
 /// <summary>
 /// HttpPollySetup
 /// </summary>
+/// <remarks>使用 HttpClient 进行 HTTP/3 的 Localhost 测试请求时，需要额外的配置：
+/// <see href="https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/servers/kestrel/http3?view=aspnetcore-7.0#localhost-testing"/>
+/// </remarks>
 public static class HttpPollySetup
 {
     /// <summary>
@@ -47,10 +50,10 @@ public static class HttpPollySetup
         // 为每个重试定义超时策略
         var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
-        // 注入 Http 请求
-        services.AddHttpClient(HttpGroupEnum.Remote.ToString(), c =>
+        // 远程请求
+        services.AddHttpClient(HttpGroupEnum.Remote.ToString(), options =>
         {
-            c.DefaultRequestHeaders.Add("Accept", "application/json");
+            options.DefaultRequestHeaders.Add("Accept", "application/json");
         })
         // 忽略 SSL 不安全检查，或 HTTPS 不安全或 HTTPS 证书有误
         .ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler
@@ -63,10 +66,13 @@ public static class HttpPollySetup
         .AddPolicyHandler(retryPolicy)
         .AddPolicyHandler(timeoutPolicy);
 
-        services.AddHttpClient(HttpGroupEnum.Local.ToString(), c =>
+        // 本地请求
+        services.AddHttpClient(HttpGroupEnum.Local.ToString(), options =>
         {
-            c.BaseAddress = new Uri("http://www.localhost.com");
-            c.DefaultRequestHeaders.Add("Accept", "application/json");
+            options.BaseAddress = new Uri("http://www.localhost.com");
+            options.DefaultRequestHeaders.Add("Accept", "application/json");
+            // 需要额外的配置
+            options.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
         })
         .AddPolicyHandler(retryPolicy)
         .AddPolicyHandler(timeoutPolicy);

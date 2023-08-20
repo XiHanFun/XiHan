@@ -14,7 +14,6 @@
 
 using SqlSugar;
 using XiHan.Models.Bases.Attributes;
-using XiHan.Models.Bases.Entities;
 
 namespace XiHan.Models.Syses;
 
@@ -24,14 +23,8 @@ namespace XiHan.Models.Syses;
 /// <remarks>记录新增信息</remarks>
 [SystemTable]
 [SugarTable(TableName = "Sys_Log_Operation")]
-public class SysLogOperation : BaseCreateEntity
+public class SysLogOperation : SysLogVisit
 {
-    /// <summary>
-    /// 操作方法
-    ///</summary>
-    [SugarColumn(Length = 64, IsNullable = true)]
-    public string? Method { get; set; }
-
     /// <summary>
     /// 操作模块
     ///</summary>
@@ -64,59 +57,7 @@ public class SysLogOperation : BaseCreateEntity
     public bool Status { get; set; } = true;
 
     /// <summary>
-    /// 错误消息
-    /// </summary>
-    [SugarColumn(Length = 512, IsNullable = true)]
-    public string? ErrorMessage { get; set; }
-
-    /// <summary>
     /// 操作用时
     /// </summary>
     public long ElapsedTime { get; set; }
-
-    #region 客户端信息
-
-    /// <summary>
-    /// 是否是 ajax 请求
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public bool? IsAjaxRequest { get; set; }
-
-    /// <summary>
-    /// 请求类型 GET、POST等
-    /// </summary>
-    [SugarColumn(Length = 16, IsNullable = true)]
-    public string? RequestMethod { get; set; }
-
-    /// <summary>
-    /// 请求地址
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public string? RequestUrl { get; set; }
-
-    /// <summary>
-    /// 操作地点
-    ///</summary>
-    [SugarColumn(Length = 64, IsNullable = true)]
-    public string? Location { get; set; }
-
-    /// <summary>
-    /// 来源页面
-    /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Referrer { get; set; }
-
-    /// <summary>
-    /// 代理信息
-    /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Agent { get; set; }
-
-    /// <summary>
-    /// 操作Ip
-    ///</summary>
-    [SugarColumn(Length = 32, IsNullable = true)]
-    public string? Ip { get; set; }
-
-    #endregion
 }

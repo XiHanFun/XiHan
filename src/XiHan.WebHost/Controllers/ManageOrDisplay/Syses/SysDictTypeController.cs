@@ -101,7 +101,7 @@ public class SysDictTypeController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetList")]
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetDictTypePageList([FromBody] SysDictTypeWDto dictTypeWDto)
+    public async Task<ApiResult> GetDictTypeList([FromBody] SysDictTypeWDto dictTypeWDto)
     {
         var result = await _sysDictTypeService.GetDictTypeList(dictTypeWDto);
         return ApiResult.Success(result);

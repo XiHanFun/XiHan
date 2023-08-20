@@ -351,6 +351,35 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     }
 
     /// <summary>
+    /// 分页排序查询
+    /// </summary>
+    /// <param name="currentIndex">页面索引</param>
+    /// <param name="pageSize">页面大小</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    {
+        return await Context.Queryable<TEntity>()
+            .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
+            .ToPageDataDto(currentIndex, pageSize);
+    }
+
+    /// <summary>
+    /// 分页排序查询
+    /// </summary>
+    /// <param name="page">分页实体</param>
+    /// <param name="orderExpression">自定义排序条件</param>
+    /// <param name="isOrderAsc">是否正序排序</param>
+    /// <returns></returns>
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    {
+        return await Context.Queryable<TEntity>()
+            .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
+            .ToPageDataDto(page);
+    }
+
+    /// <summary>
     /// 自定义条件分页查询
     /// </summary>
     /// <param name="whereExpression">自定义条件</param>

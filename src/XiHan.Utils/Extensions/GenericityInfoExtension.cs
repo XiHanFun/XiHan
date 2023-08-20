@@ -25,6 +25,26 @@ public static class GenericityInfoExtension
     #region 属性信息
 
     /// <summary>
+    /// 递归获取最深层次的任何类型的属性
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="propertyName"></param>
+    /// <returns></returns>
+    public static TEntity GetPropertyDeepestValue<TEntity>(this TEntity entity, string propertyName)
+    {
+        var value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
+        if (value == null)
+        {
+            return entity;
+        }
+        else
+        {
+            return GetPropertyDeepestValue(entity, propertyName);
+        }
+    }
+
+    /// <summary>
     /// 获取对象属性值
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>

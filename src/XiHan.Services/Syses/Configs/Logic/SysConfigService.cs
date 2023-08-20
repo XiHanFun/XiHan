@@ -20,7 +20,6 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Configs.Dtos;
-using XiHan.Utils;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 
@@ -88,15 +87,19 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <summary>
     /// 修改系统配置
     /// </summary>
-    /// <param name="sysConfigCDto"></param>
+    /// <param name="configMDto"></param>
     /// <returns></returns>
-    public async Task<bool> ModifySysConfig(SysConfigCDto sysConfigCDto)
+    public async Task<bool> ModifySysConfig(SysConfigMDto configMDto)
     {
-        var sysSysConfig = sysConfigCDto.Adapt<SysConfig>();
+        var sysConfig = configMDto.Adapt<SysConfig>();
 
-        _ = await CheckConfigUnique(sysSysConfig);
+        // 禁止修改系统参数
+        var oldSysConfig = await FindAsync(c => c.BaseId == sysConfig.BaseId);
+        if (oldSysConfig.IsOfficial) throw new CustomException("禁止修改系统内置参数！");
 
-        return await UpdateAsync(sysSysConfig);
+        _ = await CheckConfigUnique(sysConfig);
+
+        return await UpdateAsync(sysConfig);
     }
 
     /// <summary>
@@ -139,10 +142,25 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     {
         var typeList = await Context.Queryable<SysConfig>()
             .GroupBy(c => c.TypeCode)
-            .Select(c => c.TypeCode)
-            .ToListAsync();
+            .ToListAsync(c => c.TypeCode);
 
         return typeList;
+    }
+
+    /// <summary>
+    /// 查询系统配置列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysConfig>> GetSysConfigList(SysConfigWDto whereDto)
+    {
+        var whereExpression = Expressionable.Create<SysConfig>();
+        whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
+        whereExpression.AndIF(whereDto.Code != null, u => u.Code == whereDto.Code);
+        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
+
+        return await QueryAsync(whereExpression.ToExpression(), o => new { o.TypeCode, o.SortOrder }, false);
     }
 
     /// <summary>
@@ -160,6 +178,6 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
         whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
         whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => new { o.TypeCode, o.SortOrder }, pageWhere.IsAsc);
     }
 }

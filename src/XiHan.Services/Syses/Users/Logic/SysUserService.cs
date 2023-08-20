@@ -68,7 +68,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
 
         _ = await GetAccountUnique(sysUser);
 
-        var encryptPasswod = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
+        var encryptPasswod = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
         sysUser.Password = encryptPasswod;
         var userId = await AddReturnIdAsync(sysUser);
 
@@ -165,11 +165,11 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword))))
+        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword))))
         {
             return await UpdateAsync(s => new SysUser()
             {
-                Password = Md5EncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
+                Password = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
             }, f => f.BaseId == userPwdMDto.BaseId);
         }
         throw new CustomException("重置密码出错，旧密码有误！");
@@ -226,6 +226,6 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
         whereExpression.And(u => !u.IsDeleted);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }
 }

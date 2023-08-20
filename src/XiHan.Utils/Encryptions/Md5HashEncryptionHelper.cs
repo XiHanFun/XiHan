@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:Md5EncryptionHelper
+// FileName:Md5HashEncryptionHelper
 // Guid:21e9cb49-385d-4549-ad4e-1fcfd56b3472
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,12 +18,12 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Md5 加密类
+/// Md5 生成哈希类
 /// </summary>
-public static class Md5EncryptionHelper
+public static class Md5HashEncryptionHelper
 {
     /// <summary>
-    /// 对字符串进行 MD5 加密
+    /// 对字符串进行 MD5 生成哈希
     /// </summary>
     /// <param name="input">待加密的明文字符串</param>
     /// <returns>加密后的字符串(32位或64位)</returns>
@@ -46,7 +46,7 @@ public static class Md5EncryptionHelper
     }
 
     /// <summary>
-    /// 对数据流进行 MD5 加密，返回32位MD5值
+    /// 对数据流进行 MD5 生成哈希，返回32位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流路径</param>
     /// <returns></returns>
@@ -59,7 +59,7 @@ public static class Md5EncryptionHelper
     }
 
     /// <summary>
-    /// 对数据流进行 MD5 加密，返回64位MD5值
+    /// 对数据流进行 MD5 生成哈希，返回64位MD5值
     /// </summary>
     /// <param name="inputPath">待加密的数据流</param>
     /// <returns></returns>

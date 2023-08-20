@@ -169,6 +169,6 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
         whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
         whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder, pageWhere.IsAsc);
     }
 }

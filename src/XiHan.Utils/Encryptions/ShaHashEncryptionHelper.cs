@@ -76,7 +76,7 @@ public static class ShaHashEncryptionHelper
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
-    private static string ComputeHash(byte[] source)
+    private static string ComputeHash(IEnumerable<byte> source)
     {
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();

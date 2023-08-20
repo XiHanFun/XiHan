@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogExceptionService
-// Guid:65179156-6084-40b4-ace3-0cda5ee49eeb
+// FileName:SysLogVisitService
+// Guid:cc745d02-3511-4de9-8da8-14888c33747e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023/7/19 1:16:48
+// CreateTime:2023/8/21 1:57:56
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -19,16 +19,15 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Logging.Dtos;
-using XiHan.Utils;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Logging.Logic;
 
 /// <summary>
-/// 系统异常日志服务
+/// 系统访问日志服务
 /// </summary>
-[AppService(ServiceType = typeof(ISysLogExceptionService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExceptionService
+[AppService(ServiceType = typeof(ISysLogVisitService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
 {
     private readonly IAppCacheService _appCacheService;
 
@@ -36,79 +35,78 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
     /// 构造函数
     /// </summary>
     /// <param name="appCacheService"></param>
-    public SysLogExceptionService(IAppCacheService appCacheService)
+    public SysLogVisitService(IAppCacheService appCacheService)
     {
         _appCacheService = appCacheService;
     }
 
     /// <summary>
-    /// 新增系统异常日志
+    /// 新增系统访问日志
     /// </summary>
-    /// <param name="logException"></param>
+    /// <param name="logVisit"></param>
     /// <returns></returns>
-    public async Task<bool> CreateLogException(SysLogException logException)
+    public async Task<bool> CreateLogVisit(SysLogVisit logVisit)
     {
-        return await AddAsync(logException);
+        return await AddAsync(logVisit);
     }
 
     /// <summary>
-    /// 批量删除系统异常日志
+    /// 批量删除系统访问日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteLogExceptionByIds(long[] logIds)
+    public async Task<bool> DeleteLogVisitByIds(long[] logIds)
     {
         return await RemoveAsync(logIds);
     }
 
     /// <summary>
-    /// 清空系统异常日志
+    /// 清空系统访问日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> ClearLogException()
+    public async Task<bool> ClearLogVisit()
     {
         return await ClearAsync();
     }
 
     /// <summary>
-    /// 查询系统系统异常日志(根据异常Id)
+    /// 查询系统系统访问日志(根据访问Id)
     /// </summary>
-    /// <param name="exceptionId"></param>
+    /// <param name="visitId"></param>
     /// <returns></returns>
-    public async Task<SysLogException> GetLogExceptionById(long exceptionId)
+    public async Task<SysLogVisit> GetLogVisitById(long visitId)
     {
-        var key = $"GetLogExceptionById_{exceptionId}";
-        if (_appCacheService.Get(key) is SysLogException sysLogException) return sysLogException;
-        sysLogException = await FindAsync(d => d.BaseId == exceptionId);
-        _appCacheService.SetWithMinutes(key, sysLogException, 30);
+        var key = $"GetLogVisitById_{visitId}";
+        if (_appCacheService.Get(key) is SysLogVisit sysLogVisit) return sysLogVisit;
+        sysLogVisit = await FindAsync(d => d.BaseId == visitId);
+        _appCacheService.SetWithMinutes(key, sysLogVisit, 30);
 
-        return sysLogException;
+        return sysLogVisit;
     }
 
     /// <summary>
-    /// 查询系统系统异常日志列表
+    /// 查询系统系统访问日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysLogException>> GetLogExceptionList(SysLogExceptionWDto whereDto)
+    public async Task<List<SysLogVisit>> GetLogVisitList(SysLogVisitWDto whereDto)
     {
         // 时间为空，默认查询当天
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogException>();
+        var whereExpression = Expressionable.Create<SysLogVisit>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Level.IsNotEmptyOrNull(), u => u.Level == whereDto.Level!);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
 
     /// <summary>
-    /// 查询系统系统异常日志列表(根据分页条件)
+    /// 查询系统系统访问日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysLogException>> GetLogExceptionPageList(PageWhereDto<SysLogExceptionWDto> pageWhere)
+    public async Task<PageDataDto<SysLogVisit>> GetLogVisitPageList(PageWhereDto<SysLogVisitWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
@@ -116,9 +114,8 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogException>();
+        var whereExpression = Expressionable.Create<SysLogVisit>();
         whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Level.IsNotEmptyOrNull(), u => u.Level == whereDto.Level!);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

@@ -122,7 +122,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
         whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
         whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
-        return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder);
+        return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder, false);
     }
 
     /// <summary>
@@ -139,6 +139,6 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
         whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
         whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder, pageWhere.IsAsc);
     }
 }

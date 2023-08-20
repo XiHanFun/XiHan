@@ -79,7 +79,12 @@ public static class App
     /// <summary>
     /// 请求上下文权限信息
     /// </summary>
-    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetUserAuthInfo();
+    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetAuthInfo();
+
+    /// <summary>
+    /// 请求上下文权限信息
+    /// </summary>
+    public static UserActionInfo ActionInfo => HttpContextCurrent.GetActionInfo().Result;
 
     /// <summary>
     /// 上传根路径
