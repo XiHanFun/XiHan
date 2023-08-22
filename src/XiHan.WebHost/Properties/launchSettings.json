@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "sslPort": 0
     }
   },
@@ -19,7 +19,7 @@
     "Development": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -28,7 +28,7 @@
     "Test": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Test"
       },
@@ -36,7 +36,7 @@
     },
     "Production": {
       "commandName": "Project",
-      "applicationUrl": "https://127.0.0.1:9708",
+      "applicationUrl": "http://127.0.0.1:9708",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
@@ -48,7 +48,7 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "https://127.0.0.1:9708"
+        "ASPNETCORE_URLS": "http://127.0.0.1:9708"
       },
       "publishAllPorts": true,
       "dockerOptions": {
