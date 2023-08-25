@@ -128,8 +128,8 @@ public static class HttpContextExtend
     /// <param name="contentType"></param>
     public static async Task DownloadFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
     {
-        context.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-        context.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
+        context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
+        context.Response.Headers.Append("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
         context.Response.ContentType = contentType.GetValue();
         await context.Response.BodyWriter.WriteAsync(fileContents);
         await context.Response.BodyWriter.FlushAsync();
@@ -459,7 +459,7 @@ public static class HttpContextExtend
             }
 
             actionInfo.RequestParameters = await context.GetRequestParameters();
-            actionInfo.ResponseResult = await context.GetResponseResult();
+            //actionInfo.ResponseResult = await context.GetResponseResult();
         }
 
         return actionInfo;
@@ -527,13 +527,13 @@ public static class HttpContextExtend
     public static async Task<string> GetResponseResult(this HttpContext context)
     {
         var responseResult = string.Empty;
-        //var response = context.Response;
-        //// 使用异步获取请求实体
-        //using var reader = new StreamReader(response.Body, Encoding.UTF8, true, 1024, true);
-        //var requestBody = await reader.ReadToEndAsync();
-        //response.Body.Seek(0, SeekOrigin.Begin);
-        //// 为空则取请求字符串里的参数
-        //responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
+        var response = context.Response;
+        // 使用异步获取请求实体
+        using var reader = new StreamReader(response.Body, Encoding.UTF8, true, 1024, true);
+        var requestBody = await reader.ReadToEndAsync();
+        response.Body.Seek(0, SeekOrigin.Begin);
+        // 为空则取请求字符串里的参数
+        responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
         return responseResult;
     }
 

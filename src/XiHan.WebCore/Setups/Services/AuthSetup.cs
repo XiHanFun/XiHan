@@ -80,12 +80,12 @@ public static class AuthSetup
                         if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
                         {
                             failedResult = ApiResult.Unauthorized("授权因颁发者伪造无法读取！");
-                            context.Response.Headers.Add("Token-Error-Iss", "Issuer is wrong!");
+                            context.Response.Headers.Append("Token-Error-Iss", "Issuer is wrong!");
                         }
                         if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
                         {
                             failedResult = ApiResult.Unauthorized("授权因签收者伪造无法读取！");
-                            context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
+                            context.Response.Headers.Append("Token-Error-Aud", "Audience is wrong!");
                         }
                     }
 
@@ -93,7 +93,7 @@ public static class AuthSetup
                     if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                     {
                         failedResult = ApiResult.Unauthorized("授权已过期！");
-                        context.Response.Headers.Add("Token-Expired", "true");
+                        context.Response.Headers.Append("Token-Expired", "true");
                     }
                     context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
                     return Task.CompletedTask;
@@ -105,7 +105,7 @@ public static class AuthSetup
                     var failedResult = ApiResult.Unauthorized("未授权！");
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
-                    context.Response.Headers.Add("Token-Error", context.ErrorDescription);
+                    context.Response.Headers.Append("Token-Error", context.ErrorDescription);
                     context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
                     return Task.CompletedTask;
                 }
