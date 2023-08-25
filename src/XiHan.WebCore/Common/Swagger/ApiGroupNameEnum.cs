@@ -22,36 +22,36 @@ public enum ApiGroupNameEnum
     /// <summary>
     /// 所有接口
     /// </summary>
-    [GroupInfo(Title = "所有接口", Description = "用于生成调试接口的所有接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "所有接口", Description = "用于生成调试接口的所有接口", Version = "v0.3.3")]
     All,
 
     /// <summary>
     /// 前台接口
     /// </summary>
-    [GroupInfo(Title = "前台接口", Description = "用于普通用户浏览的前台接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "前台接口", Description = "用于普通用户浏览的前台接口", Version = "v0.3.3")]
     Display,
 
     /// <summary>
     /// 后台接口
     /// </summary>
-    [GroupInfo(Title = "后台接口", Description = "用于管理的后台接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "后台接口", Description = "用于管理的后台接口", Version = "v0.3.3")]
     Manage,
 
     /// <summary>
     /// 授权接口
     /// </summary>
-    [GroupInfo(Title = "授权接口", Description = "用于登录的授权接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "授权接口", Description = "用于登录的授权接口", Version = "v0.3.3")]
     Authorize,
 
     /// <summary>
     /// 公共接口
     /// </summary>
-    [GroupInfo(Title = "公共接口", Description = "用于常用功能的公共接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "公共接口", Description = "用于常用功能的公共接口", Version = "v0.3.3")]
     Common,
 
     /// <summary>
     /// 测试接口
     /// </summary>
-    [GroupInfo(Title = "测试接口", Description = "用于测试的测试接口", Version = "v0.3.2")]
+    [GroupInfo(Title = "测试接口", Description = "用于测试的测试接口", Version = "v0.3.3")]
     Test
 }
