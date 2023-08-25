@@ -18,13 +18,11 @@ using SqlSugar;
 using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
-using XiHan.Models.Bases.Entities;
 using XiHan.Models.Bases.Interface;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
 using XiHan.Utils.Extensions;
 using XiHan.WebCore.Extensions;
-using Yitter.IdGenerator;
 
 namespace XiHan.WebCore.Setups.Services;
 

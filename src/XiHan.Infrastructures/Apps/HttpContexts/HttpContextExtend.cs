@@ -16,7 +16,6 @@ using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using UAParser;

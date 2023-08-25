@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.Hubs;
+namespace XiHan.Subscriptions.Hubs.Entities;
 
 /// <summary>
 /// 在线用户
@@ -20,12 +20,12 @@ namespace XiHan.Subscriptions.Hubs;
 public class OnlineUser
 {
     /// <summary>
-    /// 连接Id
+    /// 连接标识
     /// </summary>
-    public string? ConnectionId { get; set; }
+    public string ConnectionId { get; set; } = string.Empty;
 
     /// <summary>
-    /// 用户Id
+    /// 用户标识
     /// </summary>
     public long UserId { get; set; }
 
@@ -55,14 +55,19 @@ public class OnlineUser
     public string? Location { get; set; }
 
     /// <summary>
-    /// 浏览器
+    /// 设备类型
     /// </summary>
-    public string? Browser { get; set; }
+    public string? DeviceType { get; set; } = string.Empty;
 
     /// <summary>
-    /// 操作系统
+    /// 系统名称、版本
     /// </summary>
     public string? Os { get; set; }
+
+    /// <summary>
+    /// 浏览器名称、版本
+    /// </summary>
+    public string? Browser { get; set; }
 
     /// <summary>
     /// 连接时间

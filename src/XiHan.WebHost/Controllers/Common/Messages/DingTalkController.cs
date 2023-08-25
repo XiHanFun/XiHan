@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Responses;
 using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.WebHooks.DingTalk;
-using XiHan.WebHost.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
+using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Common.Messages;
 

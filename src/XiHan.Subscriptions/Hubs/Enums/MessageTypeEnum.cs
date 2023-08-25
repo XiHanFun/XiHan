@@ -3,39 +3,46 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysDictTypeWDto
-// Guid:3cd51a41-be16-4d82-901e-40e7dc59496b
+// FileName:MessageTypeEnum
+// Guid:330e94ac-9b76-4a42-81e6-ce6faa58a002
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-06-12 下午 04:43:08
+// CreateTime:2023/8/26 2:01:10
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Dicts.Dtos;
+using System.ComponentModel;
+
+namespace XiHan.Subscriptions.Hubs.Enums;
 
 /// <summary>
-/// SysDictTypeWDto
+/// 消息类型枚举
 /// </summary>
-public class SysDictTypeWDto
+[Description("消息类型枚举")]
+public enum MessageTypeEnum
 {
     /// <summary>
-    /// 字典编码
-    ///</summary>
-    public string? Code { get; set; }
+    /// 普通信息
+    /// </summary>
+    [Description("消息")]
+    Info = 0,
 
     /// <summary>
-    /// 字典名称
+    /// 成功提示
     /// </summary>
-    public string? Name { get; set; }
+    [Description("成功")]
+    Success = 1,
 
     /// <summary>
-    /// 是否启用
+    /// 警告提示
     /// </summary>
-    public bool? IsEnable { get; set; }
+    [Description("警告")]
+    Warning = 2,
 
     /// <summary>
-    /// 是否系统内置
+    /// 错误提示
     /// </summary>
-    public bool? IsOfficial { get; set; }
+    [Description("错误")]
+    Error = 3
 }

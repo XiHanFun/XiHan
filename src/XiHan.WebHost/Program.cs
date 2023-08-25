@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Serilog;
-using XiHan.WebHost.Consoles;
 using XiHan.WebCore.Setups;
+using XiHan.WebHost.Consoles;
 
 var builder = WebApplication.CreateBuilder(args);
 

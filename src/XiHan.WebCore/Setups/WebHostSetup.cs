@@ -14,7 +14,6 @@
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Options;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Utils.Extensions;
 
@@ -51,7 +50,6 @@ public static class WebHostSetup
             options.ListenAnyIP(port, listenOptions =>
             {
                 listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
-                listenOptions.UseHttps();
             });
         });
 

@@ -14,17 +14,8 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Quartz;
-using Serilog;
-using SqlSugar.IOC;
-using XiHan.Infrastructures.Apps;
-using XiHan.Jobs.Bases.Servers;
-using XiHan.Models.Syses;
-using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Exceptions;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.WebCore.Setups.Apps;
 

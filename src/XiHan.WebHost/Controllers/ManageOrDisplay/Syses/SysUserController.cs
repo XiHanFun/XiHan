@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
-using XiHan.WebHost.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
+using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
 

@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Caches;
-using XiHan.Utils;
 
 namespace XiHan.WebCore.Filters;
 

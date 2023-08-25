@@ -3,39 +3,41 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysDictTypeWDto
-// Guid:3cd51a41-be16-4d82-901e-40e7dc59496b
+// FileName:GroupMessageCDto
+// Guid:5cb2ef28-074f-446e-bd7a-a46033dec947
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-06-12 下午 04:43:08
+// CreateTime:2023/8/26 2:48:40
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Dicts.Dtos;
+using XiHan.Subscriptions.Hubs.Enums;
+
+namespace XiHan.Subscriptions.Hubs.Dtos;
 
 /// <summary>
-/// SysDictTypeWDto
+/// 群组消息
 /// </summary>
-public class SysDictTypeWDto
+public class GroupMessageCDto
 {
     /// <summary>
-    /// 字典编码
-    ///</summary>
-    public string? Code { get; set; }
+    /// 消息类型
+    /// </summary>
+    public MessageTypeEnum MessageType { get; set; }
 
     /// <summary>
-    /// 字典名称
+    /// 群组名称
     /// </summary>
-    public string? Name { get; set; }
+    public List<string> GroupNames { get; set; } = new();
 
     /// <summary>
-    /// 是否启用
+    /// 消息标题
     /// </summary>
-    public bool? IsEnable { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    /// 是否系统内置
+    /// 消息内容
     /// </summary>
-    public bool? IsOfficial { get; set; }
+    public string Message { get; set; } = string.Empty;
 }

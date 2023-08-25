@@ -24,9 +24,9 @@ using XiHan.Models.Syses.SeedData;
 using XiHan.Models.Syses.SeedDatas;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
-using XiHan.WebHost.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Filters;
+using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Test;
 

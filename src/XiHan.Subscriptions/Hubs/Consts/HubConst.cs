@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.Hubs;
+namespace XiHan.Subscriptions.Hubs.Consts;
 
 /// <summary>
 /// HubConst
@@ -22,25 +22,30 @@ public static class HubConst
     /// <summary>
     /// 公共组
     /// </summary>
-    public const string CommonGroup = "CommonGroup";
+    public const string CommonGroup = "公共组";
 
     /// <summary>
     /// 加入群组
     /// </summary>
-    public const string GroupAdded = "加入群组";
+    public const string GroupAdded = "加入群组！";
 
     /// <summary>
     /// 退出群组
     /// </summary>
-    public const string GroupRemoved = "退出群组";
+    public const string GroupRemoved = "退出群组！";
 
     /// <summary>
     /// 新建连接
     /// </summary>
-    public const string Connected = "新建连接";
+    public const string Connected = "新建连接！";
 
     /// <summary>
     /// 断开连接
     /// </summary>
-    public const string Disconnected = "断开连接";
+    public const string Disconnected = "断开连接！";
+
+    /// <summary>
+    /// 被强制下线
+    /// </summary>
+    public const string ForceOffline = "被强制下线！";
 }

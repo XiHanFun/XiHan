@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IOnlineUserHub
+// FileName:IChatHub
 // Guid:4e4bd472-94b5-4e53-a02e-9f39156f5961
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,29 +15,28 @@
 namespace XiHan.Subscriptions.Hubs;
 
 /// <summary>
-/// IOnlineUserHub
+/// IChatHub
 /// </summary>
-public interface IOnlineUserHub
+public interface IChatHub
 {
     /// <summary>
     /// 接收信息
     /// </summary>
-    /// <param name="message">信息内容</param>
+    /// <param name="context">信息内容</param>
     /// <returns></returns>
-    Task ReceiveMessage(object message);
-
-    /// <summary>
-    /// 接收信息
-    /// </summary>
-    /// <param name="user">指定接收客户端</param>
-    /// <param name="message">信息内容</param>
-    /// <returns></returns>
-    Task ReceiveMessage(string user, string message);
+    Task ReceiveMessage(object context);
 
     /// <summary>
     /// 消息更新
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="context">信息内容</param>
     /// <returns></returns>
-    Task ReceiveUpdate(object message);
+    Task ReceiveUpdate(object context);
+
+    /// <summary>
+    /// 强制下线
+    /// </summary>
+    /// <param name="context">信息内容</param>
+    /// <returns></returns>
+    Task ForceOffline(object context);
 }

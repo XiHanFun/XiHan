@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(function () {
             //苹果的手机的写法 （需要跳过协商）               
-            var connection = new signalR.HubConnectionBuilder().withUrl("https://api.xihan.fun/ChatHub", {
+            var connection = new signalR.HubConnectionBuilder().withUrl("http://127.0.0.1:9708/ChatHub", {
                 skipNegotiation: true, //针对webSocket为默认协议的时候，可以跳过协商
                 transport: signalR.HttpTransportType.WebSockets
             }).withAutomaticReconnect([3000, 4000, 10000, 10000]).build();

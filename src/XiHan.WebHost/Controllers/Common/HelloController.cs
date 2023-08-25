@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses;
-using XiHan.WebHost.Controllers.Bases;
 using XiHan.WebCore.Common.Swagger;
+using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Common;
 

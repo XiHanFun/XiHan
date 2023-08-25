@@ -12,8 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel.DataAnnotations;
-
 namespace XiHan.Services.Syses.Dicts.Dtos;
 
 /// <summary>

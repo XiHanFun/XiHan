@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Authentication;
-using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.WebCore.Filters;
 

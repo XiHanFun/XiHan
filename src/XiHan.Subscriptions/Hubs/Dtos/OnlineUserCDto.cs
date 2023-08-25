@@ -3,25 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISoftDeleteFilter
-// Guid:62e03307-a4d3-47ea-8e0b-3bdd334fcdfe
-// Author:Administrator
+// FileName:OnlineUserCDto
+// Guid:197d6b01-9041-4cd0-92ca-6e78d27b9041
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-08-16 下午 05:30:57
+// CreateTime:2023/8/26 1:42:26
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Models.Bases.Filters;
+namespace XiHan.Subscriptions.Hubs.Dtos;
 
 /// <summary>
-/// 软删除接口过滤器
-/// 只有实现了该接口的类才可以调用 Repository 的软删除方法
+/// OnlineUserCDto
 /// </summary>
-public interface ISoftDeleteFilter
+public class OnlineUserCDto
 {
     /// <summary>
-    /// 是否已删除
+    /// 连接标识
     /// </summary>
-    bool IsDeleted { get; set; }
+    public string ConnectionId { get; set; } = string.Empty;
 }
