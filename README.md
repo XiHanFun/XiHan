@@ -1,7 +1,5 @@
 ![LOGO](./assets/LOGO.png)
 
-![license-MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat-square) 
-
 ![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
  一款快速，轻量，高效，用心的开发框架和新型去中心化全场景应用软件。 基于 DotNet 和 Vue 构建。
