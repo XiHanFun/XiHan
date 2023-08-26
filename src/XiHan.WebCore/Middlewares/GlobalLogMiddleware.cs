@@ -112,9 +112,9 @@ public class GlobalLogMiddleware
         var authInfo = App.AuthInfo;
         var actionInfo = App.ActionInfo;
 
-        // 记录日志
         var sysLogVisit = new SysLogVisit
         {
+            // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
             Language = clientInfo.Language,
             Referrer = clientInfo.Referer,
@@ -147,9 +147,9 @@ public class GlobalLogMiddleware
         var stackFrame = new StackTrace(ex, true).GetFrame(0);
         var targetSite = ex.TargetSite;
 
-        // 记录日志
         var sysLogException = new SysLogException
         {
+            // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
             Language = clientInfo.Language,
             Referrer = clientInfo.Referer,
@@ -192,9 +192,9 @@ public class GlobalLogMiddleware
         var authInfo = App.AuthInfo;
         var actionInfo = App.ActionInfo;
 
-        // 记录日志
         var sysLogOperation = new SysLogOperation
         {
+            // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
             Language = clientInfo.Language,
             Referrer = clientInfo.Referer,
@@ -205,14 +205,15 @@ public class GlobalLogMiddleware
             Ip = addressInfo.RemoteIPv4,
             Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
             RealName = authInfo.RealName,
-            Status = status,
-            ElapsedTime = elapsed,
             RequestMethod = actionInfo.RequestMethod,
             RequestUrl = actionInfo.RequestUrl,
+            // 操作信息
             Module = actionInfo.Module,
             BusinessType = actionInfo.BusinessType,
             RequestParameters = actionInfo.RequestParameters,
             ResponseResult = actionInfo.ResponseResult,
+            Status = status,
+            ElapsedTime = elapsed,
         };
 
         var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();

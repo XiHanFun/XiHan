@@ -42,7 +42,7 @@ public interface ISysLogJobService : IBaseService<SysLogJob>
     /// 清空任务日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> ClearLogJob();
+    Task<bool> CleanLogJob();
 
     /// <summary>
     /// 查询系统任务日志(根据任务Id)

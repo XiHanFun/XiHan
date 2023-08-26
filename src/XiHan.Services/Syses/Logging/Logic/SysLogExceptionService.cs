@@ -64,9 +64,9 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
     /// 清空系统异常日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> ClearLogException()
+    public async Task<bool> CleanLogException()
     {
-        return await ClearAsync();
+        return await CleanAsync();
     }
 
     /// <summary>

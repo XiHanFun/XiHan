@@ -54,7 +54,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// <returns></returns>
     public async Task<bool> CleanLogLogin()
     {
-        return await ClearAsync();
+        return await CleanAsync();
     }
 
     /// <summary>

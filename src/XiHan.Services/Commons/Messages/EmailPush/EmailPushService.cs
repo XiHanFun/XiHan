@@ -76,7 +76,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 								<section style='border-style:solid;border-right:none;border-top:none;border-width:1px;border-color:#afafaf;padding:0px 0px 5px 5px;display:inline-block;float:right;'>
 									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #3e3e3e;'><br/></section>
 								</section>
-								<section style='clear: both;box-sizing: border-box;'></section>
+								<section style='Clean: both;box-sizing: border-box;'></section>
 								<section style='background: linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -o-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -ms-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -moz-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);background: -webkit-linear-gradient(left , rgb(183, 250, 191) 1% , rgb(253, 232, 219) 100%);margin: -5px 5px; border-style: solid; border-width: 1px; border-color: #afafaf; box-sizing: border-box; padding: 10px 15px; text-align: left;'>
 									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 10px; color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;;'>亲爱的【<span style='font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 10px; color: #0052ff;'>" + userName + @"</span></span><span style='font-size: 10px;'>】：</span></p>
 									<p style='letter-spacing: 2px; line-height: normal; text-align: left;'><span style='font-size: 10px;  color: #4c4c4c;'>&nbsp;&nbsp;&nbsp;&nbsp;感谢您注册和使用曦寒。</span><span style='color: #4c4c4c; font-family: &quot;lucida Grande&quot;, Verdana, &quot;Microsoft YaHei&quot;; font-size: 10px;'>您的帐号正在进行身份验证，请将以下内容填入对应的邮箱验证码输入框。</span>
@@ -93,7 +93,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 								<section style='border-style:solid;border-right:none;border-bottom:none;border-width:1px;border-color:#afafaf;padding:5px 0px 0px 5px;display:inline-block;float:right;'>
 									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #3e3e3e;'></section>
 								</section>
-								<section style='clear: both;box-sizing: border-box;'></section>
+								<section style='Clean: both;box-sizing: border-box;'></section>
 							</section>
 						</section>
 						<section class='_editor'>

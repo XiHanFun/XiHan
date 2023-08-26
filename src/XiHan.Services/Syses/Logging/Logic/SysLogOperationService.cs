@@ -52,9 +52,9 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     /// 清空系统操作日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> ClearLogOperation()
+    public async Task<bool> CleanLogOperation()
     {
-        return await ClearAsync();
+        return await CleanAsync();
     }
 
     /// <summary>

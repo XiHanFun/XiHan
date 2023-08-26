@@ -28,7 +28,7 @@ public static class FileHelper
     /// 清空指定目录下所有文件及子目录
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
-    public static void ClearDirectory(string directoryPath)
+    public static void CleanDirectory(string directoryPath)
     {
         if (!Directory.Exists(directoryPath)) return;
         // 删除目录中所有的文件
@@ -43,7 +43,7 @@ public static class FileHelper
     /// 清空文件内容
     /// </summary>
     /// <param name="filePath">文件的绝对路径</param>
-    public static void ClearFile(string filePath)
+    public static void CleanFile(string filePath)
     {
         if (!File.Exists(filePath)) return;
         // 删除文件

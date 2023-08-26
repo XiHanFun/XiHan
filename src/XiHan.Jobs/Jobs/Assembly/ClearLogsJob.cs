@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ClearLogsJob
+// FileName:CleanLogsJob
 // Guid:524456f9-1fd0-4c0f-aa7f-bc0f5889bcb5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -22,8 +22,8 @@ namespace XiHan.Jobs.Jobs.Assembly;
 /// <summary>
 /// 清理日志任务
 /// </summary>
-[AppService(ServiceType = typeof(ClearLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class ClearLogsJob : JobBase, IJob
+[AppService(ServiceType = typeof(CleanLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
+public class CleanLogsJob : JobBase, IJob
 {
     private readonly ISysLogOperationService _sysLogOperationService;
     private readonly ISysLogJobService _sysLogJobService;
@@ -33,7 +33,7 @@ public class ClearLogsJob : JobBase, IJob
     /// </summary>
     /// <param name="sysLogOperationService"></param>
     /// <param name="sysLogJobService"></param>
-    public ClearLogsJob(ISysLogOperationService sysLogOperationService, ISysLogJobService sysLogJobService)
+    public CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysLogJobService sysLogJobService)
     {
         _sysLogOperationService = sysLogOperationService;
         _sysLogJobService = sysLogJobService;
@@ -46,7 +46,7 @@ public class ClearLogsJob : JobBase, IJob
     /// <returns></returns>
     public async Task Execute(IJobExecutionContext context)
     {
-        await ExecuteJob(context, ClearLogs);
+        await ExecuteJob(context, CleanLogs);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class ClearLogsJob : JobBase, IJob
     /// </summary>
     /// <returns></returns>
     [Job(JobGroup = "系统", JobName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
-    private async Task ClearLogs()
+    private async Task CleanLogs()
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 

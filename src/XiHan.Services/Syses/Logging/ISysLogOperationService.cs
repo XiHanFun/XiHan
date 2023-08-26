@@ -42,7 +42,7 @@ public interface ISysLogOperationService : IBaseService<SysLogOperation>
     /// 清空系统操作日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> ClearLogOperation();
+    Task<bool> CleanLogOperation();
 
     /// <summary>
     /// 查询系统操作日志(根据Id)

@@ -188,7 +188,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// 清空表
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<bool> ClearAsync()
+    public virtual async Task<bool> CleanAsync()
     {
         return await Task.Run(Context.DbMaintenance.TruncateTable<TEntity>);
     }

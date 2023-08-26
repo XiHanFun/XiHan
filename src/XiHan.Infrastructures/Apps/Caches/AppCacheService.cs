@@ -191,7 +191,7 @@ public class AppCacheService : IAppCacheService
     /// <summary>
     /// 删除所有缓存
     /// </summary>
-    public void ClearAll()
+    public void CleanAll()
     {
         var l = GetKeys();
         foreach (var s in l) Remove(s);

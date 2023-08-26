@@ -64,9 +64,9 @@ public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
     /// 清空系统访问日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> ClearLogVisit()
+    public async Task<bool> CleanLogVisit()
     {
-        return await ClearAsync();
+        return await CleanAsync();
     }
 
     /// <summary>

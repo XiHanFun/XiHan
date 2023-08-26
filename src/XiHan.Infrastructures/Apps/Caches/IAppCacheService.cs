@@ -104,7 +104,7 @@ public interface IAppCacheService
     /// <summary>
     /// 删除所有缓存
     /// </summary>
-    void ClearAll();
+    void CleanAll();
 
     #endregion
 

@@ -76,9 +76,9 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
     /// 清空任务日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> ClearLogJob()
+    public async Task<bool> CleanLogJob()
     {
-        return await ClearAsync();
+        return await CleanAsync();
     }
 
     /// <summary>

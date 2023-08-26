@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogOperationController
+// FileName:SysLogExceptionController
 // Guid:a6b72a71-814c-43ca-b83c-3313cf432b83
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -25,84 +25,83 @@ using XiHan.WebHost.Controllers.Bases;
 namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
 
 /// <summary>
-/// 系统操作日志管理
+/// 系统异常日志管理
 /// </summary>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogOperationController : BaseApiController
+public class SysLogExceptionController : BaseApiController
 {
-    private readonly ISysLogOperationService _sysLogOperationService;
+    private readonly ISysLogExceptionService _sysLogExceptionService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysLogOperationService"></param>
-    public SysLogOperationController(ISysLogOperationService sysLogOperationService)
+    /// <param name="sysLogExceptionService"></param>
+    public SysLogExceptionController(ISysLogExceptionService sysLogExceptionService)
     {
-        _sysLogOperationService = sysLogOperationService;
+        _sysLogExceptionService = sysLogExceptionService;
     }
 
     /// <summary>
-    /// 批量删除系统操作日志
+    /// 批量删除系统异常日志
     /// </summary>
     /// <param name="logIds"></param>
     /// <returns></returns>
     [HttpDelete("Delete")]
-    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<ApiResult> DeleteLogOperation(long[] logIds)
+    [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Delete)]
+    public async Task<ApiResult> DeleteLogException(long[] logIds)
     {
-        var result = await _sysLogOperationService.DeleteLogOperationByIds(logIds);
+        var result = await _sysLogExceptionService.DeleteLogExceptionByIds(logIds);
         return ApiResult.Success(result);
     }
 
     /// <summary>
-    /// 清空系统操作日志
+    /// 清空系统异常日志
     /// </summary>
-    /// <returns></returns>
     [HttpDelete("Clean")]
-    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Clean)]
-    public async Task<ApiResult> CleanLogOperation()
+    [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Clean)]
+    public async Task<ApiResult> CleanLogException()
     {
-        var result = await _sysLogOperationService.CleanLogOperation();
+        var result = await _sysLogExceptionService.CleanLogException();
         return ApiResult.Success(result);
     }
 
     /// <summary>
-    /// 查询系统操作日志(根据Id)
+    /// 查询系统异常日志(根据Id)
     /// </summary>
     /// <param name="logId"></param>
     /// <returns></returns>
     [HttpGet("Get/ById")]
-    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogOperationById(long logId)
+    [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
+    public async Task<ApiResult> GetLogExceptionById(long logId)
     {
-        var result = await _sysLogOperationService.GetLogOperationById(logId);
+        var result = await _sysLogExceptionService.GetLogExceptionById(logId);
         return ApiResult.Success(result);
     }
 
     /// <summary>
-    /// 查询系统操作日志列表
+    /// 查询系统异常日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
     [HttpPost("GetList")]
-    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogOperationList([FromBody] SysLogOperationWDto whereDto)
+    [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
+    public async Task<ApiResult> GetLogExceptionList([FromBody] SysLogExceptionWDto whereDto)
     {
-        var result = await _sysLogOperationService.GetLogOperationList(whereDto);
+        var result = await _sysLogExceptionService.GetLogExceptionList(whereDto);
         return ApiResult.Success(result);
     }
 
     /// <summary>
-    /// 查询系统操作日志列表(根据分页条件)
+    /// 查询系统异常日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
     [HttpPost("GetPageList")]
-    [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogOperationPageList([FromBody] PageWhereDto<SysLogOperationWDto> pageWhere)
+    [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
+    public async Task<ApiResult> GetLogExceptionPageList([FromBody] PageWhereDto<SysLogExceptionWDto> pageWhere)
     {
-        var result = await _sysLogOperationService.GetLogOperationPageList(pageWhere);
+        var result = await _sysLogExceptionService.GetLogExceptionPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

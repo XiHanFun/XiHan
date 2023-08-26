@@ -41,7 +41,7 @@ public interface ISysLogVisitService
     /// 清空系统访问日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> ClearLogVisit();
+    Task<bool> CleanLogVisit();
 
     /// <summary>
     /// 查询系统系统访问日志(根据访问Id)

@@ -46,7 +46,7 @@ public class ResourcesService
             // 替换资源
             content = content.FormatReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写
-            FileHelper.ClearFile(content);
+            FileHelper.CleanFile(content);
             FileHelper.WriteText(path, content, Encoding.UTF8);
             // 迁移成功
             migrationInfo.IsSucess = true;

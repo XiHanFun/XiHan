@@ -42,7 +42,7 @@ public interface ISysLogExceptionService : IBaseService<SysLogException>
     /// 清空系统异常日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> ClearLogException();
+    Task<bool> CleanLogException();
 
     /// <summary>
     /// 查询系统系统异常日志(根据异常Id)
