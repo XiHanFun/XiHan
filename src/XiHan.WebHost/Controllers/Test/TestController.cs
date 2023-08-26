@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses;
@@ -38,6 +39,17 @@ namespace XiHan.WebHost.Controllers.Test;
 [ApiGroup(ApiGroupNameEnum.Test)]
 public class TestController : BaseApiController
 {
+    /// <summary>
+    /// 获取用于显示 MiniProfiler 的 Html 代码片段
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("MiniProfilerHtml")]
+    public string MiniProfilerHtml()
+    {
+        var html = MiniProfiler.Current?.RenderIncludes(HttpContext);
+        return html?.Value ?? string.Empty;
+    }
+
     /// <summary>
     /// 客户端信息
     /// </summary>

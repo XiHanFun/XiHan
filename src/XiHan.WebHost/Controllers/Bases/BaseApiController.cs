@@ -71,7 +71,7 @@ public class BaseApiController : ControllerBase
         {
             throw new CustomException(fileName + "文件不存在！");
         }
-        await HttpContext.DownloadFile(fileName, GetFileBytes(fullPath), contentType);
+        await HttpContext.DownloadFile(fileName, fullPath, contentType);
     }
 
     #endregion
@@ -89,7 +89,7 @@ public class BaseApiController : ControllerBase
         // 模板文件路径
         var fullPath = Path.Combine(App.RootTemplatePath, fileName);
         if (FileHelper.IsExistDirectory(fullPath))
-            await HttpContext.DownloadFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+            await HttpContext.DownloadFile(fileName, fullPath, ContentTypeEnum.ApplicationXlsx);
         throw new CustomException(fileName + "文件不存在！");
     }
 
@@ -120,7 +120,7 @@ public class BaseApiController : ControllerBase
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
         FileHelper.DeleteFile(tempPath);
-        await HttpContext.DownloadFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+        await HttpContext.DownloadFile(fileName, fullPath, ContentTypeEnum.ApplicationXlsx);
     }
 
     #endregion
@@ -195,7 +195,7 @@ public class BaseApiController : ControllerBase
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
         FileHelper.DeleteFile(tempPath);
-        await HttpContext.DownloadFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+        await HttpContext.DownloadFile(fileName, fullPath, ContentTypeEnum.ApplicationXlsx);
     }
 
     /// <summary>
@@ -214,7 +214,7 @@ public class BaseApiController : ControllerBase
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
         FileHelper.DeleteFile(tempPath);
-        await HttpContext.DownloadFile(fileName, GetFileBytes(fullPath), ContentTypeEnum.ApplicationXlsx);
+        await HttpContext.DownloadFile(fileName, fullPath, ContentTypeEnum.ApplicationXlsx);
     }
 
     #endregion
@@ -230,19 +230,5 @@ public class BaseApiController : ControllerBase
         string fileExtension = FileHelper.GetFileExtension(fileName);
         string uniqueFileName = $"{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}{fileExtension}";
         return uniqueFileName;
-    }
-
-    /// <summary>
-    /// 获取文件字节数组
-    /// </summary>
-    /// <param name="path">完整文件路径</param>
-    /// <returns></returns>
-    private static byte[] GetFileBytes(string path)
-    {
-        // 创建文件流
-        using var fileStream = new FileStream(path, FileMode.Open);
-        using var memoryStream = new MemoryStream();
-        fileStream.CopyTo(memoryStream);
-        return memoryStream.ToArray();
     }
 }

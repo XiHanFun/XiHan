@@ -49,14 +49,14 @@ public static class AppSetup
         app.UseSqlSugarSetup();
         // Http
         app.UseHttpSetup(env);
+        // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
+        app.UseStaticFiles();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
         app.UseWebSockets();
         // MiniProfiler
         app.UseMiniProfilerSetup();
         // Swagger
         app.UseSwaggerSetup();
-        // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
-        app.UseStaticFiles();
         // 添加路由中间件
         app.UseRouting();
         // 跨域，要放在 UseEndpoints 前

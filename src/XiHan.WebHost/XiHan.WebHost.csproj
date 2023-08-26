@@ -43,10 +43,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="favicon.ico" />
-    </ItemGroup>
-
-    <ItemGroup>
         <EmbeddedResource Include="index.html" />
     </ItemGroup>
 

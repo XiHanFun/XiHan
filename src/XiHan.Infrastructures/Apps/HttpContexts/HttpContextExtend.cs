@@ -15,6 +15,7 @@
 using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using System.IO;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -122,9 +123,29 @@ public static class HttpContextExtend
     /// 通过 httpcontext 下载文件
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="fileExportName"></param>
-    /// <param name="fileContents"></param>
-    /// <param name="contentType"></param>
+    /// <param name="fileExportName">导出名称</param>
+    /// <param name="path">完整文件路径</param>
+    /// <param name="contentType">文件的 MIME 类型</param>
+    public static async Task DownloadFile(this HttpContext context, string fileExportName, string path, ContentTypeEnum contentType)
+    {
+        context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
+        context.Response.Headers.Append("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
+        context.Response.ContentType = contentType.GetValue();
+        // 创建文件流
+        using var fileStream = new FileStream(path, FileMode.Open);
+        using var memoryStream = new MemoryStream();
+        fileStream.CopyTo(memoryStream);
+        await context.Response.BodyWriter.WriteAsync(memoryStream.ToArray());
+        await context.Response.BodyWriter.FlushAsync();
+    }
+
+    /// <summary>
+    /// 通过 httpcontext 下载文件
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="fileExportName">导出名称</param>
+    /// <param name="fileContents">文件内容</param>
+    /// <param name="contentType">文件的 MIME 类型</param>
     public static async Task DownloadFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
     {
         context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");

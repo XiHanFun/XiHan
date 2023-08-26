@@ -27,7 +27,7 @@ namespace XiHan.WebCore.Setups.Services;
 public static class CacheSetup
 {
     /// <summary>
-    /// 分布式缓存 服务扩展
+    /// 缓存服务扩展
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

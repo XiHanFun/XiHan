@@ -38,12 +38,14 @@ public static class ServiceSetup
         // 服务注册
         AppServiceProvider.RegisterService(services);
 
-        // 分布式缓存
+        // 缓存
         services.AddCacheSetup();
         // 响应缓存
         services.AddResponseCacheSetup();
         // Mapster
         services.AddMapsterSetup();
+        // Swagger
+        services.AddSwaggerSetup();
         // 性能分析
         services.AddMiniProfilerSetup();
         // SqlSugar，必须在 AddMiniProfilerSetup 后才能使用
@@ -52,8 +54,6 @@ public static class ServiceSetup
         services.AddHttpPollySetup();
         // Auth，必须在 AddHttpPollySetup 后才能使用
         services.AddAuthSetup();
-        // Swagger
-        services.AddSwaggerSetup();
         // RabbitMQ
         services.AddRabbitMqSetup();
         // 限流
