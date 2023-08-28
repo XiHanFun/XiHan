@@ -106,7 +106,7 @@ public class JsonHelper
             bool isValueType = value!.GetType().IsValueType;
             if (i == keys.Length - 1)
             {
-                oldObject[keys[i]] = isValueType || value is string ? JsonSerializer.Serialize(value) : value;
+                oldObject[keys[i]] = isValueType || value is string ? (dynamic)JsonSerializer.Serialize(value) : value;
             }
             else
             {
