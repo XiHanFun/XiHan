@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /xihan-framework/src
+WORKDIR ./xihan-framework/src
 COPY ["XiHan.WebHost/XiHan.WebHost.csproj", "XiHan.WebHost/"]
 COPY ["XiHan.WebCore/XiHan.WebCore.csproj", "XiHan.WebCore/"]
 COPY ["XiHan.Jobs/XiHan.Jobs.csproj", "XiHan.Jobs/"]
