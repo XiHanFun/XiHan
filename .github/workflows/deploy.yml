@@ -1,5 +1,5 @@
 # 名称
-name: 部署测试
+name: 部署后端
 
 # 触发条件：在 push 和 pull 到 main 分支后
 on:
@@ -34,5 +34,5 @@ jobs:
       - name: 构建项目
         run: dotnet build --no-restore XiHan.sln
 
-      - name: 运行测试
+      - name: 测试后端
         run: dotnet test --no-build --verbosity normal XiHan.sln
