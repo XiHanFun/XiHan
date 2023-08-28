@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+WORKDIR /xihan-framework/src
 COPY ["XiHan.WebHost/XiHan.WebHost.csproj", "XiHan.WebHost/"]
 COPY ["XiHan.WebCore/XiHan.WebCore.csproj", "XiHan.WebCore/"]
 COPY ["XiHan.Jobs/XiHan.Jobs.csproj", "XiHan.Jobs/"]
@@ -16,7 +16,7 @@ COPY ["XiHan.Utils/XiHan.Utils.csproj", "XiHan.Utils/"]
 COPY ["XiHan.Subscriptions/XiHan.Subscriptions.csproj", "XiHan.Subscriptions/"]
 RUN dotnet restore "XiHan.WebHost/XiHan.WebHost.csproj"
 COPY . .
-WORKDIR "/src/XiHan.WebHost"
+WORKDIR "/xihan-framework/src/XiHan.WebHost"
 RUN dotnet build "XiHan.WebHost.csproj" -c Release -o /app/build
 
 FROM build AS publish
