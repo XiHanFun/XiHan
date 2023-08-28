@@ -256,8 +256,7 @@ public class WeComController : BaseApiController
             AspectRatio = (float?)2.25
         };
         // 左图右文样式
-        _ = new        // 左图右文样式
-        WeComImageTextArea()
+        _ = new WeComImageTextArea
         {
             Type = 1,
             Url = "https://work.weixin.qq.com",
@@ -266,8 +265,7 @@ public class WeComController : BaseApiController
             ImageUrl = "https://wework.qpic.cn/wwpic/354393_4zpkKXd7SrGMvfg_1629280616/0"
         };
         // 引用文本
-        _ = new        // 引用文本
-        WeComQuoteArea()
+        _ = new WeComQuoteArea
         {
             Type = 1,
             Url = "https://work.weixin.qq.com/?from=openApi",
@@ -275,8 +273,7 @@ public class WeComController : BaseApiController
             QuoteText = "Jack：企业微信真的很好用~\nBalian：超级好的一款软件！"
         };
         // 卡片二级垂直
-        _ = new        // 卡片二级垂直
-        List<WeComVerticalContent>()
+        _ = new List<WeComVerticalContent>
         {
             new()
             {

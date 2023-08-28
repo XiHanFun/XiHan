@@ -165,7 +165,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
         return await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword)))
-            ? await UpdateAsync(s => new SysUser()
+            ? await UpdateAsync(s => new SysUser
             {
                 Password = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
             }, f => f.BaseId == userPwdMDto.BaseId)
