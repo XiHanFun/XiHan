@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AuthController
+// FileName:SysAuthController
 // Guid:d8862f12-0e46-46cd-8278-099dc1dfce92
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -29,7 +29,7 @@ using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Handlers;
 using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.Authorize;
+namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
 
 /// <summary>
 /// 系统登录授权管理
@@ -37,7 +37,7 @@ namespace XiHan.WebHost.Controllers.Authorize;
 /// </summary>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Authorize)]
-public class AuthController : BaseApiController
+public class SysAuthController : BaseApiController
 {
     private readonly ISysUserService _sysUserService;
     private readonly ISysRoleService _sysRoleService;
@@ -53,7 +53,7 @@ public class AuthController : BaseApiController
     /// <param name="sysPermissionService"></param>
     /// <param name="sysMenuService"></param>
     /// <param name="sysLogLoginService"></param>
-    public AuthController(ISysUserService sysUserService, ISysRoleService sysRoleService, ISysPermissionService sysPermissionService,
+    public SysAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService, ISysPermissionService sysPermissionService,
         ISysMenuService sysMenuService, ISysLogLoginService sysLogLoginService)
     {
         _sysUserService = sysUserService;
