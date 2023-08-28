@@ -30,10 +30,8 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static bool ParseToBool(this object? thisValue)
     {
-        var reveal = false;
-        if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reveal))
-            return reveal;
-        return reveal;
+        bool reveal = false;
+        return thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reveal) ? reveal : reveal;
     }
 
     #endregion
@@ -47,9 +45,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static short ParseToShort(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            short.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0;
+        return thisValue != null && thisValue != DBNull.Value &&
+            short.TryParse(thisValue.ToString(), out short reveal)
+            ? reveal
+            : (short)0;
     }
 
     /// <summary>
@@ -60,9 +59,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static short ParseToShort(this object? thisValue, short errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            short.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            short.TryParse(thisValue.ToString(), out short reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -76,9 +76,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static long ParseToLong(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            long.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0L;
+        return thisValue != null && thisValue != DBNull.Value &&
+            long.TryParse(thisValue.ToString(), out long reveal)
+            ? reveal
+            : 0L;
     }
 
     /// <summary>
@@ -89,9 +90,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static long ParseToLong(this object? thisValue, long errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            long.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            long.TryParse(thisValue.ToString(), out long reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -106,9 +108,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static float ParseToFloat(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            float.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0.0F;
+        return thisValue != null && thisValue != DBNull.Value &&
+            float.TryParse(thisValue.ToString(), out float reveal)
+            ? reveal
+            : 0.0F;
     }
 
     /// <summary>
@@ -120,9 +123,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static float ParseToFloat(this object? thisValue, float errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            float.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            float.TryParse(thisValue.ToString(), out float reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -137,9 +141,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static double ParseToDouble(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0.0D;
+        return thisValue != null && thisValue != DBNull.Value &&
+            double.TryParse(thisValue.ToString(), out double reveal)
+            ? reveal
+            : 0.0D;
     }
 
     /// <summary>
@@ -151,9 +156,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static double ParseToDouble(this object? thisValue, double errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            double.TryParse(thisValue.ToString(), out double reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -168,9 +174,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static decimal ParseToDecimal(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            decimal.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0M;
+        return thisValue != null && thisValue != DBNull.Value &&
+            decimal.TryParse(thisValue.ToString(), out decimal reveal)
+            ? reveal
+            : 0M;
     }
 
     /// <summary>
@@ -182,9 +189,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static decimal ParseToDecimal(this object? thisValue, decimal errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            decimal.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            decimal.TryParse(thisValue.ToString(), out decimal reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -198,10 +206,8 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static int ParseToInt(this object? thisValue)
     {
-        var reveal = 0;
-        if (thisValue == null) return 0;
-        if (thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reveal)) return reveal;
-        return reveal;
+        int reveal = 0;
+        return thisValue == null ? 0 : thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reveal) ? reveal : reveal;
     }
 
     /// <summary>
@@ -212,9 +218,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static int ParseToInt(this object? thisValue, int errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            int.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            int.TryParse(thisValue.ToString(), out int reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -228,9 +235,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static double ParseToMoney(this object? thisValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return 0;
+        return thisValue != null && thisValue != DBNull.Value &&
+            double.TryParse(thisValue.ToString(), out double reveal)
+            ? reveal
+            : 0;
     }
 
     /// <summary>
@@ -241,9 +249,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static double ParseToMoney(this object? thisValue, double errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value &&
-            double.TryParse(thisValue.ToString(), out var reveal)) return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value &&
+            double.TryParse(thisValue.ToString(), out double reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -323,9 +332,12 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static DateTime ParseToDateTime(this object? thisValue)
     {
-        var reveal = DateTime.MinValue;
+        DateTime reveal = DateTime.MinValue;
         if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out reveal))
+        {
             reveal = Convert.ToDateTime(thisValue);
+        }
+
         return reveal;
     }
 
@@ -337,9 +349,9 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static DateTime ParseToDateTime(this object? thisValue, DateTime errorValue)
     {
-        if (thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out var reveal))
-            return reveal;
-        return errorValue;
+        return thisValue != null && thisValue != DBNull.Value && DateTime.TryParse(thisValue.ToString(), out DateTime reveal)
+            ? reveal
+            : errorValue;
     }
 
     #endregion
@@ -376,12 +388,14 @@ public static class ObjectConvertExtension
     public static IEnumerable<Dictionary<string, dynamic>> ParseToDictionary(this object? obj)
     {
         if (obj is not IEnumerable<dynamic> objDynamics)
+        {
             yield break;
+        }
 
-        foreach (var objDynamic in objDynamics)
+        foreach (dynamic objDynamic in objDynamics)
         {
             // 找到所有的没有此特性、或有此特性但忽略字段的属性
-            var item = (objDynamic as object).GetType().GetProperties()
+            Dictionary<string, dynamic> item = (objDynamic as object).GetType().GetProperties()
                 .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
 
             yield return item;
@@ -397,12 +411,14 @@ public static class ObjectConvertExtension
     public static IEnumerable<Dictionary<string, dynamic>> ParseToDictionaryFilterAttribute<TAttribute>(this object? obj) where TAttribute : Attribute
     {
         if (obj is not IEnumerable<dynamic> objDynamics)
+        {
             yield break;
+        }
 
-        foreach (var objDynamic in objDynamics)
+        foreach (dynamic objDynamic in objDynamics)
         {
             // 找到所有的没有此特性、或有此特性但忽略字段的属性
-            var item = (objDynamic as object).GetType().GetProperties()
+            Dictionary<string, dynamic> item = (objDynamic as object).GetType().GetProperties()
                 .Where(prop => !prop.HasAttribute<TAttribute>() ||
                                (prop.HasAttribute<TAttribute>() &&
                                !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!.GetPropertyValue<TAttribute, bool>("IsIgnore")))
@@ -443,9 +459,17 @@ public static class ObjectConvertExtension
     /// <returns> 转化后的指定类型的对象，转化失败引发异常。</returns>
     public static T? CastTo<T>(this object? value)
     {
-        if (value == null && default(T) == null) return default;
-        if (value?.GetType() == typeof(T)) return (T)value;
-        var result = value.CastTo(typeof(T));
+        if (value == null && default(T) == null)
+        {
+            return default;
+        }
+
+        if (value?.GetType() == typeof(T))
+        {
+            return (T)value;
+        }
+
+        object? result = value.CastTo(typeof(T));
         return (T?)result;
     }
 
@@ -457,7 +481,10 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static object? CastTo(this object? value, Type conversionType)
     {
-        if (conversionType.IsNullableType() || value == null || value.ToString().IsNullOrEmpty()) return null;
+        if (conversionType.IsNullableType() || value == null || value.ToString().IsNullOrEmpty())
+        {
+            return null;
+        }
 
         // 常规类型
         return conversionType switch

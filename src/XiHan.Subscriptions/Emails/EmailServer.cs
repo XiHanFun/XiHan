@@ -39,7 +39,7 @@ public class EmailServer
     /// </summary>
     public async Task<bool> SendMail(EmailToModel toModel)
     {
-        var message = new MimeMessage
+        MimeMessage message = new()
         {
             // 来源
             Sender = new MailboxAddress(_fromModel.FromMail, _fromModel.FromMail)
@@ -57,7 +57,7 @@ public class EmailServer
         // 邮件日期
         message.Date = DateTime.Now;
         // 邮件正文
-        var bodyBuilder = new BodyBuilder
+        BodyBuilder bodyBuilder = new()
         {
             HtmlBody = toModel.IsBodyHtml ? toModel.Body : null,
             TextBody = toModel.IsBodyHtml ? null : toModel.Body
@@ -69,7 +69,7 @@ public class EmailServer
             {
                 toModel.AttachmentsPath.ForEach(attachmentFile =>
                 {
-                    var attachment = new MimePart()
+                    MimePart attachment = new()
                     {
                         Content = new MimeContent(attachmentFile.ContentStream),
                         // 读取文件只能用绝对路径
@@ -89,7 +89,7 @@ public class EmailServer
 
         try
         {
-            using var client = new SmtpClient();
+            using SmtpClient client = new();
             // 解决远程证书验证无效
             client.ServerCertificateValidationCallback = (s, c, h, e) => true;
             // 异步连接
@@ -97,7 +97,7 @@ public class EmailServer
             // 异步登录
             await client.AuthenticateAsync(_fromModel.FromUserName, _fromModel.FromPassword);
             // 异步发送
-            var result = await client.SendAsync(message);
+            string result = await client.SendAsync(message);
             // 异步断连
             await client.DisconnectAsync(true);
 

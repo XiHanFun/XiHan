@@ -34,7 +34,7 @@ public static class SqlSugarPageExtend
     public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
-        var data = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
+        List<TEntity> data = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
         PageDataDto<TEntity> pageDataDto = new()
         {
             PageInfo = new PageInfoDto(currentIndex, pageSize, totalCount),
@@ -54,7 +54,7 @@ public static class SqlSugarPageExtend
     public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, PageDto pageDto) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
-        var data = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
+        List<TEntity> data = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);
         PageDataDto<TEntity> pageDataDto = new()
         {
             PageInfo = new PageInfoDto(pageDto.CurrentIndex, pageDto.PageSize, totalCount),

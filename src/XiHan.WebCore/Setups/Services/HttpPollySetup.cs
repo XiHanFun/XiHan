@@ -37,10 +37,13 @@ public static class HttpPollySetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddHttpPollySetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 若超时则抛出此异常
-        var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError().Or<TimeoutRejectedException>()
+        Polly.Retry.AsyncRetryPolicy<HttpResponseMessage> retryPolicy = HttpPolicyExtensions.HandleTransientHttpError().Or<TimeoutRejectedException>()
             .WaitAndRetryAsync(new[]
             {
                 TimeSpan.FromSeconds(1),
@@ -48,10 +51,10 @@ public static class HttpPollySetup
                 TimeSpan.FromSeconds(10)
             });
         // 为每个重试定义超时策略
-        var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
+        AsyncTimeoutPolicy<HttpResponseMessage> timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
         // 远程请求
-        services.AddHttpClient(HttpGroupEnum.Remote.ToString(), options =>
+        _ = services.AddHttpClient(HttpGroupEnum.Remote.ToString(), options =>
         {
             options.DefaultRequestHeaders.Add("Accept", "application/json");
         })
@@ -67,7 +70,7 @@ public static class HttpPollySetup
         .AddPolicyHandler(timeoutPolicy);
 
         // 本地请求
-        services.AddHttpClient(HttpGroupEnum.Local.ToString(), options =>
+        _ = services.AddHttpClient(HttpGroupEnum.Local.ToString(), options =>
         {
             options.BaseAddress = new Uri("http://www.localhost.com");
             options.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -78,8 +81,8 @@ public static class HttpPollySetup
         .AddPolicyHandler(timeoutPolicy);
 
         // 注入 Http 相关实例
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IHttpPollyService, HttpPollyService>();
+        _ = services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        _ = services.AddSingleton<IHttpPollyService, HttpPollyService>();
 
         return services;
     }

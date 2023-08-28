@@ -16,7 +16,7 @@ using Serilog;
 using XiHan.WebCore.Setups;
 using XiHan.WebHost.Consoles;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // 打印欢迎语
 ConsoleProjectInfo.SayHello();
@@ -24,26 +24,26 @@ ConsoleProjectInfo.SayHello();
 ConsoleServerInfo.ConfirmServerInfo();
 
 // 配置日志
-var log = builder.Logging;
+ILoggingBuilder log = builder.Logging;
 log.AddLogSetup();
 
 try
 {
     // 创建配置
-    var config = builder.Configuration;
-    config.AddConfigSetup();
+    ConfigurationManager config = builder.Configuration;
+    _ = config.AddConfigSetup();
 
     // 配置主机
-    var host = builder.WebHost;
-    host.AddWebHostSetup();
+    ConfigureWebHostBuilder host = builder.WebHost;
+    _ = host.AddWebHostSetup();
 
     // 配置服务
-    var services = builder.Services;
-    services.AddServiceSetup();
+    IServiceCollection services = builder.Services;
+    _ = services.AddServiceSetup();
 
     // 配置中间件
-    var app = builder.Build();
-    app.UseApplicationSetup(app.Environment);
+    WebApplication app = builder.Build();
+    _ = app.UseApplicationSetup(app.Environment);
 
     // 打印配置信息
     ConsoleConfigInfo.ConfirmConfigInfo();

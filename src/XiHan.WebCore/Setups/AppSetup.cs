@@ -38,7 +38,10 @@ public static class AppSetup
     public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env)
     {
         "XiHan Application Start……".WriteLineInfo();
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
         // 注入全局宿主环境
         AppEnvironmentProvider.WebHostEnvironment = env;
@@ -46,44 +49,44 @@ public static class AppSetup
         AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
         // 数据库初始化
-        app.UseSqlSugarSetup();
+        _ = app.UseSqlSugarSetup();
         // Http
-        app.UseHttpSetup(env);
+        _ = app.UseHttpSetup(env);
         // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
-        app.UseStaticFiles();
+        _ = app.UseStaticFiles();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
-        app.UseWebSockets();
+        _ = app.UseWebSockets();
         // MiniProfiler
-        app.UseMiniProfilerSetup();
+        _ = app.UseMiniProfilerSetup();
         // Swagger
-        app.UseSwaggerSetup();
+        _ = app.UseSwaggerSetup();
         // 添加路由中间件
-        app.UseRouting();
+        _ = app.UseRouting();
         // 跨域，要放在 UseEndpoints 前
-        app.UseCorsSetup();
+        _ = app.UseCorsSetup();
         // 限流，若作用于特定路由，必须在 UseRouting 之后
-        app.UseRateLimiter();
+        _ = app.UseRateLimiter();
         // 添加认证中间件
-        app.UseAuthentication();
+        _ = app.UseAuthentication();
         // 添加授权中间件
-        app.UseAuthorization();
+        _ = app.UseAuthorization();
         // 开启响应缓存
-        app.UseResponseCaching();
+        _ = app.UseResponseCaching();
         // 恢复或启动任务
-        app.UseTaskSchedulers(env);
+        _ = app.UseTaskSchedulers(env);
 
         // 全局日志中间件
-        app.UseMiddleware<GlobalLogMiddleware>();
+        _ = app.UseMiddleware<GlobalLogMiddleware>();
 
         // 添加终端中间件
-        app.UseEndpoints(endpoints =>
+        _ = app.UseEndpoints(endpoints =>
         {
             // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
-            endpoints.MapControllers();
+            _ = endpoints.MapControllers();
             // 健康检查
-            endpoints.MapHealthChecks("/Health");
+            _ = endpoints.MapHealthChecks("/Health");
             // 即时通讯集线器
-            endpoints.MapHub<ChatHub>("/ChatHub");
+            _ = endpoints.MapHub<ChatHub>("/ChatHub");
         });
 
         "XiHan Application Started Successfully！".WriteLineSuccess();

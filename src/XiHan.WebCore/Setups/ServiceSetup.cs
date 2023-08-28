@@ -33,45 +33,48 @@ public static class ServiceSetup
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
         "Services Start……".WriteLineInfo();
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 服务注册
         AppServiceProvider.RegisterService(services);
 
         // 缓存
-        services.AddCacheSetup();
+        _ = services.AddCacheSetup();
         // 响应缓存
-        services.AddResponseCacheSetup();
+        _ = services.AddResponseCacheSetup();
         // Mapster
-        services.AddMapsterSetup();
+        _ = services.AddMapsterSetup();
         // Swagger
-        services.AddSwaggerSetup();
+        _ = services.AddSwaggerSetup();
         // 性能分析
-        services.AddMiniProfilerSetup();
+        _ = services.AddMiniProfilerSetup();
         // SqlSugar，必须在 AddMiniProfilerSetup 后才能使用
-        services.AddSqlSugarSetup();
+        _ = services.AddSqlSugarSetup();
         // Http上下文
-        services.AddHttpPollySetup();
+        _ = services.AddHttpPollySetup();
         // Auth，必须在 AddHttpPollySetup 后才能使用
-        services.AddAuthSetup();
+        _ = services.AddAuthSetup();
         // RabbitMQ
-        services.AddRabbitMqSetup();
+        _ = services.AddRabbitMqSetup();
         // 限流
-        services.AddRateLimiterSetup();
+        _ = services.AddRateLimiterSetup();
         // Cors
-        services.AddCorsSetup();
+        _ = services.AddCorsSetup();
         // Controllers
-        services.AddControllersSetup();
+        _ = services.AddControllersSetup();
         // Route
-        services.AddRouteSetup();
+        _ = services.AddRouteSetup();
         // 终端
-        services.AddEndpointsApiExplorer();
+        _ = services.AddEndpointsApiExplorer();
         // 即时通讯
-        services.AddSignalRSetup();
+        _ = services.AddSignalRSetup();
         // 健康检查
-        services.AddHealthChecks();
+        _ = services.AddHealthChecks();
         // 计划任务
-        services.AddJobSetup();
+        _ = services.AddJobSetup();
 
         "Services Started Successfully！".WriteLineSuccess();
         return services;

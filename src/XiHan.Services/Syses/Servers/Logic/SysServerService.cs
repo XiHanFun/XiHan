@@ -29,12 +29,12 @@ public class SysServerService : ISysServerService
     /// <returns></returns>
     public Dictionary<string, object?> GetServerInfo()
     {
-        var result = new Dictionary<string, object?>();
+        Dictionary<string, object?> result = new();
 
-        var systemInfoProperties = typeof(SystemInfoHelper).GetProperties().ToList();
-        var environmentInfoProperties = typeof(EnvironmentInfoHelper).GetProperties().ToList();
-        var projectInfoProperties = typeof(ProjectInfoHelper).GetProperties().ToList();
-        var applicationInfoProperties = typeof(ApplicationInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> systemInfoProperties = typeof(SystemInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> environmentInfoProperties = typeof(EnvironmentInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> projectInfoProperties = typeof(ProjectInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> applicationInfoProperties = typeof(ApplicationInfoHelper).GetProperties().ToList();
 
         systemInfoProperties.ForEach(property =>
         {

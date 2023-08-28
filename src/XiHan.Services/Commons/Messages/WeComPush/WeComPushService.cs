@@ -39,7 +39,7 @@ public class WeComPushService : BaseService<SysRobot>, IWeComPushService
     /// <param name="httpPolly"></param>
     public WeComPushService(IHttpPollyService httpPolly)
     {
-        var weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
+        WeComConnection weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
         _weComRobot = new WeComCustomRobot(httpPolly, weComConnection);
     }
 
@@ -49,11 +49,11 @@ public class WeComPushService : BaseService<SysRobot>, IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.WeCom.GetEnumValueByKey());
-        var config = new TypeAdapterConfig().ForType<SysRobot, WeComConnection>()
+        SysRobot sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.WeCom.GetEnumValueByKey());
+        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysRobot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
-        var weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
+        WeComConnection weComConnection = sysCustomRobot.Adapt<WeComConnection>(config);
         return weComConnection;
     }
 

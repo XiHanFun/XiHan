@@ -31,11 +31,14 @@ public static class MapsterSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddMapsterSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 创建具体的映射对象
-        services.AddSingleton(MapsterAdaptConfig.InitMapperConfig());
-        services.AddScoped<IMapper, ServiceMapper>();
+        _ = services.AddSingleton(MapsterAdaptConfig.InitMapperConfig());
+        _ = services.AddScoped<IMapper, ServiceMapper>();
 
         return services;
     }

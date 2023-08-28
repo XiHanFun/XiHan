@@ -51,7 +51,7 @@ public class SysLogVisitController : BaseApiController
     [AppLog(Module = "系统访问日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteLogVisit(long[] logIds)
     {
-        var result = await _sysLogVisitService.DeleteLogVisitByIds(logIds);
+        bool result = await _sysLogVisitService.DeleteLogVisitByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -62,7 +62,7 @@ public class SysLogVisitController : BaseApiController
     [AppLog(Module = "系统访问日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanLogVisit()
     {
-        var result = await _sysLogVisitService.CleanLogVisit();
+        bool result = await _sysLogVisitService.CleanLogVisit();
         return ApiResult.Success(result);
     }
 
@@ -75,7 +75,7 @@ public class SysLogVisitController : BaseApiController
     [AppLog(Module = "系统访问日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogVisitById(long logId)
     {
-        var result = await _sysLogVisitService.GetLogVisitById(logId);
+        Models.Syses.SysLogVisit result = await _sysLogVisitService.GetLogVisitById(logId);
         return ApiResult.Success(result);
     }
 
@@ -88,7 +88,7 @@ public class SysLogVisitController : BaseApiController
     [AppLog(Module = "系统访问日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogVisitList([FromBody] SysLogVisitWDto whereDto)
     {
-        var result = await _sysLogVisitService.GetLogVisitList(whereDto);
+        List<Models.Syses.SysLogVisit> result = await _sysLogVisitService.GetLogVisitList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -101,7 +101,7 @@ public class SysLogVisitController : BaseApiController
     [AppLog(Module = "系统访问日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogVisitPageList([FromBody] PageWhereDto<SysLogVisitWDto> pageWhere)
     {
-        var result = await _sysLogVisitService.GetLogVisitPageList(pageWhere);
+        PageDataDto<Models.Syses.SysLogVisit> result = await _sysLogVisitService.GetLogVisitPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

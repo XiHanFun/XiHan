@@ -33,15 +33,8 @@ public static class GenericityInfoExtension
     /// <returns></returns>
     public static TEntity GetPropertyDeepestValue<TEntity>(this TEntity entity, string propertyName)
     {
-        var value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
-        if (value == null)
-        {
-            return entity;
-        }
-        else
-        {
-            return GetPropertyDeepestValue(entity, propertyName);
-        }
+        TEntity? value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
+        return value == null ? entity : GetPropertyDeepestValue(entity, propertyName);
     }
 
     /// <summary>
@@ -54,18 +47,20 @@ public static class GenericityInfoExtension
     /// <returns></returns>
     public static TValue GetPropertyValue<TEntity, TValue>(this TEntity entity, string propertyName)
     {
-        var objectType = typeof(TEntity);
-        var propertyInfo = objectType.GetProperty(propertyName);
+        Type objectType = typeof(TEntity);
+        System.Reflection.PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
+        {
             throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+        }
 
-        var paramObj = Expression.Parameter(typeof(TEntity));
-        var paramVal = Expression.Parameter(typeof(TValue));
+        ParameterExpression paramObj = Expression.Parameter(typeof(TEntity));
+        ParameterExpression paramVal = Expression.Parameter(typeof(TValue));
 
         // 转成真实类型，防止Dynamic类型转换成object
-        var bodyObj = Expression.Convert(paramObj, objectType);
-        var body = Expression.Property(bodyObj, propertyInfo);
-        var getValue = Expression.Lambda<Func<TEntity, TValue>>(body, paramObj).Compile();
+        UnaryExpression bodyObj = Expression.Convert(paramObj, objectType);
+        MemberExpression body = Expression.Property(bodyObj, propertyInfo);
+        Func<TEntity, TValue> getValue = Expression.Lambda<Func<TEntity, TValue>>(body, paramObj).Compile();
         return getValue(entity);
     }
 
@@ -80,23 +75,29 @@ public static class GenericityInfoExtension
     /// <returns></returns>
     public static bool SetPropertyValue<TEntity, TValue>(this TEntity entity, string propertyName, TValue value)
     {
-        var objectType = typeof(TEntity);
-        var propertyInfo = objectType.GetProperty(propertyName);
+        Type objectType = typeof(TEntity);
+        System.Reflection.PropertyInfo? propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
+        {
             throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+        }
 
-        var paramObj = Expression.Parameter(objectType);
-        var paramVal = Expression.Parameter(typeof(TValue));
-        var bodyObj = Expression.Convert(paramObj, objectType);
-        var bodyVal = Expression.Convert(paramVal, propertyInfo.PropertyType);
+        ParameterExpression paramObj = Expression.Parameter(objectType);
+        ParameterExpression paramVal = Expression.Parameter(typeof(TValue));
+        UnaryExpression bodyObj = Expression.Convert(paramObj, objectType);
+        UnaryExpression bodyVal = Expression.Convert(paramVal, propertyInfo.PropertyType);
 
         // 获取设置属性的值的方法
-        var setMethod = propertyInfo.GetSetMethod(true);
+        System.Reflection.MethodInfo? setMethod = propertyInfo.GetSetMethod(true);
 
         // 如果只是只读,则 setMethod==null
-        if (setMethod == null) return false;
-        var body = Expression.Call(paramObj, setMethod, bodyVal);
-        var setValue = Expression.Lambda<Action<TEntity, TValue>>(body, paramObj, paramVal).Compile();
+        if (setMethod == null)
+        {
+            return false;
+        }
+
+        MethodCallExpression body = Expression.Call(paramObj, setMethod, bodyVal);
+        Action<TEntity, TValue> setValue = Expression.Lambda<Action<TEntity, TValue>>(body, paramObj, paramVal).Compile();
         setValue(entity, value);
 
         return true;
@@ -108,8 +109,8 @@ public static class GenericityInfoExtension
     /// <typeparam name="TEntity"></typeparam>
     public static List<CustomPropertyInfo> GetProperties<TEntity>(this TEntity entity) where TEntity : class
     {
-        var type = typeof(TEntity);
-        var properties = type.GetProperties();
+        Type type = typeof(TEntity);
+        System.Reflection.PropertyInfo[] properties = type.GetProperties();
         return properties.Select(info => new CustomPropertyInfo()
         {
             PropertyName = info.Name,
@@ -127,7 +128,7 @@ public static class GenericityInfoExtension
     /// <returns></returns>
     public static IEnumerable<CustomPropertyVariance> GetPropertiesDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2) where TEntity : class
     {
-        var propertyInfo = typeof(TEntity).GetProperties();
+        System.Reflection.PropertyInfo[] propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
@@ -151,18 +152,20 @@ public static class GenericityInfoExtension
     public static string GetPropertiesChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
-        var list = GetPropertiesDetailedCompare(oldVal, newVal);
+        IEnumerable<CustomPropertyVariance> list = GetPropertiesDetailedCompare(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,
             s.ValueA,
             s.ValueB
         });
-        if (specialList.Any()) newList = newList.Where(s => !specialList.Contains(s.PropertyName));
+        if (specialList.Any())
+        {
+            newList = newList.Where(s => !specialList.Contains(s.PropertyName));
+        }
 
         var enumerable = newList.ToList();
-        if (!enumerable.ToList().Any()) return string.Empty;
-        return SerializeHelper.SerializeToJson(enumerable);
+        return !enumerable.ToList().Any() ? string.Empty : SerializeHelper.SerializeToJson(enumerable);
     }
 
     #endregion
@@ -177,11 +180,21 @@ public static class GenericityInfoExtension
     public static bool IsNullOrEmpty<T>(this T? data)
     {
         // 如果为null
-        if (data == null) return true;
+        if (data == null)
+        {
+            return true;
+        }
 
         // 如果为""
-        if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim())) return true;
+        if (data is not string)
+        {
+            return data is DBNull;
+        }
+
+        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
+        {
+            return true;
+        }
 
         // 如果为DBNull
         return data is DBNull;
@@ -203,7 +216,7 @@ public static class GenericityInfoExtension
     /// <returns> 是否介于 </returns>
     public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = true, bool rightEqual = true) where T : IComparable
     {
-        var flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
+        bool flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
         return flag && (rightEqual ? value.CompareTo(end) <= 0 : value.CompareTo(end) < 0);
     }
 
@@ -218,7 +231,7 @@ public static class GenericityInfoExtension
     /// <param name="maxEqual">是否可等于大值(默认等于)</param>
     public static bool IsInRange<T>(this IComparable<T> value, T min, T max, bool minEqual = true, bool maxEqual = true) where T : IComparable
     {
-        var flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;
+        bool flag = minEqual ? value.CompareTo(min) >= 0 : value.CompareTo(min) > 0;
         return flag && (maxEqual ? value.CompareTo(max) <= 0 : value.CompareTo(max) < 0);
     }
 

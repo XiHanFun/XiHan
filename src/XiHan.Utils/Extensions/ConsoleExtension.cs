@@ -30,7 +30,7 @@ public static class ConsoleExtension
     {
         lock (ObjLock)
         {
-            var currentForeColor = Console.ForegroundColor;
+            ConsoleColor currentForeColor = Console.ForegroundColor;
             Console.ForegroundColor = frontColor;
             Console.WriteLine(inputStr);
             Console.ForegroundColor = currentForeColor;

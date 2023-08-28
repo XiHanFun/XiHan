@@ -32,9 +32,7 @@ public static class AppConfigExtend
     /// <exception cref="ArgumentNullException"></exception>
     public static TKey GetValue<TKey>([DisallowNull] this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-
-        return AppConfigProvider.GetValue<TKey>(fullName);
+        return key == null ? throw new ArgumentNullException(nameof(key)) : AppConfigProvider.GetValue<TKey>(fullName);
     }
 
     /// <summary>
@@ -47,9 +45,7 @@ public static class AppConfigExtend
     /// <exception cref="ArgumentNullException"></exception>
     public static TKey GetSection<TKey>([DisallowNull] this TKey key, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-
-        return AppConfigProvider.GetSection<TKey>(fullName);
+        return key == null ? throw new ArgumentNullException(nameof(key)) : AppConfigProvider.GetSection<TKey>(fullName);
     }
 
     /// <summary>
@@ -63,7 +59,10 @@ public static class AppConfigExtend
     /// <exception cref="ArgumentNullException"></exception>
     public static void Set<TKey, TValue>([DisallowNull] this TKey key, TValue value, [CallerArgumentExpression(nameof(key))] string fullName = "")
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
         AppConfigProvider.Set<TKey, TValue>(fullName, value);
     }

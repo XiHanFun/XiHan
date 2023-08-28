@@ -49,12 +49,12 @@ public static class AppServiceProvider
     private static void RegisterBaseService(IServiceCollection services)
     {
         // 属性或字段自动注入服务
-        services.AddSingleton<AutowiredServiceHandler>();
+        _ = services.AddSingleton<AutowiredServiceHandler>();
         // Ip 查询服务
-        var dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
-        services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
+        string dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
+        _ = services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
         // 雪花 Id 生成服务
-        var options = new IdGeneratorOptions
+        IdGeneratorOptions options = new()
         {
             WorkerId = 1,
             WorkerIdBitLength = 1,
@@ -71,63 +71,56 @@ public static class AppServiceProvider
     private static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库
-        var libraries = new string[]
+        string[] libraries = new string[]
         {
             "XiHan.Services",
             "XiHan.Jobs"
         };
         // 根据程序路径反射出所有引用的程序集
-        var referencedTypes = new List<Type>();
-        foreach (var library in libraries)
+        List<Type> referencedTypes = new();
+        foreach (string library in libraries)
         {
             try
             {
-                var assemblyTypes = Assembly.Load(library).GetTypes().Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
+                IEnumerable<Type> assemblyTypes = Assembly.Load(library).GetTypes().Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
                 referencedTypes.AddRange(assemblyTypes);
             }
             catch (Exception ex)
             {
-                var errorMsg = $"找不到【{library}】组件库！";
+                string errorMsg = $"找不到【{library}】组件库！";
                 Log.Error(ex, errorMsg);
                 errorMsg.WriteLineError();
             }
         }
 
         // 批量注入
-        foreach (var type in referencedTypes)
+        foreach (Type type in referencedTypes)
         {
             // 服务周期
-            var serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
-            if (serviceAttribute == null) continue;
+            AppServiceAttribute? serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
+            if (serviceAttribute == null)
+            {
+                continue;
+            }
             // 如果有值的话，它就是注册服务的类型；如果没有的话，看是否允许从接口中获取服务类型；
-            var serviceType = serviceAttribute.ServiceType;
+            Type? serviceType = serviceAttribute.ServiceType;
 
             // 情况1 适用于依赖抽象编程(如果允许，便尝试获取第一个作为服务类型)
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
+            {
                 serviceType = type.GetInterfaces().FirstOrDefault();
+            }
             // 情况2 特殊情况下才会指定(如果还没获取到，就把自身的类型作为服务类型)
             serviceType ??= type;
 
-            switch (serviceAttribute.ServiceLifetime)
+            _ = serviceAttribute.ServiceLifetime switch
             {
-                case ServiceLifeTimeEnum.Singleton:
-                    services.AddSingleton(serviceType, type);
-                    break;
-
-                case ServiceLifeTimeEnum.Scoped:
-                    services.AddScoped(serviceType, type);
-                    break;
-
-                case ServiceLifeTimeEnum.Transient:
-                    services.AddTransient(serviceType, type);
-                    break;
-
-                default:
-                    services.AddTransient(serviceType, type);
-                    break;
-            }
-
-            var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
+                ServiceLifeTimeEnum.Singleton => services.AddSingleton(serviceType, type),
+                ServiceLifeTimeEnum.Scoped => services.AddScoped(serviceType, type),
+                ServiceLifeTimeEnum.Transient => services.AddTransient(serviceType, type),
+                _ => services.AddTransient(serviceType, type),
+            };
+            string infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
             Log.Information(infoMsg);
             infoMsg.WriteLineSuccess();
         }

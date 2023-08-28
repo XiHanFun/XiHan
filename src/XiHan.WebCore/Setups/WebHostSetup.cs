@@ -33,14 +33,17 @@ public static class WebHostSetup
     public static IWebHostBuilder AddWebHostSetup(this IWebHostBuilder host)
     {
         "Host Start……".WriteLineInfo();
-        if (host == null) throw new ArgumentNullException(nameof(host));
+        if (host == null)
+        {
+            throw new ArgumentNullException(nameof(host));
+        }
 
         // 端口
-        var port = AppSettings.Port.GetValue();
-        host.UseUrls($"http://*:{port}");
+        int port = AppSettings.Port.GetValue();
+        _ = host.UseUrls($"http://*:{port}");
 
         // 设置接口超时时间和上传大小
-        host.ConfigureKestrel(options =>
+        _ = host.ConfigureKestrel(options =>
         {
             options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
             options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);

@@ -62,15 +62,22 @@ public static class CaptchaHelper
     /// <returns></returns>
     private static string RandomTo(int length, string source)
     {
-        if (length <= 0) throw new ArgumentOutOfRangeException(nameof(length));
-        if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));
+        if (length <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
+
+        if (string.IsNullOrEmpty(source))
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
         StringBuilder result = new();
         Random random = new(~unchecked((int)DateTime.Now.Ticks));
-        for (var i = 0; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
-            Task.Delay(3);
-            result.Append(source[random.Next(0, source.Length)]);
+            _ = Task.Delay(3);
+            _ = result.Append(source[random.Next(0, source.Length)]);
         }
 
         return result.ToString();

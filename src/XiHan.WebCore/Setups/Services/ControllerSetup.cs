@@ -34,18 +34,21 @@ public static class ControllerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddControllersSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
-        services.AddControllers(configure =>
+        _ = services.AddControllers(configure =>
         {
             // 接受浏览器 Accept 标头
             configure.RespectBrowserAcceptHeader = true;
 
             // 全局注入过滤器
-            configure.Filters.Add<ActionFilterAsyncAttribute>();
-            configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
+            _ = configure.Filters.Add<ActionFilterAsyncAttribute>();
+            _ = configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
             //configure.Filters.Add<ResourceFilterAsyncAttribute>();
-            configure.Filters.Add<ResultFilterAsyncAttribute>();
+            _ = configure.Filters.Add<ResultFilterAsyncAttribute>();
             //configure.Filters.Add<ExceptionFilterAsyncAttribute>(); // 已弃用，由 GlobalExceptionMiddleware 全局日志中间件代替
         }).ConfigureApiBehaviorOptions(setupAction =>
         {

@@ -28,10 +28,10 @@ public static class ShellHelper
     /// <returns></returns>
     public static string Bash(string command)
     {
-        var output = string.Empty;
-        var escapedArgs = command.Replace(@"""", @"\""");
+        string output = string.Empty;
+        string escapedArgs = command.Replace(@"""", @"\""");
 
-        var info = new ProcessStartInfo
+        ProcessStartInfo info = new()
         {
             FileName = @"/bin/bash",
             Arguments = $@"-c ""{escapedArgs}""",
@@ -40,8 +40,12 @@ public static class ShellHelper
             CreateNoWindow = true
         };
 
-        using var process = Process.Start(info);
-        if (process == null) return output;
+        using Process? process = Process.Start(info);
+        if (process == null)
+        {
+            return output;
+        }
+
         output = process.StandardOutput.ReadToEnd();
         return output;
     }
@@ -54,17 +58,21 @@ public static class ShellHelper
     /// <returns></returns>
     public static string Cmd(string fileName, string args)
     {
-        var output = string.Empty;
+        string output = string.Empty;
 
-        var info = new ProcessStartInfo
+        ProcessStartInfo info = new()
         {
             FileName = fileName,
             Arguments = args,
             RedirectStandardOutput = true
         };
 
-        using var process = Process.Start(info);
-        if (process == null) return output;
+        using Process? process = Process.Start(info);
+        if (process == null)
+        {
+            return output;
+        }
+
         output = process.StandardOutput.ReadToEnd();
         return output;
     }

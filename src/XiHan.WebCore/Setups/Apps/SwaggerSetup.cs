@@ -35,26 +35,33 @@ public static class SwaggerSetup
     /// <exception cref="Exception"></exception>
     public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
         try
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
+            _ = app.UseSwagger();
+            _ = app.UseSwaggerUI(options =>
             {
                 // 路由前缀
-                var routePrefix = AppSettings.Swagger.RoutePrefix.GetValue();
+                string routePrefix = AppSettings.Swagger.RoutePrefix.GetValue();
                 // 性能分析开关
-                var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
+                bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
                 // 需要暴露的分组
-                var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
+                string[] publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
 
                 // 根据分组遍历展示
                 typeof(ApiGroupNameEnum).GetFields().Skip(1).ToList().ForEach(group =>
                 {
                     // 获取枚举值上的特性
-                    if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
-                    var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
+                    if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase)))
+                    {
+                        return;
+                    }
+
+                    GroupInfoAttribute? info = group.GetCustomAttributes(typeof(GroupInfoAttribute), false).OfType<GroupInfoAttribute>().FirstOrDefault();
                     // 切换分组操作,参数一是使用的哪个json文件,参数二是个名字
                     options.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", info?.Title);
                 });
@@ -63,7 +70,7 @@ public static class SwaggerSetup
                 if (isEnabledMiniprofiler)
                 {
                     // 入口程序集
-                    var entryAssembly = App.EntryAssembly;
+                    System.Reflection.Assembly entryAssembly = App.EntryAssembly;
                     // 将swagger首页，设置成自定义的页面，写法：{ 项目名.index.html}
                     options.IndexStream = () => entryAssembly.GetManifestResourceStream($"{entryAssembly.GetName().Name}.index.html");
                     options.HeadContent = @"<style>.opblock-summary-description{font-weight: bold;text-align: right;}</style>";

@@ -32,9 +32,9 @@ public static class ObjectInfoExtension
     /// <exception cref="ArgumentNullException"></exception>
     public static string GetObjectFullNameOf([DisallowNull] this object? instance, [CallerArgumentExpression(nameof(instance))] string fullName = "")
     {
-        if (instance == null) throw new ArgumentNullException(nameof(instance));
-        if (fullName == null) throw new ArgumentNullException(nameof(fullName));
-        return fullName;
+        return instance == null
+            ? throw new ArgumentNullException(nameof(instance))
+            : fullName ?? throw new ArgumentNullException(nameof(fullName));
     }
 
     #region 字段信息
@@ -47,8 +47,12 @@ public static class ObjectInfoExtension
     /// <returns>是否包含</returns>
     public static bool IsObjectContainField(this object? instance, string fieldName)
     {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) return false;
-        var foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        if (instance == null || string.IsNullOrEmpty(fieldName))
+        {
+            return false;
+        }
+
+        FieldInfo? foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundFieldInfo != null;
     }
 
@@ -60,10 +64,13 @@ public static class ObjectInfoExtension
     /// <returns>字段信息</returns>
     public static FieldInfo GetObjectField(this object? instance, string fieldName)
     {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) throw new NotImplementedException(nameof(fieldName));
-        var foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        if (foundFieldInfo != null) return foundFieldInfo;
-        throw new NotImplementedException(nameof(fieldName));
+        if (instance == null || string.IsNullOrEmpty(fieldName))
+        {
+            throw new NotImplementedException(nameof(fieldName));
+        }
+
+        FieldInfo? foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        return foundFieldInfo ?? throw new NotImplementedException(nameof(fieldName));
     }
 
     /// <summary>
@@ -73,10 +80,13 @@ public static class ObjectInfoExtension
     /// <returns>字段信息</returns>
     public static FieldInfo[] GetObjectFields(this object? instance)
     {
-        if (instance == null) throw new NotImplementedException(nameof(instance));
-        var foundFieldInfos = instance.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        if (foundFieldInfos != null) return foundFieldInfos;
-        throw new NotImplementedException(nameof(foundFieldInfos));
+        if (instance == null)
+        {
+            throw new NotImplementedException(nameof(instance));
+        }
+
+        FieldInfo[] foundFieldInfos = instance.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        return foundFieldInfos ?? throw new NotImplementedException(nameof(foundFieldInfos));
     }
 
     #endregion
@@ -91,8 +101,12 @@ public static class ObjectInfoExtension
     /// <returns>是否包含</returns>
     public static bool IsContainObjectProperty(this object? instance, string propertyName)
     {
-        if (instance == null || string.IsNullOrEmpty(propertyName)) return false;
-        var foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        if (instance == null || string.IsNullOrEmpty(propertyName))
+        {
+            return false;
+        }
+
+        PropertyInfo? foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundPropertyInfo != null;
     }
 
@@ -104,10 +118,13 @@ public static class ObjectInfoExtension
     /// <returns>属性信息</returns>
     public static PropertyInfo GetObjectProperty(this object? instance, string propertyName)
     {
-        if (instance == null || string.IsNullOrEmpty(propertyName)) throw new NotImplementedException(nameof(propertyName));
-        var foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        if (foundPropertyInfo != null) return foundPropertyInfo;
-        throw new NotImplementedException(nameof(foundPropertyInfo));
+        if (instance == null || string.IsNullOrEmpty(propertyName))
+        {
+            throw new NotImplementedException(nameof(propertyName));
+        }
+
+        PropertyInfo? foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        return foundPropertyInfo ?? throw new NotImplementedException(nameof(foundPropertyInfo));
     }
 
     /// <summary>
@@ -117,10 +134,13 @@ public static class ObjectInfoExtension
     /// <returns>属性信息</returns>
     public static PropertyInfo[] GetObjectProperties(this object? instance)
     {
-        if (instance == null) throw new NotImplementedException(nameof(instance));
-        var foundPropertyInfos = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        if (foundPropertyInfos != null) return foundPropertyInfos;
-        throw new NotImplementedException(nameof(foundPropertyInfos));
+        if (instance == null)
+        {
+            throw new NotImplementedException(nameof(instance));
+        }
+
+        PropertyInfo[] foundPropertyInfos = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        return foundPropertyInfos ?? throw new NotImplementedException(nameof(foundPropertyInfos));
     }
 
     #endregion
@@ -134,11 +154,21 @@ public static class ObjectInfoExtension
     public static bool IsNullOrEmpty(this object? data)
     {
         // 如果为null
-        if (data == null) return true;
+        if (data == null)
+        {
+            return true;
+        }
 
         // 如果为""
-        if (data is not string) return data is DBNull;
-        if (string.IsNullOrEmpty(data.ToString()?.Trim())) return true;
+        if (data is not string)
+        {
+            return data is DBNull;
+        }
+
+        if (string.IsNullOrEmpty(data.ToString()?.Trim()))
+        {
+            return true;
+        }
 
         // 如果为DBNull
         return data is DBNull;

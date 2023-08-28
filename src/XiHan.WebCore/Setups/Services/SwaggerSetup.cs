@@ -38,10 +38,13 @@ public static class SwaggerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 配置Swagger，从路由、控制器和模型构建对象
-        services.AddSwaggerGen(options =>
+        _ = services.AddSwaggerGen(options =>
         {
             // 配置Swagger文档信息
             SwaggerInfoConfig(options);
@@ -62,14 +65,17 @@ public static class SwaggerSetup
     private static void SwaggerInfoConfig(SwaggerGenOptions options)
     {
         // 需要暴露的分组
-        var publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
+        string[] publishGroup = AppSettings.Swagger.PublishGroup.GetSection();
         // 利用枚举反射加载出每个分组的接口文档，Skip(1)是因为Enum第一个FieldInfo 是内置的一个 Int 值
         typeof(ApiGroupNameEnum).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
-            if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
+            if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase)))
+            {
+                return;
+            }
             // 获取分组信息
-            var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
+            GroupInfoAttribute? info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
             // 添加文档介绍
             options.SwaggerDoc(group.Name, new OpenApiInfo
             {
@@ -103,24 +109,24 @@ public static class SwaggerSetup
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 反射获取基类 BaseApiController 的 ApiGroupAttribute 信息
-            var baseControllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+            List<ApiGroupAttribute>? baseControllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo.BaseType?
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
             // 反射获取 ApiController 的 ApiGroupAttribute 信息
-            var controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+            List<ApiGroupAttribute> controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
             // 反射获取派生类 Action 的 ApiGroupAttribute 信息
-            var actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
+            List<ApiGroupAttribute> actionAttributeList = apiDescription.ActionDescriptor.EndpointMetadata
                 .Where(x => x is ApiGroupAttribute).OfType<ApiGroupAttribute>()
                 .ToList();
 
             // 所有含 ApiGroupAttribute 的集合
-            var apiGroupAttributeList = new List<ApiGroupAttribute>();
+            List<ApiGroupAttribute> apiGroupAttributeList = new();
             // 为空时插入空，减少 if 判断
-            var emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
+            List<ApiGroupAttribute> emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
             apiGroupAttributeList.AddRange(baseControllerAttributeList ?? emptyAttribute);
             apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
             apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
@@ -128,14 +134,17 @@ public static class SwaggerSetup
             // 判断所有的分组名称是否含有此名称
             if (apiGroupAttributeList.Any())
             {
-                var containList = new List<bool>();
+                List<bool> containList = new();
                 // 遍历判断是否包含这个分组
                 apiGroupAttributeList.ForEach(attribute =>
                 {
                     containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
                 // 若有，则为该分组名称分配此 Action
-                if (containList.Any(c => c)) return true;
+                if (containList.Any(c => c))
+                {
+                    return true;
+                }
             }
             return false;
         });
@@ -161,7 +170,7 @@ public static class SwaggerSetup
         }
         catch (Exception ex)
         {
-            var errorMsg = $"Swagger 文档加载失败！";
+            string errorMsg = $"Swagger 文档加载失败！";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
         }
@@ -174,7 +183,7 @@ public static class SwaggerSetup
     private static void SwaggerJwtConfig(SwaggerGenOptions options)
     {
         // 定义安全方案
-        var securitySchemeOauth2 = new OpenApiSecurityScheme
+        OpenApiSecurityScheme securitySchemeOauth2 = new()
         {
             // JWT默认的参数名称
             Name = "Authorization",

@@ -49,9 +49,8 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     private async Task<bool> CheckConfigUnique(SysConfig sysConfig)
     {
-        var isUnique = await IsAnyAsync(f => f.TypeCode == sysConfig.TypeCode && (f.Code == sysConfig.Code || f.Name == sysConfig.Name));
-        if (isUnique) throw new CustomException($"配置类【{sysConfig.TypeCode}】下已存在配置项【{sysConfig.Code}({sysConfig.Name})】!");
-        return isUnique;
+        bool isUnique = await IsAnyAsync(f => f.TypeCode == sysConfig.TypeCode && (f.Code == sysConfig.Code || f.Name == sysConfig.Name));
+        return isUnique ? throw new CustomException($"配置类【{sysConfig.TypeCode}】下已存在配置项【{sysConfig.Code}({sysConfig.Name})】!") : isUnique;
     }
 
     /// <summary>
@@ -61,7 +60,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<long> CreateSysConfig(SysConfigCDto configCDto)
     {
-        var sysConfig = configCDto.Adapt<SysConfig>();
+        SysConfig sysConfig = configCDto.Adapt<SysConfig>();
 
         _ = await CheckConfigUnique(sysConfig);
 
@@ -75,10 +74,10 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<bool> DeleteSysConfigByIds(long[] configIds)
     {
-        var sysConfigList = await QueryAsync(d => configIds.Contains(d.BaseId));
+        List<SysConfig> sysConfigList = await QueryAsync(d => configIds.Contains(d.BaseId));
 
         // 禁止删除系统参数
-        var deleteList = sysConfigList.Where(c => !c.IsOfficial).ToList();
+        List<SysConfig> deleteList = sysConfigList.Where(c => !c.IsOfficial).ToList();
 
         _appCacheService.Remove(deleteList.Select(c => c.Code));
         return await RemoveAsync(deleteList);
@@ -91,11 +90,14 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<bool> ModifySysConfig(SysConfigMDto configMDto)
     {
-        var sysConfig = configMDto.Adapt<SysConfig>();
+        SysConfig sysConfig = configMDto.Adapt<SysConfig>();
 
         // 禁止修改系统参数
-        var oldSysConfig = await FindAsync(c => c.BaseId == sysConfig.BaseId);
-        if (oldSysConfig.IsOfficial) throw new CustomException("禁止修改系统内置参数！");
+        SysConfig oldSysConfig = await FindAsync(c => c.BaseId == sysConfig.BaseId);
+        if (oldSysConfig.IsOfficial)
+        {
+            throw new CustomException("禁止修改系统内置参数！");
+        }
 
         _ = await CheckConfigUnique(sysConfig);
 
@@ -109,11 +111,15 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<SysConfig> GetSysConfigById(long configId)
     {
-        var key = $"GetSysConfigById_{configId}";
-        if (_appCacheService.Get(key) is SysConfig sysConfig) return sysConfig;
+        string key = $"GetSysConfigById_{configId}";
+        if (_appCacheService.Get(key) is SysConfig sysConfig)
+        {
+            return sysConfig;
+        }
+
         sysConfig = await FindAsync(d => d.BaseId == configId);
 
-        _appCacheService.SetWithMinutes(key, sysConfig, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysConfig, 30);
         return sysConfig;
     }
 
@@ -124,13 +130,16 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<T> GetSysConfigValueByCode<T>(string configCode)
     {
-        var key = $"GetSysConfigValueByCode_{configCode}";
-        var value = _appCacheService.Get<string>(key);
-        if (value.IsNotEmptyOrNull()) return value.CastTo<T>()!;
+        string key = $"GetSysConfigValueByCode_{configCode}";
+        string? value = _appCacheService.Get<string>(key);
+        if (value.IsNotEmptyOrNull())
+        {
+            return value.CastTo<T>()!;
+        }
 
-        var sysConfig = await FindAsync(d => d.Code == configCode);
+        SysConfig sysConfig = await FindAsync(d => d.Code == configCode);
 
-        _appCacheService.SetWithMinutes(key, sysConfig.Value, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysConfig.Value, 30);
         return sysConfig.Value.CastTo<T>()!;
     }
 
@@ -140,7 +149,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<List<string>> GetSysConfigTypeList()
     {
-        var typeList = await Context.Queryable<SysConfig>()
+        List<string> typeList = await Context.Queryable<SysConfig>()
             .GroupBy(c => c.TypeCode)
             .ToListAsync(c => c.TypeCode);
 
@@ -154,11 +163,11 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<List<SysConfig>> GetSysConfigList(SysConfigWDto whereDto)
     {
-        var whereExpression = Expressionable.Create<SysConfig>();
-        whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
-        whereExpression.AndIF(whereDto.Code != null, u => u.Code == whereDto.Code);
-        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
-        whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
+        Expressionable<SysConfig> whereExpression = Expressionable.Create<SysConfig>();
+        _ = whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
+        _ = whereExpression.AndIF(whereDto.Code != null, u => u.Code == whereDto.Code);
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
         return await QueryAsync(whereExpression.ToExpression(), o => new { o.TypeCode, o.SortOrder }, false);
     }
@@ -170,13 +179,13 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<PageDataDto<SysConfig>> GetSysConfigPageList(PageWhereDto<SysConfigWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysConfigWDto whereDto = pageWhere.Where;
 
-        var whereExpression = Expressionable.Create<SysConfig>();
-        whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
-        whereExpression.AndIF(whereDto.Code != null, u => u.Code == whereDto.Code);
-        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
-        whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
+        Expressionable<SysConfig> whereExpression = Expressionable.Create<SysConfig>();
+        _ = whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
+        _ = whereExpression.AndIF(whereDto.Code != null, u => u.Code == whereDto.Code);
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => new { o.TypeCode, o.SortOrder }, pageWhere.IsAsc);
     }

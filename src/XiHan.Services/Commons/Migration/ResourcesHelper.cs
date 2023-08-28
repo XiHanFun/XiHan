@@ -31,18 +31,21 @@ public class ResourcesService
     /// <returns></returns>
     public static async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
     {
-        if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
+        if (resourceInfo == null)
+        {
+            throw new ArgumentNullException(nameof(resourceInfo));
+        }
 
         List<MigrationInfoDto> list = new();
         string[] paths = FileHelper.GetFiles(resourceInfo.Path);
-        foreach (var path in paths)
+        foreach (string path in paths)
         {
             MigrationInfoDto migrationInfo = new()
             {
                 // 路径
                 Path = path
             };
-            var content = await File.ReadAllTextAsync(path, Encoding.UTF8);
+            string content = await File.ReadAllTextAsync(path, Encoding.UTF8);
             // 替换资源
             content = content.FormatReplaceStr(resourceInfo.OldPrefix, resourceInfo.NewPrefix);
             // 刷新重写

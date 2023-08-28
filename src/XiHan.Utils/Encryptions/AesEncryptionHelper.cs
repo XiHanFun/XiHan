@@ -41,29 +41,29 @@ public static class AesEncryptionHelper
     public static string Encrypt(string plainText, string password)
     {
         // 生成盐
-        var salt = new byte[BlockSize / 8];
-        using (var rng = RandomNumberGenerator.Create())
+        byte[] salt = new byte[BlockSize / 8];
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
 
         // 扩展密码为 IV 和 KEY
-        var key = DeriveKey(password, salt, KeySize / 8);
-        var iv = DeriveKey(password, salt, BlockSize / 8);
+        byte[] key = DeriveKey(password, salt, KeySize / 8);
+        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
 
-        using var aes = Aes.Create();
+        using Aes aes = Aes.Create();
         aes.Key = key;
         aes.IV = iv;
 
         // 加密算法
         string cipherText;
-        using (var cipherStream = new MemoryStream())
+        using (MemoryStream cipherStream = new())
         {
-            using var cryptoStream = new CryptoStream(cipherStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
-            var plainBytes = Encoding.UTF8.GetBytes(plainText);
+            using CryptoStream cryptoStream = new(cipherStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
+            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
             cryptoStream.Write(plainBytes, 0, plainBytes.Length);
             cryptoStream.FlushFinalBlock();
-            var cipherBytes = cipherStream.ToArray();
+            byte[] cipherBytes = cipherStream.ToArray();
 
             cipherText = Convert.ToBase64String(cipherBytes);
         }
@@ -82,34 +82,40 @@ public static class AesEncryptionHelper
     public static string Decrypt(string cipherText, string password)
     {
         // 检查密文的有效性
-        if (string.IsNullOrEmpty(cipherText)) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        if (string.IsNullOrEmpty(cipherText))
+        {
+            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        }
 
         // 解析盐和密文
-        var parts = cipherText.Split(new[]
+        string[] parts = cipherText.Split(new[]
         {
             ':'
         }, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length != 2) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        if (parts.Length != 2)
+        {
+            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        }
 
-        var salt = Convert.FromBase64String(parts[0]);
-        var cipherBytes = Convert.FromBase64String(parts[1]);
+        byte[] salt = Convert.FromBase64String(parts[0]);
+        byte[] cipherBytes = Convert.FromBase64String(parts[1]);
 
         // 扩展密码为 IV 和 KEY
-        var key = DeriveKey(password, salt, KeySize / 8);
-        var iv = DeriveKey(password, salt, BlockSize / 8);
+        byte[] key = DeriveKey(password, salt, KeySize / 8);
+        byte[] iv = DeriveKey(password, salt, BlockSize / 8);
 
-        using var aes = Aes.Create();
+        using Aes aes = Aes.Create();
         aes.Key = key;
         aes.IV = iv;
 
         // 解密算法
-        using var plainStream = new MemoryStream();
-        using var cryptoStream = new CryptoStream(plainStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
+        using MemoryStream plainStream = new();
+        using CryptoStream cryptoStream = new(plainStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
         cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
         cryptoStream.FlushFinalBlock();
-        var plainBytes = plainStream.ToArray();
+        byte[] plainBytes = plainStream.ToArray();
 
-        var plainText = Encoding.UTF8.GetString(plainBytes);
+        string plainText = Encoding.UTF8.GetString(plainBytes);
 
         // 返回解密结果
         return plainText;
@@ -124,7 +130,7 @@ public static class AesEncryptionHelper
     /// <returns></returns>
     private static byte[] DeriveKey(string password, byte[] salt, int bytes)
     {
-        using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations, HashAlgorithmName.SHA256);
+        using Rfc2898DeriveBytes pbkdf2 = new(password, salt, Iterations, HashAlgorithmName.SHA256);
         return pbkdf2.GetBytes(bytes);
     }
 }

@@ -34,7 +34,10 @@ public static class JobSetup
     /// <exception cref="CustomException"></exception>
     public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
         // 环境变量，生产环境
         if (env.IsProduction())

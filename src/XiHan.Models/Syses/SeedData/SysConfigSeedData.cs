@@ -29,10 +29,10 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
     [IgnoreUpdate]
     public IEnumerable<SysConfig> HasData()
     {
-        var result = new List<SysConfig>();
+        List<SysConfig> result = new();
 
         // 站点配置
-        var siteConfig = new List<SysConfig>
+        List<SysConfig> siteConfig = new()
         {
             new SysConfig{
                 BaseId = 1,
@@ -107,7 +107,7 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
             }
         };
         // 日志配置
-        var logConfig = new List<SysConfig>
+        List<SysConfig> logConfig = new()
         {
             new SysConfig{
                 BaseId = 11,
@@ -142,7 +142,7 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
         };
 
         // 模式配置
-        var modeConfig = new List<SysConfig>
+        List<SysConfig> modeConfig = new()
         {
              new SysConfig{
                 BaseId = 21,

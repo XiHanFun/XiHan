@@ -51,9 +51,9 @@ public class LarkCustomRobot
     public async Task<ApiResult> TextMessage(LarkText content)
     {
         // 消息类型
-        var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        string msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type = msgType, content });
+        ApiResult result = await Send(new { msg_type = msgType, content });
         return result;
     }
 
@@ -64,9 +64,9 @@ public class LarkCustomRobot
     public async Task<ApiResult> PostMessage(LarkPost post)
     {
         // 消息类型
-        var msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
+        string msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type = msgType, post });
+        ApiResult result = await Send(new { msg_type = msgType, post });
         return result;
     }
 
@@ -80,15 +80,15 @@ public class LarkCustomRobot
         bool isAtAll = false)
     {
         // 消息类型
-        var msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
+        string msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
         // 指定目标人群
-        var at = new LarkAt
+        LarkAt at = new()
         {
             AtMobiles = atMobiles,
             IsAtAll = isAtAll
         };
         // 发送
-        var result = await Send(new { msg_type = msgType, markdown, at });
+        ApiResult result = await Send(new { msg_type = msgType, markdown, at });
         return result;
     }
 
@@ -99,9 +99,9 @@ public class LarkCustomRobot
     public async Task<ApiResult> ImageMessage(LarkActionCard actionCard)
     {
         // 消息类型
-        var msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        string msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type = msgType, actionCard });
+        ApiResult result = await Send(new { msg_type = msgType, actionCard });
         return result;
     }
 
@@ -112,9 +112,9 @@ public class LarkCustomRobot
     public async Task<ApiResult> InterActiveMessage(LarkFeedCard feedCard)
     {
         // 消息类型
-        var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
+        string msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
         // 发送
-        var result = await Send(new { msg_type = msgType, feedCard });
+        ApiResult result = await Send(new { msg_type = msgType, feedCard });
         return result;
     }
 
@@ -125,21 +125,21 @@ public class LarkCustomRobot
     /// <returns></returns>
     private async Task<ApiResult> Send(object objSend)
     {
-        var url = _url;
-        var sendMessage = objSend.SerializeToJson();
-        var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+        string url = _url;
+        string sendMessage = objSend.SerializeToJson();
+        long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
         {
             // 把 【timestamp + "\n" + 密钥】 当做签名字符串
-            var sign = timeStamp + "\n" + _secret;
-            var encoding = new UTF8Encoding();
-            var keyByte = encoding.GetBytes(_secret);
-            var messageBytes = encoding.GetBytes(sign);
+            string sign = timeStamp + "\n" + _secret;
+            UTF8Encoding encoding = new();
+            byte[] keyByte = encoding.GetBytes(_secret);
+            byte[] messageBytes = encoding.GetBytes(sign);
             // 使用 HmacSHA256 算法计算签名
-            using (var hash256 = new HMACSHA256(keyByte))
+            using (HMACSHA256 hash256 = new(keyByte))
             {
-                var hashMessage = hash256.ComputeHash(messageBytes);
+                byte[] hashMessage = hash256.ComputeHash(messageBytes);
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
@@ -149,13 +149,17 @@ public class LarkCustomRobot
         }
 
         // 发起请求
-        var result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
+        LarkResultInfoDto? result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {
-            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功");
-            var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
-            var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
+            if (result.Code == 0 || result.Msg == "success")
+            {
+                return ApiResult.Success("发送成功");
+            }
+
+            IEnumerable<EnumDescDto> resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
+            EnumDescDto? info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
             return ApiResult.BadRequest("发送失败，" + info?.Label);
         }
 

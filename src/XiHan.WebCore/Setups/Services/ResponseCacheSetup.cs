@@ -30,11 +30,16 @@ public static class ResponseCacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddResponseCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 响应缓存
-        var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();
-        if (isEnabledResponseCache) services.AddResponseCaching(options =>
+        bool isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();
+        if (isEnabledResponseCache)
+        {
+            _ = services.AddResponseCaching(options =>
         {
             // 确定是否将响应缓存在区分大小写的路径上。 默认值是 false
             options.UseCaseSensitivePaths = false;
@@ -43,6 +48,7 @@ public static class ResponseCacheSetup
             // 响应缓存中间件的大小限制(以字节为单位)。 默认值为 100 * 1024 * 1024 (100 MB)
             options.SizeLimit = 100 * 1024 * 1024;
         });
+        }
 
         return services;
     }

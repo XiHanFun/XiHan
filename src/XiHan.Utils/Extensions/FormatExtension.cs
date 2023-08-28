@@ -37,11 +37,15 @@ public static class FormatExtension
     public static string FormatFileSizeToString(this long bytes)
     {
         double last = 1;
-        for (var i = 0; i < Suffixes.Length; i++)
+        for (int i = 0; i < Suffixes.Length; i++)
         {
-            var current = Math.Pow(1024, i + 1);
-            var temp = bytes / current;
-            if (temp < 1) return (bytes / last).ToString("f3") + Suffixes[i];
+            double current = Math.Pow(1024, i + 1);
+            double temp = bytes / current;
+            if (temp < 1)
+            {
+                return (bytes / last).ToString("f3") + Suffixes[i];
+            }
+
             last = current;
         }
 
@@ -143,12 +147,12 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatMoneyToString(this decimal num)
     {
-        var numStr = num.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
+        string numStr = num.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
         string numRes;
-        var numDecimal = string.Empty;
+        string numDecimal = string.Empty;
         if (numStr.Contains('.'))
         {
-            var numInt = numStr.Split('.')[0];
+            string numInt = numStr.Split('.')[0];
             numDecimal = "." + numStr.Split('.')[1];
             numRes = FormatMoneyStringComma(numInt);
         }
@@ -167,12 +171,14 @@ public static class FormatExtension
     /// <returns></returns>
     private static string FormatMoneyStringComma(string numInt)
     {
-        if (numInt.Length <= 4) return numInt;
-        var numNoFormat = numInt[..^4];
-        var numFormat = numInt.Substring(numInt.Length - 4, 4);
-        if (numNoFormat.Length > 4) return FormatMoneyStringComma(numNoFormat) + "," + numFormat;
+        if (numInt.Length <= 4)
+        {
+            return numInt;
+        }
 
-        return numNoFormat + "," + numFormat;
+        string numNoFormat = numInt[..^4];
+        string numFormat = numInt.Substring(numInt.Length - 4, 4);
+        return numNoFormat.Length > 4 ? FormatMoneyStringComma(numNoFormat) + "," + numFormat : numNoFormat + "," + numFormat;
     }
 
     #endregion
@@ -196,7 +202,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static long GetDateToTimeStamp(this DateTime dateTime)
     {
-        var ts = dateTime - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        TimeSpan ts = dateTime - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return Convert.ToInt64(ts.TotalSeconds);
     }
 
@@ -242,12 +248,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static DateTime GetBeginTime(this DateTime? dateTime, int days = 0)
     {
-        if (dateTime == DateTime.MinValue || dateTime == null)
-        {
-            return DateTime.Now.AddDays(days);
-        }
-
-        return (DateTime)dateTime;
+        return dateTime == DateTime.MinValue || dateTime == null ? DateTime.Now.AddDays(days) : (DateTime)dateTime;
     }
 
     /// <summary>
@@ -257,7 +258,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static string GetWeekByDate(this DateTime dateTime)
     {
-        var day = new[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        string[] day = new[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
         return day[Convert.ToInt32(dateTime.DayOfWeek.ToString("d"))];
     }
 
@@ -272,14 +273,14 @@ public static class FormatExtension
         // 本月第一天
         DateTime firstDay = daytime.AddDays(1 - daytime.Day);
         // 本月第一天是周几
-        int weekday = (int)firstDay.DayOfWeek == 0 ? 7 : (int)firstDay.DayOfWeek;
+        int weekday = firstDay.DayOfWeek == 0 ? 7 : (int)firstDay.DayOfWeek;
         // 本月第一周有几天
         int firstWeekEndDay = 7 - (weekday - 1);
         // 当前日期和第一周之差
         int diffday = dayInMonth - firstWeekEndDay;
         diffday = diffday > 0 ? diffday : 1;
         // 当前是第几周，若整除7就减一天
-        return ((diffday % 7) == 0 ? (diffday / 7 - 1) : (diffday / 7)) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
+        return ((diffday % 7) == 0 ? ((diffday / 7) - 1) : (diffday / 7)) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
     }
 
     /// <summary>
@@ -300,8 +301,12 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatDateTimeToString(this DateTime dateTimeBefore, DateTime dateTimeAfter)
     {
-        if (dateTimeBefore >= dateTimeAfter) throw new Exception("开始日期必须小于结束日期");
-        var timeSpan = dateTimeAfter - dateTimeBefore;
+        if (dateTimeBefore >= dateTimeAfter)
+        {
+            throw new Exception("开始日期必须小于结束日期");
+        }
+
+        TimeSpan timeSpan = dateTimeAfter - dateTimeBefore;
         return timeSpan.FormatTimeSpanToString();
     }
 
@@ -312,7 +317,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatMilliSecondsToString(this long milliseconds)
     {
-        var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
+        TimeSpan timeSpan = TimeSpan.FromMilliseconds(milliseconds);
         return timeSpan.FormatTimeSpanToString();
     }
 
@@ -323,7 +328,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatTimeTicksToString(this long ticks)
     {
-        var timeSpan = TimeSpan.FromTicks(ticks);
+        TimeSpan timeSpan = TimeSpan.FromTicks(ticks);
         return timeSpan.FormatTimeSpanToString();
     }
 
@@ -339,22 +344,22 @@ public static class FormatExtension
         const int hh = mi * 60;
         const int dd = hh * 24;
 
-        var day = ms / dd;
-        var hour = (ms - day * dd) / hh;
-        var minute = (ms - day * dd - hour * hh) / mi;
-        var second = (ms - day * dd - hour * hh - minute * mi) / ss;
-        var milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+        long day = ms / dd;
+        long hour = (ms - (day * dd)) / hh;
+        long minute = (ms - (day * dd) - (hour * hh)) / mi;
+        long second = (ms - (day * dd) - (hour * hh) - (minute * mi)) / ss;
+        long milliSecond = ms - (day * dd) - (hour * hh) - (minute * mi) - (second * ss);
 
         // 天
-        var sDay = day < 10 ? "0" + day : string.Empty + day;
+        string sDay = day < 10 ? "0" + day : string.Empty + day;
         // 小时
-        var sHour = hour < 10 ? "0" + hour : string.Empty + hour;
+        string sHour = hour < 10 ? "0" + hour : string.Empty + hour;
         // 分钟
-        var sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
+        string sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
         // 秒
-        var sSecond = second < 10 ? "0" + second : string.Empty + second;
+        string sSecond = second < 10 ? "0" + second : string.Empty + second;
         // 毫秒
-        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
+        string sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
         sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : string.Empty + sMilliSecond;
 
         return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
@@ -367,22 +372,22 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatTimeSpanToString(this TimeSpan timeSpan)
     {
-        var day = timeSpan.Days;
-        var hour = timeSpan.Hours;
-        var minute = timeSpan.Minutes;
-        var second = timeSpan.Seconds;
-        var milliSecond = timeSpan.Milliseconds;
+        int day = timeSpan.Days;
+        int hour = timeSpan.Hours;
+        int minute = timeSpan.Minutes;
+        int second = timeSpan.Seconds;
+        int milliSecond = timeSpan.Milliseconds;
 
         // 天
-        var sDay = day < 10 ? "0" + day : string.Empty + day;
+        string sDay = day < 10 ? "0" + day : string.Empty + day;
         // 小时
-        var sHour = hour < 10 ? "0" + hour : string.Empty + hour;
+        string sHour = hour < 10 ? "0" + hour : string.Empty + hour;
         // 分钟
-        var sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
+        string sMinute = minute < 10 ? "0" + minute : string.Empty + minute;
         // 秒
-        var sSecond = second < 10 ? "0" + second : string.Empty + second;
+        string sSecond = second < 10 ? "0" + second : string.Empty + second;
         // 毫秒
-        var sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
+        string sMilliSecond = milliSecond < 10 ? "0" + milliSecond : string.Empty + milliSecond;
         sMilliSecond = milliSecond < 100 ? "0" + sMilliSecond : string.Empty + sMilliSecond;
 
         return $"{sDay} 天 {sHour} 小时 {sMinute} 分 {sSecond} 秒 {sMilliSecond} 毫秒";
@@ -395,10 +400,14 @@ public static class FormatExtension
     /// <returns></returns>
     public static string FormatDateTimeToEasyString(this DateTime value)
     {
-        var now = DateTime.Now;
-        var strDate = value.ToString("yyyy-MM-dd");
-        if (now < value) return strDate;
-        var dep = now - value;
+        DateTime now = DateTime.Now;
+        string strDate = value.ToString("yyyy-MM-dd");
+        if (now < value)
+        {
+            return strDate;
+        }
+
+        TimeSpan dep = now - value;
 
         switch (dep.TotalMinutes)
         {
@@ -411,8 +420,11 @@ public static class FormatExtension
             default:
                 {
                     if (dep.TotalHours < 24)
+                    {
                         return dep.TotalHours.ParseToInt() + "小时前";
+                    }
                     else
+                    {
                         switch (dep.TotalDays)
                         {
                             case < 7:
@@ -420,16 +432,17 @@ public static class FormatExtension
 
                             case >= 7 and < 30:
                                 {
-                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                                    int defaultWeek = dep.TotalDays.ParseToInt() / 7;
                                     return defaultWeek + "周前";
                                 }
                             default:
                                 {
-                                    if (dep.TotalDays.ParseToInt() >= 30 && dep.TotalDays.ParseToInt() < 365)
-                                        return value.Month.ParseToInt() + "个月前";
-                                    else return now.Year - value.Year + "年前";
+                                    return dep.TotalDays.ParseToInt() is >= 30 and < 365
+                                        ? value.Month.ParseToInt() + "个月前"
+                                        : now.Year - value.Year + "年前";
                                 }
                         }
+                    }
                 }
         }
     }
@@ -443,14 +456,18 @@ public static class FormatExtension
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(thisValue)) return DateTime.MinValue;
+            if (string.IsNullOrWhiteSpace(thisValue))
+            {
+                return DateTime.MinValue;
+            }
+
             if (thisValue.Contains('-') || thisValue.Contains('/'))
             {
                 return DateTime.Parse(thisValue);
             }
             else
             {
-                var length = thisValue.Length;
+                int length = thisValue.Length;
                 return length switch
                 {
                     4 => DateTime.ParseExact(thisValue, "yyyy", CultureInfo.CurrentCulture),

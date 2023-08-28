@@ -41,7 +41,7 @@ public class JobBase
     protected async Task ExecuteJob(IJobExecutionContext context, Func<Task> job)
     {
         // 记录Job日志
-        var sysLogJob = new SysLogJob();
+        SysLogJob sysLogJob = new();
 
         try
         {
@@ -79,21 +79,21 @@ public class JobBase
     {
         try
         {
-            var sysJobService = App.GetRequiredService<ISysJobService>();
-            var sysLogJobService = App.GetRequiredService<ISysLogJobService>();
-            var emailPushService = App.GetRequiredService<IEmailPushService>();
+            ISysJobService sysJobService = App.GetRequiredService<ISysJobService>();
+            ISysLogJobService sysLogJobService = App.GetRequiredService<ISysLogJobService>();
+            IEmailPushService emailPushService = App.GetRequiredService<IEmailPushService>();
 
             // 获取任务详情
-            var jobDetail = context.JobDetail;
+            IJobDetail jobDetail = context.JobDetail;
             jobLog.JobId = jobDetail.Key.Name.ParseToLong();
             jobLog.InvokeTarget = jobDetail.JobType.FullName;
             jobLog = await sysLogJobService.CreateLogJob(jobLog);
-            var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
+            string logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
 
             // 若执行成功，则执行次数加一
             if (jobLog.IsSuccess)
             {
-                await sysJobService.UpdateAsync(job => new SysJob()
+                _ = await sysJobService.UpdateAsync(job => new SysJob()
                 {
                     RunTimes = job.RunTimes + 1,
                     LastRunTime = DateTime.Now

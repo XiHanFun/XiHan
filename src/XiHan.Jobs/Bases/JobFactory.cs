@@ -46,12 +46,8 @@ public class JobFactory : IJobFactory
     {
         try
         {
-            var serviceScope = _serviceProvider.CreateScope();
-            var job = serviceScope.ServiceProvider.GetService(bundle.JobDetail.JobType) as IJob;
-            if (job == null)
-                throw new CustomException("Job服务为空或获取失败！");
-            else
-                return job;
+            IServiceScope serviceScope = _serviceProvider.CreateScope();
+            return serviceScope.ServiceProvider.GetService(bundle.JobDetail.JobType) is not IJob job ? throw new CustomException("Job服务为空或获取失败！") : job;
         }
         catch (Exception ex)
         {
@@ -65,6 +61,9 @@ public class JobFactory : IJobFactory
     /// <param name="job"></param>
     public void ReturnJob(IJob job)
     {
-        if (job is IDisposable disposable) disposable.Dispose();
+        if (job is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
     }
 }

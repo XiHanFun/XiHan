@@ -35,7 +35,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// <returns></returns>
     public async Task CreateLogLogin(SysLogLogin logLogin)
     {
-        await AddAsync(logLogin);
+        _ = await AddAsync(logLogin);
     }
 
     /// <summary>
@@ -77,12 +77,12 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
         whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
 
-        var whereExpression = Expressionable.Create<SysLogLogin>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
-        whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
-        whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
-        whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
+        Expressionable<SysLogLogin> whereExpression = Expressionable.Create<SysLogLogin>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
+        _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
+        _ = whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -94,17 +94,17 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// <returns></returns>
     public async Task<PageDataDto<SysLogLogin>> GetLogLoginPageList(PageWhereDto<SysLogLoginWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysLogLoginWDto whereDto = pageWhere.Where;
 
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
         whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
 
-        var whereExpression = Expressionable.Create<SysLogLogin>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
-        whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
-        whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
-        whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
+        Expressionable<SysLogLogin> whereExpression = Expressionable.Create<SysLogLogin>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
+        _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
+        _ = whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

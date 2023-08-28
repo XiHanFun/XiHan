@@ -39,10 +39,13 @@ public static class SqlSugarSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseSqlSugarSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        if (app == null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
-        var dbConfigs = AppSettings.Database.DatabaseConfigs.GetSection();
-        var connectionConfigs = dbConfigs.Select(config => new ConnectionConfig()
+        DatabaseConfig[] dbConfigs = AppSettings.Database.DatabaseConfigs.GetSection();
+        List<ConnectionConfig> connectionConfigs = dbConfigs.Select(config => new ConnectionConfig()
         {
             ConfigId = config.ConfigId,
             DbType = config.DataBaseType.GetEnumByName<DataBaseTypeEnum>().ConvertDbType(),
@@ -51,7 +54,7 @@ public static class SqlSugarSetup
         }).ToList();
 
         // 初始化
-        var client = new SqlSugarClient(connectionConfigs);
+        SqlSugarClient client = new(connectionConfigs);
         InitDatabase(client);
         InitSeedData(client);
 
@@ -67,18 +70,25 @@ public static class SqlSugarSetup
         try
         {
             "正在从配置中检测是否需要初始化数据库……".WriteLineInfo();
-            var enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
-            if (!enableInitDb) return;
+            bool enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
+            if (!enableInitDb)
+            {
+                return;
+            }
+
             "数据库正在初始化……".WriteLineInfo();
 
             "创建数据库……".WriteLineInfo();
-            client.DbMaintenance.CreateDatabase();
+            _ = client.DbMaintenance.CreateDatabase();
             "数据库创建成功！".WriteLineSuccess();
 
             "创建数据表……".WriteLineInfo();
             // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
-            var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
-            if (!dbEntities.Any()) return;
+            Type[] dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
+            if (!dbEntities.Any())
+            {
+                return;
+            }
             // 支持分表，官方文档 https://www.donet5.com/Home/Doc?typeId=1201
             client.CodeFirst.SetStringDefaultLength(256).SplitTables().InitTables(dbEntities);
             "数据表创建成功！".WriteLineSuccess();
@@ -100,28 +110,38 @@ public static class SqlSugarSetup
         try
         {
             "正在从配置中检测是否需要初始化种子数据……".WriteLineInfo();
-            var enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
-            if (!enableInitSeed) return;
+            bool enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
+            if (!enableInitSeed)
+            {
+                return;
+            }
+
             "种子数据正在初始化……".WriteLineInfo();
 
             // 获取继承自泛型接口 ISeedData<> 的所有类
-            var seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
-            if (!seedTypes.Any()) return;
+            List<Type> seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
+            if (!seedTypes.Any())
+            {
+                return;
+            }
 
             seedTypes.ForEach(seedType =>
             {
-                var instance = Activator.CreateInstance(seedType);
+                object? instance = Activator.CreateInstance(seedType);
 
-                var hasDataMethod = seedType.GetMethods().First();
-                var seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
-                if (seedData == null) return;
+                MethodInfo? hasDataMethod = seedType.GetMethods().First();
+                IEnumerable<object>? seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
+                if (seedData == null)
+                {
+                    return;
+                }
 
-                var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
-                var entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
+                Type entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
+                EntityInfo entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
 
                 $"种子数据【{entityInfo.DbTableName}】初始化，共【{seedData.Count()}】条数据。".WriteLineInfo();
 
-                var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                IgnoreUpdateAttribute? ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
                 if (client.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
                 {
                     $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineSuccess();
@@ -131,14 +151,17 @@ public static class SqlSugarSetup
                     if (entityInfo.Columns.Any(u => u.IsPrimarykey))
                     {
                         // 按主键进行批量增加和更新
-                        var storage = client.StorageableByObject(seedData.ToList()).ToStorage();
-                        storage.AsInsertable.ExecuteCommand();
-                        if (ignoreUpdate == null) storage.AsUpdateable.ExecuteCommand();
+                        StorageableMethodInfo storage = client.StorageableByObject(seedData.ToList()).ToStorage();
+                        _ = storage.AsInsertable.ExecuteCommand();
+                        if (ignoreUpdate == null)
+                        {
+                            _ = storage.AsUpdateable.ExecuteCommand();
+                        }
                     }
                     else
                     {
                         // 无主键则只进行插入
-                        client.InsertableByObject(seedData.ToList()).ExecuteCommand();
+                        _ = client.InsertableByObject(seedData.ToList()).ExecuteCommand();
                     }
                 }
             });

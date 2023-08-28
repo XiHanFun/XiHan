@@ -34,27 +34,30 @@ public static class CacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 内存缓存(默认开启)
-        services.AddMemoryCache();
-        services.AddSingleton<IAppCacheService, AppCacheService>();
+        _ = services.AddMemoryCache();
+        _ = services.AddSingleton<IAppCacheService, AppCacheService>();
 
         // 分布式缓存
-        var isEnabledRedisCache = AppSettings.Cache.RedisCache.IsEnabled.GetValue();
+        bool isEnabledRedisCache = AppSettings.Cache.RedisCache.IsEnabled.GetValue();
         if (isEnabledRedisCache)
         {
             // CSRedis
-            var connectionString = AppSettings.Cache.RedisCache.ConnectionString.GetValue();
-            var prefix = AppSettings.Cache.RedisCache.Prefix.GetValue();
-            var redisStr = $"{connectionString}, prefix = {prefix}";
-            var redisClient = new CSRedisClient(redisStr);
+            string connectionString = AppSettings.Cache.RedisCache.ConnectionString.GetValue();
+            string prefix = AppSettings.Cache.RedisCache.Prefix.GetValue();
+            string redisStr = $"{connectionString}, prefix = {prefix}";
+            CSRedisClient redisClient = new(redisStr);
             // 用法一：基于 Redis 初始化 IDistributedCache
-            services.AddSingleton(redisClient);
-            services.AddSingleton<IDistributedCache>(new CSRedisCache(redisClient));
+            _ = services.AddSingleton(redisClient);
+            _ = services.AddSingleton<IDistributedCache>(new CSRedisCache(redisClient));
             // 用法二：帮助类直接调用
             RedisHelper.Initialization(redisClient);
-            services.AddDistributedMemoryCache();
+            _ = services.AddDistributedMemoryCache();
         }
 
         return services;

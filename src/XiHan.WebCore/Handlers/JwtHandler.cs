@@ -37,14 +37,14 @@ public static class JwtHandler
     /// <returns></returns>
     public static string TokenIssue(TokenModel tokenModel)
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
 
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
-        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
 
         // Nuget引入：Microsoft.IdentityModel.Tokens
-        var claims = new List<Claim>
+        List<Claim> claims = new()
         {
             new(ClaimConst.UserId, tokenModel.UserId.ToString()),
             new(ClaimConst.Account, tokenModel.Account),
@@ -70,7 +70,7 @@ public static class JwtHandler
             // 过期时间
             expires: DateTime.UtcNow.AddMinutes(authJwtSetting.Expires)
         );
-        var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
+        string accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
         return accessToken;
     }
 
@@ -82,12 +82,16 @@ public static class JwtHandler
     public static TokenModel TokenSerialize(string token)
     {
         // Token安全验证
-        if (!IsSafeVerifyToken(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
+        if (!IsSafeVerifyToken(token))
+        {
+            throw new AuthenticationException($"JwtToken 字符串解析失败！");
+        }
+
         token = token.ParseToString().Replace(ClaimConst.TokenReplace, string.Empty);
-        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
         List<Claim> claims = jwtToken.Claims.ToList();
-        var tokenModel = new TokenModel
+        TokenModel tokenModel = new()
         {
             UserId = claims.First(claim => claim.Type == ClaimConst.UserId).Value.ParseToLong(),
             Account = claims.First(claim => claim.Type == ClaimConst.Account).Value,
@@ -105,20 +109,23 @@ public static class JwtHandler
     /// <returns></returns>
     public static bool IsSafeVerifyToken(string token)
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
 
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
-        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature);
+        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
 
         try
         {
             token = token.ParseToString().Replace("Bearer ", string.Empty);
             // 开始Token校验
-            if (token.IsEmptyOrNull() || !new JwtSecurityTokenHandler().CanReadToken(token)) throw new ArgumentException("token 为空或无法解析！", nameof(token));
+            if (token.IsEmptyOrNull() || !new JwtSecurityTokenHandler().CanReadToken(token))
+            {
+                throw new ArgumentException("token 为空或无法解析！", nameof(token));
+            }
             // 读取旧token
-            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
+            JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            bool verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
             return verifyResult;
         }
         catch (Exception ex)
@@ -133,11 +140,11 @@ public static class JwtHandler
     /// <returns></returns>
     public static TokenValidationParameters GetTokenVerifyParams()
     {
-        var authJwtSetting = GetAuthJwtSetting();
+        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
         // 签名密钥
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
         // 令牌验证参数
-        var tokenValidationParameters = new TokenValidationParameters
+        TokenValidationParameters tokenValidationParameters = new()
         {
             // 是否验证签名
             ValidateIssuerSigningKey = true,
@@ -170,7 +177,7 @@ public static class JwtHandler
         try
         {
             // 读取配置
-            var authJwtSetting = new AuthJwtSetting
+            AuthJwtSetting authJwtSetting = new()
             {
                 Issuer = AppSettings.Auth.Jwt.Issuer.GetValue(),
                 Audience = AppSettings.Auth.Jwt.Audience.GetValue(),
@@ -182,7 +189,9 @@ public static class JwtHandler
             authJwtSetting.GetProperties().ForEach(setting =>
             {
                 if (setting.PropertyValue.IsNullOrZero())
+                {
                     throw new ArgumentNullException(nameof(setting.PropertyName));
+                }
             });
             return authJwtSetting;
         }

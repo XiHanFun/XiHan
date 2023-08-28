@@ -72,7 +72,7 @@ public class AuthController : BaseApiController
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetTokenByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     {
-        var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
+        SysUser sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
         return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
     }
 
@@ -85,7 +85,7 @@ public class AuthController : BaseApiController
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetTokenByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
     {
-        var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
+        SysUser sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
         return await GetTokenAndRecordLogLogin(sysUser, loginByEmailCDto.Password);
     }
 
@@ -97,12 +97,12 @@ public class AuthController : BaseApiController
     /// <returns></returns>
     private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
     {
-        var token = string.Empty;
+        string token = string.Empty;
 
         // 获取当前请求上下文信息
-        var clientInfo = App.ClientInfo;
-        var addressInfo = App.AddressInfo;
-        var sysLogLogin = new SysLogLogin
+        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
+        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
+        SysLogLogin sysLogLogin = new()
         {
             Ip = addressInfo.RemoteIPv4,
             Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
@@ -113,8 +113,15 @@ public class AuthController : BaseApiController
 
         try
         {
-            if (sysUser == null) throw new Exception("登录失败，用户不存在！");
-            if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password))) throw new Exception("登录失败，密码错误！");
+            if (sysUser == null)
+            {
+                throw new Exception("登录失败，用户不存在！");
+            }
+
+            if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
+            {
+                throw new Exception("登录失败，密码错误！");
+            }
 
             sysLogLogin.IsSuccess = true;
             sysLogLogin.Message = "登录成功！";
@@ -123,7 +130,7 @@ public class AuthController : BaseApiController
             sysLogLogin.Account = sysUser.Account;
             sysLogLogin.RealName = sysUser.RealName;
 
-            var userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+            List<long> userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
             token = JwtHandler.TokenIssue(new TokenModel()
             {
                 UserId = sysUser.BaseId,
@@ -138,7 +145,7 @@ public class AuthController : BaseApiController
             sysLogLogin.Message = ex.Message;
         }
 
-        await _sysLogLoginService.AddAsync(sysLogLogin);
+        _ = await _sysLogLoginService.AddAsync(sysLogLogin);
         return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
     }
 }

@@ -51,7 +51,7 @@ public class SysLogJobController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteLogJob(long[] logIds)
     {
-        var result = await _sysLogJobService.DeleteLogJobByIds(logIds);
+        bool result = await _sysLogJobService.DeleteLogJobByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -62,7 +62,7 @@ public class SysLogJobController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanLogJob()
     {
-        var result = await _sysLogJobService.CleanLogJob();
+        bool result = await _sysLogJobService.CleanLogJob();
         return ApiResult.Success(result);
     }
 
@@ -75,7 +75,7 @@ public class SysLogJobController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogJobById(long logId)
     {
-        var result = await _sysLogJobService.GetLogJobByJobId(logId);
+        Models.Syses.SysLogJob result = await _sysLogJobService.GetLogJobByJobId(logId);
         return ApiResult.Success(result);
     }
 
@@ -88,7 +88,7 @@ public class SysLogJobController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogJobList([FromBody] SysLogJobWDto whereDto)
     {
-        var result = await _sysLogJobService.GetLogJobList(whereDto);
+        List<Models.Syses.SysLogJob> result = await _sysLogJobService.GetLogJobList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -101,7 +101,7 @@ public class SysLogJobController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogJobPageList([FromBody] PageWhereDto<SysLogJobWDto> pageWhere)
     {
-        var result = await _sysLogJobService.GetLogJobPageList(pageWhere);
+        PageDataDto<Models.Syses.SysLogJob> result = await _sysLogJobService.GetLogJobPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }
