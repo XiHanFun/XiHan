@@ -41,20 +41,26 @@ public static class AppConfigProvider
     /// <param name="config"></param>
     public static void RegisterConfig(IConfigurationBuilder config)
     {
-        if (config is not ConfigurationManager configurationManager) return;
+        if (config is not ConfigurationManager configurationManager)
+        {
+            return;
+        }
 
-        var jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>()
+        List<string> jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>()
             .Select(file => file.Path!)
             .ToList();
-        if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json")) return;
+        if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json"))
+        {
+            return;
+        }
 
         try
         {
-            var configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
-            var envName = configurationFile.Split('.')[1];
+            string configurationFile = jsonFilePath.First(name => name.Contains("appsettings"));
+            string envName = configurationFile.Split('.')[1];
             ConfigurationRoot = config.Build();
             ConfigurationFile = configurationFile;
-            var infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
+            string infoMsg = $"配置注册：环境{envName}，配置中心{ConfigurationRoot}，文件名称{ConfigurationFile}";
             Log.Information(infoMsg);
             infoMsg.WriteLineSuccess();
         }
@@ -75,7 +81,7 @@ public static class AppConfigProvider
     /// <returns></returns>
     public static TKey GetValue<TKey>(string key)
     {
-        var result = ConfigurationRoot.GetValue<TKey>(GetPropertyName(key));
+        TKey? result = ConfigurationRoot.GetValue<TKey>(GetPropertyName(key));
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】或配置出错！");
     }
 
@@ -88,7 +94,7 @@ public static class AppConfigProvider
     /// <returns></returns>
     public static TKey GetSection<TKey>(string key)
     {
-        var result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TKey>();
+        TKey? result = ConfigurationRoot.GetSection(GetPropertyName(key)).Get<TKey>();
         return result != null ? result : throw new ArgumentNullException($"配置文件未配置该设置【{key}】或配置出错！");
     }
 

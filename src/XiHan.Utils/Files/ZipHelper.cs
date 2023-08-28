@@ -36,7 +36,7 @@ public static class ZipHelper
 
         if (!Directory.Exists(extractPath))
         {
-            Directory.CreateDirectory(extractPath);
+            _ = Directory.CreateDirectory(extractPath);
         }
 
         ZipFile.ExtractToDirectory(archivePath, extractPath);

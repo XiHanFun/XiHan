@@ -34,17 +34,16 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         // 控制器信息
-        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-        if (actionDescriptor != null)
+        if (context.ActionDescriptor is ControllerActionDescriptor actionDescriptor)
         {
             // 是否授权访问
-            var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
+            bool isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
                 || actionDescriptor.ControllerTypeInfo!.IsDefined(typeof(AuthorizeAttribute), true)
                 || actionDescriptor.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
             // 授权访问就进行权限检查
             if (isAuthorize)
             {
-                var identities = context.HttpContext.User.Identities;
+                IEnumerable<System.Security.Claims.ClaimsIdentity> identities = context.HttpContext.User.Identities;
                 // 验证权限
                 if (identities == null)
                 {

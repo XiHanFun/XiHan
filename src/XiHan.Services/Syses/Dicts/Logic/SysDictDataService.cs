@@ -49,9 +49,8 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     private async Task<bool> CheckDictDataUnique(SysDictData sysDictData)
     {
-        var isUnique = await IsAnyAsync(f => f.TypeCode == sysDictData.TypeCode && f.Value == sysDictData.Value);
-        if (isUnique) throw new CustomException($"字典【{sysDictData.TypeCode}】已存在字典项【{sysDictData.Value}】!");
-        return isUnique;
+        bool isUnique = await IsAnyAsync(f => f.TypeCode == sysDictData.TypeCode && f.Value == sysDictData.Value);
+        return isUnique ? throw new CustomException($"字典【{sysDictData.TypeCode}】已存在字典项【{sysDictData.Value}】!") : isUnique;
     }
 
     /// <summary>
@@ -61,10 +60,12 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<long> CreateDictData(SysDictDataCDto dictDataCDto)
     {
-        var sysDictData = dictDataCDto.Adapt<SysDictData>();
+        SysDictData sysDictData = dictDataCDto.Adapt<SysDictData>();
 
         if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
+        {
             throw new CustomException($"该字典不存在或不可用!");
+        }
 
         _ = await CheckDictDataUnique(sysDictData);
 
@@ -78,7 +79,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> DeleteDictDataByIds(long[] dictIds)
     {
-        var dictDataList = await QueryAsync(d => dictIds.Contains(d.BaseId));
+        List<SysDictData> dictDataList = await QueryAsync(d => dictIds.Contains(d.BaseId));
         return await RemoveAsync(dictDataList);
     }
 
@@ -89,10 +90,12 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<bool> ModifyDictData(SysDictDataMDto dictDataMDto)
     {
-        var sysDictData = dictDataMDto.Adapt<SysDictData>();
+        SysDictData sysDictData = dictDataMDto.Adapt<SysDictData>();
 
         if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
+        {
             throw new CustomException($"该字典不存在或不可用!");
+        }
 
         _ = await CheckDictDataUnique(sysDictData);
 
@@ -106,11 +109,15 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<SysDictData> GetDictDataById(long dictDataId)
     {
-        var key = $"GetDictDataById_{dictDataId}";
-        if (_appCacheService.Get(key) is SysDictData sysDictData) return sysDictData;
+        string key = $"GetDictDataById_{dictDataId}";
+        if (_appCacheService.Get(key) is SysDictData sysDictData)
+        {
+            return sysDictData;
+        }
+
         sysDictData = await FindAsync(d => d.BaseId == dictDataId && d.IsEnable);
 
-        _appCacheService.SetWithMinutes(key, sysDictData, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysDictData, 30);
         return sysDictData;
     }
 
@@ -121,8 +128,12 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataListByType(string dictCode)
     {
-        var key = $"GetDictDataByType_{dictCode}";
-        if (_appCacheService.Get(key) is List<SysDictData> list) return list;
+        string key = $"GetDictDataByType_{dictCode}";
+        if (_appCacheService.Get(key) is List<SysDictData> list)
+        {
+            return list;
+        }
+
         list = await Context.Queryable<SysDictType>()
             .LeftJoin<SysDictData>((t, d) => t.Code == d.TypeCode)
             .Where((t, d) => t.Code == dictCode && d.IsEnable)
@@ -130,7 +141,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
             .ToListAsync();
         list = list.OrderBy(d => d.SortOrder).ToList();
 
-        _appCacheService.SetWithMinutes(key, list, 30);
+        _ = _appCacheService.SetWithMinutes(key, list, 30);
         return list;
     }
 
@@ -141,8 +152,12 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataListByTypes(string[] dictCodes)
     {
-        var key = $"GetDictDataByType_{dictCodes.GetArrayStr(',')}";
-        if (_appCacheService.Get(key) is List<SysDictData> list) return list;
+        string key = $"GetDictDataByType_{dictCodes.GetArrayStr(',')}";
+        if (_appCacheService.Get(key) is List<SysDictData> list)
+        {
+            return list;
+        }
+
         list = await Context.Queryable<SysDictType>()
            .LeftJoin<SysDictData>((t, d) => t.Code == d.TypeCode)
            .Where((t, d) => dictCodes.Contains(t.Code) && d.IsEnable)
@@ -150,7 +165,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
            .ToListAsync();
         list = list.OrderBy(d => d.SortOrder).ToList();
 
-        _appCacheService.SetWithMinutes(key, list, 30);
+        _ = _appCacheService.SetWithMinutes(key, list, 30);
         return list;
     }
 
@@ -161,13 +176,13 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
     /// <returns></returns>
     public async Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysDictDataWDto whereDto = pageWhere.Where;
 
-        var whereExpression = Expressionable.Create<SysDictData>();
-        whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
-        whereExpression.AndIF(whereDto.Label.IsNotEmptyOrNull(), u => u.Label.Contains(whereDto.Label!));
-        whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
-        whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
+        Expressionable<SysDictData> whereExpression = Expressionable.Create<SysDictData>();
+        _ = whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
+        _ = whereExpression.AndIF(whereDto.Label.IsNotEmptyOrNull(), u => u.Label.Contains(whereDto.Label!));
+        _ = whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
+        _ = whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder, pageWhere.IsAsc);
     }

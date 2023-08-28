@@ -52,9 +52,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     private async Task<bool> GetAccountUnique(SysUser sysUser)
     {
-        var isUnique = await IsAnyAsync(u => u.Account == sysUser.Account && !u.IsDeleted);
-        if (isUnique) throw new CustomException($"账户【{sysUser.Account}】已存在！");
-        return isUnique;
+        bool isUnique = await IsAnyAsync(u => u.Account == sysUser.Account && !u.IsDeleted);
+        return isUnique ? throw new CustomException($"账户【{sysUser.Account}】已存在！") : isUnique;
     }
 
     /// <summary>
@@ -64,13 +63,13 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<long> CreateUser(SysUserCDto userCDto)
     {
-        var sysUser = userCDto.Adapt<SysUser>();
+        SysUser sysUser = userCDto.Adapt<SysUser>();
 
         _ = await GetAccountUnique(sysUser);
 
-        var encryptPasswod = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
+        string encryptPasswod = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
         sysUser.Password = encryptPasswod;
-        var userId = await AddReturnIdAsync(sysUser);
+        long userId = await AddReturnIdAsync(sysUser);
 
         // 新增用户角色信息
         sysUser.BaseId = userId;
@@ -84,9 +83,9 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> DeleteUser(SysUser sysUser)
     {
-        var user = await FindAsync(u => u.BaseId == sysUser.BaseId && !u.IsDeleted);
+        SysUser user = await FindAsync(u => u.BaseId == sysUser.BaseId && !u.IsDeleted);
         // 删除用户角色
-        await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
+        _ = await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
         return await RemoveAsync(user);
     }
 
@@ -97,7 +96,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserAccountInfo(SysUserCDto userCDto)
     {
-        var sysUser = userCDto.Adapt<SysUser>();
+        SysUser sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             Account = sysUser.Account,
@@ -114,7 +113,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserBaseInfo(SysUserCDto userCDto)
     {
-        var sysUser = userCDto.Adapt<SysUser>();
+        SysUser sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             RealName = sysUser.RealName,
@@ -150,7 +149,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserStatus(SysUserCDto userCDto)
     {
-        var sysUser = userCDto.Adapt<SysUser>();
+        SysUser sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             StateKey = sysUser.StateKey,
@@ -165,14 +164,12 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        if (await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword))))
-        {
-            return await UpdateAsync(s => new SysUser()
+        return await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword)))
+            ? await UpdateAsync(s => new SysUser()
             {
                 Password = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
-            }, f => f.BaseId == userPwdMDto.BaseId);
-        }
-        throw new CustomException("重置密码出错，旧密码有误！");
+            }, f => f.BaseId == userPwdMDto.BaseId)
+            : throw new CustomException("重置密码出错，旧密码有误！");
     }
 
     /// <summary>
@@ -182,7 +179,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser> GetUserById(long userId)
     {
-        var sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
+        SysUser sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
         //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
         //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
 
@@ -216,15 +213,15 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
-        var whereExpression = Expressionable.Create<SysUser>();
-        whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
-        whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.NickName.Contains(whereDto.NickName!));
-        whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), u => u.RealName.Contains(whereDto.RealName!));
-        whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
-        whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
-        whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
-        whereExpression.And(u => !u.IsDeleted);
+        SysUserWDto whereDto = pageWhere.Where;
+        Expressionable<SysUser> whereExpression = Expressionable.Create<SysUser>();
+        _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
+        _ = whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.NickName.Contains(whereDto.NickName!));
+        _ = whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), u => u.RealName.Contains(whereDto.RealName!));
+        _ = whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
+        _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
+        _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
+        _ = whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

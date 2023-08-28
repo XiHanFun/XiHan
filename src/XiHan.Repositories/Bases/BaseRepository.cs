@@ -66,8 +66,11 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         }
 
         // 若当前未登录或是默认租户Id，则返回默认的连接
-        var tenantId = App.AuthInfo.TenantId;
-        if (tenantId < 1 || tenantId == SqlSugarConst.DefaultTenantId) return;
+        long tenantId = App.AuthInfo.TenantId;
+        if (tenantId is < 1 or SqlSugarConst.DefaultTenantId)
+        {
+            return;
+        }
     }
 
     #region 新增
@@ -89,7 +92,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddAsync(IEnumerable<TEntity> entities)
     {
-        var entityList = entities.ToList();
+        List<TEntity> entityList = entities.ToList();
         return await base.InsertRangeAsync(entityList);
     }
 
@@ -124,7 +127,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> AddOrUpdateAsync(IEnumerable<TEntity> entities)
     {
-        var entityList = entities.ToList();
+        List<TEntity> entityList = entities.ToList();
         return await base.InsertOrUpdateAsync(entityList);
     }
 
@@ -149,7 +152,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(IEnumerable<long> ids)
     {
-        var newIds = ids.Select(x => x as dynamic).ToArray();
+        dynamic[] newIds = ids.Select(x => x as dynamic).ToArray();
         return await base.DeleteByIdsAsync(newIds);
     }
 
@@ -170,7 +173,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> RemoveAsync(IEnumerable<TEntity> entities)
     {
-        var entityList = entities.ToList();
+        List<TEntity> entityList = entities.ToList();
         return await base.DeleteAsync(entityList);
     }
 
@@ -202,7 +205,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(TEntity entity)
+    public new virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         return await base.UpdateAsync(entity);
     }
@@ -213,7 +216,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
+    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);
     }
@@ -225,7 +228,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <returns></returns>
     public virtual async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
     {
-        var entityList = entities.ToList();
+        List<TEntity> entityList = entities.ToList();
         return await base.UpdateRangeAsync(entityList);
     }
 
@@ -281,7 +284,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
+    public new virtual async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
     {
         return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
     }

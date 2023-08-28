@@ -29,7 +29,7 @@ public static class EntityExtension
     /// <returns></returns>
     public static TSource ToCreated<TSource>(this TSource source)
     {
-        var propertyInfo = new PropertyInfo
+        PropertyInfo propertyInfo = new()
         {
             HandleId = "CreatedId",
             HandleBy = "CreatedBy",
@@ -47,7 +47,7 @@ public static class EntityExtension
     /// <returns></returns>
     public static TSource ToModified<TSource>(this TSource source)
     {
-        var propertyInfo = new PropertyInfo
+        PropertyInfo propertyInfo = new()
         {
             HandleId = "ModifiedId",
             HandleBy = "ModifiedBy",
@@ -65,7 +65,7 @@ public static class EntityExtension
     /// <returns></returns>
     public static TSource ToDeleted<TSource>(this TSource source)
     {
-        var propertyInfo = new PropertyInfo
+        PropertyInfo propertyInfo = new()
         {
             IsHandle = "IsDeleted",
             HandleId = "DeletedId",
@@ -84,7 +84,7 @@ public static class EntityExtension
     /// <returns></returns>
     public static TSource ToAudited<TSource>(this TSource source)
     {
-        var propertyInfo = new PropertyInfo
+        PropertyInfo propertyInfo = new()
         {
             HandleId = "AuditedId",
             HandleBy = "AuditedBy",
@@ -105,23 +105,39 @@ public static class EntityExtension
     /// <returns></returns>
     private static TSource CommonTo<TSource>(this TSource source, PropertyInfo propertyInfo)
     {
-        var types = source?.GetType();
-        if (types == null) return source;
+        Type? types = source?.GetType();
+        if (types == null)
+        {
+            return source;
+        }
 
         if (propertyInfo.IsHandle != null && types.GetProperty(propertyInfo.IsHandle) != null)
+        {
             types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true, null);
-        if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
-            types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
+        }
 
-        var user = App.AuthInfo;
+        if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
+        {
+            types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
+        }
+
+        Infrastructures.Apps.HttpContexts.UserAuthInfo user = App.AuthInfo;
         if (user.IsAuthenticated)
         {
             if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
+            {
                 types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
+            }
+
             if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
+            {
                 types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account, null);
+            }
+
             if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
+            {
                 types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId, null);
+            }
         }
         return source;
     }

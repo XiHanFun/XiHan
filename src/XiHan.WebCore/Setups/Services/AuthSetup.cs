@@ -40,10 +40,13 @@ public static class AuthSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAuthSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
         // 身份验证(默认用JwtBearer认证)
-        services.AddAuthentication(options =>
+        _ = services.AddAuthentication(options =>
         {
             // 默认身份验证方案
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,16 +66,16 @@ public static class AuthSetup
                 // 认证失败时
                 OnAuthenticationFailed = context =>
                 {
-                    var token = App.AuthInfo.UserToken;
+                    string token = App.AuthInfo.UserToken;
 
-                    var failedResult = ApiResult.Unauthorized();
+                    ApiResult failedResult = ApiResult.Unauthorized();
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
 
                     // 若Token为空、伪造无法读取
                     if (token.IsNotEmptyOrNull() && new JwtSecurityTokenHandler().CanReadToken(token))
                     {
-                        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                        JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
                         if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
                         {
@@ -92,18 +95,18 @@ public static class AuthSetup
                         failedResult = ApiResult.Unauthorized("授权已过期！");
                         context.Response.Headers.Append("Token-Expired", "true");
                     }
-                    context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
                     return Task.CompletedTask;
                 },
                 // 未授权时
                 OnChallenge = context =>
                 {
                     // 将Token错误添加到返回头信息中，返回自定义的未授权模型数据
-                    var failedResult = ApiResult.Unauthorized("未授权！");
+                    ApiResult failedResult = ApiResult.Unauthorized("未授权！");
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
                     context.Response.Headers.Append("Token-Error", context.ErrorDescription);
-                    context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                    _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
                     return Task.CompletedTask;
                 }
             };
@@ -140,7 +143,7 @@ public static class AuthSetup
             options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
         });
         // 认证授权
-        services.AddAuthorization();
+        _ = services.AddAuthorization();
         return services;
     }
 }

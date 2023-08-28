@@ -33,17 +33,17 @@ public static class NetworkHelper
     /// <returns></returns>
     public static List<NetworkInfo> GetNetworkInfos()
     {
-        var networkInfos = new List<NetworkInfo>();
+        List<NetworkInfo> networkInfos = new();
 
         try
         {
             // 获取可用网卡
-            var interfaces = NetworkInterface.GetAllNetworkInterfaces().Where(network => network.OperationalStatus == OperationalStatus.Up);
+            IEnumerable<NetworkInterface> interfaces = NetworkInterface.GetAllNetworkInterfaces().Where(network => network.OperationalStatus == OperationalStatus.Up);
 
-            foreach (var ni in interfaces)
+            foreach (NetworkInterface? ni in interfaces)
             {
-                var properties = ni.GetIPProperties();
-                var networkInfo = new NetworkInfo
+                IPInterfaceProperties properties = ni.GetIPProperties();
+                NetworkInfo networkInfo = new()
                 {
                     Name = ni.Name,
                     Description = ni.Description,

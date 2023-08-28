@@ -48,12 +48,12 @@ public class DingTalkController : BaseApiController
     [HttpPost("Text")]
     public async Task<ApiResult> DingTalkToText()
     {
-        var text = new DingTalkText
+        DingTalkText text = new()
         {
             Content = "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
         List<string> atMobiles = new() { "1302873****" };
-        var isAtAll = false;
+        bool isAtAll = false;
         return await _dingTalkPushService.DingTalkToText(text, atMobiles, isAtAll);
     }
 
@@ -64,7 +64,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("Link")]
     public async Task<ApiResult> DingTalkToLink()
     {
-        var link = new DingTalkLink
+        DingTalkLink link = new()
         {
             Title = "时代在召唤",
             Text = "这个即将发布的新版本，创始人陈航(花名“无招”)称它为“红树林”。而在此之前，每当面临重大升级，产品经理们都会取一个应景的代号，这一次，为什么是“红树林”？",
@@ -82,7 +82,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("Markdown")]
     public async Task<ApiResult> DingTalkToMarkdown()
     {
-        var markdown = new DingTalkMarkdown
+        DingTalkMarkdown markdown = new()
         {
             Title = "长沙天气",
             Text = "#### 长沙天气 \n" +
@@ -91,7 +91,7 @@ public class DingTalkController : BaseApiController
                 "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
         };
         List<string> atMobiles = new() { "1302873****" };
-        var isAtAll = false;
+        bool isAtAll = false;
         return await _dingTalkPushService.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
     }
 
@@ -102,7 +102,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("WholeActionCard")]
     public async Task<ApiResult> DingTalkToWholeActionCard()
     {
-        var actionCard = new DingTalkActionCard
+        DingTalkActionCard actionCard = new()
         {
             Title = "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text =
@@ -122,7 +122,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("PartActionCard")]
     public async Task<ApiResult> DingTalkToPartActionCard()
     {
-        var actionCard = new DingTalkActionCard
+        DingTalkActionCard actionCard = new()
         {
             Title = "乔布斯 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身",
             Text =
@@ -154,7 +154,7 @@ public class DingTalkController : BaseApiController
     [HttpPost("FeedCard")]
     public async Task<ApiResult> DingTalkToFeedCard()
     {
-        var feedCard = new DingTalkFeedCard
+        DingTalkFeedCard feedCard = new()
         {
             Links = new List<DingTalkFeedCardLink>
             {

@@ -42,12 +42,12 @@ public static class ExcelHelper
     /// <returns></returns>
     public static IDictionary<string, object> ReadFromExcel(string fullPath)
     {
-        var resultData = new Dictionary<string, object>();
+        Dictionary<string, object> resultData = new();
 
-        var sheetNames = MiniExcel.GetSheetNames(fullPath);
-        foreach (var sheetName in sheetNames)
+        List<string> sheetNames = MiniExcel.GetSheetNames(fullPath);
+        foreach (string? sheetName in sheetNames)
         {
-            var data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
+            IEnumerable<dynamic> data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
             resultData.Add(sheetName, data);
         }
         return resultData;
@@ -124,7 +124,7 @@ public static class ExcelHelper
     {
         fileName = $"{fileName}.xlsx";
         // 临时文件夹
-        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+        string tempPath = Path.Combine(Path.GetTempPath(), fileName);
         // 将数据写入 Excel 文件
         WriteToExcel(tempPath, dataSource, sheetName);
         return tempPath;
@@ -139,7 +139,7 @@ public static class ExcelHelper
     {
         fileName = $"{fileName}.xlsx";
         // 临时文件夹
-        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+        string tempPath = Path.Combine(Path.GetTempPath(), fileName);
         // 将数据写入 Excel 文件
         WriteToExcel(tempPath, sheetsSource);
         return tempPath;

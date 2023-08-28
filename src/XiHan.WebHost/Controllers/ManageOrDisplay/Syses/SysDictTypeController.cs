@@ -50,7 +50,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Create)]
     public async Task<ApiResult> CreateDictType([FromBody] SysDictTypeCDto dictTypeCDto)
     {
-        var result = await _sysDictTypeService.CreateDictType(dictTypeCDto);
+        long result = await _sysDictTypeService.CreateDictType(dictTypeCDto);
         return ApiResult.Success(result);
     }
 
@@ -63,7 +63,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteDictType([FromBody] long[] dictIds)
     {
-        var result = await _sysDictTypeService.DeleteDictTypeByIds(dictIds);
+        bool result = await _sysDictTypeService.DeleteDictTypeByIds(dictIds);
         return ApiResult.Success(result);
     }
 
@@ -76,7 +76,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<ApiResult> ModifyDictData([FromBody] SysDictTypeMDto dictTypeMDto)
     {
-        var result = await _sysDictTypeService.ModifyDictType(dictTypeMDto);
+        bool result = await _sysDictTypeService.ModifyDictType(dictTypeMDto);
         return ApiResult.Success(result);
     }
 
@@ -89,7 +89,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetDictTypeById([FromBody] long dictId)
     {
-        var result = await _sysDictTypeService.GetDictTypeById(dictId);
+        Models.Syses.SysDictType result = await _sysDictTypeService.GetDictTypeById(dictId);
         return ApiResult.Success(result);
     }
 
@@ -102,7 +102,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetDictTypeList([FromBody] SysDictTypeWDto dictTypeWDto)
     {
-        var result = await _sysDictTypeService.GetDictTypeList(dictTypeWDto);
+        List<Models.Syses.SysDictType> result = await _sysDictTypeService.GetDictTypeList(dictTypeWDto);
         return ApiResult.Success(result);
     }
 
@@ -115,7 +115,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetDictTypePageList([FromBody] PageWhereDto<SysDictTypeWDto> pageWhere)
     {
-        var result = await _sysDictTypeService.GetDictTypePageList(pageWhere);
+        PageDataDto<Models.Syses.SysDictType> result = await _sysDictTypeService.GetDictTypePageList(pageWhere);
         return ApiResult.Success(result);
     }
 
@@ -127,7 +127,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
     public async Task<ApiResult> ExportDict()
     {
-        var result = await _sysDictTypeService.GetListAsync();
+        List<Models.Syses.SysDictType> result = await _sysDictTypeService.GetListAsync();
         await ExportExcel("系统字典", result, "SysDictType");
         return ApiResult.Success($"系统字典导出成功！");
     }

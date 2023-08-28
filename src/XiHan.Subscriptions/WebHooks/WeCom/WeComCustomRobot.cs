@@ -51,9 +51,9 @@ public class WeComCustomRobot
     public async Task<ApiResult> TextMessage(WeComText text)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, text });
+        ApiResult result = await SendMessage(new { msgType, text });
         return result;
     }
 
@@ -65,9 +65,9 @@ public class WeComCustomRobot
     public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, markdown });
+        ApiResult result = await SendMessage(new { msgType, markdown });
         return result;
     }
 
@@ -79,9 +79,9 @@ public class WeComCustomRobot
     public async Task<ApiResult> ImageMessage(WeComImage image)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, image });
+        ApiResult result = await SendMessage(new { msgType, image });
         return result;
     }
 
@@ -93,9 +93,9 @@ public class WeComCustomRobot
     public async Task<ApiResult> NewsMessage(WeComNews news)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, news });
+        ApiResult result = await SendMessage(new { msgType, news });
         return result;
     }
 
@@ -107,9 +107,9 @@ public class WeComCustomRobot
     public async Task<ApiResult> FileMessage(WeComFile file)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, file });
+        ApiResult result = await SendMessage(new { msgType, file });
         return result;
     }
 
@@ -121,10 +121,10 @@ public class WeComCustomRobot
     public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, template_card = templateCard });
+        ApiResult result = await SendMessage(new { msgType, template_card = templateCard });
         return result;
     }
 
@@ -136,10 +136,10 @@ public class WeComCustomRobot
     public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
     {
         // 消息类型
-        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
         // 发送
-        var result = await SendMessage(new { msgType, template_card = templateCard });
+        ApiResult result = await SendMessage(new { msgType, template_card = templateCard });
         return result;
     }
 
@@ -157,14 +157,14 @@ public class WeComCustomRobot
             { "filelength", fileStream.Length.ToString() }
         };
         // 发起请求，上传地址
-        var result =
+        WeComResultInfoDto? result =
             await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _fileUrl, fileStream, headers);
         // 包装返回信息
         if (result != null)
         {
             if (result.ErrCode == 0 || result.ErrMsg == "ok")
             {
-                var uploadResult = new WeComUploadResultDto
+                WeComUploadResultDto uploadResult = new()
                 {
                     Message = "上传成功",
                     MediaId = result.MediaId
@@ -188,18 +188,12 @@ public class WeComCustomRobot
     private async Task<ApiResult> SendMessage(object objSend)
     {
         // 发送对象
-        var sendMessage = objSend.SerializeToJson();
+        string sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
-        var result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
+        WeComResultInfoDto? result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
         // 包装返回信息
-        if (result != null)
-        {
-            if (result.ErrCode == 0 || result.ErrMsg == "ok")
-                return ApiResult.Success("发送成功");
-            else
-                return ApiResult.BadRequest("发送失败");
-        }
-
-        return ApiResult.InternalServerError();
+        return result != null
+            ? result.ErrCode == 0 || result.ErrMsg == "ok" ? ApiResult.Success("发送成功") : ApiResult.BadRequest("发送失败")
+            : ApiResult.InternalServerError();
     }
 }

@@ -35,7 +35,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     /// <returns></returns>
     public async Task CreateLogOperation(SysLogOperation logOperation)
     {
-        await AddAsync(logOperation);
+        _ = await AddAsync(logOperation);
     }
 
     /// <summary>
@@ -78,12 +78,12 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogOperation>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
-        whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
-        whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
-        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+        Expressionable<SysLogOperation> whereExpression = Expressionable.Create<SysLogOperation>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
+        _ = whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
+        _ = whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
+        _ = whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -95,18 +95,18 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
     /// <returns></returns>
     public async Task<PageDataDto<SysLogOperation>> GetLogOperationPageList(PageWhereDto<SysLogOperationWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysLogOperationWDto whereDto = pageWhere.Where;
 
         // 时间为空，默认查询当天
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(0).GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogOperation>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
-        whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
-        whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
-        whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
-        whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
+        Expressionable<SysLogOperation> whereExpression = Expressionable.Create<SysLogOperation>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.Module.IsNotEmptyOrNull(), l => l.Module == whereDto.Module);
+        _ = whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(), l => l.BusinessType == whereDto.BusinessType);
+        _ = whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(), l => l.RequestMethod!.ToUpperInvariant() == whereDto.RequestMethod!.ToUpperInvariant());
+        _ = whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

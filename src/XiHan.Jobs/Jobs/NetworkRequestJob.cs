@@ -66,12 +66,14 @@ public class NetworkRequestJob : JobBase, IJob
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            var info = await _sysJobService.GetByIdAsync(trigger.JobName) ?? throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
-            var url = info.ApiUrl;
-            var paras = info.Params;
+            Models.Syses.SysJob info = await _sysJobService.GetByIdAsync(trigger.JobName) ?? throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
+            string? url = info.ApiUrl;
+            string? paras = info.Params;
 
             if (url.IsNullOrEmpty() && paras.IsNullOrEmpty())
+            {
                 throw new CustomException($"网络请求任务【{trigger.JobName}】执行失败，参数为空！");
+            }
 
             // POST请求
             string result;

@@ -31,7 +31,7 @@ public class SysUserSeedData : ISeedDataFilter<SysUser>
     [IgnoreUpdate]
     public IEnumerable<SysUser> HasData()
     {
-        var encryptPassword = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
+        string encryptPassword = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
         return new List<SysUser>
         {
             new()

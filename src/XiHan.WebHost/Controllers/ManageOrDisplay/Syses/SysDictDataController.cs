@@ -51,7 +51,7 @@ public class SysDictDataController : BaseApiController
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Create)]
     public async Task<ApiResult> CreateDictData([FromBody] SysDictDataCDto dictDataCDto)
     {
-        var result = await _sysDictDataService.CreateDictData(dictDataCDto);
+        long result = await _sysDictDataService.CreateDictData(dictDataCDto);
         return ApiResult.Success(result);
     }
 
@@ -64,7 +64,7 @@ public class SysDictDataController : BaseApiController
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteDictData([FromBody] long[] dictDataIds)
     {
-        var result = await _sysDictDataService.DeleteDictDataByIds(dictDataIds);
+        bool result = await _sysDictDataService.DeleteDictDataByIds(dictDataIds);
         return ApiResult.Success(result);
     }
 
@@ -77,7 +77,7 @@ public class SysDictDataController : BaseApiController
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<ApiResult> ModifyDictData([FromBody] SysDictDataMDto dictDataMDto)
     {
-        var result = await _sysDictDataService.ModifyDictData(dictDataMDto);
+        bool result = await _sysDictDataService.ModifyDictData(dictDataMDto);
         return ApiResult.Success(result);
     }
 
@@ -90,7 +90,7 @@ public class SysDictDataController : BaseApiController
     [ApiGroup(ApiGroupNameEnum.Display)]
     public async Task<ApiResult> GetDictDataById([FromBody] long dictDataId)
     {
-        var result = await _sysDictDataService.GetDictDataById(dictDataId);
+        Models.Syses.SysDictData result = await _sysDictDataService.GetDictDataById(dictDataId);
         return ApiResult.Success(result);
     }
 
@@ -104,7 +104,7 @@ public class SysDictDataController : BaseApiController
     [ApiGroup(ApiGroupNameEnum.Display)]
     public async Task<ApiResult> GetDictDataListByTypeCode([FromBody] string dictCode)
     {
-        var result = await _sysDictDataService.GetDictDataListByType(dictCode);
+        List<Models.Syses.SysDictData> result = await _sysDictDataService.GetDictDataListByType(dictCode);
         return ApiResult.Success(result);
     }
 
@@ -118,7 +118,7 @@ public class SysDictDataController : BaseApiController
     [ApiGroup(ApiGroupNameEnum.Display)]
     public async Task<ApiResult> GetDictDataListByTypes([FromBody] string[] dictCodes)
     {
-        var result = await _sysDictDataService.GetDictDataListByTypes(dictCodes);
+        List<Models.Syses.SysDictData> result = await _sysDictDataService.GetDictDataListByTypes(dictCodes);
         return ApiResult.Success(result);
     }
 
@@ -131,7 +131,7 @@ public class SysDictDataController : BaseApiController
     [AppLog(Module = "系统字典项", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetDictDataPageList([FromBody] PageWhereDto<SysDictDataWDto> pageWhere)
     {
-        var result = await _sysDictDataService.GetDictDataPageList(pageWhere);
+        PageDataDto<Models.Syses.SysDictData> result = await _sysDictDataService.GetDictDataPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

@@ -29,8 +29,8 @@ namespace XiHan.Services.Syses.Roles.Logic;
 [AppService(ServiceType = typeof(ISysRoleService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysRoleService : BaseService<SysRole>, ISysRoleService
 {
-    private ISysUserRoleService _sysUserRoleService;
-    private ISysRolePermissionService _sysRolePermissionService;
+    private readonly ISysUserRoleService _sysUserRoleService;
+    private readonly ISysRolePermissionService _sysRolePermissionService;
 
     /// <summary>
     /// 构造函数
@@ -50,9 +50,8 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     private async Task<bool> CheckRoleUnique(SysRole sysRole)
     {
-        var isUnique = await IsAnyAsync(f => f.Code == sysRole.Code && f.Name == sysRole.Name);
-        if (isUnique) throw new CustomException($"角色【{sysRole.Name}】已存在!");
-        return isUnique;
+        bool isUnique = await IsAnyAsync(f => f.Code == sysRole.Code && f.Name == sysRole.Name);
+        return isUnique ? throw new CustomException($"角色【{sysRole.Name}】已存在!") : isUnique;
     }
 
     /// <summary>
@@ -62,7 +61,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     public async Task<long> CreateRole(SysRoleCDto roleCDto)
     {
-        var sysRole = roleCDto.Adapt<SysRole>();
+        SysRole sysRole = roleCDto.Adapt<SysRole>();
 
         _ = await CheckRoleUnique(sysRole);
 
@@ -76,13 +75,8 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     public async Task<bool> DeleteRoleByIds(long[] dictIds)
     {
-        var roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        if (roles.Any(r => r.Code == GlobalConst.DefaultRole))
-        {
-            throw new CustomException($"禁止删除系统管理员角色!");
-        }
-
-        return await RemoveAsync(roles);
+        List<SysRole> roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
+        return roles.Any(r => r.Code == GlobalConst.DefaultRole) ? throw new CustomException($"禁止删除系统管理员角色!") : await RemoveAsync(roles);
     }
 
     /// <summary>
@@ -106,7 +100,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     public async Task<List<long>> GetUserRoleIdsByUserId(long userId)
     {
-        var list = await GetUserRolesByUserId(userId);
+        List<SysRole> list = await GetUserRolesByUserId(userId);
         return list.Select(r => r.BaseId).ToList();
     }
 }

@@ -42,7 +42,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     public EmailPushService(ISysUserService sysUserService)
     {
         _sysUserService = sysUserService;
-        var emailFrom = GetEmailFrom().Result ?? throw new CustomException("未添加邮件推送配置或配置不可用！");
+        EmailFromModel emailFrom = GetEmailFrom().Result ?? throw new CustomException("未添加邮件推送配置或配置不可用！");
         _emailRobot = new EmailServer(emailFrom);
     }
 
@@ -52,8 +52,8 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// <returns></returns>
     private async Task<EmailFromModel> GetEmailFrom()
     {
-        var sysEmail = await GetFirstAsync(e => e.IsEnabled);
-        var emailFromModel = sysEmail.Adapt<EmailFromModel>();
+        SysEmail sysEmail = await GetFirstAsync(e => e.IsEnabled);
+        EmailFromModel emailFromModel = sysEmail.Adapt<EmailFromModel>();
         return emailFromModel;
     }
 
@@ -68,7 +68,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     /// <returns></returns>
     public async Task<ApiResult> SendCaptchaMail(string userName, string userEmail, string captcha)
     {
-        var body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
+        string body = @"<section style='background: linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -o-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -ms-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -moz-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);background: -webkit-linear-gradient(left , rgb(183, 244, 250) 1% , rgb(171, 174, 253) 100%);margin-top:10px;margin-bottom: 10px;'>
 							<section style='border-style: solid;border-width: 1px;border-color: #afafaf;box-sizing: border-box;'>
 								<section style='border-style:solid;border-left:none;border-top:none;border-width:1px;border-color:#afafaf;padding:0px 5px 5px 0px;display:inline-block;float:left;'>
 									<section style='width: 5px; height: 5px; background-color: #afafaf; border-width: 0px; border-color: #ef0c0c;'></section>
@@ -100,7 +100,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 							<p style='text-align: center;'><span style='font-size: 10px;'>Copyright &copy;<time>2016-" + DateTime.Now.Year + @"</time>&nbsp;&nbsp;<a href=string.Emptyhttps://www.zhaifanhua.comstring.Empty>ZhaiFanhua</a>&nbsp;All Rights Reserved.</span></p>
 						</section>";
 
-        var emailTo = new EmailToModel
+        EmailToModel emailTo = new()
         {
             Subject = "曦寒账号验证",
             Body = body,

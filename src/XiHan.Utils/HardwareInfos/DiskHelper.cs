@@ -40,17 +40,17 @@ public static class DiskHelper
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2").Trim();
-                var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+                string output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2").Trim();
+                List<string> lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (lines.Any())
                 {
-                    foreach (var line in lines)
+                    foreach (string? line in lines)
                     {
                         // 单位是 KB
-                        var rootDisk = line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+                        string[] rootDisk = line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
                         if (rootDisk.Length >= 5)
                         {
-                            var info = new DiskInfo()
+                            DiskInfo info = new()
                             {
                                 DiskName = rootDisk[4].Trim(),
                                 TypeName = rootDisk[0].Trim(),
@@ -68,7 +68,7 @@ public static class DiskHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
+                List<DriveInfo> drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
                 diskInfos.AddRange(drives.Select(item => new DiskInfo
                 {
                     DiskName = item.Name,

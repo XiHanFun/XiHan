@@ -70,9 +70,9 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             _ => context.Result
         };
         // 请求构造函数和方法,调用下一个过滤器
-        var resultExecuted = await next();
+        ResultExecutedContext resultExecuted = await next();
         // 执行结果
-        var result = JsonSerializer.Serialize(resultExecuted.Result);
+        _ = JsonSerializer.Serialize(resultExecuted.Result);
 
         await Task.CompletedTask;
     }

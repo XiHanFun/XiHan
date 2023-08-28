@@ -39,7 +39,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <param name="httpPolly"></param>
     public DingTalkPushService(IHttpPollyService httpPolly)
     {
-        var dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
+        DingTalkConnection dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
         _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);
     }
 
@@ -49,11 +49,11 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        var sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.DingTalk.GetEnumValueByKey());
-        var config = new TypeAdapterConfig().ForType<SysRobot, DingTalkConnection>()
+        SysRobot sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.DingTalk.GetEnumValueByKey());
+        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysRobot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        var dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
+        DingTalkConnection dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
         return dingTalkConnection;
     }
 

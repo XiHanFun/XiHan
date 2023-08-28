@@ -25,10 +25,10 @@ public class TestRegex
     public static void TestCardId()
     {
         Console.WriteLine("输入身份证号码");
-        var cardId = Console.ReadLine();
+        string? cardId = Console.ReadLine();
         if (cardId != null)
         {
-            var result = RegexHelper.IsNumberPeople(cardId);
+            bool result = RegexHelper.IsNumberPeople(cardId);
             Console.WriteLine(result);
         }
         else

@@ -76,10 +76,14 @@ public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
     /// <returns></returns>
     public async Task<SysLogVisit> GetLogVisitById(long visitId)
     {
-        var key = $"GetLogVisitById_{visitId}";
-        if (_appCacheService.Get(key) is SysLogVisit sysLogVisit) return sysLogVisit;
+        string key = $"GetLogVisitById_{visitId}";
+        if (_appCacheService.Get(key) is SysLogVisit sysLogVisit)
+        {
+            return sysLogVisit;
+        }
+
         sysLogVisit = await FindAsync(d => d.BaseId == visitId);
-        _appCacheService.SetWithMinutes(key, sysLogVisit, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysLogVisit, 30);
 
         return sysLogVisit;
     }
@@ -95,8 +99,8 @@ public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogVisit>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        Expressionable<SysLogVisit> whereExpression = Expressionable.Create<SysLogVisit>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -108,14 +112,14 @@ public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
     /// <returns></returns>
     public async Task<PageDataDto<SysLogVisit>> GetLogVisitPageList(PageWhereDto<SysLogVisitWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysLogVisitWDto whereDto = pageWhere.Where;
 
         // 时间为空，默认查询当天
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        var whereExpression = Expressionable.Create<SysLogVisit>();
-        whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        Expressionable<SysLogVisit> whereExpression = Expressionable.Create<SysLogVisit>();
+        _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

@@ -36,7 +36,7 @@ public static class SerializeHelper
     /// <returns></returns>
     private static JsonSerializerOptions GetJsonSerializerOptions()
     {
-        var options = new JsonSerializerOptions
+        JsonSerializerOptions options = new()
         {
             // 序列化格式
             WriteIndented = true,

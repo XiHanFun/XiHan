@@ -30,23 +30,30 @@ public static class CorsSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCorsSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        if (services == null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
-        var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
-        if (!isEnabledCors) return services;
-        services.AddCors(options =>
+        bool isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
+        if (!isEnabledCors)
+        {
+            return services;
+        }
+
+        _ = services.AddCors(options =>
         {
             // 策略名称
-            var policyName = AppSettings.Cors.PolicyName.GetValue();
+            string policyName = AppSettings.Cors.PolicyName.GetValue();
             // 支持多个域名端口，端口号后不可带/符号
-            var origins = AppSettings.Cors.Origins.GetSection();
+            string[] origins = AppSettings.Cors.Origins.GetSection();
             // 支持多个请求头
-            var headers = AppSettings.Cors.Headers.GetSection();
+            string[] headers = AppSettings.Cors.Headers.GetSection();
             // 添加指定策略
             options.AddPolicy(policyName, policy =>
             {
                 // 配置允许访问的域名
-                policy.WithOrigins(origins)
+                _ = policy.WithOrigins(origins)
                     // 是否允许同源时匹配配置的通配符域
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
                     // 允许任何请求头

@@ -57,12 +57,8 @@ public static class StringExtension
     /// <returns></returns>
     public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        var result = sourceStr.Split(sepeater) as IEnumerable<string>;
-        if (isAllowsDuplicates)
-        {
-            return result;
-        }
-        return result.Distinct();
+        IEnumerable<string> result = sourceStr.Split(sepeater);
+        return isAllowsDuplicates ? result : result.Distinct();
     }
 
     #endregion
@@ -78,7 +74,7 @@ public static class StringExtension
     /// <returns></returns>
     public static string GetListStr(this List<string> sourceList, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        var sourceEnumerable = sourceList as IEnumerable<string>;
+        IEnumerable<string> sourceEnumerable = sourceList;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
     }
 
@@ -91,7 +87,7 @@ public static class StringExtension
     /// <returns></returns>
     public static string GetArrayStr(this string[] sourceArray, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        var sourceEnumerable = sourceArray as IEnumerable<string>;
+        IEnumerable<string> sourceEnumerable = sourceArray;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
     }
 
@@ -104,7 +100,7 @@ public static class StringExtension
     /// <returns></returns>
     public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        var sourceEnumerable = sourceDictionary.Values as IEnumerable<string>;
+        IEnumerable<string> sourceEnumerable = sourceDictionary.Values;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
     }
 
@@ -118,17 +114,21 @@ public static class StringExtension
     public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         StringBuilder sb = new();
-        if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
-        foreach (var item in sourceEnumerable)
+        if (!isAllowsDuplicates)
+        {
+            sourceEnumerable = sourceEnumerable.Distinct();
+        }
+
+        foreach (string item in sourceEnumerable)
         {
             if (item == sourceEnumerable.LastOrDefault())
             {
-                sb.Append(item);
+                _ = sb.Append(item);
             }
             else
             {
-                sb.Append(item);
-                sb.Append(sepeater);
+                _ = sb.Append(item);
+                _ = sb.Append(sepeater);
             }
         }
         return sb.ToString();
@@ -160,8 +160,8 @@ public static class StringExtension
     /// <returns></returns>
     public static string ToSbc(this string sourceStr)
     {
-        var c = sourceStr.ToCharArray();
-        for (var i = 0; i < c.Length; i++)
+        char[] c = sourceStr.ToCharArray();
+        for (int i = 0; i < c.Length; i++)
         {
             if (c[i] == 32)
             {
@@ -169,7 +169,9 @@ public static class StringExtension
                 continue;
             }
             if (c[i] < 127)
+            {
                 c[i] = (char)(c[i] + 65248);
+            }
         }
         return new string(c);
     }
@@ -181,16 +183,18 @@ public static class StringExtension
     /// <returns></returns>
     public static string ToDbc(this string sourceStr)
     {
-        var c = sourceStr.ToCharArray();
-        for (var i = 0; i < c.Length; i++)
+        char[] c = sourceStr.ToCharArray();
+        for (int i = 0; i < c.Length; i++)
         {
             if (c[i] == 12288)
             {
                 c[i] = (char)32;
                 continue;
             }
-            if (c[i] > 65280 && c[i] < 65375)
+            if (c[i] is > (char)65280 and < (char)65375)
+            {
                 c[i] = (char)(c[i] - 65248);
+            }
         }
         return new string(c);
     }
@@ -216,7 +220,7 @@ public static class StringExtension
         else
         {
             // 返回去掉分隔符
-            var newString = sourceStr.Replace(splitString, string.Empty);
+            string newString = sourceStr.Replace(splitString, string.Empty);
             result = newString;
         }
 
@@ -247,8 +251,8 @@ public static class StringExtension
         else
         {
             //检查传入的字符串长度和样式是否匹配,如果不匹配，则说明使用错误，给出错误信息并返回空值
-            var sourceStrLength = sourceStr.Length;
-            var newStyleLength = GetCleanStyle(newStyle, splitString).Length;
+            int sourceStrLength = sourceStr.Length;
+            int newStyleLength = GetCleanStyle(newStyle, splitString).Length;
             if (sourceStrLength != newStyleLength)
             {
                 returnValue = string.Empty;
@@ -259,14 +263,20 @@ public static class StringExtension
                 // 检查新样式中分隔符的位置
                 StringBuilder newStr = new();
                 if (newStyle != null)
-                    for (var i = 0; i < newStyle.Length; i++)
+                {
+                    for (int i = 0; i < newStyle.Length; i++)
+                    {
                         if (newStyle.Substring(i, 1) == splitString)
-                            newStr.Append(i + ",");
+                        {
+                            _ = newStr.Append(i + ",");
+                        }
+                    }
+                }
 
                 if (!string.IsNullOrWhiteSpace(newStr.ToString()))
                 {
                     // 将分隔符放在新样式中的位置
-                    var str = newStr.ToString().Split(',');
+                    string[] str = newStr.ToString().Split(',');
                     sourceStr = str.Aggregate(sourceStr, (current, bb) => current.Insert(int.Parse(bb), splitString));
                 }
 
@@ -326,8 +336,12 @@ public static class StringExtension
     /// <returns></returns>
     public static bool IsValidateStr(this string express, string? value)
     {
-        if (value == null) return false;
-        var myRegex = new Regex(express);
+        if (value == null)
+        {
+            return false;
+        }
+
+        Regex myRegex = new(express);
         return value.Length != 0 && myRegex.IsMatch(value);
     }
 
@@ -343,13 +357,20 @@ public static class StringExtension
     public static int StrLength(this string inputString)
     {
         ASCIIEncoding ascii = new();
-        var tempLen = 0;
-        var s = ascii.GetBytes(inputString);
-        foreach (var t in s)
+        int tempLen = 0;
+        byte[] s = ascii.GetBytes(inputString);
+        foreach (byte t in s)
+        {
             if (t == 63)
+            {
                 tempLen += 2;
+            }
             else
+            {
                 tempLen += 1;
+            }
+        }
+
         return tempLen;
     }
 
@@ -365,7 +386,7 @@ public static class StringExtension
     /// <returns>返回处理后的字符串</returns>
     public static string ClipString(this string inputString, int len)
     {
-        var isShowFix = false;
+        bool isShowFix = false;
         if (len > 0 && len % 2 == 1)
         {
             isShowFix = true;
@@ -373,19 +394,23 @@ public static class StringExtension
         }
 
         ASCIIEncoding ascii = new();
-        var tempLen = 0;
+        int tempLen = 0;
         StringBuilder sb = new();
-        var s = ascii.GetBytes(inputString);
-        for (var i = 0; i < s.Length; i++)
+        byte[] s = ascii.GetBytes(inputString);
+        for (int i = 0; i < s.Length; i++)
         {
             if (s[i] == 63)
+            {
                 tempLen += 2;
+            }
             else
+            {
                 tempLen += 1;
+            }
 
             try
             {
-                sb.Append(inputString.AsSpan(i, 1));
+                _ = sb.Append(inputString.AsSpan(i, 1));
             }
             catch
             {
@@ -393,10 +418,16 @@ public static class StringExtension
             }
 
             if (tempLen > len)
+            {
                 break;
+            }
         }
-        var myByte = Encoding.Default.GetBytes(inputString);
-        if (isShowFix && myByte.Length > len) sb.Append('…');
+        byte[] myByte = Encoding.Default.GetBytes(inputString);
+        if (isShowFix && myByte.Length > len)
+        {
+            _ = sb.Append('…');
+        }
+
         return sb.ToString();
     }
 
@@ -416,8 +447,8 @@ public static class StringExtension
             @"<script[^>]*?>.*?</script>", @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>", @"([\r\n])[\s]+", @"&(quot|#34);", @"&(amp|#38);", @"&(lt|#60);", @"&(gt|#62);", @"&(nbsp|#160);", @"&(iexcl|#161);", @"&(cent|#162);", @"&(pound|#163);", @"&(copy|#169);", @"&#(\d+);", @"-->", @"<!--.*\n"
         };
 
-        var newReg = aryReg[0];
-        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
+        string newReg = aryReg[0];
+        string strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
         strOutput = strOutput.Replace("<", string.Empty).Replace(">", string.Empty).Replace("\r\n", string.Empty);
         return strOutput;
     }
@@ -460,24 +491,31 @@ public static class StringExtension
     public static string FormatReplaceStr(this string content, string oldStr, string newStr)
     {
         // 没有替换字符串直接返回源字符串
-        if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
+        if (!content.Contains(oldStr, StringComparison.CurrentCulture))
+        {
+            return content;
+        }
         // 有替换字符串开始替换
         StringBuilder strBuffer = new();
-        var start = 0;
-        var end = 0;
+        int start = 0;
+        int end = 0;
         // 查找替换内容，把它之前和上一个替换内容之后的字符串拼接起来
         while (true)
         {
             start = content.IndexOf(oldStr, start, StringComparison.Ordinal);
-            if (start == -1) break;
-            strBuffer.Append(content[end..start]);
-            strBuffer.Append(newStr);
+            if (start == -1)
+            {
+                break;
+            }
+
+            _ = strBuffer.Append(content[end..start]);
+            _ = strBuffer.Append(newStr);
             start += oldStr.Length;
             end = start;
         }
 
         // 查找到最后一个位置之后，把剩下的字符串拼接进去
-        strBuffer.Append(content[end..]);
+        _ = strBuffer.Append(content[end..]);
         return strBuffer.ToString();
     }
 

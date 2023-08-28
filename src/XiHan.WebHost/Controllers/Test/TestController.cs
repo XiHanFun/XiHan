@@ -46,7 +46,7 @@ public class TestController : BaseApiController
     [HttpGet("MiniProfilerHtml")]
     public string MiniProfilerHtml()
     {
-        var html = MiniProfiler.Current?.RenderIncludes(HttpContext);
+        Microsoft.AspNetCore.Html.HtmlString? html = MiniProfiler.Current?.RenderIncludes(HttpContext);
         return html?.Value ?? string.Empty;
     }
 
@@ -162,7 +162,7 @@ public class TestController : BaseApiController
     [HttpPost("Upload/File")]
     public new async Task<ApiResult> UploadFile(IFormFile file)
     {
-        var path = await base.UploadFile(file);
+        string path = await base.UploadFile(file);
         return ApiResult.Success($"上传成功！文件路径：{path}");
     }
 
@@ -185,8 +185,8 @@ public class TestController : BaseApiController
     [HttpGet("Download/ImportTemplate")]
     public async Task DownloadImportTemplate()
     {
-        var sysUserSeedData = new SysUserSeedData();
-        var dataSource = sysUserSeedData.HasData();
+        SysUserSeedData sysUserSeedData = new();
+        IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
         await DownloadImportTemplate<SysUser>("系统用户种子数据", dataSource, "SysUser");
     }
 
@@ -199,7 +199,7 @@ public class TestController : BaseApiController
     [HttpPost("Import/Excel")]
     public async Task<ApiResult> ImportExcel(IFormFile file, string sheetName)
     {
-        var userData = await ImportExcel<SysUser>(file, sheetName);
+        IEnumerable<SysUser> userData = await ImportExcel<SysUser>(file, sheetName);
         return ApiResult.Success(userData.SerializeToJson());
     }
 
@@ -211,7 +211,7 @@ public class TestController : BaseApiController
     [HttpPost("Import/Excel/MultipleSheets")]
     public async Task<ApiResult> ImportExcelMultipleSheets(IFormFile file)
     {
-        var data = await ImportExcel(file);
+        IDictionary<string, object> data = await ImportExcel(file);
         return ApiResult.Success(data.SerializeToJson());
     }
 
@@ -222,8 +222,8 @@ public class TestController : BaseApiController
     [HttpGet("Export/Excel")]
     public async Task ExportExcel()
     {
-        var sysUserSeedData = new SysUserSeedData();
-        var dataSource = sysUserSeedData.HasData();
+        SysUserSeedData sysUserSeedData = new();
+        IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
         await ExportExcel<SysUser>("系统用户种子数据", dataSource, "SysUser");
     }
 
@@ -234,11 +234,11 @@ public class TestController : BaseApiController
     [HttpGet("Export/Excel/MultipleSheets")]
     public async Task ExportExcelMultipleSheets()
     {
-        var sysUserSeedData = new SysUserSeedData();
-        var sysConfigSeedData = new SysConfigSeedData();
-        var dataSourceSysUser = sysUserSeedData.HasData();
-        var dataSourceSysConfig = sysConfigSeedData.HasData();
-        var dataSource = new Dictionary<string, object>()
+        SysUserSeedData sysUserSeedData = new();
+        SysConfigSeedData sysConfigSeedData = new();
+        IEnumerable<SysUser> dataSourceSysUser = sysUserSeedData.HasData();
+        IEnumerable<SysConfig> dataSourceSysConfig = sysConfigSeedData.HasData();
+        Dictionary<string, object> dataSource = new()
         {
             {"SysUserSeedData",dataSourceSysUser },
             {"SysConfigSeedData",dataSourceSysConfig },

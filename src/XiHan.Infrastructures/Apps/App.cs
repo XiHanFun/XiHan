@@ -118,7 +118,7 @@ public static class App
     /// <returns></returns>
     public static TService GetService<TService>() where TService : class
     {
-        var service = GetService(typeof(TService)) as TService;
+        TService? service = GetService(typeof(TService)) as TService;
         return service!;
     }
 
@@ -129,7 +129,7 @@ public static class App
     /// <returns></returns>
     public static object GetService(Type type)
     {
-        var service = ServiceProvider.GetService(type);
+        object? service = ServiceProvider.GetService(type);
         return service!;
     }
 
@@ -140,7 +140,7 @@ public static class App
     /// <returns></returns>
     public static TService GetRequiredService<TService>() where TService : class
     {
-        var service = GetRequiredService(typeof(TService)) as TService;
+        TService? service = GetRequiredService(typeof(TService)) as TService;
         return service!;
     }
 
@@ -151,7 +151,7 @@ public static class App
     /// <returns></returns>
     public static object GetRequiredService(Type type)
     {
-        var service = ServiceProvider.GetRequiredService(type);
+        object service = ServiceProvider.GetRequiredService(type);
         return service!;
     }
 

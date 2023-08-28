@@ -54,9 +54,7 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Exists(string key)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-
-        return _cache.TryGetValue(key, out _);
+        return key == null ? throw new ArgumentNullException(nameof(key)) : _cache.TryGetValue(key, out _);
     }
 
     #endregion
@@ -71,10 +69,17 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
-        _cache.Set(key, value.SerializeToJson());
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        _ = _cache.Set(key, value.SerializeToJson());
         return Exists(key);
     }
 
@@ -88,10 +93,17 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
-        _cache.Set(key, value.SerializeToJson(), new MemoryCacheEntryOptions()
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        _ = _cache.Set(key, value.SerializeToJson(), new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
             .SetAbsoluteExpiration(expiresAbsolute));
         return Exists(key);
@@ -107,10 +119,17 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value, TimeSpan expiresIn, bool isSliding = false)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
-        _cache.Set(key, value.SerializeToJson(), isSliding
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        _ = _cache.Set(key, value.SerializeToJson(), isSliding
             ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
             : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
         return Exists(key);
@@ -124,11 +143,22 @@ public class AppCacheService : IAppCacheService
     /// <param name="seconds">缓存时长，秒</param>
     public bool SetWithSeconds(string key, object value, int seconds)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
-        if (seconds <= 0) throw new ArgumentOutOfRangeException(nameof(seconds));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
-        _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddSeconds(seconds));
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        if (seconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(seconds));
+        }
+
+        _ = _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddSeconds(seconds));
         return Exists(key);
     }
 
@@ -140,11 +170,22 @@ public class AppCacheService : IAppCacheService
     /// <param name="minutes">缓存时长，分钟</param>
     public bool SetWithMinutes(string key, object value, int minutes)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
-        if (minutes <= 0) throw new ArgumentOutOfRangeException(nameof(minutes));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
-        _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddMinutes(minutes));
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        if (minutes <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(minutes));
+        }
+
+        _ = _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddMinutes(minutes));
         return Exists(key);
     }
 
@@ -159,7 +200,10 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Remove(string key)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
 
         _cache.Remove(key);
         return !Exists(key);
@@ -172,9 +216,12 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public void Remove(IEnumerable<string> keys)
     {
-        if (keys == null) throw new ArgumentNullException(nameof(keys));
+        if (keys == null)
+        {
+            throw new ArgumentNullException(nameof(keys));
+        }
 
-        keys.ToList().ForEach(item => _cache.Remove(item));
+        keys.ToList().ForEach(_cache.Remove);
     }
 
     /// <summary>
@@ -184,8 +231,11 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public void RemoveByPattern(string pattern)
     {
-        var l = GetMatch(pattern);
-        foreach (var s in l) Remove(s);
+        IEnumerable<string> l = GetMatch(pattern);
+        foreach (string s in l)
+        {
+            _ = Remove(s);
+        }
     }
 
     /// <summary>
@@ -193,8 +243,11 @@ public class AppCacheService : IAppCacheService
     /// </summary>
     public void CleanAll()
     {
-        var l = GetKeys();
-        foreach (var s in l) Remove(s);
+        List<string> l = GetKeys();
+        foreach (string s in l)
+        {
+            _ = Remove(s);
+        }
     }
 
     #endregion
@@ -209,11 +262,11 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Update(string key, object value)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
-
-        if (!Exists(key)) return Set(key, value.SerializeToJson());
-        return Remove(key) && Set(key, value.SerializeToJson());
+        return key == null
+            ? throw new ArgumentNullException(nameof(key))
+            : value == null
+            ? throw new ArgumentNullException(nameof(value))
+            : !Exists(key) ? Set(key, value.SerializeToJson()) : Remove(key) && Set(key, value.SerializeToJson());
     }
 
     /// <summary>
@@ -226,11 +279,13 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Update(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
-
-        if (!Exists(key)) return Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
-        return Remove(key) && Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
+        return key == null
+            ? throw new ArgumentNullException(nameof(key))
+            : value == null
+            ? throw new ArgumentNullException(nameof(value))
+            : !Exists(key)
+            ? Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute)
+            : Remove(key) && Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
     }
 
     /// <summary>
@@ -243,11 +298,13 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Update(string key, object value, TimeSpan expiresIn, bool isSliding = false)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-        if (value == null) throw new ArgumentNullException(nameof(value));
-
-        if (!Exists(key)) return Set(key, value.SerializeToJson(), expiresIn, isSliding);
-        return Remove(key) && Set(key, value.SerializeToJson(), expiresIn, isSliding);
+        return key == null
+            ? throw new ArgumentNullException(nameof(key))
+            : value == null
+            ? throw new ArgumentNullException(nameof(value))
+            : !Exists(key)
+            ? Set(key, value.SerializeToJson(), expiresIn, isSliding)
+            : Remove(key) && Set(key, value.SerializeToJson(), expiresIn, isSliding);
     }
 
     #endregion
@@ -261,9 +318,7 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public T? Get<T>(string key) where T : class
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-
-        return _cache.Get(key) as T;
+        return key == null ? throw new ArgumentNullException(nameof(key)) : _cache.Get(key) as T;
     }
 
     /// <summary>
@@ -273,9 +328,7 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public object Get(string key)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
-
-        return _cache.Get(key) ?? new object();
+        return key == null ? throw new ArgumentNullException(nameof(key)) : _cache.Get(key) ?? new object();
     }
 
     /// <summary>
@@ -285,9 +338,12 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public IDictionary<string, object?> Get(IEnumerable<string> keys)
     {
-        if (keys == null) throw new ArgumentNullException(nameof(keys));
+        if (keys == null)
+        {
+            throw new ArgumentNullException(nameof(keys));
+        }
 
-        var dict = new Dictionary<string, object?>();
+        Dictionary<string, object?> dict = new();
         keys.ToList().ForEach(item => dict.Add(item, _cache.Get(item)));
         return dict;
     }
@@ -299,8 +355,8 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public IEnumerable<string> GetMatch(string pattern)
     {
-        var cacheKeys = GetKeys();
-        var l = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToList();
+        List<string> cacheKeys = GetKeys();
+        List<string> l = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToList();
         return l.AsReadOnly();
     }
 
@@ -310,11 +366,14 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public List<string> GetKeys()
     {
-        var keys = new List<string>();
+        List<string> keys = new();
 
-        var entries = _cache.GetType().GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(_cache);
-        var cacheItems = entries as IDictionary;
-        if (cacheItems == null) return keys;
+        object? entries = _cache.GetType().GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(_cache);
+        if (entries is not IDictionary cacheItems)
+        {
+            return keys;
+        }
+
         keys.AddRange(from DictionaryEntry cacheItem in cacheItems select cacheItem.Key.ToString()!);
         return keys;
     }

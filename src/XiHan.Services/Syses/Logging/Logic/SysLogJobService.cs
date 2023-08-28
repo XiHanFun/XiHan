@@ -52,7 +52,7 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
     public async Task<SysLogJob> CreateLogJob(SysLogJob logJob)
     {
         //获取任务信息
-        var sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == logJob.JobId);
+        SysJob sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == logJob.JobId);
         if (sysJob != null)
         {
             logJob.JobName = sysJob.Name;
@@ -88,10 +88,14 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
     /// <returns></returns>
     public async Task<SysLogJob> GetLogJobByJobId(long jobsId)
     {
-        var key = $"GetLogJobByJobId_{jobsId}";
-        if (_appCacheService.Get(key) is SysLogJob sysLogJob) return sysLogJob;
+        string key = $"GetLogJobByJobId_{jobsId}";
+        if (_appCacheService.Get(key) is SysLogJob sysLogJob)
+        {
+            return sysLogJob;
+        }
+
         sysLogJob = await FindAsync(d => d.JobId == jobsId);
-        _appCacheService.SetWithMinutes(key, sysLogJob, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysLogJob, 30);
 
         return sysLogJob;
     }
@@ -103,10 +107,10 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
     /// <returns></returns>
     public async Task<List<SysLogJob>> GetLogJobList(SysLogJobWDto whereDto)
     {
-        var whereExpression = Expressionable.Create<SysLogJob>();
-        whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
-        whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
-        whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
+        Expressionable<SysLogJob> whereExpression = Expressionable.Create<SysLogJob>();
+        _ = whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
+        _ = whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
@@ -118,12 +122,12 @@ public class SysLogJobService : BaseService<SysLogJob>, ISysLogJobService
     /// <returns></returns>
     public async Task<PageDataDto<SysLogJob>> GetLogJobPageList(PageWhereDto<SysLogJobWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysLogJobWDto whereDto = pageWhere.Where;
 
-        var whereExpression = Expressionable.Create<SysLogJob>();
-        whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
-        whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
-        whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
+        Expressionable<SysLogJob> whereExpression = Expressionable.Create<SysLogJob>();
+        _ = whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
+        _ = whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

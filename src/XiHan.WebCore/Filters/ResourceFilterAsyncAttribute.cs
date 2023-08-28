@@ -45,9 +45,9 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <returns></returns>
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
-        var appCacheService = App.GetRequiredService<IAppCacheService>();
+        IAppCacheService appCacheService = App.GetRequiredService<IAppCacheService>();
 
-        var apiResourceCacheKey = GetCacheKey(context.HttpContext);
+        string apiResourceCacheKey = GetCacheKey(context.HttpContext);
 
         // 若存在此资源，直接返回缓存资源
         if (appCacheService.Exists(apiResourceCacheKey))
@@ -57,12 +57,12 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
         else
         {
             // 请求构造函数和方法,调用下一个过滤器
-            var resourceExecuted = await next();
+            ResourceExecutedContext resourceExecuted = await next();
             // 执行结果，若不存在此资源，缓存请求后的资源(请求构造函数和方法)
             if (resourceExecuted.Result != null)
             {
-                var result = resourceExecuted.Result as ActionResult;
-                appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
+                ActionResult? result = resourceExecuted.Result as ActionResult;
+                _ = appCacheService.SetWithMinutes(apiResourceCacheKey, result!, _syncTimeout);
             }
         }
     }
@@ -74,7 +74,7 @@ public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
     /// <returns></returns>
     private static string GetCacheKey(HttpContext context)
     {
-        var requestId = context.TraceIdentifier.Split(':')[0];
+        string requestId = context.TraceIdentifier.Split(':')[0];
         return $"{requestId}_{context.Request.Path.ToString().ToLowerInvariant()}";
     }
 }

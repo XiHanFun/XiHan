@@ -30,7 +30,7 @@ public static class ContentTypeExtend
     /// <returns></returns>
     public static string GetValue(this ContentTypeEnum contentType)
     {
-        var hashtable = new Hashtable
+        Hashtable hashtable = new()
         {
             // 纯文本
             {ContentTypeEnum.TextPlain,"text/plain"},

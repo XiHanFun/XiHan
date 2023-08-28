@@ -32,11 +32,11 @@ public static class AppLogProvider
     /// <param name="builder"></param>
     public static void RegisterLog(ILoggingBuilder builder)
     {
-        var debugPath = @"Logs/Debug/.log";
-        var infoPath = @"Logs/Info/.log";
-        var waringPath = @"Logs/Waring/.log";
-        var errorPath = @"Logs/Error/.log";
-        var fatalPath = @"Logs/Fatal/.log";
+        string debugPath = @"Logs/Debug/.log";
+        string infoPath = @"Logs/Info/.log";
+        string waringPath = @"Logs/Waring/.log";
+        string errorPath = @"Logs/Error/.log";
+        string fatalPath = @"Logs/Fatal/.log";
         const string infoTemplate =
             @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Message：{Message}{NewLine}================{NewLine}";
         const string warnTemplate =
@@ -64,7 +64,7 @@ public static class AppLogProvider
             .SinkFileConfig(LogEventLevel.Fatal, fatalPath, errorTemplate)
             .CreateLogger();
         builder.AddSerilog();
-        var infoMsg = $"日志注册：{Log.Logger}";
+        string infoMsg = $"日志注册：{Log.Logger}";
         Log.Information(infoMsg);
         infoMsg.WriteLineSuccess();
     }

@@ -29,9 +29,9 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Assembly> GetAllEffectiveAssemblies(string prefix = "XiHan", string suffix = "dll")
     {
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        var filteredAssemblies = assemblies
+        IEnumerable<Assembly> filteredAssemblies = assemblies
             .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().StartsWith(prefix.ToLowerInvariant()))
             .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().EndsWith(suffix.ToLowerInvariant()));
 
@@ -58,12 +58,12 @@ public static class ReflectionHelper
         List<string> nugetPackages = new();
 
         // 获取当前应用程序集引用的所有程序集
-        var assemblies = GetAllEffectiveAssemblies();
+        IEnumerable<Assembly> assemblies = GetAllEffectiveAssemblies();
 
         // 查找被引用程序集中的 NuGet 库依赖项
         foreach (Assembly assembly in assemblies)
         {
-            var referencedAssemblies = assembly.GetReferencedAssemblies()
+            IEnumerable<AssemblyName> referencedAssemblies = assembly.GetReferencedAssemblies()
                 .Where(s => !s.FullName!.StartsWith("Microsoft"))
                 .Where(s => !s.FullName!.StartsWith("System"));
             foreach (AssemblyName referencedAssembly in referencedAssemblies)

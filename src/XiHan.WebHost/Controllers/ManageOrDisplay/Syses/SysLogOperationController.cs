@@ -51,7 +51,7 @@ public class SysLogOperationController : BaseApiController
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteLogOperation(long[] logIds)
     {
-        var result = await _sysLogOperationService.DeleteLogOperationByIds(logIds);
+        bool result = await _sysLogOperationService.DeleteLogOperationByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -63,7 +63,7 @@ public class SysLogOperationController : BaseApiController
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanLogOperation()
     {
-        var result = await _sysLogOperationService.CleanLogOperation();
+        bool result = await _sysLogOperationService.CleanLogOperation();
         return ApiResult.Success(result);
     }
 
@@ -76,7 +76,7 @@ public class SysLogOperationController : BaseApiController
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogOperationById(long logId)
     {
-        var result = await _sysLogOperationService.GetLogOperationById(logId);
+        Models.Syses.SysLogOperation result = await _sysLogOperationService.GetLogOperationById(logId);
         return ApiResult.Success(result);
     }
 
@@ -89,7 +89,7 @@ public class SysLogOperationController : BaseApiController
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogOperationList([FromBody] SysLogOperationWDto whereDto)
     {
-        var result = await _sysLogOperationService.GetLogOperationList(whereDto);
+        List<Models.Syses.SysLogOperation> result = await _sysLogOperationService.GetLogOperationList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -102,7 +102,7 @@ public class SysLogOperationController : BaseApiController
     [AppLog(Module = "系统操作日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogOperationPageList([FromBody] PageWhereDto<SysLogOperationWDto> pageWhere)
     {
-        var result = await _sysLogOperationService.GetLogOperationPageList(pageWhere);
+        PageDataDto<Models.Syses.SysLogOperation> result = await _sysLogOperationService.GetLogOperationPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

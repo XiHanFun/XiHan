@@ -51,11 +51,11 @@ public class ChatHub : Hub<IChatHub>
     public override async Task OnConnectedAsync()
     {
         // 获取当前请求上下文信息
-        var clientInfo = App.ClientInfo;
-        var addressInfo = App.AddressInfo;
-        var authInfo = App.AuthInfo;
+        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
+        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
+        Infrastructures.Apps.HttpContexts.UserAuthInfo authInfo = App.AuthInfo;
 
-        var onlineUser = new OnlineUser
+        OnlineUser onlineUser = new()
         {
             ConnectionId = Context.ConnectionId,
             UserId = authInfo.UserId,
@@ -84,8 +84,11 @@ public class ChatHub : Hub<IChatHub>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var onlineUser = OnlineUsers.Where(u => u.ConnectionId == Context.ConnectionId).FirstOrDefault();
-        if (onlineUser == null) return;
+        OnlineUser? onlineUser = OnlineUsers.Where(u => u.ConnectionId == Context.ConnectionId).FirstOrDefault();
+        if (onlineUser == null)
+        {
+            return;
+        }
 
         _ = OnlineUsers.Remove(onlineUser);
         _ = _appCacheService.Remove($"UserOnline_{onlineUser.UserId}");
@@ -164,11 +167,14 @@ public class ChatHub : Hub<IChatHub>
     [HubMethodName("SendMessageToUser")]
     public async Task SendMessageToUser(UserMessageCDto message)
     {
-        var userlist = new List<string>();
-        foreach (var userId in message.UserIds)
+        List<string> userlist = new();
+        foreach (long userId in message.UserIds)
         {
-            var user = _appCacheService.Get<OnlineUser>($"UserOnline_{userId}");
-            if (user != null) userlist.Add(user.ConnectionId);
+            OnlineUser? user = _appCacheService.Get<OnlineUser>($"UserOnline_{userId}");
+            if (user != null)
+            {
+                userlist.Add(user.ConnectionId);
+            }
         }
         await Clients.Clients(userlist).ReceiveMessage(message);
     }

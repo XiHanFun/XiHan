@@ -49,9 +49,8 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     private async Task<bool> CheckPermissionUnique(SysPermission sysPermission)
     {
-        var isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code && p.Name == sysPermission.Name);
-        if (isUnique) throw new CustomException($"权限【{sysPermission.Name}】已存在!");
-        return isUnique;
+        bool isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code && p.Name == sysPermission.Name);
+        return isUnique ? throw new CustomException($"权限【{sysPermission.Name}】已存在!") : isUnique;
     }
 
     /// <summary>
@@ -62,7 +61,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <exception cref="CustomException"></exception>
     public async Task<long> CreatePermission(SysPermissionCDto permissionCDto)
     {
-        var sysPermission = permissionCDto.Adapt<SysPermission>();
+        SysPermission sysPermission = permissionCDto.Adapt<SysPermission>();
 
         _ = await CheckPermissionUnique(sysPermission);
 
@@ -76,7 +75,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<bool> DeletePermissionByIds(long[] permissionIds)
     {
-        var permissionList = await QueryAsync(d => permissionIds.Contains(d.BaseId));
+        List<SysPermission> permissionList = await QueryAsync(d => permissionIds.Contains(d.BaseId));
         return await RemoveAsync(permissionList);
     }
 
@@ -87,7 +86,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<bool> ModifyPermission(SysPermissionCDto permissionCDto)
     {
-        var sysPermission = permissionCDto.Adapt<SysPermission>();
+        SysPermission sysPermission = permissionCDto.Adapt<SysPermission>();
 
         _ = await CheckPermissionUnique(sysPermission);
 
@@ -101,10 +100,14 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<SysPermission> GetPermissionById(long permissionId)
     {
-        var key = $"GetPermissionById_{permissionId}";
-        if (_appCacheService.Get(key) is SysPermission sysPermission) return sysPermission;
+        string key = $"GetPermissionById_{permissionId}";
+        if (_appCacheService.Get(key) is SysPermission sysPermission)
+        {
+            return sysPermission;
+        }
+
         sysPermission = await FindAsync(d => d.BaseId == permissionId);
-        _appCacheService.SetWithMinutes(key, sysPermission, 30);
+        _ = _appCacheService.SetWithMinutes(key, sysPermission, 30);
 
         return sysPermission;
     }
@@ -116,10 +119,10 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<List<SysPermission>> GetPermissionList(SysPermissionWDto whereDto)
     {
-        var whereExpression = Expressionable.Create<SysPermission>();
-        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
-        whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
-        whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
+        Expressionable<SysPermission> whereExpression = Expressionable.Create<SysPermission>();
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
+        _ = whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.SortOrder, false);
     }
@@ -131,12 +134,12 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<PageDataDto<SysPermission>> GetPermissionPageList(PageWhereDto<SysPermissionWDto> pageWhere)
     {
-        var whereDto = pageWhere.Where;
+        SysPermissionWDto whereDto = pageWhere.Where;
 
-        var whereExpression = Expressionable.Create<SysPermission>();
-        whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
-        whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
-        whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
+        Expressionable<SysPermission> whereExpression = Expressionable.Create<SysPermission>();
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
+        _ = whereExpression.AndIF(whereDto.PermissionType != null, u => u.PermissionType == whereDto.PermissionType);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder, pageWhere.IsAsc);
     }
