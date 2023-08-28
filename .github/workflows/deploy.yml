@@ -1,5 +1,5 @@
 # 名称
-name: XiHan.Framework Publish Test
+name: 部署测试
 
 # 触发条件：在 push 和 pull 到 main 分支后
 on:
@@ -19,15 +19,20 @@ jobs:
 
     steps:
       # 拉取代码
-      - uses: actions/checkout@v3
+      - name: 拉取代码
+        uses: actions/checkout@v3
+
       # 环境
-      - name: Setup .NET
+      - name: 安装环境
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 7.0.x
-      - name: Restore dependencies
+
+      - name: 恢复依赖
         run: dotnet restore XiHan.sln
-      - name: Build
+
+      - name: 构建项目
         run: dotnet build --no-restore XiHan.sln
-      - name: Test
+
+      - name: 运行测试
         run: dotnet test --no-build --verbosity normal XiHan.sln
