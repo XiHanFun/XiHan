@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogJob
+// FileName:SysJobLog
 // Guid:238e4849-c954-4aad-955f-db05adadc267
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -23,8 +23,8 @@ namespace XiHan.Models.Syses;
 /// </summary>
 /// <remarks>记录新增信息</remarks>
 [SystemTable]
-[SugarTable("Sys_Log_Job")]
-public class SysLogJob : BaseDeleteEntity
+[SugarTable("Sys_Job_Log")]
+public class SysJobLog : BaseDeleteEntity
 {
     /// <summary>
     /// 所属任务

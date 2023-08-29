@@ -146,7 +146,7 @@ public class SysConfigController : BaseApiController
     }
 
     /// <summary>
-    /// 系统配置导出
+    /// 导出系统配置
     /// </summary>
     /// <returns></returns>
     [HttpGet("Export/Data")]

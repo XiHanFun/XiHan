@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel.DataAnnotations;
 using XiHan.Services.Bases.Dtos;
 
 namespace XiHan.Services.Syses.Dicts.Dtos;
@@ -24,5 +25,6 @@ public class SysDictTypeMDto : SysDictTypeCDto, IBaseIdDto
     /// <summary>
     /// 主键标识
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public long BaseId { get; set; }
 }

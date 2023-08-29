@@ -25,6 +25,7 @@ public class SysUserPwdMDto : IBaseIdDto
     /// <summary>
     /// 主键标识
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public long BaseId { get; set; }
 
     /// <summary>

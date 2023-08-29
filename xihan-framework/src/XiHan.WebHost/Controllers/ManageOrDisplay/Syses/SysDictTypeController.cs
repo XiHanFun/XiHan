@@ -42,7 +42,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 新增字典
+    /// 新增系统字典
     /// </summary>
     /// <param name="dictTypeCDto"></param>
     /// <returns></returns>
@@ -55,7 +55,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 删除字典
+    /// 删除系统字典
     /// </summary>
     /// <param name="dictIds"></param>
     /// <returns></returns>
@@ -68,7 +68,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 修改字典
+    /// 修改系统字典
     /// </summary>
     /// <param name="dictTypeMDto"></param>
     /// <returns></returns>
@@ -81,7 +81,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典详情
+    /// 查询系统字典详情
     /// </summary>
     /// <param name="dictId"></param>
     /// <returns></returns>
@@ -94,7 +94,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典列表
+    /// 查询系统字典列表
     /// </summary>
     /// <param name="dictTypeWDto"></param>
     /// <returns></returns>
@@ -107,7 +107,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典分页列表
+    /// 查询系统字典分页列表
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
@@ -120,7 +120,7 @@ public class SysDictTypeController : BaseApiController
     }
 
     /// <summary>
-    /// 字典导出
+    /// 导出系统字典
     /// </summary>
     /// <returns></returns>
     [HttpGet("Export/Data")]

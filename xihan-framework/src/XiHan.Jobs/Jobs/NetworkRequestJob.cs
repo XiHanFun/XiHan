@@ -77,7 +77,7 @@ public class NetworkRequestJob : JobBase, IJob
 
             // POST请求
             string result;
-            if (info.RequestMethod != null && info.RequestMethod == RequestMethodEnum.Post)
+            if (info.RequestMethod is not null and RequestMethodEnum.Post)
             {
                 result = await _httpPollyService.PostAsync(HttpGroupEnum.Remote, url!, paras!);
             }

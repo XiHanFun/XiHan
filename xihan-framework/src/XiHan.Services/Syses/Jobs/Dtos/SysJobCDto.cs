@@ -3,70 +3,60 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysJob
-// Guid:cf17417c-79fa-4785-b490-feea07bbf6e3
+// FileName:SysJobCDto
+// Guid:09dece81-20d6-4d30-afea-80d95d375ce3
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-04-11 下午 02:30:34
-// ----------------------------------------------------------------​
+// CreateTime:2023/8/29 23:18:17
+// ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
+using System.ComponentModel.DataAnnotations;
 using XiHan.Infrastructures.Requests.Https;
-using XiHan.Models.Bases.Attributes;
-using XiHan.Models.Bases.Entities;
 using XiHan.Models.Syses.Enums;
 
-namespace XiHan.Models.Syses;
+namespace XiHan.Services.Syses.Jobs.Dtos;
 
 /// <summary>
-/// 系统计划任务表
+/// SysJobCDto
 /// </summary>
-/// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Job")]
-public class SysJob : BaseDeleteEntity
+public class SysJobCDto
 {
     /// <summary>
     /// 任务分组
     /// </summary>
-    [SugarColumn(Length = 32)]
+    [Required(ErrorMessage = "{0}不能为空")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字")]
+    [MaxLength(32, ErrorMessage = "{0}不能多于{1}个字")]
     public string Group { get; set; } = string.Empty;
 
     /// <summary>
     /// 任务名称
     /// </summary>
-    [SugarColumn(Length = 32)]
+    [Required(ErrorMessage = "{0}不能为空")]
+    [MinLength(4, ErrorMessage = "{0}不能少于{1}个字")]
+    [MaxLength(32, ErrorMessage = "{0}不能多于{1}个字")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否启动
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public bool IsStart { get; set; }
 
     /// <summary>
     /// 任务描述
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字")]
     public string? Description { get; set; }
-
-    /// <summary>
-    /// 执行次数
-    /// </summary>
-    public int RunTimes { get; set; }
-
-    /// <summary>
-    /// 最后运行时间
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public DateTime? LastRunTime { get; set; }
 
     #region 任务类型
 
     /// <summary>
     /// 任务类型
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public JobTypeEnum JobType { get; set; }
 
     #region 程序集
@@ -74,13 +64,13 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 程序集名称
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字")]
     public string? AssemblyName { get; set; }
 
     /// <summary>
     /// 任务所在类
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字")]
     public string? ClassName { get; set; }
 
     #endregion
@@ -90,19 +80,18 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 网络请求方式
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public RequestMethodEnum? RequestMethod { get; set; }
 
     /// <summary>
     /// Api执行地址
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
+    [MaxLength(256, ErrorMessage = "{0}不能多于{1}个字")]
     public string? ApiUrl { get; set; }
 
     /// <summary>
     /// 传入参数
     /// </summary>
-    [SugarColumn(Length = 512, IsNullable = true)]
+    [MaxLength(512, ErrorMessage = "{0}不能多于{1}个字")]
     public string? Params { get; set; }
 
     #endregion
@@ -112,7 +101,6 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// SQL语句
     /// </summary>
-    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string? SqlText { get; set; }
 
     #endregion
@@ -124,6 +112,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 触发器类型
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public TriggerTypeEnum TriggerType { get; set; }
 
     #region 定时任务
@@ -131,31 +120,21 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 执行间隔时间 单位秒
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public int? IntervalSecond { get; set; }
 
     /// <summary>
     /// 循环执行次数
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public int? CycleRunTimes { get; set; }
-
-    /// <summary>
-    /// 已循环次数
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public int? CycleHasRunTimes { get; set; }
 
     /// <summary>
     /// 开始时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public DateTime? BeginTime { get; set; }
 
     /// <summary>
     /// 结束时间
     /// </summary>
-    [SugarColumn(IsNullable = true)]
     public DateTime? EndTime { get; set; }
 
     #endregion
@@ -165,7 +144,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 运行时间表达式
     /// </summary>
-    [SugarColumn(Length = 64, IsNullable = true)]
+    [RegularExpression(@"^\\s*($|#|\\w+\\s*=|(\\?|\\*|(?:[0-5]?\\d)(?:(?:-|\\/|\\,)(?:[0-5]?\\d))?(?:,(?:[0-5]?\\d)(?:(?:-|\\/|\\,)(?:[0-5]?\\d))?)*)\\s+(\\?|\\*|(?:[0-5]?\\d)(?:(?:-|\\/|\\,)(?:[0-5]?\\d))?(?:,(?:[0-5]?\\d)(?:(?:-|\\/|\\,)(?:[0-5]?\\d))?)*)\\s+(\\?|\\*|(?:[01]?\\d|2[0-3])(?:(?:-|\\/|\\,)(?:[01]?\\d|2[0-3]))?(?:,(?:[01]?\\d|2[0-3])(?:(?:-|\\/|\\,)(?:[01]?\\d|2[0-3]))?)*)\\s+(\\?|\\*|(?:0?[1-9]|[12]\\d|3[01])(?:(?:-|\\/|\\,)(?:0?[1-9]|[12]\\d|3[01]))?(?:,(?:0?[1-9]|[12]\\d|3[01])(?:(?:-|\\/|\\,)(?:0?[1-9]|[12]\\d|3[01]))?)*)\\s+(\\?|\\*|(?:[1-9]|1[012])(?:(?:-|\\/|\\,)(?:[1-9]|1[012]))?(?:L|W)?(?:,(?:[1-9]|1[012])(?:(?:-|\\/|\\,)(?:[1-9]|1[012]))?(?:L|W)?)*|\\?|\\*|(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(?:(?:-)(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))?(?:,(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(?:(?:-)(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))?)*)\\s+(\\?|\\*|(?:[0-6])(?:(?:-|\\/|\\,|#)(?:[0-6]))?(?:L)?(?:,(?:[0-6])(?:(?:-|\\/|\\,|#)(?:[0-6]))?(?:L)?)*|\\?|\\*|(?:MON|TUE|WED|THU|FRI|SAT|SUN)(?:(?:-)(?:MON|TUE|WED|THU|FRI|SAT|SUN))?(?:,(?:MON|TUE|WED|THU|FRI|SAT|SUN)(?:(?:-)(?:MON|TUE|WED|THU|FRI|SAT|SUN))?)*)(|\\s)+(\\?|\\*|(?:|\\d{4})(?:(?:-|\\/|\\,)(?:|\\d{4}))?(?:,(?:|\\d{4})(?:(?:-|\\/|\\,)(?:|\\d{4}))?)*))$", ErrorMessage = "Cron表达式无效")]
     public string? Cron { get; set; }
 
     #endregion

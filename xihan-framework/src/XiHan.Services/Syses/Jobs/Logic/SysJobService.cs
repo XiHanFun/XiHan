@@ -12,9 +12,15 @@
 
 #endregion <<版权版本注释>>
 
+using Mapster;
+using SqlSugar;
 using XiHan.Infrastructures.Apps.Services;
+using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
+using XiHan.Services.Syses.Jobs.Dtos;
+using XiHan.Utils.Exceptions;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Syses.Jobs.Logic;
 
@@ -24,78 +30,99 @@ namespace XiHan.Services.Syses.Jobs.Logic;
 [AppService(ServiceType = typeof(ISysJobService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
 public class SysJobService : BaseService<SysJob>, ISysJobService
 {
-    ///// <summary>
-    ///// 新增字典项
-    ///// </summary>
-    ///// <param name="dictDataCDto"></param>
-    ///// <returns></returns>
-    //public async Task<long> CreateDictData(SysDictDataCDto dictDataCDto)
-    //{
-    //    var sysDictData = dictDataCDto.Adapt<SysDictData>();
-    //    if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.TypeCode == sysDictData.TypeCode && t.IsEnable))
-    //        throw new CustomException($"该字典不存在!");
+    /// <summary>
+    /// 校验任务是否唯一
+    /// </summary>
+    /// <param name="sysJob"></param>
+    /// <returns></returns>
+    private async Task<bool> GetJobUnique(SysJob sysJob)
+    {
+        bool isUnique = await IsAnyAsync(j => j.Group == sysJob.Group && j.Name == sysJob.Name);
+        return isUnique ? throw new CustomException($"任务【{sysJob.Group}-{sysJob.Name}】已存在！") : isUnique;
+    }
 
-    //    _ = await CheckDictDataUnique(sysDictData);
+    /// <summary>
+    /// 新增系统任务
+    /// </summary>
+    /// <param name="jobCDto"></param>
+    /// <returns></returns>
+    public async Task<long> CreateJob(SysJobCDto jobCDto)
+    {
+        SysJob sysJob = jobCDto.Adapt<SysJob>();
 
-    //    return await AddReturnIdAsync(sysDictData);
-    //}
+        _ = await GetJobUnique(sysJob);
 
-    ///// <summary>
-    ///// 批量删除字典项
-    ///// </summary>
-    ///// <param name="dictIds"></param>
-    ///// <returns></returns>
-    //public async Task<bool> DeleteDictDataByIds(long[] dictIds)
-    //{
-    //    var dictDataList = await QueryAsync(d => dictIds.Contains(d.BaseId));
-    //    return await RemoveAsync(dictDataList);
-    //}
+        return await AddReturnIdAsync(sysJob);
+    }
 
-    ///// <summary>
-    ///// 修改字典项
-    ///// </summary>
-    ///// <param name="dictDataCDto"></param>
-    ///// <returns></returns>
-    //public async Task<bool> ModifyDictData(SysDictDataCDto dictDataCDto)
-    //{
-    //    var sysDictData = dictDataCDto.Adapt<SysDictData>();
+    /// <summary>
+    /// 批量删除系统任务
+    /// </summary>
+    /// <param name="jobIds"></param>
+    /// <returns></returns>
+    public async Task<bool> DeleteJobByIds(long[] jobIds)
+    {
+        List<SysJob> jobList = await QueryAsync(d => jobIds.Contains(d.BaseId));
+        return await RemoveAsync(jobList);
+    }
 
-    //    _ = await CheckDictDataUnique(sysDictData);
+    /// <summary>
+    /// 修改系统任务
+    /// </summary>
+    /// <param name="jobMDto"></param>
+    /// <returns></returns>
+    public async Task<bool> ModifyJob(SysJobMDto jobMDto)
+    {
+        SysJob newSysJob = jobMDto.Adapt<SysJob>();
 
-    //    return await UpdateAsync(sysDictData);
-    //}
+        return await UpdateAsync(newSysJob);
+    }
 
-    ///// <summary>
-    ///// 查询字典项(根据Id)
-    ///// </summary>
-    ///// <param name="dictDataId"></param>
-    ///// <returns></returns>
-    //public async Task<SysDictData> GetDictDataById(long dictDataId)
-    //{
-    //    var key = $"GetDictDataById_{dictDataId}";
-    //    if (_appCacheService.Get(key) is SysDictData sysDictData) return sysDictData;
-    //    sysDictData = await FindAsync(d => d.BaseId == dictDataId && d.IsEnable);
-    //    _appCacheService.SetWithMinutes(key, sysDictData, 30);
+    /// <summary>
+    /// 查询系统任务(根据Id)
+    /// </summary>
+    /// <param name="jobId"></param>
+    /// <returns></returns>
+    public async Task<SysJob> GetJobById(long jobId)
+    {
+        SysJob sysJob = await FindAsync(d => d.BaseId == jobId && !d.IsDeleted);
 
-    //    return sysDictData;
-    //}
+        return sysJob;
+    }
 
-    ///// <summary>
-    ///// 查询字典项列表(根据分页条件)
-    ///// </summary>
-    ///// <param name="pageWhere"></param>
-    ///// <returns></returns>
-    //public async Task<PageDataDto<SysDictData>> GetDictDataPageList(PageWhereDto<SysDictDataWDto> pageWhere)
-    //{
-    //    var whereDto = pageWhere.Where;
+    /// <summary>
+    /// 查询系统任务列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    public async Task<List<SysJob>> GetJobList(SysJobWDto whereDto)
+    {
+        Expressionable<SysJob> whereExpression = Expressionable.Create<SysJob>();
+        _ = whereExpression.AndIF(whereDto.Group.IsNotEmptyOrNull(), u => u.Group.Contains(whereDto.Group!));
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.JobType != null, u => u.JobType == whereDto.JobType);
+        _ = whereExpression.AndIF(whereDto.TriggerType != null, u => u.TriggerType == whereDto.TriggerType);
+        _ = whereExpression.AndIF(whereDto.IsStart != null, u => u.IsStart == whereDto.IsStart);
 
-    //    var whereExpression = Expressionable.Create<SysDictData>();
-    //    whereExpression.AndIF(whereDto.TypeCode != null, u => u.TypeCode == whereDto.TypeCode);
-    //    whereExpression.AndIF(whereDto.Value.IsNotEmptyOrNull(), u => u.Value == whereDto.Value);
-    //    whereExpression.AndIF(whereDto.Label.IsNotEmptyOrNull(), u => u.Label.Contains(whereDto.Label!));
-    //    whereExpression.AndIF(whereDto.IsDefault != null, u => u.IsDefault == whereDto.IsDefault);
-    //    whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
+        return await QueryAsync(whereExpression.ToExpression(), o => new { o.IsStart, o.CreatedTime });
+    }
 
-    //    return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.SortOrder);
-    //}
+    /// <summary>
+    /// 查询系统任务列表(根据分页条件)
+    /// </summary>
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    public async Task<PageDataDto<SysJob>> GetJobPageList(PageWhereDto<SysJobWDto> pageWhere)
+    {
+        SysJobWDto whereDto = pageWhere.Where;
+
+        Expressionable<SysJob> whereExpression = Expressionable.Create<SysJob>();
+        _ = whereExpression.AndIF(whereDto.Group.IsNotEmptyOrNull(), u => u.Group.Contains(whereDto.Group!));
+        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.JobType != null, u => u.JobType == whereDto.JobType);
+        _ = whereExpression.AndIF(whereDto.TriggerType != null, u => u.TriggerType == whereDto.TriggerType);
+        _ = whereExpression.AndIF(whereDto.IsStart != null, u => u.IsStart == whereDto.IsStart);
+
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => new { o.IsStart, o.CreatedTime }, pageWhere.IsAsc);
+    }
 }

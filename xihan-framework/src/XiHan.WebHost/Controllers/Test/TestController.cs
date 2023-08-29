@@ -22,7 +22,6 @@ using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.SeedData;
-using XiHan.Models.Syses.SeedDatas;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 using XiHan.WebCore.Common.Swagger;

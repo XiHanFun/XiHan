@@ -43,7 +43,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 新增字典项
+    /// 新增系统字典项
     /// </summary>
     /// <param name="dictDataCDto"></param>
     /// <returns></returns>
@@ -56,7 +56,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 删除字典项
+    /// 删除系统字典项
     /// </summary>
     /// <param name="dictDataIds"></param>
     /// <returns></returns>
@@ -69,7 +69,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 修改字典项
+    /// 修改系统字典项
     /// </summary>
     /// <param name="dictDataMDto"></param>
     /// <returns></returns>
@@ -82,7 +82,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典项详情
+    /// 查询系统字典项详情
     /// </summary>
     /// <param name="dictDataId"></param>
     /// <returns></returns>
@@ -95,7 +95,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典项列表(根据字典编码)
+    /// 查询系统字典项列表(根据字典编码)
     /// </summary>
     /// <param name="dictCode"></param>
     /// <returns></returns>
@@ -109,7 +109,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典项列表(根据多个字典)
+    /// 查询系统字典项列表(根据多个字典)
     /// </summary>
     /// <param name="dictCodes"></param>
     /// <returns></returns>
@@ -123,7 +123,7 @@ public class SysDictDataController : BaseApiController
     }
 
     /// <summary>
-    /// 查询字典项分页列表
+    /// 查询系统字典项分页列表
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>

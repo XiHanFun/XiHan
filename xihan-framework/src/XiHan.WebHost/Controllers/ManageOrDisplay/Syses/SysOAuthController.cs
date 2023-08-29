@@ -54,76 +54,76 @@ public class SysOAuthController : BaseApiController
         _sysLogLoginService = sysLogLoginService;
     }
 
-    /// <summary>
-    /// 三方登录
-    /// </summary>
-    /// <param name="loginByAccountCDto"></param>
-    /// <returns></returns>
-    [HttpPost("SignIn")]
-    [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> SignIn([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
-    {
-        SysUser sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
-        return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
-    }
+    ///// <summary>
+    ///// 三方登录
+    ///// </summary>
+    ///// <param name="loginByAccountCDto"></param>
+    ///// <returns></returns>
+    //[HttpPost("SignIn")]
+    //[AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
+    //public async Task<ApiResult> SignIn([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
+    //{
+    //    SysUser sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
+    //    return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
+    //}
 
-    /// <summary>
-    /// 获取 Token 并记录登录日志
-    /// </summary>
-    /// <param name="sysUser"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
-    private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
-    {
-        string token = string.Empty;
+    ///// <summary>
+    ///// 获取 Token 并记录登录日志
+    ///// </summary>
+    ///// <param name="sysUser"></param>
+    ///// <param name="password"></param>
+    ///// <returns></returns>
+    //private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
+    //{
+    //    string token = string.Empty;
 
-        // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-        SysLogLogin sysLogLogin = new()
-        {
-            Ip = addressInfo.RemoteIPv4,
-            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
-            Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
-            Os = clientInfo.OsName + clientInfo.OsVersion,
-            Agent = clientInfo.Agent
-        };
+    //    // 获取当前请求上下文信息
+    //    Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
+    //    Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
+    //    SysLogLogin sysLogLogin = new()
+    //    {
+    //        Ip = addressInfo.RemoteIPv4,
+    //        Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
+    //        Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
+    //        Os = clientInfo.OsName + clientInfo.OsVersion,
+    //        Agent = clientInfo.Agent
+    //    };
 
-        try
-        {
-            if (sysUser == null)
-            {
-                throw new Exception("登录失败，用户不存在！");
-            }
+    //    try
+    //    {
+    //        if (sysUser == null)
+    //        {
+    //            throw new Exception("登录失败，用户不存在！");
+    //        }
 
-            if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
-            {
-                throw new Exception("登录失败，密码错误！");
-            }
+    //        if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
+    //        {
+    //            throw new Exception("登录失败，密码错误！");
+    //        }
 
-            sysLogLogin.IsSuccess = true;
-            sysLogLogin.Message = "登录成功！";
-            sysLogLogin.Account = sysUser.Account;
-            sysLogLogin.RealName = sysUser.RealName;
-            sysLogLogin.Account = sysUser.Account;
-            sysLogLogin.RealName = sysUser.RealName;
+    //        sysLogLogin.IsSuccess = true;
+    //        sysLogLogin.Message = "登录成功！";
+    //        sysLogLogin.Account = sysUser.Account;
+    //        sysLogLogin.RealName = sysUser.RealName;
+    //        sysLogLogin.Account = sysUser.Account;
+    //        sysLogLogin.RealName = sysUser.RealName;
 
-            List<long> userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
-            token = JwtHandler.TokenIssue(new TokenModel()
-            {
-                UserId = sysUser.BaseId,
-                Account = sysUser.Account,
-                NickName = sysUser.NickName,
-                UserRole = userRoleIds,
-            });
-        }
-        catch (Exception ex)
-        {
-            sysLogLogin.IsSuccess = false;
-            sysLogLogin.Message = ex.Message;
-        }
+    //        List<long> userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+    //        token = JwtHandler.TokenIssue(new TokenModel()
+    //        {
+    //            UserId = sysUser.BaseId,
+    //            Account = sysUser.Account,
+    //            NickName = sysUser.NickName,
+    //            UserRole = userRoleIds,
+    //        });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        sysLogLogin.IsSuccess = false;
+    //        sysLogLogin.Message = ex.Message;
+    //    }
 
-        _ = await _sysLogLoginService.AddAsync(sysLogLogin);
-        return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
-    }
+    //    _ = await _sysLogLoginService.AddAsync(sysLogLogin);
+    //    return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
+    //}
 }

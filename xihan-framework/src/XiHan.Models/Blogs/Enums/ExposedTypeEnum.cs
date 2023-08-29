@@ -14,7 +14,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Models.Posts.Enums;
+namespace XiHan.Models.Blogs.Enums;
 
 /// <summary>
 /// 公开类型

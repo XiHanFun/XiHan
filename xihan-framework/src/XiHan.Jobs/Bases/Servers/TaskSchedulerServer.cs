@@ -24,12 +24,11 @@ using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Utils.Exceptions;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Jobs.Bases.Servers;
 
 /// <summary>
-/// 任务调度管理中心
+/// 任务调度中心
 /// </summary>
 public class TaskSchedulerServer : ITaskSchedulerServer
 {
@@ -303,6 +302,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
 
     #region 私有方法
 
+    #region 任务类型
+
     /// <summary>
     /// 创建任务
     /// 程序集类型
@@ -366,6 +367,10 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         return job;
     }
 
+    #endregion
+
+    #region 触发器类型
+
     /// <summary>
     /// 创建 Interval 类型的触发器
     /// 定时任务
@@ -381,6 +386,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         // 设置开始时间和结束时间
         sysJob.BeginTime ??= DateTime.Now;
         sysJob.EndTime ??= DateTime.MaxValue.AddDays(-1);
+        sysJob.IntervalSecond ??= 60;
         DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(sysJob.BeginTime, 1);
         DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(sysJob.EndTime, 1);
 
@@ -401,7 +407,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 .WithIdentity(sysJob.BaseId.ToString(), sysJob.Group)
                 .StartAt(starRunTime)
                 .EndAt(endRunTime)
-                .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysJob.IntervalSecond)
+                .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysJob.IntervalSecond.Value)
                     .WithRepeatCount(sysJob.RunTimes))
                 .ForJob(sysJob.BaseId.ToString(), sysJob.Group)
                 .Build();
@@ -413,7 +419,7 @@ public class TaskSchedulerServer : ITaskSchedulerServer
                 .WithIdentity(sysJob.BaseId.ToString(), sysJob.Group)
                 .StartAt(starRunTime)
                 .EndAt(endRunTime)
-                .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysJob.IntervalSecond)
+                .WithSimpleSchedule(x => x.WithIntervalInSeconds(sysJob.IntervalSecond.Value)
                     .RepeatForever())
                 .ForJob(sysJob.BaseId.ToString(), sysJob.Group)
                 .Build();
@@ -455,6 +461,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
         return trigger;
     }
+
+    #endregion
 
     #endregion
 }

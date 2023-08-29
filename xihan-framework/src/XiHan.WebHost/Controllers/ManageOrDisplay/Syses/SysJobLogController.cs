@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogJobController
+// FileName:SysJobLogController
 // Guid:a6b72a71-814c-43ca-b83c-3313cf432b83
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,8 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Services.Syses.Logging;
-using XiHan.Services.Syses.Logging.Dtos;
+using XiHan.Services.Syses.Jobs;
+using XiHan.Services.Syses.Jobs.Dtos;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebHost.Controllers.Bases;
 
@@ -29,17 +29,17 @@ namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
 /// </summary>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogJobController : BaseApiController
+public class SysJobLogController : BaseApiController
 {
-    private readonly ISysLogJobService _sysLogJobService;
+    private readonly ISysJobLogService _sysJobLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sysLogJobService"></param>
-    public SysLogJobController(ISysLogJobService sysLogJobService)
+    /// <param name="sysJobLogService"></param>
+    public SysJobLogController(ISysJobLogService sysJobLogService)
     {
-        _sysLogJobService = sysLogJobService;
+        _sysJobLogService = sysJobLogService;
     }
 
     /// <summary>
@@ -49,9 +49,9 @@ public class SysLogJobController : BaseApiController
     /// <returns></returns>
     [HttpDelete("Delete")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<ApiResult> DeleteLogJob(long[] logIds)
+    public async Task<ApiResult> DeleteJobLog(long[] logIds)
     {
-        bool result = await _sysLogJobService.DeleteLogJobByIds(logIds);
+        bool result = await _sysJobLogService.DeleteJobLogByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -60,9 +60,9 @@ public class SysLogJobController : BaseApiController
     /// </summary>
     [HttpDelete("Clean")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Clean)]
-    public async Task<ApiResult> CleanLogJob()
+    public async Task<ApiResult> CleanJobLog()
     {
-        bool result = await _sysLogJobService.CleanLogJob();
+        bool result = await _sysJobLogService.CleanJobLog();
         return ApiResult.Success(result);
     }
 
@@ -73,9 +73,9 @@ public class SysLogJobController : BaseApiController
     /// <returns></returns>
     [HttpGet("Get/ByJobId")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogJobById(long logId)
+    public async Task<ApiResult> GetJobLogById(long logId)
     {
-        Models.Syses.SysLogJob result = await _sysLogJobService.GetLogJobByJobId(logId);
+        Models.Syses.SysJobLog result = await _sysJobLogService.GetJobLogByJobId(logId);
         return ApiResult.Success(result);
     }
 
@@ -86,9 +86,9 @@ public class SysLogJobController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetList")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogJobList([FromBody] SysLogJobWDto whereDto)
+    public async Task<ApiResult> GetJobLogList([FromBody] SysJobLogWDto whereDto)
     {
-        List<Models.Syses.SysLogJob> result = await _sysLogJobService.GetLogJobList(whereDto);
+        List<Models.Syses.SysJobLog> result = await _sysJobLogService.GetJobLogList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -99,9 +99,9 @@ public class SysLogJobController : BaseApiController
     /// <returns></returns>
     [HttpPost("GetPageList")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetLogJobPageList([FromBody] PageWhereDto<SysLogJobWDto> pageWhere)
+    public async Task<ApiResult> GetJobLogPageList([FromBody] PageWhereDto<SysJobLogWDto> pageWhere)
     {
-        PageDataDto<Models.Syses.SysLogJob> result = await _sysLogJobService.GetLogJobPageList(pageWhere);
+        PageDataDto<Models.Syses.SysJobLog> result = await _sysJobLogService.GetJobLogPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

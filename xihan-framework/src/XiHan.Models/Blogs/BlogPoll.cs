@@ -14,7 +14,7 @@
 
 using SqlSugar;
 using XiHan.Models.Bases.Entities;
-using XiHan.Models.Posts.Enums;
+using XiHan.Models.Blogs.Enums;
 
 namespace XiHan.Models.Blogs;
 

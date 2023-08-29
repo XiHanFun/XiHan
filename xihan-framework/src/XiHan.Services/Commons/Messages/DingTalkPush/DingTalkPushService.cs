@@ -21,7 +21,6 @@ using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Subscriptions.WebHooks.DingTalk;
 using XiHan.Utils.Exceptions;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Commons.Messages.DingTalkPush;
 

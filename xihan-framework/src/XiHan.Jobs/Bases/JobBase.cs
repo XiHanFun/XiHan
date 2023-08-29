@@ -19,7 +19,6 @@ using XiHan.Infrastructures.Apps;
 using XiHan.Models.Syses;
 using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.Services.Syses.Jobs;
-using XiHan.Services.Syses.Logging;
 using XiHan.Utils.Extensions;
 
 namespace XiHan.Jobs.Bases;
@@ -41,7 +40,7 @@ public class JobBase
     protected async Task ExecuteJob(IJobExecutionContext context, Func<Task> job)
     {
         // 记录Job日志
-        SysLogJob sysLogJob = new();
+        SysJobLog sysJobLog = new();
 
         try
         {
@@ -49,9 +48,9 @@ public class JobBase
             await job();
             _stopwatch.Stop();
 
-            sysLogJob.IsSuccess = true;
-            sysLogJob.Message = "执行成功！";
-            sysLogJob.Elapsed = _stopwatch.ElapsedMilliseconds;
+            sysJobLog.IsSuccess = true;
+            sysJobLog.Message = "执行成功！";
+            sysJobLog.Elapsed = _stopwatch.ElapsedMilliseconds;
         }
         catch (Exception ex)
         {
@@ -61,12 +60,12 @@ public class JobBase
                 RefireImmediately = true
             };
 
-            sysLogJob.IsSuccess = false;
-            sysLogJob.Message = "执行失败！";
-            sysLogJob.Exception = ex.Message;
+            sysJobLog.IsSuccess = false;
+            sysJobLog.Message = "执行失败！";
+            sysJobLog.Exception = ex.Message;
         }
 
-        await RecordTasksLog(context, sysLogJob);
+        await RecordTasksLog(context, sysJobLog);
     }
 
     /// <summary>
@@ -75,19 +74,19 @@ public class JobBase
     /// <param name="context"></param>
     /// <param name="jobLog"></param>
     /// <returns></returns>
-    private async Task RecordTasksLog(IJobExecutionContext context, SysLogJob jobLog)
+    private async Task RecordTasksLog(IJobExecutionContext context, SysJobLog jobLog)
     {
         try
         {
             ISysJobService sysJobService = App.GetRequiredService<ISysJobService>();
-            ISysLogJobService sysLogJobService = App.GetRequiredService<ISysLogJobService>();
+            ISysJobLogService sysJobLogService = App.GetRequiredService<ISysJobLogService>();
             IEmailPushService emailPushService = App.GetRequiredService<IEmailPushService>();
 
             // 获取任务详情
             IJobDetail jobDetail = context.JobDetail;
             jobLog.JobId = jobDetail.Key.Name.ParseToLong();
             jobLog.InvokeTarget = jobDetail.JobType.FullName;
-            jobLog = await sysLogJobService.CreateLogJob(jobLog);
+            jobLog = await sysJobLogService.CreateJobLog(jobLog);
             string logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
 
             // 若执行成功，则执行次数加一
@@ -96,6 +95,7 @@ public class JobBase
                 _ = await sysJobService.UpdateAsync(job => new SysJob()
                 {
                     RunTimes = job.RunTimes + 1,
+                    //CycleHasRunTimes = job.CycleHasRunTimes + 1,
                     LastRunTime = DateTime.Now
                 }, f => f.BaseId == jobDetail.Key.Name.ParseToLong());
                 Logger.Information(logInfo);

@@ -15,6 +15,7 @@
 using Quartz;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Jobs.Bases;
+using XiHan.Services.Syses.Jobs;
 using XiHan.Services.Syses.Logging;
 
 namespace XiHan.Jobs.Jobs.Assembly;
@@ -26,17 +27,17 @@ namespace XiHan.Jobs.Jobs.Assembly;
 public class CleanLogsJob : JobBase, IJob
 {
     private readonly ISysLogOperationService _sysLogOperationService;
-    private readonly ISysLogJobService _sysLogJobService;
+    private readonly ISysJobLogService _sysJobLogService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="sysLogOperationService"></param>
-    /// <param name="sysLogJobService"></param>
-    public CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysLogJobService sysLogJobService)
+    /// <param name="sysJobLogService"></param>
+    public CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysJobLogService sysJobLogService)
     {
         _sysLogOperationService = sysLogOperationService;
-        _sysLogJobService = sysLogJobService;
+        _sysJobLogService = sysJobLogService;
     }
 
     /// <summary>
@@ -59,6 +60,6 @@ public class CleanLogsJob : JobBase, IJob
         DateTime twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
         _ = await _sysLogOperationService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
-        _ = await _sysLogJobService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        _ = await _sysJobLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
     }
 }
