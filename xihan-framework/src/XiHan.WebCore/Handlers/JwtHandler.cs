@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
@@ -166,6 +167,64 @@ public static class JwtHandler
             RequireExpirationTime = true
         };
         return tokenValidationParameters;
+    }
+
+    /// <summary>
+    /// 读取 Token，不含验证
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
+    public static JsonWebToken ReadJwtToken(string accessToken)
+    {
+        var tokenHandler = new JsonWebTokenHandler();
+        if (tokenHandler.CanReadToken(accessToken))
+        {
+            return tokenHandler.ReadJsonWebToken(accessToken);
+        }
+        else
+        {
+            throw new AuthenticationException("读取 JWT Bearer Token 失败！");
+        }
+    }
+
+    /// <summary>
+    /// 读取 Token，不含验证
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
+    public static JwtSecurityToken SecurityReadJwtToken(string accessToken)
+    {
+        var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+        if (jwtSecurityTokenHandler.CanReadToken(accessToken))
+        {
+            return jwtSecurityTokenHandler.ReadJwtToken(accessToken);
+        }
+        else
+        {
+            throw new AuthenticationException("读取 JWT Bearer Token 失败！");
+        }
+    }
+
+    /// <summary>
+    /// 获取 JWT Bearer Token
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <param name="headerKey"></param>
+    /// <param name="tokenPrefix"></param>
+    /// <returns></returns>
+    public static string GetJwtBearerToken(DefaultHttpContext httpContext, string headerKey = "Authorization", string tokenPrefix = "Bearer ")
+    {
+        // 判断请求报文头中是否有 "Authorization" 报文头
+        var bearerToken = httpContext.Request.Headers[headerKey].ToString();
+        if (string.IsNullOrWhiteSpace(bearerToken))
+        {
+            throw new AuthenticationException("获取 JWT Bearer Token 失败！");
+        }
+
+        var prefixLenght = tokenPrefix.Length;
+        return bearerToken.StartsWith(tokenPrefix, true, null) && bearerToken.Length > prefixLenght
+            ? bearerToken[prefixLenght..]
+            : throw new AuthenticationException("获取 JWT Bearer Token 失败！"); ;
     }
 
     /// <summary>
