@@ -22,7 +22,7 @@ using XiHan.Services.Syses.Logging.Dtos;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
+namespace XiHan.WebHost.Controllers.Syses;
 
 /// <summary>
 /// 系统操作日志管理

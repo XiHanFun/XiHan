@@ -22,7 +22,7 @@ using XiHan.Services.Syses.Dicts.Dtos;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
+namespace XiHan.WebHost.Controllers.Syses;
 
 /// <summary>
 /// 系统字典项管理

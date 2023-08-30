@@ -218,9 +218,9 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
         _ = whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.NickName.Contains(whereDto.NickName!));
         _ = whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), u => u.RealName.Contains(whereDto.RealName!));
-        _ = whereExpression.AndIF(whereDto.Gender.IsNotEmptyOrNull(), u => u.Gender == whereDto.Gender);
-        _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email == whereDto.Email);
-        _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone == whereDto.Phone);
+        _ = whereExpression.AndIF(whereDto.Gender != null, u => u.Gender == whereDto.Gender);
+        _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email.Contains(whereDto.Email!));
+        _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone.Contains(whereDto.Phone!));
         _ = whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);

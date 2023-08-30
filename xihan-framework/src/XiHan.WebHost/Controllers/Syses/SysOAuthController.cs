@@ -27,7 +27,7 @@ using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Handlers;
 using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
+namespace XiHan.WebHost.Controllers.Syses;
 
 /// <summary>
 /// 系统三方登录管理

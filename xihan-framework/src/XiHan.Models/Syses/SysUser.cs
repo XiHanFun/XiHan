@@ -15,6 +15,7 @@
 using SqlSugar;
 using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Entities;
+using XiHan.Models.Syses.Enums;
 
 namespace XiHan.Models.Syses;
 
@@ -58,6 +59,11 @@ public class SysUser : BaseEntity
     [SugarColumn(Length = 512, IsNullable = true)]
     public string? Signature { get; set; }
 
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public StatusEnum Status { get; set; } = StatusEnum.Enable;
+
     #endregion
 
     #region 基本信息
@@ -70,10 +76,8 @@ public class SysUser : BaseEntity
 
     /// <summary>
     /// 性别
-    /// 男(true)女(false)
     /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public bool? Gender { get; set; }
+    public GenderEnum Gender { get; set; } = GenderEnum.Unknown;
 
     /// <summary>
     /// 邮箱
@@ -84,8 +88,8 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 手机号码
     /// </summary>
-    [SugarColumn(IsNullable = true, Length = 32)]
-    public string? Phone { get; set; }
+    [SugarColumn(Length = 32)]
+    public string Phone { get; set; } = string.Empty;
 
     /// <summary>
     /// 生日

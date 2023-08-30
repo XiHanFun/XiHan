@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysMenuController
-// Guid:fd14c90d-92d3-42f6-a909-025c5b3f858c
+// FileName:SysUserRoleController
+// Guid:a5768a4e-d914-4d5d-9bda-8844a96638c7
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-19 下午 05:51:42
+// CreateTime:2023-07-19 下午 05:50:43
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -16,19 +16,19 @@ using Microsoft.AspNetCore.Authorization;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.ManageOrDisplay.Syses;
+namespace XiHan.WebHost.Controllers.Syses;
 
 /// <summary>
-/// 系统菜单管理
+/// 系统用户角色管理
 /// </summary>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysMenuController : BaseApiController
+public class SysUserRoleController : BaseApiController
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public SysMenuController()
+    public SysUserRoleController()
     {
     }
 }
