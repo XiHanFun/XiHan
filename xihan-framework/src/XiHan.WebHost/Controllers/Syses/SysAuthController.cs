@@ -15,9 +15,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
+using XiHan.Models.Syses.Enums;
 using XiHan.Services.Syses.Logging;
 using XiHan.Services.Syses.Menus;
 using XiHan.Services.Syses.Permissions;
@@ -64,7 +66,7 @@ public class SysAuthController : BaseApiController
     }
 
     /// <summary>
-    /// 通过账户登录
+    /// 登录(通过账户)
     /// </summary>
     /// <param name="loginByAccountCDto"></param>
     /// <returns></returns>
@@ -77,7 +79,7 @@ public class SysAuthController : BaseApiController
     }
 
     /// <summary>
-    /// 通过邮箱登录
+    /// 登录(通过邮箱)
     /// </summary>
     /// <param name="loginByEmailCDto"></param>
     /// <returns></returns>
@@ -87,6 +89,21 @@ public class SysAuthController : BaseApiController
     {
         SysUser sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
         return await GetTokenAndRecordLogLogin(sysUser, loginByEmailCDto.Password);
+    }
+
+    /// <summary>
+    /// 注销
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("SignOut")]
+    [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
+    public new async Task<ApiResult> SignOut()
+    {
+        await Task.Run(() =>
+        {
+            HttpContext.SignoutToSwagger();
+        });
+        return ApiResult.Continue();
     }
 
     /// <summary>
@@ -100,8 +117,8 @@ public class SysAuthController : BaseApiController
         string token = string.Empty;
 
         // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
+        UserClientInfo clientInfo = App.ClientInfo;
+        UserAddressInfo addressInfo = App.AddressInfo;
         SysLogLogin sysLogLogin = new()
         {
             Ip = addressInfo.RemoteIPv4,
@@ -116,6 +133,11 @@ public class SysAuthController : BaseApiController
             if (sysUser == null)
             {
                 throw new Exception("登录失败，用户不存在！");
+            }
+
+            if (sysUser.Status == StatusEnum.Disable)
+            {
+                throw new Exception("登录失败，用户已被禁用！");
             }
 
             if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
@@ -145,7 +167,16 @@ public class SysAuthController : BaseApiController
             sysLogLogin.Message = ex.Message;
         }
 
+        // 记录登录日志
         _ = await _sysLogLoginService.AddAsync(sysLogLogin);
-        return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
+
+        // 验证成功就设置响应报文头，并返回 Token 令牌
+        if (sysLogLogin.IsSuccess)
+        {
+            HttpContext.SigninToSwagger(token);
+            return ApiResult.Success(token);
+        }
+
+        return ApiResult.BadRequest(sysLogLogin.Message);
     }
 }

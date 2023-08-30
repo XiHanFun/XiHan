@@ -59,11 +59,6 @@ public class SysUser : BaseEntity
     [SugarColumn(Length = 512, IsNullable = true)]
     public string? Signature { get; set; }
 
-    /// <summary>
-    /// 状态
-    /// </summary>
-    public StatusEnum Status { get; set; } = StatusEnum.Enable;
-
     #endregion
 
     #region 基本信息
@@ -118,6 +113,15 @@ public class SysUser : BaseEntity
     /// </summary>
     [SugarColumn(IsOnlyIgnoreUpdate = true, IsNullable = true, Length = 64)]
     public string? RegisterIp { get; set; }
+
+    #endregion
+
+    #region 状态信息
+
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public StatusEnum Status { get; set; } = StatusEnum.Enable;
 
     #endregion
 }

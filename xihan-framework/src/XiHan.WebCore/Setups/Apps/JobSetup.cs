@@ -15,7 +15,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using SqlSugar;
+using XiHan.Infrastructures.Apps;
+using XiHan.Jobs.Bases.Servers;
+using XiHan.Models.Syses;
+using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Exceptions;
+using XiHan.Utils.Extensions;
+using XiHan.WebCore.Common.SqlSugar;
 
 namespace XiHan.WebCore.Setups.Apps;
 
@@ -54,34 +62,36 @@ public static class JobSetup
     /// <exception cref="CustomException"></exception>
     private static void RegisterScheduledTasks()
     {
-        //try
-        //{
-        //    var schedulerServer = App.GetRequiredService<ITaskSchedulerServer>();
-        //    var sysJobService = App.GetRequiredService<ISysJobService>();
+        try
+        {
+            var schedulerServer = App.GetRequiredService<ITaskSchedulerServer>();
+            var sysJobService = App.GetRequiredService<ISysJobService>();
 
-        //    var jobs = context.Queryable<SysJob>().Where(m => m.IsStart).ToList();
+            var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
+            SqlSugarClient client = new(connectionConfigs);
+            var jobs = client.Queryable<SysJob>().Where(m => m.IsStart).ToList();
 
-        //    // 程序启动后注册所有定时任务
-        //    foreach (var job in jobs)
-        //    {
-        //        var result = schedulerServer.CreateTaskScheduleAsync(job);
-        //        if (result.Result.IsSuccess)
-        //        {
-        //            var info = $"注册任务：{job.Name}成功！";
-        //            info.WriteLineSuccess();
-        //            Log.Information(info);
-        //        }
-        //        else
-        //        {
-        //            var info = $"注册任务：{job.Name}失败！";
-        //            info.WriteLineError();
-        //            Log.Error(info);
-        //        }
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    throw new CustomException($"注册定时任务出错！", ex);
-        //}
+            // 程序启动后注册所有定时任务
+            foreach (var job in jobs)
+            {
+                var result = schedulerServer.CreateTaskScheduleAsync(job);
+                if (result.Result.IsSuccess)
+                {
+                    var info = $"注册任务：{job.Name}成功！";
+                    info.WriteLineSuccess();
+                    Log.Information(info);
+                }
+                else
+                {
+                    var info = $"注册任务：{job.Name}失败！";
+                    info.WriteLineError();
+                    Log.Error(info);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new CustomException($"注册定时任务出错！", ex);
+        }
     }
 }

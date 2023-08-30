@@ -13,6 +13,8 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Authorization;
+using XiHan.Services.Syses.Roles;
+using XiHan.Services.Syses.Users;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebHost.Controllers.Bases;
 
@@ -25,10 +27,17 @@ namespace XiHan.WebHost.Controllers.Syses;
 [ApiGroup(ApiGroupNameEnum.Manage)]
 public class SysUserController : BaseApiController
 {
+    private readonly ISysUserService _sysUserService;
+    private readonly ISysRoleService _sysRoleService;
+
     /// <summary>
     /// 构造函数
     /// </summary>
-    public SysUserController()
+    /// <param name="sysUserService"></param>
+    /// <param name="sysRoleService"></param>
+    public SysUserController(ISysUserService sysUserService, ISysRoleService sysRoleService)
     {
+        _sysUserService = sysUserService;
+        _sysRoleService = sysRoleService;
     }
 }

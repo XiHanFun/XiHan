@@ -60,7 +60,7 @@ public static class ConsoleConfigInfo
         $@"响应式缓存：{AppSettings.Cache.ResponseCache.IsEnabled.GetValue()}".WriteLineInfo();
         "跨域：".WriteLineInfo();
         $@"是否启用：{AppSettings.Cors.IsEnabled.GetValue()}".WriteLineInfo();
-        "==============================任务信息==============================".WriteLineInfo();
+
         "==============================运行信息==============================".WriteLineInfo();
     }
 }

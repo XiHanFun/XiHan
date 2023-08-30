@@ -22,7 +22,7 @@ using XiHan.Models.Bases.Interface;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
 using XiHan.Utils.Extensions;
-using XiHan.WebCore.Extensions;
+using XiHan.WebCore.Common.SqlSugar;
 
 namespace XiHan.WebCore.Setups.Services;
 
@@ -45,15 +45,7 @@ public static class SqlSugarSetup
         }
 
         // 注入参考，官方文档 https://www.donet5.com/Home/Doc?typeId=2405
-        DatabaseConfig[] dbConfigs = AppSettings.Database.DatabaseConfigs.GetSection();
-        List<ConnectionConfig> connectionConfigs = dbConfigs.Select(config => new ConnectionConfig()
-        {
-            ConfigId = config.ConfigId,
-            DbType = config.DataBaseType.GetEnumByName<DataBaseTypeEnum>().ConvertDbType(),
-            ConnectionString = config.ConnectionString,
-            IsAutoCloseConnection = config.IsAutoCloseConnection
-        }).ToList();
-
+        var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
         SqlSugarScope sqlSugar = new(connectionConfigs, client =>
         {
             connectionConfigs.ForEach(config =>

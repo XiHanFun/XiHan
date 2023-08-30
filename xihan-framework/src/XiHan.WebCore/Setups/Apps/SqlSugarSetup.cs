@@ -22,7 +22,7 @@ using XiHan.Models.Bases.Entities;
 using XiHan.Models.Bases.Filters;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
-using XiHan.WebCore.Extensions;
+using XiHan.WebCore.Common.SqlSugar;
 
 namespace XiHan.WebCore.Setups.Apps;
 
@@ -44,16 +44,8 @@ public static class SqlSugarSetup
             throw new ArgumentNullException(nameof(app));
         }
 
-        DatabaseConfig[] dbConfigs = AppSettings.Database.DatabaseConfigs.GetSection();
-        List<ConnectionConfig> connectionConfigs = dbConfigs.Select(config => new ConnectionConfig()
-        {
-            ConfigId = config.ConfigId,
-            DbType = config.DataBaseType.GetEnumByName<DataBaseTypeEnum>().ConvertDbType(),
-            ConnectionString = config.ConnectionString,
-            IsAutoCloseConnection = config.IsAutoCloseConnection
-        }).ToList();
-
         // 初始化
+        var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
         SqlSugarClient client = new(connectionConfigs);
         InitDatabase(client);
         InitSeedData(client);

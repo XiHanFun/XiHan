@@ -152,13 +152,12 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         SysUser sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
-            StateKey = sysUser.StateKey,
-            StateValue = sysUser.StateValue
+            Status = sysUser.Status
         }, f => f.BaseId == sysUser.BaseId);
     }
 
     /// <summary>
-    /// 重置用户密码
+    /// 更改用户密码
     /// </summary>
     /// <param name="userPwdMDto"></param>
     /// <returns></returns>
@@ -214,6 +213,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWDto> pageWhere)
     {
         SysUserWDto whereDto = pageWhere.Where;
+
         Expressionable<SysUser> whereExpression = Expressionable.Create<SysUser>();
         _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
         _ = whereExpression.AndIF(whereDto.NickName.IsNotEmptyOrNull(), u => u.NickName.Contains(whereDto.NickName!));
@@ -221,6 +221,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         _ = whereExpression.AndIF(whereDto.Gender != null, u => u.Gender == whereDto.Gender);
         _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email.Contains(whereDto.Email!));
         _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone.Contains(whereDto.Phone!));
+        _ = whereExpression.AndIF(whereDto.Status != null, u => u.Status == whereDto.Status);
         _ = whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);

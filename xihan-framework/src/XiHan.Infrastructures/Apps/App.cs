@@ -49,7 +49,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices ?? AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider => AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器

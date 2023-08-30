@@ -15,6 +15,7 @@
 using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Polly;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -450,6 +451,41 @@ public static class HttpContextExtend
     public static IEnumerable<ClaimsIdentity> GetUserClaims(this HttpContext context)
     {
         return context.User.Identities;
+    }
+
+    /// <summary>
+    /// 设置规范化文档自动登录
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="accessToken"></param>
+    public static void SigninToSwagger(this HttpContext context, string accessToken)
+    {
+        // 设置 Swagger 刷新自动授权
+        context.Response.Headers["access-token"] = accessToken;
+    }
+
+    /// <summary>
+    /// 设置规范化文档退出登录
+    /// </summary>
+    /// <param name="context"></param>
+    public static void SignoutToSwagger(this HttpContext context)
+    {
+        context.Response.Headers["access-token"] = "invalid_token";
+    }
+
+    /// <summary>
+    /// 设置响应头 Tokens
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="accessToken"></param>
+    /// <param name="refreshToken"></param>
+    public static void SetTokensOfResponseHeaders(this HttpContext context, string accessToken, string? refreshToken)
+    {
+        context.Response.Headers["access-token"] = accessToken;
+        if (refreshToken.IsNotEmptyOrNull())
+        {
+            context.Response.Headers["x-access-token"] = refreshToken;
+        }
     }
 
     #endregion

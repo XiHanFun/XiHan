@@ -24,7 +24,7 @@ public class SysUserWDto
     /// <summary>
     /// 用户账号
     /// </summary>
-    public string? Account { get; set; } = string.Empty;
+    public string? Account { get; set; }
 
     /// <summary>
     /// 用户昵称
@@ -34,7 +34,7 @@ public class SysUserWDto
     /// <summary>
     /// 姓名
     /// </summary>
-    public string? RealName { get; set; } = string.Empty;
+    public string? RealName { get; set; }
 
     /// <summary>
     /// 用户性别 男(true)女(false)
@@ -44,10 +44,15 @@ public class SysUserWDto
     /// <summary>
     /// 邮箱
     /// </summary>
-    public string? Email { get; set; } = string.Empty;
+    public string? Email { get; set; }
 
     /// <summary>
     /// 手机号码
     /// </summary>
-    public string? Phone { get; set; } = string.Empty;
+    public string? Phone { get; set; }
+
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public StatusEnum? Status { get; set; }
 }
