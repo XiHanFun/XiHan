@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
+using XiHan.Infrastructures.Apps;
 
 namespace XiHan.WebCore.Setups.Apps;
 
@@ -28,15 +29,16 @@ public static class HttpSetup
     /// Http 应用扩展
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="env"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseHttpSetup(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static IApplicationBuilder UseHttpSetup(this IApplicationBuilder app)
     {
         if (app == null)
         {
             throw new ArgumentNullException(nameof(app));
         }
+
+        IWebHostEnvironment env = App.WebHostEnvironment;
 
         // 环境变量，开发环境
         if (env.IsDevelopment())

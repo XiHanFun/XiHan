@@ -127,7 +127,7 @@ public class SysDictTypeController : BaseApiController
     [AppLog(Module = "系统字典", BusinessType = BusinessTypeEnum.Export, IsSaveRequestData = false)]
     public async Task<ApiResult> ExportDict()
     {
-        List<Models.Syses.SysDictType> result = await _sysDictTypeService.GetListAsync();
+        List<Models.Syses.SysDictType> result = await _sysDictTypeService.GetDictTypeList();
         await ExportExcel("系统字典", result, "SysDictType");
         return ApiResult.Success($"系统字典导出成功！");
     }

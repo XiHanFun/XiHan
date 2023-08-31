@@ -63,14 +63,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="wwwroot\Imports\" />
-        <Folder Include="wwwroot\Templates\" />
-        <Folder Include="Properties\PublishProfiles\" />
-        <Folder Include="wwwroot\Exports\" />
-        <Folder Include="wwwroot\Uploads\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     </ItemGroup>
 

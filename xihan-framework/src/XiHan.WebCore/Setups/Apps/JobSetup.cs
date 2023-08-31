@@ -36,17 +36,17 @@ public static class JobSetup
     /// 计划任务
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="env"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="CustomException"></exception>
-    public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app)
     {
         if (app == null)
         {
             throw new ArgumentNullException(nameof(app));
         }
 
+        IWebHostEnvironment env = App.WebHostEnvironment;
         // 环境变量，生产环境
         if (env.IsProduction())
         {

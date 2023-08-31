@@ -51,7 +51,7 @@ public static class AppSetup
         // 数据库初始化
         _ = app.UseSqlSugarSetup();
         // Http
-        _ = app.UseHttpSetup(env);
+        _ = app.UseHttpSetup();
         // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
         _ = app.UseStaticFiles();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
@@ -75,7 +75,7 @@ public static class AppSetup
         // 全局日志中间件
         _ = app.UseMiddleware<GlobalLogMiddleware>();
         // 恢复或启动任务
-        _ = app.UseTaskSchedulers(env);
+        _ = app.UseTaskSchedulers();
 
         // 添加终端中间件
         _ = app.UseEndpoints(endpoints =>
