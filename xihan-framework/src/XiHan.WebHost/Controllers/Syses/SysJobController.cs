@@ -78,7 +78,7 @@ public class SysJobController : BaseApiController
     public async Task<ApiResult> DeleteJobByIds([FromBody] long[] jobIds)
     {
         Dictionary<SysJob, dynamic> errorMessages = new();
-        List<SysJob> sysJobs = await _sysJobService.QueryAsync(j => jobIds.Contains(j.BaseId) && !j.IsDeleted);
+        List<SysJob> sysJobs = await _sysJobService.QueryAsync(j => jobIds.Contains(j.BaseId));
         sysJobs.ForEach(async sysJob =>
         {
             // 先删除任务调度中心的任务

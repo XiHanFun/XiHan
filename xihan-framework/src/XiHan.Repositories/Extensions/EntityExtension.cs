@@ -113,12 +113,12 @@ public static class EntityExtension
 
         if (propertyInfo.IsHandle != null && types.GetProperty(propertyInfo.IsHandle) != null)
         {
-            types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true, null);
+            types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true);
         }
 
         if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
         {
-            types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now, null);
+            types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now);
         }
 
         Infrastructures.Apps.HttpContexts.UserAuthInfo user = App.AuthInfo;
@@ -126,17 +126,17 @@ public static class EntityExtension
         {
             if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
             {
-                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId, null);
+                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId);
             }
 
             if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
             {
-                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account, null);
+                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account);
             }
 
             if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
             {
-                types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId, null);
+                types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId);
             }
         }
         return source;

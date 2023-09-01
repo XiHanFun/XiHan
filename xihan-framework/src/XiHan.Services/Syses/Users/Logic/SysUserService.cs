@@ -52,7 +52,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     private async Task<bool> GetAccountUnique(SysUser sysUser)
     {
-        bool isUnique = await IsAnyAsync(u => u.Account == sysUser.Account && !u.IsDeleted);
+        bool isUnique = await IsAnyAsync(u => u.Account == sysUser.Account);
         return isUnique ? throw new CustomException($"账户【{sysUser.Account}】已存在！") : isUnique;
     }
 
@@ -83,7 +83,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> DeleteUser(SysUser sysUser)
     {
-        SysUser user = await FindAsync(u => u.BaseId == sysUser.BaseId && !u.IsDeleted);
+        SysUser user = await FindAsync(u => u.BaseId == sysUser.BaseId);
         // 删除用户角色
         _ = await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
         return await RemoveAsync(user);
@@ -178,7 +178,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser> GetUserById(long userId)
     {
-        SysUser sysUser = await FindAsync(u => u.BaseId == userId && !u.IsDeleted);
+        SysUser sysUser = await FindAsync(u => u.BaseId == userId);
         //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
         //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
 
@@ -192,7 +192,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser> GetUserByAccount(string account)
     {
-        return await FindAsync(u => u.Account == account && !u.IsDeleted);
+        return await FindAsync(u => u.Account == account);
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser> GetUserByEmail(string email)
     {
-        return await FindAsync(u => u.Email == email && !u.IsDeleted);
+        return await FindAsync(u => u.Email == email);
     }
 
     /// <summary>
@@ -222,7 +222,6 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email.Contains(whereDto.Email!));
         _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone.Contains(whereDto.Phone!));
         _ = whereExpression.AndIF(whereDto.Status != null, u => u.Status == whereDto.Status);
-        _ = whereExpression.And(u => !u.IsDeleted);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
     }

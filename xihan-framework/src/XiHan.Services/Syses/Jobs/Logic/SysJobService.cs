@@ -85,7 +85,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     public async Task<SysJob> GetJobById(long jobId)
     {
-        SysJob sysJob = await FindAsync(d => d.BaseId == jobId && !d.IsDeleted);
+        SysJob sysJob = await FindAsync(d => d.BaseId == jobId);
 
         return sysJob;
     }
