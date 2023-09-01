@@ -50,48 +50,51 @@ public static class JobSetup
         // 环境变量，生产环境
         if (env.IsProduction())
         {
-            RegisterScheduledTasks();
         }
-
+        RegisterScheduledTasks();
         return app;
     }
 
     /// <summary>
-    /// 注册定时任务
+    /// 注册计划任务
     /// </summary>
     /// <exception cref="CustomException"></exception>
     private static void RegisterScheduledTasks()
     {
         try
         {
+            "正在从配置中检测所有需要初始化启动的计划任务……".WriteLineInfo();
             var schedulerServer = App.GetRequiredService<ITaskSchedulerServer>();
             var sysJobService = App.GetRequiredService<ISysJobService>();
 
-            var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
-            SqlSugarClient client = new(connectionConfigs);
+            var client = App.GetRequiredService<ISqlSugarClient>();
             var jobs = client.Queryable<SysJob>().Where(m => m.IsStart).ToList();
 
-            // 程序启动后注册所有定时任务
+            // 程序启动后注册所有计划任务
+            "计划任务正在注册……".WriteLineInfo();
             foreach (var job in jobs)
             {
                 var result = schedulerServer.CreateTaskScheduleAsync(job);
                 if (result.Result.IsSuccess)
                 {
-                    var info = $"注册任务：{job.Name}成功！";
+                    var info = $"任务【{job.Name}】注册成功！";
                     info.WriteLineSuccess();
                     Log.Information(info);
                 }
                 else
                 {
-                    var info = $"注册任务：{job.Name}失败！";
+                    var info = $"任务【{job.Name}】注册失败！";
                     info.WriteLineError();
                     Log.Error(info);
                 }
             }
+            "计划任务注册成功！".WriteLineSuccess();
+
+            "所有计划任务初始化启动已完成！".WriteLineSuccess();
         }
         catch (Exception ex)
         {
-            throw new CustomException($"注册定时任务出错！", ex);
+            ex.ThrowAndConsoleError("注册计划任务出错！");
         }
     }
 }

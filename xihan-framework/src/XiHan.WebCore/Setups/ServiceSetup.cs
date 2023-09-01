@@ -25,7 +25,7 @@ namespace XiHan.WebCore.Setups;
 public static class ServiceSetup
 {
     /// <summary>
-    /// 依赖注入服务扩展
+    /// 服务扩展 依赖注入
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -38,42 +38,42 @@ public static class ServiceSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 服务注册
+        // 基础服务注册
         AppServiceProvider.RegisterService(services);
 
+        // 对象映射
+        _ = services.AddMapsterSetup();
         // 缓存
         _ = services.AddCacheSetup();
-        // 响应缓存
-        _ = services.AddResponseCacheSetup();
-        // Mapster
-        _ = services.AddMapsterSetup();
-        // Swagger
-        _ = services.AddSwaggerSetup();
-        // 性能分析
-        _ = services.AddMiniProfilerSetup();
-        // SqlSugar，必须在 AddMiniProfilerSetup 后才能使用
+        // SqlSugar
         _ = services.AddSqlSugarSetup();
         // Http上下文
         _ = services.AddHttpPollySetup();
-        // Auth，必须在 AddHttpPollySetup 后才能使用
-        _ = services.AddAuthSetup();
-        // RabbitMQ
-        _ = services.AddRabbitMqSetup();
+        // 性能分析
+        _ = services.AddMiniProfilerSetup();
+        // 接口文档
+        _ = services.AddSwaggerSetup();
+        // 路由
+        _ = services.AddRouteSetup();
         // 限流
         _ = services.AddRateLimiterSetup();
-        // Cors
+        // 跨域
         _ = services.AddCorsSetup();
+        // 鉴权授权
+        _ = services.AddAuthSetup();
         // Controllers
         _ = services.AddControllersSetup();
-        // Route
-        _ = services.AddRouteSetup();
-        // 终端
-        _ = services.AddEndpointsApiExplorer();
+        // RabbitMQ
+        _ = services.AddRabbitMqSetup();
         // 即时通讯
         _ = services.AddSignalRSetup();
         // 健康检查
         _ = services.AddHealthChecks();
-        // 计划任务
+        // 响应缓存
+        _ = services.AddResponseCacheSetup();
+        // 终端
+        _ = services.AddEndpointsApiExplorer();
+        // 任务队列
         _ = services.AddJobSetup();
 
         "Services Started Successfully！".WriteLineSuccess();

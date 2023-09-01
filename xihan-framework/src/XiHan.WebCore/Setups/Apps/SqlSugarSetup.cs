@@ -16,13 +16,13 @@ using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using System.Collections;
 using System.Reflection;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Entities;
 using XiHan.Models.Bases.Filters;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Reflections;
-using XiHan.WebCore.Common.SqlSugar;
 
 namespace XiHan.WebCore.Setups.Apps;
 
@@ -45,8 +45,7 @@ public static class SqlSugarSetup
         }
 
         // 初始化
-        var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
-        SqlSugarClient client = new(connectionConfigs);
+        var client = App.GetRequiredService<ISqlSugarClient>();
         InitDatabase(client);
         InitSeedData(client);
 
@@ -57,7 +56,7 @@ public static class SqlSugarSetup
     /// 初始化数据库
     /// </summary>
     /// <param name="client"></param>
-    private static void InitDatabase(SqlSugarClient client)
+    private static void InitDatabase(ISqlSugarClient client)
     {
         try
         {
@@ -97,7 +96,7 @@ public static class SqlSugarSetup
     /// 初始化种子数据
     /// </summary>
     /// <param name="client"></param>
-    private static void InitSeedData(SqlSugarClient client)
+    private static void InitSeedData(ISqlSugarClient client)
     {
         try
         {

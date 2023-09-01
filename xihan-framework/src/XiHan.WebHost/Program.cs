@@ -37,11 +37,11 @@ try
     ConfigureWebHostBuilder host = builder.WebHost;
     _ = host.AddWebHostSetup();
 
-    // 配置服务
+    // 配置依赖注入
     IServiceCollection services = builder.Services;
     _ = services.AddServiceSetup();
 
-    // 配置中间件
+    // 配置中间件添加到请求管道
     WebApplication app = builder.Build();
     _ = app.UseApplicationSetup(app.Environment);
 

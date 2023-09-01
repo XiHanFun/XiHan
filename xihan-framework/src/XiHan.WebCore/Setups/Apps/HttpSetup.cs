@@ -59,7 +59,7 @@ public static class HttpSetup
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
         // 强制https跳转
-        _ = app.UseHttpsRedirection();
+        //_ = app.UseHttpsRedirection();
 
         return app;
     }

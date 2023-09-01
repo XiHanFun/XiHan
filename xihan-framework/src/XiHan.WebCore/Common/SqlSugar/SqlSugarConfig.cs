@@ -38,6 +38,7 @@ public static class SqlSugarConfig
             ConnectionString = config.ConnectionString,
             IsAutoCloseConnection = config.IsAutoCloseConnection
         }).ToList();
+
         return connectionConfigs;
     }
 }

@@ -29,7 +29,7 @@ namespace XiHan.WebCore.Setups;
 public static class AppSetup
 {
     /// <summary>
-    /// 应用扩展 配置中间件
+    /// 应用扩展 中间件添加到请求管道
     /// </summary>
     /// <param name="app"></param>
     /// <param name="env"></param>
@@ -52,19 +52,19 @@ public static class AppSetup
         _ = app.UseSqlSugarSetup();
         // Http
         _ = app.UseHttpSetup();
-        // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
-        _ = app.UseStaticFiles();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
         _ = app.UseWebSockets();
         // MiniProfiler
         _ = app.UseMiniProfilerSetup();
         // Swagger
         _ = app.UseSwaggerSetup();
+        // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
+        _ = app.UseStaticFiles();
         // 添加路由中间件
         _ = app.UseRouting();
         // 限流，若作用于特定路由，必须在 UseRouting 之后
         _ = app.UseRateLimiter();
-        // 跨域，要放在 UseEndpoints 前
+        // 跨域，必须在 UseRouting 之后、UseEndpoints 之前添加
         _ = app.UseCorsSetup();
         // 添加认证中间件
         _ = app.UseAuthentication();
@@ -72,11 +72,10 @@ public static class AppSetup
         _ = app.UseAuthorization();
         // 开启响应缓存
         _ = app.UseResponseCaching();
-        // 全局日志中间件
-        _ = app.UseMiddleware<GlobalLogMiddleware>();
         // 恢复或启动任务
         _ = app.UseTaskSchedulers();
-
+        // 全局日志中间件
+        _ = app.UseMiddleware<GlobalLogMiddleware>();
         // 添加终端中间件
         _ = app.UseEndpoints(endpoints =>
         {

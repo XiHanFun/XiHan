@@ -18,9 +18,14 @@ using SqlSugar;
 using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Consts;
+using XiHan.Models.Bases.Filters;
 using XiHan.Models.Bases.Interface;
+using XiHan.Models.Syses;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
+using XiHan.Services.Syses.Configs;
+using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.WebCore.Common.SqlSugar;
 
@@ -44,19 +49,25 @@ public static class SqlSugarSetup
             throw new ArgumentNullException(nameof(services));
         }
 
-        // 注入参考，官方文档 https://www.donet5.com/Home/Doc?typeId=2405
+        // 注入多库参考，官方文档 https://www.donet5.com/Home/Doc?typeId=2405
         var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
-        SqlSugarScope sqlSugar = new(connectionConfigs, client =>
+        SqlSugarScope sugarScope = new(connectionConfigs, client =>
         {
             connectionConfigs.ForEach(config =>
             {
                 dynamic dbProvider = client.GetConnectionScope(config.ConfigId);
+
+                // 动态添加全局过滤器参考，官方文档 https://www.donet5.com/home/doc?masterId=1&typeId=1205
+                // 全局过滤器，作用是设置一个查询条件，当你使用查询操作的时候满足这个条件，那么你的语句就会附加你设置的条件。应用场景：过滤假删除数据，比如，每个查询后面都要加 IsDeleted = false
+
+                // 非超级管理员，不添加过滤假删除数据的条件
+                client.QueryFilter.AddTableFilterIF<ISoftDeleteFilter>(App.AuthInfo.IsSuperAdmin == false, it => it.IsDeleted == false);
                 SetSugarAop(dbProvider);
             });
         });
 
         // 单例注册
-        _ = services.AddSingleton<ISqlSugarClient>(sqlSugar);
+        _ = services.AddSingleton<ISqlSugarClient>(sugarScope);
         // 仓储注册
         _ = services.AddScoped(typeof(BaseRepository<>));
 
@@ -82,11 +93,30 @@ public static class SqlSugarSetup
         // 执行SQL数据
         dbProvider.Aop.DataExecuting = (value, entity) =>
         {
+            // 演示环境判断
+            if (entity.EntityColumnInfo.IsPrimarykey)
+            {
+                var entityNames = new List<string>() {
+                        nameof(SysJob),
+                        nameof(SysJobLog),
+                        nameof(SysLogVisit),
+                        nameof(SysLogOperation),
+                        nameof(SysLogLogin),
+                        nameof(SysLogException)
+                    };
+                if (entityNames.Any(name => !name.Contains(entity.EntityName)))
+                {
+                    var sysConfigService = App.GetRequiredService<ISysConfigService>();
+                    var isDemoMode = sysConfigService.GetSysConfigValueByCode<bool>(GlobalConst.IsDemoMode).GetAwaiter().GetResult();
+                    if (isDemoMode) throw new CustomException("演示环境禁止修改数据！");
+                }
+            }
+
             switch (entity.OperationType)
             {
                 // 新增操作
                 case DataFilterType.InsertByObject:
-                    //自动设置主键
+                    // 自动设置主键
                     if (entity.EntityColumnInfo.IsPrimarykey && entity.EntityValue is IBaseIdEntity<long> { BaseId: 0 } entityInfo)
                     {
                         entityInfo.BaseId = App.GetSnowflakeId();
@@ -109,8 +139,7 @@ public static class SqlSugarSetup
         {
             string param = dbProvider.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
             string sqlInfo = $"【数据库{configId}】执行SQL语句：" + Environment.NewLine +
-                          UtilMethods.GetSqlString(config.DbType, sql, pars);
-            _ = MiniProfiler.Current.CustomTiming("执行SQL日志", sqlInfo);
+                            UtilMethods.GetSqlString(config.DbType, sql, pars);
             // SQL控制台打印
             if (databaseConsole)
             {
@@ -140,7 +169,7 @@ public static class SqlSugarSetup
         dbProvider.Aop.OnLogExecuted = (_, _) =>
         {
             string handleInfo = $"【数据库{configId}】执行SQL时间：" + Environment.NewLine +
-                             dbProvider.Ado.SqlExecutionTime;
+                                dbProvider.Ado.SqlExecutionTime;
             _ = MiniProfiler.Current.CustomTiming("执行SQL时间", handleInfo);
             if (databaseConsole)
             {
@@ -157,8 +186,8 @@ public static class SqlSugarSetup
         dbProvider.Aop.OnError = exp =>
         {
             string errorInfo = $"【数据库{configId}】执行SQL出错：" + Environment.NewLine +
-                            exp.Message + Environment.NewLine +
-                            UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+                                exp.Message + Environment.NewLine +
+                                UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
             _ = MiniProfiler.Current.CustomTiming("执行SQL出错", errorInfo);
             if (databaseConsole)
             {
