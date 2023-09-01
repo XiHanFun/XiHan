@@ -159,6 +159,7 @@ public class SysAuthController : BaseApiController
                 Account = sysUser.Account,
                 NickName = sysUser.NickName,
                 UserRole = userRoleIds,
+                IsSuperAdmin = sysUser.IsSuperAdmin()
             });
         }
         catch (Exception ex)

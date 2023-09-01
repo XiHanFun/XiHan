@@ -124,4 +124,13 @@ public class SysUser : BaseEntity
     public StatusEnum Status { get; set; } = StatusEnum.Enable;
 
     #endregion
+
+    /// <summary>
+    /// 是否超级管理员
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSuperAdmin()
+    {
+        return BaseId == 1;
+    }
 }

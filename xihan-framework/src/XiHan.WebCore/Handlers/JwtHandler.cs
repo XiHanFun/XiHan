@@ -50,8 +50,7 @@ public static class JwtHandler
             new(ClaimConst.UserId, tokenModel.UserId.ToString()),
             new(ClaimConst.Account, tokenModel.Account),
             new(ClaimConst.NickName, tokenModel.NickName),
-            new(ClaimConst.Issuer, authJwtSetting.Issuer),
-            new(ClaimConst.Audience, authJwtSetting.Audience),
+            new(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString()),
         };
         // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
         tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
@@ -99,6 +98,7 @@ public static class JwtHandler
             NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
             RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
             UserRole = claims.First(claim => claim.Type == ClaimConst.UserRole).Value.GetStrList(',').Select(s => s.ParseToLong()).ToList(),
+            IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool(),
         };
         return tokenModel;
     }
@@ -202,7 +202,7 @@ public static class JwtHandler
     /// <param name="headerKey"></param>
     /// <param name="tokenPrefix"></param>
     /// <returns></returns>
-    public static string GetJwtBearerToken(DefaultHttpContext httpContext, string headerKey = "Authorization", string tokenPrefix = "Bearer ")
+    public static string GetJwtBearerToken(HttpContext httpContext, string headerKey = "Authorization", string tokenPrefix = "Bearer ")
     {
         // 判断请求报文头中是否有 "Authorization" 报文头
         string bearerToken = httpContext.Request.Headers[headerKey].ToString();
@@ -311,4 +311,9 @@ public class TokenModel
     /// 用户权限
     /// </summary>
     public List<long> UserRole { get; set; } = new();
+
+    /// <summary>
+    /// 是否超级管理员
+    /// </summary>
+    public bool IsSuperAdmin { get; set; }
 }
