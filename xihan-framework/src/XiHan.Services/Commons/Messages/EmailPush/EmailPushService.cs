@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
 using XiHan.Services.Syses.Users;
-using XiHan.Subscriptions.Emails;
+using XiHan.Subscriptions.Bots.Email;
 using XiHan.Utils.Exceptions;
 
 namespace XiHan.Services.Commons.Messages.EmailPush;
@@ -32,7 +32,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
 {
     private readonly ILogger _logger = Log.ForContext<EmailPushService>();
     private readonly ISysUserService _sysUserService;
-    private readonly EmailServer _emailRobot;
+    private readonly EmailBot _emailBot;
 
     /// <summary>
     /// 构造函数
@@ -43,7 +43,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     {
         _sysUserService = sysUserService;
         EmailFromModel emailFrom = GetEmailFrom().Result ?? throw new CustomException("未添加邮件推送配置或配置不可用！");
-        _emailRobot = new EmailServer(emailFrom);
+        _emailBot = new EmailBot(emailFrom);
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
     private async Task<ApiResult> SendEmail(EmailToModel emailTo)
     {
         string? logoInfo;
-        if (await _emailRobot.SendMail(emailTo))
+        if (await _emailBot.SendMail(emailTo))
         {
             logoInfo = "邮件发送成功！";
             _logger.Information(logoInfo);

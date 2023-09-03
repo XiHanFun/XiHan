@@ -18,7 +18,6 @@ using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
 using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Common.Messages;
 

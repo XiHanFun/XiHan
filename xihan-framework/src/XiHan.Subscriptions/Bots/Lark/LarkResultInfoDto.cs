@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:DingTalkResultInfoDto
+// FileName:LarkResultInfoDto
 // Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,22 +14,30 @@
 
 using System.Text.Json.Serialization;
 
-namespace XiHan.Subscriptions.WebHooks.DingTalk;
+namespace XiHan.Subscriptions.Bots.Lark;
 
 /// <summary>
 /// 结果信息
 /// </summary>
-public class DingTalkResultInfoDto
+public class LarkResultInfoDto
 {
     /// <summary>
     /// 结果代码
+    /// 成功 0
     /// </summary>
-    [JsonPropertyName("errcode")]
-    public int ErrCode { get; set; }
+    [JsonPropertyName("code")]
+    public int Code { get; set; }
 
     /// <summary>
     /// 结果消息
+    /// 成功 success
     /// </summary>
-    [JsonPropertyName("errmsg")]
-    public string ErrMsg { get; set; } = string.Empty;
+    [JsonPropertyName("msg")]
+    public string Msg { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 数据
+    /// </summary>
+    [JsonPropertyName("data")]
+    public object Data { get; set; } = new object();
 }

@@ -27,7 +27,6 @@ using XiHan.Services.Syses.Jobs.Dtos;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Syses;
 

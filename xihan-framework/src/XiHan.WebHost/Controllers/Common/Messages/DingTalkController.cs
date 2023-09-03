@@ -16,9 +16,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Responses;
 using XiHan.Services.Commons.Messages.DingTalkPush;
-using XiHan.Subscriptions.WebHooks.DingTalk;
+using XiHan.Subscriptions.Bots.DingTalk;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Common.Messages;
 
@@ -52,9 +51,12 @@ public class DingTalkController : BaseApiController
         {
             Content = "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
-        List<string> atMobiles = new() { "1302873****" };
-        bool isAtAll = false;
-        return await _dingTalkPushService.DingTalkToText(text, atMobiles, isAtAll);
+        DingTalkAt dingTalkAt = new()
+        {
+            AtMobiles = new() { "1302873****" },
+            IsAtAll = false
+        };
+        return await _dingTalkPushService.DingTalkToText(text, dingTalkAt);
     }
 
     /// <summary>
@@ -90,9 +92,12 @@ public class DingTalkController : BaseApiController
                 "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
                 "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
         };
-        List<string> atMobiles = new() { "1302873****" };
-        bool isAtAll = false;
-        return await _dingTalkPushService.DingTalkToMarkdown(markdown, atMobiles, isAtAll);
+        DingTalkAt dingTalkAt = new()
+        {
+            AtMobiles = new() { "1302873****" },
+            IsAtAll = false
+        };
+        return await _dingTalkPushService.DingTalkToMarkdown(markdown, dingTalkAt);
     }
 
     /// <summary>

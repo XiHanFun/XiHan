@@ -14,7 +14,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Subscriptions.WebHooks.DingTalk;
+namespace XiHan.Subscriptions.Bots.DingTalk;
 
 /// <summary>
 /// 结果代码
@@ -49,7 +49,7 @@ public enum DingTalkResultErrCodeEnum
     /// 机器人已停用，请联系管理员启用机器人
     /// </summary>
     [Description("机器人已停用，请联系管理员启用机器人")]
-    RobotDeactivated = 400102,
+    BotDeactivated = 400102,
 
     /// <summary>
     /// 不支持的消息类型，请使用文档中支持的消息类型
@@ -61,7 +61,7 @@ public enum DingTalkResultErrCodeEnum
     /// 机器人不存在，请确认机器人是否在群中
     /// </summary>
     [Description("机器人不存在，请确认机器人是否在群中")]
-    RobotNotExist = 400106,
+    BotNotExist = 400106,
 
     /// <summary>
     /// 发送速度太快而限流，请降低发送速度

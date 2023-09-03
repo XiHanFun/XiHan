@@ -20,7 +20,7 @@ using XiHan.Utils.Files;
 using XiHan.WebCore.Common.Excels;
 using XiHan.WebCore.Common.Swagger;
 
-namespace XiHan.WebHost.Controllers.Bases;
+namespace XiHan.WebHost.Controllers;
 
 /// <summary>
 /// BaseApiController
@@ -36,25 +36,32 @@ public class BaseApiController : ControllerBase
     /// <summary>
     /// 上传文件
     /// </summary>
-    /// <param name="file"></param>
+    /// <param name="files"></param>
     /// <returns>完整文件路径</returns>
     /// <exception cref="CustomException"></exception>
-    protected async Task<string> UploadFile(IFormFile file)
+    protected async Task<IEnumerable<string>> UploadFile(IEnumerable<IFormFile> files)
     {
-        if (file == null || file.Length == 0)
+        await Task.Run(async () =>
         {
-            throw new CustomException("No file uploaded.");
-        }
+            if (files.Any())
+            {
+                List<string> paths = new();
+                foreach (var file in files)
+                {
+                    // 唯一文件名
+                    string uniqueFileName = GetUniqueFileName(file.FileName);
+                    // 上传文件路径
+                    string fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(), FileHelper.GetFileNameWithExtension(uniqueFileName));
+                    // 创建目录
+                    FileHelper.CreateDirectory(fullPath);
+                    using FileStream stream = new(fullPath, FileMode.Create);
+                    await file.CopyToAsync(stream);
+                    paths.Add(fullPath);
+                }
+            }
+        });
 
-        // 唯一文件名
-        string uniqueFileName = GetUniqueFileName(file.FileName);
-        // 上传文件路径
-        string fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(), FileHelper.GetFileNameWithExtension(uniqueFileName));
-        // 创建目录
-        FileHelper.CreateDirectory(fullPath);
-        using FileStream stream = new(fullPath, FileMode.Create);
-        await file.CopyToAsync(stream);
-        return fullPath;
+        throw new CustomException("No files uploaded.");
     }
 
     #endregion
@@ -234,7 +241,7 @@ public class BaseApiController : ControllerBase
     {
         string fileNameWithoutExtension = FileHelper.GetFileNameWithoutExtension(fileName);
         string fileExtension = FileHelper.GetFileExtension(fileName);
-        string uniqueFileName = $"{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}{fileExtension}";
-        return uniqueFileName;
+        string uniqueFileName = $"{FileHelper.GetDateFileName()}_{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}";
+        return uniqueFileName + fileExtension;
     }
 }

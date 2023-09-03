@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
-using XiHan.Subscriptions.WebHooks.DingTalk;
+using XiHan.Subscriptions.Bots.DingTalk;
 using XiHan.Utils.Exceptions;
 
 namespace XiHan.Services.Commons.Messages.DingTalkPush;
@@ -28,18 +28,17 @@ namespace XiHan.Services.Commons.Messages.DingTalkPush;
 /// DingTalkMessagePush
 /// </summary>
 [AppService(ServiceType = typeof(IDingTalkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
+public class DingTalkPushService : BaseService<SysBot>, IDingTalkPushService
 {
-    private readonly DingTalkCustomRobot _dingTalkRobot;
+    private readonly DingTalkBot _dingTalkBot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPolly"></param>
-    public DingTalkPushService(IHttpPollyService httpPolly)
+    public DingTalkPushService()
     {
         DingTalkConnection dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
-        _dingTalkRobot = new DingTalkCustomRobot(httpPolly, dingTalkConnection);
+        _dingTalkBot = new DingTalkBot(dingTalkConnection);
     }
 
     /// <summary>
@@ -48,11 +47,11 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        SysRobot sysCustomRobot = await GetFirstAsync(e => e.IsEnabled && e.RobotType == RobotTypeEnum.DingTalk);
-        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysRobot, DingTalkConnection>()
+        SysBot sysCustomBot = await GetFirstAsync(e => e.IsEnabled && e.BotType == BotTypeEnum.DingTalk);
+        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysBot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        DingTalkConnection dingTalkConnection = sysCustomRobot.Adapt<DingTalkConnection>(config);
+        DingTalkConnection dingTalkConnection = sysCustomBot.Adapt<DingTalkConnection>(config);
         return dingTalkConnection;
     }
 
@@ -62,12 +61,11 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// 钉钉推送文本消息
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="atMobiles"></param>
-    /// <param name="isAtAll"></param>
+    /// <param name="at"></param>
     /// <returns></returns>
-    public async Task<ApiResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> DingTalkToText(DingTalkText text, DingTalkAt? at)
     {
-        return await _dingTalkRobot.TextMessage(text, atMobiles, isAtAll);
+        return await _dingTalkBot.TextMessage(text, at);
     }
 
     /// <summary>
@@ -77,19 +75,18 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <returns></returns>
     public async Task<ApiResult> DingTalkToLink(DingTalkLink link)
     {
-        return await _dingTalkRobot.LinkMessage(link);
+        return await _dingTalkBot.LinkMessage(link);
     }
 
     /// <summary>
     /// 钉钉推送文档消息
     /// </summary>
     /// <param name="markdown"></param>
-    /// <param name="atMobiles"></param>
-    /// <param name="isAtAll"></param>
+    /// <param name="at"></param>
     /// <returns></returns>
-    public async Task<ApiResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> DingTalkToMarkdown(DingTalkMarkdown markdown, DingTalkAt? at)
     {
-        return await _dingTalkRobot.MarkdownMessage(markdown, atMobiles, isAtAll);
+        return await _dingTalkBot.MarkdownMessage(markdown, at);
     }
 
     /// <summary>
@@ -99,7 +96,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <returns></returns>
     public async Task<ApiResult> DingTalkToActionCard(DingTalkActionCard actionCard)
     {
-        return await _dingTalkRobot.ActionCardMessage(actionCard);
+        return await _dingTalkBot.ActionCardMessage(actionCard);
     }
 
     /// <summary>
@@ -109,7 +106,7 @@ public class DingTalkPushService : BaseService<SysRobot>, IDingTalkPushService
     /// <returns></returns>
     public async Task<ApiResult> DingTalkToFeedCard(DingTalkFeedCard feedCard)
     {
-        return await _dingTalkRobot.FeedCardMessage(feedCard);
+        return await _dingTalkBot.FeedCardMessage(feedCard);
     }
 
     #endregion DingTalk

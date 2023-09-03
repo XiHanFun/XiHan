@@ -114,12 +114,7 @@ public static class TestEncryption
         Console.WriteLine($@"字符串【{plainText}】Rsa加密后：{strRsa1}；");
 
         Console.WriteLine("请输入要Rsa解密的文本：");
-        string? encryptedText = Console.ReadLine();
-        if (encryptedText == null)
-        {
-            throw new ArgumentNullException();
-        }
-
+        string? encryptedText = Console.ReadLine() ?? throw new ArgumentNullException();
         RsaEncryptionHelper.LoadKeys(publicKey, privateKey);
         string strRsa2 = RsaEncryptionHelper.Decrypt(encryptedText);
         Console.WriteLine($@"字符串【{plainText}】Rsa解密后：{strRsa2}；");

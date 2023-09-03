@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HelloController
+// FileName:CommonController
 // Guid:1ba84471-fadd-4d4c-94d6-04942cf3b4a1
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,16 +18,15 @@ using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.Common;
+namespace XiHan.WebHost.Controllers;
 
 /// <summary>
 /// 快速开始
 /// </summary>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Common)]
-public class HelloController : BaseApiController
+public class CommonController : BaseApiController
 {
     /// <summary>
     /// 欢迎使用曦寒

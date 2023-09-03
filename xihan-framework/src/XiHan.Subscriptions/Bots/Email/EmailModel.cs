@@ -15,7 +15,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace XiHan.Subscriptions.Emails;
+namespace XiHan.Subscriptions.Bots.Email;
 
 /// <summary>
 /// EmailFromModel

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:LarkModel
+// FileName:DingTalkModel
 // Guid:5d00cc16-5e63-4fd4-9052-54068c536acf
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,38 +15,56 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Subscriptions.WebHooks.Lark;
+namespace XiHan.Subscriptions.Bots.DingTalk;
 
 #region 基本类型
 
 /// <summary>
 /// 文本类型
 /// </summary>
-public class LarkText
+public class DingTalkText
 {
     /// <summary>
     /// 文本内容
     /// </summary>
-    [JsonPropertyName("text")]
-    public string Text { get; set; } = string.Empty;
+    [JsonPropertyName("content")]
+    public string Content { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// 富文本类型
+/// 链接类型
 /// </summary>
-public class LarkPost
+public class DingTalkLink
 {
     /// <summary>
     /// 消息标题
     /// </summary>
-    [JsonPropertyName("post")]
-    public string Post { set; get; } = string.Empty;
+    [JsonPropertyName("title")]
+    public string Title { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 消息内容
+    /// </summary>
+    [JsonPropertyName("text")]
+    public string Text { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 图片链接
+    /// </summary>
+    [JsonPropertyName("picUrl")]
+    public string PicUrl { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 点击消息跳转的链接
+    /// </summary>
+    [JsonPropertyName("messageUrl")]
+    public string MessageUrl { set; get; } = string.Empty;
 }
 
 /// <summary>
 /// 文档类型
 /// </summary>
-public class LarkMarkdown
+public class DingTalkMarkdown
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -63,8 +81,11 @@ public class LarkMarkdown
 
 /// <summary>
 /// 任务卡片类型
+/// 单个按钮方案：必须属性有 SingleTitle、SingleUrl
+/// 多个按钮方案：必须属性有 BtnOrientation、Btns
+/// 两种方案二选一，设置单个按钮方案后多个按钮方案会无效
 /// </summary>
-public class LarkActionCard
+public class DingTalkActionCard
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -79,40 +100,40 @@ public class LarkActionCard
     public string Text { set; get; } = string.Empty;
 
     /// <summary>
-    /// 单个按钮方案(设置此项后btns无效)
+    /// 单个按钮方案：按钮标题
     /// </summary>
     [JsonPropertyName("singleTitle")]
-    public string SingleTitle { set; get; } = string.Empty;
+    public string? SingleTitle { set; get; }
 
     /// <summary>
-    /// 单个按钮方案触发的URL(设置此项后btns无效)
+    /// 单个按钮方案：按钮触发的链接
     /// </summary>
     [JsonPropertyName("singleURL")]
-    public string SingleUrl { set; get; } = string.Empty;
+    public string? SingleUrl { set; get; }
 
     /// <summary>
-    /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
+    /// 多个按钮方案：按钮排列，0-按钮竖直排列，1-按钮横向排列
     /// </summary>
     [JsonPropertyName("btnOrientation")]
     public string? BtnOrientation { set; get; } = "0";
 
     /// <summary>
-    /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
+    /// 多个按钮方案：按钮信息
     /// </summary>
     [JsonPropertyName("btns")]
-    public List<LarkBtnInfo>? Btns { set; get; }
+    public List<DingTalkBtnInfo>? Btns { set; get; }
 }
 
 /// <summary>
 /// 菜单卡片类型
 /// </summary>
-public class LarkFeedCard
+public class DingTalkFeedCard
 {
     /// <summary>
     /// 链接列表
     /// </summary>
     [JsonPropertyName("links")]
-    public List<LarkFeedCardLink>? Links { get; set; }
+    public List<DingTalkFeedCardLink>? Links { get; set; }
 }
 
 #endregion 基本类型
@@ -122,7 +143,7 @@ public class LarkFeedCard
 /// <summary>
 /// 菜单卡片类型链接
 /// </summary>
-public class LarkFeedCardLink
+public class DingTalkFeedCardLink
 {
     /// <summary>
     /// 消息标题
@@ -131,13 +152,13 @@ public class LarkFeedCardLink
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
-    /// 图片URL
+    /// 图片链接
     /// </summary>
     [JsonPropertyName("picURL")]
     public string PicUrl { set; get; } = string.Empty;
 
     /// <summary>
-    /// 点击消息跳转的URL
+    /// 点击消息跳转的链接
     /// </summary>
     [JsonPropertyName("messageURL")]
     public string MessageUrl { set; get; } = string.Empty;
@@ -146,7 +167,7 @@ public class LarkFeedCardLink
 /// <summary>
 /// @指定人(被@人的手机号和被@人的用户 userid 如非群内成员则会被自动过滤)
 /// </summary>
-public class LarkAt
+public class DingTalkAt
 {
     /// <summary>
     /// 被@的手机号
@@ -170,16 +191,16 @@ public class LarkAt
 /// <summary>
 /// 按钮信息
 /// </summary>
-public class LarkBtnInfo
+public class DingTalkBtnInfo
 {
     /// <summary>
-    /// 按钮方案
+    /// 按钮标题
     /// </summary>
     [JsonPropertyName("title")]
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    /// 动作触发的URL
+    /// 动作触发的链接
     /// </summary>
     [JsonPropertyName("actionURL")]
     public string ActionUrl { get; set; } = string.Empty;
@@ -192,7 +213,7 @@ public class LarkBtnInfo
 /// <summary>
 /// 消息类型枚举
 /// </summary>
-public enum LarkMsgTypeEnum
+public enum DingTalkMsgTypeEnum
 {
     /// <summary>
     /// 文本类型
@@ -200,24 +221,24 @@ public enum LarkMsgTypeEnum
     [Description("text")] Text,
 
     /// <summary>
-    /// 富文本类型
+    /// 链接类型
     /// </summary>
-    [Description("post")] Post,
+    [Description("link")] Link,
 
     /// <summary>
-    /// 群名片类型
+    /// 文档类型
     /// </summary>
-    [Description("share_chat")] ShareChat,
+    [Description("markdown")] Markdown,
 
     /// <summary>
-    /// 图片类型
+    /// 任务卡片类型
     /// </summary>
-    [Description("image")] Image,
+    [Description("actionCard")] ActionCard,
 
     /// <summary>
-    /// 消息卡片类型
+    /// 菜单卡片类型
     /// </summary>
-    [Description("interactive")] InterActive
+    [Description("feedCard")] FeedCard
 }
 
 #endregion

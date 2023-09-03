@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.WebHooks.Lark;
+namespace XiHan.Subscriptions.Bots.Lark;
 
 /// <summary>
 /// LarkConnection
@@ -40,5 +40,10 @@ public class LarkConnection
     /// <summary>
     /// 机密
     /// </summary>
-    public string Secret { get; set; } = string.Empty;
+    public string? Secret { get; set; }
+
+    /// <summary>
+    /// 关键字
+    /// </summary>
+    public string? KeyWord { get; set; }
 }

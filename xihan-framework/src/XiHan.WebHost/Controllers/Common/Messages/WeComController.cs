@@ -17,10 +17,9 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Responses;
 using XiHan.Services.Commons.Messages.WeComPush;
-using XiHan.Subscriptions.WebHooks.WeCom;
+using XiHan.Subscriptions.Bots.WeCom;
 using XiHan.Utils.Encryptions;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Common.Messages;
 
@@ -137,6 +136,21 @@ public class WeComController : BaseApiController
     }
 
     /// <summary>
+    /// 语音
+    /// </summary>
+    /// <param name="mediaId"></param>
+    /// <returns></returns>
+    [HttpPost("Voice")]
+    public async Task<ApiResult> WeComToVoice(string mediaId)
+    {
+        WeComVoice voice = new()
+        {
+            MediaId = mediaId
+        };
+        return await _weComPushService.WeComToVoice(voice);
+    }
+
+    /// <summary>
     /// 文本通知卡片
     /// </summary>
     /// <returns></returns>
@@ -183,16 +197,16 @@ public class WeComController : BaseApiController
             },
             new()
             {
+                Type = 1,
                 KeyName = "企微官网",
                 Value = "点击访问",
-                Type = 1,
                 Url = "https://work.weixin.qq.com/?from=openApi"
             },
             new()
             {
+                Type = 2,
                 KeyName = "文件下载",
                 Value = "3.png",
-                Type = 2,
                 MediaId = mediaId
             }
         };
@@ -292,9 +306,9 @@ public class WeComController : BaseApiController
             },
             new()
             {
+                Type = 1,
                 KeyName = "企微官网",
                 Value = "点击访问",
-                Type = 1,
                 Url = "https://work.weixin.qq.com/?from=openApi"
             }
         };
@@ -340,7 +354,7 @@ public class WeComController : BaseApiController
     /// <param name="formFile"></param>
     /// <returns></returns>
     [HttpPost("UploadFile")]
-    public new async Task<ApiResult> UploadFile(IFormFile formFile)
+    public async Task<ApiResult> UploadFile(IFormFile formFile)
     {
         if (formFile.Length <= 0)
         {
@@ -356,7 +370,7 @@ public class WeComController : BaseApiController
 
         FileStream stream = new(path, FileMode.Open);
 
-        return await _weComPushService.WeComToUploadFile(stream);
+        return await _weComPushService.WeComToUploadFile(stream, WeComUploadType.File);
     }
 
     #endregion 上传文件

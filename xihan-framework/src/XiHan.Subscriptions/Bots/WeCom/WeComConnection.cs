@@ -12,7 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.WebHooks.WeCom;
+
+namespace XiHan.Subscriptions.Bots.WeCom;
 
 /// <summary>
 /// WeChatConnection

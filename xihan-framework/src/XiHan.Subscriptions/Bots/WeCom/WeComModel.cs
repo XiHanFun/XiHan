@@ -15,12 +15,12 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Subscriptions.WebHooks.WeCom;
+namespace XiHan.Subscriptions.Bots.WeCom;
 
 #region 基本类型
 
 /// <summary>
-/// Text类型
+/// 文本类型
 /// </summary>
 public class WeComText : WeComAt
 {
@@ -32,7 +32,7 @@ public class WeComText : WeComAt
 }
 
 /// <summary>
-/// Markdown类型
+/// 文档类型
 /// </summary>
 public class WeComMarkdown
 {
@@ -44,7 +44,7 @@ public class WeComMarkdown
 }
 
 /// <summary>
-/// Image类型，base64编码前最大不能超过2M，支持JPG、PNG格式
+/// 图片类型，base64编码前最大不能超过2M，支持JPG、PNG格式
 /// </summary>
 public class WeComImage
 {
@@ -86,12 +86,25 @@ public class WeComFile
 }
 
 /// <summary>
+/// 语音类型
+/// </summary>
+public class WeComVoice
+{
+    /// <summary>
+    /// 文件id，通过下文的文件上传接口获取
+    /// </summary>
+    [JsonPropertyName("media_id")]
+    public string MediaId { get; set; } = string.Empty;
+}
+
+/// <summary>
 /// 文本通知模版卡片内容
 /// </summary>
 public class WeComTemplateCardTextNotice
 {
     /// <summary>
-    /// 模版卡片的模版类型，文本通知模版卡片的类型为text_notice，图文展示模版卡片的类型为news_notice
+    /// 模版卡片的模版类型
+    /// 文本通知模版卡片的类型为text_notice
     /// </summary>
     [JsonPropertyName("card_type")]
     public string CardType { get; set; } = string.Empty;
@@ -152,7 +165,8 @@ public class WeComTemplateCardTextNotice
 public class WeComTemplateCardNewsNotice
 {
     /// <summary>
-    /// 模版卡片的模版类型，文本通知模版卡片的类型为text_notice，图文展示模版卡片的类型为news_notice
+    /// 模版卡片的模版类型
+    /// 图文展示模版卡片的类型为news_notice
     /// </summary>
     [JsonPropertyName("card_type")]
     public string CardType { get; set; } = string.Empty;
@@ -571,32 +585,44 @@ public enum WeComMsgTypeEnum
     /// <summary>
     /// 文本类型
     /// </summary>
-    [Description("text")] Text,
+    [Description("text")]
+    Text,
 
     /// <summary>
     /// 文档类型
     /// </summary>
-    [Description("markdown")] Markdown,
+    [Description("markdown")]
+    Markdown,
 
     /// <summary>
     /// 图片类型
     /// </summary>
-    [Description("image")] Image,
+    [Description("image")]
+    Image,
 
     /// <summary>
     /// 图文类型
     /// </summary>
-    [Description("news")] News,
+    [Description("news")]
+    News,
 
     /// <summary>
     /// 文件类型
     /// </summary>
-    [Description("file")] File,
+    [Description("file")]
+    File,
+
+    /// <summary>
+    /// 语音类型
+    /// </summary>
+    [Description("voice")]
+    Voice,
 
     /// <summary>
     /// 模版卡片类型
     /// </summary>
-    [Description("template_card")] TemplateCard
+    [Description("template_card")]
+    TemplateCard
 }
 
 /// <summary>
@@ -607,12 +633,32 @@ public enum WeComTemplateCardType
     /// <summary>
     /// 文本通知类型，属于模版卡片类型
     /// </summary>
-    [Description("text_notice")] TextNotice,
+    [Description("text_notice")]
+    TextNotice,
 
     /// <summary>
     /// 图文展示类型，属于模版卡片类型
     /// </summary>
-    [Description("news_notice")] NewsNotice
+    [Description("news_notice")]
+    NewsNotice
+}
+
+/// <summary>
+/// 文件上传类型枚举
+/// </summary>
+public enum WeComUploadType
+{
+    /// <summary>
+    /// 文件类型
+    /// </summary>
+    [Description("file")]
+    File,
+
+    /// <summary>
+    /// 语音类型
+    /// </summary>
+    [Description("voice")]
+    Voice,
 }
 
 #endregion

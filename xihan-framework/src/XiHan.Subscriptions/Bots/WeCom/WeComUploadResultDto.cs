@@ -12,7 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.WebHooks.WeCom;
+using System.Text.Json.Serialization;
+
+namespace XiHan.Subscriptions.Bots.WeCom;
 
 /// <summary>
 /// 文件上传返回结果
@@ -28,4 +30,9 @@ public class WeComUploadResultDto
     /// 介质ID
     /// </summary>
     public string MediaId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 媒体文件类型，分别有图片(image)、语音(voice)、视频(video)，普通文件(file)
+    /// </summary>
+    public string Type { get; set; } = string.Empty;
 }

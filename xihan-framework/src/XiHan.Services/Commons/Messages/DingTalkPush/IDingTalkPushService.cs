@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Responses;
-using XiHan.Subscriptions.WebHooks.DingTalk;
+using XiHan.Subscriptions.Bots.DingTalk;
 
 namespace XiHan.Services.Commons.Messages.DingTalkPush;
 
@@ -26,10 +26,9 @@ public interface IDingTalkPushService
     /// 钉钉推送文本消息
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="atMobiles"></param>
-    /// <param name="isAtAll"></param>
+    /// <param name="at"></param>
     /// <returns></returns>
-    Task<ApiResult> DingTalkToText(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false);
+    Task<ApiResult> DingTalkToText(DingTalkText text, DingTalkAt? at);
 
     /// <summary>
     /// 钉钉推送链接消息
@@ -42,10 +41,9 @@ public interface IDingTalkPushService
     /// 钉钉推送文档消息
     /// </summary>
     /// <param name="markdown"></param>
-    /// <param name="atMobiles"></param>
-    /// <param name="isAtAll"></param>
+    /// <param name="at"></param>
     /// <returns></returns>
-    Task<ApiResult> DingTalkToMarkdown(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false);
+    Task<ApiResult> DingTalkToMarkdown(DingTalkMarkdown markdown, DingTalkAt? at);
 
     /// <summary>
     /// 钉钉推送任务卡片消息

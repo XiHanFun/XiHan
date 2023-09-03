@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 
 namespace XiHan.Repositories.Extensions;
 
@@ -106,6 +107,8 @@ public static class EntityExtension
     private static TSource CommonTo<TSource>(this TSource source, PropertyInfo propertyInfo)
     {
         Type? types = source?.GetType();
+        UserAuthInfo? user = App.AuthInfo;
+
         if (types == null)
         {
             return source;
@@ -121,8 +124,7 @@ public static class EntityExtension
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now);
         }
 
-        Infrastructures.Apps.HttpContexts.UserAuthInfo user = App.AuthInfo;
-        if (user.IsAuthenticated)
+        if (user != null && user.IsAuthenticated)
         {
             if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
             {

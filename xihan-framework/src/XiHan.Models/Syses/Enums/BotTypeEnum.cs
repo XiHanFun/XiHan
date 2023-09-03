@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:RobotTypeEnum
+// FileName:BotTypeEnum
 // Guid:9f8be55b-25f8-4a40-af16-050ad4ef815f
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Models.Syses.Enums;
 /// <summary>
 /// 机器人类型类型
 /// </summary>
-public enum RobotTypeEnum
+public enum BotTypeEnum
 {
     /// <summary>
     /// 钉钉

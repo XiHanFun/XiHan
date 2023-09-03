@@ -52,7 +52,7 @@ public static class JwtHandler
             new(ClaimConst.NickName, tokenModel.NickName),
             new(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString()),
         };
-        // 为了解决一个用户多个角色(比如：Admin,System)，用下边的方法
+        // 用户被分配多个角色
         tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
 
         // Nuget引入：System.IdentityModel.Tokens.Jwt
@@ -97,7 +97,7 @@ public static class JwtHandler
             Account = claims.First(claim => claim.Type == ClaimConst.Account).Value,
             NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
             RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
-            UserRole = claims.First(claim => claim.Type == ClaimConst.UserRole).Value.GetStrList(',').Select(s => s.ParseToLong()).ToList(),
+            UserRole = claims.Where(claim => claim.Type == ClaimConst.UserRole).Select(s => s.ParseToLong()).ToList(),
             IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool(),
         };
         return tokenModel;

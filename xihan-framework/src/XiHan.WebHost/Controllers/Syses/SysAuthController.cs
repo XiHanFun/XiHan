@@ -29,7 +29,6 @@ using XiHan.Services.Syses.Users.Dtos;
 using XiHan.Utils.Encryptions;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Handlers;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Syses;
 

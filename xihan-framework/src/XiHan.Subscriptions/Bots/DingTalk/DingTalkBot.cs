@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:DingTalkCustomRobot
+// FileName:DingTalkBot
 // Guid:b9ebb234-1ebf-4b97-b308-0c525d2cd190
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,32 +14,31 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 
-namespace XiHan.Subscriptions.WebHooks.DingTalk;
+namespace XiHan.Subscriptions.Bots.DingTalk;
 
 /// <summary>
 /// 钉钉自定义机器人消息推送
 /// https://open.dingtalk.com/document/orgapp/custom-robot-access
+/// 每个机器人每分钟最多发送20条消息到群里，如果超过20条，会限流10分钟
 /// </summary>
-public class DingTalkCustomRobot
+public class DingTalkBot
 {
-    private readonly IHttpPollyService _httpPollyService;
     private readonly string _url;
-    private readonly string _secret;
+    private readonly string? _secret;
     private readonly string? _keyWord;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPollyService"></param>
     /// <param name="dingTalkConnection"></param>
-    public DingTalkCustomRobot(IHttpPollyService httpPollyService, DingTalkConnection dingTalkConnection)
+    public DingTalkBot(DingTalkConnection dingTalkConnection)
     {
-        _httpPollyService = httpPollyService;
         _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
         _secret = dingTalkConnection.Secret;
         _keyWord = dingTalkConnection.KeyWord;
@@ -49,21 +48,12 @@ public class DingTalkCustomRobot
     /// 发送文本消息
     /// </summary>
     /// <param name="text">内容</param>
-    /// <param name="atMobiles">被@的人群</param>
-    /// <param name="isAtAll">是否@全员</param>
+    /// <param name="at">指定目标人群</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextMessage(DingTalkText text, List<string>? atMobiles = null, bool isAtAll = false)
+    public async Task<ApiResult> TextMessage(DingTalkText text, DingTalkAt? at)
     {
-        // 消息类型
         string msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        // 指定目标人群
-        DingTalkAt at = new()
-        {
-            AtMobiles = atMobiles,
-            IsAtAll = isAtAll
-        };
         text.Content = _keyWord + text.Content;
-        // 发送
         ApiResult result = await Send(new { msgType, text, at });
         return result;
     }
@@ -74,10 +64,8 @@ public class DingTalkCustomRobot
     /// <param name="link"></param>
     public async Task<ApiResult> LinkMessage(DingTalkLink link)
     {
-        // 消息类型
         string msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
         link.Title = _keyWord + link.Title;
-        // 发送
         ApiResult result = await Send(new { msgType, link });
         return result;
     }
@@ -86,35 +74,25 @@ public class DingTalkCustomRobot
     /// 发送文档消息
     /// </summary>
     /// <param name="markdown">Markdown内容</param>
-    /// <param name="atMobiles">被@的人群</param>
-    /// <param name="isAtAll">是否@全员</param>
-    public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown markdown, List<string>? atMobiles = null, bool isAtAll = false)
+    /// <param name="at">指定目标人群</param>
+    public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown markdown, DingTalkAt? at)
     {
-        // 消息类型
         string msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        // 指定目标人群
-        DingTalkAt at = new()
-        {
-            AtMobiles = atMobiles,
-            IsAtAll = isAtAll
-        };
         markdown.Title = _keyWord + markdown.Title;
-        // 发送
         ApiResult result = await Send(new { msgType, markdown, at });
         return result;
     }
 
     /// <summary>
     /// 发送任务卡片消息
+    /// 按钮方案二选一，设置单个按钮方案后多个按钮方案会无效
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
     public async Task<ApiResult> ActionCardMessage(DingTalkActionCard actionCard)
     {
-        // 消息类型
         string msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
         actionCard.Title = _keyWord + actionCard.Title;
         actionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
-        // 发送
         ApiResult result = await Send(new { msgType, actionCard });
         return result;
     }
@@ -125,10 +103,8 @@ public class DingTalkCustomRobot
     /// <param name="feedCard">FeedCard内容</param>
     public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard feedCard)
     {
-        // 消息类型
         string msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
         feedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
-        // 发送
         ApiResult result = await Send(new { msgType, feedCard });
         return result;
     }
@@ -142,11 +118,12 @@ public class DingTalkCustomRobot
     {
         string url = _url;
         string sendMessage = objSend.SerializeToJson();
-        long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
         {
             // 把 【timestamp + "\n" + 密钥】 当做签名字符串
+            long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
             string sign = timeStamp + "\n" + _secret;
             UTF8Encoding encoding = new();
             byte[] keyByte = encoding.GetBytes(_secret);
@@ -164,6 +141,7 @@ public class DingTalkCustomRobot
         }
 
         // 发起请求
+        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         DingTalkResultInfoDto? result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result == null)

@@ -14,7 +14,9 @@
 
 using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Reflection;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 
@@ -30,16 +32,21 @@ public static class AppHttpContextProvider
     /// <summary>
     /// 当前上下文
     /// </summary>
-    public static HttpContext HttpContextCurrent => GetHttpContextCurrent();
+    public static HttpContext? HttpContextCurrent => GetHttpContextCurrent();
 
     /// <summary>
     /// 获取当前 HttpContext 对象
     /// </summary>
-    private static HttpContext GetHttpContextCurrent()
+    private static HttpContext? GetHttpContextCurrent()
     {
-        object asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
-        object holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
-        return (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
+        object? asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
+        if (asyncLocal == null) return null;
+
+        object? holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
+        if (holder == null) return null;
+
+        HttpContext? httpContext = (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
+        return httpContext;
 
         // 创建异步本地访问器
         static Func<object> CreateAsyncLocalAccessor()

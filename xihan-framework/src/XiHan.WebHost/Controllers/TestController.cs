@@ -26,9 +26,8 @@ using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Filters;
-using XiHan.WebHost.Controllers.Bases;
 
-namespace XiHan.WebHost.Controllers.Test;
+namespace XiHan.WebHost.Controllers;
 
 /// <summary>
 /// 测试管理
@@ -156,13 +155,13 @@ public class TestController : BaseApiController
     /// <summary>
     /// 上传文件
     /// </summary>
-    /// <param name="file"></param>
+    /// <param name="files"></param>
     /// <returns>完整文件路径</returns>
     [HttpPost("Upload/File")]
-    public new async Task<ApiResult> UploadFile(IFormFile file)
+    public new async Task<ApiResult> UploadFile(IEnumerable<IFormFile> files)
     {
-        string path = await base.UploadFile(file);
-        return ApiResult.Success($"上传成功！文件路径：{path}");
+        var pathes = await base.UploadFile(files);
+        return ApiResult.Success($"上传成功！文件路径：{pathes.FirstOrDefault()}");
     }
 
     /// <summary>
@@ -186,7 +185,7 @@ public class TestController : BaseApiController
     {
         SysUserSeedData sysUserSeedData = new();
         IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
-        await DownloadImportTemplate<SysUser>("系统用户种子数据", dataSource, "SysUser");
+        await DownloadImportTemplate("系统用户种子数据", dataSource, "SysUser");
     }
 
     /// <summary>
@@ -223,7 +222,7 @@ public class TestController : BaseApiController
     {
         SysUserSeedData sysUserSeedData = new();
         IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
-        await ExportExcel<SysUser>("系统用户种子数据", dataSource, "SysUser");
+        await ExportExcel("系统用户种子数据", dataSource, "SysUser");
     }
 
     /// <summary>

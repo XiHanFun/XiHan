@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Infrastructures.Responses;
-using XiHan.Subscriptions.WebHooks.WeCom;
+using XiHan.Subscriptions.Bots.WeCom;
 
 namespace XiHan.Services.Commons.Messages.WeComPush;
 
@@ -58,6 +58,13 @@ public interface IWeComPushService
     Task<ApiResult> WeComToFile(WeComFile file);
 
     /// <summary>
+    /// 企业微信推送语音消息
+    /// </summary>
+    /// <param name="voice">语音</param>
+    /// <returns></returns>
+    Task<ApiResult> WeComToVoice(WeComVoice voice);
+
+    /// <summary>
     /// 微信推送文本通知消息
     /// </summary>
     /// <param name="templateCard">文本通知-模版卡片</param>
@@ -72,9 +79,10 @@ public interface IWeComPushService
     Task<ApiResult> WeComToNewsNotice(WeComTemplateCardNewsNotice templateCard);
 
     /// <summary>
-    /// 微信上传文件
+    /// 企业微信上传文件
     /// </summary>
     /// <param name="fileStream">文件</param>
+    /// <param name="uploadType">文件类型</param>
     /// <returns></returns>
-    Task<ApiResult> WeComToUploadFile(FileStream fileStream);
+    Task<ApiResult> WeComToUploadFile(FileStream fileStream, WeComUploadType uploadType);
 }

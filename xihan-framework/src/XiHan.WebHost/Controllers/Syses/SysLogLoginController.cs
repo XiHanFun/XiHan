@@ -21,7 +21,6 @@ using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
 using XiHan.Services.Syses.Logging.Dtos;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Syses;
 

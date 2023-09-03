@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:DingTalkModel
+// FileName:LarkModel
 // Guid:5d00cc16-5e63-4fd4-9052-54068c536acf
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,56 +15,38 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace XiHan.Subscriptions.WebHooks.DingTalk;
+namespace XiHan.Subscriptions.Bots.Lark;
 
 #region 基本类型
 
 /// <summary>
 /// 文本类型
 /// </summary>
-public class DingTalkText
+public class LarkText
 {
     /// <summary>
     /// 文本内容
     /// </summary>
-    [JsonPropertyName("content")]
-    public string Content { get; set; } = string.Empty;
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// 链接类型
+/// 富文本类型
 /// </summary>
-public class DingTalkLink
+public class LarkPost
 {
     /// <summary>
     /// 消息标题
     /// </summary>
-    [JsonPropertyName("title")]
-    public string Title { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 消息内容
-    /// </summary>
-    [JsonPropertyName("text")]
-    public string Text { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 图片URL
-    /// </summary>
-    [JsonPropertyName("picUrl")]
-    public string PicUrl { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 点击消息跳转的URL
-    /// </summary>
-    [JsonPropertyName("messageUrl")]
-    public string MessageUrl { set; get; } = string.Empty;
+    [JsonPropertyName("post")]
+    public string Post { set; get; } = string.Empty;
 }
 
 /// <summary>
 /// 文档类型
 /// </summary>
-public class DingTalkMarkdown
+public class LarkMarkdown
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -82,7 +64,7 @@ public class DingTalkMarkdown
 /// <summary>
 /// 任务卡片类型
 /// </summary>
-public class DingTalkActionCard
+public class LarkActionCard
 {
     /// <summary>
     /// 首屏会话透出的展示内容
@@ -118,19 +100,19 @@ public class DingTalkActionCard
     /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
     /// </summary>
     [JsonPropertyName("btns")]
-    public List<DingTalkBtnInfo>? Btns { set; get; }
+    public List<LarkBtnInfo>? Btns { set; get; }
 }
 
 /// <summary>
 /// 菜单卡片类型
 /// </summary>
-public class DingTalkFeedCard
+public class LarkFeedCard
 {
     /// <summary>
     /// 链接列表
     /// </summary>
     [JsonPropertyName("links")]
-    public List<DingTalkFeedCardLink>? Links { get; set; }
+    public List<LarkFeedCardLink>? Links { get; set; }
 }
 
 #endregion 基本类型
@@ -140,7 +122,7 @@ public class DingTalkFeedCard
 /// <summary>
 /// 菜单卡片类型链接
 /// </summary>
-public class DingTalkFeedCardLink
+public class LarkFeedCardLink
 {
     /// <summary>
     /// 消息标题
@@ -162,33 +144,21 @@ public class DingTalkFeedCardLink
 }
 
 /// <summary>
-/// @指定人(被@人的手机号和被@人的用户 userid 如非群内成员则会被自动过滤)
+/// @指定人(被@人的用户 OpenID 如非群内成员则会被自动过滤)
 /// </summary>
-public class DingTalkAt
+public class LarkAt
 {
-    /// <summary>
-    /// 被@的手机号
-    /// </summary>
-    [JsonPropertyName("atMobiles")]
-    public List<string>? AtMobiles { set; get; }
-
     /// <summary>
     /// 被@的用户ID
     /// </summary>
-    [JsonPropertyName("atUserIds")]
+    [JsonPropertyName("user_id")]
     public List<string>? AtUserIds { set; get; }
-
-    /// <summary>
-    /// 是否@所有人(如要 @所有人为 true，反之用 false)
-    /// </summary>
-    [JsonPropertyName("isAtAll")]
-    public bool IsAtAll { set; get; }
 }
 
 /// <summary>
 /// 按钮信息
 /// </summary>
-public class DingTalkBtnInfo
+public class LarkBtnInfo
 {
     /// <summary>
     /// 按钮方案
@@ -210,32 +180,37 @@ public class DingTalkBtnInfo
 /// <summary>
 /// 消息类型枚举
 /// </summary>
-public enum DingTalkMsgTypeEnum
+public enum LarkMsgTypeEnum
 {
     /// <summary>
     /// 文本类型
     /// </summary>
-    [Description("text")] Text,
+    [Description("text")]
+    Text,
 
     /// <summary>
-    /// 链接类型
+    /// 富文本类型
     /// </summary>
-    [Description("link")] Link,
+    [Description("post")]
+    Post,
 
     /// <summary>
-    /// 文档类型
+    /// 群名片类型
     /// </summary>
-    [Description("markdown")] Markdown,
+    [Description("share_chat")]
+    ShareChat,
 
     /// <summary>
-    /// 任务卡片类型
+    /// 图片类型
     /// </summary>
-    [Description("actionCard")] ActionCard,
+    [Description("image")]
+    Image,
 
     /// <summary>
-    /// 菜单卡片类型
+    /// 消息卡片类型
     /// </summary>
-    [Description("feedCard")] FeedCard
+    [Description("interactive")]
+    InterActive
 }
 
 #endregion

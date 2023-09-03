@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysRobot
+// FileName:SysBot
 // Guid:e034c85d-9537-4580-ad6b-5974c27915e1
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -24,13 +24,19 @@ namespace XiHan.Models.Syses;
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SystemTable]
-[SugarTable(TableName = "Sys_Robot")]
-public class SysRobot : BaseModifyEntity
+[SugarTable(TableName = "Sys_Bot")]
+public class SysBot : BaseModifyEntity
 {
+    /// <summary>
+    /// 自定义机器人标题
+    /// </summary>
+    [SugarColumn(Length = 256)]
+    public string Title { get; set; } = string.Empty;
+
     /// <summary>
     /// 自定义机器人类型
     /// </summary>
-    public RobotTypeEnum RobotType { get; set; }
+    public BotTypeEnum BotType { get; set; }
 
     /// <summary>
     /// 网络挂钩地址
@@ -50,7 +56,14 @@ public class SysRobot : BaseModifyEntity
     /// 钉钉、飞书用
     /// </summary>
     [SugarColumn(Length = 128, IsNullable = true)]
-    public string? Secret { get; set; } = string.Empty;
+    public string? Secret { get; set; }
+
+    /// <summary>
+    /// 关键字
+    /// 钉钉、飞书用
+    /// </summary>
+    [SugarColumn(Length = 128, IsNullable = true)]
+    public string? KeyWord { get; set; }
 
     /// <summary>
     /// 上传地址

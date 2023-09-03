@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Subscriptions.WebHooks.DingTalk;
+namespace XiHan.Subscriptions.Bots.DingTalk;
 
 /// <summary>
 /// DingTalkConnection
@@ -40,10 +40,10 @@ public class DingTalkConnection
     /// <summary>
     /// 机密
     /// </summary>
-    public string Secret { get; set; } = string.Empty;
+    public string? Secret { get; set; }
 
     /// <summary>
     /// 关键字
     /// </summary>
-    public string KeyWord { get; set; } = string.Empty;
+    public string? KeyWord { get; set; }
 }

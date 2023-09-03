@@ -1,47 +1,20 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:LarkResultInfoDto
-// Guid:c6e6bf2a-d8d5-40f3-8834-019cc8ae4b28
+// FileName:LarkResultErrCodeEnum
+// Guid:bd2ec69e-d4b5-4d85-91e3-cf9379b7e444
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-11-08 下午 08:49:29
+// CreateTime:2023/9/2 23:56:29
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using System.ComponentModel;
-using System.Text.Json.Serialization;
 
-namespace XiHan.Subscriptions.WebHooks.Lark;
-
-/// <summary>
-/// 结果信息
-/// </summary>
-public class LarkResultInfoDto
-{
-    /// <summary>
-    /// 结果代码
-    /// 成功 0
-    /// </summary>
-    [JsonPropertyName("code")]
-    public int Code { get; set; }
-
-    /// <summary>
-    /// 结果消息
-    /// 成功 success
-    /// </summary>
-    [JsonPropertyName("msg")]
-    public string Msg { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 数据
-    /// </summary>
-    [JsonPropertyName("data")]
-    public object Data { get; set; } = string.Empty;
-}
+namespace XiHan.Subscriptions.Bots.Lark;
 
 /// <summary>
 /// 结果代码
@@ -61,15 +34,17 @@ public enum LarkResultErrCodeEnum
     /// 3、签名不匹配，校验不通过。
     /// </summary>
     [Description("签名校验失败，请排查以下原因：1、时间戳距发送时已超过 1 小时，签名已过期；2、服务器时间与标准时间有比较大的偏差，导致签名过期。请注意检查、校准你的服务器时间；3、签名不匹配，校验不通过。")]
-    SignMatchFailOrTimestampIsNotWithinOneHourFromCurrentTime = 19021,
+    SignMatchFail = 19021,
 
     /// <summary>
     /// IP校验失败
     /// </summary>
-    [Description("IP校验失败")] IpNotAllowed = 19022,
+    [Description("IP校验失败")]
+    IpNotAllowed = 19022,
 
     /// <summary>
-    /// 自定义关键词校验失败
+    /// 关键词校验失败
     /// </summary>
-    [Description("自定义关键词校验失败")] KeyWordsNotFound = 19024
+    [Description("关键词校验失败")]
+    KeyWordsNotFound = 19024
 }

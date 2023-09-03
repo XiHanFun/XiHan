@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:WeComCustomRobot
+// FileName:WeComBot
 // Guid:1f9edb73-56c9-4849-88a8-c57488b3582d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,35 +12,34 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
 
-namespace XiHan.Subscriptions.WebHooks.WeCom;
+namespace XiHan.Subscriptions.Bots.WeCom;
 
 /// <summary>
 /// 企业微信自定义机器人消息推送
 /// https://developer.work.weixin.qq.com/document/path/91770
+/// 每个机器人发送的消息不能超过20条/分钟
 /// </summary>
-public class WeComCustomRobot
+public class WeComBot
 {
-    private readonly IHttpPollyService _httpPollyService;
     private readonly string _messageUrl;
 
-    // 正式文件上传地址，调用接口凭证, 机器人 webhook 中的 key 参数
-    private readonly string _fileUrl;
+    // 文件上传地址，调用接口凭证, 机器人 webhook 中的 key 参数
+    private readonly string _uploadUrl;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="httpPollyService"></param>
     /// <param name="weChatConnection"></param>
-    public WeComCustomRobot(IHttpPollyService httpPollyService, WeComConnection weChatConnection)
+    public WeComBot(WeComConnection weChatConnection)
     {
-        _httpPollyService = httpPollyService;
         _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
-        _fileUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key + "&type=file";
+        _uploadUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key;
     }
 
     /// <summary>
@@ -50,9 +49,7 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> TextMessage(WeComText text)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        // 发送
         ApiResult result = await SendMessage(new { msgType, text });
         return result;
     }
@@ -64,9 +61,7 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        // 发送
         ApiResult result = await SendMessage(new { msgType, markdown });
         return result;
     }
@@ -78,9 +73,7 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> ImageMessage(WeComImage image)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        // 发送
         ApiResult result = await SendMessage(new { msgType, image });
         return result;
     }
@@ -92,9 +85,7 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> NewsMessage(WeComNews news)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
-        // 发送
         ApiResult result = await SendMessage(new { msgType, news });
         return result;
     }
@@ -106,10 +97,20 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> FileMessage(WeComFile file)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
-        // 发送
         ApiResult result = await SendMessage(new { msgType, file });
+        return result;
+    }
+
+    /// <summary>
+    /// 发送语音消息
+    /// </summary>
+    /// <param name="voice">语音</param>
+    /// <returns></returns>
+    public async Task<ApiResult> VoiceMessage(WeComVoice voice)
+    {
+        string msgType = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgType, voice });
         return result;
     }
 
@@ -120,11 +121,9 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
-        // 发送
-        ApiResult result = await SendMessage(new { msgType, template_card = templateCard });
+        ApiResult result = await SendMessage(new { msgType, templateCard });
         return result;
     }
 
@@ -135,30 +134,41 @@ public class WeComCustomRobot
     /// <returns></returns>
     public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
     {
-        // 消息类型
         string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         templateCard.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
-        // 发送
-        ApiResult result = await SendMessage(new { msgType, template_card = templateCard });
+        ApiResult result = await SendMessage(new { msgType, templateCard });
         return result;
     }
 
     /// <summary>
     /// 微信执行上传文件
     /// </summary>
-    /// <remarks>素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用</remarks>
-    /// <remarks>文件大小在5B~20M之间</remarks>
+    /// <param name="fileStream">文件流</param>
+    /// <param name="uploadType">文件上传类型</param>
     /// <returns></returns>
-    public async Task<ApiResult> UploadFile(FileStream fileStream)
+    /// <remarks>
+    /// 素材上传得到media_id，该media_id仅三天内有效，且只能对应上传文件的机器人可以使用
+    /// 普通文件(file)：文件大小不超过20M
+    /// 语音文件(voice)：文件大小不超过2M，播放长度不超过60s，仅支持AMR格式
+    /// </remarks>
+    public async Task<ApiResult> UploadFile(FileStream fileStream, WeComUploadType uploadType)
     {
         Dictionary<string, string> headers = new()
         {
             { "filename", fileStream.Name },
             { "filelength", fileStream.Length.ToString() }
         };
+
+        string type = uploadType switch
+        {
+            WeComUploadType.File => "&type=file",
+            WeComUploadType.Voice => "&type=voice",
+            _ => string.Empty
+        };
+
         // 发起请求，上传地址
-        WeComResultInfoDto? result =
-            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _fileUrl, fileStream, headers);
+        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
+        WeComResultInfoDto? result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _uploadUrl + type, fileStream, headers);
         // 包装返回信息
         if (result != null)
         {
@@ -167,7 +177,8 @@ public class WeComCustomRobot
                 WeComUploadResultDto uploadResult = new()
                 {
                     Message = "上传成功",
-                    MediaId = result.MediaId
+                    Type = result.Type,
+                    MediaId = result.MediaId,
                 };
                 return ApiResult.Success(uploadResult);
             }
@@ -190,6 +201,7 @@ public class WeComCustomRobot
         // 发送对象
         string sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
+        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         WeComResultInfoDto? result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
         // 包装返回信息
         return result != null

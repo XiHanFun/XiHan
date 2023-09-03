@@ -17,7 +17,6 @@ using XiHan.Services.Syses.Logging;
 using XiHan.Services.Syses.Roles;
 using XiHan.Services.Syses.Users;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Syses;
 

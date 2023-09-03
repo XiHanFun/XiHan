@@ -14,7 +14,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using XiHan.WebCore.Common.Swagger;
-using XiHan.WebHost.Controllers.Bases;
 
 namespace XiHan.WebHost.Controllers.Syses;
 

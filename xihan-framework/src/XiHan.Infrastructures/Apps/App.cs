@@ -49,7 +49,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
@@ -64,27 +64,27 @@ public static class App
     /// <summary>
     /// 全局请求上下文
     /// </summary>
-    public static HttpContext HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
+    public static HttpContext? HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
 
     /// <summary>
     /// 请求上下文客户端信息
     /// </summary>
-    public static UserClientInfo ClientInfo => HttpContextCurrent.GetClientInfo();
+    public static UserClientInfo? ClientInfo => HttpContextCurrent?.GetClientInfo();
 
     /// <summary>
     /// 请求上下文地址信息
     /// </summary>
-    public static UserAddressInfo AddressInfo => HttpContextCurrent.GetAddressInfo();
+    public static UserAddressInfo? AddressInfo => HttpContextCurrent?.GetAddressInfo();
 
     /// <summary>
     /// 请求上下文权限信息
     /// </summary>
-    public static UserAuthInfo AuthInfo => HttpContextCurrent.GetAuthInfo();
+    public static UserAuthInfo? AuthInfo => HttpContextCurrent?.GetAuthInfo();
 
     /// <summary>
     /// 请求上下文权限信息
     /// </summary>
-    public static UserActionInfo ActionInfo => HttpContextCurrent.GetActionInfo().Result;
+    public static UserActionInfo? ActionInfo => HttpContextCurrent?.GetActionInfo().Result;
 
     /// <summary>
     /// 上传根路径
