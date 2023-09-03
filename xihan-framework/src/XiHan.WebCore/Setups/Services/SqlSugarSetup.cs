@@ -18,6 +18,7 @@ using SqlSugar;
 using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Consts;
 using XiHan.Models.Bases.Filters;
 using XiHan.Models.Bases.Interface;
@@ -60,8 +61,14 @@ public static class SqlSugarSetup
                 // 动态添加全局过滤器参考，官方文档 https://www.donet5.com/home/doc?masterId=1&typeId=1205
                 // 全局过滤器，作用是设置一个查询条件，当你使用查询操作的时候满足这个条件，那么你的语句就会附加你设置的条件。应用场景：过滤假删除数据，比如，每个查询后面都要加 IsDeleted = false
 
-                // 非超级管理员或未登录用户，添加过滤假删除数据的条件
-                client.QueryFilter.AddTableFilterIF<ISoftDeleteFilter>(App.AuthInfo == null || App.AuthInfo.IsSuperAdmin == false, it => it.IsDeleted == false);
+                // 获取当前请求上下文信息
+                var httpCurrent = App.HttpContextCurrent;
+                if (httpCurrent != null)
+                {
+                    UserAuthInfo? user = httpCurrent.GetAuthInfo();
+                    // 非超级管理员或未登录用户，添加过滤假删除数据的条件
+                    client.QueryFilter.AddTableFilterIF<ISoftDeleteFilter>(user.IsSuperAdmin == false, it => it.IsDeleted == false);
+                }
 
                 SetSugarAop(dbProvider);
             });

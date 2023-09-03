@@ -14,7 +14,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
@@ -116,8 +115,8 @@ public class SysAuthController : BaseApiController
         string token = string.Empty;
 
         // 获取当前请求上下文信息
-        UserClientInfo clientInfo = App.ClientInfo;
-        UserAddressInfo addressInfo = App.AddressInfo;
+        UserClientInfo clientInfo = HttpContext.GetClientInfo();
+        UserAddressInfo addressInfo = HttpContext.GetAddressInfo();
         SysLogLogin sysLogLogin = new()
         {
             Ip = addressInfo.RemoteIPv4,

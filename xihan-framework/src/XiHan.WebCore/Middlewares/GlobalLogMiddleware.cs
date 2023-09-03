@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Security.Authentication;
 using System.Text;
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
@@ -107,10 +108,13 @@ public class GlobalLogMiddleware
     private async Task RecordLogVisit()
     {
         // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-        Infrastructures.Apps.HttpContexts.UserAuthInfo authInfo = App.AuthInfo;
-        Infrastructures.Apps.HttpContexts.UserActionInfo actionInfo = App.ActionInfo;
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
+
+        var clientInfo = httpCurrent.GetClientInfo();
+        var addressInfo = httpCurrent.GetAddressInfo();
+        var authInfo = httpCurrent.GetAuthInfo();
+        var actionInfo = await httpCurrent.GetActionInfo();
 
         SysLogVisit sysLogVisit = new()
         {
@@ -140,10 +144,13 @@ public class GlobalLogMiddleware
     private async Task RecordLogException(Exception ex)
     {
         // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-        Infrastructures.Apps.HttpContexts.UserAuthInfo authInfo = App.AuthInfo;
-        Infrastructures.Apps.HttpContexts.UserActionInfo actionInfo = App.ActionInfo;
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
+
+        var clientInfo = httpCurrent.GetClientInfo();
+        var addressInfo = httpCurrent.GetAddressInfo();
+        var authInfo = httpCurrent.GetAuthInfo();
+        var actionInfo = await httpCurrent.GetActionInfo();
         StackFrame? stackFrame = new StackTrace(ex, true).GetFrame(0);
         System.Reflection.MethodBase? targetSite = ex.TargetSite;
 
@@ -187,10 +194,13 @@ public class GlobalLogMiddleware
     private async Task RecordLogOperation(long elapsed, bool status)
     {
         // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-        Infrastructures.Apps.HttpContexts.UserAuthInfo authInfo = App.AuthInfo;
-        Infrastructures.Apps.HttpContexts.UserActionInfo actionInfo = App.ActionInfo;
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
+
+        var clientInfo = httpCurrent.GetClientInfo();
+        var addressInfo = httpCurrent.GetAddressInfo();
+        var authInfo = httpCurrent.GetAuthInfo();
+        var actionInfo = await httpCurrent.GetActionInfo();
 
         SysLogOperation sysLogOperation = new()
         {

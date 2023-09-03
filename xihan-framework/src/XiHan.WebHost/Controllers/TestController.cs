@@ -55,11 +55,20 @@ public class TestController : BaseApiController
     [HttpGet("ClientInfo")]
     public ApiResult ClientInfo()
     {
+        // 获取当前请求上下文信息
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null)
+            return ApiResult.BadRequest("当前请求上下文信息为空！");
+
+        var clientInfo = httpCurrent.GetClientInfo();
+        var addressInfo = httpCurrent.GetAddressInfo();
+        var authInfo = httpCurrent.GetAuthInfo();
+
         return ApiResult.Success(new
         {
-            App.ClientInfo,
-            App.AddressInfo,
-            App.AuthInfo
+            clientInfo,
+            addressInfo,
+            authInfo
         });
     }
 

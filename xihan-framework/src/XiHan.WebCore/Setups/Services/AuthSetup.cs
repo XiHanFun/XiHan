@@ -20,6 +20,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
@@ -66,11 +67,11 @@ public static class AuthSetup
                 // 认证失败时
                 OnAuthenticationFailed = context =>
                 {
-                    string token = App.AuthInfo.UserToken;
-
                     ApiResult failedResult = ApiResult.Unauthorized();
                     context.Response.ContentType = "text/json;charset=utf-8";
                     context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
+
+                    string token = context.HttpContext.GetAuthInfo().UserToken;
 
                     // 若Token为空、伪造无法读取
                     if (token.IsNotEmptyOrNull() && new JwtSecurityTokenHandler().CanReadToken(token))

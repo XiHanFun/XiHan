@@ -15,7 +15,6 @@
 using IP2Region.Net.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Polly;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -40,10 +39,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static UserClientInfo? GetClientInfo(this HttpContext? context)
+    public static UserClientInfo GetClientInfo(this HttpContext context)
     {
-        if (context == null) return null;
-
         try
         {
             IHeaderDictionary header = context.Request.Headers;
@@ -208,10 +205,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static UserAddressInfo? GetAddressInfo(this HttpContext? context)
+    public static UserAddressInfo GetAddressInfo(this HttpContext context)
     {
-        if (context == null) return null;
-
         try
         {
             string ip = context.GetClientIpV4();
@@ -320,10 +315,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static UserAuthInfo? GetAuthInfo(this HttpContext? context)
+    public static UserAuthInfo GetAuthInfo(this HttpContext context)
     {
-        if (context == null) return null;
-
         try
         {
             UserAuthInfo userAuthInfo = new()
@@ -503,10 +496,8 @@ public static class HttpContextExtend
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public static async Task<UserActionInfo?> GetActionInfo(this HttpContext? context)
+    public static async Task<UserActionInfo> GetActionInfo(this HttpContext context)
     {
-        if (context == null) return null;
-
         UserActionInfo actionInfo = new()
         {
             RequestMethod = context.GetRequestMethod(),

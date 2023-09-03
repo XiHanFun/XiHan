@@ -15,6 +15,7 @@
 using Microsoft.AspNetCore.SignalR;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Caches;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Subscriptions.Hubs.Consts;
 using XiHan.Subscriptions.Hubs.Dtos;
 using XiHan.Subscriptions.Hubs.Entities;
@@ -51,9 +52,12 @@ public class ChatHub : Hub<IChatHub>
     public override async Task OnConnectedAsync()
     {
         // 获取当前请求上下文信息
-        Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
-        Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-        Infrastructures.Apps.HttpContexts.UserAuthInfo authInfo = App.AuthInfo;
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
+
+        var clientInfo = httpCurrent.GetClientInfo();
+        var addressInfo = httpCurrent.GetAddressInfo();
+        var authInfo = httpCurrent.GetAuthInfo();
 
         OnlineUser onlineUser = new()
         {

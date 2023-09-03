@@ -12,11 +12,64 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Infrastructures.Responses.Pages;
+using XiHan.Models.Syses;
+using XiHan.Services.Bases;
+using XiHan.Services.Syses.Bots.Dtos;
+using XiHan.Utils.Extensions;
+
 namespace XiHan.Services.Syses.Bots;
 
 /// <summary>
 /// ISysBotService
 /// </summary>
-public interface ISysBotService
+public interface ISysBotService : IBaseService<SysBot>
 {
+    /// <summary>
+    /// 新增系统机器人
+    /// </summary>
+    /// <param name="botCDto"></param>
+    /// <returns></returns>
+    Task<long> CreateSysBot(SysBotCDto botCDto);
+
+    /// <summary>
+    /// 批量删除系统机器人
+    /// </summary>
+    /// <param name="botIds"></param>
+    /// <returns></returns>
+    Task<bool> DeleteSysBotByIds(long[] botIds);
+
+    /// <summary>
+    /// 修改系统机器人
+    /// </summary>
+    /// <param name="botMDto"></param>
+    /// <returns></returns>
+    Task<bool> ModifySysBot(SysBotMDto botMDto);
+
+    /// <summary>
+    /// 查询系统机器人(根据Id)
+    /// </summary>
+    /// <param name="botId"></param>
+    /// <returns></returns>
+    Task<SysBot> GetSysBotById(long botId);
+
+    /// <summary>
+    /// 查询系统机器人分类列表
+    /// </summary>
+    /// <returns></returns>
+    Task<List<EnumDescDto>> GetSysBotTypeList();
+
+    /// <summary>
+    /// 查询系统机器人列表
+    /// </summary>
+    /// <param name="whereDto"></param>
+    /// <returns></returns>
+    Task<List<SysBot>> GetSysBotList(SysBotWDto whereDto);
+
+    /// <summary>
+    /// 查询系统机器人列表(根据分页条件)
+    /// </summary>
+    /// <param name="pageWhere"></param>
+    /// <returns></returns>
+    Task<PageDataDto<SysBot>> GetSysBotPageList(PageWhereDto<SysBotWDto> pageWhere);
 }

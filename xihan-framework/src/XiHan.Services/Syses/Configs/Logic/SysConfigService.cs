@@ -131,14 +131,13 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     public async Task<T> GetSysConfigValueByCode<T>(string configCode)
     {
         string key = $"GetSysConfigValueByCode_{configCode}";
-        string? value = _appCacheService.Get<string>(key);
+        object? value = _appCacheService.Get(key);
         if (value.IsNotEmptyOrNull())
         {
             return value.CastTo<T>()!;
         }
 
         SysConfig sysConfig = await FindAsync(d => d.Code == configCode);
-
         _ = _appCacheService.SetWithMinutes(key, sysConfig.Value, 30);
         return sysConfig.Value.CastTo<T>()!;
     }

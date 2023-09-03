@@ -107,7 +107,6 @@ public static class EntityExtension
     private static TSource CommonTo<TSource>(this TSource source, PropertyInfo propertyInfo)
     {
         Type? types = source?.GetType();
-        UserAuthInfo? user = App.AuthInfo;
 
         if (types == null)
         {
@@ -124,6 +123,11 @@ public static class EntityExtension
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now);
         }
 
+        // 获取当前请求上下文信息
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return source;
+
+        UserAuthInfo? user = httpCurrent.GetAuthInfo();
         if (user != null && user.IsAuthenticated)
         {
             if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)

@@ -67,26 +67,6 @@ public static class App
     public static HttpContext? HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
 
     /// <summary>
-    /// 请求上下文客户端信息
-    /// </summary>
-    public static UserClientInfo? ClientInfo => HttpContextCurrent?.GetClientInfo();
-
-    /// <summary>
-    /// 请求上下文地址信息
-    /// </summary>
-    public static UserAddressInfo? AddressInfo => HttpContextCurrent?.GetAddressInfo();
-
-    /// <summary>
-    /// 请求上下文权限信息
-    /// </summary>
-    public static UserAuthInfo? AuthInfo => HttpContextCurrent?.GetAuthInfo();
-
-    /// <summary>
-    /// 请求上下文权限信息
-    /// </summary>
-    public static UserActionInfo? ActionInfo => HttpContextCurrent?.GetActionInfo().Result;
-
-    /// <summary>
     /// 上传根路径
     /// </summary>
     public static string WebRootPath => WebHostEnvironment.WebRootPath;

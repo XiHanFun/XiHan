@@ -15,6 +15,7 @@
 using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Infrastructures.Apps;
+using XiHan.Infrastructures.Apps.HttpContexts;
 using XiHan.Infrastructures.Consts;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Bases.Attributes;
@@ -65,8 +66,12 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
             return;
         }
 
+        // 获取当前请求上下文信息
+        var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
+
         // 若当前未登录或是默认租户Id，则返回默认的连接
-        long tenantId = App.AuthInfo.TenantId;
+        long tenantId = httpCurrent.GetAuthInfo().TenantId;
         if (tenantId is < 1 or SqlSugarConst.DefaultTenantId)
         {
             return;

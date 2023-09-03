@@ -18,6 +18,7 @@ using System.Diagnostics;
 using XiHan.Infrastructures.Apps;
 using XiHan.Models.Syses;
 using XiHan.Services.Commons.Messages.EmailPush;
+using XiHan.Services.Syses.Bots;
 using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Extensions;
 
