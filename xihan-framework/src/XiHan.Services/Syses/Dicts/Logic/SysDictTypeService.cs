@@ -48,7 +48,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     private async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
-        bool isUnique = await IsAnyAsync(f => f.Code == sysDictType.Code && f.Name == sysDictType.Name);
+        var isUnique = await IsAnyAsync(f => f.Code == sysDictType.Code && f.Name == sysDictType.Name);
         return isUnique ? throw new CustomException($"已存在字典【{sysDictType.Name}】!") : isUnique;
     }
 
@@ -59,7 +59,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<long> CreateDictType(SysDictTypeCDto dictTypeCDto)
     {
-        SysDictType sysDictType = dictTypeCDto.Adapt<SysDictType>();
+        var sysDictType = dictTypeCDto.Adapt<SysDictType>();
 
         _ = await CheckDictTypeUnique(sysDictType);
 
@@ -76,23 +76,17 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         List<SysDictType> sysDictTypeList = await QueryAsync(s => dictIds.Contains(s.BaseId));
 
         // 系统内置字典
-        int isOfficialCount = sysDictTypeList.Where(s => s.IsOfficial).ToList().Count;
-        if (isOfficialCount > 0)
-        {
-            throw new CustomException($"存在系统内置字典，不能删除！");
-        }
+        var isOfficialCount = sysDictTypeList.Where(s => s.IsOfficial).ToList().Count;
+        if (isOfficialCount > 0) throw new CustomException($"存在系统内置字典，不能删除！");
 
         // 已分配字典
         List<string> typeCodes = sysDictTypeList.Select(s => s.Code).ToList();
         List<SysDictData> sysDictDataList = await _sysDictDataService.QueryAsync(f => typeCodes.Contains(f.TypeCode));
-        if (!sysDictDataList.Any())
-        {
-            return await RemoveAsync(s => dictIds.Contains(s.BaseId));
-        }
+        if (!sysDictDataList.Any()) return await RemoveAsync(s => dictIds.Contains(s.BaseId));
 
-        foreach (SysDictData sysDictData in sysDictDataList)
+        foreach (var sysDictData in sysDictDataList)
         {
-            SysDictType sysDictType = sysDictTypeList.First(s => s.Code == sysDictData.TypeCode);
+            var sysDictType = sysDictTypeList.First(s => s.Code == sysDictData.TypeCode);
             throw new CustomException($"字典【{sysDictType.Name}】已分配字典项【{sysDictData.Label}】,不能删除！");
         }
 
@@ -106,13 +100,11 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<bool> ModifyDictType(SysDictTypeMDto dictTypeMDto)
     {
-        SysDictType sysDictType = dictTypeMDto.Adapt<SysDictType>();
+        var sysDictType = dictTypeMDto.Adapt<SysDictType>();
 
-        SysDictType oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
+        var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
         if (sysDictType.Code != oldDictType.Code || sysDictType.Name != oldDictType.Name)
-        {
             _ = await CheckDictTypeUnique(sysDictType);
-        }
 
         return await UpdateAsync(sysDictType);
     }
@@ -159,7 +151,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
     /// <returns></returns>
     public async Task<PageDataDto<SysDictType>> GetDictTypePageList(PageWhereDto<SysDictTypeWDto> pageWhere)
     {
-        SysDictTypeWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysDictType> whereExpression = Expressionable.Create<SysDictType>();
         _ = whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);

@@ -43,11 +43,11 @@ public static class HttpContextExtend
     {
         try
         {
-            IHeaderDictionary header = context.Request.Headers;
-            _ = header.TryGetValue("Accept-Language", out Microsoft.Extensions.Primitives.StringValues language);
-            _ = header.TryGetValue("Referer", out Microsoft.Extensions.Primitives.StringValues referer);
-            _ = header.TryGetValue("User-Agent", out Microsoft.Extensions.Primitives.StringValues agent);
-            ClientInfo clientInfo = Parser.GetDefault().Parse(agent);
+            var header = context.Request.Headers;
+            _ = header.TryGetValue("Accept-Language", out var language);
+            _ = header.TryGetValue("Referer", out var referer);
+            _ = header.TryGetValue("User-Agent", out var agent);
+            var clientInfo = Parser.GetDefault().Parse(agent);
 
             UserClientInfo clientModel = new()
             {
@@ -57,9 +57,11 @@ public static class HttpContextExtend
                 Agent = agent.ToString(),
                 DeviceType = clientInfo.Device.Family,
                 OsName = clientInfo.OS.Family,
-                OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." + (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
+                OsVersion = (clientInfo.OS.Major ?? "0") + "." + (clientInfo.OS.Minor ?? "0") + "." +
+                            (clientInfo.OS.Patch ?? "0") + "." + (clientInfo.OS.PatchMinor ?? "0"),
                 BrowserName = clientInfo.UA.Family,
-                BrowserVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." + (clientInfo.UA.Patch ?? "0"),
+                BrowserVersion = (clientInfo.UA.Major ?? "0") + "." + (clientInfo.UA.Minor ?? "0") + "." +
+                                 (clientInfo.UA.Patch ?? "0")
             };
             return clientModel;
         }
@@ -76,9 +78,9 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsAjaxRequest(this HttpContext context)
     {
-        Microsoft.Extensions.Primitives.StringValues stringValues = (from headers in context.Request.Headers
-                                                                     where headers.Key.ToLower() == "X-Requested-With".ToLower()
-                                                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "X-Requested-With".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
     }
 
@@ -89,9 +91,9 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsJsonRequest(this HttpContext context)
     {
-        Microsoft.Extensions.Primitives.StringValues stringValues = (from headers in context.Request.Headers
-                                                                     where headers.Key.ToLower() == "content-type".ToLower()
-                                                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "content-type".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
     }
 
@@ -102,9 +104,9 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsHtmlRequest(this HttpContext context)
     {
-        Microsoft.Extensions.Primitives.StringValues stringValues = (from headers in context.Request.Headers
-                                                                     where headers.Key.ToLower() == "accept".ToLower()
-                                                                     select headers.Value).FirstOrDefault();
+        var stringValues = (from headers in context.Request.Headers
+            where headers.Key.ToLower() == "accept".ToLower()
+            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
     }
 
@@ -125,7 +127,8 @@ public static class HttpContextExtend
     /// <param name="fileExportName">导出名称</param>
     /// <param name="path">完整文件路径</param>
     /// <param name="contentType">文件的 MIME 类型</param>
-    public static async Task DownloadFile(this HttpContext context, string fileExportName, string path, ContentTypeEnum contentType)
+    public static async Task DownloadFile(this HttpContext context, string fileExportName, string path,
+        ContentTypeEnum contentType)
     {
         context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.Headers.Append("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
@@ -145,7 +148,8 @@ public static class HttpContextExtend
     /// <param name="fileExportName">导出名称</param>
     /// <param name="fileContents">文件内容</param>
     /// <param name="contentType">文件的 MIME 类型</param>
-    public static async Task DownloadFile(this HttpContext context, string fileExportName, byte[] fileContents, ContentTypeEnum contentType)
+    public static async Task DownloadFile(this HttpContext context, string fileExportName, byte[] fileContents,
+        ContentTypeEnum contentType)
     {
         context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
         context.Response.Headers.Append("Content-Disposition", "attachment; filename=" + fileExportName.UrlEncode());
@@ -209,19 +213,13 @@ public static class HttpContextExtend
     {
         try
         {
-            string ip = context.GetClientIpV4();
-            if (ip.IsNullOrEmpty())
-            {
-                throw new ArgumentException(nameof(ip));
-            }
+            var ip = context.GetClientIpV4();
+            if (ip.IsNullOrEmpty()) throw new ArgumentException(nameof(ip));
 
             // 中国|0|浙江省|杭州市|电信
-            ISearcher searcher = App.GetRequiredService<ISearcher>();
-            string? searchResult = searcher.Search(ip);
-            if (searchResult == null)
-            {
-                throw new ArgumentException("Ip地址信息查询出错", nameof(searchResult));
-            }
+            var searcher = App.GetRequiredService<ISearcher>();
+            var searchResult = searcher.Search(ip);
+            if (searchResult == null) throw new ArgumentException("Ip地址信息查询出错", nameof(searchResult));
 
             string[] addressArray = searchResult.Replace('0', '-').Split('|');
             UserAddressInfo addressInfo = new()
@@ -282,8 +280,8 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static IPAddress GetClientIpAddressInfo(this HttpContext context)
     {
-        string? result = "0.0.0.0";
-        IHeaderDictionary header = context.Request.Headers;
+        var result = "0.0.0.0";
+        var header = context.Request.Headers;
 
         if (context.Connection.RemoteIpAddress != null)
         {
@@ -293,15 +291,10 @@ public static class HttpContextExtend
         {
             // 取代理 IP
             if (header.ContainsKey("X-Real-IP") | header.ContainsKey("X-Forwarded-For"))
-            {
                 result = header["X-Real-IP"].FirstOrDefault() ?? header["X-Forwarded-For"].FirstOrDefault();
-            }
         }
 
-        if (string.IsNullOrEmpty(result))
-        {
-            result = "0.0.0.0";
-        }
+        if (string.IsNullOrEmpty(result)) result = "0.0.0.0";
 
         return result.FormatIpToAddress();
     }
@@ -358,7 +351,8 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsSuperAdmin(this HttpContext context)
     {
-        return context.User.FindFirstValue(ClaimConst.IsSuperAdmin) != null && context.User.FindFirstValue(ClaimConst.IsSuperAdmin).ParseToBool();
+        return context.User.FindFirstValue(ClaimConst.IsSuperAdmin) != null &&
+               context.User.FindFirstValue(ClaimConst.IsSuperAdmin).ParseToBool();
     }
 
     /// <summary>
@@ -481,10 +475,7 @@ public static class HttpContextExtend
     public static void SetTokensOfResponseHeaders(this HttpContext context, string accessToken, string? refreshToken)
     {
         context.Response.Headers["access-token"] = accessToken;
-        if (refreshToken.IsNotEmptyOrNull())
-        {
-            context.Response.Headers["x-access-token"] = refreshToken;
-        }
+        if (refreshToken.IsNotEmptyOrNull()) context.Response.Headers["x-access-token"] = refreshToken;
     }
 
     #endregion
@@ -501,14 +492,14 @@ public static class HttpContextExtend
         UserActionInfo actionInfo = new()
         {
             RequestMethod = context.GetRequestMethod(),
-            RequestUrl = context.GetRequestUrl(),
+            RequestUrl = context.GetRequestUrl()
         };
 
-        Endpoint? endpoint = context.GetEndpoint();
+        var endpoint = context.GetEndpoint();
         if (endpoint != null)
         {
             // 获取控制器、路由信息
-            ControllerActionDescriptor? actionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
+            var actionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
             if (actionDescriptor != null)
             {
                 actionInfo.ControllerName = actionDescriptor.ControllerName;
@@ -517,7 +508,7 @@ public static class HttpContextExtend
             }
 
             // 获取模块信息
-            AppLogAttribute? logAttribute = endpoint.Metadata.GetMetadata<AppLogAttribute>();
+            var logAttribute = endpoint.Metadata.GetMetadata<AppLogAttribute>();
             if (logAttribute != null)
             {
                 actionInfo.Module = logAttribute.Module;
@@ -539,7 +530,7 @@ public static class HttpContextExtend
     public static string GetRequestMethod(this HttpContext context)
     {
         // 获取 HttpRequest 对象
-        HttpRequest httpRequest = context.Request;
+        var httpRequest = context.Request;
         return httpRequest.Method;
     }
 
@@ -551,8 +542,8 @@ public static class HttpContextExtend
     public static string GetRequestUrl(this HttpContext context)
     {
         // 获取 HttpRequest 对象
-        HttpRequest httpRequest = context.Request;
-        string url = httpRequest.Host.Value + httpRequest.Path.Value + httpRequest.QueryString.Value;
+        var httpRequest = context.Request;
+        var url = httpRequest.Host.Value + httpRequest.Path.Value + httpRequest.QueryString.Value;
         return url ?? string.Empty;
     }
 
@@ -563,16 +554,16 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static async Task<string> GetRequestParameters(this HttpContext context)
     {
-        string requestParameters = string.Empty;
-        HttpRequest request = context.Request;
-        string method = request.Method;
+        var requestParameters = string.Empty;
+        var request = context.Request;
+        var method = request.Method;
         if (HttpMethods.IsPost(method) || HttpMethods.IsPut(method) || HttpMethods.IsPatch(method))
         {
             // 启用请求缓冲
             request.EnableBuffering();
             // 使用异步获取请求实体
             using StreamReader reader = new(request.Body, Encoding.UTF8, true, 1024, true);
-            string requestBody = await reader.ReadToEndAsync();
+            var requestBody = await reader.ReadToEndAsync();
             _ = request.Body.Seek(0, SeekOrigin.Begin);
             // 为空则取请求字符串里的参数
             requestParameters = requestBody.IsEmptyOrNull() ? request.QueryString.Value ?? string.Empty : requestBody;
@@ -592,13 +583,13 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static async Task<string> GetResponseResult(this HttpContext context)
     {
-        HttpResponse response = context.Response;
+        var response = context.Response;
         // 使用异步获取请求实体
         using StreamReader reader = new(response.Body, Encoding.UTF8, true, 1024, true);
-        string requestBody = await reader.ReadToEndAsync();
+        var requestBody = await reader.ReadToEndAsync();
         _ = response.Body.Seek(0, SeekOrigin.Begin);
         // 为空则取请求字符串里的参数
-        string responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
+        var responseResult = requestBody.IsEmptyOrNull() ? string.Empty : requestBody;
         return responseResult;
     }
 

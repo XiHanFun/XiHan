@@ -24,18 +24,15 @@ public enum JobTypeEnum
     /// <summary>
     /// 程序集
     /// </summary>
-    [Description("程序集")]
-    Assembly = 1,
+    [Description("程序集")] Assembly = 1,
 
     /// <summary>
     /// 网络请求
     /// </summary>
-    [Description("网络请求")]
-    NetworkRequest = 2,
+    [Description("网络请求")] NetworkRequest = 2,
 
     /// <summary>
     /// SQL语句
     /// </summary>
-    [Description("SQL语句")]
-    SqlStatement = 3
+    [Description("SQL语句")] SqlStatement = 3
 }

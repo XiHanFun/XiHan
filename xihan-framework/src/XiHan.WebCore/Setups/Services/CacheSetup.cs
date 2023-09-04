@@ -34,23 +34,20 @@ public static class CacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 内存缓存(默认开启)
         _ = services.AddMemoryCache();
         _ = services.AddSingleton<IAppCacheService, AppCacheService>();
 
         // 分布式缓存
-        bool isEnabledRedisCache = AppSettings.Cache.RedisCache.IsEnabled.GetValue();
+        var isEnabledRedisCache = AppSettings.Cache.RedisCache.IsEnabled.GetValue();
         if (isEnabledRedisCache)
         {
             // CSRedis
-            string connectionString = AppSettings.Cache.RedisCache.ConnectionString.GetValue();
-            string prefix = AppSettings.Cache.RedisCache.Prefix.GetValue();
-            string redisStr = $"{connectionString}, prefix = {prefix}";
+            var connectionString = AppSettings.Cache.RedisCache.ConnectionString.GetValue();
+            var prefix = AppSettings.Cache.RedisCache.Prefix.GetValue();
+            var redisStr = $"{connectionString}, prefix = {prefix}";
             CSRedisClient redisClient = new(redisStr);
             // 用法一：基于 Redis 初始化 IDistributedCache
             _ = services.AddSingleton(redisClient);

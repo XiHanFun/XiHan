@@ -54,7 +54,7 @@ public class GlobalLogMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         Stopwatch stopwatch = new();
-        bool status = true;
+        var status = true;
 
         try
         {
@@ -73,7 +73,7 @@ public class GlobalLogMiddleware
             await RecordLogException(ex);
 
             // 处理异常
-            ApiResult exceptionResult = ex switch
+            var exceptionResult = ex switch
             {
                 // 参数异常
                 ArgumentException => ApiResult.UnprocessableEntity(),
@@ -88,7 +88,7 @@ public class GlobalLogMiddleware
                 // 自定义异常
                 CustomException => ApiResult.BadRequest(ex.Message),
                 // 其他异常默认返回服务器错误，不直接明文显示
-                _ => ApiResult.InternalServerError(),
+                _ => ApiResult.InternalServerError()
             };
             context.Response.ContentType = "text/json;charset=utf-8";
             context.Response.StatusCode = exceptionResult.Code.GetEnumValueByKey();
@@ -130,9 +130,9 @@ public class GlobalLogMiddleware
             Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity,
             RealName = authInfo.RealName,
             RequestMethod = actionInfo.RequestMethod,
-            RequestUrl = actionInfo.RequestUrl,
+            RequestUrl = actionInfo.RequestUrl
         };
-        ISysLogVisitService sysLogVisitService = App.GetRequiredService<ISysLogVisitService>();
+        var sysLogVisitService = App.GetRequiredService<ISysLogVisitService>();
         _ = await sysLogVisitService.CreateLogVisit(sysLogVisit);
     }
 
@@ -151,8 +151,8 @@ public class GlobalLogMiddleware
         var addressInfo = httpCurrent.GetAddressInfo();
         var authInfo = httpCurrent.GetAuthInfo();
         var actionInfo = await httpCurrent.GetActionInfo();
-        StackFrame? stackFrame = new StackTrace(ex, true).GetFrame(0);
-        System.Reflection.MethodBase? targetSite = ex.TargetSite;
+        var stackFrame = new StackTrace(ex, true).GetFrame(0);
+        var targetSite = ex.TargetSite;
 
         SysLogException sysLogException = new()
         {
@@ -180,7 +180,7 @@ public class GlobalLogMiddleware
             StackTrace = ex.StackTrace
         };
 
-        ISysLogExceptionService sysLogExceptionService = App.GetRequiredService<ISysLogExceptionService>();
+        var sysLogExceptionService = App.GetRequiredService<ISysLogExceptionService>();
         _ = await sysLogExceptionService.CreateLogException(sysLogException);
         _logger.Error(ex, ex.Message);
     }
@@ -223,10 +223,10 @@ public class GlobalLogMiddleware
             RequestParameters = actionInfo.RequestParameters,
             ResponseResult = actionInfo.ResponseResult,
             Status = status,
-            ElapsedTime = elapsed,
+            ElapsedTime = elapsed
         };
 
-        ISysLogOperationService sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
+        var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
         await sysLogOperationService.CreateLogOperation(sysLogOperation);
     }
 }

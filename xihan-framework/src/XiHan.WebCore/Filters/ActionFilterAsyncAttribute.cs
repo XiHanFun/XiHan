@@ -34,7 +34,7 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         // 模型验证
-        Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState = context.ModelState;
+        var modelState = context.ModelState;
         if (!modelState.IsValid)
         {
             // 获取模型验证出错字段
@@ -45,13 +45,10 @@ public class ActionFilterAsyncAttribute : Attribute, IAsyncActionFilter
         else
         {
             // 请求构造函数和方法,调用下一个过滤器
-            ActionExecutedContext actionExecuted = await next();
+            var actionExecuted = await next();
             // 判断是否请求成功，没有异常就是请求成功
-            Exception? requestException = actionExecuted.Exception;
-            if (requestException != null)
-            {
-                await Task.CompletedTask;
-            }
+            var requestException = actionExecuted.Exception;
+            if (requestException != null) await Task.CompletedTask;
         }
     }
 }

@@ -33,12 +33,9 @@ public static class HttpSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseHttpSetup(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
-        IWebHostEnvironment env = App.WebHostEnvironment;
+        var env = App.WebHostEnvironment;
 
         // 环境变量，开发环境
         if (env.IsDevelopment())

@@ -31,7 +31,7 @@ public static partial class EncodeExtension
     /// <returns>编码后的字符串</returns>
     public static string Base32Encode(this string data)
     {
-        byte[] bytes = Encoding.UTF8.GetBytes(data);
+        var bytes = Encoding.UTF8.GetBytes(data);
         return Base32.ToBase32String(bytes);
     }
 
@@ -42,7 +42,7 @@ public static partial class EncodeExtension
     /// <returns>解码后的字符串</returns>
     public static string Base32Decode(this string data)
     {
-        byte[] bytes = Base32.FromBase32String(data);
+        var bytes = Base32.FromBase32String(data);
         return Encoding.UTF8.GetString(bytes);
     }
 
@@ -53,7 +53,7 @@ public static partial class EncodeExtension
     /// <returns>编码后的字符串</returns>
     public static string Base64Encode(this string data)
     {
-        byte[] bytes = Encoding.UTF8.GetBytes(data);
+        var bytes = Encoding.UTF8.GetBytes(data);
         return Convert.ToBase64String(bytes);
     }
 
@@ -64,7 +64,7 @@ public static partial class EncodeExtension
     /// <returns>解码后的字符串</returns>
     public static string Base64Decode(this string data)
     {
-        byte[] bytes = Convert.FromBase64String(data);
+        var bytes = Convert.FromBase64String(data);
         return Encoding.UTF8.GetString(bytes);
     }
 
@@ -116,10 +116,7 @@ public static partial class EncodeExtension
     public static string ToUnicode(this string data)
     {
         StringBuilder sb = new();
-        foreach (char t in data)
-        {
-            _ = sb.Append($@"\u{(int)t:x4}");
-        }
+        foreach (var t in data) _ = sb.Append($@"\u{(int)t:x4}");
 
         return sb.ToString();
     }
@@ -131,7 +128,8 @@ public static partial class EncodeExtension
     /// <returns>解码后的字符串</returns>
     public static string FromUnicode(this string data)
     {
-        return UnicodeRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
+        return UnicodeRegex().Replace(data,
+            match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
     }
 
     /// <summary>
@@ -173,29 +171,23 @@ public static class Base32
     /// <exception cref="ArgumentNullException"></exception>
     public static string ToBase32String(byte[] bytes)
     {
-        if (bytes == null)
-        {
-            throw new ArgumentNullException(nameof(bytes));
-        }
+        if (bytes == null) throw new ArgumentNullException(nameof(bytes));
 
-        if (bytes.Length == 0)
-        {
-            return string.Empty;
-        }
+        if (bytes.Length == 0) return string.Empty;
 
-        StringBuilder sb = new(((bytes.Length * 8) + 4) / 5);
+        StringBuilder sb = new((bytes.Length * 8 + 4) / 5);
 
-        int bitCount = 0;
-        int accumulatedBits = 0;
+        var bitCount = 0;
+        var accumulatedBits = 0;
 
-        foreach (byte currentByte in bytes)
+        foreach (var currentByte in bytes)
         {
             accumulatedBits |= currentByte << bitCount;
             bitCount += 8;
             while (bitCount >= 5)
             {
-                int mask = 0x1f;
-                int currentBase32Value = accumulatedBits & mask;
+                var mask = 0x1f;
+                var currentBase32Value = accumulatedBits & mask;
                 _ = sb.Append(Base32Alphabet[currentBase32Value]);
                 accumulatedBits >>= 5;
                 bitCount -= 5;
@@ -204,8 +196,8 @@ public static class Base32
 
         if (bitCount > 0)
         {
-            int mask = 0x1f;
-            int currentBase32Value = accumulatedBits & mask;
+            var mask = 0x1f;
+            var currentBase32Value = accumulatedBits & mask;
             _ = sb.Append(Base32Alphabet[currentBase32Value]);
         }
 
@@ -221,41 +213,29 @@ public static class Base32
     /// <exception cref="ArgumentException"></exception>
     public static byte[] FromBase32String(string base32String)
     {
-        if (base32String == null)
-        {
-            throw new ArgumentNullException(nameof(base32String));
-        }
+        if (base32String == null) throw new ArgumentNullException(nameof(base32String));
 
-        if (base32String.Length == 0)
-        {
-            return Array.Empty<byte>();
-        }
+        if (base32String.Length == 0) return Array.Empty<byte>();
 
         base32String = base32String.TrimEnd('=');
 
-        int byteCount = base32String.Length * 5 / 8;
-        byte[] buffer = new byte[byteCount];
+        var byteCount = base32String.Length * 5 / 8;
+        var buffer = new byte[byteCount];
 
-        int bitCount = 0;
-        int accumulatedBits = 0;
-        int bufferIndex = 0;
-        foreach (int currentCharValue in base32String.Select(currentChar => Base32Alphabet.IndexOf(currentChar)))
+        var bitCount = 0;
+        var accumulatedBits = 0;
+        var bufferIndex = 0;
+        foreach (var currentCharValue in base32String.Select(currentChar => Base32Alphabet.IndexOf(currentChar)))
         {
-            if (currentCharValue is < 0 or > 31)
-            {
-                throw new ArgumentException("Invalid character in Base32 string.");
-            }
+            if (currentCharValue is < 0 or > 31) throw new ArgumentException("Invalid character in Base32 string.");
 
             accumulatedBits |= currentCharValue << bitCount;
             bitCount += 5;
 
-            if (bitCount < 8)
-            {
-                continue;
-            }
+            if (bitCount < 8) continue;
 
             const int mask = 0xff;
-            int currentByteValue = accumulatedBits & mask;
+            var currentByteValue = accumulatedBits & mask;
             buffer[bufferIndex++] = (byte)currentByteValue;
             accumulatedBits >>= 8;
             bitCount -= 8;

@@ -76,11 +76,8 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
     /// <returns></returns>
     public async Task<SysLogException> GetLogExceptionById(long exceptionId)
     {
-        string key = $"GetLogExceptionById_{exceptionId}";
-        if (_appCacheService.Get(key) is SysLogException sysLogException)
-        {
-            return sysLogException;
-        }
+        var key = $"GetLogExceptionById_{exceptionId}";
+        if (_appCacheService.Get(key) is SysLogException sysLogException) return sysLogException;
 
         sysLogException = await FindAsync(d => d.BaseId == exceptionId);
         _ = _appCacheService.SetWithMinutes(key, sysLogException, 30);
@@ -113,7 +110,7 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
     /// <returns></returns>
     public async Task<PageDataDto<SysLogException>> GetLogExceptionPageList(PageWhereDto<SysLogExceptionWDto> pageWhere)
     {
-        SysLogExceptionWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         // 时间为空，默认查询当天
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
@@ -123,6 +120,7 @@ public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExcep
         _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
         _ = whereExpression.AndIF(whereDto.Level.IsNotEmptyOrNull(), u => u.Level == whereDto.Level!);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
+            pageWhere.IsAsc);
     }
 }

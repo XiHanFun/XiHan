@@ -30,18 +30,12 @@ public static class CorsSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseCorsSetup(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
-        bool isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
-        if (!isEnabledCors)
-        {
-            return app;
-        }
+        var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
+        if (!isEnabledCors) return app;
         // 策略名称
-        string policyName = AppSettings.Cors.PolicyName.GetValue();
+        var policyName = AppSettings.Cors.PolicyName.GetValue();
         // 对 UseCors 的调用必须放在 UseRouting 之后，但在 UseAuthorization 之前
         _ = app.UseCors(policyName);
         return app;

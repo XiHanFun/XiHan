@@ -46,11 +46,11 @@ public static class RsaEncryptionHelper
     public static void GenerateKeys(string publicKeyFile, string privateKeyFile)
     {
         // 保存公钥
-        string publicKey = RsaProvider.ToXmlString(false);
+        var publicKey = RsaProvider.ToXmlString(false);
         File.WriteAllText(publicKeyFile, publicKey);
 
         // 保存私钥
-        string privateKey = RsaProvider.ToXmlString(true);
+        var privateKey = RsaProvider.ToXmlString(true);
         File.WriteAllText(privateKeyFile, privateKey);
     }
 
@@ -61,9 +61,9 @@ public static class RsaEncryptionHelper
     /// <returns></returns>
     public static string Encrypt(string plainText)
     {
-        byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] encryptedBytes = RsaProvider.Encrypt(plainBytes, RSAEncryptionPadding.Pkcs1);
-        string encryptedText = Convert.ToBase64String(encryptedBytes);
+        var plainBytes = Encoding.UTF8.GetBytes(plainText);
+        var encryptedBytes = RsaProvider.Encrypt(plainBytes, RSAEncryptionPadding.Pkcs1);
+        var encryptedText = Convert.ToBase64String(encryptedBytes);
         return encryptedText;
     }
 
@@ -79,11 +79,11 @@ public static class RsaEncryptionHelper
     public static void LoadKeys(string publicKeyFile, string privateKeyFile)
     {
         // 加载公钥
-        string publicKey = File.ReadAllText(publicKeyFile);
+        var publicKey = File.ReadAllText(publicKeyFile);
         RsaProvider.FromXmlString(publicKey);
 
         // 加载私钥
-        string privateKey = File.ReadAllText(privateKeyFile);
+        var privateKey = File.ReadAllText(privateKeyFile);
         RsaProvider.FromXmlString(privateKey);
     }
 
@@ -94,9 +94,9 @@ public static class RsaEncryptionHelper
     /// <returns></returns>
     public static string Decrypt(string encryptedText)
     {
-        byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
-        byte[] plainBytes = RsaProvider.Decrypt(encryptedBytes, RSAEncryptionPadding.Pkcs1);
-        string plainText = Encoding.UTF8.GetString(plainBytes);
+        var encryptedBytes = Convert.FromBase64String(encryptedText);
+        var plainBytes = RsaProvider.Decrypt(encryptedBytes, RSAEncryptionPadding.Pkcs1);
+        var plainText = Encoding.UTF8.GetString(plainBytes);
         return plainText;
     }
 

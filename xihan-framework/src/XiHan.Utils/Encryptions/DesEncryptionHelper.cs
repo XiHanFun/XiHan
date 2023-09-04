@@ -34,7 +34,7 @@ public static class DesEncryptionHelper
     static DesEncryptionHelper()
     {
         // 构造函数，初始化密钥和向量
-        string password = "XiHan_ZhaiFanhua";
+        var password = "XiHan_ZhaiFanhua";
         PasswordDeriveBytes pdb = new(password, null);
         KeyBytes = pdb.GetBytes(8);
         IvBytes = pdb.GetBytes(8);
@@ -48,7 +48,7 @@ public static class DesEncryptionHelper
     public static string Encrypt(string plainText)
     {
         // 创建加密算法实例
-        using DES des = DES.Create();
+        using var des = DES.Create();
         // 设置加密算法的密钥和向量
         des.Key = KeyBytes;
         des.IV = IvBytes;
@@ -58,13 +58,13 @@ public static class DesEncryptionHelper
         using (CryptoStream cs = new(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
         {
             // 将明文转换为字节数组，并将其写入 CryptoStream 对象中
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             cs.Write(plainTextBytes, 0, plainTextBytes.Length);
             cs.Close();
         }
 
         // 从内存流中获取加密后的字节数组，并将其转换为 Base64 字符串
-        byte[] cipherTextBytes = ms.ToArray();
+        var cipherTextBytes = ms.ToArray();
         return Convert.ToBase64String(cipherTextBytes);
     }
 
@@ -76,10 +76,10 @@ public static class DesEncryptionHelper
     public static string Decrypt(string cipherText)
     {
         // 将 Base64 字符串转换为字节数组
-        byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
+        var cipherTextBytes = Convert.FromBase64String(cipherText);
 
         // 创建解密算法实例
-        using DES des = DES.Create();
+        using var des = DES.Create();
         // 设置解密算法的密钥和向量
         des.Key = KeyBytes;
         des.IV = IvBytes;
@@ -94,7 +94,7 @@ public static class DesEncryptionHelper
         }
 
         // 将内存流中的解密后的字节数组转换为字符串
-        byte[] plainTextBytes = ms.ToArray();
+        var plainTextBytes = ms.ToArray();
         return Encoding.UTF8.GetString(plainTextBytes);
     }
 }

@@ -50,7 +50,7 @@ public class SysLogExceptionController : BaseApiController
     [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteLogException(long[] logIds)
     {
-        bool result = await _sysLogExceptionService.DeleteLogExceptionByIds(logIds);
+        var result = await _sysLogExceptionService.DeleteLogExceptionByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -61,7 +61,7 @@ public class SysLogExceptionController : BaseApiController
     [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanLogException()
     {
-        bool result = await _sysLogExceptionService.CleanLogException();
+        var result = await _sysLogExceptionService.CleanLogException();
         return ApiResult.Success(result);
     }
 
@@ -74,7 +74,7 @@ public class SysLogExceptionController : BaseApiController
     [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogExceptionById(long logId)
     {
-        Models.Syses.SysLogException result = await _sysLogExceptionService.GetLogExceptionById(logId);
+        var result = await _sysLogExceptionService.GetLogExceptionById(logId);
         return ApiResult.Success(result);
     }
 
@@ -87,7 +87,7 @@ public class SysLogExceptionController : BaseApiController
     [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogExceptionList([FromBody] SysLogExceptionWDto whereDto)
     {
-        List<Models.Syses.SysLogException> result = await _sysLogExceptionService.GetLogExceptionList(whereDto);
+        var result = await _sysLogExceptionService.GetLogExceptionList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -100,7 +100,7 @@ public class SysLogExceptionController : BaseApiController
     [AppLog(Module = "系统异常日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogExceptionPageList([FromBody] PageWhereDto<SysLogExceptionWDto> pageWhere)
     {
-        PageDataDto<Models.Syses.SysLogException> result = await _sysLogExceptionService.GetLogExceptionPageList(pageWhere);
+        var result = await _sysLogExceptionService.GetLogExceptionPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

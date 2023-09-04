@@ -37,7 +37,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     private async Task<bool> GetJobUnique(SysJob sysJob)
     {
-        bool isUnique = await IsAnyAsync(j => j.Group == sysJob.Group && j.Name == sysJob.Name);
+        var isUnique = await IsAnyAsync(j => j.Group == sysJob.Group && j.Name == sysJob.Name);
         return isUnique ? throw new CustomException($"任务【{sysJob.Group}-{sysJob.Name}】已存在！") : isUnique;
     }
 
@@ -48,7 +48,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     public async Task<long> CreateJob(SysJobCDto jobCDto)
     {
-        SysJob sysJob = jobCDto.Adapt<SysJob>();
+        var sysJob = jobCDto.Adapt<SysJob>();
 
         _ = await GetJobUnique(sysJob);
 
@@ -73,7 +73,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     public async Task<bool> ModifyJob(SysJobMDto jobMDto)
     {
-        SysJob newSysJob = jobMDto.Adapt<SysJob>();
+        var newSysJob = jobMDto.Adapt<SysJob>();
 
         return await UpdateAsync(newSysJob);
     }
@@ -85,7 +85,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     public async Task<SysJob> GetJobById(long jobId)
     {
-        SysJob sysJob = await FindAsync(d => d.BaseId == jobId);
+        var sysJob = await FindAsync(d => d.BaseId == jobId);
 
         return sysJob;
     }
@@ -114,7 +114,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
     /// <returns></returns>
     public async Task<PageDataDto<SysJob>> GetJobPageList(PageWhereDto<SysJobWDto> pageWhere)
     {
-        SysJobWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysJob> whereExpression = Expressionable.Create<SysJob>();
         _ = whereExpression.AndIF(whereDto.Group.IsNotEmptyOrNull(), u => u.Group.Contains(whereDto.Group!));
@@ -123,6 +123,7 @@ public class SysJobService : BaseService<SysJob>, ISysJobService
         _ = whereExpression.AndIF(whereDto.TriggerType != null, u => u.TriggerType == whereDto.TriggerType);
         _ = whereExpression.AndIF(whereDto.IsStart != null, u => u.IsStart == whereDto.IsStart);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => new { o.IsStart, o.CreatedTime }, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page,
+            o => new { o.IsStart, o.CreatedTime }, pageWhere.IsAsc);
     }
 }

@@ -71,7 +71,7 @@ public class ChatHub : Hub<IChatHub>
             DeviceType = clientInfo.DeviceType,
             Os = clientInfo.OsName + clientInfo.OsVersion,
             Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
-            ConnectionTime = DateTime.Now,
+            ConnectionTime = DateTime.Now
         };
         _ = OnlineUsers.Append(onlineUser);
         _ = _appCacheService.Set($"UserOnline_{onlineUser.UserId}", onlineUser);
@@ -88,11 +88,8 @@ public class ChatHub : Hub<IChatHub>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        OnlineUser? onlineUser = OnlineUsers.Where(u => u.ConnectionId == Context.ConnectionId).FirstOrDefault();
-        if (onlineUser == null)
-        {
-            return;
-        }
+        var onlineUser = OnlineUsers.Where(u => u.ConnectionId == Context.ConnectionId).FirstOrDefault();
+        if (onlineUser == null) return;
 
         _ = OnlineUsers.Remove(onlineUser);
         _ = _appCacheService.Remove($"UserOnline_{onlineUser.UserId}");
@@ -172,14 +169,12 @@ public class ChatHub : Hub<IChatHub>
     public async Task SendMessageToUser(UserMessageCDto message)
     {
         List<string> userlist = new();
-        foreach (long userId in message.UserIds)
+        foreach (var userId in message.UserIds)
         {
-            OnlineUser? user = _appCacheService.Get<OnlineUser>($"UserOnline_{userId}");
-            if (user != null)
-            {
-                userlist.Add(user.ConnectionId);
-            }
+            var user = _appCacheService.Get<OnlineUser>($"UserOnline_{userId}");
+            if (user != null) userlist.Add(user.ConnectionId);
         }
+
         await Clients.Clients(userlist).ReceiveMessage(message);
     }
 
@@ -202,10 +197,7 @@ public class ChatHub : Hub<IChatHub>
     [HubMethodName("ThrowException")]
     public async Task ThrowException()
     {
-        await Task.Run(() =>
-        {
-            throw new HubException("This error will be sent to the client!");
-        });
+        await Task.Run(() => { throw new HubException("This error will be sent to the client!"); });
     }
 
     #endregion

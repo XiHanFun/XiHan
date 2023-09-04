@@ -36,7 +36,7 @@ public class WeComPushService : BaseService<SysBot>, IWeComPushService
     /// </summary>
     public WeComPushService()
     {
-        WeComConnection weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
+        var weComConnection = GetWeComConn().Result ?? throw new CustomException("未添加企业微信推送配置或配置不可用！");
         _weComBot = new WeComBot(weComConnection);
     }
 
@@ -46,11 +46,11 @@ public class WeComPushService : BaseService<SysBot>, IWeComPushService
     /// <returns></returns>
     private async Task<WeComConnection> GetWeComConn()
     {
-        SysBot sysCustomBot = await GetFirstAsync(e => e.IsEnabled && e.BotType == BotTypeEnum.WeCom);
-        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysBot, WeComConnection>()
+        var sysCustomBot = await GetFirstAsync(e => e.IsEnabled && e.BotType == BotTypeEnum.WeCom);
+        var config = new TypeAdapterConfig().ForType<SysBot, WeComConnection>()
             .Map(dest => dest.Key, src => src.AccessTokenOrKey)
             .Config;
-        WeComConnection weComConnection = sysCustomBot.Adapt<WeComConnection>(config);
+        var weComConnection = sysCustomBot.Adapt<WeComConnection>(config);
         return weComConnection;
     }
 

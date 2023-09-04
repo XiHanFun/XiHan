@@ -37,13 +37,13 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
         if (context.ActionDescriptor is ControllerActionDescriptor actionDescriptor)
         {
             // 是否授权访问
-            bool isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
-                || actionDescriptor.ControllerTypeInfo!.IsDefined(typeof(AuthorizeAttribute), true)
-                || actionDescriptor.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
+            var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
+                              || actionDescriptor.ControllerTypeInfo!.IsDefined(typeof(AuthorizeAttribute), true)
+                              || actionDescriptor.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
             // 授权访问就进行权限检查
             if (isAuthorize)
             {
-                IEnumerable<System.Security.Claims.ClaimsIdentity> identities = context.HttpContext.User.Identities;
+                var identities = context.HttpContext.User.Identities;
                 // 验证权限
                 if (identities == null)
                 {

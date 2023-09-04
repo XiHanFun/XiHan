@@ -38,7 +38,8 @@ public static class CaptchaHelper
     /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母字符源</param>
     /// <returns></returns>
-    public static string CodeLetter(int length = 6, string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeLetter(int length = 6,
+        string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }
@@ -49,7 +50,8 @@ public static class CaptchaHelper
     /// <param name="length">生成长度 默认6个字符</param>
     /// <param name="source">随机字母或数字字符源</param>
     /// <returns></returns>
-    public static string CodeNumberOrLetter(int length = 6, string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeNumberOrLetter(int length = 6,
+        string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     {
         return RandomTo(length, source);
     }
@@ -62,19 +64,13 @@ public static class CaptchaHelper
     /// <returns></returns>
     private static string RandomTo(int length, string source)
     {
-        if (length <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(length));
-        }
+        if (length <= 0) throw new ArgumentOutOfRangeException(nameof(length));
 
-        if (string.IsNullOrEmpty(source))
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
+        if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));
 
         StringBuilder result = new();
         Random random = new(~unchecked((int)DateTime.Now.Ticks));
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
         {
             _ = Task.Delay(3);
             _ = result.Append(source[random.Next(0, source.Length)]);

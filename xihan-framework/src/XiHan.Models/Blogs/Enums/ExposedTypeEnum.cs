@@ -24,18 +24,15 @@ public enum ExposedTypeEnum
     /// <summary>
     /// 保留
     /// </summary>
-    [Description("保留")]
-    Reserve = 0,
+    [Description("保留")] Reserve = 0,
 
     /// <summary>
     /// 公开
     /// </summary>
-    [Description("公开")]
-    Public = 1,
+    [Description("公开")] Public = 1,
 
     /// <summary>
     /// 私密
     /// </summary>
-    [Description("私密")]
-    Secret = 2
+    [Description("私密")] Secret = 2
 }

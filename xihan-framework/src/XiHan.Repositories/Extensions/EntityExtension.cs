@@ -35,7 +35,7 @@ public static class EntityExtension
             HandleId = "CreatedId",
             HandleBy = "CreatedBy",
             HandleTime = "CreatedTime",
-            TenantId = "TenantId",
+            TenantId = "TenantId"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -53,7 +53,7 @@ public static class EntityExtension
             HandleId = "ModifiedId",
             HandleBy = "ModifiedBy",
             HandleTime = "ModifiedTime",
-            TenantId = "TenantId",
+            TenantId = "TenantId"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -72,7 +72,7 @@ public static class EntityExtension
             HandleId = "DeletedId",
             HandleBy = "DeletedBy",
             HandleTime = "DeletedTime",
-            TenantId = "TenantId",
+            TenantId = "TenantId"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -90,7 +90,7 @@ public static class EntityExtension
             HandleId = "AuditedId",
             HandleBy = "AuditedBy",
             HandleTime = "AuditedTime",
-            TenantId = "TenantId",
+            TenantId = "TenantId"
         };
         return source.CommonTo(propertyInfo);
     }
@@ -106,45 +106,33 @@ public static class EntityExtension
     /// <returns></returns>
     private static TSource CommonTo<TSource>(this TSource source, PropertyInfo propertyInfo)
     {
-        Type? types = source?.GetType();
+        var types = source?.GetType();
 
-        if (types == null)
-        {
-            return source;
-        }
+        if (types == null) return source;
 
         if (propertyInfo.IsHandle != null && types.GetProperty(propertyInfo.IsHandle) != null)
-        {
             types.GetProperty(propertyInfo.IsHandle)?.SetValue(source, true);
-        }
 
         if (propertyInfo.HandleTime != null && types.GetProperty(propertyInfo.HandleTime) != null)
-        {
             types.GetProperty(propertyInfo.HandleTime)?.SetValue(source, DateTime.Now);
-        }
 
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
         if (httpCurrent == null) return source;
 
-        UserAuthInfo? user = httpCurrent.GetAuthInfo();
+        var user = httpCurrent.GetAuthInfo();
         if (user != null && user.IsAuthenticated)
         {
             if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
-            {
                 types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId);
-            }
 
             if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
-            {
                 types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account);
-            }
 
             if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
-            {
                 types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId);
-            }
         }
+
         return source;
     }
 

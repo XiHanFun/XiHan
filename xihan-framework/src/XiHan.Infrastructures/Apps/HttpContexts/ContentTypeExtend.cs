@@ -33,62 +33,68 @@ public static class ContentTypeExtend
         Hashtable hashtable = new()
         {
             // 纯文本
-            {ContentTypeEnum.TextPlain,"text/plain"},
+            { ContentTypeEnum.TextPlain, "text/plain" },
             // HTML 文档
-            {ContentTypeEnum.TextHtml,"text/html"},
+            { ContentTypeEnum.TextHtml, "text/html" },
             // CSS 样式表
-            {ContentTypeEnum.TextCss,"text/css"},
+            { ContentTypeEnum.TextCss, "text/css" },
             // JavaScript 脚本
-            {ContentTypeEnum.TextJavaScript,"text/javascript"},
+            { ContentTypeEnum.TextJavaScript, "text/javascript" },
             // XML 文档
-            {ContentTypeEnum.TextXml,"text/xml"},
+            { ContentTypeEnum.TextXml, "text/xml" },
             // JSON 数据
-            {ContentTypeEnum.ApplicationJson,"application/json"},
+            { ContentTypeEnum.ApplicationJson, "application/json" },
             // XML 数据
-            {ContentTypeEnum.ApplicationXml,"application/xml"},
+            { ContentTypeEnum.ApplicationXml, "application/xml" },
             // PDF 文档
-            {ContentTypeEnum.ApplicationPdf,"application/pdf"},
+            { ContentTypeEnum.ApplicationPdf, "application/pdf" },
             // Microsoft Word 文档(97-2003)
-            {ContentTypeEnum.ApplicationDoc,"application/msword"},
+            { ContentTypeEnum.ApplicationDoc, "application/msword" },
             // Microsoft Word 文档(2007)
-            {ContentTypeEnum.ApplicationDocx,"application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+            {
+                ContentTypeEnum.ApplicationDocx,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
             // Microsoft Excel 表格(97-2003)
-            {ContentTypeEnum.ApplicationXls,"application/vnd.ms-excel"},
+            { ContentTypeEnum.ApplicationXls, "application/vnd.ms-excel" },
             // Microsoft Excel 表格(2007)
-            {ContentTypeEnum.ApplicationXlsx,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+            { ContentTypeEnum.ApplicationXlsx, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
             // Microsoft PowerPoint 演示文稿(97-2003)
-            {ContentTypeEnum.ApplicationPpt,"application/vnd.ms-powerpoint"},
+            { ContentTypeEnum.ApplicationPpt, "application/vnd.ms-powerpoint" },
             // Microsoft PowerPoint 演示文稿(2007)
-            {ContentTypeEnum.ApplicationPptx,"application/vnd.openxmlformats-officedocument.presentationml.presentation"},
+            {
+                ContentTypeEnum.ApplicationPptx,
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
             // ZIP 压缩文件
-            {ContentTypeEnum.ApplicationZip,"application/zip"},
+            { ContentTypeEnum.ApplicationZip, "application/zip" },
             // JPEG 图像
-            {ContentTypeEnum.ImageJpeg,"image/jpeg"},
+            { ContentTypeEnum.ImageJpeg, "image/jpeg" },
             // PNG 图像
-            {ContentTypeEnum.ImagePng,"image/png"},
+            { ContentTypeEnum.ImagePng, "image/png" },
             // GIF 图像
-            {ContentTypeEnum.ImageGif,"image/gif"},
+            { ContentTypeEnum.ImageGif, "image/gif" },
             // SVG 图像
-            {ContentTypeEnum.ImageSvg,"image/svg+xml"},
+            { ContentTypeEnum.ImageSvg, "image/svg+xml" },
             // MP3 音频
-            {ContentTypeEnum.AudioMp3,"audio/mpeg"},
+            { ContentTypeEnum.AudioMp3, "audio/mpeg" },
             // WAV 音频
-            {ContentTypeEnum.AudioWav,"audio/wav"},
+            { ContentTypeEnum.AudioWav, "audio/wav" },
             // MIDI 音频
-            {ContentTypeEnum.AudioMidi,"audio/midi"},
+            { ContentTypeEnum.AudioMidi, "audio/midi" },
             // MP4 视频
-            {ContentTypeEnum.VideoMp4,"video/mp4"},
+            { ContentTypeEnum.VideoMp4, "video/mp4" },
             // MPEG 视频
-            {ContentTypeEnum.VideoMpeg,"video/mpeg"},
+            { ContentTypeEnum.VideoMpeg, "video/mpeg" },
             // QuickTime 视频
-            {ContentTypeEnum.VideoQuickTime,"video/quicktime"},
+            { ContentTypeEnum.VideoQuickTime, "video/quicktime" },
             // 二进制数据流
-            {ContentTypeEnum.ApplicationStream,"application/octet-stream"},
+            { ContentTypeEnum.ApplicationStream, "application/octet-stream" },
             // 可执行文件下载
-            {ContentTypeEnum.ApplicationExecutableFile,"application/x-msdownload"},
+            { ContentTypeEnum.ApplicationExecutableFile, "application/x-msdownload" }
         };
 
-        string value = hashtable[contentType].ParseToString();
+        var value = hashtable[contentType].ParseToString();
         return value;
     }
 }

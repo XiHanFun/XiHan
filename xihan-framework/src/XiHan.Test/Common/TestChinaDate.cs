@@ -28,11 +28,11 @@ public static class TestChinaDate
     {
         while (true)
         {
-            DateTime dateTime1 = DateTime.Now;
+            var dateTime1 = DateTime.Now;
             Console.WriteLine("时间1：" + dateTime1);
             Random random = new();
             Task.Delay(random.Next(1, 3000)).Wait();
-            DateTime dateTime2 = DateTime.Now;
+            var dateTime2 = DateTime.Now;
             Console.WriteLine("时间2：" + dateTime2);
             Console.WriteLine("时间差：" + FormatExtension.FormatDateTimeToString(dateTime1, dateTime2));
         }

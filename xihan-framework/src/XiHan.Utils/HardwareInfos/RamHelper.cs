@@ -40,13 +40,13 @@ public static class RamHelper
         try
         {
             // 单位是 Byte
-            long totalMemoryParts = 0.ParseToLong();
-            long usedMemoryParts = 0.ParseToLong();
-            long freeMemoryParts = 0.ParseToLong();
+            var totalMemoryParts = 0.ParseToLong();
+            var usedMemoryParts = 0.ParseToLong();
+            var freeMemoryParts = 0.ParseToLong();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                string output = ShellHelper.Bash("free -k | tail -n +2| head -n +1 | awk '{print $2,$3,$4,$7}'").Trim();
+                var output = ShellHelper.Bash("free -k | tail -n +2| head -n +1 | awk '{print $2,$3,$4,$7}'").Trim();
                 string[] lines = output.Split(' ', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
@@ -57,21 +57,23 @@ public static class RamHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                string output = ShellHelper.Bash("top -l 1 | head -n +7 | tail -n -1 | awk '{print $2,$4,$6,$8}'").Trim();
+                var output = ShellHelper.Bash("top -l 1 | head -n +7 | tail -n -1 | awk '{print $2,$4,$6,$8}'").Trim();
                 string[] lines = output.Split(' ', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    long usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.None).Replace('M', (char)StringSplitOptions.None).ParseToLong();
-                    long usedMemoryParts2 = lines[1].Replace('M', (char)StringSplitOptions.None).ParseToLong();
+                    var usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.None)
+                        .Replace('M', (char)StringSplitOptions.None).ParseToLong();
+                    var usedMemoryParts2 = lines[1].Replace('M', (char)StringSplitOptions.None).ParseToLong();
 
-                    totalMemoryParts = lines[0].Replace('G', (char)StringSplitOptions.None).ParseToLong() * 1024 * 1024 * 1024;
+                    totalMemoryParts = lines[0].Replace('G', (char)StringSplitOptions.None).ParseToLong() * 1024 *
+                                       1024 * 1024;
                     freeMemoryParts = lines[3].Replace('M', (char)StringSplitOptions.None).ParseToLong() * 1024 * 1024;
                     usedMemoryParts = (usedMemoryParts1 + usedMemoryParts2) * 1024 * 1024;
                 }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                string output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
+                var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
                 string[] lines = output.Split('\n', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
@@ -80,14 +82,15 @@ public static class RamHelper
                     usedMemoryParts = totalMemoryParts - freeMemoryParts;
                 }
             }
+
             RamInfo ramInfo = new()
             {
                 TotalSpace = totalMemoryParts.FormatFileSizeToString(),
                 UsedSpace = usedMemoryParts.FormatFileSizeToString(),
                 FreeSpace = freeMemoryParts.FormatFileSizeToString(),
                 AvailableRate = totalMemoryParts == 0
-                           ? "0%"
-                           : Math.Round((decimal)freeMemoryParts / totalMemoryParts * 100, 3) + "%"
+                    ? "0%"
+                    : Math.Round((decimal)freeMemoryParts / totalMemoryParts * 100, 3) + "%"
             };
             ramInfos.Add(ramInfo);
         }

@@ -30,21 +30,15 @@ public static class CorsSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCorsSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
-        bool isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
-        if (!isEnabledCors)
-        {
-            return services;
-        }
+        var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
+        if (!isEnabledCors) return services;
 
         _ = services.AddCors(options =>
         {
             // 策略名称
-            string policyName = AppSettings.Cors.PolicyName.GetValue();
+            var policyName = AppSettings.Cors.PolicyName.GetValue();
             // 支持多个域名端口，端口号后不可带/符号
             string[] origins = AppSettings.Cors.Origins.GetSection();
             // 支持多个请求头

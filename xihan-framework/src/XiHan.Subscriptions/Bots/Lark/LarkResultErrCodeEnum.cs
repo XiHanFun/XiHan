@@ -39,12 +39,10 @@ public enum LarkResultErrCodeEnum
     /// <summary>
     /// IP校验失败
     /// </summary>
-    [Description("IP校验失败")]
-    IpNotAllowed = 19022,
+    [Description("IP校验失败")] IpNotAllowed = 19022,
 
     /// <summary>
     /// 关键词校验失败
     /// </summary>
-    [Description("关键词校验失败")]
-    KeyWordsNotFound = 19024
+    [Description("关键词校验失败")] KeyWordsNotFound = 19024
 }

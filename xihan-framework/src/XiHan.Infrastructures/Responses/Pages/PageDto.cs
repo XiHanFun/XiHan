@@ -48,10 +48,7 @@ public class PageDto
         get => _currentIndex;
         set
         {
-            if (value < DefaultIndex)
-            {
-                value = DefaultIndex;
-            }
+            if (value < DefaultIndex) value = DefaultIndex;
             _currentIndex = value;
         }
     }
@@ -67,13 +64,8 @@ public class PageDto
         set
         {
             if (value > DefaultMaxPageSize)
-            {
                 value = DefaultMaxPageSize;
-            }
-            else if (value < DefaultMinPageSize)
-            {
-                value = DefaultMinPageSize;
-            }
+            else if (value < DefaultMinPageSize) value = DefaultMinPageSize;
             _pageSize = value;
         }
     }

@@ -38,10 +38,7 @@ public static class SwaggerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 配置Swagger，从路由、控制器和模型构建对象
         _ = services.AddSwaggerGen(options =>
@@ -70,18 +67,18 @@ public static class SwaggerSetup
         typeof(ApiGroupNameEnum).GetFields().Skip(1).ToList().ForEach(group =>
         {
             // 获取枚举值上的特性
-            if (publishGroup.All(pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase)))
-            {
-                return;
-            }
+            if (publishGroup.All(
+                    pGroup => !string.Equals(pGroup, group.Name, StringComparison.CurrentCultureIgnoreCase))) return;
             // 获取分组信息
-            GroupInfoAttribute? info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>().FirstOrDefault();
+            var info = group.GetCustomAttributes(typeof(GroupInfoAttribute), true).OfType<GroupInfoAttribute>()
+                .FirstOrDefault();
             // 添加文档介绍
             options.SwaggerDoc(group.Name, new OpenApiInfo
             {
                 Title = info?.Title,
                 Version = info?.Version,
-                Description = info?.Description + $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
+                Description = info?.Description +
+                              $" Powered by {EnvironmentInfoHelper.FrameworkDescription} on {SystemInfoHelper.OperatingSystem}",
                 Contact = new OpenApiContact
                 {
                     Name = "ZhaiFanhua",
@@ -109,12 +106,14 @@ public static class SwaggerSetup
         options.DocInclusionPredicate((docName, apiDescription) =>
         {
             // 反射获取基类 BaseApiController 的 ApiGroupAttribute 信息
-            List<ApiGroupAttribute>? baseControllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+            List<ApiGroupAttribute>? baseControllerAttributeList =
+                ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo.BaseType?
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
             // 反射获取 ApiController 的 ApiGroupAttribute 信息
-            List<ApiGroupAttribute> controllerAttributeList = ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
+            List<ApiGroupAttribute> controllerAttributeList =
+                ((ControllerActionDescriptor)apiDescription.ActionDescriptor)
                 .ControllerTypeInfo
                 .GetCustomAttributes(typeof(ApiGroupAttribute), true).OfType<ApiGroupAttribute>()
                 .ToList();
@@ -141,11 +140,9 @@ public static class SwaggerSetup
                     containList.Add(attribute.GroupNames.Any(x => x.ToString() == docName));
                 });
                 // 若有，则为该分组名称分配此 Action
-                if (containList.Any(c => c))
-                {
-                    return true;
-                }
+                if (containList.Any(c => c)) return true;
             }
+
             return false;
         });
     }
@@ -170,7 +167,7 @@ public static class SwaggerSetup
         }
         catch (Exception ex)
         {
-            string errorMsg = $"Swagger 文档加载失败！";
+            var errorMsg = $"Swagger 文档加载失败！";
             Log.Error(ex, errorMsg);
             errorMsg.WriteLineError();
         }

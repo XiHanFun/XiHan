@@ -57,7 +57,7 @@ public class CleanLogsJob : JobBase, IJob
     [Job(JobGroup = "系统", JobName = "清理日志", Description = "清理日志两个月前的操作日志和任务日志", IsEnable = true)]
     private async Task CleanLogs()
     {
-        DateTime twoMonthsAgo = DateTime.Now.AddMonths(-2);
+        var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
         _ = await _sysLogOperationService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
         _ = await _sysJobLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);

@@ -51,14 +51,14 @@ public static class AppServiceProvider
         // 属性或字段自动注入服务
         _ = services.AddSingleton<AutowiredServiceHandler>();
         // Ip 查询服务
-        string dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
+        var dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
         _ = services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
         // 雪花 Id 生成服务
         IdGeneratorOptions options = new()
         {
             WorkerId = 1,
             WorkerIdBitLength = 1,
-            SeqBitLength = 6,
+            SeqBitLength = 6
         };
         YitIdHelper.SetIdGenerator(options);
     }
@@ -78,38 +78,32 @@ public static class AppServiceProvider
         };
         // 根据程序路径反射出所有引用的程序集
         List<Type> referencedTypes = new();
-        foreach (string library in libraries)
-        {
+        foreach (var library in libraries)
             try
             {
-                IEnumerable<Type> assemblyTypes = Assembly.Load(library).GetTypes().Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
+                IEnumerable<Type> assemblyTypes = Assembly.Load(library).GetTypes()
+                    .Where(type => type.GetCustomAttribute<AppServiceAttribute>() != null);
                 referencedTypes.AddRange(assemblyTypes);
             }
             catch (Exception ex)
             {
-                string errorMsg = $"找不到【{library}】组件库！";
+                var errorMsg = $"找不到【{library}】组件库！";
                 Log.Error(ex, errorMsg);
                 errorMsg.WriteLineError();
             }
-        }
 
         // 批量注入
-        foreach (Type type in referencedTypes)
+        foreach (var type in referencedTypes)
         {
             // 服务周期
-            AppServiceAttribute? serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
-            if (serviceAttribute == null)
-            {
-                continue;
-            }
+            var serviceAttribute = type.GetCustomAttribute<AppServiceAttribute>();
+            if (serviceAttribute == null) continue;
             // 如果有值的话，它就是注册服务的类型；如果没有的话，看是否允许从接口中获取服务类型；
-            Type? serviceType = serviceAttribute.ServiceType;
+            var serviceType = serviceAttribute.ServiceType;
 
             // 情况1 适用于依赖抽象编程(如果允许，便尝试获取第一个作为服务类型)
             if (serviceType == null && serviceAttribute.IsInterfaceServiceType)
-            {
                 serviceType = type.GetInterfaces().FirstOrDefault();
-            }
             // 情况2 特殊情况下才会指定(如果还没获取到，就把自身的类型作为服务类型)
             serviceType ??= type;
 
@@ -118,9 +112,10 @@ public static class AppServiceProvider
                 ServiceLifeTimeEnum.Singleton => services.AddSingleton(serviceType, type),
                 ServiceLifeTimeEnum.Scoped => services.AddScoped(serviceType, type),
                 ServiceLifeTimeEnum.Transient => services.AddTransient(serviceType, type),
-                _ => services.AddTransient(serviceType, type),
+                _ => services.AddTransient(serviceType, type)
             };
-            string infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
+            var infoMsg =
+                $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
             Log.Information(infoMsg);
             infoMsg.WriteLineSuccess();
         }

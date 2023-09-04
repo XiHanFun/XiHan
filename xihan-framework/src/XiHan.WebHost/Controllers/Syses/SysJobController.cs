@@ -62,7 +62,7 @@ public class SysJobController : BaseApiController
     {
         _ = VerifyJobParams(jobCDto);
 
-        long result = await _sysJobService.CreateJob(jobCDto);
+        var result = await _sysJobService.CreateJob(jobCDto);
 
         return ApiResult.Success(result);
     }
@@ -81,12 +81,10 @@ public class SysJobController : BaseApiController
         sysJobs.ForEach(async sysJob =>
         {
             // 先删除任务调度中心的任务
-            ApiResult result = await _taskSchedulerServer.DeleteTaskScheduleAsync(sysJob);
+            var result = await _taskSchedulerServer.DeleteTaskScheduleAsync(sysJob);
             if (result.IsSuccess)
-            {
                 // 再删除数据库的任务
                 _ = await _sysJobService.DeleteJobByIds(new long[] { sysJob.BaseId });
-            }
             errorMessages.Add(sysJob, result.Data);
         });
 
@@ -104,19 +102,14 @@ public class SysJobController : BaseApiController
     {
         _ = VerifyJobParams(jobMDto);
 
-        SysJob sysJob = await _sysJobService.GetJobById(jobMDto.BaseId);
-        if (sysJob.IsStart)
-        {
-            throw new CustomException($"该任务正在运行中，请先停止再更新！");
-        }
+        var sysJob = await _sysJobService.GetJobById(jobMDto.BaseId);
+        if (sysJob.IsStart) throw new CustomException($"该任务正在运行中，请先停止再更新！");
 
         // 先更新数据库的任务
-        bool result = await _sysJobService.ModifyJob(jobMDto);
+        var result = await _sysJobService.ModifyJob(jobMDto);
         if (result)
-        {
             // 再更新任务调度中心的任务
             return await _taskSchedulerServer.ModifyTaskScheduleAsync(sysJob);
-        }
 
         return ApiResult.Success(result);
     }
@@ -130,10 +123,10 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Other)]
     public async Task<ApiResult> StartJob(SysJobIdDto jobIdDto)
     {
-        SysJob sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
+        var sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
 
         // 先启动任务调度中心的任务
-        ApiResult result = await _taskSchedulerServer.CreateTaskScheduleAsync(sysJob);
+        var result = await _taskSchedulerServer.CreateTaskScheduleAsync(sysJob);
         if (result.IsSuccess)
         {
             sysJob.IsStart = true;
@@ -153,10 +146,10 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Other)]
     public async Task<ApiResult> StopJob(SysJobIdDto jobIdDto)
     {
-        SysJob sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
+        var sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
 
         // 先停止任务调度中心的任务
-        ApiResult result = await _taskSchedulerServer.DeleteTaskScheduleAsync(sysJob);
+        var result = await _taskSchedulerServer.DeleteTaskScheduleAsync(sysJob);
         if (result.IsSuccess)
         {
             sysJob.IsStart = false;
@@ -176,9 +169,9 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Other)]
     public async Task<ApiResult> RunJob(SysJobIdDto jobIdDto)
     {
-        SysJob sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
+        var sysJob = await _sysJobService.GetJobById(jobIdDto.BaseId);
 
-        ApiResult result = await _taskSchedulerServer.RunTaskScheduleAsync(sysJob);
+        var result = await _taskSchedulerServer.RunTaskScheduleAsync(sysJob);
 
         return ApiResult.Success(result);
     }
@@ -192,7 +185,7 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobById([FromBody] long jobId)
     {
-        SysJob result = await _sysJobService.GetJobById(jobId);
+        var result = await _sysJobService.GetJobById(jobId);
         return ApiResult.Success(result);
     }
 
@@ -205,7 +198,7 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobList([FromBody] SysJobWDto whereDto)
     {
-        List<SysJob> result = await _sysJobService.GetJobList(whereDto);
+        var result = await _sysJobService.GetJobList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -218,7 +211,7 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobPageList([FromBody] PageWhereDto<SysJobWDto> pageWhere)
     {
-        PageDataDto<SysJob> result = await _sysJobService.GetJobPageList(pageWhere);
+        var result = await _sysJobService.GetJobPageList(pageWhere);
         return ApiResult.Success(result);
     }
 
@@ -245,45 +238,25 @@ public class SysJobController : BaseApiController
     {
         // 根据任务类型验证任务参数
         if (jobCDto.JobType == JobTypeEnum.Assembly)
-        {
             if (jobCDto.AssemblyName.IsNullOrEmpty() || jobCDto.ClassName.IsNullOrEmpty())
-            {
                 throw new CustomException($"任务类型为【程序集】时，程序集或所在类不能为空！");
-            }
-        }
         if (jobCDto.JobType == JobTypeEnum.NetworkRequest)
-        {
             if (jobCDto.RequestMethod == null || jobCDto.ApiUrl.IsNullOrEmpty())
-            {
                 throw new CustomException($"任务类型为【网络请求】时，请求方式或执行地址不能为空！");
-            }
-        }
         if (jobCDto.JobType == JobTypeEnum.SqlStatement)
-        {
             if (jobCDto.SqlText.IsNullOrEmpty())
-            {
                 throw new CustomException($"任务类型为【SQL语句】时，SQL语句不能为空！");
-            }
-        }
 
         // 根据触发器类型验证执行参数
         if (jobCDto.TriggerType == TriggerTypeEnum.Interval)
-        {
-            if (jobCDto.IntervalSecond == null || jobCDto.CycleRunTimes == null || jobCDto.BeginTime == null || jobCDto.EndTime == null)
-            {
+            if (jobCDto.IntervalSecond == null || jobCDto.CycleRunTimes == null || jobCDto.BeginTime == null ||
+                jobCDto.EndTime == null)
                 throw new CustomException($"触发器类型为【定时任务】时，执行间隔时间、循环执行次数、开始时间、结束时间等不能为空！");
-            }
-        }
         if (jobCDto.TriggerType == TriggerTypeEnum.Cron)
         {
             if (jobCDto.IntervalSecond.IsEmptyOrNull())
-            {
                 throw new CustomException($"触发器类型为【时间点或者周期性任务】时，Cron表达式不能为空！");
-            }
-            else if (!CronExpression.IsValidExpression(jobCDto.Cron!))
-            {
-                throw new CustomException($"Cron表达式不正确！");
-            }
+            else if (!CronExpression.IsValidExpression(jobCDto.Cron!)) throw new CustomException($"Cron表达式不正确！");
         }
 
         return true;

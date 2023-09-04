@@ -32,26 +32,16 @@ public class SysServerService : ISysServerService
         Dictionary<string, object?> result = new();
 
         List<System.Reflection.PropertyInfo> systemInfoProperties = typeof(SystemInfoHelper).GetProperties().ToList();
-        List<System.Reflection.PropertyInfo> environmentInfoProperties = typeof(EnvironmentInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> environmentInfoProperties =
+            typeof(EnvironmentInfoHelper).GetProperties().ToList();
         List<System.Reflection.PropertyInfo> projectInfoProperties = typeof(ProjectInfoHelper).GetProperties().ToList();
-        List<System.Reflection.PropertyInfo> applicationInfoProperties = typeof(ApplicationInfoHelper).GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> applicationInfoProperties =
+            typeof(ApplicationInfoHelper).GetProperties().ToList();
 
-        systemInfoProperties.ForEach(property =>
-        {
-            result.Add(property.Name, property.GetValue(null));
-        });
-        environmentInfoProperties.ForEach(property =>
-        {
-            result.Add(property.Name, property.GetValue(null));
-        });
-        projectInfoProperties.ForEach(property =>
-        {
-            result.Add(property.Name, property.GetValue(null));
-        });
-        applicationInfoProperties.ForEach(property =>
-        {
-            result.Add(property.Name, property.GetValue(null));
-        });
+        systemInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });
+        environmentInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });
+        projectInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });
+        applicationInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });
         return result;
     }
 }

@@ -49,8 +49,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> TextMessage(WeComText text)
     {
-        string msgtype = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, text });
+        var msgtype = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, text });
         return result;
     }
 
@@ -61,8 +61,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
     {
-        string msgtype = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, markdown });
+        var msgtype = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, markdown });
         return result;
     }
 
@@ -73,8 +73,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> ImageMessage(WeComImage image)
     {
-        string msgtype = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, image });
+        var msgtype = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, image });
         return result;
     }
 
@@ -85,8 +85,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> NewsMessage(WeComNews news)
     {
-        string msgtype = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, news });
+        var msgtype = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, news });
         return result;
     }
 
@@ -97,8 +97,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> FileMessage(WeComFile file)
     {
-        string msgtype = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, file });
+        var msgtype = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, file });
         return result;
     }
 
@@ -109,8 +109,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> VoiceMessage(WeComVoice voice)
     {
-        string msgtype = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, voice });
+        var msgtype = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype, voice });
         return result;
     }
 
@@ -121,9 +121,9 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice template_card)
     {
-        string msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         template_card.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, template_card });
+        var result = await SendMessage(new { msgtype, template_card });
         return result;
     }
 
@@ -134,9 +134,9 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice template_card)
     {
-        string msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         template_card.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgtype, template_card });
+        var result = await SendMessage(new { msgtype, template_card });
         return result;
     }
 
@@ -159,7 +159,7 @@ public class WeComBot
             { "filelength", fileStream.Length.ToString() }
         };
 
-        string type = uploadType switch
+        var type = uploadType switch
         {
             WeComUploadType.File => "&type=file",
             WeComUploadType.Voice => "&type=voice",
@@ -168,7 +168,9 @@ public class WeComBot
 
         // 发起请求，上传地址
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        WeComResultInfoDto? result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _uploadUrl + type, fileStream, headers);
+        var result =
+            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _uploadUrl + type, fileStream,
+                headers);
         // 包装返回信息
         if (result != null)
         {
@@ -178,7 +180,7 @@ public class WeComBot
                 {
                     Message = "上传成功",
                     Type = result.Type,
-                    MediaId = result.MediaId,
+                    MediaId = result.MediaId
                 };
                 return ApiResult.Success(uploadResult);
             }
@@ -199,10 +201,11 @@ public class WeComBot
     private async Task<ApiResult> SendMessage(object objSend)
     {
         // 发送对象
-        string sendMessage = objSend.SerializeToJson();
+        var sendMessage = objSend.SerializeToJson();
         // 发起请求，发送消息地址
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        WeComResultInfoDto? result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
+        var result =
+            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
         // 包装返回信息
         return result != null
             ? result.ErrCode == 0 || result.ErrMsg == "ok" ? ApiResult.Success("发送成功") : ApiResult.BadRequest("发送失败")

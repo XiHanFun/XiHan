@@ -51,12 +51,13 @@ public class SysJobLogService : BaseService<SysJobLog>, ISysJobLogService
     public async Task<SysJobLog> CreateJobLog(SysJobLog jobLog)
     {
         //获取任务信息
-        SysJob sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == jobLog.JobId);
+        var sysJob = await _sysJobService.GetSingleAsync(j => j.BaseId == jobLog.JobId);
         if (sysJob != null)
         {
             jobLog.JobName = sysJob.Name;
             jobLog.JobGroup = sysJob.Group;
         }
+
         _ = await AddAsync(jobLog);
         return jobLog;
     }
@@ -87,11 +88,8 @@ public class SysJobLogService : BaseService<SysJobLog>, ISysJobLogService
     /// <returns></returns>
     public async Task<SysJobLog> GetJobLogByJobId(long jobsId)
     {
-        string key = $"GetJobLogByJobId_{jobsId}";
-        if (_appCacheService.Get(key) is SysJobLog sysJobLog)
-        {
-            return sysJobLog;
-        }
+        var key = $"GetJobLogByJobId_{jobsId}";
+        if (_appCacheService.Get(key) is SysJobLog sysJobLog) return sysJobLog;
 
         sysJobLog = await FindAsync(d => d.JobId == jobsId);
         _ = _appCacheService.SetWithMinutes(key, sysJobLog, 30);
@@ -121,13 +119,14 @@ public class SysJobLogService : BaseService<SysJobLog>, ISysJobLogService
     /// <returns></returns>
     public async Task<PageDataDto<SysJobLog>> GetJobLogPageList(PageWhereDto<SysJobLogWDto> pageWhere)
     {
-        SysJobLogWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysJobLog> whereExpression = Expressionable.Create<SysJobLog>();
         _ = whereExpression.AndIF(whereDto.JobName.IsNotEmptyOrNull(), u => u.JobName.Contains(whereDto.JobName!));
         _ = whereExpression.AndIF(whereDto.JobGroup.IsNotEmptyOrNull(), u => u.JobGroup.Contains(whereDto.JobGroup!));
         _ = whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
+            pageWhere.IsAsc);
     }
 }

@@ -29,7 +29,7 @@ public static class EnumExtension
     /// <returns></returns>
     public static TEnum GetEnumByName<TEnum>(this string name) where TEnum : struct
     {
-        TEnum tEnum = Enum.Parse<TEnum>(name, true);
+        var tEnum = Enum.Parse<TEnum>(name, true);
         return tEnum;
     }
 
@@ -40,8 +40,8 @@ public static class EnumExtension
     /// <returns></returns>
     public static int GetEnumValueByKey(this Enum keyEnum)
     {
-        string enumName = keyEnum.ToString();
-        FieldInfo? field = keyEnum.GetType().GetField(enumName);
+        var enumName = keyEnum.ToString();
+        var field = keyEnum.GetType().GetField(enumName);
         return field == null ? throw new ArgumentException(null, nameof(keyEnum)) : (int)field.GetRawConstantValue()!;
     }
 
@@ -52,13 +52,13 @@ public static class EnumExtension
     /// <returns></returns>
     public static string GetEnumDescriptionByKey(this Enum keyEnum)
     {
-        string enumName = keyEnum.ToString();
-        FieldInfo? field = keyEnum.GetType().GetField(enumName);
+        var enumName = keyEnum.ToString();
+        var field = keyEnum.GetType().GetField(enumName);
         return field == null
             ? string.Empty
             : field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description
-            ? description.Description
-            : string.Empty;
+                ? description.Description
+                : string.Empty;
     }
 
     /// <summary>
@@ -68,10 +68,10 @@ public static class EnumExtension
     /// <returns></returns>
     public static string GetEnumDescriptionByValue<TEnum>(this object enumValue)
     {
-        string description = string.Empty;
+        var description = string.Empty;
         try
         {
-            Enum? tEnum = Enum.Parse(typeof(TEnum), enumValue.ParseToString()) as Enum;
+            var tEnum = Enum.Parse(typeof(TEnum), enumValue.ParseToString()) as Enum;
             description = tEnum!.GetEnumDescriptionByKey();
         }
         catch (Exception ex)
@@ -94,16 +94,11 @@ public static class EnumExtension
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理
-            if (!field.FieldType.IsEnum)
-            {
-                return;
-            }
+            if (!field.FieldType.IsEnum) return;
 
-            string desc = string.Empty;
+            var desc = string.Empty;
             if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
-            {
                 desc = description.Description;
-            }
 
             result.Add(new EnumDescDto
             {
@@ -124,21 +119,16 @@ public static class EnumExtension
     {
         Dictionary<int, string> result = new();
         List<FieldInfo> fields = enumType.GetFields().ToList();
-        if (fields.Any())
-        {
-            return result;
-        }
+        if (fields.Any()) return result;
 
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理
             if (field.FieldType.IsEnum)
             {
-                string desc = string.Empty;
+                var desc = string.Empty;
                 if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
-                {
                     desc = description.Description;
-                }
 
                 result.Add((int)field.GetRawConstantValue()!, desc);
             }

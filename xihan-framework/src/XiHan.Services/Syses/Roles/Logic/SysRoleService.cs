@@ -50,7 +50,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     private async Task<bool> CheckRoleUnique(SysRole sysRole)
     {
-        bool isUnique = await IsAnyAsync(f => f.Code == sysRole.Code && f.Name == sysRole.Name);
+        var isUnique = await IsAnyAsync(f => f.Code == sysRole.Code && f.Name == sysRole.Name);
         return isUnique ? throw new CustomException($"角色【{sysRole.Name}】已存在!") : isUnique;
     }
 
@@ -61,7 +61,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     public async Task<long> CreateRole(SysRoleCDto roleCDto)
     {
-        SysRole sysRole = roleCDto.Adapt<SysRole>();
+        var sysRole = roleCDto.Adapt<SysRole>();
 
         _ = await CheckRoleUnique(sysRole);
 
@@ -76,7 +76,9 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     public async Task<bool> DeleteRoleByIds(long[] dictIds)
     {
         List<SysRole> roles = await QueryAsync(d => dictIds.Contains(d.BaseId));
-        return roles.Any(r => r.Code == GlobalConst.DefaultRole) ? throw new CustomException($"禁止删除系统管理员角色!") : await RemoveAsync(roles);
+        return roles.Any(r => r.Code == GlobalConst.DefaultRole)
+            ? throw new CustomException($"禁止删除系统管理员角色!")
+            : await RemoveAsync(roles);
     }
 
     /// <summary>

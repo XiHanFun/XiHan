@@ -79,16 +79,16 @@ public class JobBase
     {
         try
         {
-            ISysJobService sysJobService = App.GetRequiredService<ISysJobService>();
-            ISysJobLogService sysJobLogService = App.GetRequiredService<ISysJobLogService>();
-            IEmailPushService emailPushService = App.GetRequiredService<IEmailPushService>();
+            var sysJobService = App.GetRequiredService<ISysJobService>();
+            var sysJobLogService = App.GetRequiredService<ISysJobLogService>();
+            var emailPushService = App.GetRequiredService<IEmailPushService>();
 
             // 获取任务详情
-            IJobDetail jobDetail = context.JobDetail;
+            var jobDetail = context.JobDetail;
             jobLog.JobId = jobDetail.Key.Name.ParseToLong();
             jobLog.InvokeTarget = jobDetail.JobType.FullName;
             jobLog = await sysJobLogService.CreateJobLog(jobLog);
-            string logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
+            var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
 
             // 若执行成功，则执行次数加一
             if (jobLog.IsSuccess)

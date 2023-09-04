@@ -45,7 +45,7 @@ public class SysServerController : BaseApiController
     [AppLog(Module = "系统服务器监控", BusinessType = BusinessTypeEnum.Get)]
     public ApiResult GetServerInfo()
     {
-        Dictionary<string, object?> serverInfo = _sysServerService.GetServerInfo();
+        var serverInfo = _sysServerService.GetServerInfo();
         return ApiResult.Success(serverInfo);
     }
 }

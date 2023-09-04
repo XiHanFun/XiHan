@@ -29,15 +29,9 @@ public static class ZipHelper
     /// <exception cref="FileNotFoundException"></exception>
     public static void Extract(string archivePath, string extractPath)
     {
-        if (!File.Exists(archivePath))
-        {
-            throw new FileNotFoundException("Archive not found.", archivePath);
-        }
+        if (!File.Exists(archivePath)) throw new FileNotFoundException("Archive not found.", archivePath);
 
-        if (!Directory.Exists(extractPath))
-        {
-            _ = Directory.CreateDirectory(extractPath);
-        }
+        if (!Directory.Exists(extractPath)) _ = Directory.CreateDirectory(extractPath);
 
         ZipFile.ExtractToDirectory(archivePath, extractPath);
     }
@@ -50,10 +44,7 @@ public static class ZipHelper
     /// <exception cref="DirectoryNotFoundException"></exception>
     public static void Compress(string sourceDirectory, string archivePath)
     {
-        if (!Directory.Exists(sourceDirectory))
-        {
-            throw new DirectoryNotFoundException("Source directory not found.");
-        }
+        if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException("Source directory not found.");
 
         ZipFile.CreateFromDirectory(sourceDirectory, archivePath, CompressionLevel.Optimal, false);
     }

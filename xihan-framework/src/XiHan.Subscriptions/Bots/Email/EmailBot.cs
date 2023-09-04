@@ -66,7 +66,6 @@ public class EmailBot
         try
         {
             if (toModel.AttachmentsPath != null && toModel.AttachmentsPath.Count > 0)
-            {
                 toModel.AttachmentsPath.ForEach(attachmentFile =>
                 {
                     MimePart attachment = new()
@@ -79,12 +78,12 @@ public class EmailBot
                     };
                     bodyBuilder.Attachments.Add(attachment);
                 });
-            }
         }
         catch (Exception ex)
         {
             throw new Exception($"在添加附件时有错误:{ex}");
         }
+
         message.Body = bodyBuilder.ToMessageBody();
 
         try
@@ -97,7 +96,7 @@ public class EmailBot
             // 异步登录
             await client.AuthenticateAsync(_fromModel.FromUserName, _fromModel.FromPassword);
             // 异步发送
-            string result = await client.SendAsync(message);
+            var result = await client.SendAsync(message);
             // 异步断连
             await client.DisconnectAsync(true);
 

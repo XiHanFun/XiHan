@@ -26,13 +26,15 @@ public class SysUserLoginByEmailCDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
-    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", ErrorMessage = "请输入正确的邮箱地址")]
+    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$",
+        ErrorMessage = "请输入正确的邮箱地址")]
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// 用户密码
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
-    [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$", ErrorMessage = "密码至少为8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符")]
+    [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$",
+        ErrorMessage = "密码至少为8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符")]
     public string Password { get; set; } = string.Empty;
 }

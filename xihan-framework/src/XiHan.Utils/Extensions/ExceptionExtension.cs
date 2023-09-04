@@ -24,7 +24,7 @@ public static class ExceptionExtension
     /// </summary>
     public static void ThrowAndConsoleError(this Exception ex, string info)
     {
-        string errorInfo = info + Environment.NewLine + ex.Message;
+        var errorInfo = info + Environment.NewLine + ex.Message;
         errorInfo.WriteLineError();
         throw new Exception(errorInfo, ex);
     }

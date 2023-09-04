@@ -24,12 +24,10 @@ public enum HttpGroupEnum
     /// <summary>
     /// 远程
     /// </summary>
-    [Description("远程")]
-    Remote,
+    [Description("远程")] Remote,
 
     /// <summary>
     /// 本地
     /// </summary>
-    [Description("本地")]
-    Local,
+    [Description("本地")] Local
 }

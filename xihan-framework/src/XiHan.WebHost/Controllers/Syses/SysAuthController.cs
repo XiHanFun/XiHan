@@ -53,7 +53,8 @@ public class SysAuthController : BaseApiController
     /// <param name="sysPermissionService"></param>
     /// <param name="sysMenuService"></param>
     /// <param name="sysLogLoginService"></param>
-    public SysAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService, ISysPermissionService sysPermissionService,
+    public SysAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
+        ISysPermissionService sysPermissionService,
         ISysMenuService sysMenuService, ISysLogLoginService sysLogLoginService)
     {
         _sysUserService = sysUserService;
@@ -72,7 +73,7 @@ public class SysAuthController : BaseApiController
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> SignInByAccount([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     {
-        SysUser sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
+        var sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
         return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
     }
 
@@ -85,7 +86,7 @@ public class SysAuthController : BaseApiController
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> SignInByEmail([FromBody] SysUserLoginByEmailCDto loginByEmailCDto)
     {
-        SysUser sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
+        var sysUser = await _sysUserService.GetUserByEmail(loginByEmailCDto.Email);
         return await GetTokenAndRecordLogLogin(sysUser, loginByEmailCDto.Password);
     }
 
@@ -97,10 +98,7 @@ public class SysAuthController : BaseApiController
     [AppLog(Module = "系统登录授权", BusinessType = BusinessTypeEnum.Get)]
     public new async Task<ApiResult> SignOut()
     {
-        await Task.Run(() =>
-        {
-            HttpContext.SignoutToSwagger();
-        });
+        await Task.Run(() => { HttpContext.SignoutToSwagger(); });
         return ApiResult.Continue();
     }
 
@@ -112,15 +110,16 @@ public class SysAuthController : BaseApiController
     /// <returns></returns>
     private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
     {
-        string token = string.Empty;
+        var token = string.Empty;
 
         // 获取当前请求上下文信息
-        UserClientInfo clientInfo = HttpContext.GetClientInfo();
-        UserAddressInfo addressInfo = HttpContext.GetAddressInfo();
+        var clientInfo = HttpContext.GetClientInfo();
+        var addressInfo = HttpContext.GetAddressInfo();
         SysLogLogin sysLogLogin = new()
         {
             Ip = addressInfo.RemoteIPv4,
-            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
+            Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" +
+                       addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
             Browser = clientInfo.BrowserName + clientInfo.BrowserVersion,
             Os = clientInfo.OsName + clientInfo.OsVersion,
             Agent = clientInfo.Agent
@@ -128,20 +127,12 @@ public class SysAuthController : BaseApiController
 
         try
         {
-            if (sysUser == null)
-            {
-                throw new Exception("登录失败，用户不存在！");
-            }
+            if (sysUser == null) throw new Exception("登录失败，用户不存在！");
 
-            if (sysUser.Status == StatusEnum.Disable)
-            {
-                throw new Exception("登录失败，用户已被禁用！");
-            }
+            if (sysUser.Status == StatusEnum.Disable) throw new Exception("登录失败，用户已被禁用！");
 
             if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
-            {
                 throw new Exception("登录失败，密码错误！");
-            }
 
             sysLogLogin.IsSuccess = true;
             sysLogLogin.Message = "登录成功！";
@@ -150,7 +141,7 @@ public class SysAuthController : BaseApiController
             sysLogLogin.Account = sysUser.Account;
             sysLogLogin.RealName = sysUser.RealName;
 
-            List<long> userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
+            var userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
             token = JwtHandler.TokenIssue(new TokenModel()
             {
                 UserId = sysUser.BaseId,

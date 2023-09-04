@@ -50,7 +50,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Create)]
     public async Task<ApiResult> CreateDictData([FromBody] SysConfigCDto configCDto)
     {
-        long result = await _sysConfigService.CreateSysConfig(configCDto);
+        var result = await _sysConfigService.CreateSysConfig(configCDto);
         return ApiResult.Success(result);
     }
 
@@ -63,7 +63,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteSysConfigByIds([FromBody] long[] configIds)
     {
-        bool result = await _sysConfigService.DeleteSysConfigByIds(configIds);
+        var result = await _sysConfigService.DeleteSysConfigByIds(configIds);
         return ApiResult.Success(result);
     }
 
@@ -76,7 +76,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<ApiResult> ModifySysConfig([FromBody] SysConfigMDto configMDto)
     {
-        bool result = await _sysConfigService.ModifySysConfig(configMDto);
+        var result = await _sysConfigService.ModifySysConfig(configMDto);
         return ApiResult.Success(result);
     }
 
@@ -89,7 +89,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigById([FromBody] long configId)
     {
-        Models.Syses.SysConfig result = await _sysConfigService.GetSysConfigById(configId);
+        var result = await _sysConfigService.GetSysConfigById(configId);
         return ApiResult.Success(result);
     }
 
@@ -102,7 +102,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigValueByCode<T>([FromBody] string configCode)
     {
-        T? result = await _sysConfigService.GetSysConfigValueByCode<T>(configCode);
+        var result = await _sysConfigService.GetSysConfigValueByCode<T>(configCode);
         return ApiResult.Success(result!);
     }
 
@@ -114,7 +114,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigTypeList()
     {
-        List<string> result = await _sysConfigService.GetSysConfigTypeList();
+        var result = await _sysConfigService.GetSysConfigTypeList();
         return ApiResult.Success(result);
     }
 
@@ -127,7 +127,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigList([FromBody] SysConfigWDto configWDto)
     {
-        List<Models.Syses.SysConfig> result = await _sysConfigService.GetSysConfigList(configWDto);
+        var result = await _sysConfigService.GetSysConfigList(configWDto);
         return ApiResult.Success(result);
     }
 
@@ -140,7 +140,7 @@ public class SysConfigController : BaseApiController
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigPageList([FromBody] PageWhereDto<SysConfigWDto> pageWhere)
     {
-        PageDataDto<Models.Syses.SysConfig> result = await _sysConfigService.GetSysConfigPageList(pageWhere);
+        var result = await _sysConfigService.GetSysConfigPageList(pageWhere);
         return ApiResult.Success(result);
     }
 

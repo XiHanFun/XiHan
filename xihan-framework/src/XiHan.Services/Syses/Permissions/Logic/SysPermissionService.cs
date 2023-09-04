@@ -49,7 +49,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     private async Task<bool> CheckPermissionUnique(SysPermission sysPermission)
     {
-        bool isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code && p.Name == sysPermission.Name);
+        var isUnique = await IsAnyAsync(p => p.Code == sysPermission.Code && p.Name == sysPermission.Name);
         return isUnique ? throw new CustomException($"权限【{sysPermission.Name}】已存在!") : isUnique;
     }
 
@@ -61,7 +61,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <exception cref="CustomException"></exception>
     public async Task<long> CreatePermission(SysPermissionCDto permissionCDto)
     {
-        SysPermission sysPermission = permissionCDto.Adapt<SysPermission>();
+        var sysPermission = permissionCDto.Adapt<SysPermission>();
 
         _ = await CheckPermissionUnique(sysPermission);
 
@@ -86,7 +86,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<bool> ModifyPermission(SysPermissionCDto permissionCDto)
     {
-        SysPermission sysPermission = permissionCDto.Adapt<SysPermission>();
+        var sysPermission = permissionCDto.Adapt<SysPermission>();
 
         _ = await CheckPermissionUnique(sysPermission);
 
@@ -100,11 +100,8 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<SysPermission> GetPermissionById(long permissionId)
     {
-        string key = $"GetPermissionById_{permissionId}";
-        if (_appCacheService.Get(key) is SysPermission sysPermission)
-        {
-            return sysPermission;
-        }
+        var key = $"GetPermissionById_{permissionId}";
+        if (_appCacheService.Get(key) is SysPermission sysPermission) return sysPermission;
 
         sysPermission = await FindAsync(d => d.BaseId == permissionId);
         _ = _appCacheService.SetWithMinutes(key, sysPermission, 30);
@@ -134,7 +131,7 @@ public class SysPermissionService : BaseService<SysPermission>, ISysPermissionSe
     /// <returns></returns>
     public async Task<PageDataDto<SysPermission>> GetPermissionPageList(PageWhereDto<SysPermissionWDto> pageWhere)
     {
-        SysPermissionWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysPermission> whereExpression = Expressionable.Create<SysPermission>();
         _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));

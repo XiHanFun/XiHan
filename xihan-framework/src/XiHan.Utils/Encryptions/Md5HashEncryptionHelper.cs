@@ -30,13 +30,13 @@ public static class Md5HashEncryptionHelper
     public static string Encrypt(string input)
     {
         // 计算32位MD5值
-        byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-        byte[] hashBytes = MD5.HashData(inputBytes);
-        string md5Str = ComputeHash(hashBytes);
+        var inputBytes = Encoding.UTF8.GetBytes(input);
+        var hashBytes = MD5.HashData(inputBytes);
+        var md5Str = ComputeHash(hashBytes);
         if (md5Str.Length == 32)
         {
             // 转换为64位MD5值
-            byte[] bytes = Encoding.UTF8.GetBytes(md5Str);
+            var bytes = Encoding.UTF8.GetBytes(md5Str);
             return ComputeHash(bytes);
         }
         else
@@ -53,8 +53,8 @@ public static class Md5HashEncryptionHelper
     public static string EncryptStream(string inputPath)
     {
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        using MD5 md5 = MD5.Create();
-        byte[] hashBytes = md5.ComputeHash(stream);
+        using var md5 = MD5.Create();
+        var hashBytes = md5.ComputeHash(stream);
         return BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
     }
 
@@ -66,8 +66,8 @@ public static class Md5HashEncryptionHelper
     public static string Encrypt64Stream(string inputPath)
     {
         using FileStream stream = new(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        using MD5 md5 = MD5.Create();
-        byte[] hashBytes = md5.ComputeHash(stream);
+        using var md5 = MD5.Create();
+        var hashBytes = md5.ComputeHash(stream);
         return ComputeHash(hashBytes);
     }
 
@@ -80,10 +80,7 @@ public static class Md5HashEncryptionHelper
     {
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        foreach (byte t in source)
-        {
-            _ = sb.Append(t.ToString("x2"));
-        }
+        foreach (var t in source) _ = sb.Append(t.ToString("x2"));
         // 返回生成的哈希值
         return sb.ToString();
     }

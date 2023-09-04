@@ -52,7 +52,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     private async Task<bool> GetAccountUnique(SysUser sysUser)
     {
-        bool isUnique = await IsAnyAsync(u => u.Account == sysUser.Account);
+        var isUnique = await IsAnyAsync(u => u.Account == sysUser.Account);
         return isUnique ? throw new CustomException($"账户【{sysUser.Account}】已存在！") : isUnique;
     }
 
@@ -63,13 +63,13 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<long> CreateUser(SysUserCDto userCDto)
     {
-        SysUser sysUser = userCDto.Adapt<SysUser>();
+        var sysUser = userCDto.Adapt<SysUser>();
 
         _ = await GetAccountUnique(sysUser);
 
-        string encryptPasswod = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
+        var encryptPasswod = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));
         sysUser.Password = encryptPasswod;
-        long userId = await AddReturnIdAsync(sysUser);
+        var userId = await AddReturnIdAsync(sysUser);
 
         // 新增用户角色信息
         sysUser.BaseId = userId;
@@ -83,7 +83,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> DeleteUser(SysUser sysUser)
     {
-        SysUser user = await FindAsync(u => u.BaseId == sysUser.BaseId);
+        var user = await FindAsync(u => u.BaseId == sysUser.BaseId);
         // 删除用户角色
         _ = await _sysUserRoleService.DeleteUserRoleByUserId(sysUser.BaseId);
         return await RemoveAsync(user);
@@ -96,13 +96,13 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserAccountInfo(SysUserCDto userCDto)
     {
-        SysUser sysUser = userCDto.Adapt<SysUser>();
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             Account = sysUser.Account,
             NickName = sysUser.NickName,
             AvatarPath = sysUser.AvatarPath,
-            Signature = sysUser.Signature,
+            Signature = sysUser.Signature
         }, f => f.BaseId == sysUser.BaseId);
     }
 
@@ -113,7 +113,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserBaseInfo(SysUserCDto userCDto)
     {
-        SysUser sysUser = userCDto.Adapt<SysUser>();
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             RealName = sysUser.RealName,
@@ -121,7 +121,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
             Email = sysUser.Email,
             Phone = sysUser.Phone,
             Birthday = sysUser.Birthday,
-            Address = sysUser.Address,
+            Address = sysUser.Address
         }, f => f.BaseId == sysUser.BaseId);
     }
 
@@ -149,7 +149,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserStatus(SysUserCDto userCDto)
     {
-        SysUser sysUser = userCDto.Adapt<SysUser>();
+        var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
             Status = sysUser.Status
@@ -163,7 +163,8 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<bool> ModifyUserPassword(SysUserPwdMDto userPwdMDto)
     {
-        return await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password == Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword)))
+        return await IsAnyAsync(u => !u.IsDeleted && u.BaseId == userPwdMDto.BaseId && u.Password ==
+            Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.OldPassword)))
             ? await UpdateAsync(s => new SysUser
             {
                 Password = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(userPwdMDto.NewPassword))
@@ -178,7 +179,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<SysUser> GetUserById(long userId)
     {
-        SysUser sysUser = await FindAsync(u => u.BaseId == userId);
+        var sysUser = await FindAsync(u => u.BaseId == userId);
         //sysUser.SysRoles = await _sysRoleService.GetUserRolesByUserId(userId);
         //sysUser.SysRoleIds = sysUser.SysRoles.Select(x => x.BaseId).ToList();
 
@@ -212,7 +213,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
     /// <returns></returns>
     public async Task<PageDataDto<SysUser>> GetUserList(PageWhereDto<SysUserWDto> pageWhere)
     {
-        SysUserWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysUser> whereExpression = Expressionable.Create<SysUser>();
         _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), u => u.Account.Contains(whereDto.Account!));
@@ -223,6 +224,7 @@ public class SysUserService : BaseService<SysUser>, ISysUserService
         _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone.Contains(whereDto.Phone!));
         _ = whereExpression.AndIF(whereDto.Status != null, u => u.Status == whereDto.Status);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
+            pageWhere.IsAsc);
     }
 }

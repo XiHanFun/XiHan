@@ -48,10 +48,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (IsIgnore || context.Result == null || context.HttpContext.IsDownloadFile())
-        {
-            return;
-        }
+        if (IsIgnore || context.Result == null || context.HttpContext.IsDownloadFile()) return;
 
         // 结果不为空就做序列化处理
         context.Result = context.Result switch
@@ -70,7 +67,7 @@ public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
             _ => context.Result
         };
         // 请求构造函数和方法,调用下一个过滤器
-        ResultExecutedContext resultExecuted = await next();
+        var resultExecuted = await next();
         // 执行结果
         _ = JsonSerializer.Serialize(resultExecuted.Result);
 

@@ -32,7 +32,7 @@ public static class ExcelHelper
     /// <returns>对象列表</returns>
     public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName) where T : class, new()
     {
-        return MiniExcel.Query<T>(path: fullPath, sheetName: sheetName);
+        return MiniExcel.Query<T>(fullPath, sheetName);
     }
 
     /// <summary>
@@ -45,11 +45,12 @@ public static class ExcelHelper
         Dictionary<string, object> resultData = new();
 
         List<string> sheetNames = MiniExcel.GetSheetNames(fullPath);
-        foreach (string? sheetName in sheetNames)
+        foreach (var sheetName in sheetNames)
         {
-            IEnumerable<dynamic> data = MiniExcel.Query(path: fullPath, useHeaderRow: true, sheetName: sheetName);
+            IEnumerable<dynamic> data = MiniExcel.Query(fullPath, true, sheetName);
             resultData.Add(sheetName, data);
         }
+
         return resultData;
     }
 
@@ -64,10 +65,11 @@ public static class ExcelHelper
     /// <param name="fullPath">Excel 文件全路径</param>
     /// <param name="dataSource">序列对象源</param>
     /// <param name="sheetName">工作表名称</param>
-    public static void WriteToExcel<T>(string fullPath, IEnumerable<T> dataSource, string sheetName) where T : class, new()
+    public static void WriteToExcel<T>(string fullPath, IEnumerable<T> dataSource, string sheetName)
+        where T : class, new()
     {
         // 写入数据到 Excel 文件
-        MiniExcel.SaveAs(path: fullPath, value: dataSource, printHeader: true, sheetName: sheetName, overwriteFile: true);
+        MiniExcel.SaveAs(fullPath, dataSource, true, sheetName, overwriteFile: true);
     }
 
     /// <summary>
@@ -77,7 +79,7 @@ public static class ExcelHelper
     /// <param name="sheetsSource">表格数据源</param>
     public static void WriteToExcel(string fullPath, IDictionary<string, object> sheetsSource)
     {
-        MiniExcel.SaveAs(path: fullPath, value: sheetsSource, overwriteFile: true);
+        MiniExcel.SaveAs(fullPath, sheetsSource, overwriteFile: true);
     }
 
     #endregion
@@ -94,7 +96,7 @@ public static class ExcelHelper
     public static IEnumerable<T> ImportToExcel<T>(string fullPath, string sheetName) where T : class, new()
     {
         // 读取 Excel 文件
-        return ReadFromExcel<T>(fullPath: fullPath, sheetName: sheetName);
+        return ReadFromExcel<T>(fullPath, sheetName);
     }
 
     /// <summary>
@@ -105,7 +107,7 @@ public static class ExcelHelper
     public static IDictionary<string, object> ImportToExcel(string fullPath)
     {
         // 读取 Excel 文件
-        return ReadFromExcel(fullPath: fullPath);
+        return ReadFromExcel(fullPath);
     }
 
     #endregion
@@ -120,11 +122,12 @@ public static class ExcelHelper
     /// <param name="dataSource">对象源序列</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>Excel 文件路径</returns>
-    public static string ExportToExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName) where T : class, new()
+    public static string ExportToExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+        where T : class, new()
     {
         fileName = $"{fileName}.xlsx";
         // 临时文件夹
-        string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
         // 将数据写入 Excel 文件
         WriteToExcel(tempPath, dataSource, sheetName);
         return tempPath;
@@ -139,7 +142,7 @@ public static class ExcelHelper
     {
         fileName = $"{fileName}.xlsx";
         // 临时文件夹
-        string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
         // 将数据写入 Excel 文件
         WriteToExcel(tempPath, sheetsSource);
         return tempPath;

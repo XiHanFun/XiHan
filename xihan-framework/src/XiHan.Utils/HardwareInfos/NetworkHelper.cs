@@ -38,11 +38,12 @@ public static class NetworkHelper
         try
         {
             // 获取可用网卡
-            IEnumerable<NetworkInterface> interfaces = NetworkInterface.GetAllNetworkInterfaces().Where(network => network.OperationalStatus == OperationalStatus.Up);
+            IEnumerable<NetworkInterface> interfaces = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(network => network.OperationalStatus == OperationalStatus.Up);
 
-            foreach (NetworkInterface? ni in interfaces)
+            foreach (var ni in interfaces)
             {
-                IPInterfaceProperties properties = ni.GetIPProperties();
+                var properties = ni.GetIPProperties();
                 NetworkInfo networkInfo = new()
                 {
                     Name = ni.Name,

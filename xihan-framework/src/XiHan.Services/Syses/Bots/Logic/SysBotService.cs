@@ -38,8 +38,10 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     private async Task<bool> CheckBotUnique(SysBot sysBot)
     {
-        bool isUnique = await IsAnyAsync(f => f.Title == sysBot.Title || f.BotType == sysBot.BotType);
-        return isUnique ? throw new CustomException($"机器人类别为【{sysBot.BotType.GetEnumDescriptionByKey()}】的【{sysBot.Title}】已存在!") : isUnique;
+        var isUnique = await IsAnyAsync(f => f.Title == sysBot.Title || f.BotType == sysBot.BotType);
+        return isUnique
+            ? throw new CustomException($"机器人类别为【{sysBot.BotType.GetEnumDescriptionByKey()}】的【{sysBot.Title}】已存在!")
+            : isUnique;
     }
 
     /// <summary>
@@ -49,7 +51,7 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     public async Task<long> CreateSysBot(SysBotCDto botCDto)
     {
-        SysBot sysBot = botCDto.Adapt<SysBot>();
+        var sysBot = botCDto.Adapt<SysBot>();
 
         _ = await CheckBotUnique(sysBot);
 
@@ -77,10 +79,10 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     public async Task<bool> ModifySysBot(SysBotMDto botMDto)
     {
-        SysBot sysBot = botMDto.Adapt<SysBot>();
+        var sysBot = botMDto.Adapt<SysBot>();
 
         // 禁止修改系统参数
-        SysBot oldSysBot = await FindAsync(c => c.BaseId == sysBot.BaseId);
+        var oldSysBot = await FindAsync(c => c.BaseId == sysBot.BaseId);
 
         _ = await CheckBotUnique(sysBot);
         return await UpdateAsync(sysBot);
@@ -93,7 +95,7 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     public async Task<SysBot> GetSysBotById(long botId)
     {
-        SysBot sysBot = await FindAsync(d => d.BaseId == botId);
+        var sysBot = await FindAsync(d => d.BaseId == botId);
         return sysBot;
     }
 
@@ -129,7 +131,7 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     public async Task<PageDataDto<SysBot>> GetSysBotPageList(PageWhereDto<SysBotWDto> pageWhere)
     {
-        SysBotWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         Expressionable<SysBot> whereExpression = Expressionable.Create<SysBot>();
         _ = whereExpression.AndIF(whereDto.BotType != null, u => u.BotType == whereDto.BotType);

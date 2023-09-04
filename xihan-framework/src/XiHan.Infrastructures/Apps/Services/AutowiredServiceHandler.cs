@@ -51,7 +51,7 @@ public class AutowiredServiceHandler
     /// <param name="serviceProvider"></param>
     private void Autowired(object service, IServiceProvider serviceProvider)
     {
-        Type serviceType = service.GetType();
+        var serviceType = service.GetType();
         if (_autowiredActions.TryGetValue(serviceType, out Action<object, IServiceProvider>? act))
         {
             act(service, serviceProvider);
@@ -59,17 +59,18 @@ public class AutowiredServiceHandler
         else
         {
             //参数
-            ParameterExpression objParam = Expression.Parameter(typeof(object), "obj");
-            ParameterExpression spParam = Expression.Parameter(typeof(IServiceProvider), "sp");
-            UnaryExpression obj = Expression.Convert(objParam, serviceType);
-            MethodInfo? getService = typeof(IServiceProvider).GetMethod("GetService");
+            var objParam = Expression.Parameter(typeof(object), "obj");
+            var spParam = Expression.Parameter(typeof(IServiceProvider), "sp");
+            var obj = Expression.Convert(objParam, serviceType);
+            var getService = typeof(IServiceProvider).GetMethod("GetService");
 
             List<Expression> setList = new();
             if (getService != null)
             {
                 // 字段赋值
                 setList.AddRange(
-                    from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public |
+                                                        BindingFlags.NonPublic)
                     let autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let fieldExp = Expression.Field(obj, field)
@@ -77,7 +78,8 @@ public class AutowiredServiceHandler
                     select Expression.Assign(fieldExp, Expression.Convert(createService, field.FieldType)));
                 // 属性赋值
                 setList.AddRange(
-                    from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public |
+                                                               BindingFlags.NonPublic)
                     let autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let propExp = Expression.Property(obj, property)
@@ -85,8 +87,9 @@ public class AutowiredServiceHandler
                     select Expression.Assign(propExp, Expression.Convert(createService, property.PropertyType)));
             }
 
-            BlockExpression bodyExp = Expression.Block(setList);
-            Action<object, IServiceProvider> setAction = Expression.Lambda<Action<object, IServiceProvider>>(bodyExp, objParam, spParam).Compile();
+            var bodyExp = Expression.Block(setList);
+            Action<object, IServiceProvider> setAction =
+                Expression.Lambda<Action<object, IServiceProvider>>(bodyExp, objParam, spParam).Compile();
             _autowiredActions[serviceType] = setAction;
             setAction(service, serviceProvider);
         }

@@ -39,5 +39,5 @@ public class LarkResultInfoDto
     /// 数据
     /// </summary>
     [JsonPropertyName("data")]
-    public object Data { get; set; } = new object();
+    public object Data { get; set; } = new();
 }

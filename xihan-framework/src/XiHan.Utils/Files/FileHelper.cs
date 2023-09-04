@@ -30,22 +30,13 @@ public static class FileHelper
     /// <param name="directoryPath">指定目录的绝对路径</param>
     public static void CleanDirectory(string directoryPath)
     {
-        if (!Directory.Exists(directoryPath))
-        {
-            return;
-        }
+        if (!Directory.Exists(directoryPath)) return;
         // 删除目录中所有的文件
         string[] fileNames = GetFiles(directoryPath);
-        foreach (string t in fileNames)
-        {
-            DeleteFile(t);
-        }
+        foreach (var t in fileNames) DeleteFile(t);
         // 删除目录中所有的子目录
         string[] directoryNames = GetDirectories(directoryPath);
-        foreach (string t in directoryNames)
-        {
-            DeleteDirectory(t);
-        }
+        foreach (var t in directoryNames) DeleteDirectory(t);
     }
 
     /// <summary>
@@ -54,10 +45,7 @@ public static class FileHelper
     /// <param name="filePath">文件的绝对路径</param>
     public static void CleanFile(string filePath)
     {
-        if (!File.Exists(filePath))
-        {
-            return;
-        }
+        if (!File.Exists(filePath)) return;
         // 删除文件
         File.Delete(filePath);
         // 重新创建该文件
@@ -86,30 +74,18 @@ public static class FileHelper
     public static void CopyFolder(string varFromDirectory, string varToDirectory)
     {
         _ = Directory.CreateDirectory(varToDirectory);
-        if (!Directory.Exists(varFromDirectory))
-        {
-            return;
-        }
+        if (!Directory.Exists(varFromDirectory)) return;
 
         string[] directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
-        {
-            foreach (string d in directories)
-            {
+            foreach (var d in directories)
                 CopyFolder(d, varToDirectory + d[d.LastIndexOf(@"\", StringComparison.Ordinal)..]);
-            }
-        }
 
         string[] files = Directory.GetFiles(varFromDirectory);
-        if (files.Length <= 0)
-        {
-            return;
-        }
+        if (files.Length <= 0) return;
 
-        foreach (string s in files)
-        {
+        foreach (var s in files)
             File.Copy(s, varToDirectory + s[s.LastIndexOf(@"\", StringComparison.Ordinal)..], true);
-        }
     }
 
     #endregion
@@ -125,10 +101,7 @@ public static class FileHelper
     {
         dir1 = dir1.Replace(@"/", @"\");
         dir2 = dir2.Replace(@"/", @"\");
-        if (File.Exists(dir1))
-        {
-            File.Move(dir1, dir2);
-        }
+        if (File.Exists(dir1)) File.Move(dir1, dir2);
     }
 
     /// <summary>
@@ -139,16 +112,11 @@ public static class FileHelper
     public static void MoveFileToDirectory(string sourceFilePath, string descDirectoryPath)
     {
         // 获取源文件的名称
-        string sourceFileName = GetFileNameWithExtension(sourceFilePath);
-        if (!IsExistDirectory(descDirectoryPath))
-        {
-            return;
-        }
+        var sourceFileName = GetFileNameWithExtension(sourceFilePath);
+        if (!IsExistDirectory(descDirectoryPath)) return;
         // 如果目标中存在同名文件,则删除
         if (IsExistFile(descDirectoryPath + @"\" + sourceFileName))
-        {
             DeleteFile(descDirectoryPath + @"\" + sourceFileName);
-        }
         // 将文件移动到指定目录
         File.Move(sourceFilePath, descDirectoryPath + @"\" + sourceFileName);
     }
@@ -180,9 +148,7 @@ public static class FileHelper
     public static void CreateDirectory(string filePath)
     {
         if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-        {
             _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? string.Empty);
-        }
     }
 
     /// <summary>
@@ -195,9 +161,7 @@ public static class FileHelper
     {
         dir = dir.Replace(@"/", @"\");
         if (dir.IndexOf(@"\", StringComparison.Ordinal) > -1)
-        {
             CreateDirectory(dir[..dir.LastIndexOf(@"\", StringComparison.Ordinal)]);
-        }
 
         StreamWriter sw = new(dir, false, encoding);
         sw.Write(pagestr);
@@ -214,10 +178,7 @@ public static class FileHelper
     /// <param name="dir">要删除的目录路径和名称</param>
     public static void DeleteDirectory(string dir)
     {
-        if (Directory.Exists(dir))
-        {
-            Directory.Delete(dir, true);
-        }
+        if (Directory.Exists(dir)) Directory.Delete(dir, true);
     }
 
     /// <summary>
@@ -226,10 +187,7 @@ public static class FileHelper
     /// <param name="file">要删除的文件路径和名称</param>
     public static void DeleteFile(string file)
     {
-        if (File.Exists(file))
-        {
-            File.Delete(file);
-        }
+        if (File.Exists(file)) File.Delete(file);
     }
 
     /// <summary>
@@ -240,30 +198,19 @@ public static class FileHelper
     public static void DeleteFolderFiles(string varFromDirectory, string varToDirectory)
     {
         _ = Directory.CreateDirectory(varToDirectory);
-        if (!Directory.Exists(varFromDirectory))
-        {
-            return;
-        }
+        if (!Directory.Exists(varFromDirectory)) return;
 
         string[] directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
-        {
-            foreach (string d in directories)
-            {
-                DeleteFolderFiles(d, string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
-            }
-        }
+            foreach (var d in directories)
+                DeleteFolderFiles(d,
+                    string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
 
         string[] files = Directory.GetFiles(varFromDirectory);
-        if (files.Length <= 0)
-        {
-            return;
-        }
+        if (files.Length <= 0) return;
 
-        foreach (string s in files)
-        {
+        foreach (var s in files)
             File.Delete(string.Concat(varToDirectory, s.AsSpan(s.LastIndexOf(@"\", StringComparison.Ordinal))));
-        }
     }
 
     #endregion
@@ -352,7 +299,8 @@ public static class FileHelper
     /// <returns></returns>
     public static string[] GetDirectories(string directoryPath, string searchPattern, bool isSearchChild)
     {
-        return Directory.GetDirectories(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        return Directory.GetDirectories(directoryPath, searchPattern,
+            isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     /// <summary>
@@ -366,13 +314,10 @@ public static class FileHelper
         // 定义一个DirectoryInfo对象
         DirectoryInfo di = new(dirPath);
         // 通过GetFiles方法,获取di目录中的所有文件的大小
-        long len = di.GetFiles().Sum(fi => fi.Length);
+        var len = di.GetFiles().Sum(fi => fi.Length);
         // 获取di中所有的文件夹,并存到一个新的对象数组中,以进行递归
         DirectoryInfo[] dis = di.GetDirectories();
-        if (dis.Length <= 0)
-        {
-            return len;
-        }
+        if (dis.Length <= 0) return len;
 
         len += dis.Sum(t => GetDirectorySize(t.FullName));
         return len;
@@ -390,10 +335,7 @@ public static class FileHelper
     public static string[] GetFiles(string directoryPath)
     {
         // 如果目录不存在，则抛出异常
-        if (!IsExistDirectory(directoryPath))
-        {
-            throw new FileNotFoundException();
-        }
+        if (!IsExistDirectory(directoryPath)) throw new FileNotFoundException();
         // 获取文件列表
         return Directory.GetFiles(directoryPath);
     }
@@ -410,7 +352,8 @@ public static class FileHelper
         // 如果目录不存在，则抛出异常
         return !IsExistDirectory(directoryPath)
             ? throw new FileNotFoundException()
-            : Directory.GetFiles(directoryPath, searchPattern, isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            : Directory.GetFiles(directoryPath, searchPattern,
+                isSearchChild ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
     }
 
     #endregion
@@ -513,10 +456,7 @@ public static class FileHelper
     {
         // 判断是否存在文件
         string[] fileNames = GetFiles(directoryPath);
-        if (fileNames.Any())
-        {
-            return false;
-        }
+        if (fileNames.Any()) return false;
         // 判断是否存在文件夹
         string[] directoryNames = GetDirectories(directoryPath);
         return !directoryNames.Any();
@@ -549,12 +489,9 @@ public static class FileHelper
     /// <returns></returns>
     public static void ExistsFile(string filePath)
     {
-        if (File.Exists(filePath))
-        {
-            return;
-        }
+        if (File.Exists(filePath)) return;
 
-        FileStream fs = File.Create(filePath);
+        var fs = File.Create(filePath);
         fs.Close();
     }
 

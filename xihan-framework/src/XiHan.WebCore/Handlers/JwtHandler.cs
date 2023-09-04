@@ -38,7 +38,7 @@ public static class JwtHandler
     /// <returns></returns>
     public static string TokenIssue(TokenModel tokenModel)
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
 
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
         SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
@@ -47,10 +47,10 @@ public static class JwtHandler
         // Nuget引入：Microsoft.IdentityModel.Tokens
         List<Claim> claims = new()
         {
-            new(ClaimConst.UserId, tokenModel.UserId.ToString()),
-            new(ClaimConst.Account, tokenModel.Account),
-            new(ClaimConst.NickName, tokenModel.NickName),
-            new(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString()),
+            new Claim(ClaimConst.UserId, tokenModel.UserId.ToString()),
+            new Claim(ClaimConst.Account, tokenModel.Account),
+            new Claim(ClaimConst.NickName, tokenModel.NickName),
+            new Claim(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString())
         };
         // 用户被分配多个角色
         tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
@@ -70,7 +70,7 @@ public static class JwtHandler
             // 过期时间
             expires: DateTime.UtcNow.AddMinutes(authJwtSetting.Expires)
         );
-        string accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
+        var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
         return accessToken;
     }
 
@@ -82,13 +82,10 @@ public static class JwtHandler
     public static TokenModel TokenSerialize(string token)
     {
         // Token安全验证
-        if (!IsSafeVerifyToken(token))
-        {
-            throw new AuthenticationException($"JwtToken 字符串解析失败！");
-        }
+        if (!IsSafeVerifyToken(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
 
         token = token.ParseToString().Replace(ClaimConst.TokenReplace, string.Empty);
-        JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
         List<Claim> claims = jwtToken.Claims.ToList();
         TokenModel tokenModel = new()
@@ -98,7 +95,7 @@ public static class JwtHandler
             NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
             RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
             UserRole = claims.Where(claim => claim.Type == ClaimConst.UserRole).Select(s => s.ParseToLong()).ToList(),
-            IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool(),
+            IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool()
         };
         return tokenModel;
     }
@@ -110,7 +107,7 @@ public static class JwtHandler
     /// <returns></returns>
     public static bool IsSafeVerifyToken(string token)
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
 
         // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
         SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
@@ -121,12 +118,12 @@ public static class JwtHandler
             token = token.ParseToString().Replace("Bearer ", string.Empty);
             // 开始Token校验
             if (token.IsEmptyOrNull() || !new JwtSecurityTokenHandler().CanReadToken(token))
-            {
                 throw new ArgumentException("token 为空或无法解析！", nameof(token));
-            }
             // 读取旧token
-            JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            bool verifyResult = jwtToken.RawSignature == JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload, credentials);
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            var verifyResult = jwtToken.RawSignature ==
+                               JwtTokenUtilities.CreateEncodedSignature(jwtToken.RawHeader + "." + jwtToken.RawPayload,
+                                   credentials);
             return verifyResult;
         }
         catch (Exception ex)
@@ -141,7 +138,7 @@ public static class JwtHandler
     /// <returns></returns>
     public static TokenValidationParameters GetTokenVerifyParams()
     {
-        AuthJwtSetting authJwtSetting = GetAuthJwtSetting();
+        var authJwtSetting = GetAuthJwtSetting();
         // 签名密钥
         SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
         // 令牌验证参数
@@ -202,19 +199,18 @@ public static class JwtHandler
     /// <param name="headerKey"></param>
     /// <param name="tokenPrefix"></param>
     /// <returns></returns>
-    public static string GetJwtBearerToken(HttpContext httpContext, string headerKey = "Authorization", string tokenPrefix = "Bearer ")
+    public static string GetJwtBearerToken(HttpContext httpContext, string headerKey = "Authorization",
+        string tokenPrefix = "Bearer ")
     {
         // 判断请求报文头中是否有 "Authorization" 报文头
-        string bearerToken = httpContext.Request.Headers[headerKey].ToString();
-        if (string.IsNullOrWhiteSpace(bearerToken))
-        {
-            throw new AuthenticationException("获取 JWT Bearer Token 失败！");
-        }
+        var bearerToken = httpContext.Request.Headers[headerKey].ToString();
+        if (string.IsNullOrWhiteSpace(bearerToken)) throw new AuthenticationException("获取 JWT Bearer Token 失败！");
 
-        int prefixLenght = tokenPrefix.Length;
+        var prefixLenght = tokenPrefix.Length;
         return bearerToken.StartsWith(tokenPrefix, true, null) && bearerToken.Length > prefixLenght
             ? bearerToken[prefixLenght..]
-            : throw new AuthenticationException("获取 JWT Bearer Token 失败！"); ;
+            : throw new AuthenticationException("获取 JWT Bearer Token 失败！");
+        ;
     }
 
     /// <summary>
@@ -237,10 +233,7 @@ public static class JwtHandler
             // 判断结果
             authJwtSetting.GetProperties().ForEach(setting =>
             {
-                if (setting.PropertyValue.IsNullOrZero())
-                {
-                    throw new ArgumentNullException(nameof(setting.PropertyName));
-                }
+                if (setting.PropertyValue.IsNullOrZero()) throw new ArgumentNullException(nameof(setting.PropertyName));
             });
             return authJwtSetting;
         }

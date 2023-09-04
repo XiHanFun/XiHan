@@ -39,10 +39,7 @@ public static class SqlSugarSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseSqlSugarSetup(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
         // 初始化
         var client = App.GetRequiredService<ISqlSugarClient>();
@@ -61,11 +58,8 @@ public static class SqlSugarSetup
         try
         {
             "正在从配置中检测是否需要初始化数据库……".WriteLineInfo();
-            bool enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
-            if (!enableInitDb)
-            {
-                return;
-            }
+            var enableInitDb = AppSettings.Database.EnableInitDb.GetValue();
+            if (!enableInitDb) return;
 
             "数据库正在初始化……".WriteLineInfo();
 
@@ -76,10 +70,7 @@ public static class SqlSugarSetup
             "创建数据表……".WriteLineInfo();
             // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
             Type[] dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
-            if (!dbEntities.Any())
-            {
-                return;
-            }
+            if (!dbEntities.Any()) return;
             // 支持分表，官方文档 https://www.donet5.com/Home/Doc?typeId=1201
             client.CodeFirst.SetStringDefaultLength(256).SplitTables().InitTables(dbEntities);
             "数据表创建成功！".WriteLineSuccess();
@@ -101,38 +92,29 @@ public static class SqlSugarSetup
         try
         {
             "正在从配置中检测是否需要初始化种子数据……".WriteLineInfo();
-            bool enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
-            if (!enableInitSeed)
-            {
-                return;
-            }
+            var enableInitSeed = AppSettings.Database.EnableInitSeed.GetValue();
+            if (!enableInitSeed) return;
 
             "种子数据正在初始化……".WriteLineInfo();
 
             // 获取继承自泛型接口 ISeedData<> 的所有类
             List<Type> seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
-            if (!seedTypes.Any())
-            {
-                return;
-            }
+            if (!seedTypes.Any()) return;
 
             seedTypes.ForEach(seedType =>
             {
-                object? instance = Activator.CreateInstance(seedType);
+                var instance = Activator.CreateInstance(seedType);
 
-                MethodInfo? hasDataMethod = seedType.GetMethods().First();
+                var hasDataMethod = seedType.GetMethods().First();
                 IEnumerable<object>? seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
-                if (seedData == null)
-                {
-                    return;
-                }
+                if (seedData == null) return;
 
-                Type entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
-                EntityInfo entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
+                var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
+                var entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
 
                 $"种子数据【{entityInfo.DbTableName}】初始化，共【{seedData.Count()}】条数据。".WriteLineInfo();
 
-                IgnoreUpdateAttribute? ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
                 if (client.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
                 {
                     $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineSuccess();
@@ -142,12 +124,9 @@ public static class SqlSugarSetup
                     if (entityInfo.Columns.Any(u => u.IsPrimarykey))
                     {
                         // 按主键进行批量增加和更新
-                        StorageableMethodInfo storage = client.StorageableByObject(seedData.ToList()).ToStorage();
+                        var storage = client.StorageableByObject(seedData.ToList()).ToStorage();
                         _ = storage.AsInsertable.ExecuteCommand();
-                        if (ignoreUpdate == null)
-                        {
-                            _ = storage.AsUpdateable.ExecuteCommand();
-                        }
+                        if (ignoreUpdate == null) _ = storage.AsUpdateable.ExecuteCommand();
                     }
                     else
                     {

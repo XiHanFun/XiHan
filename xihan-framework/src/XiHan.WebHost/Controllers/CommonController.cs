@@ -43,7 +43,7 @@ public class CommonController : BaseApiController
             ProjectInfoHelper.Copyright,
             ProjectInfoHelper.OfficialDocuments,
             ProjectInfoHelper.OfficialOrganization,
-            ProjectInfoHelper.SourceCodeRepository,
+            ProjectInfoHelper.SourceCodeRepository
         });
     }
 }

@@ -41,16 +41,14 @@ public static class JobSetup
     /// <exception cref="CustomException"></exception>
     public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
-        IWebHostEnvironment env = App.WebHostEnvironment;
+        var env = App.WebHostEnvironment;
         // 环境变量，生产环境
         if (env.IsProduction())
         {
         }
+
         RegisterScheduledTasks();
         return app;
     }
@@ -88,6 +86,7 @@ public static class JobSetup
                     Log.Error(info);
                 }
             }
+
             "计划任务注册成功！".WriteLineSuccess();
 
             "所有计划任务初始化启动已完成！".WriteLineSuccess();

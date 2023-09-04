@@ -40,13 +40,10 @@ public class JsonHelper
     /// <returns></returns>
     public TEntity? Get<TEntity>()
     {
-        if (!File.Exists(_jsonFilePath))
-        {
-            return default;
-        }
+        if (!File.Exists(_jsonFilePath)) return default;
 
-        string jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
-        TEntity? result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
+        var jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
+        var result = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         return result;
     }
 
@@ -58,27 +55,21 @@ public class JsonHelper
     /// <returns>类型为TEntity的对象</returns>
     public TEntity? Get<TEntity>(string keyLink)
     {
-        if (!File.Exists(_jsonFilePath))
-        {
-            return default;
-        }
+        if (!File.Exists(_jsonFilePath)) return default;
 
         using StreamReader streamReader = new(_jsonFilePath);
-        string jsonStr = streamReader.ReadToEnd();
+        var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
         string[] keys = keyLink.Split(':');
-        dynamic currentObject = obj;
-        foreach (string key in keys)
+        var currentObject = obj;
+        foreach (var key in keys)
         {
             currentObject = currentObject[key];
-            if (currentObject == null)
-            {
-                return default;
-            }
+            if (currentObject == null) return default;
         }
 
-        dynamic result =
+        var result =
             JsonSerializer.Deserialize<TEntity>(currentObject.ToString(),
                 SerializeHelper.JsonSerializerOptionsInstance);
         return result;
@@ -93,17 +84,17 @@ public class JsonHelper
     /// <param name="value"></param>
     public void Set<TEntity, TREntity>(string keyLink, TREntity value)
     {
-        string jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
+        var jsonStr = File.ReadAllText(_jsonFilePath, Encoding.UTF8);
         dynamic? jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
         string[] keys = keyLink.Split(':');
-        dynamic currentObject = jsoObj;
-        for (int i = 0; i < keys.Length; i++)
+        var currentObject = jsoObj;
+        for (var i = 0; i < keys.Length; i++)
         {
-            dynamic oldObject = currentObject;
+            var oldObject = currentObject;
             currentObject = currentObject[keys[i]];
-            bool isValueType = value!.GetType().IsValueType;
+            var isValueType = value!.GetType().IsValueType;
             if (i == keys.Length - 1)
             {
                 oldObject[keys[i]] = isValueType || value is string ? (dynamic)JsonSerializer.Serialize(value) : value;
@@ -111,12 +102,9 @@ public class JsonHelper
             else
             {
                 //如果不存在，新建
-                if (currentObject != null)
-                {
-                    continue;
-                }
+                if (currentObject != null) continue;
 
-                JsonDocument obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
+                var obj = JsonDocument.Parse(JsonSerializer.Serialize(new object()));
                 oldObject[keys[i]] = obj;
                 currentObject = oldObject[keys[i]];
             }
@@ -132,7 +120,7 @@ public class JsonHelper
     /// <param name="jsoObj"></param>
     private void Save<TEntity>(TEntity jsoObj)
     {
-        string jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
+        var jsonStr = JsonSerializer.Serialize(jsoObj, SerializeHelper.JsonSerializerOptionsInstance);
         File.WriteAllText(_jsonFilePath, jsonStr, Encoding.UTF8);
     }
 }

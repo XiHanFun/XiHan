@@ -33,13 +33,10 @@ public static class WebHostSetup
     public static IWebHostBuilder AddWebHostSetup(this IWebHostBuilder host)
     {
         "Host Start……".WriteLineInfo();
-        if (host == null)
-        {
-            throw new ArgumentNullException(nameof(host));
-        }
+        if (host == null) throw new ArgumentNullException(nameof(host));
 
         // 端口
-        int port = AppSettings.Port.GetValue();
+        var port = AppSettings.Port.GetValue();
         _ = host.UseUrls($"http://*:{port}");
 
         // 设置接口超时时间和上传大小
@@ -50,10 +47,8 @@ public static class WebHostSetup
             // 文件上传最大限制 100M
             options.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
             // 启用 HTTP/3
-            options.ListenAnyIP(port, listenOptions =>
-            {
-                listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
-            });
+            options.ListenAnyIP(port,
+                listenOptions => { listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3; });
         });
 
         "Host Started Successfully！".WriteLineSuccess();

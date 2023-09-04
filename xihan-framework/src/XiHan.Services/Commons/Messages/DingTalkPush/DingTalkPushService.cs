@@ -37,7 +37,7 @@ public class DingTalkPushService : BaseService<SysBot>, IDingTalkPushService
     /// </summary>
     public DingTalkPushService()
     {
-        DingTalkConnection dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
+        var dingTalkConnection = GetDingTalkConn().Result ?? throw new CustomException("未添加钉钉推送配置或配置不可用！");
         _dingTalkBot = new DingTalkBot(dingTalkConnection);
     }
 
@@ -47,11 +47,11 @@ public class DingTalkPushService : BaseService<SysBot>, IDingTalkPushService
     /// <returns></returns>
     private async Task<DingTalkConnection> GetDingTalkConn()
     {
-        SysBot sysCustomBot = await GetFirstAsync(e => e.IsEnabled && e.BotType == BotTypeEnum.DingTalk);
-        TypeAdapterConfig config = new TypeAdapterConfig().ForType<SysBot, DingTalkConnection>()
+        var sysCustomBot = await GetFirstAsync(e => e.IsEnabled && e.BotType == BotTypeEnum.DingTalk);
+        var config = new TypeAdapterConfig().ForType<SysBot, DingTalkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        DingTalkConnection dingTalkConnection = sysCustomBot.Adapt<DingTalkConnection>(config);
+        var dingTalkConnection = sysCustomBot.Adapt<DingTalkConnection>(config);
         return dingTalkConnection;
     }
 

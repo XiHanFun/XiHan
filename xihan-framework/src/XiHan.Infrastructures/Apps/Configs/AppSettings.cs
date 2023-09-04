@@ -387,30 +387,25 @@ public enum DataBaseTypeEnum
     /// <summary>
     /// MySql
     /// </summary>
-    [Display(Name = "MySql")]
-    MySql = 0,
+    [Display(Name = "MySql")] MySql = 0,
 
     /// <summary>
     /// SqlServer
     /// </summary>
-    [Display(Name = "SqlServer")]
-    SqlServer = 1,
+    [Display(Name = "SqlServer")] SqlServer = 1,
 
     /// <summary>
     /// Sqlite
     /// </summary>
-    [Display(Name = "Sqlite")]
-    Sqlite = 2,
+    [Display(Name = "Sqlite")] Sqlite = 2,
 
     /// <summary>
     /// Oracle
     /// </summary>
-    [Display(Name = "Oracle")]
-    Oracle = 3,
+    [Display(Name = "Oracle")] Oracle = 3,
 
     /// <summary>
     /// PostgreSql
     /// </summary>
-    [Display(Name = "PostgreSql")]
-    PostgreSql = 4,
+    [Display(Name = "PostgreSql")] PostgreSql = 4
 }

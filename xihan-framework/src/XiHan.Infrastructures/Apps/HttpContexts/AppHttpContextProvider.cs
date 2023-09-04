@@ -39,41 +39,43 @@ public static class AppHttpContextProvider
     /// </summary>
     private static HttpContext? GetHttpContextCurrent()
     {
-        object? asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
+        var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
         if (asyncLocal == null) return null;
 
-        object? holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
+        var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
         if (holder == null) return null;
 
-        HttpContext? httpContext = (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
+        var httpContext = (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
         return httpContext;
 
         // 创建异步本地访问器
         static Func<object> CreateAsyncLocalAccessor()
         {
-            FieldInfo fieldInfo = typeof(HttpContextAccessor).GetField("_httpContextCurrent", BindingFlags.Static | BindingFlags.NonPublic)!;
-            MemberExpression field = Expression.Field(null, fieldInfo);
+            var fieldInfo =
+                typeof(HttpContextAccessor).GetField("_httpContextCurrent",
+                    BindingFlags.Static | BindingFlags.NonPublic)!;
+            var field = Expression.Field(null, fieldInfo);
             return Expression.Lambda<Func<object>>(field).Compile();
         }
 
         // 创建常驻 HttpContext 访问器
         static Func<object, object> CreateHolderAccessor(object asyncLocal)
         {
-            Type holderType = asyncLocal.GetType().GetGenericArguments()[0];
-            MethodInfo method = typeof(AsyncLocal<>).MakeGenericType(holderType).GetProperty("Value")!.GetGetMethod()!;
-            ParameterExpression target = Expression.Parameter(typeof(object));
-            UnaryExpression convert = Expression.Convert(target, asyncLocal.GetType());
-            MethodCallExpression getValue = Expression.Call(convert, method);
+            var holderType = asyncLocal.GetType().GetGenericArguments()[0];
+            var method = typeof(AsyncLocal<>).MakeGenericType(holderType).GetProperty("Value")!.GetGetMethod()!;
+            var target = Expression.Parameter(typeof(object));
+            var convert = Expression.Convert(target, asyncLocal.GetType());
+            var getValue = Expression.Call(convert, method);
             return Expression.Lambda<Func<object, object>>(getValue, target).Compile();
         }
 
         // 获取 HttpContext 访问器
         static Func<object, HttpContext> CreateHttpContextAccessor(object holder)
         {
-            ParameterExpression target = Expression.Parameter(typeof(object));
-            UnaryExpression convert = Expression.Convert(target, holder.GetType());
-            MemberExpression field = Expression.Field(convert, "Context");
-            UnaryExpression convertAsResult = Expression.Convert(field, typeof(HttpContext));
+            var target = Expression.Parameter(typeof(object));
+            var convert = Expression.Convert(target, holder.GetType());
+            var field = Expression.Field(convert, "Context");
+            var convertAsResult = Expression.Convert(field, typeof(HttpContext));
             return Expression.Lambda<Func<object, HttpContext>>(convertAsResult, target).Compile();
         }
     }

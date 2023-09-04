@@ -59,12 +59,14 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 占用空间
     /// </summary>
-    public static string DirectorySize => FileHelper.GetDirectorySize(AppContext.BaseDirectory).FormatFileSizeToString();
+    public static string DirectorySize =>
+        FileHelper.GetDirectorySize(AppContext.BaseDirectory).FormatFileSizeToString();
 
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName) ?? string.Empty;
+    public static string ProcessPath =>
+        Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName) ?? string.Empty;
 
     /// <summary>
     /// 运行时间

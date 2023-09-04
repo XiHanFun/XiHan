@@ -41,108 +41,107 @@ public static class AuthSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAuthSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         // 身份验证(默认用JwtBearer认证)
         _ = services.AddAuthentication(options =>
-        {
-            // 默认身份验证方案
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            // 默认质询方案
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // 默认禁止方案
-            options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddCookie()
-        .AddJwtBearer(options =>
-        {
-            // 配置鉴权逻辑，添加JwtBearer服务
-            options.SaveToken = true;
-            options.TokenValidationParameters = JwtHandler.GetTokenVerifyParams();
-            options.Events = new JwtBearerEvents
             {
-                // 认证失败时
-                OnAuthenticationFailed = context =>
+                // 默认身份验证方案
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // 默认质询方案
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // 默认禁止方案
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddJwtBearer(options =>
+            {
+                // 配置鉴权逻辑，添加JwtBearer服务
+                options.SaveToken = true;
+                options.TokenValidationParameters = JwtHandler.GetTokenVerifyParams();
+                options.Events = new JwtBearerEvents
                 {
-                    ApiResult failedResult = ApiResult.Unauthorized();
-                    context.Response.ContentType = "text/json;charset=utf-8";
-                    context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
-
-                    string token = context.HttpContext.GetAuthInfo().UserToken;
-
-                    // 若Token为空、伪造无法读取
-                    if (token.IsNotEmptyOrNull() && new JwtSecurityTokenHandler().CanReadToken(token))
+                    // 认证失败时
+                    OnAuthenticationFailed = context =>
                     {
-                        JwtSecurityToken jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                        var failedResult = ApiResult.Unauthorized();
+                        context.Response.ContentType = "text/json;charset=utf-8";
+                        context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
 
-                        if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
-                        {
-                            failedResult = ApiResult.Unauthorized("授权因颁发者伪造无法读取！");
-                            context.Response.Headers.Append("Token-Error-Iss", "Issuer is wrong!");
-                        }
-                        if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
-                        {
-                            failedResult = ApiResult.Unauthorized("授权因签收者伪造无法读取！");
-                            context.Response.Headers.Append("Token-Error-Aud", "Audience is wrong!");
-                        }
-                    }
+                        var token = context.HttpContext.GetAuthInfo().UserToken;
 
-                    // 如果过期，则把是否过期添加到返回头信息中
-                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        // 若Token为空、伪造无法读取
+                        if (token.IsNotEmptyOrNull() && new JwtSecurityTokenHandler().CanReadToken(token))
+                        {
+                            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+                            if (jwtToken.Issuer != JwtHandler.GetAuthJwtSetting().Issuer)
+                            {
+                                failedResult = ApiResult.Unauthorized("授权因颁发者伪造无法读取！");
+                                context.Response.Headers.Append("Token-Error-Iss", "Issuer is wrong!");
+                            }
+
+                            if (jwtToken.Audiences.FirstOrDefault() != JwtHandler.GetAuthJwtSetting().Audience)
+                            {
+                                failedResult = ApiResult.Unauthorized("授权因签收者伪造无法读取！");
+                                context.Response.Headers.Append("Token-Error-Aud", "Audience is wrong!");
+                            }
+                        }
+
+                        // 如果过期，则把是否过期添加到返回头信息中
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            failedResult = ApiResult.Unauthorized("授权已过期！");
+                            context.Response.Headers.Append("Token-Expired", "true");
+                        }
+
+                        _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                        return Task.CompletedTask;
+                    },
+                    // 未授权时
+                    OnChallenge = context =>
                     {
-                        failedResult = ApiResult.Unauthorized("授权已过期！");
-                        context.Response.Headers.Append("Token-Expired", "true");
+                        // 将Token错误添加到返回头信息中，返回自定义的未授权模型数据
+                        var failedResult = ApiResult.Unauthorized("未授权！");
+                        context.Response.ContentType = "text/json;charset=utf-8";
+                        context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
+                        context.Response.Headers.Append("Token-Error", context.ErrorDescription);
+                        _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                        return Task.CompletedTask;
                     }
-                    _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
-                    return Task.CompletedTask;
-                },
-                // 未授权时
-                OnChallenge = context =>
-                {
-                    // 将Token错误添加到返回头信息中，返回自定义的未授权模型数据
-                    ApiResult failedResult = ApiResult.Unauthorized("未授权！");
-                    context.Response.ContentType = "text/json;charset=utf-8";
-                    context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
-                    context.Response.Headers.Append("Token-Error", context.ErrorDescription);
-                    _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
-                    return Task.CompletedTask;
-                }
-            };
-        })
-        .AddQQ(options =>
-        {
-            options.ClientId = AppSettings.Auth.Qq.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Qq.ClientSecret.GetValue();
-        })
-        .AddWeixin(options =>
-        {
-            options.ClientId = AppSettings.Auth.WeChat.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.WeChat.ClientSecret.GetValue();
-        })
-        .AddAlipay(options =>
-        {
-            options.ClientId = AppSettings.Auth.Alipay.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Alipay.ClientSecret.GetValue();
-        })
-        .AddGitHub(options =>
-        {
-            options.ClientId = AppSettings.Auth.Github.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Github.ClientSecret.GetValue();
-            options.Scope.Add("user:email");
-        })
-        .AddGitLab(options =>
-        {
-            options.ClientId = AppSettings.Auth.Gitlab.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Gitlab.ClientSecret.GetValue();
-        })
-        .AddGitee(options =>
-        {
-            options.ClientId = AppSettings.Auth.Gitee.ClientId.GetValue();
-            options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
-        });
+                };
+            })
+            .AddQQ(options =>
+            {
+                options.ClientId = AppSettings.Auth.Qq.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Qq.ClientSecret.GetValue();
+            })
+            .AddWeixin(options =>
+            {
+                options.ClientId = AppSettings.Auth.WeChat.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.WeChat.ClientSecret.GetValue();
+            })
+            .AddAlipay(options =>
+            {
+                options.ClientId = AppSettings.Auth.Alipay.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Alipay.ClientSecret.GetValue();
+            })
+            .AddGitHub(options =>
+            {
+                options.ClientId = AppSettings.Auth.Github.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Github.ClientSecret.GetValue();
+                options.Scope.Add("user:email");
+            })
+            .AddGitLab(options =>
+            {
+                options.ClientId = AppSettings.Auth.Gitlab.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Gitlab.ClientSecret.GetValue();
+            })
+            .AddGitee(options =>
+            {
+                options.ClientId = AppSettings.Auth.Gitee.ClientId.GetValue();
+                options.ClientSecret = AppSettings.Auth.Gitee.ClientSecret.GetValue();
+            });
         // 认证授权
         _ = services.AddAuthorization();
         return services;

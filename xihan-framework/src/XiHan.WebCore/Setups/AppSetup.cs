@@ -38,10 +38,7 @@ public static class AppSetup
     public static IApplicationBuilder UseApplicationSetup(this IApplicationBuilder app, IWebHostEnvironment env)
     {
         "XiHan Application Start……".WriteLineInfo();
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
         // 注入全局宿主环境
         AppEnvironmentProvider.WebHostEnvironment = env;

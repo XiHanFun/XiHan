@@ -94,7 +94,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// <returns></returns>
     public async Task<PageDataDto<SysLogLogin>> GetLogLoginPageList(PageWhereDto<SysLogLoginWDto> pageWhere)
     {
-        SysLogLoginWDto whereDto = pageWhere.Where;
+        var whereDto = pageWhere.Where;
 
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
         whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
@@ -106,6 +106,7 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
         _ = whereExpression.AndIF(whereDto.RealName.IsNotEmptyOrNull(), l => l.RealName!.Contains(whereDto.RealName!));
         _ = whereExpression.AndIF(whereDto.IsSuccess != null, l => l.IsSuccess == whereDto.IsSuccess);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
+            pageWhere.IsAsc);
     }
 }

@@ -23,8 +23,8 @@ public static class TestZip
 {
     public static void Extract()
     {
-        string archivePath = "D:\\新建文件夹1.zip";
-        string extractPath = "D:\\新建文件夹1";
+        var archivePath = "D:\\新建文件夹1.zip";
+        var extractPath = "D:\\新建文件夹1";
 
         try
         {
@@ -40,12 +40,12 @@ public static class TestZip
 
     public static void Compress()
     {
-        string sourceDirectory = "D:\\新建文件夹2";
+        var sourceDirectory = "D:\\新建文件夹2";
 
         try
         {
             // Compress the specified directory into an archive
-            string compressedArchivePath = "D:\\新建文件夹2.zip";
+            var compressedArchivePath = "D:\\新建文件夹2.zip";
             ZipHelper.Compress(sourceDirectory, compressedArchivePath);
             Console.WriteLine("压缩成功.");
         }

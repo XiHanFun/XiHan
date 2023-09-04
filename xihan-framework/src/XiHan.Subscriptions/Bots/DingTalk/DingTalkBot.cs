@@ -52,9 +52,9 @@ public class DingTalkBot
     /// <returns></returns>
     public async Task<ApiResult> TextMessage(DingTalkText text, DingTalkAt? at)
     {
-        string msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
         text.Content = _keyWord + text.Content;
-        ApiResult result = await Send(new { msgType, text, at });
+        var result = await Send(new { msgType, text, at });
         return result;
     }
 
@@ -64,9 +64,9 @@ public class DingTalkBot
     /// <param name="link"></param>
     public async Task<ApiResult> LinkMessage(DingTalkLink link)
     {
-        string msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
         link.Title = _keyWord + link.Title;
-        ApiResult result = await Send(new { msgType, link });
+        var result = await Send(new { msgType, link });
         return result;
     }
 
@@ -77,9 +77,9 @@ public class DingTalkBot
     /// <param name="at">指定目标人群</param>
     public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown markdown, DingTalkAt? at)
     {
-        string msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
         markdown.Title = _keyWord + markdown.Title;
-        ApiResult result = await Send(new { msgType, markdown, at });
+        var result = await Send(new { msgType, markdown, at });
         return result;
     }
 
@@ -90,10 +90,10 @@ public class DingTalkBot
     /// <param name="actionCard">ActionCard内容</param>
     public async Task<ApiResult> ActionCardMessage(DingTalkActionCard actionCard)
     {
-        string msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
         actionCard.Title = _keyWord + actionCard.Title;
         actionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
-        ApiResult result = await Send(new { msgType, actionCard });
+        var result = await Send(new { msgType, actionCard });
         return result;
     }
 
@@ -103,9 +103,9 @@ public class DingTalkBot
     /// <param name="feedCard">FeedCard内容</param>
     public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard feedCard)
     {
-        string msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
+        var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
         feedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
-        ApiResult result = await Send(new { msgType, feedCard });
+        var result = await Send(new { msgType, feedCard });
         return result;
     }
 
@@ -116,22 +116,22 @@ public class DingTalkBot
     /// <returns></returns>
     private async Task<ApiResult> Send(object objSend)
     {
-        string url = _url;
-        string sendMessage = objSend.SerializeToJson();
+        var url = _url;
+        var sendMessage = objSend.SerializeToJson();
 
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
         {
             // 把 【timestamp + "\n" + 密钥】 当做签名字符串
-            long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-            string sign = timeStamp + "\n" + _secret;
+            var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var sign = timeStamp + "\n" + _secret;
             UTF8Encoding encoding = new();
-            byte[] keyByte = encoding.GetBytes(_secret);
-            byte[] messageBytes = encoding.GetBytes(sign);
+            var keyByte = encoding.GetBytes(_secret);
+            var messageBytes = encoding.GetBytes(sign);
             // 使用 HmacSHA256 算法计算签名
             using (HMACSHA256 hash256 = new(keyByte))
             {
-                byte[] hashMessage = hash256.ComputeHash(messageBytes);
+                var hashMessage = hash256.ComputeHash(messageBytes);
                 // 然后进行 Base64 encode，最后再把签名参数再进行 urlEncode
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
@@ -142,20 +142,14 @@ public class DingTalkBot
 
         // 发起请求
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        DingTalkResultInfoDto? result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
+        var result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
-        if (result == null)
-        {
-            return ApiResult.InternalServerError();
-        }
+        if (result == null) return ApiResult.InternalServerError();
 
-        if (result.ErrCode == 0 || result.ErrMsg == "ok")
-        {
-            return ApiResult.Success("发送成功");
-        }
+        if (result.ErrCode == 0 || result.ErrMsg == "ok") return ApiResult.Success("发送成功");
 
-        IEnumerable<EnumDescDto> resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
-        EnumDescDto? info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
+        var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
+        var info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
         return ApiResult.BadRequest("发送失败，" + info?.Label);
     }
 }

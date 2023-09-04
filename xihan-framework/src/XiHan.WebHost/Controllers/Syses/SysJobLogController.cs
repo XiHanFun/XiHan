@@ -50,7 +50,7 @@ public class SysJobLogController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteJobLog(long[] logIds)
     {
-        bool result = await _sysJobLogService.DeleteJobLogByIds(logIds);
+        var result = await _sysJobLogService.DeleteJobLogByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -61,7 +61,7 @@ public class SysJobLogController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanJobLog()
     {
-        bool result = await _sysJobLogService.CleanJobLog();
+        var result = await _sysJobLogService.CleanJobLog();
         return ApiResult.Success(result);
     }
 
@@ -74,7 +74,7 @@ public class SysJobLogController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobLogById(long logId)
     {
-        Models.Syses.SysJobLog result = await _sysJobLogService.GetJobLogByJobId(logId);
+        var result = await _sysJobLogService.GetJobLogByJobId(logId);
         return ApiResult.Success(result);
     }
 
@@ -87,7 +87,7 @@ public class SysJobLogController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobLogList([FromBody] SysJobLogWDto whereDto)
     {
-        List<Models.Syses.SysJobLog> result = await _sysJobLogService.GetJobLogList(whereDto);
+        var result = await _sysJobLogService.GetJobLogList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -100,7 +100,7 @@ public class SysJobLogController : BaseApiController
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobLogPageList([FromBody] PageWhereDto<SysJobLogWDto> pageWhere)
     {
-        PageDataDto<Models.Syses.SysJobLog> result = await _sysJobLogService.GetJobLogPageList(pageWhere);
+        var result = await _sysJobLogService.GetJobLogPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

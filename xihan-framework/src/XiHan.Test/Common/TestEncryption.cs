@@ -28,13 +28,13 @@ public static class TestEncryption
     public static void EncryptionDes()
     {
         Console.WriteLine("请输入要Des加密的文本：");
-        string? plainText = Console.ReadLine();
-        string strDes1 = plainText != null ? DesEncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
+        var plainText = Console.ReadLine();
+        var strDes1 = plainText != null ? DesEncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{plainText}】Des加密后：{strDes1}；");
 
         Console.WriteLine("请输入要Des解密的文本：");
-        string? cipherText = Console.ReadLine();
-        string strDes2 = cipherText != null ? DesEncryptionHelper.Decrypt(cipherText) : throw new ArgumentNullException();
+        var cipherText = Console.ReadLine();
+        var strDes2 = cipherText != null ? DesEncryptionHelper.Decrypt(cipherText) : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{cipherText}】Des解密后：{strDes2}；");
     }
 
@@ -45,17 +45,21 @@ public static class TestEncryption
     public static void EncryptionAes()
     {
         Console.WriteLine("请输入要Aes加密的文本：");
-        string? plainText = Console.ReadLine();
+        var plainText = Console.ReadLine();
         Console.WriteLine("请输入要Aes加密的密码：");
-        string? password1 = Console.ReadLine();
-        string strAes1 = plainText != null && password1 != null ? AesEncryptionHelper.Encrypt(plainText, password1) : throw new ArgumentNullException();
+        var password1 = Console.ReadLine();
+        var strAes1 = plainText != null && password1 != null
+            ? AesEncryptionHelper.Encrypt(plainText, password1)
+            : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{plainText}】Aes加密后：{strAes1}；");
 
         Console.WriteLine("请输入要Aes解密的文本：");
-        string? cipherText = Console.ReadLine();
+        var cipherText = Console.ReadLine();
         Console.WriteLine("请输入要Aes解密的密码：");
-        string? password2 = Console.ReadLine();
-        string strAes2 = cipherText != null && password2 != null ? AesEncryptionHelper.Decrypt(cipherText, password2) : throw new ArgumentNullException();
+        var password2 = Console.ReadLine();
+        var strAes2 = cipherText != null && password2 != null
+            ? AesEncryptionHelper.Decrypt(cipherText, password2)
+            : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{cipherText}】Aes解密后：{strAes2}；");
     }
 
@@ -65,13 +69,13 @@ public static class TestEncryption
     public static void EncryptionMd5()
     {
         Console.WriteLine("请输入要Md5加密的文本：");
-        string? plainText = Console.ReadLine();
-        string strMd5 = plainText != null ? Md5HashEncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
+        var plainText = Console.ReadLine();
+        var strMd5 = plainText != null ? Md5HashEncryptionHelper.Encrypt(plainText) : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{plainText}】Md5加密后：{strMd5}；");
 
         Console.WriteLine("请输入要Md5加密的文件路径：");
-        string? file = Console.ReadLine();
-        string strMd5File = file != null ? Md5HashEncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
+        var file = Console.ReadLine();
+        var strMd5File = file != null ? Md5HashEncryptionHelper.EncryptStream(file) : throw new ArgumentNullException();
         Console.WriteLine($@"文件【{file}】Md5加密后：{strMd5File}；");
     }
 
@@ -81,11 +85,17 @@ public static class TestEncryption
     public static void EncryptionSha()
     {
         Console.WriteLine("请输入要Sha加密的文本：");
-        string? plainText = Console.ReadLine();
-        string strSha1 = plainText != null ? ShaHashEncryptionHelper.Sha1(plainText) : throw new ArgumentNullException();
-        string strSha256 = plainText != null ? ShaHashEncryptionHelper.Sha256(plainText) : throw new ArgumentNullException();
-        string strSha384 = plainText != null ? ShaHashEncryptionHelper.Sha384(plainText) : throw new ArgumentNullException();
-        string strSha512 = plainText != null ? ShaHashEncryptionHelper.Sha512(plainText) : throw new ArgumentNullException();
+        var plainText = Console.ReadLine();
+        var strSha1 = plainText != null ? ShaHashEncryptionHelper.Sha1(plainText) : throw new ArgumentNullException();
+        var strSha256 = plainText != null
+            ? ShaHashEncryptionHelper.Sha256(plainText)
+            : throw new ArgumentNullException();
+        var strSha384 = plainText != null
+            ? ShaHashEncryptionHelper.Sha384(plainText)
+            : throw new ArgumentNullException();
+        var strSha512 = plainText != null
+            ? ShaHashEncryptionHelper.Sha512(plainText)
+            : throw new ArgumentNullException();
         Console.WriteLine($@"字符串【{plainText}】Sha1加密后：{strSha1}；");
         Console.WriteLine($@"字符串【{plainText}】Sha256加密后：{strSha256}；");
         Console.WriteLine($@"字符串【{plainText}】Sha384加密后：{strSha384}；");
@@ -99,24 +109,21 @@ public static class TestEncryption
     public static void EncryptionRsa()
     {
         Console.WriteLine("请输入要Rsa加密的公钥路径：(如：publicKey.xml)");
-        string? publicKey = Console.ReadLine();
+        var publicKey = Console.ReadLine();
         Console.WriteLine("请输入要Rsa加密的私钥路径：(如：privateKey.xml)");
-        string? privateKey = Console.ReadLine();
+        var privateKey = Console.ReadLine();
         Console.WriteLine("请输入要Rsa加密的文本：");
-        string? plainText = Console.ReadLine();
-        if (publicKey == null || privateKey == null || plainText == null)
-        {
-            throw new ArgumentNullException();
-        }
+        var plainText = Console.ReadLine();
+        if (publicKey == null || privateKey == null || plainText == null) throw new ArgumentNullException();
 
         RsaEncryptionHelper.GenerateKeys(publicKey, privateKey);
-        string strRsa1 = RsaEncryptionHelper.Encrypt(plainText);
+        var strRsa1 = RsaEncryptionHelper.Encrypt(plainText);
         Console.WriteLine($@"字符串【{plainText}】Rsa加密后：{strRsa1}；");
 
         Console.WriteLine("请输入要Rsa解密的文本：");
-        string? encryptedText = Console.ReadLine() ?? throw new ArgumentNullException();
+        var encryptedText = Console.ReadLine() ?? throw new ArgumentNullException();
         RsaEncryptionHelper.LoadKeys(publicKey, privateKey);
-        string strRsa2 = RsaEncryptionHelper.Decrypt(encryptedText);
+        var strRsa2 = RsaEncryptionHelper.Decrypt(encryptedText);
         Console.WriteLine($@"字符串【{plainText}】Rsa解密后：{strRsa2}；");
     }
 }

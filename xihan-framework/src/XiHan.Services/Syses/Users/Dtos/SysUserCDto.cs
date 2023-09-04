@@ -41,7 +41,8 @@ public class SysUserCDto
     /// </summary>
     [Required(ErrorMessage = "{0}不能为空")]
     [MaxLength(50, ErrorMessage = "{0}不能多于{1}个字符")]
-    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", ErrorMessage = "请输入正确的邮箱地址")]
+    [RegularExpression(@"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$",
+        ErrorMessage = "请输入正确的邮箱地址")]
     public string Email { get; set; } = string.Empty;
 
     /// <summary>

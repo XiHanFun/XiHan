@@ -66,14 +66,13 @@ public class NetworkRequestJob : JobBase, IJob
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            Models.Syses.SysJob info = await _sysJobService.GetByIdAsync(trigger.JobName) ?? throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
-            string? url = info.ApiUrl;
-            string? paras = info.Params;
+            var info = await _sysJobService.GetByIdAsync(trigger.JobName) ??
+                       throw new CustomException($"网络请求任务【{trigger?.JobName}】执行失败，任务不存在！");
+            var url = info.ApiUrl;
+            var paras = info.Params;
 
             if (url.IsNullOrEmpty() && paras.IsNullOrEmpty())
-            {
                 throw new CustomException($"网络请求任务【{trigger.JobName}】执行失败，参数为空！");
-            }
 
             // POST请求
             string result;
@@ -85,13 +84,9 @@ public class NetworkRequestJob : JobBase, IJob
             else
             {
                 if (url!.IndexOf("?", StringComparison.Ordinal) > -1)
-                {
                     url += "&" + paras;
-                }
                 else
-                {
                     url += "?" + paras;
-                }
 
                 result = await _httpPollyService.GetAsync(HttpGroupEnum.Remote, url);
             }

@@ -30,16 +30,10 @@ public static class MiniProfilerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseMiniProfilerSetup(this IApplicationBuilder app)
     {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        if (app == null) throw new ArgumentNullException(nameof(app));
 
-        bool isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
-        if (!isEnabledMiniprofiler)
-        {
-            return app;
-        }
+        var isEnabledMiniprofiler = AppSettings.Miniprofiler.IsEnabled.GetValue();
+        if (!isEnabledMiniprofiler) return app;
         // 性能分析
         _ = app.UseMiniProfiler();
 

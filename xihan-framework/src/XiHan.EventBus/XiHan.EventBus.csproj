@@ -1,38 +1,38 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
-		<AssemblyVersion>0.3.3</AssemblyVersion>
-		<FileVersion>0.3.3</FileVersion>
-		<Title>XiHan.EventBus</Title>
-		<Version>0.3.3</Version>
-		<Authors>ZhaiFanhua</Authors>
-		<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>XiHan.EventBus</Description>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<PackageIcon>readme.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
+        <AssemblyVersion>0.3.3</AssemblyVersion>
+        <FileVersion>0.3.3</FileVersion>
+        <Title>XiHan.EventBus</Title>
+        <Version>0.3.3</Version>
+        <Authors>ZhaiFanhua</Authors>
+        <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Description>XiHan.EventBus</Description>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+        <PackageIcon>readme.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="LICENSE">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-    <None Update="readme.md">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-    <None Update="readme.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Update="LICENSE">
+            <PackagePath>\</PackagePath>
+            <Pack>True</Pack>
+        </None>
+        <None Update="readme.md">
+            <PackagePath>\</PackagePath>
+            <Pack>True</Pack>
+        </None>
+        <None Update="readme.png">
+            <PackagePath>\</PackagePath>
+            <Pack>True</Pack>
+        </None>
+    </ItemGroup>
 
 </Project>

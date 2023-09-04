@@ -28,10 +28,7 @@ public static class RabbitMqSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddRabbitMqSetup(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        if (services == null) throw new ArgumentNullException(nameof(services));
 
         //var isEnabledRabbitMQ = AppSettings.RabbitMQ.Enabled.GetValue();
         //if (isEnabledRabbitMQ)

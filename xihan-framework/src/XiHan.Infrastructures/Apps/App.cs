@@ -49,7 +49,8 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider =>
+        HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
@@ -98,7 +99,7 @@ public static class App
     /// <returns></returns>
     public static TService GetService<TService>() where TService : class
     {
-        TService? service = GetService(typeof(TService)) as TService;
+        var service = GetService(typeof(TService)) as TService;
         return service!;
     }
 
@@ -109,7 +110,7 @@ public static class App
     /// <returns></returns>
     public static object GetService(Type type)
     {
-        object? service = ServiceProvider.GetService(type);
+        var service = ServiceProvider.GetService(type);
         return service!;
     }
 
@@ -120,7 +121,7 @@ public static class App
     /// <returns></returns>
     public static TService GetRequiredService<TService>() where TService : class
     {
-        TService? service = GetRequiredService(typeof(TService)) as TService;
+        var service = GetRequiredService(typeof(TService)) as TService;
         return service!;
     }
 
@@ -131,7 +132,7 @@ public static class App
     /// <returns></returns>
     public static object GetRequiredService(Type type)
     {
-        object service = ServiceProvider.GetRequiredService(type);
+        var service = ServiceProvider.GetRequiredService(type);
         return service!;
     }
 

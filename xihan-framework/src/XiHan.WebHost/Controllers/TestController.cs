@@ -44,7 +44,7 @@ public class TestController : BaseApiController
     [HttpGet("MiniProfilerHtml")]
     public string MiniProfilerHtml()
     {
-        Microsoft.AspNetCore.Html.HtmlString? html = MiniProfiler.Current?.RenderIncludes(HttpContext);
+        var html = MiniProfiler.Current?.RenderIncludes(HttpContext);
         return html?.Value ?? string.Empty;
     }
 
@@ -180,8 +180,8 @@ public class TestController : BaseApiController
     [HttpGet("Download/File")]
     public async Task DownloadFile()
     {
-        string path = @"E:\Repository\XiHanFun\Other\架构设计\系统设计\日志管理\image-20210409150248593.png";
-        string fileName = @"image-20210409150248593.png";
+        var path = @"E:\Repository\XiHanFun\Other\架构设计\系统设计\日志管理\image-20210409150248593.png";
+        var fileName = @"image-20210409150248593.png";
         await DownloadFile(fileName, path, ContentTypeEnum.ImagePng);
     }
 
@@ -193,7 +193,7 @@ public class TestController : BaseApiController
     public async Task DownloadImportTemplate()
     {
         SysUserSeedData sysUserSeedData = new();
-        IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
+        var dataSource = sysUserSeedData.HasData();
         await DownloadImportTemplate("系统用户种子数据", dataSource, "SysUser");
     }
 
@@ -230,7 +230,7 @@ public class TestController : BaseApiController
     public async Task ExportExcel()
     {
         SysUserSeedData sysUserSeedData = new();
-        IEnumerable<SysUser> dataSource = sysUserSeedData.HasData();
+        var dataSource = sysUserSeedData.HasData();
         await ExportExcel("系统用户种子数据", dataSource, "SysUser");
     }
 
@@ -241,12 +241,12 @@ public class TestController : BaseApiController
     [HttpGet("Export/Excel/MultipleSheets")]
     public async Task ExportExcelMultipleSheets()
     {
-        IEnumerable<SysUser> dataSourceSysUser = new SysUserSeedData().HasData();
-        IEnumerable<SysConfig> dataSourceSysConfig = new SysConfigSeedData().HasData();
+        var dataSourceSysUser = new SysUserSeedData().HasData();
+        var dataSourceSysConfig = new SysConfigSeedData().HasData();
         Dictionary<string, object> dataSource = new()
         {
-            {"SysUserSeedData",dataSourceSysUser },
-            {"SysConfigSeedData",dataSourceSysConfig },
+            { "SysUserSeedData", dataSourceSysUser },
+            { "SysConfigSeedData", dataSourceSysConfig }
         };
         await ExportExcel("系统种子数据", dataSource);
     }

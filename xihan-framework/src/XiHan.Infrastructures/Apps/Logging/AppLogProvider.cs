@@ -32,11 +32,11 @@ public static class AppLogProvider
     /// <param name="builder"></param>
     public static void RegisterLog(ILoggingBuilder builder)
     {
-        string debugPath = @"Logs/Debug/.log";
-        string infoPath = @"Logs/Info/.log";
-        string waringPath = @"Logs/Waring/.log";
-        string errorPath = @"Logs/Error/.log";
-        string fatalPath = @"Logs/Fatal/.log";
+        var debugPath = @"Logs/Debug/.log";
+        var infoPath = @"Logs/Info/.log";
+        var waringPath = @"Logs/Waring/.log";
+        var errorPath = @"Logs/Error/.log";
+        var fatalPath = @"Logs/Fatal/.log";
         const string infoTemplate =
             @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Message：{Message}{NewLine}================{NewLine}";
         const string warnTemplate =
@@ -64,7 +64,7 @@ public static class AppLogProvider
             .SinkFileConfig(LogEventLevel.Fatal, fatalPath, errorTemplate)
             .CreateLogger();
         builder.AddSerilog();
-        string infoMsg = $"日志注册：{Log.Logger}";
+        var infoMsg = $"日志注册：{Log.Logger}";
         Log.Information(infoMsg);
         infoMsg.WriteLineSuccess();
     }
@@ -77,13 +77,14 @@ public static class AppLogProvider
     /// <param name="filePath"></param>
     /// <param name="template"></param>
     /// <returns></returns>
-    private static LoggerConfiguration SinkFileConfig(this LoggerConfiguration config, LogEventLevel level, string filePath, string template)
+    private static LoggerConfiguration SinkFileConfig(this LoggerConfiguration config, LogEventLevel level,
+        string filePath, string template)
     {
         return config.WriteTo.Logger(log => log.Filter.ByIncludingOnly(lev => lev.Level == level)
             // 异步输出到文件
             .WriteTo.Async(newConfig => newConfig.File(
                 // 配置日志输出到文件，文件输出到当前项目的 logs 目录下，linux 中大写会出错
-                path: Path.Combine(ApplicationInfoHelper.BaseDirectory, filePath.ToLowerInvariant()),
+                Path.Combine(ApplicationInfoHelper.BaseDirectory, filePath.ToLowerInvariant()),
                 // 生成周期：天
                 rollingInterval: RollingInterval.Day,
                 // 文件大小：10M，默认1GB

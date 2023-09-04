@@ -53,7 +53,7 @@ public class DingTalkController : BaseApiController
         };
         DingTalkAt dingTalkAt = new()
         {
-            AtMobiles = new() { "1302873****" },
+            AtMobiles = new List<string> { "1302873****" },
             IsAtAll = false
         };
         return await _dingTalkPushService.DingTalkToText(text, dingTalkAt);
@@ -88,13 +88,13 @@ public class DingTalkController : BaseApiController
         {
             Title = "长沙天气",
             Text = "#### 长沙天气 \n" +
-                "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
-                "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
-                "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
+                   "> 8度，西北风3级，空气优16，相对湿度100%\n\n" +
+                   "> ![screenshot](https://gw.alipayobjects.com/zos/skylark-tools/public/files/84111bbeba74743d2771ed4f062d1f25.png)\n" +
+                   "> ###### 15点03分发布 [天气](https://www.seniverse.com/) \n"
         };
         DingTalkAt dingTalkAt = new()
         {
-            AtMobiles = new() { "1302873****" },
+            AtMobiles = new List<string> { "1302873****" },
             IsAtAll = false
         };
         return await _dingTalkPushService.DingTalkToMarkdown(markdown, dingTalkAt);
@@ -139,12 +139,12 @@ public class DingTalkController : BaseApiController
             {
                 new()
                 {
-                    Title =  "不错",
+                    Title = "不错",
                     ActionUrl = "https://www.dingtalk.com/"
                 },
                 new()
                 {
-                    Title =  "不感兴趣",
+                    Title = "不感兴趣",
                     ActionUrl = "https://www.dingtalk.com/"
                 }
             }
@@ -165,13 +165,13 @@ public class DingTalkController : BaseApiController
             {
                 new()
                 {
-                    Title =  "时代的火车向前开",
+                    Title = "时代的火车向前开",
                     MessageUrl = "https://www.dingtalk.com/",
                     PicUrl = "https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 },
                 new()
                 {
-                    Title =  "时代在召唤",
+                    Title = "时代在召唤",
                     MessageUrl = "https://www.dingtalk.com/",
                     PicUrl = "https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 }

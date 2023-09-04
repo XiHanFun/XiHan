@@ -51,7 +51,7 @@ public class SysLogLoginController : BaseApiController
     [AppLog(Module = "系统登录日志", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteLogLogin(long[] logIds)
     {
-        bool result = await _sysLogLoginService.DeleteLogLoginByIds(logIds);
+        var result = await _sysLogLoginService.DeleteLogLoginByIds(logIds);
         return ApiResult.Success(result);
     }
 
@@ -63,7 +63,7 @@ public class SysLogLoginController : BaseApiController
     [AppLog(Module = "系统登录日志", BusinessType = BusinessTypeEnum.Clean)]
     public async Task<ApiResult> CleanLogLogin()
     {
-        bool result = await _sysLogLoginService.CleanLogLogin();
+        var result = await _sysLogLoginService.CleanLogLogin();
         return ApiResult.Success(result);
     }
 
@@ -76,7 +76,7 @@ public class SysLogLoginController : BaseApiController
     [AppLog(Module = "系统登录日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogLoginById(long logId)
     {
-        SysLogLogin result = await _sysLogLoginService.GetLogLoginById(logId);
+        var result = await _sysLogLoginService.GetLogLoginById(logId);
         return ApiResult.Success(result);
     }
 
@@ -89,7 +89,7 @@ public class SysLogLoginController : BaseApiController
     [AppLog(Module = "系统登录日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogLoginList([FromBody] SysLogLoginWDto whereDto)
     {
-        List<SysLogLogin> result = await _sysLogLoginService.GetLogLoginList(whereDto);
+        var result = await _sysLogLoginService.GetLogLoginList(whereDto);
         return ApiResult.Success(result);
     }
 
@@ -102,7 +102,7 @@ public class SysLogLoginController : BaseApiController
     [AppLog(Module = "系统登录日志", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetLogLoginPageList([FromBody] PageWhereDto<SysLogLoginWDto> pageWhere)
     {
-        PageDataDto<SysLogLogin> result = await _sysLogLoginService.GetLogLoginPageList(pageWhere);
+        var result = await _sysLogLoginService.GetLogLoginPageList(pageWhere);
         return ApiResult.Success(result);
     }
 }

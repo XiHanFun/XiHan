@@ -40,9 +40,6 @@ public static class TestDiskInformation
 
         string[]? directories = FileHelper.GetDirectories(@"D:\");
         Console.WriteLine($@"【D:\】目录：");
-        foreach (string directory in directories)
-        {
-            Console.WriteLine(directory);
-        }
+        foreach (var directory in directories) Console.WriteLine(directory);
     }
 }

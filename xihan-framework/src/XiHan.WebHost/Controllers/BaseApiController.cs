@@ -49,9 +49,10 @@ public class BaseApiController : ControllerBase
                 foreach (var file in files)
                 {
                     // 唯一文件名
-                    string uniqueFileName = GetUniqueFileName(file.FileName);
+                    var uniqueFileName = GetUniqueFileName(file.FileName);
                     // 上传文件路径
-                    string fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(), FileHelper.GetFileNameWithExtension(uniqueFileName));
+                    var fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(),
+                        FileHelper.GetFileNameWithExtension(uniqueFileName));
                     // 创建目录
                     FileHelper.CreateDirectory(fullPath);
                     using FileStream stream = new(fullPath, FileMode.Create);
@@ -77,10 +78,7 @@ public class BaseApiController : ControllerBase
     /// <returns></returns>
     protected async Task DownloadFile(string fileName, string fullPath, ContentTypeEnum contentType)
     {
-        if (!FileHelper.IsExistFile(fullPath))
-        {
-            throw new CustomException(fileName + "文件不存在！");
-        }
+        if (!FileHelper.IsExistFile(fullPath)) throw new CustomException(fileName + "文件不存在！");
         await HttpContext.DownloadFile(fileName, fullPath, contentType);
     }
 
@@ -97,11 +95,9 @@ public class BaseApiController : ControllerBase
     {
         fileName = $"{fileName}_模板.xlsx";
         // 模板文件路径
-        string fullPath = Path.Combine(App.RootTemplatePath, fileName);
+        var fullPath = Path.Combine(App.RootTemplatePath, fileName);
         if (FileHelper.IsExistDirectory(fullPath))
-        {
             await HttpContext.DownloadFile(fileName, fullPath, ContentTypeEnum.ApplicationXlsx);
-        }
 
         throw new CustomException(fileName + "文件不存在！");
     }
@@ -114,21 +110,20 @@ public class BaseApiController : ControllerBase
     /// <param name="dataSource">数据源</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns></returns>
-    protected async Task DownloadImportTemplate<T>(string fileName, IEnumerable<T> dataSource, string sheetName) where T : class, new()
+    protected async Task DownloadImportTemplate<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+        where T : class, new()
     {
         fileName = $"{fileName}_模板.xlsx";
         // 模板文件路径
-        string fullPath = Path.Combine(App.RootTemplatePath, fileName);
+        var fullPath = Path.Combine(App.RootTemplatePath, fileName);
         // 存在模板就删除重新写入
         if (FileHelper.IsExistDirectory(fullPath))
-        {
             // 删除原模板文件
             FileHelper.DeleteFile(fullPath);
-        }
         List<T> templateData = dataSource.ToList();
         templateData.Clear();
         // 临时文件路径
-        string tempPath = ExcelHelper.ExportToExcel(fileName, templateData, sheetName);
+        var tempPath = ExcelHelper.ExportToExcel(fileName, templateData, sheetName);
         // 将临时文件从临时文件路径复制到导入模板文件路径
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
@@ -150,13 +145,12 @@ public class BaseApiController : ControllerBase
     protected async Task<IEnumerable<T>> ImportExcel<T>(IFormFile file, string sheetName) where T : class, new()
     {
         if (!Path.GetExtension(file.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-        {
             throw new CustomException("Invalid file format. Only .xlsx files are supported.");
-        }
         // 唯一文件名
-        string uniqueFileName = GetUniqueFileName(file.FileName);
+        var uniqueFileName = GetUniqueFileName(file.FileName);
         // 导入文件路径
-        string fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(), FileHelper.GetFileNameWithExtension(uniqueFileName));
+        var fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(),
+            FileHelper.GetFileNameWithExtension(uniqueFileName));
         // 创建目录
         FileHelper.CreateDirectory(fullPath);
         using FileStream stream = new(fullPath, FileMode.Create);
@@ -172,13 +166,12 @@ public class BaseApiController : ControllerBase
     protected async Task<IDictionary<string, object>> ImportExcel(IFormFile file)
     {
         if (!Path.GetExtension(file.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-        {
             throw new CustomException("Invalid file format. Only .xlsx files are supported.");
-        }
         // 唯一文件名
-        string uniqueFileName = GetUniqueFileName(file.FileName);
+        var uniqueFileName = GetUniqueFileName(file.FileName);
         // 导入文件路径
-        string fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(), FileHelper.GetFileNameWithExtension(uniqueFileName));
+        var fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(),
+            FileHelper.GetFileNameWithExtension(uniqueFileName));
         // 创建目录
         FileHelper.CreateDirectory(fullPath);
         using FileStream stream = new(fullPath, FileMode.Create);
@@ -198,12 +191,13 @@ public class BaseApiController : ControllerBase
     /// <param name="dataSource">对象源序列</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns></returns>
-    protected async Task ExportExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName) where T : class, new()
+    protected async Task ExportExcel<T>(string fileName, IEnumerable<T> dataSource, string sheetName)
+        where T : class, new()
     {
         // 临时文件路径
-        string tempPath = ExcelHelper.ExportToExcel(fileName, dataSource, sheetName);
+        var tempPath = ExcelHelper.ExportToExcel(fileName, dataSource, sheetName);
         // 导出文件路径
-        string fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
+        var fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
         // 将临时文件从临时文件路径复制到导出文件路径
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
@@ -220,9 +214,9 @@ public class BaseApiController : ControllerBase
     protected async Task ExportExcel(string fileName, IDictionary<string, object> sheetsSource)
     {
         // 临时文件路径
-        string tempPath = ExcelHelper.ExportToExcel(fileName, sheetsSource);
+        var tempPath = ExcelHelper.ExportToExcel(fileName, sheetsSource);
         // 导出文件路径
-        string fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
+        var fullPath = Path.Combine(App.RootExportPath, FileHelper.GetFileNameWithExtension(tempPath));
         // 将临时文件从临时文件路径复制到导出文件路径
         FileHelper.CopyFile(tempPath, fullPath);
         // 删除临时文件
@@ -239,9 +233,10 @@ public class BaseApiController : ControllerBase
     /// <returns></returns>
     private string GetUniqueFileName(string fileName)
     {
-        string fileNameWithoutExtension = FileHelper.GetFileNameWithoutExtension(fileName);
-        string fileExtension = FileHelper.GetFileExtension(fileName);
-        string uniqueFileName = $"{FileHelper.GetDateFileName()}_{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}";
+        var fileNameWithoutExtension = FileHelper.GetFileNameWithoutExtension(fileName);
+        var fileExtension = FileHelper.GetFileExtension(fileName);
+        var uniqueFileName =
+            $"{FileHelper.GetDateFileName()}_{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}";
         return uniqueFileName + fileExtension;
     }
 }

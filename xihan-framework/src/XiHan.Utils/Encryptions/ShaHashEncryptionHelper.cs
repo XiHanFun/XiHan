@@ -31,7 +31,7 @@ public static class ShaHashEncryptionHelper
     public static string Sha1(string data)
     {
         // 创建 SHA1 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        byte[] hashData = SHA1.HashData(Encoding.UTF8.GetBytes(data));
+        var hashData = SHA1.HashData(Encoding.UTF8.GetBytes(data));
         return ComputeHash(hashData);
     }
 
@@ -43,7 +43,7 @@ public static class ShaHashEncryptionHelper
     public static string Sha256(string data)
     {
         // 创建 SHA256 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        byte[] hashData = SHA256.HashData(Encoding.UTF8.GetBytes(data));
+        var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(data));
         return ComputeHash(hashData);
     }
 
@@ -55,7 +55,7 @@ public static class ShaHashEncryptionHelper
     public static string Sha384(string data)
     {
         // 创建 SHA384 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        byte[] hashData = SHA384.HashData(Encoding.UTF8.GetBytes(data));
+        var hashData = SHA384.HashData(Encoding.UTF8.GetBytes(data));
         return ComputeHash(hashData);
     }
 
@@ -67,7 +67,7 @@ public static class ShaHashEncryptionHelper
     public static string Sha512(string data)
     {
         // 创建 SHA512 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        byte[] hashData = SHA512.HashData(Encoding.UTF8.GetBytes(data));
+        var hashData = SHA512.HashData(Encoding.UTF8.GetBytes(data));
         return ComputeHash(hashData);
     }
 
@@ -80,10 +80,7 @@ public static class ShaHashEncryptionHelper
     {
         // 将字节数组转换为十六进制字符串
         StringBuilder sb = new();
-        foreach (byte t in source)
-        {
-            _ = sb.Append(t.ToString("x2"));
-        }
+        foreach (var t in source) _ = sb.Append(t.ToString("x2"));
         // 返回生成的哈希值
         return sb.ToString();
     }

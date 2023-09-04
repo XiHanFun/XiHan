@@ -52,7 +52,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Create)]
     public async Task<ApiResult> CreateDictData([FromBody] SysBotCDto botCDto)
     {
-        long result = await _sysBotService.CreateSysBot(botCDto);
+        var result = await _sysBotService.CreateSysBot(botCDto);
         return ApiResult.Success(result);
     }
 
@@ -65,7 +65,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteSysBotByIds([FromBody] long[] botIds)
     {
-        bool result = await _sysBotService.DeleteSysBotByIds(botIds);
+        var result = await _sysBotService.DeleteSysBotByIds(botIds);
         return ApiResult.Success(result);
     }
 
@@ -78,7 +78,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Modify)]
     public async Task<ApiResult> ModifySysBot([FromBody] SysBotMDto botMDto)
     {
-        bool result = await _sysBotService.ModifySysBot(botMDto);
+        var result = await _sysBotService.ModifySysBot(botMDto);
         return ApiResult.Success(result);
     }
 
@@ -91,7 +91,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysBotById([FromBody] long botId)
     {
-        SysBot result = await _sysBotService.GetSysBotById(botId);
+        var result = await _sysBotService.GetSysBotById(botId);
         return ApiResult.Success(result);
     }
 
@@ -103,7 +103,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysBotTypeList()
     {
-        List<EnumDescDto> result = await _sysBotService.GetSysBotTypeList();
+        var result = await _sysBotService.GetSysBotTypeList();
         return ApiResult.Success(result);
     }
 
@@ -116,7 +116,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysBotList([FromBody] SysBotWDto botWDto)
     {
-        List<SysBot> result = await _sysBotService.GetSysBotList(botWDto);
+        var result = await _sysBotService.GetSysBotList(botWDto);
         return ApiResult.Success(result);
     }
 
@@ -129,7 +129,7 @@ public class SysBotController : BaseApiController
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysBotPageList([FromBody] PageWhereDto<SysBotWDto> pageWhere)
     {
-        PageDataDto<SysBot> result = await _sysBotService.GetSysBotPageList(pageWhere);
+        var result = await _sysBotService.GetSysBotPageList(pageWhere);
         return ApiResult.Success(result);
     }
 

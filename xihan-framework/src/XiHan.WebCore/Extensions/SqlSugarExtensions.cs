@@ -37,7 +37,7 @@ public static class SqlSugarExtensions
             DataBaseTypeEnum.Sqlite => DbType.Sqlite,
             DataBaseTypeEnum.Oracle => DbType.Oracle,
             DataBaseTypeEnum.PostgreSql => DbType.PostgreSQL,
-            _ => throw new ArgumentException("Invalid value.", nameof(dbTypeValue)),
+            _ => throw new ArgumentException("Invalid value.", nameof(dbTypeValue))
         };
     }
 }

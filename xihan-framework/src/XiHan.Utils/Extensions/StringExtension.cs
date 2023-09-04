@@ -55,7 +55,8 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
+    public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',',
+        bool isAllowsDuplicates = true)
     {
         IEnumerable<string> result = sourceStr.Split(sepeater);
         return isAllowsDuplicates ? result : result.Distinct();
@@ -98,7 +99,8 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',', bool isAllowsDuplicates = true)
+    public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',',
+        bool isAllowsDuplicates = true)
     {
         IEnumerable<string> sourceEnumerable = sourceDictionary.Values;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
@@ -111,16 +113,13 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',', bool isAllowsDuplicates = true)
+    public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',',
+        bool isAllowsDuplicates = true)
     {
         StringBuilder sb = new();
-        if (!isAllowsDuplicates)
-        {
-            sourceEnumerable = sourceEnumerable.Distinct();
-        }
+        if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
 
-        foreach (string item in sourceEnumerable)
-        {
+        foreach (var item in sourceEnumerable)
             if (item == sourceEnumerable.LastOrDefault())
             {
                 _ = sb.Append(item);
@@ -130,7 +129,7 @@ public static class StringExtension
                 _ = sb.Append(item);
                 _ = sb.Append(sepeater);
             }
-        }
+
         return sb.ToString();
     }
 
@@ -160,19 +159,18 @@ public static class StringExtension
     /// <returns></returns>
     public static string ToSbc(this string sourceStr)
     {
-        char[] c = sourceStr.ToCharArray();
-        for (int i = 0; i < c.Length; i++)
+        var c = sourceStr.ToCharArray();
+        for (var i = 0; i < c.Length; i++)
         {
             if (c[i] == 32)
             {
                 c[i] = (char)12288;
                 continue;
             }
-            if (c[i] < 127)
-            {
-                c[i] = (char)(c[i] + 65248);
-            }
+
+            if (c[i] < 127) c[i] = (char)(c[i] + 65248);
         }
+
         return new string(c);
     }
 
@@ -183,19 +181,18 @@ public static class StringExtension
     /// <returns></returns>
     public static string ToDbc(this string sourceStr)
     {
-        char[] c = sourceStr.ToCharArray();
-        for (int i = 0; i < c.Length; i++)
+        var c = sourceStr.ToCharArray();
+        for (var i = 0; i < c.Length; i++)
         {
             if (c[i] == 12288)
             {
                 c[i] = (char)32;
                 continue;
             }
-            if (c[i] is > (char)65280 and < (char)65375)
-            {
-                c[i] = (char)(c[i] - 65248);
-            }
+
+            if (c[i] is > (char)65280 and < (char)65375) c[i] = (char)(c[i] - 65248);
         }
+
         return new string(c);
     }
 
@@ -220,7 +217,7 @@ public static class StringExtension
         else
         {
             // 返回去掉分隔符
-            string newString = sourceStr.Replace(splitString, string.Empty);
+            var newString = sourceStr.Replace(splitString, string.Empty);
             result = newString;
         }
 
@@ -251,8 +248,8 @@ public static class StringExtension
         else
         {
             //检查传入的字符串长度和样式是否匹配,如果不匹配，则说明使用错误，给出错误信息并返回空值
-            int sourceStrLength = sourceStr.Length;
-            int newStyleLength = GetCleanStyle(newStyle, splitString).Length;
+            var sourceStrLength = sourceStr.Length;
+            var newStyleLength = GetCleanStyle(newStyle, splitString).Length;
             if (sourceStrLength != newStyleLength)
             {
                 returnValue = string.Empty;
@@ -263,15 +260,9 @@ public static class StringExtension
                 // 检查新样式中分隔符的位置
                 StringBuilder newStr = new();
                 if (newStyle != null)
-                {
-                    for (int i = 0; i < newStyle.Length; i++)
-                    {
+                    for (var i = 0; i < newStyle.Length; i++)
                         if (newStyle.Substring(i, 1) == splitString)
-                        {
                             _ = newStr.Append(i + ",");
-                        }
-                    }
-                }
 
                 if (!string.IsNullOrWhiteSpace(newStr.ToString()))
                 {
@@ -336,10 +327,7 @@ public static class StringExtension
     /// <returns></returns>
     public static bool IsValidateStr(this string express, string? value)
     {
-        if (value == null)
-        {
-            return false;
-        }
+        if (value == null) return false;
 
         Regex myRegex = new(express);
         return value.Length != 0 && myRegex.IsMatch(value);
@@ -357,19 +345,13 @@ public static class StringExtension
     public static int StrLength(this string inputString)
     {
         ASCIIEncoding ascii = new();
-        int tempLen = 0;
-        byte[] s = ascii.GetBytes(inputString);
-        foreach (byte t in s)
-        {
+        var tempLen = 0;
+        var s = ascii.GetBytes(inputString);
+        foreach (var t in s)
             if (t == 63)
-            {
                 tempLen += 2;
-            }
             else
-            {
                 tempLen += 1;
-            }
-        }
 
         return tempLen;
     }
@@ -386,7 +368,7 @@ public static class StringExtension
     /// <returns>返回处理后的字符串</returns>
     public static string ClipString(this string inputString, int len)
     {
-        bool isShowFix = false;
+        var isShowFix = false;
         if (len > 0 && len % 2 == 1)
         {
             isShowFix = true;
@@ -394,19 +376,15 @@ public static class StringExtension
         }
 
         ASCIIEncoding ascii = new();
-        int tempLen = 0;
+        var tempLen = 0;
         StringBuilder sb = new();
-        byte[] s = ascii.GetBytes(inputString);
-        for (int i = 0; i < s.Length; i++)
+        var s = ascii.GetBytes(inputString);
+        for (var i = 0; i < s.Length; i++)
         {
             if (s[i] == 63)
-            {
                 tempLen += 2;
-            }
             else
-            {
                 tempLen += 1;
-            }
 
             try
             {
@@ -417,16 +395,11 @@ public static class StringExtension
                 break;
             }
 
-            if (tempLen > len)
-            {
-                break;
-            }
+            if (tempLen > len) break;
         }
-        byte[] myByte = Encoding.Default.GetBytes(inputString);
-        if (isShowFix && myByte.Length > len)
-        {
-            _ = sb.Append('…');
-        }
+
+        var myByte = Encoding.Default.GetBytes(inputString);
+        if (isShowFix && myByte.Length > len) _ = sb.Append('…');
 
         return sb.ToString();
     }
@@ -444,11 +417,15 @@ public static class StringExtension
     {
         string[] aryReg =
         {
-            @"<script[^>]*?>.*?</script>", @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>", @"([\r\n])[\s]+", @"&(quot|#34);", @"&(amp|#38);", @"&(lt|#60);", @"&(gt|#62);", @"&(nbsp|#160);", @"&(iexcl|#161);", @"&(cent|#162);", @"&(pound|#163);", @"&(copy|#169);", @"&#(\d+);", @"-->", @"<!--.*\n"
+            @"<script[^>]*?>.*?</script>",
+            @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
+            @"([\r\n])[\s]+", @"&(quot|#34);", @"&(amp|#38);", @"&(lt|#60);", @"&(gt|#62);", @"&(nbsp|#160);",
+            @"&(iexcl|#161);", @"&(cent|#162);", @"&(pound|#163);", @"&(copy|#169);", @"&#(\d+);", @"-->", @"<!--.*\n"
         };
 
-        string newReg = aryReg[0];
-        string strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
+        var newReg = aryReg[0];
+        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase))
+            .Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
         strOutput = strOutput.Replace("<", string.Empty).Replace(">", string.Empty).Replace("\r\n", string.Empty);
         return strOutput;
     }
@@ -491,22 +468,16 @@ public static class StringExtension
     public static string FormatReplaceStr(this string content, string oldStr, string newStr)
     {
         // 没有替换字符串直接返回源字符串
-        if (!content.Contains(oldStr, StringComparison.CurrentCulture))
-        {
-            return content;
-        }
+        if (!content.Contains(oldStr, StringComparison.CurrentCulture)) return content;
         // 有替换字符串开始替换
         StringBuilder strBuffer = new();
-        int start = 0;
-        int end = 0;
+        var start = 0;
+        var end = 0;
         // 查找替换内容，把它之前和上一个替换内容之后的字符串拼接起来
         while (true)
         {
             start = content.IndexOf(oldStr, start, StringComparison.Ordinal);
-            if (start == -1)
-            {
-                break;
-            }
+            if (start == -1) break;
 
             _ = strBuffer.Append(content[end..start]);
             _ = strBuffer.Append(newStr);

@@ -61,30 +61,25 @@ public static class ReflectionHelper
         IEnumerable<Assembly> assemblies = GetAllEffectiveAssemblies();
 
         // 查找被引用程序集中的 NuGet 库依赖项
-        foreach (Assembly assembly in assemblies)
+        foreach (var assembly in assemblies)
         {
             IEnumerable<AssemblyName> referencedAssemblies = assembly.GetReferencedAssemblies()
                 .Where(s => !s.FullName!.StartsWith("Microsoft"))
                 .Where(s => !s.FullName!.StartsWith("System"));
-            foreach (AssemblyName referencedAssembly in referencedAssemblies)
-            {
+            foreach (var referencedAssembly in referencedAssemblies)
                 // 检查引用的程序集是否来自 NuGet
                 if (referencedAssembly.FullName.Contains("Version="))
                 {
                     // 获取 NuGet 包的名称和版本号
-                    string packageName = referencedAssembly.Name!;
-                    string packageVersion = new AssemblyName(referencedAssembly.FullName).Version!.ToString();
+                    var packageName = referencedAssembly.Name!;
+                    var packageVersion = new AssemblyName(referencedAssembly.FullName).Version!.ToString();
 
                     // 拼接成 NuGet 包的标识（名称:版本）
-                    string packageIdentifier = $"{packageName}:{packageVersion}";
+                    var packageIdentifier = $"{packageName}:{packageVersion}";
 
                     // 避免重复添加相同的 NuGet 包标识
-                    if (!nugetPackages.Contains(packageIdentifier))
-                    {
-                        nugetPackages.Add(packageIdentifier);
-                    }
+                    if (!nugetPackages.Contains(packageIdentifier)) nugetPackages.Add(packageIdentifier);
                 }
-            }
         }
 
         return nugetPackages;
@@ -157,8 +152,8 @@ public static class ReflectionHelper
     public static IEnumerable<Type> GetSubClasses<T>() where T : class
     {
         return GetAllEffectiveTypes()
-           .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
-           .Where(t => typeof(T).IsAssignableFrom(t));
+            .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
+            .Where(t => typeof(T).IsAssignableFrom(t));
     }
 
     /// <summary>
@@ -183,13 +178,10 @@ public static class ReflectionHelper
     {
         List<Type> implementingTypes = new();
 
-        foreach (Type type in GetAllEffectiveTypes())
-        {
-            if (type.IsClass && !type.IsAbstract && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
-            {
+        foreach (var type in GetAllEffectiveTypes())
+            if (type.IsClass && !type.IsAbstract && type.GetInterfaces()
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
                 implementingTypes.Add(type);
-            }
-        }
 
         return implementingTypes;
     }
@@ -205,7 +197,8 @@ public static class ReflectionHelper
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static IEnumerable<Type> GetContainsAttributeSubClasses<T, TAttribute>() where T : class where TAttribute : Attribute
+    public static IEnumerable<Type> GetContainsAttributeSubClasses<T, TAttribute>()
+        where T : class where TAttribute : Attribute
     {
         return GetSubClasses<T>().Intersect(GetContainsAttributeTypes<TAttribute>());
     }
@@ -233,7 +226,8 @@ public static class ReflectionHelper
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static IEnumerable<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
+    public static IEnumerable<Type> GetFilterAttributeSubClass<T, TAttribute>()
+        where T : class where TAttribute : Attribute
     {
         return GetSubClasses<T>().Intersect(GetFilterAttributeTypes<TAttribute>());
     }

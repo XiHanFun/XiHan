@@ -31,7 +31,8 @@ public static class SqlSugarPageExtend
     /// <param name="currentIndex">当前页标</param>
     /// <param name="pageSize">每页大小</param>
     /// <returns>分页后的List数据</returns>
-    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, int currentIndex, int pageSize) where TEntity : class, new()
+    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities,
+        int currentIndex, int pageSize) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
         List<TEntity> data = await entities.ToPageListAsync(currentIndex, pageSize, totalCount);
@@ -51,7 +52,8 @@ public static class SqlSugarPageExtend
     /// <param name="entities">数据源</param>
     /// <param name="pageDto">分页传入实体</param>
     /// <returns>分页后的List数据</returns>
-    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities, PageDto pageDto) where TEntity : class, new()
+    public static async Task<PageDataDto<TEntity>> ToPageDataDto<TEntity>(this ISugarQueryable<TEntity> entities,
+        PageDto pageDto) where TEntity : class, new()
     {
         RefAsync<int> totalCount = 0;
         List<TEntity> data = await entities.ToPageListAsync(pageDto.CurrentIndex, pageDto.PageSize, totalCount);

@@ -38,7 +38,8 @@ public class SysOAuthController : BaseApiController
     /// <param name="sysUserService"></param>
     /// <param name="sysRoleService"></param>
     /// <param name="sysLogLoginService"></param>
-    public SysOAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService, ISysLogLoginService sysLogLoginService)
+    public SysOAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
+        ISysLogLoginService sysLogLoginService)
     {
         _sysUserService = sysUserService;
         _sysRoleService = sysRoleService;

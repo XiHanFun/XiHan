@@ -71,11 +71,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
         if (httpCurrent == null) return;
 
         // 若当前未登录或是默认租户Id，则返回默认的连接
-        long tenantId = httpCurrent.GetAuthInfo().TenantId;
-        if (tenantId is < 1 or SqlSugarConst.DefaultTenantId)
-        {
-            return;
-        }
+        var tenantId = httpCurrent.GetAuthInfo().TenantId;
+        if (tenantId is < 1 or SqlSugarConst.DefaultTenantId) return;
     }
 
     #region 新增
@@ -210,7 +207,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(TEntity entity)
+    public new virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         return await base.UpdateAsync(entity);
     }
@@ -221,7 +218,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
+    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
+        Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);
     }
@@ -289,7 +287,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public virtual new async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
+    public new virtual async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
     {
         return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
     }
@@ -301,7 +299,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression,
+        Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -329,7 +328,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, RefAsync<int> totalCount)
+    public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression,
+        int currentIndex, int pageSize, RefAsync<int> totalCount)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .ToPageListAsync(currentIndex, pageSize, totalCount);
@@ -366,7 +366,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(int currentIndex, int pageSize,
+        Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>()
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -380,7 +381,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(PageDto page,
+        Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>()
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -394,7 +396,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="currentIndex">页面索引</param>
     /// <param name="pageSize">页面大小</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression,
+        int currentIndex, int pageSize)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .ToPageDataDto(currentIndex, pageSize);
@@ -406,7 +409,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="whereExpression">自定义条件</param>
     /// <param name="page">分页实体</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression,
+        PageDto page)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .ToPageDataDto(page);
@@ -421,7 +425,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression,
+        int currentIndex, int pageSize, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)
@@ -436,7 +441,8 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="orderExpression">自定义排序条件</param>
     /// <param name="isOrderAsc">是否正序排序</param>
     /// <returns></returns>
-    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression, PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
+    public virtual async Task<PageDataDto<TEntity>> QueryPageAsync(Expression<Func<TEntity, bool>> whereExpression,
+        PageDto page, Expression<Func<TEntity, object>> orderExpression, bool isOrderAsc = true)
     {
         return await Context.Queryable<TEntity>().Where(whereExpression)
             .OrderBy(orderExpression, isOrderAsc ? OrderByType.Asc : OrderByType.Desc)

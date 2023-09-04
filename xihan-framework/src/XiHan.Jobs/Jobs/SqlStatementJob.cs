@@ -62,11 +62,11 @@ public class SqlStatementJob : JobBase, IJob
     {
         if (context is JobExecutionContextImpl { Trigger: AbstractTrigger trigger })
         {
-            Models.Syses.SysJob info = await _sysJobService.GetByIdAsync(trigger.JobName);
+            var info = await _sysJobService.GetByIdAsync(trigger.JobName);
 
             if (info != null && info.SqlText.IsNotEmptyOrNull())
             {
-                int result = DbScoped.SugarScope.Ado.ExecuteCommandWithGo(info.SqlText);
+                var result = DbScoped.SugarScope.Ado.ExecuteCommandWithGo(info.SqlText);
                 Logger.Information($"执行SQL任务【{info.Name}】执行成功，sql请求执行结果为：" + result);
             }
             else
