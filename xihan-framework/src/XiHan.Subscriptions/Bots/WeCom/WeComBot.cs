@@ -49,8 +49,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> TextMessage(WeComText text)
     {
-        string msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, text });
+        string msgtype = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, text });
         return result;
     }
 
@@ -61,8 +61,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
     {
-        string msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, markdown });
+        string msgtype = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, markdown });
         return result;
     }
 
@@ -73,8 +73,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> ImageMessage(WeComImage image)
     {
-        string msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, image });
+        string msgtype = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, image });
         return result;
     }
 
@@ -85,8 +85,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> NewsMessage(WeComNews news)
     {
-        string msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, news });
+        string msgtype = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, news });
         return result;
     }
 
@@ -97,8 +97,8 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> FileMessage(WeComFile file)
     {
-        string msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, file });
+        string msgtype = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, file });
         return result;
     }
 
@@ -109,34 +109,34 @@ public class WeComBot
     /// <returns></returns>
     public async Task<ApiResult> VoiceMessage(WeComVoice voice)
     {
-        string msgType = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, voice });
+        string msgtype = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, voice });
         return result;
     }
 
     /// <summary>
     /// 发送文本通知模版卡片消息
     /// </summary>
-    /// <param name="templateCard">模版卡片</param>
+    /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice templateCard)
+    public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice template_card)
     {
-        string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
-        templateCard.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, templateCard });
+        string msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        template_card.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, template_card });
         return result;
     }
 
     /// <summary>
     /// 发送图文展示模版卡片消息
     /// </summary>
-    /// <param name="templateCard">模版卡片</param>
+    /// <param name="template_card">模版卡片</param>
     /// <returns></returns>
-    public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice templateCard)
+    public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice template_card)
     {
-        string msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
-        templateCard.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
-        ApiResult result = await SendMessage(new { msgType, templateCard });
+        string msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        template_card.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
+        ApiResult result = await SendMessage(new { msgtype, template_card });
         return result;
     }
 

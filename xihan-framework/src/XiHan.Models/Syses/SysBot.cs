@@ -71,7 +71,7 @@ public class SysBot : BaseModifyEntity
     /// 为空时使用系统默认地址
     /// </summary>
     [SugarColumn(Length = 256, IsNullable = true)]
-    public string? UploadUrl { get; set; } = string.Empty;
+    public string? UploadUrl { get; set; }
 
     /// <summary>
     /// 是否可用

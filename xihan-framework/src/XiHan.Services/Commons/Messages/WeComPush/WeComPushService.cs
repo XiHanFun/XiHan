@@ -14,14 +14,12 @@
 
 using Mapster;
 using XiHan.Infrastructures.Apps.Services;
-using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
 using XiHan.Services.Bases;
 using XiHan.Subscriptions.Bots.WeCom;
 using XiHan.Utils.Exceptions;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Services.Commons.Messages.WeComPush;
 

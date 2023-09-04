@@ -155,7 +155,7 @@ public class WeComController : BaseApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("TextNotice")]
-    public async Task<ApiResult> WeComToTextNotice(string mediaId)
+    public async Task<ApiResult> WeComToTextNotice()
     {
         // 来源
         WeComSource source = new()
@@ -201,13 +201,6 @@ public class WeComController : BaseApiController
                 KeyName = "企微官网",
                 Value = "点击访问",
                 Url = "https://work.weixin.qq.com/?from=openApi"
-            },
-            new()
-            {
-                Type = 2,
-                KeyName = "文件下载",
-                Value = "3.png",
-                MediaId = mediaId
             }
         };
         // 跳转指引
