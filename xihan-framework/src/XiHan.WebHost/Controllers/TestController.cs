@@ -241,10 +241,8 @@ public class TestController : BaseApiController
     [HttpGet("Export/Excel/MultipleSheets")]
     public async Task ExportExcelMultipleSheets()
     {
-        SysUserSeedData sysUserSeedData = new();
-        SysConfigSeedData sysConfigSeedData = new();
-        IEnumerable<SysUser> dataSourceSysUser = sysUserSeedData.HasData();
-        IEnumerable<SysConfig> dataSourceSysConfig = sysConfigSeedData.HasData();
+        IEnumerable<SysUser> dataSourceSysUser = new SysUserSeedData().HasData();
+        IEnumerable<SysConfig> dataSourceSysConfig = new SysConfigSeedData().HasData();
         Dictionary<string, object> dataSource = new()
         {
             {"SysUserSeedData",dataSourceSysUser },
