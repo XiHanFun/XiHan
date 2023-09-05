@@ -45,7 +45,22 @@ public class SysAnnouncement : BaseDeleteEntity
     public string? Url { get; set; }
 
     /// <summary>
-    /// 公告结束时间
+    /// 是否撤销
     /// </summary>
-    public DateTime? ShowEndTime { get; set; }
+    public bool IsCancel { get; set; }
+
+    /// <summary>
+    /// 公告撤销时间
+    /// </summary>
+    public DateTime? CancelTime { get; set; }
+
+    /// <summary>
+    /// 优先级
+    /// </summary>
+    public int Priority { get; set; }
+
+    /// <summary>
+    /// 用户类型
+    /// </summary>
+    public int UserType { get; set; }
 }
