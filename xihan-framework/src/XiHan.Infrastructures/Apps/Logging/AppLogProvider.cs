@@ -32,11 +32,12 @@ public static class AppLogProvider
     /// <param name="builder"></param>
     public static void RegisterLog(ILoggingBuilder builder)
     {
-        var debugPath = @"Logs/Debug/.log";
-        var infoPath = @"Logs/Info/.log";
-        var waringPath = @"Logs/Waring/.log";
-        var errorPath = @"Logs/Error/.log";
-        var fatalPath = @"Logs/Fatal/.log";
+        const string debugPath = @"Logs/Debug/.log";
+        const string infoPath = @"Logs/Info/.log";
+        const string waringPath = @"Logs/Waring/.log";
+        const string errorPath = @"Logs/Error/.log";
+        const string fatalPath = @"Logs/Fatal/.log";
+
         const string infoTemplate =
             @"Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}Level：{Level}{NewLine}Message：{Message}{NewLine}================{NewLine}";
         const string warnTemplate =
@@ -56,7 +57,7 @@ public static class AppLogProvider
             // 记录相关上下文信息
             .Enrich.FromLogContext()
 #if DEBUG
-            .SinkFileConfig(LogEventLevel.Debug, debugPath, infoTemplate)
+            .SinkFileConfig(LogEventLevel.Debug, debugPath, errorTemplate)
 #endif
             .SinkFileConfig(LogEventLevel.Information, infoPath, infoTemplate)
             .SinkFileConfig(LogEventLevel.Warning, waringPath, warnTemplate)
@@ -89,8 +90,8 @@ public static class AppLogProvider
                 rollingInterval: RollingInterval.Day,
                 // 文件大小：10M，默认1GB
                 fileSizeLimitBytes: 1024 * 1024 * 10,
-                // 保留最近：15个文件，默认31个，等于null时永远保留文件
-                retainedFileCountLimit: 15,
+                // 保留最近：60个文件，默认31个，等于null时永远保留文件
+                retainedFileCountLimit: 60,
                 // 超过大小自动创建新文件
                 rollOnFileSizeLimit: true,
                 // 最小写入级别

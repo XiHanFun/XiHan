@@ -21,11 +21,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MailKit" Version="4.1.0"/>
+        <PackageReference Include="MailKit" Version="4.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj"/>
+        <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj" />
     </ItemGroup>
 
     <ItemGroup>
