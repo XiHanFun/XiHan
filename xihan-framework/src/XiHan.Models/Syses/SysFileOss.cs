@@ -28,6 +28,12 @@ namespace XiHan.Models.Syses;
 public class SysFileOss : BaseModifyEntity
 {
     /// <summary>
+    /// 存储标题
+    /// </summary>
+    [SugarColumn(Length = 256)]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>
     /// 存储类型
     /// </summary>
     public StoredTypeEnum StoredType { get; set; }

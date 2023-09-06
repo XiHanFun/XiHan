@@ -75,5 +75,6 @@ public class SysBotCDto
     /// <summary>
     /// 是否可用
     /// </summary>
+    [Required(ErrorMessage = "{0}不能为空")]
     public bool IsEnabled { get; set; }
 }

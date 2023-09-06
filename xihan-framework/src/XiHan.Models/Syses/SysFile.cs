@@ -83,7 +83,7 @@ public class SysFile : BaseDeleteEntity
     public string AccessUrl { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字典描述
+    /// 文件描述
     /// </summary>
     [SugarColumn(Length = 256, IsNullable = true)]
     public string? Description { get; set; }
