@@ -95,7 +95,7 @@ public static class AuthSetup
                             context.Response.Headers.Append("Token-Expired", "true");
                         }
 
-                        _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                        _ = context.Response.WriteAsync(failedResult.SerializeTo(), Encoding.UTF8);
                         return Task.CompletedTask;
                     },
                     // 未授权时
@@ -106,7 +106,7 @@ public static class AuthSetup
                         context.Response.ContentType = "text/json;charset=utf-8";
                         context.Response.StatusCode = failedResult.Code.GetEnumValueByKey();
                         context.Response.Headers.Append("Token-Error", context.ErrorDescription);
-                        _ = context.Response.WriteAsync(failedResult.SerializeToJson(), Encoding.UTF8);
+                        _ = context.Response.WriteAsync(failedResult.SerializeTo(), Encoding.UTF8);
                         return Task.CompletedTask;
                     }
                 };

@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -72,40 +71,19 @@ public static class SerializeHelper
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public static string SerializeToJson(this object item)
+    public static string SerializeTo(this object item)
     {
         return JsonSerializer.Serialize(item, JsonSerializerOptionsInstance);
     }
 
     /// <summary>
-    /// 序列化为Byte
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    public static byte[] SerializeToBate(this object item)
-    {
-        return Encoding.UTF8.GetBytes(item.SerializeToJson());
-    }
-
-    /// <summary>
-    /// Json反序列化为对象
+    /// 反序列化为对象
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="jsonString"></param>
     /// <returns></returns>
-    public static TEntity? DeserializeToObject<TEntity>(this string jsonString)
+    public static TEntity? DeserializeTo<TEntity>(this string jsonString)
     {
         return JsonSerializer.Deserialize<TEntity>(jsonString, JsonSerializerOptionsInstance);
-    }
-
-    /// <summary>
-    /// Byte反序列化为对象
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static TEntity? Deserialize<TEntity>(this byte[] value)
-    {
-        return Encoding.UTF8.GetString(value).DeserializeToObject<TEntity>();
     }
 }

@@ -207,7 +207,7 @@ public class TestController : BaseApiController
     public async Task<ApiResult> ImportExcel(IFormFile file, string sheetName)
     {
         IEnumerable<SysUser> userData = await ImportExcel<SysUser>(file, sheetName);
-        return ApiResult.Success(userData.SerializeToJson());
+        return ApiResult.Success(userData.SerializeTo());
     }
 
     /// <summary>
@@ -219,7 +219,7 @@ public class TestController : BaseApiController
     public async Task<ApiResult> ImportExcelMultipleSheets(IFormFile file)
     {
         IDictionary<string, object> data = await ImportExcel(file);
-        return ApiResult.Success(data.SerializeToJson());
+        return ApiResult.Success(data.SerializeTo());
     }
 
     /// <summary>

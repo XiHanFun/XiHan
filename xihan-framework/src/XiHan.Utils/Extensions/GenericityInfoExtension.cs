@@ -127,12 +127,12 @@ public static class GenericityInfoExtension
     {
         System.Reflection.PropertyInfo[] propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
-            {
-                PropertyName = variance.Name,
-                // 确保不为null
-                ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
-                ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
-            })
+        {
+            PropertyName = variance.Name,
+            // 确保不为null
+            ValueA = variance.GetValue(entity1, null)?.ToString() ?? string.Empty,
+            ValueB = variance.GetValue(entity2, null)?.ToString() ?? string.Empty
+        })
             //调用内置判断
             .Where(variance => !variance.ValueA.Equals(variance.ValueB))
             .ToList();
@@ -160,7 +160,7 @@ public static class GenericityInfoExtension
         if (specialList.Any()) newList = newList.Where(s => !specialList.Contains(s.PropertyName));
 
         var enumerable = newList.ToList();
-        return !enumerable.ToList().Any() ? string.Empty : SerializeHelper.SerializeToJson(enumerable);
+        return !enumerable.ToList().Any() ? string.Empty : SerializeHelper.SerializeTo(enumerable);
     }
 
     #endregion

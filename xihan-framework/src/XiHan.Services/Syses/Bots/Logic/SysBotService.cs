@@ -38,9 +38,9 @@ public class SysBotService : BaseService<SysBot>, ISysBotService
     /// <returns></returns>
     private async Task<bool> CheckBotUnique(SysBot sysBot)
     {
-        var isUnique = await IsAnyAsync(f => f.Title == sysBot.Title || f.BotType == sysBot.BotType);
+        var isUnique = await IsAnyAsync(f => f.BotType == sysBot.BotType);
         return isUnique
-            ? throw new CustomException($"机器人类别为【{sysBot.BotType.GetEnumDescriptionByKey()}】的【{sysBot.Title}】已存在!")
+            ? throw new CustomException($"机器人类别为【{sysBot.BotType.GetEnumDescriptionByKey()}】的机器人已存在!")
             : isUnique;
     }
 

@@ -117,7 +117,7 @@ public class DingTalkBot
     private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
-        var sendMessage = objSend.SerializeToJson();
+        var sendMessage = objSend.SerializeTo();
 
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))

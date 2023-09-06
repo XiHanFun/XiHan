@@ -13,11 +13,13 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Subscriptions.Hubs;
 using XiHan.Utils.Extensions;
+using XiHan.WebCore.Handlers;
 using XiHan.WebCore.Middlewares;
 using XiHan.WebCore.Setups.Apps;
 
@@ -79,7 +81,11 @@ public static class AppSetup
             // 不对约定路由做任何假设，也就是不使用约定路由，依赖用户的特性路由
             _ = endpoints.MapControllers();
             // 健康检查
-            _ = endpoints.MapHealthChecks("/Health");
+            _ = endpoints.MapHealthChecks("/Healthcheck", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = WriteResponseHandler.WriteResponse
+            });
             // 即时通讯集线器
             _ = endpoints.MapHub<ChatHub>("/ChatHub");
         });

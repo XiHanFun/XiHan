@@ -73,7 +73,7 @@ public class AppCacheService : IAppCacheService
 
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _ = _cache.Set(key, value.SerializeToJson());
+        _ = _cache.Set(key, value.SerializeTo());
         return Exists(key);
     }
 
@@ -91,7 +91,7 @@ public class AppCacheService : IAppCacheService
 
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _ = _cache.Set(key, value.SerializeToJson(), new MemoryCacheEntryOptions()
+        _ = _cache.Set(key, value.SerializeTo(), new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
             .SetAbsoluteExpiration(expiresAbsolute));
         return Exists(key);
@@ -111,7 +111,7 @@ public class AppCacheService : IAppCacheService
 
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        _ = _cache.Set(key, value.SerializeToJson(), isSliding
+        _ = _cache.Set(key, value.SerializeTo(), isSliding
             ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
             : new MemoryCacheEntryOptions().SetAbsoluteExpiration(expiresIn));
         return Exists(key);
@@ -131,7 +131,7 @@ public class AppCacheService : IAppCacheService
 
         if (seconds <= 0) throw new ArgumentOutOfRangeException(nameof(seconds));
 
-        _ = _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddSeconds(seconds));
+        _ = _cache.Set(key, value.SerializeTo(), DateTime.Now.AddSeconds(seconds));
         return Exists(key);
     }
 
@@ -149,7 +149,7 @@ public class AppCacheService : IAppCacheService
 
         if (minutes <= 0) throw new ArgumentOutOfRangeException(nameof(minutes));
 
-        _ = _cache.Set(key, value.SerializeToJson(), DateTime.Now.AddMinutes(minutes));
+        _ = _cache.Set(key, value.SerializeTo(), DateTime.Now.AddMinutes(minutes));
         return Exists(key);
     }
 
@@ -219,8 +219,8 @@ public class AppCacheService : IAppCacheService
             : value == null
                 ? throw new ArgumentNullException(nameof(value))
                 : !Exists(key)
-                    ? Set(key, value.SerializeToJson())
-                    : Remove(key) && Set(key, value.SerializeToJson());
+                    ? Set(key, value.SerializeTo())
+                    : Remove(key) && Set(key, value.SerializeTo());
     }
 
     /// <summary>
@@ -238,8 +238,8 @@ public class AppCacheService : IAppCacheService
             : value == null
                 ? throw new ArgumentNullException(nameof(value))
                 : !Exists(key)
-                    ? Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute)
-                    : Remove(key) && Set(key, value.SerializeToJson(), expiresSliding, expiresAbsolute);
+                    ? Set(key, value.SerializeTo(), expiresSliding, expiresAbsolute)
+                    : Remove(key) && Set(key, value.SerializeTo(), expiresSliding, expiresAbsolute);
     }
 
     /// <summary>
@@ -257,8 +257,8 @@ public class AppCacheService : IAppCacheService
             : value == null
                 ? throw new ArgumentNullException(nameof(value))
                 : !Exists(key)
-                    ? Set(key, value.SerializeToJson(), expiresIn, isSliding)
-                    : Remove(key) && Set(key, value.SerializeToJson(), expiresIn, isSliding);
+                    ? Set(key, value.SerializeTo(), expiresIn, isSliding)
+                    : Remove(key) && Set(key, value.SerializeTo(), expiresIn, isSliding);
     }
 
     #endregion

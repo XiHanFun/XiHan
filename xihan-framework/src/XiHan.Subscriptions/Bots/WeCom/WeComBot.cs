@@ -201,7 +201,7 @@ public class WeComBot
     private async Task<ApiResult> SendMessage(object objSend)
     {
         // 发送对象
-        var sendMessage = objSend.SerializeToJson();
+        var sendMessage = objSend.SerializeTo();
         // 发起请求，发送消息地址
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         var result =

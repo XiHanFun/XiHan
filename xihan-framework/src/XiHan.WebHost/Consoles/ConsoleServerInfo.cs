@@ -37,10 +37,10 @@ public static class ConsoleServerInfo
         $@"系统目录：{SystemInfoHelper.SystemDirectory}".WriteLineInfo();
         $@"运行时间：{SystemInfoHelper.RunningTime}".WriteLineInfo();
         $@"交互模式：{SystemInfoHelper.InteractiveMode}".WriteLineInfo();
-        $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeToJson()}".WriteLineInfo();
-        $@"内存信息：{SystemInfoHelper.RamInfo.SerializeToJson()}".WriteLineInfo();
-        $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeToJson()}".WriteLineInfo();
-        $@"网卡信息：{SystemInfoHelper.NetworkInfo.SerializeToJson()}".WriteLineInfo();
+        $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeTo()}".WriteLineInfo();
+        $@"内存信息：{SystemInfoHelper.RamInfo.SerializeTo()}".WriteLineInfo();
+        $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeTo()}".WriteLineInfo();
+        $@"网卡信息：{SystemInfoHelper.NetworkInfo.SerializeTo()}".WriteLineInfo();
 
         "==============================环境信息==============================".WriteLineInfo();
         $@"环境框架：{EnvironmentInfoHelper.FrameworkDescription}".WriteLineInfo();

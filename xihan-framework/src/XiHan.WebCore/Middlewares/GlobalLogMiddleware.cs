@@ -92,7 +92,7 @@ public class GlobalLogMiddleware
             };
             context.Response.ContentType = "text/json;charset=utf-8";
             context.Response.StatusCode = exceptionResult.Code.GetEnumValueByKey();
-            await context.Response.WriteAsync(exceptionResult.SerializeToJson(), Encoding.UTF8);
+            await context.Response.WriteAsync(exceptionResult.SerializeTo(), Encoding.UTF8);
         }
         finally
         {
