@@ -41,26 +41,24 @@ public class BaseApiController : ControllerBase
     /// <exception cref="CustomException"></exception>
     protected async Task<IEnumerable<string>> UploadFile(IEnumerable<IFormFile> files)
     {
-        await Task.Run(async () =>
+        if (files.Any())
         {
-            if (files.Any())
+            List<string> paths = new();
+            foreach (var file in files)
             {
-                List<string> paths = new();
-                foreach (var file in files)
-                {
-                    // 唯一文件名
-                    var uniqueFileName = GetUniqueFileName(file.FileName);
-                    // 上传文件路径
-                    var fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(),
-                        FileHelper.GetFileNameWithExtension(uniqueFileName));
-                    // 创建目录
-                    FileHelper.CreateDirectory(fullPath);
-                    using FileStream stream = new(fullPath, FileMode.Create);
-                    await file.CopyToAsync(stream);
-                    paths.Add(fullPath);
-                }
+                // 唯一文件名
+                var uniqueFileName = GetUniqueFileName(file.FileName);
+                // 上传文件路径
+                var fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(),
+                    FileHelper.GetFileNameWithExtension(uniqueFileName));
+                // 创建目录
+                FileHelper.CreateDirectory(fullPath);
+                using FileStream stream = new(fullPath, FileMode.Create);
+                await file.CopyToAsync(stream);
+                paths.Add(fullPath);
             }
-        });
+            return paths;
+        }
 
         throw new CustomException("No files uploaded.");
     }
