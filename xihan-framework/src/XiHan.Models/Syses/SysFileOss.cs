@@ -23,8 +23,7 @@ namespace XiHan.Models.Syses;
 /// 系统文件对象存储配置
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_File_Oss")]
+[SugarTable, SystemTable]
 public class SysFileOss : BaseModifyEntity
 {
     /// <summary>
@@ -36,6 +35,7 @@ public class SysFileOss : BaseModifyEntity
     /// <summary>
     /// 存储类型
     /// </summary>
+    [SugarColumn]
     public StoredTypeEnum StoredType { get; set; }
 
     /// <summary>
@@ -53,5 +53,6 @@ public class SysFileOss : BaseModifyEntity
     /// <summary>
     /// 是否可用
     /// </summary>
+    [SugarColumn]
     public bool IsEnabled { get; set; }
 }

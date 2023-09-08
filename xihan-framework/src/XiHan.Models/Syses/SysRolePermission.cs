@@ -22,17 +22,18 @@ namespace XiHan.Models.Syses;
 /// 系统角色权限关联表(为某角色分配权限)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Role_Permission")]
+[SugarTable, SystemTable]
 public class SysRolePermission : BaseModifyEntity
 {
     /// <summary>
     /// 系统角色
     /// </summary>
+    [SugarColumn]
     public long RoleId { get; set; }
 
     /// <summary>
     /// 系统权限
     /// </summary>
+    [SugarColumn]
     public long PermissionId { get; set; }
 }

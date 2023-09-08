@@ -21,16 +21,18 @@ namespace XiHan.Models.Blogs;
 /// 博客收藏表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Blog_Collect")]
+[SugarTable]
 public class BlogCollect : BaseCreateEntity
 {
     /// <summary>
     /// 分类编码
     /// </summary>
+    [SugarColumn]
     public long TypeId { get; set; }
 
     /// <summary>
     /// 收藏文章
     /// </summary>
+    [SugarColumn]
     public long ArticleId { get; set; }
 }

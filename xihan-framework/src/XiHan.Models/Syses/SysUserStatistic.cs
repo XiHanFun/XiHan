@@ -22,37 +22,42 @@ namespace XiHan.Models.Syses;
 /// 用户统计表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_User_Statistic")]
+[SugarTable, SystemTable]
 public class SysUserStatistic : BaseCreateEntity
 {
     /// <summary>
     /// 所属用户
     /// </summary>
+    [SugarColumn]
     public long UserId { get; set; }
 
     /// <summary>
     /// 关注数量
     /// </summary>
+    [SugarColumn]
     public int FollowsCount { get; set; }
 
     /// <summary>
     /// 粉丝数量
     /// </summary>
+    [SugarColumn]
     public int FocusCount { get; set; }
 
     /// <summary>
     /// 收藏数量
     /// </summary>
+    [SugarColumn]
     public int CollectsCount { get; set; }
 
     /// <summary>
     /// 通知数量
     /// </summary>
+    [SugarColumn]
     public int NoticesCount { get; set; }
 
     /// <summary>
     /// 登录次数
     /// </summary>
+    [SugarColumn]
     public int LoginCount { get; set; }
 }

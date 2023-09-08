@@ -82,7 +82,6 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
         // 禁止删除系统参数
         List<SysConfig> deleteList = sysConfigList.Where(c => !c.IsOfficial).ToList();
 
-        _appCacheService.Remove(deleteList.Select(c => c.Code));
         return await RemoveAsync(deleteList);
     }
 
@@ -111,12 +110,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<SysConfig> GetSysConfigById(long configId)
     {
-        var key = $"GetSysConfigById_{configId}";
-        if (_appCacheService.Get(key) is SysConfig sysConfig) return sysConfig;
-
-        sysConfig = await FindAsync(d => d.BaseId == configId);
-
-        _ = _appCacheService.SetWithMinutes(key, sysConfig, 30);
+        SysConfig sysConfig = await FindAsync(d => d.BaseId == configId);
         return sysConfig;
     }
 
@@ -127,12 +121,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<T> GetSysConfigValueByCode<T>(string configCode)
     {
-        var key = $"GetSysConfigValueByCode_{configCode}";
-        var value = _appCacheService.Get(key);
-        if (value.IsNotEmptyOrNull()) return value.CastTo<T>()!;
-
-        var sysConfig = await FindAsync(d => d.Code == configCode);
-        _ = _appCacheService.SetWithMinutes(key, sysConfig.Value, 30);
+        SysConfig sysConfig = await FindAsync(d => d.Code == configCode);
         return sysConfig.Value.CastTo<T>()!;
     }
 

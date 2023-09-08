@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统字典项表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Dict_Data")]
+[SugarTable, SystemTable]
 public class SysDictData : BaseModifyEntity
 {
     /// <summary>
@@ -53,6 +52,7 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 字典项排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>
@@ -64,11 +64,13 @@ public class SysDictData : BaseModifyEntity
     /// <summary>
     /// 是否默认值
     /// </summary>
+    [SugarColumn]
     public bool IsDefault { get; set; } = false;
 
     /// <summary>
     /// 是否启用
     /// </summary>
+    [SugarColumn]
     public bool IsEnable { get; set; } = true;
 
     /// <summary>

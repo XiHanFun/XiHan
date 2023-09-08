@@ -22,17 +22,18 @@ namespace XiHan.Models.Syses;
 /// 系统角色机构关联表(为某角色分配机构)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Role_Organization")]
+[SugarTable, SystemTable]
 public class SysRoleOrganization : BaseModifyEntity
 {
     /// <summary>
     /// 系统角色
     /// </summary>
+    [SugarColumn]
     public long RoleId { get; set; }
 
     /// <summary>
     /// 系统机构
     /// </summary>
+    [SugarColumn]
     public long OrganizationId { get; set; }
 }

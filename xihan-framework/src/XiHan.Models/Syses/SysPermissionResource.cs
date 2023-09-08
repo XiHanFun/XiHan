@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统权限资源关联表(为某权限分配资源)
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Permission_Resource")]
+[SugarTable, SystemTable]
 public class SysPermissionResource : BaseModifyEntity
 {
     /// <summary>

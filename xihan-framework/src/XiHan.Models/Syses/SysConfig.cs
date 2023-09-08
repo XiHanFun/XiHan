@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统配置表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Config")]
+[SugarTable, SystemTable]
 public class SysConfig : BaseModifyEntity
 {
     /// <summary>
@@ -53,11 +52,13 @@ public class SysConfig : BaseModifyEntity
     /// <summary>
     /// 是否系统内置
     /// </summary>
+    [SugarColumn]
     public bool IsOfficial { get; set; } = false;
 
     /// <summary>
     /// 配置排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>

@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统机构部门表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Organization")]
+[SugarTable, SystemTable]
 public class SysOrganization : BaseDeleteEntity
 {
     /// <summary>
@@ -65,6 +64,7 @@ public class SysOrganization : BaseDeleteEntity
     /// <summary>
     /// 机构排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>

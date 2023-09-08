@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统公告表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Announcement")]
+[SugarTable, SystemTable]
 public class SysAnnouncement : BaseDeleteEntity
 {
     /// <summary>
@@ -47,20 +46,24 @@ public class SysAnnouncement : BaseDeleteEntity
     /// <summary>
     /// 是否撤销
     /// </summary>
+    [SugarColumn]
     public bool IsCancel { get; set; }
 
     /// <summary>
     /// 公告撤销时间
     /// </summary>
+    [SugarColumn]
     public DateTime? CancelTime { get; set; }
 
     /// <summary>
     /// 优先级
     /// </summary>
+    [SugarColumn]
     public int Priority { get; set; }
 
     /// <summary>
     /// 用户类型
     /// </summary>
+    [SugarColumn]
     public int UserType { get; set; }
 }

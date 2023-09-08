@@ -21,16 +21,18 @@ namespace XiHan.Models.Blogs;
 /// 博客文章标签关联表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Blog_Article_Tag")]
+[SugarTable]
 public class BlogArticleTag : BaseModifyEntity
 {
     /// <summary>
     /// 关联文章
     /// </summary>
+    [SugarColumn]
     public long ArticleId { get; set; }
 
     /// <summary>
     /// 关联标签
     /// </summary>
+    [SugarColumn]
     public long TagId { get; set; }
 }

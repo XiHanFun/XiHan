@@ -23,8 +23,7 @@ namespace XiHan.Models.Syses;
 /// 系统文件表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_File")]
+[SugarTable, SystemTable]
 public class SysFile : BaseDeleteEntity
 {
     /// <summary>
@@ -67,6 +66,7 @@ public class SysFile : BaseDeleteEntity
     /// <summary>
     /// 存储类型
     /// </summary>
+    [SugarColumn]
     public StoredTypeEnum StoredType { get; set; }
 
     /// <summary>

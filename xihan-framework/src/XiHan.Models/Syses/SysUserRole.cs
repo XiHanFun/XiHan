@@ -22,17 +22,18 @@ namespace XiHan.Models.Syses;
 /// 系统用户角色关联表(为某用户分配角色)
 /// </summary>
 /// <remarks>记录新增，修改息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_User_Role")]
+[SugarTable, SystemTable]
 public class SysUserRole : BaseModifyEntity
 {
     /// <summary>
     /// 用户账户
     /// </summary>
+    [SugarColumn]
     public long UserId { get; init; }
 
     /// <summary>
     /// 系统角色
     /// </summary>
+    [SugarColumn]
     public long RoleId { get; init; }
 }

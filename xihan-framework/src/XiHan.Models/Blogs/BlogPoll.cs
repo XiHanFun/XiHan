@@ -22,21 +22,24 @@ namespace XiHan.Models.Blogs;
 /// 博客点赞表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable(TableName = "Blog_Poll")]
+[SugarTable]
 public class BlogPoll : BaseCreateEntity
 {
     /// <summary>
     /// 点赞类型(文章或评论)
     /// </summary>
+    [SugarColumn]
     public PollTypeEnum PollType { get; set; }
 
     /// <summary>
     /// 所属文章或评论
     /// </summary>
+    [SugarColumn]
     public long ParentId { get; set; }
 
     /// <summary>
     /// 赞或踩 赞(true)踩(false)
     /// </summary>
+    [SugarColumn]
     public bool IsPositive { get; set; } = true;
 }

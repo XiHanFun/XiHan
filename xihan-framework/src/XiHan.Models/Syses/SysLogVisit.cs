@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统访问日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Log_Visit")]
+[SugarTable, SystemTable]
 public class SysLogVisit : BaseCreateEntity
 {
     #region 客户端信息

@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统岗位表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Post")]
+[SugarTable, SystemTable]
 public class SysPost : BaseDeleteEntity
 {
     /// <summary>
@@ -41,6 +40,7 @@ public class SysPost : BaseDeleteEntity
     /// <summary>
     /// 岗位排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>

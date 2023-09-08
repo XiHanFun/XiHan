@@ -48,7 +48,7 @@ public static class AppSetup
         AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
         // 数据库初始化
-        _ = app.UseSqlSugarSetup();
+        _ = app.UseInitDBSetup();
         // Http
         _ = app.UseHttpSetup();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
@@ -72,7 +72,7 @@ public static class AppSetup
         // 开启响应缓存
         _ = app.UseResponseCaching();
         // 恢复或启动任务
-        _ = app.UseTaskSchedulers();
+        _ = app.UseJobSetup();
         // 全局日志中间件
         _ = app.UseMiddleware<GlobalLogMiddleware>();
         // 添加终端中间件

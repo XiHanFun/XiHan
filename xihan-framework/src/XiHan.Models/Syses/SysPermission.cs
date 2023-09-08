@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统权限表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Permission")]
+[SugarTable, SystemTable]
 public class SysPermission : BaseModifyEntity
 {
     /// <summary>
@@ -48,11 +47,13 @@ public class SysPermission : BaseModifyEntity
     /// 权限类型
     /// PermissionTypeEnum
     /// </summary>
+    [SugarColumn]
     public int PermissionType { get; set; }
 
     /// <summary>
     /// 权限排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>

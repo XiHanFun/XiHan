@@ -19,13 +19,11 @@ using StackExchange.Profiling;
 using XiHan.Infrastructures.Apps;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Consts;
 using XiHan.Models.Bases.Filters;
 using XiHan.Models.Bases.Interface;
 using XiHan.Models.Syses;
 using XiHan.Repositories.Bases;
 using XiHan.Repositories.Extensions;
-using XiHan.Services.Syses.Configs;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
 using XiHan.WebCore.Common.SqlSugar;
@@ -113,9 +111,7 @@ public static class SqlSugarSetup
                 };
                 if (entityNames.Any(name => !name.Contains(entity.EntityName)))
                 {
-                    var sysConfigService = App.GetRequiredService<ISysConfigService>();
-                    var isDemoMode = sysConfigService.GetSysConfigValueByCode<bool>(GlobalConst.IsDemoMode).GetAwaiter()
-                        .GetResult();
+                    var isDemoMode = AppSettings.IsDemoMode.GetValue();
                     if (isDemoMode) throw new CustomException("演示环境禁止修改数据！");
                 }
             }

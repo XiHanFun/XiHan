@@ -21,7 +21,7 @@ namespace XiHan.Models.Blogs;
 /// 博客评论表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Blog_Comment")]
+[SugarTable]
 public class BlogComment : BaseEntity
 {
     /// <summary>
@@ -33,6 +33,7 @@ public class BlogComment : BaseEntity
     /// <summary>
     /// 所属文章
     /// </summary>
+    [SugarColumn]
     public long ArticleId { get; set; }
 
     /// <summary>
@@ -44,11 +45,13 @@ public class BlogComment : BaseEntity
     /// <summary>
     /// 评论点赞数
     /// </summary>
+    [SugarColumn]
     public int PollCount { get; set; }
 
     /// <summary>
     /// 是否置顶 是(true)否(false)，只能置顶没有父级评论的项
     /// </summary>
+    [SugarColumn]
     public bool IsTop { get; set; }
 
     /// <summary>

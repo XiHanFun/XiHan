@@ -21,7 +21,7 @@ namespace XiHan.Models.Blogs;
 /// 博客收藏分类表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Blog_Collect_Type")]
+[SugarTable]
 public class BlogCollectType : BaseEntity
 {
     /// <summary>
@@ -45,6 +45,7 @@ public class BlogCollectType : BaseEntity
     /// <summary>
     /// 收藏总数
     /// </summary>
+    [SugarColumn]
     public int CollectCount { get; set; }
 
     /// <summary>

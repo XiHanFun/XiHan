@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统用户通知表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_User_Notice")]
+[SugarTable, SystemTable]
 public class SysUserNotice : BaseDeleteEntity
 {
     /// <summary>

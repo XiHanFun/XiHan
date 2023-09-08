@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统角色表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Role")]
+[SugarTable, SystemTable]
 public class SysRole : BaseDeleteEntity
 {
     /// <summary>
@@ -48,6 +47,7 @@ public class SysRole : BaseDeleteEntity
     /// <summary>
     /// 角色排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>

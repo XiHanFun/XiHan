@@ -24,8 +24,7 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Job")]
+[SugarTable, SystemTable]
 public class SysJob : BaseDeleteEntity
 {
     /// <summary>
@@ -43,6 +42,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 是否启动
     /// </summary>
+    [SugarColumn]
     public bool IsStart { get; set; }
 
     /// <summary>
@@ -54,6 +54,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 执行次数
     /// </summary>
+    [SugarColumn]
     public int RunTimes { get; set; }
 
     /// <summary>
@@ -67,6 +68,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 任务类型
     /// </summary>
+    [SugarColumn]
     public JobTypeEnum JobType { get; set; }
 
     #region 程序集
@@ -124,6 +126,7 @@ public class SysJob : BaseDeleteEntity
     /// <summary>
     /// 触发器类型
     /// </summary>
+    [SugarColumn]
     public TriggerTypeEnum TriggerType { get; set; }
 
     #region 定时任务

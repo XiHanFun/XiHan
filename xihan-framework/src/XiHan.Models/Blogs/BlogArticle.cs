@@ -22,7 +22,7 @@ namespace XiHan.Models.Blogs;
 /// 博客文章表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SugarTable(TableName = "Blog_Article")]
+[SugarTable]
 public class BlogArticle : BaseEntity
 {
     /// <summary>
@@ -66,21 +66,25 @@ public class BlogArticle : BaseEntity
     /// <summary>
     /// 编辑器类型
     /// </summary>
+    [SugarColumn]
     public EditorTypeEnum EditorType { get; set; }
 
     /// <summary>
     /// 文章分类
     /// </summary>
+    [SugarColumn]
     public long CategoryId { get; set; }
 
     /// <summary>
     /// 发布状态
     /// </summary>
+    [SugarColumn]
     public PubStatusEnum PubStatus { get; set; }
 
     /// <summary>
     /// 公开类型
     /// </summary>
+    [SugarColumn]
     public ExposedTypeEnum ExposedType { get; set; }
 
     /// <summary>
@@ -92,6 +96,7 @@ public class BlogArticle : BaseEntity
     /// <summary>
     /// 文章来源类型
     /// </summary>
+    [SugarColumn]
     public SourceTypeEnum SourceType { get; set; }
 
     /// <summary>
@@ -103,16 +108,19 @@ public class BlogArticle : BaseEntity
     /// <summary>
     /// 是否允许评论
     /// </summary>
+    [SugarColumn]
     public bool IsAllowComment { get; set; } = true;
 
     /// <summary>
     /// 是否置顶 是(true)否(false)
     /// </summary>
+    [SugarColumn]
     public bool IsTop { get; set; }
 
     /// <summary>
     /// 是否精华 是(true)否(false)
     /// </summary>
+    [SugarColumn]
     public bool IsEssence { get; set; }
 
     #endregion 文章设置
@@ -122,16 +130,19 @@ public class BlogArticle : BaseEntity
     /// <summary>
     /// 阅读数量
     /// </summary>
+    [SugarColumn]
     public int ReadCount { get; set; }
 
     /// <summary>
     /// 点赞数量
     /// </summary>
+    [SugarColumn]
     public int PollCount { get; set; }
 
     /// <summary>
     /// 评论数量
     /// </summary>
+    [SugarColumn]
     public int CommentCount { get; set; }
 
     #endregion 文章统计
