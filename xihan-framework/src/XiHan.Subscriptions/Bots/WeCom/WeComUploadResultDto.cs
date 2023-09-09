@@ -12,8 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Text.Json.Serialization;
-
 namespace XiHan.Subscriptions.Bots.WeCom;
 
 /// <summary>

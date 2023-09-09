@@ -207,7 +207,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public new virtual async Task<bool> UpdateAsync(TEntity entity)
+    public virtual new async Task<bool> UpdateAsync(TEntity entity)
     {
         return await base.UpdateAsync(entity);
     }
@@ -218,7 +218,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    public new virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
+    public virtual new async Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns,
         Expression<Func<TEntity, bool>> whereExpression)
     {
         return await base.UpdateAsync(columns, whereExpression);
@@ -287,7 +287,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public new virtual async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
+    public virtual new async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression)
     {
         return await Context.Queryable<TEntity>().Where(expression).AnyAsync();
     }

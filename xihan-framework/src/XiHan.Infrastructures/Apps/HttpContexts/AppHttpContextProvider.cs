@@ -14,9 +14,7 @@
 
 using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
-using System.Net.Http;
 using System.Reflection;
-using XiHan.Utils.Extensions;
 
 namespace XiHan.Infrastructures.Apps.HttpContexts;
 

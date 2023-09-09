@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-
 namespace XiHan.Subscriptions.Bots.WeCom;
 
 /// <summary>

@@ -79,8 +79,8 @@ public static class HttpContextExtend
     public static bool IsAjaxRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "X-Requested-With".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "X-Requested-With".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
     }
 
@@ -92,8 +92,8 @@ public static class HttpContextExtend
     public static bool IsJsonRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "content-type".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "content-type".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
     }
 
@@ -105,8 +105,8 @@ public static class HttpContextExtend
     public static bool IsHtmlRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-            where headers.Key.ToLower() == "accept".ToLower()
-            select headers.Value).FirstOrDefault();
+                            where headers.Key.ToLower() == "accept".ToLower()
+                            select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
     }
 

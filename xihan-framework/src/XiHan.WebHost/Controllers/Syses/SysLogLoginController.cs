@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;
 using XiHan.Infrastructures.Responses.Pages;
-using XiHan.Models.Syses;
 using XiHan.Services.Syses.Logging;
 using XiHan.Services.Syses.Logging.Dtos;
 using XiHan.WebCore.Common.Swagger;

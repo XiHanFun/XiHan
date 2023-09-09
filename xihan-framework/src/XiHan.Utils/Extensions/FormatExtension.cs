@@ -408,28 +408,28 @@ public static class FormatExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-            {
-                if (dep.TotalHours < 24)
-                    return dep.TotalHours.ParseToInt() + "小时前";
-                else
-                    switch (dep.TotalDays)
-                    {
-                        case < 7:
-                            return dep.TotalDays.ParseToInt() + "天前";
+                {
+                    if (dep.TotalHours < 24)
+                        return dep.TotalHours.ParseToInt() + "小时前";
+                    else
+                        switch (dep.TotalDays)
+                        {
+                            case < 7:
+                                return dep.TotalDays.ParseToInt() + "天前";
 
-                        case >= 7 and < 30:
-                        {
-                            var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                            return defaultWeek + "周前";
+                            case >= 7 and < 30:
+                                {
+                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                                    return defaultWeek + "周前";
+                                }
+                            default:
+                                {
+                                    return dep.TotalDays.ParseToInt() is >= 30 and < 365
+                                        ? value.Month.ParseToInt() + "个月前"
+                                        : now.Year - value.Year + "年前";
+                                }
                         }
-                        default:
-                        {
-                            return dep.TotalDays.ParseToInt() is >= 30 and < 365
-                                ? value.Month.ParseToInt() + "个月前"
-                                : now.Year - value.Year + "年前";
-                        }
-                    }
-            }
+                }
         }
     }
 

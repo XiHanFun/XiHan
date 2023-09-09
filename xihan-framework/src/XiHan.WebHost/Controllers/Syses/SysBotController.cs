@@ -20,7 +20,6 @@ using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Syses.Bots;
 using XiHan.Services.Syses.Bots.Dtos;
-using XiHan.Utils.Extensions;
 using XiHan.WebCore.Common.Swagger;
 
 namespace XiHan.WebHost.Controllers.Syses;

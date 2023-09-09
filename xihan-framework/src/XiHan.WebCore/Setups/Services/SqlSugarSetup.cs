@@ -62,8 +62,7 @@ public static class SqlSugarSetup
                 {
                     var user = httpCurrent.GetAuthInfo();
                     // 非超级管理员或未登录用户，添加过滤假删除数据的条件
-                    client.QueryFilter.AddTableFilterIF<ISoftDeleteFilter>(user.IsSuperAdmin == false,
-                        it => it.IsDeleted == false);
+                    client.QueryFilter.AddTableFilterIF<ISoftDeleteFilter>(user.IsSuperAdmin == false, it => it.IsDeleted == false);
                 }
 
                 SetSugarAop(dbProvider);
