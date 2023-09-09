@@ -22,8 +22,7 @@ namespace XiHan.Models.Blogs;
 /// 博客友情链接表
 /// </summary>
 /// <remarks>记录新增，修改，删除，审核，状态信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Blog_Friendly_Link")]
+[SugarTable]
 public class BlogFriendlyLink : BaseEntity
 {
     /// <summary>

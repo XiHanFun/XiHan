@@ -21,7 +21,7 @@ namespace XiHan.Models.Blogs;
 /// 博客分类表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SugarTable(TableName = "Blog_Category")]
+[SugarTable]
 public class BlogCategory : BaseModifyEntity
 {
     /// <summary>
@@ -39,6 +39,7 @@ public class BlogCategory : BaseModifyEntity
     /// <summary>
     /// 文章总数
     /// </summary>
+    [SugarColumn]
     public int ArticleCount { get; set; }
 
     /// <summary>

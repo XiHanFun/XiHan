@@ -22,13 +22,13 @@ namespace XiHan.Models.Syses;
 /// 系统登录日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Log_Login")]
+[SugarTable, SystemTable]
 public class SysLogLogin : BaseCreateEntity
 {
     /// <summary>
     /// 登录是否成功
     /// </summary>
+    [SugarColumn]
     public bool IsSuccess { get; set; }
 
     /// <summary>

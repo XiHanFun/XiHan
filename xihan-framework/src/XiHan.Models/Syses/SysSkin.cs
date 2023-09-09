@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统皮肤表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Skin")]
+[SugarTable, SystemTable]
 public class SysSkin : BaseModifyEntity
 {
     /// <summary>

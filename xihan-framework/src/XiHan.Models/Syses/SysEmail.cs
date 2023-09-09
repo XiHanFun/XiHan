@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统邮件配置
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Email")]
+[SugarTable, SystemTable]
 public class SysEmail : BaseModifyEntity
 {
     /// <summary>
@@ -35,6 +34,7 @@ public class SysEmail : BaseModifyEntity
     /// <summary>
     /// 是否可用
     /// </summary>
+    [SugarColumn]
     public bool IsEnabled { get; set; }
 
     /// <summary>
@@ -46,11 +46,13 @@ public class SysEmail : BaseModifyEntity
     /// <summary>
     /// 端口
     /// </summary>
+    [SugarColumn]
     public int Port { get; set; }
 
     /// <summary>
     /// 是否SSL加密
     /// </summary>
+    [SugarColumn]
     public bool UseSsl { get; set; }
 
     /// <summary>

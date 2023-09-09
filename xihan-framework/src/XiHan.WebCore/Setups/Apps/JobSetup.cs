@@ -16,14 +16,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using SqlSugar;
 using XiHan.Infrastructures.Apps;
 using XiHan.Jobs.Bases.Servers;
-using XiHan.Models.Syses;
 using XiHan.Services.Syses.Jobs;
 using XiHan.Utils.Exceptions;
 using XiHan.Utils.Extensions;
-using XiHan.WebCore.Common.SqlSugar;
 
 namespace XiHan.WebCore.Setups.Apps;
 
@@ -39,7 +36,7 @@ public static class JobSetup
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="CustomException"></exception>
-    public static IApplicationBuilder UseTaskSchedulers(this IApplicationBuilder app)
+    public static IApplicationBuilder UseJobSetup(this IApplicationBuilder app)
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 
@@ -64,9 +61,7 @@ public static class JobSetup
             "正在从配置中检测所有需要初始化启动的计划任务……".WriteLineInfo();
             var schedulerServer = App.GetRequiredService<ITaskSchedulerServer>();
             var sysJobService = App.GetRequiredService<ISysJobService>();
-
-            var client = App.GetRequiredService<ISqlSugarClient>();
-            var jobs = client.Queryable<SysJob>().Where(m => m.IsStart).ToList();
+            var jobs = sysJobService.QueryAsync(m => m.IsStart).Result;
 
             // 程序启动后注册所有计划任务
             "计划任务正在注册……".WriteLineInfo();

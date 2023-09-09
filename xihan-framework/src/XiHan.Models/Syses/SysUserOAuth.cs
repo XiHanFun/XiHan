@@ -23,13 +23,13 @@ namespace XiHan.Models.Syses;
 /// 用户三方登录授权表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_User_OAuth")]
+[SugarTable, SystemTable]
 public class SysUserOAuth : BaseCreateEntity
 {
     /// <summary>
     /// 三方登陆类型 weibo、qq、wechat 等
     /// </summary>
+    [SugarColumn]
     public OAuthTypeEnum OAuthType { get; set; }
 
     /// <summary>

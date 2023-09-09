@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统菜单表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Menu")]
+[SugarTable, SystemTable]
 public class SysMenu : BaseModifyEntity
 {
     /// <summary>
@@ -71,21 +70,25 @@ public class SysMenu : BaseModifyEntity
     /// <summary>
     /// 菜单排序
     /// </summary>
+    [SugarColumn]
     public int SortOrder { get; set; }
 
     /// <summary>
     /// 是否为外部链接
     ///</summary>
+    [SugarColumn]
     public bool IsLink { get; set; }
 
     /// <summary>
     /// 是否缓存
     ///</summary>
+    [SugarColumn]
     public bool IsCache { get; set; }
 
     /// <summary>
     /// 是否显示
     ///</summary>
+    [SugarColumn]
     public bool IsShow { get; set; }
 
     /// <summary>

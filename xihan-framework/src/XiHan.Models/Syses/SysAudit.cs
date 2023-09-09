@@ -22,13 +22,13 @@ namespace XiHan.Models.Syses;
 /// 系统审核表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Audit")]
+[SugarTable, SystemTable]
 public class SysAudit : BaseDeleteEntity
 {
     /// <summary>
     /// 审核分类
     /// </summary>
+    [SugarColumn]
     public long TypeId { get; set; }
 
     /// <summary>

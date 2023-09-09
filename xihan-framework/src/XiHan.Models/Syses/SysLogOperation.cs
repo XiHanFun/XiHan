@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统操作日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Log_Operation")]
+[SugarTable, SystemTable]
 public class SysLogOperation : SysLogVisit
 {
     /// <summary>
@@ -54,10 +53,12 @@ public class SysLogOperation : SysLogVisit
     /// <summary>
     /// 操作状态(true 正常 false异常)
     /// </summary>
+    [SugarColumn]
     public bool Status { get; set; } = true;
 
     /// <summary>
     /// 操作用时
     /// </summary>
+    [SugarColumn]
     public long ElapsedTime { get; set; }
 }

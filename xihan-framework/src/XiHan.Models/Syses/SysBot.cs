@@ -23,8 +23,7 @@ namespace XiHan.Models.Syses;
 /// 系统机器人配置表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Bot")]
+[SugarTable, SystemTable]
 public class SysBot : BaseModifyEntity
 {
     /// <summary>
@@ -36,6 +35,7 @@ public class SysBot : BaseModifyEntity
     /// <summary>
     /// 自定义机器人类型
     /// </summary>
+    [SugarColumn]
     public BotTypeEnum BotType { get; set; }
 
     /// <summary>
@@ -76,5 +76,6 @@ public class SysBot : BaseModifyEntity
     /// <summary>
     /// 是否可用
     /// </summary>
+    [SugarColumn]
     public bool IsEnabled { get; set; }
 }

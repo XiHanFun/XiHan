@@ -22,13 +22,13 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable("Sys_Job_Log")]
+[SugarTable, SystemTable]
 public class SysJobLog : BaseDeleteEntity
 {
     /// <summary>
     /// 所属任务
     /// </summary>
+    [SugarColumn]
     public long JobId { get; set; }
 
     /// <summary>
@@ -52,6 +52,7 @@ public class SysJobLog : BaseDeleteEntity
     /// <summary>
     /// 是否执行成功(1正常 0失败)
     /// </summary>
+    [SugarColumn]
     public bool IsSuccess { get; set; }
 
     /// <summary>
@@ -69,5 +70,6 @@ public class SysJobLog : BaseDeleteEntity
     /// <summary>
     /// 执行用时，毫秒
     /// </summary>
+    [SugarColumn]
     public double Elapsed { get; set; }
 }

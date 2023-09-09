@@ -138,15 +138,26 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
                 SortOrder = 2,
                 Description = "站点根据此配置开关操作日志"
             },
-            new SysConfig
+             new SysConfig
             {
                 BaseId = 13,
+                TypeCode = "SysLogConfig",
+                Code = "Visit",
+                Name = "访问日志配置",
+                Value = "true",
+                IsOfficial = true,
+                SortOrder = 3,
+                Description = "站点根据此配置开关访问日志"
+            },
+            new SysConfig
+            {
+                BaseId = 14,
                 TypeCode = "SysLogConfig",
                 Code = "Login",
                 Name = "登录日志配置",
                 Value = "true",
                 IsOfficial = true,
-                SortOrder = 3,
+                SortOrder = 4,
                 Description = "站点根据此配置开关登录日志"
             }
         };

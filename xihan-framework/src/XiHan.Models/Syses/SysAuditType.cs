@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统审核类型表
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Audit_Type")]
+[SugarTable, SystemTable]
 public class SysAuditType : BaseDeleteEntity
 {
     /// <summary>
@@ -41,6 +40,7 @@ public class SysAuditType : BaseDeleteEntity
     /// <summary>
     /// 审核等级
     /// </summary>
+    [SugarColumn]
     public int Tier { get; set; } = 1;
 
     /// <summary>

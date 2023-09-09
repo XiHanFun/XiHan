@@ -22,8 +22,7 @@ namespace XiHan.Models.Syses;
 /// 系统字典表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_Dict_Type")]
+[SugarTable, SystemTable]
 public class SysDictType : BaseModifyEntity
 {
     /// <summary>
@@ -41,11 +40,13 @@ public class SysDictType : BaseModifyEntity
     /// <summary>
     /// 是否启用
     /// </summary>
+    [SugarColumn]
     public bool IsEnable { get; set; } = true;
 
     /// <summary>
     /// 是否系统内置
     /// </summary>
+    [SugarColumn]
     public bool IsOfficial { get; set; } = false;
 
     /// <summary>

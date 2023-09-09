@@ -22,13 +22,13 @@ namespace XiHan.Models.Blogs;
 /// 博客关注表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Blog_Follow")]
+[SugarTable]
 public class BlogFollow : BaseCreateEntity
 {
     /// <summary>
     /// 关注用户
     /// </summary>
+    [SugarColumn]
     public long FollowedId { get; set; }
 
     /// <summary>

@@ -23,13 +23,13 @@ namespace XiHan.Models.Syses;
 /// 系统三方开放授权协议表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_OAuth")]
+[SugarTable, SystemTable]
 public class SysOAuth : BaseModifyEntity
 {
     /// <summary>
     /// 三方开放授权协议类型
     /// </summary>
+    [SugarColumn]
     public OAuthTypeEnum OAuthType { get; set; }
 
     /// <summary>
@@ -59,5 +59,6 @@ public class SysOAuth : BaseModifyEntity
     /// <summary>
     /// 是否可用
     /// </summary>
+    [SugarColumn]
     public bool IsEnabled { get; set; }
 }

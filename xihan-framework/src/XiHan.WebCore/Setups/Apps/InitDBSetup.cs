@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SqlSugarSetup
+// FileName:InitDBSetup
 // Guid:60e7dba5-c4d5-4e7f-819b-ceb28a096fa0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -27,9 +27,9 @@ using XiHan.Utils.Reflections;
 namespace XiHan.WebCore.Setups.Apps;
 
 /// <summary>
-/// SqlSugarSetup
+/// InitDBSetup
 /// </summary>
-public static class SqlSugarSetup
+public static class InitDBSetup
 {
     /// <summary>
     /// SqlSugar 应用扩展
@@ -37,7 +37,7 @@ public static class SqlSugarSetup
     /// <param name="app"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseSqlSugarSetup(this IApplicationBuilder app)
+    public static IApplicationBuilder UseInitDBSetup(this IApplicationBuilder app)
     {
         if (app == null) throw new ArgumentNullException(nameof(app));
 

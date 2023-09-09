@@ -23,8 +23,7 @@ namespace XiHan.Models.Syses;
 /// 系统用户表
 /// </summary>
 /// <remarks> 记录新增，修改，删除，审核，状态信息</remarks>
-[SystemTable]
-[SugarTable(TableName = "Sys_User")]
+[SugarTable, SystemTable]
 public class SysUser : BaseEntity
 {
     #region 账号信息
@@ -72,6 +71,7 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 性别
     /// </summary>
+    [SugarColumn]
     public GenderEnum Gender { get; set; } = GenderEnum.Unknown;
 
     /// <summary>
@@ -121,6 +121,7 @@ public class SysUser : BaseEntity
     /// <summary>
     /// 状态
     /// </summary>
+    [SugarColumn]
     public StatusEnum Status { get; set; } = StatusEnum.Enable;
 
     #endregion
