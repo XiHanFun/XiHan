@@ -49,9 +49,7 @@ public static class AppHttpContextProvider
         // 创建异步本地访问器
         static Func<object> CreateAsyncLocalAccessor()
         {
-            var fieldInfo =
-                typeof(HttpContextAccessor).GetField("_httpContextCurrent",
-                    BindingFlags.Static | BindingFlags.NonPublic)!;
+            var fieldInfo = typeof(HttpContextAccessor).GetField("_httpContextCurrent", BindingFlags.Static | BindingFlags.NonPublic)!;
             var field = Expression.Field(null, fieldInfo);
             return Expression.Lambda<Func<object>>(field).Compile();
         }

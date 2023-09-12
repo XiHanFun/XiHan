@@ -47,7 +47,7 @@ public class BaseApiController : ControllerBase
             foreach (var file in files)
             {
                 // 唯一文件名
-                var uniqueFileName = GetUniqueFileName(file.FileName);
+                var uniqueFileName = FileHelper.GetUniqueFileName(file.FileName);
                 // 上传文件路径
                 var fullPath = Path.Combine(App.RootUploadPath, FileHelper.GetDateDirName(),
                     FileHelper.GetFileNameWithExtension(uniqueFileName));
@@ -145,7 +145,7 @@ public class BaseApiController : ControllerBase
         if (!Path.GetExtension(file.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             throw new CustomException("Invalid file format. Only .xlsx files are supported.");
         // 唯一文件名
-        var uniqueFileName = GetUniqueFileName(file.FileName);
+        var uniqueFileName = FileHelper.GetUniqueFileName(file.FileName);
         // 导入文件路径
         var fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(),
             FileHelper.GetFileNameWithExtension(uniqueFileName));
@@ -166,7 +166,7 @@ public class BaseApiController : ControllerBase
         if (!Path.GetExtension(file.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             throw new CustomException("Invalid file format. Only .xlsx files are supported.");
         // 唯一文件名
-        var uniqueFileName = GetUniqueFileName(file.FileName);
+        var uniqueFileName = FileHelper.GetUniqueFileName(file.FileName);
         // 导入文件路径
         var fullPath = Path.Combine(App.RootImportPath, FileHelper.GetDateDirName(),
             FileHelper.GetFileNameWithExtension(uniqueFileName));
@@ -223,18 +223,4 @@ public class BaseApiController : ControllerBase
     }
 
     #endregion
-
-    /// <summary>
-    /// 生成唯一的文件名
-    /// </summary>
-    /// <param name="fileName"></param>
-    /// <returns></returns>
-    private string GetUniqueFileName(string fileName)
-    {
-        var fileNameWithoutExtension = FileHelper.GetFileNameWithoutExtension(fileName);
-        var fileExtension = FileHelper.GetFileExtension(fileName);
-        var uniqueFileName =
-            $"{FileHelper.GetDateFileName()}_{fileNameWithoutExtension}_{FileHelper.GetRandomFileName()}";
-        return uniqueFileName + fileExtension;
-    }
 }

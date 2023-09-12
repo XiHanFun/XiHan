@@ -276,6 +276,19 @@ public static class FileHelper
         return Path.GetFileName(filePath);
     }
 
+    /// <summary>
+    /// 生成唯一的文件名，上传文件使用
+    /// </summary>
+    /// <param name="fileName">包含扩展名的源文件名</param>
+    /// <returns></returns>
+    public static string GetUniqueFileName(string fileName)
+    {
+        var fileNameWithoutExtension = GetFileNameWithoutExtension(fileName);
+        var fileExtension = GetFileExtension(fileName);
+        var uniqueFileName = $"{GetDateFileName()}_{fileNameWithoutExtension}_{GetRandomFileName()}";
+        return uniqueFileName + fileExtension;
+    }
+
     #endregion
 
     #region 获取目录信息

@@ -111,7 +111,6 @@ public class TestController : BaseApiController
     /// <param name="log"></param>
     /// <returns></returns>
     [HttpGet("LogInfo")]
-    [TypeFilter(typeof(ActionFilterAsyncAttribute))]
     public string LogInfo(string log)
     {
         return $"测试日志写入:{log}";

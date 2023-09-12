@@ -42,9 +42,9 @@ public enum OAuthTypeEnum
     [Description("Github")] Github = 4,
 
     /// <summary>
-    /// Gitlub
+    /// Gitlab
     /// </summary>
-    [Description("Gitlub")] Gitlub = 5,
+    [Description("Gitlab")] Gitlab = 5,
 
     /// <summary>
     /// Gitee
