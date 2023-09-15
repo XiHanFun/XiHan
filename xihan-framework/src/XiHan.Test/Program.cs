@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Test.CodeGenerator.Copyrights;
+
 Console.WriteLine("Hello, World!");
 
 //TestZip.Extract();
@@ -23,3 +25,5 @@ Console.WriteLine("Hello, World!");
 //TestEncryption.EncryptionRsa();
 //TestEncryption.EncryptionSha();
 //TestVerificationCode.RunVerificationCode();
+
+IdentificationMaterials.Main();
