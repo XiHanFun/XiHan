@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Responses;
 using XiHan.Services.Commons.Messages.EmailPush;
 using XiHan.WebCore.Common.Swagger;
 
-namespace XiHan.WebHost.Controllers.Common.Messages;
+namespace XiHan.WebHost.Controllers.Commons.Messages;
 
 /// <summary>
 /// 邮件推送管理

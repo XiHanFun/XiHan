@@ -27,7 +27,7 @@ using XiHan.Utils.Serializes;
 using XiHan.WebCore.Common.Swagger;
 using XiHan.WebCore.Filters;
 
-namespace XiHan.WebHost.Controllers;
+namespace XiHan.WebHost.Controllers.Tests;
 
 /// <summary>
 /// 测试管理

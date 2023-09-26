@@ -19,7 +19,7 @@ using XiHan.Infrastructures.Infos;
 using XiHan.Infrastructures.Responses;
 using XiHan.WebCore.Common.Swagger;
 
-namespace XiHan.WebHost.Controllers;
+namespace XiHan.WebHost.Controllers.Commons;
 
 /// <summary>
 /// 快速开始

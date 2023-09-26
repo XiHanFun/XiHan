@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Test.CodeGenerator.Copyrights;
+using XiHan.Test.Common;
 
 Console.WriteLine("Hello, World!");
 
@@ -25,5 +26,6 @@ Console.WriteLine("Hello, World!");
 //TestEncryption.EncryptionRsa();
 //TestEncryption.EncryptionSha();
 //TestVerificationCode.RunVerificationCode();
+//IdentificationMaterials.Main();
 
-IdentificationMaterials.Main();
+TestSeo.SeoSiteMap();

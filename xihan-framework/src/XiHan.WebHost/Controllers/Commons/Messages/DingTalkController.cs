@@ -19,7 +19,7 @@ using XiHan.Services.Commons.Messages.DingTalkPush;
 using XiHan.Subscriptions.Bots.DingTalk;
 using XiHan.WebCore.Common.Swagger;
 
-namespace XiHan.WebHost.Controllers.Common.Messages;
+namespace XiHan.WebHost.Controllers.Commons.Messages;
 
 /// <summary>
 /// 钉钉消息推送管理

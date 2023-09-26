@@ -25,29 +25,29 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development' "/>
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Test' "/>
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' "/>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Test' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' " />
     <ItemGroup>
-        <Compile Remove="Uploads\**"/>
-        <Compile Remove="Xftp7DragDropSupportDir502608843\**"/>
-        <Content Remove="Uploads\**"/>
-        <Content Remove="Xftp7DragDropSupportDir502608843\**"/>
-        <EmbeddedResource Remove="Uploads\**"/>
-        <EmbeddedResource Remove="Xftp7DragDropSupportDir502608843\**"/>
-        <None Remove="Uploads\**"/>
-        <None Remove="Xftp7DragDropSupportDir502608843\**"/>
+        <Compile Remove="Uploads\**" />
+        <Compile Remove="Xftp7DragDropSupportDir502608843\**" />
+        <Content Remove="Uploads\**" />
+        <Content Remove="Xftp7DragDropSupportDir502608843\**" />
+        <EmbeddedResource Remove="Uploads\**" />
+        <EmbeddedResource Remove="Xftp7DragDropSupportDir502608843\**" />
+        <None Remove="Uploads\**" />
+        <None Remove="Xftp7DragDropSupportDir502608843\**" />
     </ItemGroup>
     <ItemGroup>
-        <None Remove="index.html"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Include="index.html"/>
+        <None Remove="index.html" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.WebCore\XiHan.WebCore.csproj"/>
+        <EmbeddedResource Include="index.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\XiHan.WebCore\XiHan.WebCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -63,7 +63,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     </ItemGroup>
 
     <ItemGroup>
@@ -101,7 +101,7 @@
 
     <ProjectExtensions>
         <VisualStudio>
-            <UserProperties properties4launchsettings1jsonJsonSchema=""/>
+            <UserProperties properties4launchsettings1jsonJsonSchema="" />
         </VisualStudio>
     </ProjectExtensions>
 

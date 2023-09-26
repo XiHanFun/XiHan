@@ -21,7 +21,7 @@ using XiHan.Subscriptions.Bots.WeCom;
 using XiHan.Utils.Encryptions;
 using XiHan.WebCore.Common.Swagger;
 
-namespace XiHan.WebHost.Controllers.Common.Messages;
+namespace XiHan.WebHost.Controllers.Commons.Messages;
 
 /// <summary>
 /// 企业微信消息推送管理

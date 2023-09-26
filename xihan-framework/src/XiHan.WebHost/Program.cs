@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Serilog;
+using XiHan.WebCore.Common.Seo;
 using XiHan.WebCore.Setups;
 using XiHan.WebHost.Consoles;
 
