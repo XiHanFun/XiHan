@@ -26,7 +26,7 @@ namespace XiHan.Models.Syses;
 public class SysEmail : BaseModifyEntity
 {
     /// <summary>
-    /// 标题
+    /// 配置标题
     /// </summary>
     [SugarColumn(Length = 64)]
     public string Title { get; set; } = string.Empty;

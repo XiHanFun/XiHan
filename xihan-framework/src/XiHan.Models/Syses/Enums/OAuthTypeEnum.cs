@@ -24,7 +24,7 @@ public enum OAuthTypeEnum
     /// <summary>
     /// QQ
     /// </summary>
-    [Description("QQ")] Qq = 1,
+    [Description("QQ")] QQ = 1,
 
     /// <summary>
     /// 微信
