@@ -38,8 +38,10 @@ public static class NetworkHelper
         try
         {
             // 获取可用网卡
-            IEnumerable<NetworkInterface> interfaces = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(network => network.OperationalStatus == OperationalStatus.Up);
+            var interfaces = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(ni => ni.OperationalStatus == OperationalStatus.Up)
+                .Where(ni => ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                .ToList();
 
             foreach (var ni in interfaces)
             {
@@ -50,7 +52,7 @@ public static class NetworkHelper
                     Description = ni.Description,
                     Type = ni.NetworkInterfaceType.ToString(),
                     Speed = ni.Speed.ToString("#,##0") + " bps",
-                    PhysicalAddress = ni.GetPhysicalAddress().ToString(),
+                    PhysicalAddress = BitConverter.ToString(ni.GetPhysicalAddress().GetAddressBytes()),
                     DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
                     IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
                 };
