@@ -60,9 +60,12 @@ public static class ShellHelper
         ProcessStartInfo info = new()
         {
             FileName = fileName,
+            // /c：在执行完命令后关闭命令提示符窗口 /b：以批处理模式运行命令
             Arguments = $"/c /b {args}",
             RedirectStandardOutput = true,
-            UseShellExecute = true,
+            // 指定是否使用操作系统的外壳程序来启动进程。如果设置为 false，则使用 CreateProcess 函数直接启动进程
+            UseShellExecute = false,
+            // 指定是否在启动进程时创建一个新的窗口
             CreateNoWindow = true
         };
 
