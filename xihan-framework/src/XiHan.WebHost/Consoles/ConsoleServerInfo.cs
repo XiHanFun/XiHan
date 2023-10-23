@@ -37,6 +37,7 @@ public static class ConsoleServerInfo
         $@"系统目录：{SystemInfoHelper.SystemDirectory}".WriteLineInfo();
         $@"运行时间：{SystemInfoHelper.RunningTime}".WriteLineInfo();
         $@"交互模式：{SystemInfoHelper.InteractiveMode}".WriteLineInfo();
+        $@"主板信息：{SystemInfoHelper.BoardInfo.SerializeTo()}".WriteLineInfo();
         $@"处理器信息：{SystemInfoHelper.CpuInfo.SerializeTo()}".WriteLineInfo();
         $@"内存信息：{SystemInfoHelper.RamInfo.SerializeTo()}".WriteLineInfo();
         $@"磁盘信息：{SystemInfoHelper.DiskInfo.SerializeTo()}".WriteLineInfo();

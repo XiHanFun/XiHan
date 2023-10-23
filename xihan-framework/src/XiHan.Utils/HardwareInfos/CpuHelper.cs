@@ -63,7 +63,7 @@ public static class CpuHelper
                 string[] lines = output.Split('\n', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    var loadPercentage = lines[0].Split('=', (char)StringSplitOptions.None)[1];
+                    var loadPercentage = lines.First(s => s.StartsWith("LoadPercentage")).Split('=', (char)StringSplitOptions.None)[1];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
                 }
             }

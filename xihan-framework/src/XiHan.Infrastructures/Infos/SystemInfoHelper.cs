@@ -62,6 +62,11 @@ public static class SystemInfoHelper
     public static string InteractiveMode => OsPlatformHelper.InteractiveMode;
 
     /// <summary>
+    /// 主板信息
+    /// </summary>
+    public static BoardInfo BoardInfo => BoardHelper.BoardInfos;
+
+    /// <summary>
     /// 处理器信息
     /// </summary>
     public static CpuInfo CpuInfo => CpuHelper.CpuInfos;

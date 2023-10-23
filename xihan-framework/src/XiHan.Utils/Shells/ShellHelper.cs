@@ -60,8 +60,10 @@ public static class ShellHelper
         ProcessStartInfo info = new()
         {
             FileName = fileName,
-            Arguments = args,
-            RedirectStandardOutput = true
+            Arguments = $"/c /b {args}",
+            RedirectStandardOutput = true,
+            UseShellExecute = true,
+            CreateNoWindow = true
         };
 
         using var process = Process.Start(info);

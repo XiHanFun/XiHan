@@ -77,8 +77,8 @@ public static class RamHelper
                 string[] lines = output.Split('\n', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.None)[1].ParseToLong() * 1024;
-                    freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.None)[1].ParseToLong() * 1024;
+                    totalMemoryParts = lines.First(s => s.StartsWith("TotalVisibleMemorySize")).Split('=', (char)StringSplitOptions.None)[1].ParseToLong() * 1024;
+                    freeMemoryParts = lines.First(s => s.StartsWith("FreePhysicalMemory")).Split('=', (char)StringSplitOptions.None)[1].ParseToLong() * 1024;
                     usedMemoryParts = totalMemoryParts - freeMemoryParts;
                 }
             }
