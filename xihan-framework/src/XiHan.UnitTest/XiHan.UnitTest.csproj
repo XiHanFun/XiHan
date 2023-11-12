@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\XiHan.WebCore\XiHan.WebCore.csproj" />
+      <ProjectReference Include="..\XiHan.WebHost\XiHan.WebHost.csproj" />
     </ItemGroup>
 
 </Project>
