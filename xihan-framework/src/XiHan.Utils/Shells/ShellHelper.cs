@@ -34,6 +34,7 @@ public static class ShellHelper
         ProcessStartInfo info = new()
         {
             FileName = @"/bin/bash",
+            // /bin/bash -c 后面接命令 ，而 /bin/bash 后面接执行的脚本
             Arguments = $@"-c ""{escapedArgs}""",
             RedirectStandardOutput = true,
             UseShellExecute = false,
@@ -50,17 +51,17 @@ public static class ShellHelper
     /// <summary>
     /// Windows 系统命令
     /// </summary>
-    /// <param name="command"></param>
+    /// <param name="fileName"></param>
+    /// <param name="args"></param>
     /// <returns></returns>
-    public static string Cmd(string command)
+    public static string Cmd(string fileName, string args)
     {
-        var output = string.Empty;
+        string output = string.Empty;
 
         ProcessStartInfo info = new()
         {
-            FileName = "cmd",
-            // /c：在执行完命令后关闭命令提示符窗口 /b：以批处理模式运行命令
-            Arguments = $"/c /b {command}",
+            FileName = fileName,
+            Arguments = args,
             RedirectStandardOutput = true,
             // 指定是否使用操作系统的外壳程序来启动进程。如果设置为 false，则使用 CreateProcess 函数直接启动进程
             UseShellExecute = false,

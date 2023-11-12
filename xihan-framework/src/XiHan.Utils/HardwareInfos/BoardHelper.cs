@@ -72,7 +72,7 @@ public static class BoardHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
+                var output = ShellHelper.Cmd("wmic", "baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
                 string[] lines = output.Split(Environment.NewLine);
                 if (lines.Any())
                 {

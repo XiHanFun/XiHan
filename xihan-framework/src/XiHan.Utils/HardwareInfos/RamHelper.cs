@@ -71,7 +71,7 @@ public static class RamHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
+                var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
                 string[] lines = output.Split(Environment.NewLine);
                 if (lines.Any())
                 {
