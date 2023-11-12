@@ -113,7 +113,7 @@ public static class OsPlatformHelper
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime /Value").Trim();
+                var output = ShellHelper.Cmd("wmic OS get LastBootUpTime /Value").Trim();
                 string[] outputArr = output.Split('=', (char)StringSplitOptions.None);
                 if (outputArr.Any())
                 {

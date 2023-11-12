@@ -50,18 +50,17 @@ public static class ShellHelper
     /// <summary>
     /// Windows 系统命令
     /// </summary>
-    /// <param name="fileName"></param>
-    /// <param name="args"></param>
+    /// <param name="command"></param>
     /// <returns></returns>
-    public static string Cmd(string fileName, string args)
+    public static string Cmd(string command)
     {
         var output = string.Empty;
 
         ProcessStartInfo info = new()
         {
-            FileName = fileName,
+            FileName = "cmd",
             // /c：在执行完命令后关闭命令提示符窗口 /b：以批处理模式运行命令
-            Arguments = $"/c /b {args}",
+            Arguments = $"/c /b {command}",
             RedirectStandardOutput = true,
             // 指定是否使用操作系统的外壳程序来启动进程。如果设置为 false，则使用 CreateProcess 函数直接启动进程
             UseShellExecute = false,

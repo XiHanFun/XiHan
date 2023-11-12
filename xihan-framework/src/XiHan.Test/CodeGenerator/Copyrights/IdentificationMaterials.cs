@@ -29,7 +29,7 @@ public class IdentificationMaterials
     public static void Main()
     {
         $@"开始读取所有代码文件……".WriteLineHandle();
-        var files = FindAllFiles(@"D:\DataMine\Repository\XiHan.Framework\xihan-framework\src", "cs");
+        var files = FindAllFiles(@"E:\Repository\XiHanFun\XiHan.Framework\xihan-framework\src", "cs");
         $@"找到代码文件共{files.Count()}个。".WriteLineHandle();
 
         var ignorePaths = new List<string>()
@@ -37,16 +37,20 @@ public class IdentificationMaterials
             "obj","bin","Test"
         };
         files = IgnorePathFiles(files, ignorePaths).OrderBy(s => s).ToList();
-        $@"移除忽略后文件共{files.Count()}个。".WriteLineHandle();
+        $@"移除忽略后文件共{files.Count}个。".WriteLineHandle();
 
         var sb = new StringBuilder();
 
-        files.Skip(1).ToList().ForEach(file =>
+        files.ForEach(file =>
         {
+            // 打印文件名称
             sb.AppendLine(file);
+            // 打印markdown代码
             sb.AppendLine("```csharp");
             var lines = File.ReadAllLines(file)
+            // 跳过版权版本注释
             .Skip(13)
+            // 跳过空行
             .Where(line => !string.IsNullOrWhiteSpace(line))
             .ToList();
             lines.ForEach(line =>

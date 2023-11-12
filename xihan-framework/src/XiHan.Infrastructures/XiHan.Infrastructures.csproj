@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <RepositoryUrl>https://github.com/XiHanFun/XiHan.Framework</RepositoryUrl>
-        <AssemblyVersion>0.3.5</AssemblyVersion>
-        <FileVersion>0.3.5</FileVersion>
+        <AssemblyVersion>0.3.6</AssemblyVersion>
+        <FileVersion>0.3.6</FileVersion>
         <Title>XiHan.Infrastructures</Title>
-        <Version>0.3.5</Version>
+        <Version>0.3.6</Version>
         <Authors>ZhaiFanhua</Authors>
         <Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -27,7 +27,7 @@
     <ItemGroup>
         <PackageReference Include="Caching.CSRedis" Version="3.8.671" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.13" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />

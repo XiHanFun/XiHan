@@ -61,20 +61,18 @@ public static class RamHelper
                 string[] lines = output.Split(' ', (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
-                    var usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.None)
-                        .Replace('M', (char)StringSplitOptions.None).ParseToLong();
+                    var usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.None).Replace('M', (char)StringSplitOptions.None).ParseToLong();
                     var usedMemoryParts2 = lines[1].Replace('M', (char)StringSplitOptions.None).ParseToLong();
 
-                    totalMemoryParts = lines[0].Replace('G', (char)StringSplitOptions.None).ParseToLong() * 1024 *
-                                       1024 * 1024;
+                    totalMemoryParts = lines[0].Replace('G', (char)StringSplitOptions.None).ParseToLong() * 1024 * 1024 * 1024;
                     freeMemoryParts = lines[3].Replace('M', (char)StringSplitOptions.None).ParseToLong() * 1024 * 1024;
                     usedMemoryParts = (usedMemoryParts1 + usedMemoryParts2) * 1024 * 1024;
                 }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
-                string[] lines = output.Split('\n', (char)StringSplitOptions.None);
+                var output = ShellHelper.Cmd("wmic OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
+                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
                     totalMemoryParts = lines.First(s => s.StartsWith("TotalVisibleMemorySize")).Split('=', (char)StringSplitOptions.None)[1].ParseToLong() * 1024;

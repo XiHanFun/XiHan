@@ -20,7 +20,7 @@ using System.Web;
 namespace XiHan.Utils.Extensions;
 
 /// <summary>
-/// EncodeExtensions
+/// 编码拓展类
 /// </summary>
 public static partial class EncodeExtension
 {

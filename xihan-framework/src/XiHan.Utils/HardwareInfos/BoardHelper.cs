@@ -40,31 +40,50 @@ public static class BoardHelper
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                //var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""").Trim();
-                //string[] lines = output.Split(',', (char)StringSplitOptions.None);
-                //if (lines.Any())
-                //{
-                //    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.None)[0];
-                //    cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
-                //}
+                string output = ShellHelper.Bash("system_profiler SPHardwareDataType").Trim();
+                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                if (!string.IsNullOrEmpty(output))
+                {
+                    var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number (system)")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Hardware UUID")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    boardInfo.Product = loadProduct;
+                    boardInfo.Manufacturer = loadManufacturer;
+                    boardInfo.SerialNumber = loadSerialNumber;
+                    boardInfo.Version = loadVersion;
+                }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                //var output = ShellHelper.Bash(@"top -l 1 -F | awk '/CPU usage/ {gsub(""%"", """"); print $7}'").Trim();
-                //cpuInfo.CpuRate = output.ParseToLong() + "%";
+                string output = ShellHelper.Bash("sudo dmidecode -t baseboard").Trim();
+                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                if (!string.IsNullOrEmpty(output))
+                {
+                    var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    boardInfo.Product = loadProduct;
+                    boardInfo.Manufacturer = loadManufacturer;
+                    boardInfo.SerialNumber = loadSerialNumber;
+                    boardInfo.Version = loadVersion;
+                }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var output = ShellHelper.Cmd("wmic", "baseboard get Product,Manufacturer,SerialNumber /Value").Trim();
-                string[] lines = output.Split('\n', (char)StringSplitOptions.None);
+                var output = ShellHelper.Cmd("wmic baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
+                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
                 if (lines.Any())
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Product")).Split('=', (char)StringSplitOptions.None)[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split('=', (char)StringSplitOptions.None)[1].Trim();
                     var loadSerialNumber = lines.First(s => s.StartsWith("SerialNumber")).Split('=', (char)StringSplitOptions.None)[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split('=', (char)StringSplitOptions.None)[1].Trim();
                     boardInfo.Product = loadProduct;
                     boardInfo.Manufacturer = loadManufacturer;
                     boardInfo.SerialNumber = loadSerialNumber;
+                    boardInfo.Version = loadVersion;
                 }
             }
         }
@@ -98,42 +117,7 @@ public class BoardInfo
     public string SerialNumber { get; set; } = string.Empty;
 
     /// <summary>
-    /// BIOS 信息
+    /// 版本号
     /// </summary>
-    public string Bios { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 芯片组信息
-    /// </summary>
-    public string Chipset { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 插槽类型和数量
-    /// </summary>
-    public string Slots { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 内存支持信息
-    /// </summary>
-    public string Memory { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 存储接口信息
-    /// </summary>
-    public string Storage { get; set; } = string.Empty;
-
-    /// <summary>
-    /// USB接口信息
-    /// </summary>
-    public string Usb { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 网络接口信息
-    /// </summary>
-    public string Network { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 接口信息
-    /// </summary>
-    public string Display { get; set; } = string.Empty;
+    public string Version { get; set; } = string.Empty;
 }
