@@ -61,7 +61,7 @@ public static class BoardHelper
                 if (lines.Any())
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':')[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Chip")).Split(':')[1].Trim();
                     var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number (system)")).Split(':')[1].Trim();
                     var loadVersion = lines.First(s => s.StartsWith("Hardware UUID")).Split(':')[1].Trim();
                     boardInfo.Product = loadProduct;
