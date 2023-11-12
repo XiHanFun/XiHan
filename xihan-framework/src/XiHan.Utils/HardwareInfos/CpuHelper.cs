@@ -45,10 +45,10 @@ public static class CpuHelper
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""").Trim();
-                string[] lines = output.Split(',', (char)StringSplitOptions.None);
+                string[] lines = output.Split(',');
                 if (lines.Any())
                 {
-                    var loadPercentage = lines[3].Trim().Split(' ', (char)StringSplitOptions.None)[0];
+                    var loadPercentage = lines[3].Trim().Split(' ')[0];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
                 }
             }
@@ -60,10 +60,10 @@ public static class CpuHelper
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var output = ShellHelper.Cmd("wmic cpu get LoadPercentage /Value").Trim();
-                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                string[] lines = output.Split(Environment.NewLine);
                 if (lines.Any())
                 {
-                    var loadPercentage = lines.First(s => s.StartsWith("LoadPercentage")).Split('=', (char)StringSplitOptions.None)[1];
+                    var loadPercentage = lines.First(s => s.StartsWith("LoadPercentage")).Split('=')[1];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
                 }
             }

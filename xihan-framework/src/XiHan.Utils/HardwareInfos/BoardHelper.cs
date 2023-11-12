@@ -41,13 +41,13 @@ public static class BoardHelper
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 string output = ShellHelper.Bash("system_profiler SPHardwareDataType").Trim();
-                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                string[] lines = output.Split(Environment.NewLine);
                 if (!string.IsNullOrEmpty(output))
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number (system)")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Hardware UUID")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':')[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
+                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number (system)")).Split(':')[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Hardware UUID")).Split(':')[1].Trim();
                     boardInfo.Product = loadProduct;
                     boardInfo.Manufacturer = loadManufacturer;
                     boardInfo.SerialNumber = loadSerialNumber;
@@ -57,13 +57,13 @@ public static class BoardHelper
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 string output = ShellHelper.Bash("sudo dmidecode -t baseboard").Trim();
-                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                string[] lines = output.Split(Environment.NewLine);
                 if (!string.IsNullOrEmpty(output))
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number")).Split(':', (char)StringSplitOptions.None)[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split(':', (char)StringSplitOptions.None)[1].Trim();
+                    var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':')[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
+                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number")).Split(':')[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split(':')[1].Trim();
                     boardInfo.Product = loadProduct;
                     boardInfo.Manufacturer = loadManufacturer;
                     boardInfo.SerialNumber = loadSerialNumber;
@@ -73,13 +73,13 @@ public static class BoardHelper
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var output = ShellHelper.Cmd("wmic baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
-                string[] lines = output.Split(Environment.NewLine, (char)StringSplitOptions.None);
+                string[] lines = output.Split(Environment.NewLine);
                 if (lines.Any())
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Product")).Split('=', (char)StringSplitOptions.None)[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split('=', (char)StringSplitOptions.None)[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("SerialNumber")).Split('=', (char)StringSplitOptions.None)[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split('=', (char)StringSplitOptions.None)[1].Trim();
+                    var loadProduct = lines.First(s => s.StartsWith("Product")).Split('=')[1].Trim();
+                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split('=')[1].Trim();
+                    var loadSerialNumber = lines.First(s => s.StartsWith("SerialNumber")).Split('=')[1].Trim();
+                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split('=')[1].Trim();
                     boardInfo.Product = loadProduct;
                     boardInfo.Manufacturer = loadManufacturer;
                     boardInfo.SerialNumber = loadSerialNumber;
