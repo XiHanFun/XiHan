@@ -42,7 +42,7 @@ public static class BoardHelper
             {
                 string output = ShellHelper.Bash("dmidecode -t baseboard").Trim();
                 string[] lines = output.Split(Environment.NewLine);
-                if (!string.IsNullOrEmpty(output))
+                if (lines.Any())
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':')[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
@@ -57,8 +57,8 @@ public static class BoardHelper
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 string output = ShellHelper.Bash("system_profiler SPHardwareDataType").Trim();
-                string[] lines = output.Split(Environment.NewLine);
-                if (!string.IsNullOrEmpty(output))
+                string[] lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+                if (lines.Any())
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':')[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
