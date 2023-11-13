@@ -41,7 +41,7 @@ public static class BoardHelper
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 string output = ShellHelper.Bash("dmidecode -t baseboard").Trim();
-                string[] lines = output.Split(Environment.NewLine);
+                string[] lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
                 if (lines.Any())
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':')[1].Trim();
