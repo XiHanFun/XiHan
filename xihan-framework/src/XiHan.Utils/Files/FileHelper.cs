@@ -32,10 +32,10 @@ public static class FileHelper
     {
         if (!Directory.Exists(directoryPath)) return;
         // 删除目录中所有的文件
-        string[] fileNames = GetFiles(directoryPath);
+        var fileNames = GetFiles(directoryPath);
         foreach (var t in fileNames) DeleteFile(t);
         // 删除目录中所有的子目录
-        string[] directoryNames = GetDirectories(directoryPath);
+        var directoryNames = GetDirectories(directoryPath);
         foreach (var t in directoryNames) DeleteDirectory(t);
     }
 
@@ -76,12 +76,12 @@ public static class FileHelper
         _ = Directory.CreateDirectory(varToDirectory);
         if (!Directory.Exists(varFromDirectory)) return;
 
-        string[] directories = Directory.GetDirectories(varFromDirectory);
+        var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
             foreach (var d in directories)
                 CopyFolder(d, varToDirectory + d[d.LastIndexOf(@"\", StringComparison.Ordinal)..]);
 
-        string[] files = Directory.GetFiles(varFromDirectory);
+        var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
 
         foreach (var s in files)
@@ -155,16 +155,16 @@ public static class FileHelper
     /// 创建文件
     /// </summary>
     /// <param name="dir">带后缀的文件名</param>
-    /// <param name="pagestr">文件内容</param>
+    /// <param name="pageStr">文件内容</param>
     /// <param name="encoding">文件编码</param>
-    public static void CreateFile(string dir, string pagestr, Encoding encoding)
+    public static void CreateFile(string dir, string pageStr, Encoding encoding)
     {
         dir = dir.Replace(@"/", @"\");
         if (dir.IndexOf(@"\", StringComparison.Ordinal) > -1)
             CreateDirectory(dir[..dir.LastIndexOf(@"\", StringComparison.Ordinal)]);
 
         StreamWriter sw = new(dir, false, encoding);
-        sw.Write(pagestr);
+        sw.Write(pageStr);
         sw.Close();
     }
 
@@ -200,13 +200,13 @@ public static class FileHelper
         _ = Directory.CreateDirectory(varToDirectory);
         if (!Directory.Exists(varFromDirectory)) return;
 
-        string[] directories = Directory.GetDirectories(varFromDirectory);
+        var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
             foreach (var d in directories)
                 DeleteFolderFiles(d,
                     string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
 
-        string[] files = Directory.GetFiles(varFromDirectory);
+        var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
 
         foreach (var s in files)
@@ -329,7 +329,7 @@ public static class FileHelper
         // 通过GetFiles方法,获取di目录中的所有文件的大小
         var len = di.GetFiles().Sum(fi => fi.Length);
         // 获取di中所有的文件夹,并存到一个新的对象数组中,以进行递归
-        DirectoryInfo[] dis = di.GetDirectories();
+        var dis = di.GetDirectories();
         if (dis.Length <= 0) return len;
 
         len += dis.Sum(t => GetDirectorySize(t.FullName));
@@ -389,7 +389,7 @@ public static class FileHelper
             return fileInfo.Length;
         }
 
-        string[] str1 = Directory.GetFileSystemEntries(filePath);
+        var str1 = Directory.GetFileSystemEntries(filePath);
         temp += str1.Sum(GetFileSize);
         return temp;
     }
@@ -402,7 +402,7 @@ public static class FileHelper
     public static int GetLineCount(string filePath)
     {
         // 将文本文件的各行读到一个字符串数组中
-        string[] rows = File.ReadAllLines(filePath);
+        var rows = File.ReadAllLines(filePath);
         // 返回行数
         return rows.Length;
     }
@@ -423,7 +423,7 @@ public static class FileHelper
         try
         {
             // 获取指定的文件列表
-            string[] fileNames = GetFiles(directoryPath, searchPattern, false);
+            var fileNames = GetFiles(directoryPath, searchPattern, false);
             // 判断指定文件是否存在
             return fileNames.Length != 0;
         }
@@ -448,7 +448,7 @@ public static class FileHelper
         try
         {
             // 获取指定的文件列表
-            string[] fileNames = GetFiles(directoryPath, searchPattern, isSearchChild);
+            var fileNames = GetFiles(directoryPath, searchPattern, isSearchChild);
             // 判断指定文件是否存在
             return fileNames.Length != 0;
         }
@@ -468,10 +468,10 @@ public static class FileHelper
     public static bool IsEmptyDirectory(string directoryPath)
     {
         // 判断是否存在文件
-        string[] fileNames = GetFiles(directoryPath);
+        var fileNames = GetFiles(directoryPath);
         if (fileNames.Any()) return false;
         // 判断是否存在文件夹
-        string[] directoryNames = GetDirectories(directoryPath);
+        var directoryNames = GetDirectories(directoryPath);
         return !directoryNames.Any();
     }
 

@@ -41,32 +41,27 @@ public static class DiskHelper
             if (OsPlatformHelper.OsIsUnix)
             {
                 var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2").Trim();
-                List<string> lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
+                var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (lines.Any())
-                    foreach (var line in lines)
-                    {
-                        // 单位是 KB
-                        string[] rootDisk = line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
-                        if (rootDisk.Length >= 5)
+                    diskInfos.AddRange(from line in lines
+                        select line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)
+                        into rootDisk
+                        where rootDisk.Length >= 5
+                        select new DiskInfo()
                         {
-                            DiskInfo info = new()
-                            {
-                                DiskName = rootDisk[4].Trim(),
-                                TypeName = rootDisk[0].Trim(),
-                                TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatFileSizeToString(),
-                                UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatFileSizeToString(),
-                                FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatFileSizeToString(),
-                                AvailableRate = rootDisk[1].ParseToLong() == 0
-                                    ? "0%"
-                                    : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%"
-                            };
-                            diskInfos.Add(info);
-                        }
-                    }
+                            DiskName = rootDisk[4].Trim(),
+                            TypeName = rootDisk[0].Trim(),
+                            TotalSpace = (rootDisk[1].ParseToLong() * 1024).FormatFileSizeToString(),
+                            UsedSpace = (rootDisk[2].ParseToLong() * 1024).FormatFileSizeToString(),
+                            FreeSpace = ((rootDisk[1].ParseToLong() - rootDisk[2].ParseToLong()) * 1024).FormatFileSizeToString(),
+                            AvailableRate = rootDisk[1].ParseToLong() == 0
+                                ? "0%"
+                                : Math.Round((decimal)rootDisk[3].ParseToLong() / rootDisk[1].ParseToLong() * 100, 3) + "%"
+                        });
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                List<DriveInfo> drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
+                var drives = DriveInfo.GetDrives().Where(d => d.IsReady).ToList();
                 diskInfos.AddRange(drives.Select(item => new DiskInfo
                 {
                     DiskName = item.Name,

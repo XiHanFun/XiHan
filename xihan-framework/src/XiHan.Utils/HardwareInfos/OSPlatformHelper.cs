@@ -114,7 +114,7 @@ public static class OsPlatformHelper
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var output = ShellHelper.Cmd("wmic", "OS get LastBootUpTime /Value").Trim();
-                string[] outputArr = output.Split('=');
+                var outputArr = output.Split('=');
                 if (outputArr.Any())
                 {
                     var timeSpan = DateTime.Now - outputArr[1].Split('.')[0].FormatStringToDate();
@@ -137,7 +137,7 @@ public static class OsPlatformHelper
     /// <returns></returns>
     private static TimeSpan ParseUptime(string uptime)
     {
-        string[] parts = uptime.Split(',');
+        var parts = uptime.Split(',');
         int days = 0, hours = 0, minutes = 0;
 
         foreach (var part in parts)
@@ -150,7 +150,7 @@ public static class OsPlatformHelper
             }
             else if (trimmedPart.Contains(':'))
             {
-                string[] timeParts = trimmedPart.Split(':');
+                var timeParts = trimmedPart.Split(':');
                 hours = int.Parse(timeParts[0]);
                 minutes = int.Parse(timeParts[1]);
             }

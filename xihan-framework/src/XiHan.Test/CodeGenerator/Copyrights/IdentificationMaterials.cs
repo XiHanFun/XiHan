@@ -61,7 +61,7 @@ public class IdentificationMaterials
             sb.AppendLine();
         });
 
-        string code = sb.ToString();
+        var code = sb.ToString();
         FileHelper.WriteText(@"D:\曦寒软著代码.md", code, Encoding.UTF8);
         $@"生成成功！路径【D:\曦寒软著代码.md】。".WriteLineSuccess();
     }

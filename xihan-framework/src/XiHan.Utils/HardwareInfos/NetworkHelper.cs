@@ -43,10 +43,9 @@ public static class NetworkHelper
                 .Where(ni => ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
                 .ToList();
 
-            foreach (var ni in interfaces)
-            {
-                var properties = ni.GetIPProperties();
-                NetworkInfo networkInfo = new()
+            networkInfos.AddRange(from ni in interfaces
+                let properties = ni.GetIPProperties()
+                select new NetworkInfo()
                 {
                     Name = ni.Name,
                     Description = ni.Description,
@@ -55,9 +54,7 @@ public static class NetworkHelper
                     PhysicalAddress = BitConverter.ToString(ni.GetPhysicalAddress().GetAddressBytes()),
                     DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
                     IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
-                };
-                networkInfos.Add(networkInfo);
-            }
+                });
         }
         catch (Exception ex)
         {

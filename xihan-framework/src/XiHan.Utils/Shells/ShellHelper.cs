@@ -56,7 +56,7 @@ public static class ShellHelper
     /// <returns></returns>
     public static string Cmd(string fileName, string args)
     {
-        string output = string.Empty;
+        var output = string.Empty;
 
         ProcessStartInfo info = new()
         {

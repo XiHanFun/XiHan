@@ -110,7 +110,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<SysConfig> GetSysConfigById(long configId)
     {
-        SysConfig sysConfig = await FindAsync(d => d.BaseId == configId);
+        var sysConfig = await FindAsync(d => d.BaseId == configId);
         return sysConfig;
     }
 
@@ -121,7 +121,7 @@ public class SysConfigService : BaseService<SysConfig>, ISysConfigService
     /// <returns></returns>
     public async Task<T> GetSysConfigValueByCode<T>(string configCode)
     {
-        SysConfig sysConfig = await FindAsync(d => d.Code == configCode);
+        var sysConfig = await FindAsync(d => d.Code == configCode);
         return sysConfig.Value.CastTo<T>()!;
     }
 

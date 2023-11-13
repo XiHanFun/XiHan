@@ -26,20 +26,10 @@ public static partial class RegexHelper
     /// <summary>
     /// 验证输入字符串是否与模式字符串匹配，匹配返回 true
     /// </summary>
-    /// <param name="input">输入字符串</param>
-    /// <param name="pattern">模式字符串</param>
-    public static bool IsMatch(string input, string pattern)
-    {
-        return IsMatch(input, pattern, RegexOptions.IgnoreCase);
-    }
-
-    /// <summary>
-    /// 验证输入字符串是否与模式字符串匹配，匹配返回 true
-    /// </summary>
     /// <param name="input">输入的字符串</param>
     /// <param name="pattern">模式字符串</param>
     /// <param name="options">筛选条件</param>
-    public static bool IsMatch(string input, string pattern, RegexOptions options)
+    public static bool IsMatch(string input, string pattern, RegexOptions options = RegexOptions.IgnoreCase)
     {
         return Regex.IsMatch(input, pattern, options);
     }
@@ -112,23 +102,21 @@ public static partial class RegexHelper
             long.TryParse(checkValue.Replace('x', '0').Replace('X', '0'), out _) == false)
             return false;
         // 省份验证
-        var address =
-            "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+        const string address = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
         if (!address.Contains(checkValue.Remove(2), StringComparison.CurrentCulture)) return false;
         // 生日验证
         var birth = checkValue.Substring(6, 8).Insert(6, "-").Insert(4, "-");
         if (!DateTime.TryParse(birth, out _)) return false;
         // 校验码验证
-        string[] arrVarifyCode = "1,0,x,9,8,7,6,5,4,3,2".Split(',');
-        string[] wi = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(',');
+        var arrVerifyCode = "1,0,x,9,8,7,6,5,4,3,2".Split(',');
+        var wi = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(',');
         var ai = checkValue.Remove(17).ToCharArray();
         var sum = 0;
         for (var i = 0; i < 17; i++) sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
 
         _ = Math.DivRem(sum, 11, out var y);
-        if (arrVarifyCode[y] != checkValue.Substring(17, 1).ToLowerInvariant()) return false;
+        return arrVerifyCode[y] == checkValue.Substring(17, 1).ToLowerInvariant();
         // 符合GB11643-1999标准
-        return true;
     }
 
     /// <summary>
@@ -485,7 +473,7 @@ public static partial class RegexHelper
         var result = false;
         try
         {
-            string[] checkValueArg = checkValue.Split('.');
+            var checkValueArg = checkValue.Split('.');
             if (string.Empty != checkValue && checkValue.Length < 16 && checkValueArg.Length == 4)
             {
                 for (var i = 0; i < 4; i++)

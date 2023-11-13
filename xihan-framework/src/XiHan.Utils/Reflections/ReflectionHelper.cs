@@ -29,9 +29,9 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Assembly> GetAllEffectiveAssemblies(string prefix = "XiHan", string suffix = "dll")
     {
-        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        IEnumerable<Assembly> filteredAssemblies = assemblies
+        var filteredAssemblies = assemblies
             .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().StartsWith(prefix.ToLowerInvariant()))
             .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().EndsWith(suffix.ToLowerInvariant()));
 
@@ -58,14 +58,14 @@ public static class ReflectionHelper
         List<string> nugetPackages = new();
 
         // 获取当前应用程序集引用的所有程序集
-        IEnumerable<Assembly> assemblies = GetAllEffectiveAssemblies();
+        var assemblies = GetAllEffectiveAssemblies();
 
         // 查找被引用程序集中的 NuGet 库依赖项
         foreach (var assembly in assemblies)
         {
-            IEnumerable<AssemblyName> referencedAssemblies = assembly.GetReferencedAssemblies()
-                .Where(s => !s.FullName!.StartsWith("Microsoft"))
-                .Where(s => !s.FullName!.StartsWith("System"));
+            var referencedAssemblies = assembly.GetReferencedAssemblies()
+                .Where(s => !s.FullName.StartsWith("Microsoft"))
+                .Where(s => !s.FullName.StartsWith("System"));
             foreach (var referencedAssembly in referencedAssemblies)
                 // 检查引用的程序集是否来自 NuGet
                 if (referencedAssembly.FullName.Contains("Version="))
@@ -176,14 +176,10 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClassesByGenericInterface(Type interfaceType)
     {
-        List<Type> implementingTypes = new();
-
-        foreach (var type in GetAllEffectiveTypes())
-            if (type.IsClass && !type.IsAbstract && type.GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
-                implementingTypes.Add(type);
-
-        return implementingTypes;
+        return GetAllEffectiveTypes()
+            .Where(type => type is { IsClass: true, IsAbstract: false } && type.GetInterfaces()
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
+            .ToList();
     }
 
     #endregion
@@ -226,8 +222,7 @@ public static class ReflectionHelper
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TAttribute"></typeparam>
     /// <returns></returns>
-    public static IEnumerable<Type> GetFilterAttributeSubClass<T, TAttribute>()
-        where T : class where TAttribute : Attribute
+    public static IEnumerable<Type> GetFilterAttributeSubClass<T, TAttribute>() where T : class where TAttribute : Attribute
     {
         return GetSubClasses<T>().Intersect(GetFilterAttributeTypes<TAttribute>());
     }

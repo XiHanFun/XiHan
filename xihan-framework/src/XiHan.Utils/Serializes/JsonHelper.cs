@@ -61,7 +61,7 @@ public class JsonHelper
         var jsonStr = streamReader.ReadToEnd();
         dynamic? obj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         obj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
-        string[] keys = keyLink.Split(':');
+        var keys = keyLink.Split(':');
         var currentObject = obj;
         foreach (var key in keys)
         {
@@ -88,7 +88,7 @@ public class JsonHelper
         dynamic? jsoObj = JsonSerializer.Deserialize<TEntity>(jsonStr, SerializeHelper.JsonSerializerOptionsInstance);
         jsoObj ??= JsonDocument.Parse(JsonSerializer.Serialize(new object()));
 
-        string[] keys = keyLink.Split(':');
+        var keys = keyLink.Split(':');
         var currentObject = jsoObj;
         for (var i = 0; i < keys.Length; i++)
         {
