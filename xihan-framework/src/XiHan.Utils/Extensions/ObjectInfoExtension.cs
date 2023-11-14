@@ -80,7 +80,7 @@ public static class ObjectInfoExtension
     {
         if (instance == null) throw new NotImplementedException(nameof(instance));
 
-        FieldInfo[] foundFieldInfos = instance.GetType()
+        var foundFieldInfos = instance.GetType()
             .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundFieldInfos ?? throw new NotImplementedException(nameof(foundFieldInfos));
     }
@@ -129,7 +129,7 @@ public static class ObjectInfoExtension
     {
         if (instance == null) throw new NotImplementedException(nameof(instance));
 
-        PropertyInfo[] foundPropertyInfos = instance.GetType()
+        var foundPropertyInfos = instance.GetType()
             .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundPropertyInfos ?? throw new NotImplementedException(nameof(foundPropertyInfos));
     }

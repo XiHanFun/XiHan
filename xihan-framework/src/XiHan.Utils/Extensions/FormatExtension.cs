@@ -24,8 +24,7 @@ public static class FormatExtension
 {
     #region FileSize
 
-    private static readonly string[] Suffixes = new string[]
-    {
+    private static readonly string[] Suffixes = {
         "B", "KB", "MB", "GB", "TB", "PB"
     };
 
@@ -254,7 +253,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static string GetWeekByDate(this DateTime dateTime)
     {
-        string[] day = new[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        string[] day = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
         return day[Convert.ToInt32(dateTime.DayOfWeek.ToString("d"))];
     }
 
@@ -408,28 +407,27 @@ public static class FormatExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-                {
-                    if (dep.TotalHours < 24)
+            {
+                if (dep.TotalHours < 24)
                         return dep.TotalHours.ParseToInt() + "小时前";
-                    else
-                        switch (dep.TotalDays)
-                        {
-                            case < 7:
-                                return dep.TotalDays.ParseToInt() + "天前";
+                switch (dep.TotalDays)
+                {
+                    case < 7:
+                        return dep.TotalDays.ParseToInt() + "天前";
 
-                            case >= 7 and < 30:
-                                {
-                                    var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                                    return defaultWeek + "周前";
-                                }
-                            default:
-                                {
-                                    return dep.TotalDays.ParseToInt() is >= 30 and < 365
-                                        ? value.Month.ParseToInt() + "个月前"
-                                        : now.Year - value.Year + "年前";
-                                }
-                        }
+                    case >= 7 and < 30:
+                    {
+                        var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                        return defaultWeek + "周前";
+                    }
+                    default:
+                    {
+                        return dep.TotalDays.ParseToInt() is >= 30 and < 365
+                            ? value.Month.ParseToInt() + "个月前"
+                            : now.Year - value.Year + "年前";
+                    }
                 }
+            }
         }
     }
 
@@ -448,20 +446,18 @@ public static class FormatExtension
             {
                 return DateTime.Parse(thisValue);
             }
-            else
+
+            var length = thisValue.Length;
+            return length switch
             {
-                var length = thisValue.Length;
-                return length switch
-                {
-                    4 => DateTime.ParseExact(thisValue, "yyyy", CultureInfo.CurrentCulture),
-                    6 => DateTime.ParseExact(thisValue, "yyyyMM", CultureInfo.CurrentCulture),
-                    8 => DateTime.ParseExact(thisValue, "yyyyMMdd", CultureInfo.CurrentCulture),
-                    10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", CultureInfo.CurrentCulture),
-                    12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", CultureInfo.CurrentCulture),
-                    14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture),
-                    _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture)
-                };
-            }
+                4 => DateTime.ParseExact(thisValue, "yyyy", CultureInfo.CurrentCulture),
+                6 => DateTime.ParseExact(thisValue, "yyyyMM", CultureInfo.CurrentCulture),
+                8 => DateTime.ParseExact(thisValue, "yyyyMMdd", CultureInfo.CurrentCulture),
+                10 => DateTime.ParseExact(thisValue, "yyyyMMddHH", CultureInfo.CurrentCulture),
+                12 => DateTime.ParseExact(thisValue, "yyyyMMddHHmm", CultureInfo.CurrentCulture),
+                14 => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture),
+                _ => DateTime.ParseExact(thisValue, "yyyyMMddHHmmss", CultureInfo.CurrentCulture)
+            };
         }
         catch
         {

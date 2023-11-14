@@ -47,7 +47,7 @@ public static class DiskHelper
                         select line.Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)
                         into rootDisk
                         where rootDisk.Length >= 5
-                        select new DiskInfo()
+                        select new DiskInfo
                         {
                             DiskName = rootDisk[4].Trim(),
                             TypeName = rootDisk[0].Trim(),

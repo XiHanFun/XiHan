@@ -34,7 +34,7 @@ public class ResourcesService
         if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
 
         List<MigrationInfoDto> list = new();
-        string[] paths = FileHelper.GetFiles(resourceInfo.Path);
+        IEnumerable<string> paths = FileHelper.GetFiles(resourceInfo.Path);
         foreach (var path in paths)
         {
             MigrationInfoDto migrationInfo = new()

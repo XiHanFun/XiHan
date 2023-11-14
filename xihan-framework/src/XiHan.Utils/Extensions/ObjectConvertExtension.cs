@@ -30,10 +30,7 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static bool ParseToBool(this object? thisValue)
     {
-        var reveal = false;
-        return thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reveal)
-            ? reveal
-            : reveal;
+        return thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out var reveal) && reveal;
     }
 
     #endregion
@@ -208,9 +205,8 @@ public static class ObjectConvertExtension
     /// <returns></returns>
     public static int ParseToInt(this object? thisValue)
     {
-        var reveal = 0;
         return thisValue == null ? 0 :
-            thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out reveal) ? reveal : reveal;
+            thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reveal) ? reveal:0;
     }
 
     /// <summary>
@@ -394,7 +390,7 @@ public static class ObjectConvertExtension
         foreach (var objDynamic in objDynamics)
         {
             // 找到所有的没有此特性、或有此特性但忽略字段的属性
-            Dictionary<string, dynamic> item = (objDynamic as object).GetType().GetProperties()
+            var item = (objDynamic as object).GetType().GetProperties()
                 .ToDictionary(prop => prop.Name, prop => prop.GetValue(objDynamic, null));
 
             yield return item;
@@ -415,7 +411,7 @@ public static class ObjectConvertExtension
         foreach (var objDynamic in objDynamics)
         {
             // 找到所有的没有此特性、或有此特性但忽略字段的属性
-            Dictionary<string, dynamic> item = (objDynamic as object).GetType().GetProperties()
+            var item = (objDynamic as object).GetType().GetProperties()
                 .Where(prop => !prop.HasAttribute<TAttribute>() ||
                                (prop.HasAttribute<TAttribute>() &&
                                 !(Attribute.GetCustomAttribute(prop, typeof(TAttribute)) as TAttribute)!
@@ -478,16 +474,16 @@ public static class ObjectConvertExtension
         // 常规类型
         return conversionType switch
         {
-            Type t when t == typeof(bool) => value.ParseToBool(),
-            Type t when t == typeof(short) => value.ParseToShort(),
-            Type t when t == typeof(long) => value.ParseToLong(),
-            Type t when t == typeof(float) => value.ParseToFloat(),
-            Type t when t == typeof(double) => value.ParseToDouble(),
-            Type t when t == typeof(decimal) => value.ParseToDecimal(),
-            Type t when t == typeof(int) => value.ParseToInt(),
-            Type t when t == typeof(string) => value.ParseToString(),
-            Type t when t == typeof(DateTime) => value.ParseToDateTime(),
-            Type t when t == typeof(Guid) => value.ParseToGuid(),
+            { } t when t == typeof(bool) => value.ParseToBool(),
+            { } t when t == typeof(short) => value.ParseToShort(),
+            { } t when t == typeof(long) => value.ParseToLong(),
+            { } t when t == typeof(float) => value.ParseToFloat(),
+            { } t when t == typeof(double) => value.ParseToDouble(),
+            { } t when t == typeof(decimal) => value.ParseToDecimal(),
+            { } t when t == typeof(int) => value.ParseToInt(),
+            { } t when t == typeof(string) => value.ParseToString(),
+            { } t when t == typeof(DateTime) => value.ParseToDateTime(),
+            { } t when t == typeof(Guid) => value.ParseToGuid(),
             _ => Convert.ChangeType(value, conversionType) // 处理未知类型的情况
         };
     }

@@ -90,7 +90,7 @@ public static class EnumExtension
     public static IEnumerable<EnumDescDto> GetEnumInfos(this Type enumType)
     {
         List<EnumDescDto> result = new();
-        List<FieldInfo> fields = enumType.GetFields().Skip(1).ToList();
+        var fields = enumType.GetFields().Skip(1).ToList();
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理
@@ -118,20 +118,18 @@ public static class EnumExtension
     public static Dictionary<int, string> GetEnumValueDescriptionToDictionary(this Type enumType)
     {
         Dictionary<int, string> result = new();
-        List<FieldInfo> fields = enumType.GetFields().ToList();
+        var fields = enumType.GetFields().ToList();
         if (fields.Any()) return result;
 
         fields.ForEach(field =>
         {
             // 不是枚举字段不处理
-            if (field.FieldType.IsEnum)
-            {
-                var desc = string.Empty;
-                if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
-                    desc = description.Description;
+            if (!field.FieldType.IsEnum) return;
+            var desc = string.Empty;
+            if (field.GetCustomAttribute(typeof(DescriptionAttribute), false) is DescriptionAttribute description)
+                desc = description.Description;
 
-                result.Add((int)field.GetRawConstantValue()!, desc);
-            }
+            result.Add((int)field.GetRawConstantValue()!, desc);
         });
         return result;
     }

@@ -33,8 +33,11 @@ public static class GenericityInfoExtension
     /// <returns></returns>
     public static TEntity GetPropertyDeepestValue<TEntity>(this TEntity entity, string propertyName)
     {
-        var value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
-        return value == null ? entity : GetPropertyDeepestValue(entity, propertyName);
+        while (true)
+        {
+            var value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
+            if (value == null) return entity;
+        }
     }
 
     /// <summary>
@@ -59,7 +62,7 @@ public static class GenericityInfoExtension
         // 转成真实类型，防止Dynamic类型转换成object
         var bodyObj = Expression.Convert(paramObj, objectType);
         var body = Expression.Property(bodyObj, propertyInfo);
-        Func<TEntity, TValue> getValue = Expression.Lambda<Func<TEntity, TValue>>(body, paramObj).Compile();
+        var getValue = Expression.Lambda<Func<TEntity, TValue>>(body, paramObj).Compile();
         return getValue(entity);
     }
 
@@ -92,7 +95,7 @@ public static class GenericityInfoExtension
         if (setMethod == null) return false;
 
         var body = Expression.Call(paramObj, setMethod, bodyVal);
-        Action<TEntity, TValue> setValue =
+        var setValue =
             Expression.Lambda<Action<TEntity, TValue>>(body, paramObj, paramVal).Compile();
         setValue(entity, value);
 
@@ -106,7 +109,7 @@ public static class GenericityInfoExtension
     public static List<CustomPropertyInfo> GetProperties<TEntity>(this TEntity entity) where TEntity : class
     {
         var type = typeof(TEntity);
-        System.Reflection.PropertyInfo[] properties = type.GetProperties();
+        var properties = type.GetProperties();
         return properties.Select(info => new CustomPropertyInfo()
         {
             PropertyName = info.Name,
@@ -125,7 +128,7 @@ public static class GenericityInfoExtension
     public static IEnumerable<CustomPropertyVariance> GetPropertiesDetailedCompare<TEntity>(this TEntity entity1,
         TEntity entity2) where TEntity : class
     {
-        System.Reflection.PropertyInfo[] propertyInfo = typeof(TEntity).GetProperties();
+        var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
         {
             PropertyName = variance.Name,
@@ -150,7 +153,7 @@ public static class GenericityInfoExtension
         List<string> specialList) where TEntity : class
     {
         // 要排除某些特殊属性
-        IEnumerable<CustomPropertyVariance> list = GetPropertiesDetailedCompare(oldVal, newVal);
+        var list = GetPropertiesDetailedCompare(oldVal, newVal);
         var newList = list.Select(s => new
         {
             s.PropertyName,

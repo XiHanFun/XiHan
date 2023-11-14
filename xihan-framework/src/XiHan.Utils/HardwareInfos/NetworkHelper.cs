@@ -40,7 +40,7 @@ public static class NetworkHelper
             // 获取可用网卡
             var interfaces = NetworkInterface.GetAllNetworkInterfaces()
                 .Where(ni => ni.OperationalStatus == OperationalStatus.Up)
-                .Where(ni => ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                .Where(ni => ni.NetworkInterfaceType is NetworkInterfaceType.Ethernet or NetworkInterfaceType.Wireless80211)
                 .ToList();
 
             networkInfos.AddRange(from ni in interfaces

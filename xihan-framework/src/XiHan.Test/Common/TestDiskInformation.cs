@@ -38,7 +38,7 @@ public static class TestDiskInformation
         Console.WriteLine(
             $@"【D:\DataMine\Repository\XiHan.Framework\README.md】文件大小：{FormatExtension.FormatFileSizeToString(FileHelper.GetFileSize(@"D:\DataMine\Repository\XiHan.Framework\README.md"))}；");
 
-        string[]? directories = FileHelper.GetDirectories(@"D:\");
+        IEnumerable<string> directories = FileHelper.GetDirectories(@"D:\");
         Console.WriteLine($@"【D:\】目录：");
         foreach (var directory in directories) Console.WriteLine(directory);
     }

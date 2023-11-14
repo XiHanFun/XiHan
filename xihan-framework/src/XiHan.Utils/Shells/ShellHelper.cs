@@ -35,7 +35,9 @@ public static class ShellHelper
         {
             FileName = @"/bin/bash",
             // /bin/bash -c 后面接命令 ，而 /bin/bash 后面接执行的脚本
-            Arguments = $@"-c ""{escapedArgs}""",
+            Arguments = $"""
+                         -c "{escapedArgs}"
+                         """,
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true

@@ -186,7 +186,7 @@ public static class Base32
             bitCount += 8;
             while (bitCount >= 5)
             {
-                var mask = 0x1f;
+                const int mask = 0x1f;
                 var currentBase32Value = accumulatedBits & mask;
                 _ = sb.Append(Base32Alphabet[currentBase32Value]);
                 accumulatedBits >>= 5;
@@ -194,9 +194,9 @@ public static class Base32
             }
         }
 
-        if (bitCount > 0)
+        if (bitCount <= 0) return sb.ToString();
         {
-            var mask = 0x1f;
+            const int mask = 0x1f;
             var currentBase32Value = accumulatedBits & mask;
             _ = sb.Append(Base32Alphabet[currentBase32Value]);
         }

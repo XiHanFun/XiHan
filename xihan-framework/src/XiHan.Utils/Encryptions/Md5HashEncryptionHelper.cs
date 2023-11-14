@@ -39,10 +39,8 @@ public static class Md5HashEncryptionHelper
             var bytes = Encoding.UTF8.GetBytes(md5Str);
             return ComputeHash(bytes);
         }
-        else
-        {
-            return md5Str;
-        }
+
+        return md5Str;
     }
 
     /// <summary>

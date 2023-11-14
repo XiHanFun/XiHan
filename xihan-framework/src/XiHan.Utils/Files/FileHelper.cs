@@ -298,7 +298,7 @@ public static class FileHelper
     /// </summary>
     /// <param name="directoryPath"></param>
     /// <returns></returns>
-    public static string[] GetDirectories(string directoryPath)
+    public static IEnumerable<string> GetDirectories(string directoryPath)
     {
         return Directory.GetDirectories(directoryPath);
     }
@@ -345,7 +345,7 @@ public static class FileHelper
     /// </summary>
     /// <param name="directoryPath">指定目录的绝对路径</param>
     /// <returns></returns>
-    public static string[] GetFiles(string directoryPath)
+    public static IEnumerable<string> GetFiles(string directoryPath)
     {
         // 如果目录不存在，则抛出异常
         if (!IsExistDirectory(directoryPath)) throw new FileNotFoundException();

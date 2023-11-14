@@ -73,9 +73,9 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetListStr(this List<string> sourceList, char sepeater = ',', bool isAllowsDuplicates = true)
+    public static string GetListStr(this IEnumerable<string> sourceList, char sepeater = ',', bool isAllowsDuplicates = true)
     {
-        IEnumerable<string> sourceEnumerable = sourceList;
+        var sourceEnumerable = sourceList;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
     }
 
@@ -83,13 +83,13 @@ public static class StringExtension
     /// 组装数组按分割器转换为字符串
     /// </summary>
     /// <param name="sourceArray">源数组</param>
-    /// <param name="sepeater">分割器</param>
+    /// <param name="sepeator">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetArrayStr(this string[] sourceArray, char sepeater = ',', bool isAllowsDuplicates = true)
+    public static string GetArrayStr(this IEnumerable<string> sourceArray, char sepeator = ',', bool isAllowsDuplicates = true)
     {
-        IEnumerable<string> sourceEnumerable = sourceArray;
-        return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
+        var sourceEnumerable = sourceArray;
+        return sourceEnumerable.GetEnumerableStr(sepeator, isAllowsDuplicates);
     }
 
     /// <summary>
@@ -119,8 +119,9 @@ public static class StringExtension
         StringBuilder sb = new();
         if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
 
-        foreach (var item in sourceEnumerable)
-            if (item == sourceEnumerable.LastOrDefault())
+        var enumerable = sourceEnumerable.ToList();
+        foreach (var item in enumerable)
+            if (item == enumerable.LastOrDefault())
             {
                 _ = sb.Append(item);
             }
@@ -267,7 +268,7 @@ public static class StringExtension
                 if (!string.IsNullOrWhiteSpace(newStr.ToString()))
                 {
                     // 将分隔符放在新样式中的位置
-                    string[] str = newStr.ToString().Split(',');
+                    var str = newStr.ToString().Split(',');
                     sourceStr = str.Aggregate(sourceStr, (current, bb) => current.Insert(int.Parse(bb), splitString));
                 }
 

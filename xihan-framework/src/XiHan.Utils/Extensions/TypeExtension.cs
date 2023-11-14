@@ -109,8 +109,8 @@ public static class TypeExtension
     /// <returns></returns>
     public static bool IsAsync(this MethodInfo method)
     {
-        return method.ReturnType == typeof(Task) || (method.ReturnType.IsGenericType &&
-                                                     method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>));
+        return method.ReturnType == typeof(Task) || method.ReturnType.IsGenericType &&
+            method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
     }
 
     /// <summary>
@@ -180,13 +180,10 @@ public static class TypeExtension
     /// <returns> </returns>
     public static Type GetUnNullableType(this Type type)
     {
-        if (type.IsNullableType())
-        {
-            NullableConverter nullableConverter = new(type);
-            return nullableConverter.UnderlyingType;
-        }
+        if (!type.IsNullableType()) return type;
+        NullableConverter nullableConverter = new(type);
+        return nullableConverter.UnderlyingType;
 
-        return type;
     }
 
     #endregion
@@ -202,16 +199,12 @@ public static class TypeExtension
     public static string GetDescription(this Type type, bool inherit = true)
     {
         var result = string.Empty;
-        if (type.IsNotNullableType())
-        {
-            var fullName = type.FullName ?? result;
-            var desc = type.GetAttribute<DescriptionAttribute>(inherit);
-            if (desc != null)
-            {
-                var description = desc.Description;
-                result = fullName + "(" + description + ")";
-            }
-        }
+        if (!type.IsNotNullableType()) return result;
+        var fullName = type.FullName ?? result;
+        var desc = type.GetAttribute<DescriptionAttribute>(inherit);
+        if (desc == null) return result;
+        var description = desc.Description;
+        result = fullName + "(" + description + ")";
 
         return result;
     }
@@ -259,7 +252,7 @@ public static class TypeExtension
     /// <returns>存在返回第一个，不存在返回null</returns>
     public static T? GetAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
     {
-        object[] attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
+        var attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
         return attributes.FirstOrDefault() as T;
     }
 
@@ -333,7 +326,7 @@ public static class TypeExtension
     {
         if (type.IsGenericType)
         {
-            Type[] genericArguments = type.GetGenericArguments();
+            var genericArguments = type.GetGenericArguments();
             ProcessGenericType(builder, type, genericArguments, genericArguments.Length, fullName);
         }
         else if (type.IsArray)
@@ -366,7 +359,7 @@ public static class TypeExtension
         }
     }
 
-    private static void ProcessGenericType(StringBuilder builder, Type type, Type[] genericArguments, int length,
+    private static void ProcessGenericType(StringBuilder builder, Type type, IReadOnlyList<Type> genericArguments, int length,
         bool fullName)
     {
         var offset = type.IsNested ? type.DeclaringType!.GetGenericArguments().Length : 0;
