@@ -57,13 +57,4 @@ public class CustomException : Exception
     {
         message?.WriteLineError();
     }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected CustomException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
 }

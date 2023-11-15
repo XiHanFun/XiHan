@@ -24,9 +24,9 @@ namespace XiHan.Test.CodeGenerator.Copyrights;
 public class IdentificationMaterials
 {
     /// <summary>
-    /// 主函数
+    /// 生成函数
     /// </summary>
-    public static void Main()
+    public static void Generate()
     {
         $@"开始读取所有代码文件……".WriteLineHandle();
         var files = FindAllFiles(@"E:\Repository\XiHanFun\XiHan.Framework\xihan-framework\src", "cs");
