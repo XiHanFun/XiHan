@@ -88,7 +88,7 @@ public class SysRoleService : BaseService<SysRole>, ISysRoleService
     /// <returns></returns>
     public async Task<List<SysRole>> GetUserRolesByUserId(long userId)
     {
-        return await Context.Queryable<SysUserRole>()
+        return await Context.Queryable<SysUserRoleTieup>()
             .LeftJoin<SysRole>((ur, r) => ur.RoleId == r.BaseId)
             .Where((ur, r) => ur.BaseId == userId && !r.IsDeleted)
             .Select((ur, r) => r)

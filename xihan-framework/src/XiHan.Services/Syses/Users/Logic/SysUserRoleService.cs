@@ -22,14 +22,14 @@ namespace XiHan.Services.Syses.Users.Logic;
 /// 系统用户角色关联服务
 /// </summary>
 [AppService(ServiceType = typeof(ISysUserRoleService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
+public class SysUserRoleService : BaseService<SysUserRoleTieup>, ISysUserRoleService
 {
     /// <summary>
     /// 新增用户角色
     /// </summary>
     /// <param name="sysUserRole"></param>
     /// <returns></returns>
-    public async Task<bool> CreateUserRole(SysUserRole sysUserRole)
+    public async Task<bool> CreateUserRole(SysUserRoleTieup sysUserRole)
     {
         return await AddAsync(sysUserRole);
     }
@@ -39,7 +39,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// </summary>
     /// <param name="sysUserRoles"></param>
     /// <returns></returns>
-    public async Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles)
+    public async Task<bool> CreateUserRoles(List<SysUserRoleTieup> sysUserRoles)
     {
         return await AddAsync(sysUserRoles);
     }
@@ -72,7 +72,7 @@ public class SysUserRoleService : BaseService<SysUserRole>, ISysUserRoleService
     /// <returns></returns>
     public async Task<List<SysUser>> GetSysUsersByRoleId(long roleId)
     {
-        return await Context.Queryable<SysUserRole>()
+        return await Context.Queryable<SysUserRoleTieup>()
             .LeftJoin<SysUser>((ur, u) => ur.UserId == u.BaseId)
             .Where((ur, u) => ur.RoleId == roleId && !u.IsDeleted)
             .Select((ur, u) => u)

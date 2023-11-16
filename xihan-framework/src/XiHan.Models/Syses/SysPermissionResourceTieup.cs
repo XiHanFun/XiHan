@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysPermissionResource
+// FileName:SysPermissionResourceTieup
 // Guid:7350f0eb-f8b3-4d81-ac4f-ca3d9adfd884
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -23,7 +23,7 @@ namespace XiHan.Models.Syses;
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable, SystemTable]
-public class SysPermissionResource : BaseModifyEntity
+public class SysPermissionResourceTieup : BaseModifyEntity
 {
     /// <summary>
     /// 所属权限

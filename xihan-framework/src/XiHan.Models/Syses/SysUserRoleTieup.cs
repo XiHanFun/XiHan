@@ -3,36 +3,37 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysUserCollect
-// Guid:9a936a6b-f0bf-4fe9-9c43-868982a69e01
+// FileName:SysUserRoleTieup
+// Guid:4bd03482-a95a-4c4e-a544-6e89ecf7c275
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-05-08 下午 06:02:22
+// CreatedTime:2022-05-09 下午 05:14:15
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Entities;
 
-namespace XiHan.Models.Blogs;
+namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 博客收藏表
+/// 系统用户角色关联表(为某用户分配角色)
 /// </summary>
-/// <remarks>记录新增信息</remarks>
-[SugarTable]
-public class BlogCollect : BaseCreateEntity
+/// <remarks>记录新增，修改息</remarks>
+[SugarTable, SystemTable]
+public class SysUserRoleTieup : BaseModifyEntity
 {
     /// <summary>
-    /// 分类编码
+    /// 用户账户
     /// </summary>
     [SugarColumn]
-    public long TypeId { get; set; }
+    public long UserId { get; init; }
 
     /// <summary>
-    /// 收藏文章
+    /// 系统角色
     /// </summary>
     [SugarColumn]
-    public long ArticleId { get; set; }
+    public long RoleId { get; init; }
 }

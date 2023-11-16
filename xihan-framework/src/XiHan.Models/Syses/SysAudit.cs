@@ -29,7 +29,7 @@ public class SysAudit : BaseDeleteEntity
     /// 审核分类
     /// </summary>
     [SugarColumn]
-    public long TypeId { get; set; }
+    public long CategoryId { get; set; }
 
     /// <summary>
     /// 审核内容

@@ -20,21 +20,21 @@ namespace XiHan.Services.Syses.Users;
 /// <summary>
 /// ISysUserRoleService
 /// </summary>
-public interface ISysUserRoleService : IBaseService<SysUserRole>
+public interface ISysUserRoleService : IBaseService<SysUserRoleTieup>
 {
     /// <summary>
     /// 新增用户角色
     /// </summary>
     /// <param name="sysUserRole"></param>
     /// <returns></returns>
-    Task<bool> CreateUserRole(SysUserRole sysUserRole);
+    Task<bool> CreateUserRole(SysUserRoleTieup sysUserRole);
 
     /// <summary>
     /// 批量新增用户角色
     /// </summary>
     /// <param name="sysUserRoles"></param>
     /// <returns></returns>
-    Task<bool> CreateUserRoles(List<SysUserRole> sysUserRoles);
+    Task<bool> CreateUserRoles(List<SysUserRoleTieup> sysUserRoles);
 
     /// <summary>
     /// 删除用户角色

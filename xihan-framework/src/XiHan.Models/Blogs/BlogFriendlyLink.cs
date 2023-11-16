@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysFriendlyLink
+// FileName:BlogFriendlyLink
 // Guid:6580a424-f371-43eb-aafb-5ed17facb1aa
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com

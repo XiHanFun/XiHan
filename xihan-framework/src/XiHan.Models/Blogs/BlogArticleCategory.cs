@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BlogTag
-// Guid:fa23fa92-d511-41b1-ac8d-1574fa01a3af
+// FileName:BlogArticleCategory
+// Guid:73eb779d-74f7-40ad-a7bd-79617d20c4f2
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-05-08 下午 06:31:06
+// CreatedTime:2022-05-08 下午 06:22:23
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -18,35 +18,23 @@ using XiHan.Models.Bases.Entities;
 namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 博客标签表
+/// 博客文章分类表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable]
-public class BlogTag : BaseModifyEntity
+public class BlogArticleCategory : BaseModifyEntity
 {
     /// <summary>
-    /// 标签别名
+    /// 父级分类
     /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Alias { get; set; } = string.Empty;
+    [SugarColumn(IsNullable = true)]
+    public long? ParentId { get; set; }
 
     /// <summary>
-    /// 标签名称
+    /// 分类名称
     /// </summary>
-    [SugarColumn(Length = 20)]
+    [SugarColumn(Length = 64)]
     public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 标签封面
-    /// </summary>
-    [SugarColumn(Length = 500)]
-    public string Cover { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 标签颜色
-    /// </summary>
-    [SugarColumn(Length = 20)]
-    public string Color { get; set; } = string.Empty;
 
     /// <summary>
     /// 文章总数
@@ -55,8 +43,15 @@ public class BlogTag : BaseModifyEntity
     public int ArticleCount { get; set; }
 
     /// <summary>
-    /// 标签描述
+    /// 分类描述
     /// </summary>
-    [SugarColumn(Length = 50, IsNullable = true)]
-    public string? Description { get; set; } = string.Empty;
+    [SugarColumn(Length = 256, IsNullable = true)]
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// 博客文章
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.CategoryId), nameof(BlogArticleCategoryTieup.ArticleId))]
+    public List<BlogArticle> Articles { get; set; } = [];
 }

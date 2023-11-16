@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BlogCategory
-// Guid:73eb779d-74f7-40ad-a7bd-79617d20c4f2
+// FileName:BlogArticleCategoryTieup
+// Guid:7f74e0d5-2c12-492c-b849-9651624ef6ae
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-05-08 下午 06:22:23
+// CreatedTime:2022-05-08 下午 06:33:08
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -18,33 +18,21 @@ using XiHan.Models.Bases.Entities;
 namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 博客分类表
+/// 博客文章分类关联表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable]
-public class BlogCategory : BaseModifyEntity
+public class BlogArticleCategoryTieup : BaseModifyEntity
 {
     /// <summary>
-    /// 父级分类
-    /// </summary>
-    [SugarColumn(IsNullable = true)]
-    public long? ParentId { get; set; }
-
-    /// <summary>
-    /// 分类名称
-    /// </summary>
-    [SugarColumn(Length = 64)]
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 文章总数
+    /// 关联文章
     /// </summary>
     [SugarColumn]
-    public int ArticleCount { get; set; }
+    public long ArticleId { get; set; }
 
     /// <summary>
-    /// 分类描述
+    /// 关联分类
     /// </summary>
-    [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Description { get; set; }
+    [SugarColumn]
+    public long CategoryId { get; set; }
 }

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysAuditType
+// FileName:SysAuditCategory
 // Guid:52830965-a1e7-4d56-b98e-2582f19d22d8
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -23,7 +23,7 @@ namespace XiHan.Models.Syses;
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
 [SugarTable, SystemTable]
-public class SysAuditType : BaseDeleteEntity
+public class SysAuditCategory : BaseDeleteEntity
 {
     /// <summary>
     /// 父级审核分类

@@ -15,6 +15,7 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entities;
 using XiHan.Models.Blogs.Enums;
+using XiHan.Models.Syses;
 
 namespace XiHan.Models.Blogs;
 
@@ -60,8 +61,6 @@ public class BlogArticle : BaseEntity
     /// </summary>
     [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Content { get; set; } = string.Empty;
-
-    #region 文章设置
 
     /// <summary>
     /// 编辑器类型
@@ -123,10 +122,6 @@ public class BlogArticle : BaseEntity
     [SugarColumn]
     public bool IsEssence { get; set; }
 
-    #endregion 文章设置
-
-    #region 文章统计
-
     /// <summary>
     /// 阅读数量
     /// </summary>
@@ -137,7 +132,13 @@ public class BlogArticle : BaseEntity
     /// 点赞数量
     /// </summary>
     [SugarColumn]
-    public int PollCount { get; set; }
+    public int VoteCount { get; set; }
+
+    /// <summary>
+    /// 点踩数量
+    /// </summary>
+    [SugarColumn]
+    public int OpposeCount { get; set; }
 
     /// <summary>
     /// 评论数量
@@ -145,5 +146,37 @@ public class BlogArticle : BaseEntity
     [SugarColumn]
     public int CommentCount { get; set; }
 
-    #endregion 文章统计
+    /// <summary>
+    /// 发表者Ip
+    /// </summary>
+    [SugarColumn(Length = 128, IsNullable = true)]
+    public string? Ip { get; set; }
+
+    /// <summary>
+    /// 文章分类
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.ArticleId), nameof(BlogArticleCategoryTieup.CategoryId))]
+    public List<BlogArticleCategory> Categorys { get; set; } = [];
+
+    /// <summary>
+    /// 文章标签
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    [Navigate(NavigateType.ManyToMany, nameof(BlogArticleTagTieup.ArticleId), nameof(BlogArticleTagTieup.TagId))]
+    public List<BlogArticleTag> Tags { get; set; } = [];
+
+    /// <summary>
+    /// 文章赞踩
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    [Navigate(NavigateType.OneToMany, nameof(BlogArticlePoll.ArticleId))]
+    public List<BlogArticlePoll> Polls { get; set; } = [];
+
+    /// <summary>
+    /// 文章评论
+    /// </summary>
+    [SugarColumn(IsIgnore = true)]
+    [Navigate(NavigateType.OneToMany, nameof(BlogArticleComment.ArticleId))]
+    public List<BlogArticleComment> Comments { get; set; } = [];
 }

@@ -3,37 +3,36 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysPermissionMenu
-// Guid:47b72b2e-41ff-4c0a-be2f-35c1c48641cf
+// FileName:BlogArticlePoll
+// Guid:2fcf240c-8218-497c-aae9-83f9c5791dfe
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-08-04 下午 01:36:37
+// CreatedTime:2022-05-08 下午 06:29:20
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Entities;
 
-namespace XiHan.Models.Syses;
+namespace XiHan.Models.Blogs;
 
 /// <summary>
-/// 系统权限菜单关联表(为某权限分配菜单)
+/// 博客文章赞踩表
 /// </summary>
-/// <remarks>记录新增，修改信息</remarks>
-[SugarTable, SystemTable]
-public class SysPermissionMenu : BaseModifyEntity
+/// <remarks>记录新增信息</remarks>
+[SugarTable]
+public class BlogArticlePoll : BaseCreateEntity
 {
     /// <summary>
-    /// 系统权限
+    /// 所属文章
     /// </summary>
     [SugarColumn]
-    public long PermissionId { get; set; }
+    public long ArticleId { get; set; }
 
     /// <summary>
-    /// 系统菜单
+    /// 赞或踩 赞(true)踩(false)
     /// </summary>
     [SugarColumn]
-    public long MenuId { get; set; }
+    public bool IsPositive { get; set; } = true;
 }
