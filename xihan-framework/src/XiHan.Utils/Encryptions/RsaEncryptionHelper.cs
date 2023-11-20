@@ -18,7 +18,7 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// RSA 加密解密类
+/// RSA 加密解密
 /// </summary>
 public static class RsaEncryptionHelper
 {

@@ -18,7 +18,7 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Aes 加密解密类
+/// Aes 加密解密
 /// </summary>
 /// <remarks>比 Des 加密更加安全</remarks>
 public static class AesEncryptionHelper
@@ -64,7 +64,6 @@ public static class AesEncryptionHelper
             cryptoStream.Write(plainBytes, 0, plainBytes.Length);
             cryptoStream.FlushFinalBlock();
             var cipherBytes = cipherStream.ToArray();
-
             cipherText = Convert.ToBase64String(cipherBytes);
         }
 
@@ -108,7 +107,6 @@ public static class AesEncryptionHelper
         cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
         cryptoStream.FlushFinalBlock();
         var plainBytes = plainStream.ToArray();
-
         var plainText = Encoding.UTF8.GetString(plainBytes);
 
         // 返回解密结果

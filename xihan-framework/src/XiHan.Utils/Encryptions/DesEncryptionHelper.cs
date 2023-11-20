@@ -18,7 +18,7 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Des 加密解密类
+/// Des 加密解密
 /// </summary>
 public static class DesEncryptionHelper
 {
@@ -34,8 +34,8 @@ public static class DesEncryptionHelper
     static DesEncryptionHelper()
     {
         // 构造函数，初始化密钥和向量
-        const string password = "XiHan_ZhaiFanhua";
-        PasswordDeriveBytes pdb = new(password, null);
+        const string defultPassword = "ZhaiFanhua";
+        PasswordDeriveBytes pdb = new(defultPassword, null);
         KeyBytes = pdb.GetBytes(8);
         IvBytes = pdb.GetBytes(8);
     }

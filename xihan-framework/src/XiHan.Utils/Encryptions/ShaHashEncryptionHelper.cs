@@ -18,7 +18,7 @@ using System.Text;
 namespace XiHan.Utils.Encryptions;
 
 /// <summary>
-/// Sha 生成哈希类
+/// Sha 生成哈希
 /// </summary>
 /// <remarks>用于数据的完整性校验、数字签名等</remarks>
 public static class ShaHashEncryptionHelper
@@ -31,8 +31,8 @@ public static class ShaHashEncryptionHelper
     public static string Sha1(string data)
     {
         // 创建 SHA1 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        var hashData = SHA1.HashData(Encoding.UTF8.GetBytes(data));
-        return ComputeHash(hashData);
+        var hashBytes = SHA1.HashData(Encoding.UTF8.GetBytes(data));
+        return Convert.ToHexString(hashBytes);
     }
 
     /// <summary>
@@ -43,8 +43,8 @@ public static class ShaHashEncryptionHelper
     public static string Sha256(string data)
     {
         // 创建 SHA256 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(data));
-        return ComputeHash(hashData);
+        var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(data));
+        return Convert.ToHexString(hashBytes);
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public static class ShaHashEncryptionHelper
     public static string Sha384(string data)
     {
         // 创建 SHA384 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        var hashData = SHA384.HashData(Encoding.UTF8.GetBytes(data));
-        return ComputeHash(hashData);
+        var hashBytes = SHA384.HashData(Encoding.UTF8.GetBytes(data));
+        return Convert.ToHexString(hashBytes);
     }
 
     /// <summary>
@@ -67,21 +67,7 @@ public static class ShaHashEncryptionHelper
     public static string Sha512(string data)
     {
         // 创建 SHA512 加密算法实例，将字符串数据转换为字节数组，并生成相应的哈希值
-        var hashData = SHA512.HashData(Encoding.UTF8.GetBytes(data));
-        return ComputeHash(hashData);
-    }
-
-    /// <summary>
-    /// 计算哈希值
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    private static string ComputeHash(IEnumerable<byte> source)
-    {
-        // 将字节数组转换为十六进制字符串
-        StringBuilder sb = new();
-        foreach (var t in source) _ = sb.Append(t.ToString("x2"));
-        // 返回生成的哈希值
-        return sb.ToString();
+        var hashBytes = SHA512.HashData(Encoding.UTF8.GetBytes(data));
+        return Convert.ToHexString(hashBytes);
     }
 }

@@ -22,10 +22,10 @@ Console.WriteLine("Hello, World!");
 
 //TestEncryption.EncryptionDes();
 //TestEncryption.EncryptionAes();
-//TestEncryption.EncryptionMd5();
+//TestEncryption.EncryptionDes();
 //TestEncryption.EncryptionRsa();
 //TestEncryption.EncryptionSha();
 //TestVerificationCode.RunVerificationCode();
 //IdentificationMaterials.Main();
 
-TestSeo.SeoSiteMap();
+//TestSeo.SeoSiteMap();
