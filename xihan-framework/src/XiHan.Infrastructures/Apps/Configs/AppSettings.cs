@@ -56,12 +56,12 @@ public static class AppSettings
         /// <summary>
         /// 域名
         /// </summary>
-        public static string[] Origins { get; set; } = Array.Empty<string>();
+        public static string[] Origins { get; set; } = [];
 
         /// <summary>
         /// 请求头
         /// </summary>
-        public static string[] Headers { get; set; } = Array.Empty<string>();
+        public static string[] Headers { get; set; } = [];
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public static class AppSettings
         /// <summary>
         /// 分组
         /// </summary>
-        public static string[] PublishGroup { get; set; } = Array.Empty<string>();
+        public static string[] PublishGroup { get; set; } = [];
     }
 
     /// <summary>
@@ -236,7 +236,7 @@ public static class AppSettings
         /// <summary>
         /// 连接配置
         /// </summary>
-        public static DatabaseConfig[] DatabaseConfigs { get; set; } = Array.Empty<DatabaseConfig>();
+        public static DatabaseConfig[] DatabaseConfigs { get; set; } = [];
 
         /// <summary>
         /// 控制台打印

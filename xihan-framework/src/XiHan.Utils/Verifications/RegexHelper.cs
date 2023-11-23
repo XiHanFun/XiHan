@@ -115,7 +115,7 @@ public static partial class RegexHelper
         for (var i = 0; i < 17; i++) sum += int.Parse(wi[i]) * int.Parse(ai[i].ToString());
 
         _ = Math.DivRem(sum, 11, out var y);
-        return arrVerifyCode[y] == checkValue.Substring(17, 1).ToLowerInvariant();
+        return arrVerifyCode[y].Equals(checkValue.Substring(17, 1), StringComparison.InvariantCultureIgnoreCase);
         // 符合GB11643-1999标准
     }
 

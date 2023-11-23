@@ -37,7 +37,7 @@ public static class HttpPollySetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddHttpPollySetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 若超时则抛出此异常
         Polly.Retry.AsyncRetryPolicy<HttpResponseMessage> retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()

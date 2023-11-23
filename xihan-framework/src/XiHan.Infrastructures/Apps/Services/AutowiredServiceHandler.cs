@@ -21,19 +21,14 @@ namespace XiHan.Infrastructures.Apps.Services;
 /// 属性或字段自动装配服务处理器
 /// </summary>
 /// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
-public class AutowiredServiceHandler
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="serviceProvider"></param>
+public class AutowiredServiceHandler(IServiceProvider serviceProvider)
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly Dictionary<Type, Action<object, IServiceProvider>> _autowiredActions = new();
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="serviceProvider"></param>
-    public AutowiredServiceHandler(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly Dictionary<Type, Action<object, IServiceProvider>> _autowiredActions = [];
 
     /// <summary>
     /// 装配属性和字段
@@ -64,7 +59,7 @@ public class AutowiredServiceHandler
             var obj = Expression.Convert(objParam, serviceType);
             var getService = typeof(IServiceProvider).GetMethod("GetService");
 
-            List<Expression> setList = new();
+            List<Expression> setList = [];
             if (getService != null)
             {
                 // 字段赋值

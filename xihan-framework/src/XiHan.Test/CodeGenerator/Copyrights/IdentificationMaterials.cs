@@ -30,13 +30,13 @@ public class IdentificationMaterials
     {
         $@"开始读取所有代码文件……".WriteLineHandle();
         var files = FindAllFiles(@"E:\Repository\XiHanFun\XiHan.Framework\xihan-framework\src", "cs");
-        $@"找到代码文件共{files.Count()}个。".WriteLineHandle();
+        $@"找到代码文件共{files.Count}个。".WriteLineHandle();
 
         var ignorePaths = new List<string>()
         {
             "obj","bin","Test"
         };
-        files = IgnorePathFiles(files, ignorePaths).OrderBy(s => s).ToList();
+        files = [.. IgnorePathFiles(files, ignorePaths).OrderBy(s => s)];
         $@"移除忽略后文件共{files.Count}个。".WriteLineHandle();
 
         var sb = new StringBuilder();
@@ -74,7 +74,7 @@ public class IdentificationMaterials
     /// <returns></returns>
     private static List<string> FindAllFiles(string path, string suffix = "cs")
     {
-        return FileHelper.GetFiles(path, $"*.{suffix}", true).ToList();
+        return [.. FileHelper.GetFiles(path, $"*.{suffix}", true)];
     }
 
     /// <summary>

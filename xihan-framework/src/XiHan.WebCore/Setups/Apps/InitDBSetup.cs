@@ -39,7 +39,7 @@ public static class InitDBSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseInitDBSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        ArgumentNullException.ThrowIfNull(app);
 
         // 初始化
         var client = App.GetRequiredService<ISqlSugarClient>();
@@ -70,7 +70,7 @@ public static class InitDBSetup
             "创建数据表……".WriteLineInfo();
             // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
             Type[] dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
-            if (!dbEntities.Any()) return;
+            if (dbEntities.Length == 0) return;
             // 支持分表，官方文档 https://www.donet5.com/Home/Doc?typeId=1201
             client.CodeFirst.SetStringDefaultLength(256).SplitTables().InitTables(dbEntities);
             "数据表创建成功！".WriteLineSuccess();
@@ -99,7 +99,7 @@ public static class InitDBSetup
 
             // 获取继承自泛型接口 ISeedData<> 的所有类
             List<Type> seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
-            if (!seedTypes.Any()) return;
+            if (seedTypes.Count == 0) return;
 
             seedTypes.ForEach(seedType =>
             {

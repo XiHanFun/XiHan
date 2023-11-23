@@ -27,19 +27,14 @@ namespace XiHan.Services.Syses.Dicts.Logic;
 /// <summary>
 /// 系统字典服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysDictDataService"></param>
 [AppService(ServiceType = typeof(ISysDictTypeService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
+public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseService<SysDictType>, ISysDictTypeService
 {
-    private readonly ISysDictDataService _sysDictDataService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysDictDataService"></param>
-    public SysDictTypeService(ISysDictDataService sysDictDataService)
-    {
-        _sysDictDataService = sysDictDataService;
-    }
+    private readonly ISysDictDataService _sysDictDataService = sysDictDataService;
 
     /// <summary>
     /// 校验字典是否唯一
@@ -82,7 +77,7 @@ public class SysDictTypeService : BaseService<SysDictType>, ISysDictTypeService
         // 已分配字典
         List<string> typeCodes = sysDictTypeList.Select(s => s.Code).ToList();
         List<SysDictData> sysDictDataList = await _sysDictDataService.QueryAsync(f => typeCodes.Contains(f.TypeCode));
-        if (!sysDictDataList.Any()) return await RemoveAsync(s => dictIds.Contains(s.BaseId));
+        if (sysDictDataList.Count == 0) return await RemoveAsync(s => dictIds.Contains(s.BaseId));
 
         foreach (var sysDictData in sysDictDataList)
         {

@@ -21,18 +21,13 @@ namespace XiHan.Subscriptions.Bots.Email;
 /// <summary>
 /// 邮件服务
 /// </summary>
-public class EmailBot
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="fromModel"></param>
+public class EmailBot(EmailFromModel fromModel)
 {
-    private readonly EmailFromModel _fromModel;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="fromModel"></param>
-    public EmailBot(EmailFromModel fromModel)
-    {
-        _fromModel = fromModel;
-    }
+    private readonly EmailFromModel _fromModel = fromModel;
 
     /// <summary>
     /// 发送邮件

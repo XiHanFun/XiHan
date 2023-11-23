@@ -34,7 +34,7 @@ public static class ControllerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddControllersSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         _ = services.AddControllers(configure =>
             {

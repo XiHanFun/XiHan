@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统登录日志管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysLogLoginService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogLoginController : BaseApiController
+public class SysLogLoginController(ISysLogLoginService sysLogLoginService) : BaseApiController
 {
-    private readonly ISysLogLoginService _sysLogLoginService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysLogLoginService"></param>
-    public SysLogLoginController(ISysLogLoginService sysLogLoginService)
-    {
-        _sysLogLoginService = sysLogLoginService;
-    }
+    private readonly ISysLogLoginService _sysLogLoginService = sysLogLoginService;
 
     /// <summary>
     /// 批量删除系统登录日志

@@ -35,34 +35,25 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// 系统登录授权管理
 /// <code>包含：JWT登录授权</code>
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysUserService"></param>
+/// <param name="sysRoleService"></param>
+/// <param name="sysPermissionService"></param>
+/// <param name="sysMenuService"></param>
+/// <param name="sysLogLoginService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Authorize)]
-public class SysAuthController : BaseApiController
+public class SysAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
+    ISysPermissionService sysPermissionService,
+    ISysMenuService sysMenuService, ISysLogLoginService sysLogLoginService) : BaseApiController
 {
-    private readonly ISysUserService _sysUserService;
-    private readonly ISysRoleService _sysRoleService;
-    private readonly ISysPermissionService _sysPermissionService;
-    private readonly ISysMenuService _sysMenuService;
-    private readonly ISysLogLoginService _sysLogLoginService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysUserService"></param>
-    /// <param name="sysRoleService"></param>
-    /// <param name="sysPermissionService"></param>
-    /// <param name="sysMenuService"></param>
-    /// <param name="sysLogLoginService"></param>
-    public SysAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
-        ISysPermissionService sysPermissionService,
-        ISysMenuService sysMenuService, ISysLogLoginService sysLogLoginService)
-    {
-        _sysUserService = sysUserService;
-        _sysRoleService = sysRoleService;
-        _sysPermissionService = sysPermissionService;
-        _sysMenuService = sysMenuService;
-        _sysLogLoginService = sysLogLoginService;
-    }
+    private readonly ISysUserService _sysUserService = sysUserService;
+    private readonly ISysRoleService _sysRoleService = sysRoleService;
+    private readonly ISysPermissionService _sysPermissionService = sysPermissionService;
+    private readonly ISysMenuService _sysMenuService = sysMenuService;
+    private readonly ISysLogLoginService _sysLogLoginService = sysLogLoginService;
 
     /// <summary>
     /// 登录(通过账户)

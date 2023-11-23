@@ -23,19 +23,14 @@ namespace XiHan.WebCore.Filters;
 /// <summary>
 /// 异步资源过滤器属性(一般用于缓存、阻止模型(值)绑定操作等)
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-public class ResourceFilterAsyncAttribute : Attribute, IAsyncResourceFilter
+public class ResourceFilterAsyncAttribute(int syncTimeout = 30) : Attribute, IAsyncResourceFilter
 {
     // 缓存时间
-    private readonly int _syncTimeout;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ResourceFilterAsyncAttribute(int syncTimeout = 30)
-    {
-        _syncTimeout = syncTimeout;
-    }
+    private readonly int _syncTimeout = syncTimeout;
 
     /// <summary>
     /// 在某资源执行时

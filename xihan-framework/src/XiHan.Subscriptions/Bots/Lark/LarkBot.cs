@@ -27,22 +27,15 @@ namespace XiHan.Subscriptions.Bots.Lark;
 /// https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
 /// 自定义机器人的频率控制和普通应用不同，为 100 次/分钟，5 次/秒
 /// </summary>
-public class LarkBot
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="larkConnection"></param>
+public class LarkBot(LarkConnection larkConnection)
 {
-    private readonly string _url;
-    private readonly string? _secret;
-    private readonly string? _keyWord;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="larkConnection"></param>
-    public LarkBot(LarkConnection larkConnection)
-    {
-        _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
-        _secret = larkConnection.Secret;
-        _keyWord = larkConnection.KeyWord;
-    }
+    private readonly string _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
+    private readonly string? _secret = larkConnection.Secret;
+    private readonly string? _keyWord = larkConnection.KeyWord;
 
     /// <summary>
     /// 发送文本消息

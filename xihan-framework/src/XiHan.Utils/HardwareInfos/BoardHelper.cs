@@ -42,7 +42,7 @@ public static class BoardHelper
             {
                 var output = ShellHelper.Bash("dmidecode -t baseboard").Trim();
                 var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':')[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
@@ -58,7 +58,7 @@ public static class BoardHelper
             {
                 var output = ShellHelper.Bash("system_profiler SPHardwareDataType").Trim();
                 var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':')[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Chip")).Split(':')[1].Trim();
@@ -74,7 +74,7 @@ public static class BoardHelper
             {
                 var output = ShellHelper.Cmd("wmic", "baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
                 var lines = output.Split(Environment.NewLine);
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var loadProduct = lines.First(s => s.StartsWith("Product")).Split('=')[1].Trim();
                     var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split('=')[1].Trim();

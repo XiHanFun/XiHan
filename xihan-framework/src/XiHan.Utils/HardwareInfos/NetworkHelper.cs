@@ -33,7 +33,7 @@ public static class NetworkHelper
     /// <returns></returns>
     public static List<NetworkInfo> GetNetworkInfos()
     {
-        List<NetworkInfo> networkInfos = new();
+        List<NetworkInfo> networkInfos = [];
 
         try
         {
@@ -44,17 +44,17 @@ public static class NetworkHelper
                 .ToList();
 
             networkInfos.AddRange(from ni in interfaces
-                let properties = ni.GetIPProperties()
-                select new NetworkInfo()
-                {
-                    Name = ni.Name,
-                    Description = ni.Description,
-                    Type = ni.NetworkInterfaceType.ToString(),
-                    Speed = ni.Speed.ToString("#,##0") + " bps",
-                    PhysicalAddress = BitConverter.ToString(ni.GetPhysicalAddress().GetAddressBytes()),
-                    DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
-                    IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
-                });
+                                  let properties = ni.GetIPProperties()
+                                  select new NetworkInfo()
+                                  {
+                                      Name = ni.Name,
+                                      Description = ni.Description,
+                                      Type = ni.NetworkInterfaceType.ToString(),
+                                      Speed = ni.Speed.ToString("#,##0") + " bps",
+                                      PhysicalAddress = BitConverter.ToString(ni.GetPhysicalAddress().GetAddressBytes()),
+                                      DnsAddresses = properties.DnsAddresses.Select(ip => ip.ToString()).ToList(),
+                                      IpAddresses = properties.UnicastAddresses.Select(ip => ip.Address + " / " + ip.IPv4Mask).ToList()
+                                  });
         }
         catch (Exception ex)
         {
@@ -98,10 +98,10 @@ public class NetworkInfo
     /// <summary>
     /// DNS地址
     /// </summary>
-    public List<string> DnsAddresses { get; set; } = new();
+    public List<string> DnsAddresses { get; set; } = [];
 
     /// <summary>
     /// IP地址
     /// </summary>
-    public List<string> IpAddresses { get; set; } = new();
+    public List<string> IpAddresses { get; set; } = [];
 }

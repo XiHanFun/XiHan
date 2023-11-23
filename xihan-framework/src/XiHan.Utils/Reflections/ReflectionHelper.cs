@@ -32,7 +32,7 @@ public static class ReflectionHelper
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
         var filteredAssemblies = assemblies
-            .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().StartsWith(prefix.ToLowerInvariant()))
+            .Where(assembly => assembly.ManifestModule.Name.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))
             .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().EndsWith(suffix.ToLowerInvariant()));
 
         return filteredAssemblies;
@@ -55,7 +55,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static List<string> GetInstalledNuGetPackages()
     {
-        List<string> nugetPackages = new();
+        List<string> nugetPackages = [];
 
         // 获取当前应用程序集引用的所有程序集
         var assemblies = GetAllEffectiveAssemblies();

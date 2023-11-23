@@ -25,20 +25,15 @@ namespace XiHan.WebHost.Controllers.Commons.Messages;
 /// 邮件推送管理
 /// <code>包含：SMTP</code>
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="emailPushService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Common)]
-public class EmailController : BaseApiController
+public class EmailController(IEmailPushService emailPushService) : BaseApiController
 {
-    private readonly IEmailPushService _emailPushService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="emailPushService"></param>
-    public EmailController(IEmailPushService emailPushService)
-    {
-        _emailPushService = emailPushService;
-    }
+    private readonly IEmailPushService _emailPushService = emailPushService;
 
     /// <summary>
     /// 发送邮件

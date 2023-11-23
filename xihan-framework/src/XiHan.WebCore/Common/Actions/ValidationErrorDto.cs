@@ -17,26 +17,21 @@ namespace XiHan.WebCore.Common.Actions;
 /// <summary>
 /// 验证出错字段实体
 /// </summary>
-public class ValidationErrorDto
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="property"></param>
+/// <param name="message"></param>
+public class ValidationErrorDto(string? property, string? message)
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="property"></param>
-    /// <param name="message"></param>
-    public ValidationErrorDto(string? property, string? message)
-    {
-        Property = property;
-        Message = message;
-    }
 
     /// <summary>
     /// 属性
     /// </summary>
-    public string? Property { get; }
+    public string? Property { get; } = property;
 
     /// <summary>
     /// 信息
     /// </summary>
-    public string? Message { get; }
+    public string? Message { get; } = message;
 }

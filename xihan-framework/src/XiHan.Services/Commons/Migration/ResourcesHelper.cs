@@ -31,9 +31,9 @@ public class ResourcesService
     /// <returns></returns>
     public static async Task<List<MigrationInfoDto>> Migration(ResourceInfoDto resourceInfo)
     {
-        if (resourceInfo == null) throw new ArgumentNullException(nameof(resourceInfo));
+        ArgumentNullException.ThrowIfNull(resourceInfo);
 
-        List<MigrationInfoDto> list = new();
+        List<MigrationInfoDto> list = [];
         IEnumerable<string> paths = FileHelper.GetFiles(resourceInfo.Path);
         foreach (var path in paths)
         {

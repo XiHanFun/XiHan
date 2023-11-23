@@ -26,19 +26,14 @@ namespace XiHan.Services.Syses.Logging.Logic;
 /// <summary>
 /// 系统访问日志服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
 [AppService(ServiceType = typeof(ISysLogVisitService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysLogVisitService : BaseService<SysLogVisit>, ISysLogVisitService
+public class SysLogVisitService(IAppCacheService appCacheService) : BaseService<SysLogVisit>, ISysLogVisitService
 {
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public SysLogVisitService(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     /// <summary>
     /// 新增系统访问日志

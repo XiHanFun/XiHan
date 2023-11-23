@@ -25,23 +25,18 @@ namespace XiHan.Subscriptions.Hubs;
 /// <summary>
 /// 即时通讯集线器
 /// </summary>
-public class ChatHub : Hub<IChatHub>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
+public class ChatHub(IAppCacheService appCacheService) : Hub<IChatHub>
 {
     /// <summary>
     /// 创建用户集合，用于存储所有链接的用户数据
     /// </summary>
-    public static readonly List<OnlineUser> OnlineUsers = new();
+    public static readonly List<OnlineUser> OnlineUsers = [];
 
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public ChatHub(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     #region 链接新建与断开
 
@@ -124,7 +119,7 @@ public class ChatHub : Hub<IChatHub>
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         await SendMessageToGroup(new GroupMessageCDto
         {
-            GroupNames = new List<string>() { groupName },
+            GroupNames = [groupName],
             Title = HubConst.GroupAdded
         });
     }
@@ -139,7 +134,7 @@ public class ChatHub : Hub<IChatHub>
     {
         await SendMessageToGroup(new GroupMessageCDto
         {
-            GroupNames = new List<string>() { groupName },
+            GroupNames = [groupName],
             Title = HubConst.GroupRemoved
         });
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
@@ -168,7 +163,7 @@ public class ChatHub : Hub<IChatHub>
     [HubMethodName("SendMessageToUser")]
     public async Task SendMessageToUser(UserMessageCDto message)
     {
-        List<string> userlist = new();
+        List<string> userlist = [];
         foreach (var userId in message.UserIds)
         {
             var user = _appCacheService.Get<OnlineUser>($"UserOnline_{userId}");
@@ -195,7 +190,7 @@ public class ChatHub : Hub<IChatHub>
     /// <returns></returns>
     /// <exception cref="HubException"></exception>
     [HubMethodName("ThrowException")]
-    public async Task ThrowException()
+    public static async Task ThrowException()
     {
         await Task.Run(() => { throw new HubException("This error will be sent to the client!"); });
     }

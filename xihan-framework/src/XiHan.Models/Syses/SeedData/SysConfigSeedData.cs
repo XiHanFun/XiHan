@@ -29,11 +29,11 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
     [IgnoreUpdate]
     public IEnumerable<SysConfig> HasData()
     {
-        List<SysConfig> result = new();
+        List<SysConfig> result = [];
 
         // 站点配置
-        List<SysConfig> siteConfig = new()
-        {
+        List<SysConfig> siteConfig =
+        [
             new SysConfig
             {
                 BaseId = 1,
@@ -112,10 +112,10 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
                 SortOrder = 7,
                 Description = "网站版本升级时间"
             }
-        };
+        ];
         // 日志配置
-        List<SysConfig> logConfig = new()
-        {
+        List<SysConfig> logConfig =
+        [
             new SysConfig
             {
                 BaseId = 11,
@@ -160,11 +160,11 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
                 SortOrder = 4,
                 Description = "站点根据此配置开关登录日志"
             }
-        };
+        ];
 
         // 模式配置
-        List<SysConfig> modeConfig = new()
-        {
+        List<SysConfig> modeConfig =
+        [
             new SysConfig
             {
                 BaseId = 21,
@@ -176,7 +176,7 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
                 SortOrder = 1,
                 Description = "网站是否为演示模式"
             }
-        };
+        ];
 
         result.AddRange(siteConfig);
         result.AddRange(logConfig);

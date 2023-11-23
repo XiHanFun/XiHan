@@ -23,27 +23,16 @@ namespace XiHan.Infrastructures.Apps.Caches;
 /// <summary>
 /// 内存缓存操作
 /// </summary>
-public class AppCacheService : IAppCacheService
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="memoryCache"></param>
+public class AppCacheService(IMemoryCache memoryCache) : IAppCacheService
 {
     /// <summary>
     /// 默认缓存配置
     /// </summary>
-    private readonly IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions
-    {
-        // 最大缓存个数限制(这属于一个说明性属性，而且单位也不是缓存数目，而是缓存真正占用的空间大小，当所有缓存大小超过这个值的时候进行一次缓存压缩)
-        SizeLimit = 60,
-        // 过期扫描频率(默认为1分钟，可以理解为每过多久移除一次过期的缓存项)
-        ExpirationScanFrequency = TimeSpan.FromMinutes(5)
-    });
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="memoryCache"></param>
-    public AppCacheService(IMemoryCache memoryCache)
-    {
-        _cache = memoryCache;
-    }
+    private readonly IMemoryCache _cache = memoryCache;
 
     #region 验证缓存项是否存在
 
@@ -69,9 +58,9 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
         _ = _cache.Set(key, value.SerializeTo());
         return Exists(key);
@@ -87,9 +76,9 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiresAbsolute)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
         _ = _cache.Set(key, value.SerializeTo(), new MemoryCacheEntryOptions()
             .SetSlidingExpiration(expiresSliding)
@@ -107,9 +96,9 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Set(string key, object value, TimeSpan expiresIn, bool isSliding = false)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
         _ = _cache.Set(key, value.SerializeTo(), isSliding
             ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
@@ -125,11 +114,11 @@ public class AppCacheService : IAppCacheService
     /// <param name="seconds">缓存时长，秒</param>
     public bool SetWithSeconds(string key, object value, int seconds)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
-        if (seconds <= 0) throw new ArgumentOutOfRangeException(nameof(seconds));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(seconds);
 
         _ = _cache.Set(key, value.SerializeTo(), DateTime.Now.AddSeconds(seconds));
         return Exists(key);
@@ -143,11 +132,11 @@ public class AppCacheService : IAppCacheService
     /// <param name="minutes">缓存时长，分钟</param>
     public bool SetWithMinutes(string key, object value, int minutes)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
-        if (minutes <= 0) throw new ArgumentOutOfRangeException(nameof(minutes));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(minutes);
 
         _ = _cache.Set(key, value.SerializeTo(), DateTime.Now.AddMinutes(minutes));
         return Exists(key);
@@ -164,7 +153,7 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public bool Remove(string key)
     {
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        ArgumentNullException.ThrowIfNull(key);
 
         _cache.Remove(key);
         return !Exists(key);
@@ -177,7 +166,7 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public void Remove(IEnumerable<string> keys)
     {
-        if (keys == null) throw new ArgumentNullException(nameof(keys));
+        ArgumentNullException.ThrowIfNull(keys);
 
         keys.ToList().ForEach(_cache.Remove);
     }
@@ -292,9 +281,9 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public IDictionary<string, object?> Get(IEnumerable<string> keys)
     {
-        if (keys == null) throw new ArgumentNullException(nameof(keys));
+        ArgumentNullException.ThrowIfNull(keys);
 
-        Dictionary<string, object?> dict = new();
+        Dictionary<string, object?> dict = [];
         keys.ToList().ForEach(item => dict.Add(item, _cache.Get(item)));
         return dict;
     }
@@ -317,10 +306,9 @@ public class AppCacheService : IAppCacheService
     /// <returns></returns>
     public List<string> GetKeys()
     {
-        List<string> keys = new();
+        List<string> keys = [];
 
-        var entries =
-            _cache.GetType().GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(_cache);
+        var entries = _cache.GetType().GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(_cache);
         if (entries is not IDictionary cacheItems) return keys;
 
         keys.AddRange(from DictionaryEntry cacheItem in cacheItems select cacheItem.Key.ToString()!);

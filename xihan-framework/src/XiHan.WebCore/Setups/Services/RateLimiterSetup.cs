@@ -34,7 +34,7 @@ public static class RateLimiterSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddRateLimiterSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         _ = services.AddRateLimiter(limiterOptions =>
         {

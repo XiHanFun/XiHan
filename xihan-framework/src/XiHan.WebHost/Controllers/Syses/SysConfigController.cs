@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统配置管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysConfigService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysConfigController : BaseApiController
+public class SysConfigController(ISysConfigService sysConfigService) : BaseApiController
 {
-    private readonly ISysConfigService _sysConfigService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysConfigService"></param>
-    public SysConfigController(ISysConfigService sysConfigService)
-    {
-        _sysConfigService = sysConfigService;
-    }
+    private readonly ISysConfigService _sysConfigService = sysConfigService;
 
     /// <summary>
     /// 新增系统配置

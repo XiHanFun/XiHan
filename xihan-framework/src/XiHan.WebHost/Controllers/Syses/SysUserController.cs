@@ -22,21 +22,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统用户管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysUserService"></param>
+/// <param name="sysRoleService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysUserController : BaseApiController
+public class SysUserController(ISysUserService sysUserService, ISysRoleService sysRoleService) : BaseApiController
 {
-    private readonly ISysUserService _sysUserService;
-    private readonly ISysRoleService _sysRoleService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysUserService"></param>
-    /// <param name="sysRoleService"></param>
-    public SysUserController(ISysUserService sysUserService, ISysRoleService sysRoleService)
-    {
-        _sysUserService = sysUserService;
-        _sysRoleService = sysRoleService;
-    }
+    private readonly ISysUserService _sysUserService = sysUserService;
+    private readonly ISysRoleService _sysRoleService = sysRoleService;
 }

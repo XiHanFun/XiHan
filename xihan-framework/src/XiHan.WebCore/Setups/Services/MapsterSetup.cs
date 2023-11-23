@@ -31,7 +31,7 @@ public static class MapsterSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddMapsterSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 创建具体的映射对象
         _ = services.AddSingleton(MapsterAdaptConfig.InitMapperConfig());

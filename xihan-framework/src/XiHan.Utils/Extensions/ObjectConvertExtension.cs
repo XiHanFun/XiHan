@@ -206,7 +206,7 @@ public static class ObjectConvertExtension
     public static int ParseToInt(this object? thisValue)
     {
         return thisValue == null ? 0 :
-            thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reveal) ? reveal:0;
+            thisValue != DBNull.Value && int.TryParse(thisValue.ToString(), out var reveal) ? reveal : 0;
     }
 
     /// <summary>

@@ -30,20 +30,14 @@ namespace XiHan.Jobs.Bases.Servers;
 /// <summary>
 /// 任务调度中心
 /// </summary>
-public class TaskSchedulerServer : ITaskSchedulerServer
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="jobFactory"></param>
+public class TaskSchedulerServer(IJobFactory jobFactory) : ITaskSchedulerServer
 {
-    private readonly IScheduler _scheduler;
-    private readonly IJobFactory _jobFactory;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="jobFactory"></param>
-    public TaskSchedulerServer(IJobFactory jobFactory)
-    {
-        _scheduler = GetTaskSchedulerAsync();
-        _jobFactory = jobFactory;
-    }
+    private readonly IScheduler _scheduler = GetTaskSchedulerAsync();
+    private readonly IJobFactory _jobFactory = jobFactory;
 
     /// <summary>
     /// 获取计划任务
@@ -213,8 +207,8 @@ public class TaskSchedulerServer : ITaskSchedulerServer
         {
             JobKey jobKey = new(sysJob.BaseId.ToString(), sysJob.Group);
             var jobs = await _scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(sysJob.Group));
-            List<JobKey> jobKeys = jobs.ToList();
-            if (jobKeys.Any()) _ = await CreateTaskScheduleAsync(sysJob);
+            List<JobKey> jobKeys = [.. jobs];
+            if (jobKeys.Count != 0) _ = await CreateTaskScheduleAsync(sysJob);
 
             var triggers = await _scheduler.GetTriggersOfJob(jobKey);
             if (triggers.Count <= 0) return ApiResult.BadRequest($"未找到任务[{jobKey.Name}]的触发器！");

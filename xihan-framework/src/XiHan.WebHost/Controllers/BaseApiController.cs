@@ -43,7 +43,7 @@ public class BaseApiController : ControllerBase
     {
         if (files.Any())
         {
-            List<string> paths = new();
+            List<string> paths = [];
             foreach (var file in files)
             {
                 // 唯一文件名

@@ -45,13 +45,13 @@ public static class JwtHandler
         SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
 
         // Nuget引入：Microsoft.IdentityModel.Tokens
-        List<Claim> claims = new()
-        {
+        List<Claim> claims =
+        [
             new Claim(ClaimConst.UserId, tokenModel.UserId.ToString()),
             new Claim(ClaimConst.Account, tokenModel.Account),
             new Claim(ClaimConst.NickName, tokenModel.NickName),
             new Claim(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString())
-        };
+        ];
         // 用户被分配多个角色
         tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
 
@@ -303,7 +303,7 @@ public class TokenModel
     /// <summary>
     /// 用户权限
     /// </summary>
-    public List<long> UserRole { get; set; } = new();
+    public List<long> UserRole { get; set; } = [];
 
     /// <summary>
     /// 是否超级管理员

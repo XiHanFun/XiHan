@@ -27,20 +27,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统机器人管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysBotService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysBotController : BaseApiController
+public class SysBotController(ISysBotService sysBotService) : BaseApiController
 {
-    private readonly ISysBotService _sysBotService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysBotService"></param>
-    public SysBotController(ISysBotService sysBotService)
-    {
-        _sysBotService = sysBotService;
-    }
+    private readonly ISysBotService _sysBotService = sysBotService;
 
     /// <summary>
     /// 新增系统机器人

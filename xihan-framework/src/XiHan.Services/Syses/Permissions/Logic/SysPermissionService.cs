@@ -28,19 +28,14 @@ namespace XiHan.Services.Syses.Permissions.Logic;
 /// <summary>
 /// 系统权限服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
 [AppService(ServiceType = typeof(ISysPermissionService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysPermissionService : BaseService<SysPermission>, ISysPermissionService
+public class SysPermissionService(IAppCacheService appCacheService) : BaseService<SysPermission>, ISysPermissionService
 {
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public SysPermissionService(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     /// <summary>
     /// 校验权限是否唯一

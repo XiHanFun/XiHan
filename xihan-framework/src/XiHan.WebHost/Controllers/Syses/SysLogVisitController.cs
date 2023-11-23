@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统访问日志管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysLogVisitService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogVisitController : BaseApiController
+public class SysLogVisitController(ISysLogVisitService sysLogVisitService) : BaseApiController
 {
-    private readonly ISysLogVisitService _sysLogVisitService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysLogVisitService"></param>
-    public SysLogVisitController(ISysLogVisitService sysLogVisitService)
-    {
-        _sysLogVisitService = sysLogVisitService;
-    }
+    private readonly ISysLogVisitService _sysLogVisitService = sysLogVisitService;
 
     /// <summary>
     /// 批量删除系统访问日志

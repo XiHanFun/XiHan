@@ -32,19 +32,14 @@ namespace XiHan.WebCore.Middlewares;
 /// <summary>
 /// 全局日志中间件
 /// </summary>
-public class GlobalLogMiddleware
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="next"></param>
+public class GlobalLogMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
+    private readonly RequestDelegate _next = next;
     private static readonly ILogger _logger = Log.ForContext<GlobalLogMiddleware>();
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="next"></param>
-    public GlobalLogMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
 
     /// <summary>
     /// 异步调用
@@ -105,7 +100,7 @@ public class GlobalLogMiddleware
     /// 记录访问日志
     /// </summary>
     /// <returns></returns>
-    private async Task RecordLogVisit()
+    private static async Task RecordLogVisit()
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
@@ -141,7 +136,7 @@ public class GlobalLogMiddleware
     /// </summary>
     /// <param name="ex"></param>
     /// <returns></returns>
-    private async Task RecordLogException(Exception ex)
+    private static async Task RecordLogException(Exception ex)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
@@ -191,7 +186,7 @@ public class GlobalLogMiddleware
     /// <param name="elapsed"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    private async Task RecordLogOperation(long elapsed, bool status)
+    private static async Task RecordLogOperation(long elapsed, bool status)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;

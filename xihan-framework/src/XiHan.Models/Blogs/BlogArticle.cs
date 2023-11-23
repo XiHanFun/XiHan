@@ -156,26 +156,26 @@ public class BlogArticle : BaseEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.ArticleId), nameof(BlogArticleCategoryTieup.CategoryId))]
-    public List<BlogArticleCategory> Categories { get; set; } = new();
+    public List<BlogArticleCategory> Categories { get; set; } = [];
 
     /// <summary>
     /// 文章标签
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleTagTieup.ArticleId), nameof(BlogArticleTagTieup.TagId))]
-    public List<BlogArticleTag> Tags { get; set; } = new();
+    public List<BlogArticleTag> Tags { get; set; } = [];
 
     /// <summary>
     /// 文章赞踩
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticlePoll.ArticleId))]
-    public List<BlogArticlePoll> Polls { get; set; } = new();
+    public List<BlogArticlePoll> Polls { get; set; } = [];
 
     /// <summary>
     /// 文章评论
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticleComment.ArticleId))]
-    public List<BlogArticleComment> Comments { get; set; } = new();
+    public List<BlogArticleComment> Comments { get; set; } = [];
 }

@@ -71,13 +71,13 @@ public static class AppServiceProvider
     private static void RegisterSelfService(IServiceCollection services)
     {
         // 所有涉及服务的组件库
-        string[] libraries = new string[]
-        {
+        string[] libraries =
+        [
             "XiHan.Services",
             "XiHan.Jobs"
-        };
+        ];
         // 根据程序路径反射出所有引用的程序集
-        List<Type> referencedTypes = new();
+        List<Type> referencedTypes = [];
         foreach (var library in libraries)
             try
             {

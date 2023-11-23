@@ -29,7 +29,7 @@ public class GroupMessageCDto
     /// <summary>
     /// 群组名称
     /// </summary>
-    public List<string> GroupNames { get; set; } = new();
+    public List<string> GroupNames { get; set; } = [];
 
     /// <summary>
     /// 消息标题

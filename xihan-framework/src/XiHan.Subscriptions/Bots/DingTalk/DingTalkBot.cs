@@ -27,22 +27,15 @@ namespace XiHan.Subscriptions.Bots.DingTalk;
 /// https://open.dingtalk.com/document/orgapp/custom-robot-access
 /// 每个机器人每分钟最多发送20条消息到群里，如果超过20条，会限流10分钟
 /// </summary>
-public class DingTalkBot
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="dingTalkConnection"></param>
+public class DingTalkBot(DingTalkConnection dingTalkConnection)
 {
-    private readonly string _url;
-    private readonly string? _secret;
-    private readonly string? _keyWord;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="dingTalkConnection"></param>
-    public DingTalkBot(DingTalkConnection dingTalkConnection)
-    {
-        _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
-        _secret = dingTalkConnection.Secret;
-        _keyWord = dingTalkConnection.KeyWord;
-    }
+    private readonly string _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
+    private readonly string? _secret = dingTalkConnection.Secret;
+    private readonly string? _keyWord = dingTalkConnection.KeyWord;
 
     /// <summary>
     /// 发送文本消息

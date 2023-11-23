@@ -26,22 +26,16 @@ namespace XiHan.Services.Syses.Roles.Logic;
 /// <summary>
 /// 系统角色服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysUserRoleService"></param>
+/// <param name="sysRolePermissionService"></param>
 [AppService(ServiceType = typeof(ISysRoleService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysRoleService : BaseService<SysRole>, ISysRoleService
+public class SysRoleService(ISysUserRoleService sysUserRoleService, ISysRolePermissionService sysRolePermissionService) : BaseService<SysRole>, ISysRoleService
 {
-    private readonly ISysUserRoleService _sysUserRoleService;
-    private readonly ISysRolePermissionService _sysRolePermissionService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysUserRoleService"></param>
-    /// <param name="sysRolePermissionService"></param>
-    public SysRoleService(ISysUserRoleService sysUserRoleService, ISysRolePermissionService sysRolePermissionService)
-    {
-        _sysUserRoleService = sysUserRoleService;
-        _sysRolePermissionService = sysRolePermissionService;
-    }
+    private readonly ISysUserRoleService _sysUserRoleService = sysUserRoleService;
+    private readonly ISysRolePermissionService _sysRolePermissionService = sysRolePermissionService;
 
     /// <summary>
     /// 校验角色是否唯一

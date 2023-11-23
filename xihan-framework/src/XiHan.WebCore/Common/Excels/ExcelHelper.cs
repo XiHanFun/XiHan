@@ -42,7 +42,7 @@ public static class ExcelHelper
     /// <returns></returns>
     public static IDictionary<string, object> ReadFromExcel(string fullPath)
     {
-        Dictionary<string, object> resultData = new();
+        Dictionary<string, object> resultData = [];
 
         List<string> sheetNames = MiniExcel.GetSheetNames(fullPath);
         foreach (var sheetName in sheetNames)

@@ -30,7 +30,7 @@ public static class CorsSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseCorsSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        ArgumentNullException.ThrowIfNull(app);
 
         var isEnabledCors = AppSettings.Cors.IsEnabled.GetValue();
         if (!isEnabledCors) return app;

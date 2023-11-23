@@ -30,20 +30,14 @@ namespace XiHan.Services.Syses.Users.Logic;
 /// <summary>
 /// 系统用户服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
 [AppService(ServiceType = typeof(ISysUserService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysUserService : BaseService<SysUser>, ISysUserService
+public class SysUserService(ISysUserRoleService sysUserRoleService, ISysRoleService sysRoleService) : BaseService<SysUser>, ISysUserService
 {
-    private readonly ISysUserRoleService _sysUserRoleService;
-    private readonly ISysRoleService _sysRoleService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public SysUserService(ISysUserRoleService sysUserRoleService, ISysRoleService sysRoleService)
-    {
-        _sysUserRoleService = sysUserRoleService;
-        _sysRoleService = sysRoleService;
-    }
+    private readonly ISysUserRoleService _sysUserRoleService = sysUserRoleService;
+    private readonly ISysRoleService _sysRoleService = sysRoleService;
 
     /// <summary>
     /// 校验账户是否唯一

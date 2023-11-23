@@ -28,19 +28,14 @@ namespace XiHan.Services.Syses.Configs.Logic;
 /// <summary>
 /// 系统配置服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
 [AppService(ServiceType = typeof(ISysConfigService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysConfigService : BaseService<SysConfig>, ISysConfigService
+public class SysConfigService(IAppCacheService appCacheService) : BaseService<SysConfig>, ISysConfigService
 {
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public SysConfigService(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     /// <summary>
     /// 校验配置项是否唯一

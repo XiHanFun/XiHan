@@ -25,20 +25,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统字典管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysDictTypeService"></param>
 //[Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysDictTypeController : BaseApiController
+public class SysDictTypeController(ISysDictTypeService sysDictTypeService) : BaseApiController
 {
-    private readonly ISysDictTypeService _sysDictTypeService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysDictTypeService"></param>
-    public SysDictTypeController(ISysDictTypeService sysDictTypeService)
-    {
-        _sysDictTypeService = sysDictTypeService;
-    }
+    private readonly ISysDictTypeService _sysDictTypeService = sysDictTypeService;
 
     /// <summary>
     /// 新增系统字典

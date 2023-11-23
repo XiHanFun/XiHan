@@ -79,7 +79,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 进程标识
     /// </summary>
-    public static string ProcessId => Process.GetCurrentProcess().Id.ToString();
+    public static string ProcessId => Environment.ProcessId.ToString();
 
     /// <summary>
     /// 会话标识

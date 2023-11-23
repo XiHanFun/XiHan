@@ -28,24 +28,18 @@ namespace XiHan.Jobs.Jobs;
 /// <summary>
 /// 网络请求任务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="httpPollyService"></param>
+/// <param name="sysJobService"></param>
 [AppService(ServiceType = typeof(NetworkRequestJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class NetworkRequestJob : JobBase, IJob
+public class NetworkRequestJob(IHttpPollyService httpPollyService, ISysJobService sysJobService) : JobBase, IJob
 {
     private static readonly ILogger Logger = Log.ForContext<SqlStatementJob>();
 
-    private readonly IHttpPollyService _httpPollyService;
-    private readonly ISysJobService _sysJobService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="httpPollyService"></param>
-    /// <param name="sysJobService"></param>
-    public NetworkRequestJob(IHttpPollyService httpPollyService, ISysJobService sysJobService)
-    {
-        _httpPollyService = httpPollyService;
-        _sysJobService = sysJobService;
-    }
+    private readonly IHttpPollyService _httpPollyService = httpPollyService;
+    private readonly ISysJobService _sysJobService = sysJobService;
 
     /// <summary>
     /// 执行
@@ -83,7 +77,7 @@ public class NetworkRequestJob : JobBase, IJob
             // GET请求
             else
             {
-                if (url!.IndexOf("?", StringComparison.Ordinal) > -1)
+                if (url!.IndexOf('?') > -1)
                     url += "&" + paras;
                 else
                     url += "?" + paras;

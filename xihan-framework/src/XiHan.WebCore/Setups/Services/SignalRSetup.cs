@@ -29,7 +29,7 @@ public static class SignalRSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSignalRSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         services.AddSignalR(options =>
         {

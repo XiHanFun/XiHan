@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统任务日志管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysJobLogService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysJobLogController : BaseApiController
+public class SysJobLogController(ISysJobLogService sysJobLogService) : BaseApiController
 {
-    private readonly ISysJobLogService _sysJobLogService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysJobLogService"></param>
-    public SysJobLogController(ISysJobLogService sysJobLogService)
-    {
-        _sysJobLogService = sysJobLogService;
-    }
+    private readonly ISysJobLogService _sysJobLogService = sysJobLogService;
 
     /// <summary>
     /// 批量删除系统任务日志

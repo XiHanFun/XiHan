@@ -25,22 +25,16 @@ namespace XiHan.Subscriptions.Bots.WeCom;
 /// https://developer.work.weixin.qq.com/document/path/91770
 /// 每个机器人发送的消息不能超过20条/分钟
 /// </summary>
-public class WeComBot
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="weChatConnection"></param>
+public class WeComBot(WeComConnection weChatConnection)
 {
-    private readonly string _messageUrl;
+    private readonly string _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
 
     // 文件上传地址，调用接口凭证, 机器人 webhook 中的 key 参数
-    private readonly string _uploadUrl;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="weChatConnection"></param>
-    public WeComBot(WeComConnection weChatConnection)
-    {
-        _messageUrl = weChatConnection.WebHookUrl + "?key=" + weChatConnection.Key;
-        _uploadUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key;
-    }
+    private readonly string _uploadUrl = weChatConnection.UploadUrl + "?key=" + weChatConnection.Key;
 
     /// <summary>
     /// 发送文本消息

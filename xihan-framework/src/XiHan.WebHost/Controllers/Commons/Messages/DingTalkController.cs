@@ -25,20 +25,15 @@ namespace XiHan.WebHost.Controllers.Commons.Messages;
 /// 钉钉消息推送管理
 /// <code>包含：文本/链接/文档/任务卡片/卡片菜单</code>
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="dingTalkPushService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Common)]
-public class DingTalkController : BaseApiController
+public class DingTalkController(IDingTalkPushService dingTalkPushService) : BaseApiController
 {
-    private readonly IDingTalkPushService _dingTalkPushService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="dingTalkPushService"></param>
-    public DingTalkController(IDingTalkPushService dingTalkPushService)
-    {
-        _dingTalkPushService = dingTalkPushService;
-    }
+    private readonly IDingTalkPushService _dingTalkPushService = dingTalkPushService;
 
     /// <summary>
     /// 文本
@@ -53,7 +48,7 @@ public class DingTalkController : BaseApiController
         };
         DingTalkAt dingTalkAt = new()
         {
-            AtMobiles = new List<string> { "1302873****" },
+            AtMobiles = ["1302873****"],
             IsAtAll = false
         };
         return await _dingTalkPushService.DingTalkToText(text, dingTalkAt);
@@ -94,7 +89,7 @@ public class DingTalkController : BaseApiController
         };
         DingTalkAt dingTalkAt = new()
         {
-            AtMobiles = new List<string> { "1302873****" },
+            AtMobiles = ["1302873****"],
             IsAtAll = false
         };
         return await _dingTalkPushService.DingTalkToMarkdown(markdown, dingTalkAt);
@@ -135,8 +130,8 @@ public class DingTalkController : BaseApiController
                 "### 乔布斯 20 年前想打造的苹果咖啡厅 " +
                 "Apple Store 的设计正从原来满满的科技感走向生活化，而其生活化的走向其实可以追溯到 20 年前苹果一个建立咖啡馆的计划",
             BtnOrientation = "1",
-            Btns = new List<DingTalkBtnInfo>
-            {
+            Btns =
+            [
                 new()
                 {
                     Title = "不错",
@@ -147,7 +142,7 @@ public class DingTalkController : BaseApiController
                     Title = "不感兴趣",
                     ActionUrl = "https://www.dingtalk.com/"
                 }
-            }
+            ]
         };
         return await _dingTalkPushService.DingTalkToActionCard(actionCard);
     }
@@ -161,8 +156,8 @@ public class DingTalkController : BaseApiController
     {
         DingTalkFeedCard feedCard = new()
         {
-            Links = new List<DingTalkFeedCardLink>
-            {
+            Links =
+            [
                 new()
                 {
                     Title = "时代的火车向前开",
@@ -175,7 +170,7 @@ public class DingTalkController : BaseApiController
                     MessageUrl = "https://www.dingtalk.com/",
                     PicUrl = "https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png"
                 }
-            }
+            ]
         };
         return await _dingTalkPushService.DingTalkToFeedCard(feedCard);
     }

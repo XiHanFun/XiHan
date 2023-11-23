@@ -23,21 +23,16 @@ namespace XiHan.WebCore.Filters;
 /// <summary>
 /// 异步结果过滤器属性(一般用于返回统一模型数据)
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-public class ResultFilterAsyncAttribute : Attribute, IAsyncResultFilter
+public class ResultFilterAsyncAttribute(bool isIgnore = false) : Attribute, IAsyncResultFilter
 {
     /// <summary>
     /// 是否忽略
     /// </summary>
-    public bool IsIgnore { get; set; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ResultFilterAsyncAttribute(bool isIgnore = false)
-    {
-        IsIgnore = isIgnore;
-    }
+    public bool IsIgnore { get; set; } = isIgnore;
 
     /// <summary>
     /// 在某结果执行时

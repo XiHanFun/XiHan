@@ -46,7 +46,7 @@ public static class CpuHelper
             {
                 var output = ShellHelper.Bash(@"top -b -n1 | grep ""Cpu(s)""").Trim();
                 var lines = output.Split(',');
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var loadPercentage = lines[3].Trim().Split(' ')[0];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";
@@ -61,7 +61,7 @@ public static class CpuHelper
             {
                 var output = ShellHelper.Cmd("wmic", "cpu get LoadPercentage /Value").Trim();
                 var lines = output.Split(Environment.NewLine);
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var loadPercentage = lines.First(s => s.StartsWith("LoadPercentage")).Split('=')[1];
                     cpuInfo.CpuRate = loadPercentage.ParseToLong() + "%";

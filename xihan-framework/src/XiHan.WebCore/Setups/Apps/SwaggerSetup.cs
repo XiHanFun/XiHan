@@ -35,7 +35,7 @@ public static class SwaggerSetup
     /// <exception cref="Exception"></exception>
     public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        ArgumentNullException.ThrowIfNull(app);
 
         try
         {
