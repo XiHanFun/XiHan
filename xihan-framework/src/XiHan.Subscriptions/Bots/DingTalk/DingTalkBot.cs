@@ -110,7 +110,6 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
-        var sendMessage = objSend.SerializeTo();
 
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
@@ -134,15 +133,16 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
         }
 
         // 发起请求
+        var sendMessage = objSend.SerializeTo();
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         var result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result == null) return ApiResult.InternalServerError();
 
-        if (result.ErrCode == 0 || result.ErrMsg == "ok") return ApiResult.Success("发送成功");
+        if (result.ErrCode == 0 || result.ErrMsg == "ok") return ApiResult.Success("发送成功；");
 
         var resultInfos = typeof(DingTalkResultErrCodeEnum).GetEnumInfos();
         var info = resultInfos.FirstOrDefault(e => e.Value == result.ErrCode);
-        return ApiResult.BadRequest("发送失败，" + info?.Label);
+        return ApiResult.BadRequest("发送失败；" + info?.Label);
     }
 }

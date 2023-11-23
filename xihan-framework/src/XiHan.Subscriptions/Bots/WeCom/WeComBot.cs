@@ -194,15 +194,13 @@ public class WeComBot(WeComConnection weChatConnection)
     /// <returns></returns>
     private async Task<ApiResult> SendMessage(object objSend)
     {
-        // 发送对象
+        // 发起请求
         var sendMessage = objSend.SerializeTo();
-        // 发起请求，发送消息地址
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        var result =
-            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
+        var result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
         // 包装返回信息
         return result != null
-            ? result.ErrCode == 0 || result.ErrMsg == "ok" ? ApiResult.Success("发送成功") : ApiResult.BadRequest("发送失败")
+            ? result.ErrCode == 0 || result.ErrMsg == "ok" ? ApiResult.Success("发送成功；") : ApiResult.BadRequest("发送失败；")
             : ApiResult.InternalServerError();
     }
 }

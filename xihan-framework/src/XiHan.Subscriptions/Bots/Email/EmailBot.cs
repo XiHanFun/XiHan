@@ -19,7 +19,7 @@ using XiHan.Utils.Extensions;
 namespace XiHan.Subscriptions.Bots.Email;
 
 /// <summary>
-/// 邮件服务
+/// 邮件机器人消息推送
 /// </summary>
 /// <remarks>
 /// 构造函数

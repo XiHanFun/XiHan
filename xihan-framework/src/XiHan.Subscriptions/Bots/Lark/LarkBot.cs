@@ -109,7 +109,6 @@ public class LarkBot(LarkConnection larkConnection)
     private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
-        var sendMessage = objSend.SerializeTo();
 
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
@@ -128,21 +127,23 @@ public class LarkBot(LarkConnection larkConnection)
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
 
-            // 得到最终的签名
-            url += $"&timestamp={timeStamp}&sign={sign}";
+            // 得到最终的请求体
+            objSend.SetPropertyValue("timeStamp", timeStamp);
+            objSend.SetPropertyValue("sign", sign);
         }
 
         // 发起请求
+        var sendMessage = objSend.SerializeTo();
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         var result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {
-            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功");
+            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功；");
 
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
             var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
-            return ApiResult.BadRequest("发送失败，" + info?.Label);
+            return ApiResult.BadRequest("发送失败；" + info?.Label);
         }
 
         return ApiResult.InternalServerError();

@@ -84,7 +84,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         _ = whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(),
             l => l.BusinessType == whereDto.BusinessType);
         _ = whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(),
-            l => l.RequestMethod.Equals(whereDto.RequestMethod, StringComparison.InvariantCultureIgnoreCase));
+            l => l.RequestMethod!.Equals(whereDto.RequestMethod, StringComparison.OrdinalIgnoreCase));
         _ = whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
@@ -109,7 +109,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         _ = whereExpression.AndIF(whereDto.BusinessType.IsNotEmptyOrNull(),
             l => l.BusinessType == whereDto.BusinessType);
         _ = whereExpression.AndIF(whereDto.RequestMethod.IsNotEmptyOrNull(),
-            l => l.RequestMethod.Equals(whereDto.RequestMethod, StringComparison.InvariantCultureIgnoreCase));
+            l => l.RequestMethod!.Equals(whereDto.RequestMethod, StringComparison.OrdinalIgnoreCase));
         _ = whereExpression.AndIF(whereDto.Status != null, l => l.Status == whereDto.Status);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,

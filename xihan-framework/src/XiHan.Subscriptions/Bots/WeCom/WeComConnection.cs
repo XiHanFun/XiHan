@@ -19,9 +19,9 @@ namespace XiHan.Subscriptions.Bots.WeCom;
 /// </summary>
 public class WeComConnection
 {
-    private const string DefaultWeComWebHookUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send";
+    private const string _defaultWeComWebHookUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send";
 
-    private const string DefaultWeComUploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media";
+    private const string _defaultWeComUploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media";
 
     private string? _webHookUrl;
 
@@ -32,7 +32,7 @@ public class WeComConnection
     /// </summary>
     public string WebHookUrl
     {
-        get => _webHookUrl ??= DefaultWeComWebHookUrl;
+        get => _webHookUrl ??= _defaultWeComWebHookUrl;
         set => _webHookUrl = value;
     }
 
@@ -41,7 +41,7 @@ public class WeComConnection
     /// </summary>
     public string UploadUrl
     {
-        get => _uploadUrl ??= DefaultWeComUploadUrl;
+        get => _uploadUrl ??= _defaultWeComUploadUrl;
         set => _uploadUrl = value;
     }
 
