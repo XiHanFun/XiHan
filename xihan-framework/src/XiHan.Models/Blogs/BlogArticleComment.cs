@@ -71,5 +71,5 @@ public class BlogArticleComment : BaseEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticleCommentPoll.CommentId))]
-    public List<BlogArticleCommentPoll> Polls { get; set; } = [];
+    public List<BlogArticleCommentPoll> Polls { get; set; } = new();
 }

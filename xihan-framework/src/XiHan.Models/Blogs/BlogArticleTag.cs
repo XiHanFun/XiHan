@@ -65,5 +65,5 @@ public class BlogArticleTag : BaseModifyEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleTagTieup.TagId), nameof(BlogArticleTagTieup.ArticleId))]
-    public List<BlogArticle> BlogArticles { get; set; } = [];
+    public List<BlogArticle> BlogArticles { get; set; } = new();
 }

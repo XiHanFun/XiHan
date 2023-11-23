@@ -53,5 +53,5 @@ public class BlogArticleCategory : BaseModifyEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.CategoryId), nameof(BlogArticleCategoryTieup.ArticleId))]
-    public List<BlogArticle> Articles { get; set; } = [];
+    public List<BlogArticle> Articles { get; set; } = new();
 }

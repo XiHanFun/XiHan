@@ -15,7 +15,6 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entities;
 using XiHan.Models.Blogs.Enums;
-using XiHan.Models.Syses;
 
 namespace XiHan.Models.Blogs;
 
@@ -157,26 +156,26 @@ public class BlogArticle : BaseEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.ArticleId), nameof(BlogArticleCategoryTieup.CategoryId))]
-    public List<BlogArticleCategory> Categorys { get; set; } = [];
+    public List<BlogArticleCategory> Categories { get; set; } = new();
 
     /// <summary>
     /// 文章标签
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleTagTieup.ArticleId), nameof(BlogArticleTagTieup.TagId))]
-    public List<BlogArticleTag> Tags { get; set; } = [];
+    public List<BlogArticleTag> Tags { get; set; } = new();
 
     /// <summary>
     /// 文章赞踩
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticlePoll.ArticleId))]
-    public List<BlogArticlePoll> Polls { get; set; } = [];
+    public List<BlogArticlePoll> Polls { get; set; } = new();
 
     /// <summary>
     /// 文章评论
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticleComment.ArticleId))]
-    public List<BlogArticleComment> Comments { get; set; } = [];
+    public List<BlogArticleComment> Comments { get; set; } = new();
 }
