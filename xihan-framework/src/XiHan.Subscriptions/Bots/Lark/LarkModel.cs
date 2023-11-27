@@ -193,11 +193,6 @@ public enum LarkMsgTypeEnum
     [Description("post")] Post,
 
     /// <summary>
-    /// 群名片类型
-    /// </summary>
-    [Description("share_chat")] ShareChat,
-
-    /// <summary>
     /// 图片类型
     /// </summary>
     [Description("image")] Image,

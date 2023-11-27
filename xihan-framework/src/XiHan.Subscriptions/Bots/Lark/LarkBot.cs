@@ -61,25 +61,6 @@ public class LarkBot(LarkConnection larkConnection)
     }
 
     /// <summary>
-    /// 发送群卡片消息
-    /// </summary>
-    /// <param name="markdown">Markdown内容</param>
-    /// <param name="atUserIds">被@的人群</param>
-    /// <param name="isAtAll">是否@全员</param>
-    public async Task<ApiResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atUserIds = null,
-        bool isAtAll = false)
-    {
-        var msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
-        // 指定目标人群
-        LarkAt at = new()
-        {
-            AtUserIds = atUserIds
-        };
-        var result = await Send(new { msg_type = msgType, markdown, at });
-        return result;
-    }
-
-    /// <summary>
     /// 发送图片消息
     /// </summary>
     /// <param name="actionCard">ActionCard内容</param>
