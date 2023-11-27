@@ -33,7 +33,7 @@ public static class ReflectionHelper
 
         var filteredAssemblies = assemblies
             .Where(assembly => assembly.ManifestModule.Name.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))
-            .Where(assembly => assembly.ManifestModule.Name.ToLowerInvariant().EndsWith(suffix.ToLowerInvariant()));
+            .Where(assembly => assembly.ManifestModule.Name.EndsWith(suffix, StringComparison.InvariantCultureIgnoreCase));
 
         return filteredAssemblies;
     }
@@ -53,35 +53,33 @@ public static class ReflectionHelper
     /// 获取自身依赖的所有包
     /// </summary>
     /// <returns></returns>
-    public static List<string> GetInstalledNuGetPackages()
+    public static List<NuGetPackage> GetInstalledNuGetPackages()
     {
-        List<string> nugetPackages = [];
+        List<NuGetPackage> nugetPackages = [];
 
-        // 获取当前应用程序集引用的所有程序集
+        // 获取当前应用程序的所有程序集
         var assemblies = GetAllEffectiveAssemblies();
 
         // 查找被引用程序集中的 NuGet 库依赖项
         foreach (var assembly in assemblies)
         {
             var referencedAssemblies = assembly.GetReferencedAssemblies()
-                .Where(s => !s.FullName.StartsWith("Microsoft"))
-                .Where(s => !s.FullName.StartsWith("System"));
+                .Where(s => !s.FullName.StartsWith("Microsoft") && !s.FullName.StartsWith("System"));
             foreach (var referencedAssembly in referencedAssemblies)
                 // 检查引用的程序集是否来自 NuGet
                 if (referencedAssembly.FullName.Contains("Version="))
                 {
-                    // 获取 NuGet 包的名称和版本号
-                    var packageName = referencedAssembly.Name!;
-                    var packageVersion = new AssemblyName(referencedAssembly.FullName).Version!.ToString();
-
-                    // 拼接成 NuGet 包的标识（名称:版本）
-                    var packageIdentifier = $"{packageName}:{packageVersion}";
+                    var nuGetPackage = new NuGetPackage
+                    {
+                        // 获取 NuGet 包的名称和版本号
+                        PackageName = referencedAssembly.Name!,
+                        PackageVersion = new AssemblyName(referencedAssembly.FullName).Version!.ToString()
+                    };
 
                     // 避免重复添加相同的 NuGet 包标识
-                    if (!nugetPackages.Contains(packageIdentifier)) nugetPackages.Add(packageIdentifier);
+                    if (!nugetPackages.Contains(nuGetPackage)) nugetPackages.Add(nuGetPackage);
                 }
         }
-
         return nugetPackages;
     }
 
@@ -240,4 +238,20 @@ public static class ReflectionHelper
     }
 
     #endregion
+}
+
+/// <summary>
+/// NuGet程序集
+/// </summary>
+public class NuGetPackage
+{
+    /// <summary>
+    /// 程序集名称
+    /// </summary>
+    public string PackageName = string.Empty;
+
+    /// <summary>
+    /// 程序集版本
+    /// </summary>
+    public string PackageVersion = string.Empty;
 }

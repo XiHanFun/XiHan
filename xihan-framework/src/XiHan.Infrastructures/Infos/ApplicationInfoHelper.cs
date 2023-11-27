@@ -89,5 +89,5 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 自身依赖的所有包
     /// </summary>
-    public static List<string> InstalledNuGetPackages => ReflectionHelper.GetInstalledNuGetPackages();
+    public static List<NuGetPackage> InstalledNuGetPackages => ReflectionHelper.GetInstalledNuGetPackages();
 }

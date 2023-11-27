@@ -15,6 +15,7 @@
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Infos;
 using XiHan.Utils.Extensions;
+using XiHan.Utils.Serializes;
 
 namespace XiHan.WebHost.Consoles;
 
@@ -41,6 +42,7 @@ public static class ConsoleConfigInfo
         $@"占用内存：{ApplicationInfoHelper.ProcessRam}".WriteLineInfo();
         $@"进程标识：{ApplicationInfoHelper.ProcessId}".WriteLineInfo();
         $@"会话标识：{ApplicationInfoHelper.ProcessSessionId}".WriteLineInfo();
+        $@"自身依赖：{ApplicationInfoHelper.InstalledNuGetPackages.SerializeTo()}".WriteLineInfo();
 
         "==============================配置信息==============================".WriteLineInfo();
         "数据库：".WriteLineInfo();
