@@ -40,39 +40,39 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="text">内容</param>
-    /// <param name="at">指定目标人群</param>
+    /// <param name="dingTalkText">内容</param>
+    /// <param name="dingTalkAt">指定目标人群</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextMessage(DingTalkText text, DingTalkAt? at)
+    public async Task<ApiResult> TextMessage(DingTalkText dingTalkText, DingTalkAt? dingTalkAt)
     {
         var msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        text.Content = _keyWord + text.Content;
-        var result = await Send(new { msgType, text, at });
+        dingTalkText.Content = _keyWord + dingTalkText.Content;
+        var result = await Send(new { msgtype = msgType, text = dingTalkText, at = dingTalkAt });
         return result;
     }
 
     /// <summary>
     /// 发送链接消息
     /// </summary>
-    /// <param name="link"></param>
-    public async Task<ApiResult> LinkMessage(DingTalkLink link)
+    /// <param name="dingTalkLink"></param>
+    public async Task<ApiResult> LinkMessage(DingTalkLink dingTalkLink)
     {
         var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
-        link.Title = _keyWord + link.Title;
-        var result = await Send(new { msgType, link });
+        dingTalkLink.Title = _keyWord + dingTalkLink.Title;
+        var result = await Send(new { msgtype = msgType, link = dingTalkLink });
         return result;
     }
 
     /// <summary>
     /// 发送文档消息
     /// </summary>
-    /// <param name="markdown">Markdown内容</param>
-    /// <param name="at">指定目标人群</param>
-    public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown markdown, DingTalkAt? at)
+    /// <param name="dingTalkMarkdown">Markdown内容</param>
+    /// <param name="dingTalkAt">指定目标人群</param>
+    public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown dingTalkMarkdown, DingTalkAt? dingTalkAt)
     {
         var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        markdown.Title = _keyWord + markdown.Title;
-        var result = await Send(new { msgType, markdown, at });
+        dingTalkMarkdown.Title = _keyWord + dingTalkMarkdown.Title;
+        var result = await Send(new { msgtype = msgType, markdown = dingTalkMarkdown, at = dingTalkAt });
         return result;
     }
 
@@ -80,25 +80,25 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     /// 发送任务卡片消息
     /// 按钮方案二选一，设置单个按钮方案后多个按钮方案会无效
     /// </summary>
-    /// <param name="actionCard">ActionCard内容</param>
-    public async Task<ApiResult> ActionCardMessage(DingTalkActionCard actionCard)
+    /// <param name="dingTalkActionCard">ActionCard内容</param>
+    public async Task<ApiResult> ActionCardMessage(DingTalkActionCard dingTalkActionCard)
     {
         var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
-        actionCard.Title = _keyWord + actionCard.Title;
-        actionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
-        var result = await Send(new { msgType, actionCard });
+        dingTalkActionCard.Title = _keyWord + dingTalkActionCard.Title;
+        dingTalkActionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
+        var result = await Send(new { msgtype = msgType, actionCard = dingTalkActionCard });
         return result;
     }
 
     /// <summary>
     /// 发送卡片菜单消息
     /// </summary>
-    /// <param name="feedCard">FeedCard内容</param>
-    public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard feedCard)
+    /// <param name="dingTalkFeedCard">FeedCard内容</param>
+    public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard dingTalkFeedCard)
     {
         var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
-        feedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
-        var result = await Send(new { msgType, feedCard });
+        dingTalkFeedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
+        var result = await Send(new { msgtype = msgType, feedCard = dingTalkFeedCard });
         return result;
     }
 

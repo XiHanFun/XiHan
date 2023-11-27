@@ -40,45 +40,82 @@ public class LarkBot(LarkConnection larkConnection)
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="content">内容</param>
+    /// <param name="larkText">内容</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextMessage(LarkText content)
+    public async Task<ApiResult> TextMessage(LarkText larkText)
     {
         var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, content });
+        var result = await Send(new { msg_type = msgType, content = larkText });
         return result;
     }
 
     /// <summary>
     /// 发送富文本消息
     /// </summary>
-    /// <param name="post"></param>
-    public async Task<ApiResult> PostMessage(LarkPost post)
+    /// <param name="larkPost">Post内容</param>
+    public async Task<ApiResult> PostMessage(LarkPost larkPost)
     {
         var msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, post });
+        var objTList = new List<List<object>>();
+
+        // 拆解内容
+        var contentTList = larkPost.Content;
+        foreach (var contentList in contentTList)
+        {
+            var TList = new List<object>();
+            foreach (var itemT in contentList)
+            {
+                switch (itemT)
+                {
+                    case TagText text:
+                        TList.Add(text);
+                        break;
+
+                    case TagA a:
+                        TList.Add(a);
+                        break;
+
+                    case TagAt at:
+                        TList.Add(at);
+                        break;
+
+                    case TagImg image:
+                        TList.Add(image);
+                        break;
+
+                    default:
+                        Console.WriteLine("Unknown type");
+                        break;
+                }
+            }
+            objTList.Add(TList);
+        }
+        var zh_cn = new { title = larkPost.Title, content = objTList };
+        var post = new { zh_cn };
+        var content = new { post };
+        var result = await Send(new { msg_type = msgType, content = content });
         return result;
     }
 
     /// <summary>
     /// 发送图片消息
     /// </summary>
-    /// <param name="actionCard">ActionCard内容</param>
-    public async Task<ApiResult> ImageMessage(LarkActionCard actionCard)
+    /// <param name="larkImage">Image内容</param>
+    public async Task<ApiResult> ImageMessage(LarkImage larkImage)
     {
         var msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, actionCard });
+        var result = await Send(new { msg_type = msgType, content = larkImage });
         return result;
     }
 
     /// <summary>
     /// 发送消息卡片
     /// </summary>
-    /// <param name="feedCard">FeedCard内容</param>
-    public async Task<ApiResult> InterActiveMessage(LarkFeedCard feedCard)
+    /// <param name="larkInterActive">InterActive内容</param>
+    public async Task<ApiResult> InterActiveMessage(LarkInterActive larkInterActive)
     {
         var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, feedCard });
+        var result = await Send(new { msg_type = msgType, card = larkInterActive });
         return result;
     }
 

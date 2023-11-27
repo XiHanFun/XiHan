@@ -14,6 +14,7 @@
 
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using XiHan.Utils.Extensions;
 
 namespace XiHan.Subscriptions.Bots.Lark;
 
@@ -25,7 +26,7 @@ namespace XiHan.Subscriptions.Bots.Lark;
 public class LarkText
 {
     /// <summary>
-    /// 文本内容
+    /// 消息文本
     /// </summary>
     [JsonPropertyName("text")]
     public string Text { get; set; } = string.Empty;
@@ -39,80 +40,44 @@ public class LarkPost
     /// <summary>
     /// 消息标题
     /// </summary>
-    [JsonPropertyName("post")]
-    public string Post { set; get; } = string.Empty;
-}
-
-/// <summary>
-/// 文档类型
-/// </summary>
-public class LarkMarkdown
-{
-    /// <summary>
-    /// 首屏会话透出的展示内容
-    /// </summary>
     [JsonPropertyName("title")]
     public string Title { set; get; } = string.Empty;
 
     /// <summary>
-    /// Markdown格式的消息
+    /// 消息内容
     /// </summary>
-    [JsonPropertyName("text")]
-    public string Text { set; get; } = string.Empty;
+    [JsonPropertyName("content")]
+    public List<List<IPostTag>> Content { get; set; } = [];
 }
 
 /// <summary>
-/// 任务卡片类型
+/// 图片类型
 /// </summary>
-public class LarkActionCard
+public class LarkImage
 {
     /// <summary>
-    /// 首屏会话透出的展示内容
+    /// 图片的唯一标识
     /// </summary>
-    [JsonPropertyName("title")]
-    public string Title { set; get; } = string.Empty;
-
-    /// <summary>
-    /// Markdown格式的消息
-    /// </summary>
-    [JsonPropertyName("text")]
-    public string Text { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 单个按钮方案(设置此项后btns无效)
-    /// </summary>
-    [JsonPropertyName("singleTitle")]
-    public string SingleTitle { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 单个按钮方案触发的URL(设置此项后btns无效)
-    /// </summary>
-    [JsonPropertyName("singleURL")]
-    public string SingleUrl { set; get; } = string.Empty;
-
-    /// <summary>
-    /// 按钮排列，0-按钮竖直排列，1-按钮横向排列
-    /// </summary>
-    [JsonPropertyName("btnOrientation")]
-    public string? BtnOrientation { set; get; } = "0";
-
-    /// <summary>
-    /// 按钮的信息：title-按钮方案，actionURL-点击按钮触发的URL
-    /// </summary>
-    [JsonPropertyName("btns")]
-    public List<LarkBtnInfo>? Btns { set; get; }
+    [JsonPropertyName("image_key")]
+    public string ImageKey { set; get; } = string.Empty;
 }
 
 /// <summary>
-/// 菜单卡片类型
+/// 消息卡片类型
 /// </summary>
-public class LarkFeedCard
+public class LarkInterActive
 {
     /// <summary>
-    /// 链接列表
+    /// 头部
     /// </summary>
-    [JsonPropertyName("links")]
-    public List<LarkFeedCardLink>? Links { get; set; }
+    [JsonPropertyName("header")]
+    public InterActiveHeader Header { set; get; } = new InterActiveHeader();
+
+    /// <summary>
+    /// 节点
+    /// </summary>
+    [JsonPropertyName("elements")]
+    public List<object> Elements { set; get; } = [];
 }
 
 #endregion 基本类型
@@ -120,58 +85,241 @@ public class LarkFeedCard
 #region 辅助类
 
 /// <summary>
-/// 菜单卡片类型链接
+/// 标签接口
 /// </summary>
-public class LarkFeedCardLink
+public interface ITag
 {
     /// <summary>
-    /// 消息标题
+    /// 标签类型
     /// </summary>
-    [JsonPropertyName("title")]
-    public string Title { set; get; } = string.Empty;
+    string Tag { get; set; }
+}
 
-    /// <summary>
-    /// 图片URL
-    /// </summary>
-    [JsonPropertyName("picURL")]
-    public string PicUrl { set; get; } = string.Empty;
+#region Post
 
-    /// <summary>
-    /// 点击消息跳转的URL
-    /// </summary>
-    [JsonPropertyName("messageURL")]
-    public string MessageUrl { set; get; } = string.Empty;
+/// <summary>
+/// Post标签接口
+/// </summary>
+public interface IPostTag : ITag
+{
 }
 
 /// <summary>
-/// @指定人(被@人的用户 OpenID 如非群内成员则会被自动过滤)
+/// 文本标签
 /// </summary>
-public class LarkAt
+public class TagText : IPostTag
 {
     /// <summary>
-    /// 被@的用户ID
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkPostTagEnum.Text.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 消息文本
+    /// </summary>
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 超链接标签
+/// </summary>
+public class TagA : IPostTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkPostTagEnum.A.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 消息文本
+    /// </summary>
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 消息链接
+    /// </summary>
+    [JsonPropertyName("href")]
+    public string Href { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// @ 标签
+/// </summary>
+public class TagAt : IPostTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkPostTagEnum.At.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 用户ID
     /// </summary>
     [JsonPropertyName("user_id")]
-    public List<string>? AtUserIds { set; get; }
+    public string UserId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 用户名称
+    /// </summary>
+    [JsonPropertyName("user_name")]
+    public string UserName { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// 按钮信息
+/// 图片标签
 /// </summary>
-public class LarkBtnInfo
+public class TagImg : IPostTag
 {
     /// <summary>
-    /// 按钮方案
+    /// 标签类型
     /// </summary>
-    [JsonPropertyName("title")]
-    public string Title { get; set; } = string.Empty;
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkPostTagEnum.Image.GetEnumDescriptionByKey();
 
     /// <summary>
-    /// 动作触发的URL
+    /// 图片的唯一标识
     /// </summary>
-    [JsonPropertyName("actionURL")]
-    public string ActionUrl { get; set; } = string.Empty;
+    [JsonPropertyName("image_key")]
+    public string ImageKey { set; get; } = string.Empty;
 }
+
+#endregion
+
+#region InterActive
+
+/// <summary>
+/// 头部
+/// </summary>
+public class InterActiveHeader
+{
+    /// <summary>
+    /// 标题
+    /// </summary>
+    [JsonPropertyName("title")]
+    public TagTitleOrText Title { set; get; } = new TagTitleOrText();
+}
+
+/// <summary>
+/// InterActive标签接口
+/// </summary>
+public interface IInterActiveTag : ITag
+{
+}
+
+/// <summary>
+/// 头部或内容标签
+/// </summary>
+public class TagTitleOrText : IInterActiveTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkInterActiveTagEnum.PlainText.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 内容
+    /// </summary>
+    [JsonPropertyName("content")]
+    public string Content { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Markdown标签
+/// </summary>
+public class TagMarkdown : IInterActiveTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkInterActiveTagEnum.Markdown.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 内容
+    /// </summary>
+    [JsonPropertyName("content")]
+    public string Content { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 容器标签
+/// </summary>
+public class TagDiv : IInterActiveTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkInterActiveTagEnum.Div.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 内容
+    /// </summary>
+    [JsonPropertyName("text")]
+    public TagMarkdown Text { set; get; } = new TagMarkdown();
+}
+
+/// <summary>
+/// 动作标签
+/// </summary>
+public class TagAction : IInterActiveTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkInterActiveTagEnum.Action.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 内容
+    /// </summary>
+    [JsonPropertyName("actions")]
+    public List<TagButton> Actions { get; set; } = new List<TagButton>();
+}
+
+/// <summary>
+/// 按钮标签
+/// </summary>
+public class TagButton : IInterActiveTag
+{
+    /// <summary>
+    /// 标签类型
+    /// </summary>
+    [JsonPropertyName("tag")]
+    public string Tag { get; set; } = LarkInterActiveTagEnum.Button.GetEnumDescriptionByKey();
+
+    /// <summary>
+    /// 内容
+    /// </summary>
+    [JsonPropertyName("text")]
+    public TagMarkdown Text { set; get; } = new TagMarkdown();
+
+    /// <summary>
+    /// 链接
+    /// </summary>
+    [JsonPropertyName("url")]
+    public string Url { set; get; } = string.Empty;
+
+    /// <summary>
+    /// 类型
+    /// </summary>
+    [JsonPropertyName("type")]
+    public string Type { set; get; } = "defult";
+
+    /// <summary>
+    /// 值
+    /// </summary>
+    [JsonPropertyName("value")]
+    public object Value { set; get; } = new object();
+}
+
+#endregion
 
 #endregion 辅助类
 
@@ -201,6 +349,63 @@ public enum LarkMsgTypeEnum
     /// 消息卡片类型
     /// </summary>
     [Description("interactive")] InterActive
+}
+
+/// <summary>
+/// Post标签类型枚举
+/// </summary>
+public enum LarkPostTagEnum
+{
+    /// <summary>
+    /// 文本标签
+    /// </summary>
+    [Description("text")] Text,
+
+    /// <summary>
+    /// 超链接标签
+    /// </summary>
+    [Description("a")] A,
+
+    /// <summary>
+    /// @ 标签
+    /// </summary>
+    [Description("at")] At,
+
+    /// <summary>
+    /// 图片标签
+    /// </summary>
+    [Description("img")] Image
+}
+
+/// <summary>
+/// InterActive标签类型枚举
+/// </summary>
+public enum LarkInterActiveTagEnum
+{
+    /// <summary>
+    /// Markdown
+    /// </summary>
+    [Description("lark_md")] Markdown,
+
+    /// <summary>
+    /// 明文
+    /// </summary>
+    [Description("plain_text")] PlainText,
+
+    /// <summary>
+    /// 容器
+    /// </summary>
+    [Description("div")] Div,
+
+    /// <summary>
+    /// 按钮
+    /// </summary>
+    [Description("button")] Button,
+
+    /// <summary>
+    /// 动作
+    /// </summary>
+    [Description("action")] Action
 }
 
 #endregion

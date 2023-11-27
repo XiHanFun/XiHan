@@ -25,7 +25,7 @@ namespace XiHan.Subscriptions.Bots.WeCom;
 public class WeComText : WeComAt
 {
     /// <summary>
-    /// 文本内容，最长不超过2048个字节，必须是utf8编码
+    /// 消息文本，最长不超过2048个字节，必须是utf8编码
     /// </summary>
     [JsonPropertyName("content")]
     public string Content { get; set; } = string.Empty;
