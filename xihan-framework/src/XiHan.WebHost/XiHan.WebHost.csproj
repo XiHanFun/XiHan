@@ -41,6 +41,11 @@
     <ItemGroup>
         <None Remove="index.html" />
     </ItemGroup>
+    <ItemGroup>
+      <_WebToolingArtifacts Remove="Properties\PublishProfiles\Docker.pubxml" />
+      <_WebToolingArtifacts Remove="Properties\PublishProfiles\Linux.pubxml" />
+      <_WebToolingArtifacts Remove="Properties\PublishProfiles\Windows.pubxml" />
+    </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="index.html" />
@@ -68,12 +73,6 @@
 
     <ItemGroup>
         <None Update="IpDatabases\ip2region.xdb">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Properties\PublishProfiles\DevelopmentLinux.pubxml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Properties\PublishProfiles\DevelopmentWindows.pubxml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Properties\PublishProfiles\ProductionLinux.pubxml">
