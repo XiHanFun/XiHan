@@ -22,7 +22,7 @@
 
     <ItemGroup>
         <PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
-        <PackageReference Include="SqlSugarCore" Version="5.1.4.124" />
+        <PackageReference Include="SqlSugarCore" Version="5.1.4.126" />
     </ItemGroup>
 
     <ItemGroup>
