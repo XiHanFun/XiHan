@@ -19,6 +19,7 @@ using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace XiHan.Subscriptions.Bots.Lark;
 
@@ -45,6 +46,7 @@ public class LarkBot(LarkConnection larkConnection)
     public async Task<ApiResult> TextMessage(LarkText larkText)
     {
         var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        larkText.Text = _keyWord + "\n" + larkText.Text;
         var result = await Send(new { msg_type = msgType, content = larkText });
         return result;
     }
@@ -90,10 +92,12 @@ public class LarkBot(LarkConnection larkConnection)
             }
             objTList.Add(TList);
         }
+        larkPost.Title = _keyWord + "\n" + larkPost.Title;
         var zh_cn = new { title = larkPost.Title, content = objTList };
+        // 设置语言
         var post = new { zh_cn };
-        var content = new { post };
-        var result = await Send(new { msg_type = msgType, content = content });
+        var postContent = new { post };
+        var result = await Send(new { msg_type = msgType, content = postContent });
         return result;
     }
 
@@ -115,6 +119,7 @@ public class LarkBot(LarkConnection larkConnection)
     public async Task<ApiResult> InterActiveMessage(LarkInterActive larkInterActive)
     {
         var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
+        larkInterActive.Header.Title.Content = _keyWord + "\n" + larkInterActive.Header.Title.Content;
         var result = await Send(new { msg_type = msgType, card = larkInterActive });
         return result;
     }

@@ -39,98 +39,98 @@ public class WeComBot(WeComConnection weChatConnection)
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="text">内容</param>
+    /// <param name="weComText">内容</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextMessage(WeComText text)
+    public async Task<ApiResult> TextMessage(WeComText weComText)
     {
-        var msgtype = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, text });
+        var msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, text = weComText });
         return result;
     }
 
     /// <summary>
     /// 发送文档消息
     /// </summary>
-    /// <param name="markdown">文档</param>
+    /// <param name="weComMarkdown">文档</param>
     /// <returns></returns>
-    public async Task<ApiResult> MarkdownMessage(WeComMarkdown markdown)
+    public async Task<ApiResult> MarkdownMessage(WeComMarkdown weComMarkdown)
     {
-        var msgtype = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, markdown });
+        var msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, markdown = weComMarkdown });
         return result;
     }
 
     /// <summary>
     /// 发送图片消息
     /// </summary>
-    /// <param name="image">图片</param>
+    /// <param name="weComImage">图片</param>
     /// <returns></returns>
-    public async Task<ApiResult> ImageMessage(WeComImage image)
+    public async Task<ApiResult> ImageMessage(WeComImage weComImage)
     {
-        var msgtype = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, image });
+        var msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, image = weComImage });
         return result;
     }
 
     /// <summary>
     /// 发送图文消息
     /// </summary>
-    /// <param name="news">图文</param>
+    /// <param name="weComNews">图文</param>
     /// <returns></returns>
-    public async Task<ApiResult> NewsMessage(WeComNews news)
+    public async Task<ApiResult> NewsMessage(WeComNews weComNews)
     {
-        var msgtype = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, news });
+        var msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, news = weComNews });
         return result;
     }
 
     /// <summary>
     /// 发送文件消息
     /// </summary>
-    /// <param name="file">文件</param>
+    /// <param name="weComFile">文件</param>
     /// <returns></returns>
-    public async Task<ApiResult> FileMessage(WeComFile file)
+    public async Task<ApiResult> FileMessage(WeComFile weComFile)
     {
-        var msgtype = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, file });
+        var msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, file = weComFile });
         return result;
     }
 
     /// <summary>
     /// 发送语音消息
     /// </summary>
-    /// <param name="voice">语音</param>
+    /// <param name="weComVoice">语音</param>
     /// <returns></returns>
-    public async Task<ApiResult> VoiceMessage(WeComVoice voice)
+    public async Task<ApiResult> VoiceMessage(WeComVoice weComVoice)
     {
-        var msgtype = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, voice });
+        var msgType = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, voice = weComVoice });
         return result;
     }
 
     /// <summary>
     /// 发送文本通知模版卡片消息
     /// </summary>
-    /// <param name="template_card">模版卡片</param>
+    /// <param name="weComTemplateCardTextNotice">模版卡片</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice template_card)
+    public async Task<ApiResult> TextNoticeMessage(WeComTemplateCardTextNotice weComTemplateCardTextNotice)
     {
-        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
-        template_card.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, template_card });
+        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        weComTemplateCardTextNotice.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, template_card = weComTemplateCardTextNotice });
         return result;
     }
 
     /// <summary>
     /// 发送图文展示模版卡片消息
     /// </summary>
-    /// <param name="template_card">模版卡片</param>
+    /// <param name="weComTemplateCardNewsNotice">模版卡片</param>
     /// <returns></returns>
-    public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice template_card)
+    public async Task<ApiResult> NewsNoticeMessage(WeComTemplateCardNewsNotice weComTemplateCardNewsNotice)
     {
-        var msgtype = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
-        template_card.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype, template_card });
+        var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
+        weComTemplateCardNewsNotice.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
+        var result = await SendMessage(new { msgtype = msgType, template_card = weComTemplateCardNewsNotice });
         return result;
     }
 
