@@ -280,7 +280,7 @@ public class TagAction : IInterActiveTag
     /// 内容
     /// </summary>
     [JsonPropertyName("actions")]
-    public List<TagButton> Actions { get; set; } = new List<TagButton>();
+    public List<TagButton> Actions { get; set; } = [];
 }
 
 /// <summary>
