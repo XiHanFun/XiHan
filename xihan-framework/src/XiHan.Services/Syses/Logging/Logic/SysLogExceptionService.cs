@@ -26,19 +26,14 @@ namespace XiHan.Services.Syses.Logging.Logic;
 /// <summary>
 /// 系统异常日志服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
 [AppService(ServiceType = typeof(ISysLogExceptionService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysLogExceptionService : BaseService<SysLogException>, ISysLogExceptionService
+public class SysLogExceptionService(IAppCacheService appCacheService) : BaseService<SysLogException>, ISysLogExceptionService
 {
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public SysLogExceptionService(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     /// <summary>
     /// 新增系统异常日志

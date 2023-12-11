@@ -22,18 +22,13 @@ namespace XiHan.Jobs.Bases;
 /// <summary>
 /// JobFactory
 /// </summary>
-public class JobFactory : IJobFactory
+/// <remarks>
+/// 构造函数 通过反射注入依赖对象
+/// </remarks>
+/// <param name="serviceProvider"></param>
+public class JobFactory(IServiceProvider serviceProvider) : IJobFactory
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    /// <summary>
-    /// 构造函数 通过反射注入依赖对象
-    /// </summary>
-    /// <param name="serviceProvider"></param>
-    public JobFactory(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     /// <summary>
     /// 创建

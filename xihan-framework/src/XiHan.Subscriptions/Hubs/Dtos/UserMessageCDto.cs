@@ -29,7 +29,7 @@ public class UserMessageCDto
     /// <summary>
     /// 用户标识列表
     /// </summary>
-    public List<long> UserIds { get; set; } = new();
+    public List<long> UserIds { get; set; } = [];
 
     /// <summary>
     /// 消息标题

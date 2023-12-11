@@ -33,7 +33,7 @@ public static class HttpSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IApplicationBuilder UseHttpSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        ArgumentNullException.ThrowIfNull(app);
 
         var env = App.WebHostEnvironment;
 

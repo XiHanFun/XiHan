@@ -83,7 +83,7 @@ public static class TypeExtension
     {
         if (!genericType.IsGenericType) throw new ArgumentException("该功能只支持泛型类型的调用，非泛型类型可使用 IsAssignableFrom 方法。");
 
-        List<Type> allOthers = new() { type };
+        List<Type> allOthers = [type];
         if (genericType.IsInterface) allOthers.AddRange(type.GetInterfaces());
 
         foreach (var other in allOthers)
@@ -183,7 +183,6 @@ public static class TypeExtension
         if (!type.IsNullableType()) return type;
         NullableConverter nullableConverter = new(type);
         return nullableConverter.UnderlyingType;
-
     }
 
     #endregion

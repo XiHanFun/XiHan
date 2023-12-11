@@ -23,22 +23,16 @@ namespace XiHan.Jobs.Jobs.Assembly;
 /// <summary>
 /// 清理日志任务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysLogOperationService"></param>
+/// <param name="sysJobLogService"></param>
 [AppService(ServiceType = typeof(CleanLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class CleanLogsJob : JobBase, IJob
+public class CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysJobLogService sysJobLogService) : JobBase, IJob
 {
-    private readonly ISysLogOperationService _sysLogOperationService;
-    private readonly ISysJobLogService _sysJobLogService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysLogOperationService"></param>
-    /// <param name="sysJobLogService"></param>
-    public CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysJobLogService sysJobLogService)
-    {
-        _sysLogOperationService = sysLogOperationService;
-        _sysJobLogService = sysJobLogService;
-    }
+    private readonly ISysLogOperationService _sysLogOperationService = sysLogOperationService;
+    private readonly ISysJobLogService _sysJobLogService = sysJobLogService;
 
     /// <summary>
     /// 执行

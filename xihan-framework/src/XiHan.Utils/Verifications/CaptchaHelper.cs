@@ -64,7 +64,7 @@ public static class CaptchaHelper
     /// <returns></returns>
     private static string RandomTo(int length, string source)
     {
-        if (length <= 0) throw new ArgumentOutOfRangeException(nameof(length));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
         if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));
 

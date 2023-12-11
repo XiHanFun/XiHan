@@ -33,7 +33,7 @@ public static class ServiceSetup
     public static IServiceCollection AddServiceSetup(this IServiceCollection services)
     {
         "Services Start……".WriteLineInfo();
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 基础服务注册
         AppServiceProvider.RegisterService(services);

@@ -79,7 +79,7 @@ public static class HttpContextExtend
     public static bool IsAjaxRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-                            where headers.Key.ToLower() == "X-Requested-With".ToLower()
+                            where headers.Key.Equals("X-Requested-With", StringComparison.CurrentCultureIgnoreCase)
                             select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "XMLHttpRequest";
     }
@@ -92,7 +92,7 @@ public static class HttpContextExtend
     public static bool IsJsonRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-                            where headers.Key.ToLower() == "content-type".ToLower()
+                            where headers.Key.Equals("content-type", StringComparison.CurrentCultureIgnoreCase)
                             select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString() == "application/json";
     }
@@ -105,7 +105,7 @@ public static class HttpContextExtend
     public static bool IsHtmlRequest(this HttpContext context)
     {
         var stringValues = (from headers in context.Request.Headers
-                            where headers.Key.ToLower() == "accept".ToLower()
+                            where headers.Key.Equals("accept", StringComparison.CurrentCultureIgnoreCase)
                             select headers.Value).FirstOrDefault();
         return !string.IsNullOrWhiteSpace(stringValues) && stringValues.ToString().Contains("text/html");
     }
@@ -117,7 +117,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static bool IsDownloadFile(this HttpContext context)
     {
-        return context.Response.Headers["Content-Disposition"].ToString().StartsWith("attachment; filename=");
+        return context.Response.Headers.ContentDisposition.ToString().StartsWith("attachment; filename=");
     }
 
     /// <summary>
@@ -219,9 +219,9 @@ public static class HttpContextExtend
             // 中国|0|浙江省|杭州市|电信
             var searcher = App.GetRequiredService<ISearcher>();
             var searchResult = searcher.Search(ip);
-            if (searchResult == null) throw new ArgumentException("Ip地址信息查询出错", nameof(searchResult));
+            ArgumentException.ThrowIfNullOrWhiteSpace("Ip地址信息查询出错", searchResult);
 
-            string[] addressArray = searchResult.Replace('0', '-').Split('|');
+            string[] addressArray = searchResult!.Replace('0', '-').Split('|');
             UserAddressInfo addressInfo = new()
             {
                 RemoteIPv4 = context.GetClientIpV4(),
@@ -433,7 +433,7 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetUserToken(this HttpContext context)
     {
-        return context.Request.Headers["Authorization"].ToString().Replace(ClaimConst.TokenReplace, string.Empty);
+        return context.Request.Headers.Authorization.ToString().Replace(ClaimConst.TokenReplace, string.Empty);
     }
 
     /// <summary>

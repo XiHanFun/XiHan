@@ -40,7 +40,7 @@ public static class AuthSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddAuthSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 身份验证(默认用JwtBearer认证)
         _ = services.AddAuthentication(options =>

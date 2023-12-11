@@ -24,9 +24,14 @@ public static class FormatExtension
 {
     #region FileSize
 
-    private static readonly string[] Suffixes = {
-        "B", "KB", "MB", "GB", "TB", "PB"
-    };
+    private static readonly string[] Suffixes = [
+        "B",
+        "KB",
+        "MB",
+        "GB",
+        "TB",
+        "PB"
+    ];
 
     /// <summary>
     /// 格式化文件大小显示为字符串
@@ -228,11 +233,11 @@ public static class FormatExtension
     /// <returns></returns>
     public static List<DateTime> GetDayDateRange(this DateTime dateTime)
     {
-        return new List<DateTime>
-        {
+        return
+        [
             dateTime.GetDayMinDate(),
             dateTime.GetDayMaxDate()
-        };
+        ];
     }
 
     /// <summary>
@@ -253,7 +258,7 @@ public static class FormatExtension
     /// <returns></returns>
     public static string GetWeekByDate(this DateTime dateTime)
     {
-        string[] day = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        string[] day = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
         return day[Convert.ToInt32(dateTime.DayOfWeek.ToString("d"))];
     }
 
@@ -407,27 +412,27 @@ public static class FormatExtension
                 return dep.TotalMinutes.ParseToInt() + "分钟前";
 
             default:
-            {
-                if (dep.TotalHours < 24)
-                        return dep.TotalHours.ParseToInt() + "小时前";
-                switch (dep.TotalDays)
                 {
-                    case < 7:
-                        return dep.TotalDays.ParseToInt() + "天前";
+                    if (dep.TotalHours < 24)
+                        return dep.TotalHours.ParseToInt() + "小时前";
+                    switch (dep.TotalDays)
+                    {
+                        case < 7:
+                            return dep.TotalDays.ParseToInt() + "天前";
 
-                    case >= 7 and < 30:
-                    {
-                        var defaultWeek = dep.TotalDays.ParseToInt() / 7;
-                        return defaultWeek + "周前";
-                    }
-                    default:
-                    {
-                        return dep.TotalDays.ParseToInt() is >= 30 and < 365
-                            ? value.Month.ParseToInt() + "个月前"
-                            : now.Year - value.Year + "年前";
+                        case >= 7 and < 30:
+                            {
+                                var defaultWeek = dep.TotalDays.ParseToInt() / 7;
+                                return defaultWeek + "周前";
+                            }
+                        default:
+                            {
+                                return dep.TotalDays.ParseToInt() is >= 30 and < 365
+                                    ? value.Month.ParseToInt() + "个月前"
+                                    : now.Year - value.Year + "年前";
+                            }
                     }
                 }
-            }
         }
     }
 

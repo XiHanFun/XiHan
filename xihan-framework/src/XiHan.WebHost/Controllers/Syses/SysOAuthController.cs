@@ -24,27 +24,20 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// 系统三方登录管理
 /// <code>包含：三方登录</code>
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysUserService"></param>
+/// <param name="sysRoleService"></param>
+/// <param name="sysLogLoginService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Authorize)]
-public class SysOAuthController : BaseApiController
+public class SysOAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
+    ISysLogLoginService sysLogLoginService) : BaseApiController
 {
-    private readonly ISysUserService _sysUserService;
-    private readonly ISysRoleService _sysRoleService;
-    private readonly ISysLogLoginService _sysLogLoginService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysUserService"></param>
-    /// <param name="sysRoleService"></param>
-    /// <param name="sysLogLoginService"></param>
-    public SysOAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
-        ISysLogLoginService sysLogLoginService)
-    {
-        _sysUserService = sysUserService;
-        _sysRoleService = sysRoleService;
-        _sysLogLoginService = sysLogLoginService;
-    }
+    private readonly ISysUserService _sysUserService = sysUserService;
+    private readonly ISysRoleService _sysRoleService = sysRoleService;
+    private readonly ISysLogLoginService _sysLogLoginService = sysLogLoginService;
 
     ///// <summary>
     ///// 三方登录

@@ -32,7 +32,7 @@ public static class LogSetup
     public static ILoggingBuilder AddLogSetup(this ILoggingBuilder builder)
     {
         "Log Start……".WriteLineInfo();
-        if (builder == null) throw new ArgumentNullException(nameof(builder));
+        ArgumentNullException.ThrowIfNull(builder);
 
         // 注册日志
         AppLogProvider.RegisterLog(builder);

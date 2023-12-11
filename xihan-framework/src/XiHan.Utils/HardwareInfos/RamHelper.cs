@@ -35,7 +35,7 @@ public static class RamHelper
     /// <returns></returns>
     public static List<RamInfo> GetRamInfos()
     {
-        List<RamInfo> ramInfos = new();
+        List<RamInfo> ramInfos = [];
 
         try
         {
@@ -48,7 +48,7 @@ public static class RamHelper
             {
                 var output = ShellHelper.Bash("free -k | tail -n +2| head -n +1 | awk '{print $2,$3,$4,$7}'").Trim();
                 var lines = output.Split(' ');
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     totalMemoryParts = lines[0].ParseToLong() * 1024;
                     freeMemoryParts = lines[2].ParseToLong() * 1024;
@@ -59,7 +59,7 @@ public static class RamHelper
             {
                 var output = ShellHelper.Bash("top -l 1 | head -n +7 | tail -n -1 | awk '{print $2,$4,$6,$8}'").Trim();
                 var lines = output.Split(' ');
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     var usedMemoryParts1 = lines[1].Replace('(', (char)StringSplitOptions.None).Replace('M', (char)StringSplitOptions.None).ParseToLong();
                     var usedMemoryParts2 = lines[1].Replace('M', (char)StringSplitOptions.None).ParseToLong();
@@ -73,7 +73,7 @@ public static class RamHelper
             {
                 var output = ShellHelper.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value").Trim();
                 var lines = output.Split(Environment.NewLine);
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
                     totalMemoryParts = lines.First(s => s.StartsWith("TotalVisibleMemorySize")).Split('=')[1].ParseToLong() * 1024;
                     freeMemoryParts = lines.First(s => s.StartsWith("FreePhysicalMemory")).Split('=')[1].ParseToLong() * 1024;

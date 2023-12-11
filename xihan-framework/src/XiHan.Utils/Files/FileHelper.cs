@@ -79,13 +79,13 @@ public static class FileHelper
         var directories = Directory.GetDirectories(varFromDirectory);
         if (directories.Length > 0)
             foreach (var d in directories)
-                CopyFolder(d, varToDirectory + d[d.LastIndexOf(@"\", StringComparison.Ordinal)..]);
+                CopyFolder(d, varToDirectory + d[d.LastIndexOf('\\')..]);
 
         var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
 
         foreach (var s in files)
-            File.Copy(s, varToDirectory + s[s.LastIndexOf(@"\", StringComparison.Ordinal)..], true);
+            File.Copy(s, varToDirectory + s[s.LastIndexOf('\\')..], true);
     }
 
     #endregion
@@ -160,8 +160,8 @@ public static class FileHelper
     public static void CreateFile(string dir, string pageStr, Encoding encoding)
     {
         dir = dir.Replace(@"/", @"\");
-        if (dir.IndexOf(@"\", StringComparison.Ordinal) > -1)
-            CreateDirectory(dir[..dir.LastIndexOf(@"\", StringComparison.Ordinal)]);
+        if (dir.IndexOf('\\') > -1)
+            CreateDirectory(dir[..dir.LastIndexOf('\\')]);
 
         StreamWriter sw = new(dir, false, encoding);
         sw.Write(pageStr);
@@ -204,13 +204,13 @@ public static class FileHelper
         if (directories.Length > 0)
             foreach (var d in directories)
                 DeleteFolderFiles(d,
-                    string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf(@"\", StringComparison.Ordinal))));
+                    string.Concat(varToDirectory, d.AsSpan(d.LastIndexOf('\\'))));
 
         var files = Directory.GetFiles(varFromDirectory);
         if (files.Length <= 0) return;
 
         foreach (var s in files)
-            File.Delete(string.Concat(varToDirectory, s.AsSpan(s.LastIndexOf(@"\", StringComparison.Ordinal))));
+            File.Delete(string.Concat(varToDirectory, s.AsSpan(s.LastIndexOf('\\'))));
     }
 
     #endregion

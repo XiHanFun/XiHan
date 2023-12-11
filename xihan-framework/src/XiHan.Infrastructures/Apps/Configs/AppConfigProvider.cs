@@ -46,7 +46,7 @@ public static class AppConfigProvider
         List<string> jsonFilePath = configurationManager.Sources.OfType<JsonConfigurationSource>()
             .Select(file => file.Path!)
             .ToList();
-        if (!jsonFilePath.Any() || !jsonFilePath.Remove("appsettings.json")) return;
+        if (jsonFilePath.Count == 0 || !jsonFilePath.Remove("appsettings.json")) return;
 
         try
         {

@@ -27,20 +27,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统邮件管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysEmailService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysEmailController : BaseApiController
+public class SysEmailController(ISysEmailService sysEmailService) : BaseApiController
 {
-    private readonly ISysEmailService _sysEmailService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysEmailService"></param>
-    public SysEmailController(ISysEmailService sysEmailService)
-    {
-        _sysEmailService = sysEmailService;
-    }
+    private readonly ISysEmailService _sysEmailService = sysEmailService;
 
     /// <summary>
     /// 新增系统邮件

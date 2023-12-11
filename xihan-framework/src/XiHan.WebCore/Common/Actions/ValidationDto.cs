@@ -19,26 +19,21 @@ namespace XiHan.WebCore.Common.Actions;
 /// <summary>
 /// 验证实体
 /// </summary>
-public class ValidationDto
+/// <remarks>
+/// 构造函数
+/// </remarks>
+public class ValidationDto(ModelStateDictionary modelState)
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ValidationDto(ModelStateDictionary modelState)
-    {
-        TotalCount = modelState.Count;
-        ValidationErrorDtos = modelState.Keys
-            .SelectMany(key => modelState[key]!.Errors.Select(x => new ValidationErrorDto(key, x.ErrorMessage)))
-            .ToList();
-    }
 
     /// <summary>
     /// 数据总数
     /// </summary>
-    public int TotalCount { get; }
+    public int TotalCount { get; } = modelState.Count;
 
     /// <summary>
     /// 验证出错字段
     /// </summary>
-    public List<ValidationErrorDto>? ValidationErrorDtos { get; }
+    public List<ValidationErrorDto>? ValidationErrorDtos { get; } = modelState.Keys
+            .SelectMany(key => modelState[key]!.Errors.Select(x => new ValidationErrorDto(key, x.ErrorMessage)))
+            .ToList();
 }

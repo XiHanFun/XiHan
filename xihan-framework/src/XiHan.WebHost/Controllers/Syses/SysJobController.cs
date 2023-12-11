@@ -33,23 +33,17 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统任务管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysJobService"></param>
+/// <param name="taskSchedulerServer"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysJobController : BaseApiController
+public class SysJobController(ISysJobService sysJobService, ITaskSchedulerServer taskSchedulerServer) : BaseApiController
 {
-    private readonly ISysJobService _sysJobService;
-    private readonly ITaskSchedulerServer _taskSchedulerServer;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysJobService"></param>
-    /// <param name="taskSchedulerServer"></param>
-    public SysJobController(ISysJobService sysJobService, ITaskSchedulerServer taskSchedulerServer)
-    {
-        _sysJobService = sysJobService;
-        _taskSchedulerServer = taskSchedulerServer;
-    }
+    private readonly ISysJobService _sysJobService = sysJobService;
+    private readonly ITaskSchedulerServer _taskSchedulerServer = taskSchedulerServer;
 
     /// <summary>
     /// 新增系统任务
@@ -76,7 +70,7 @@ public class SysJobController : BaseApiController
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Delete)]
     public async Task<ApiResult> DeleteJobByIds([FromBody] long[] jobIds)
     {
-        Dictionary<SysJob, dynamic> errorMessages = new();
+        Dictionary<SysJob, dynamic> errorMessages = [];
         List<SysJob> sysJobs = await _sysJobService.QueryAsync(j => jobIds.Contains(j.BaseId));
         sysJobs.ForEach(async sysJob =>
         {
@@ -84,7 +78,7 @@ public class SysJobController : BaseApiController
             var result = await _taskSchedulerServer.DeleteTaskScheduleAsync(sysJob);
             if (result.IsSuccess)
                 // 再删除数据库的任务
-                _ = await _sysJobService.DeleteJobByIds(new long[] { sysJob.BaseId });
+                _ = await _sysJobService.DeleteJobByIds([sysJob.BaseId]);
             errorMessages.Add(sysJob, result.Data);
         });
 
@@ -234,7 +228,7 @@ public class SysJobController : BaseApiController
     /// <param name="jobCDto"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    private bool VerifyJobParams(SysJobCDto jobCDto)
+    private static bool VerifyJobParams(SysJobCDto jobCDto)
     {
         // 根据任务类型验证任务参数
         if (jobCDto.JobType == JobTypeEnum.Assembly)

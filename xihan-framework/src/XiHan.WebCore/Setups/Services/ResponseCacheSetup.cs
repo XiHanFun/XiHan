@@ -30,7 +30,7 @@ public static class ResponseCacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddResponseCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 响应缓存
         var isEnabledResponseCache = AppSettings.Cache.ResponseCache.IsEnabled.GetValue();

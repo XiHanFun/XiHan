@@ -38,7 +38,7 @@ public static class JobSetup
     /// <exception cref="CustomException"></exception>
     public static IApplicationBuilder UseJobSetup(this IApplicationBuilder app)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
+        ArgumentNullException.ThrowIfNull(app);
 
         var env = App.WebHostEnvironment;
         // 环境变量，生产环境

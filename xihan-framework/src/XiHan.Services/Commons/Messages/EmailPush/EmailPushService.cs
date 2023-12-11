@@ -111,7 +111,7 @@ public class EmailPushService : BaseService<SysEmail>, IEmailPushService
             Subject = "曦寒账号验证",
             Body = body,
             IsBodyHtml = true,
-            ToMail = new List<string>() { userEmail }
+            ToMail = [userEmail]
         };
         return await SendEmail(emailTo);
     }

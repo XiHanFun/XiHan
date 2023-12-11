@@ -22,18 +22,13 @@ namespace XiHan.Infrastructures.Requests.Https;
 /// <summary>
 /// HttpPollyService
 /// </summary>
-public class HttpPollyService : IHttpPollyService
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="httpClientFactory"></param>
+public class HttpPollyService(IHttpClientFactory httpClientFactory) : IHttpPollyService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="httpClientFactory"></param>
-    public HttpPollyService(IHttpClientFactory httpClientFactory)
-    {
-        _httpClientFactory = httpClientFactory;
-    }
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
     /// <summary>
     /// Get 请求
@@ -131,7 +126,7 @@ public class HttpPollyService : IHttpPollyService
         Dictionary<string, string>? headers = null)
     {
         using var client = _httpClientFactory.CreateClient(httpGroupEnum.ToString());
-        using MultipartFormDataContent formDataContent = new();
+        using MultipartFormDataContent formDataContent = [];
         if (headers != null)
             foreach (KeyValuePair<string, string> header in headers.Where(header =>
                          !formDataContent.Headers.Contains(header.Key)))

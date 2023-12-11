@@ -59,7 +59,7 @@ public class UrlSet
     /// 命名空间
     /// </summary>
     [XmlElement("url")]
-    public List<Url> Url { get; set; } = new();
+    public List<Url> Url { get; set; } = [];
 }
 
 /// <summary>

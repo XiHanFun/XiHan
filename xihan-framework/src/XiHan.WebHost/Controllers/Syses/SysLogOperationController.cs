@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统操作日志管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysLogOperationService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogOperationController : BaseApiController
+public class SysLogOperationController(ISysLogOperationService sysLogOperationService) : BaseApiController
 {
-    private readonly ISysLogOperationService _sysLogOperationService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysLogOperationService"></param>
-    public SysLogOperationController(ISysLogOperationService sysLogOperationService)
-    {
-        _sysLogOperationService = sysLogOperationService;
-    }
+    private readonly ISysLogOperationService _sysLogOperationService = sysLogOperationService;
 
     /// <summary>
     /// 批量删除系统操作日志

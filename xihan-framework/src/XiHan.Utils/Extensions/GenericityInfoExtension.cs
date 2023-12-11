@@ -160,10 +160,10 @@ public static class GenericityInfoExtension
             s.ValueA,
             s.ValueB
         });
-        if (specialList.Any()) newList = newList.Where(s => !specialList.Contains(s.PropertyName));
+        if (specialList.Count != 0) newList = newList.Where(s => !specialList.Contains(s.PropertyName));
 
         var enumerable = newList.ToList();
-        return !enumerable.ToList().Any() ? string.Empty : SerializeHelper.SerializeTo(enumerable);
+        return enumerable.ToList().Count == 0 ? string.Empty : SerializeHelper.SerializeTo(enumerable);
     }
 
     #endregion

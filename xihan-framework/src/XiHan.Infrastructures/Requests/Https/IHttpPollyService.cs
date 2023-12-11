@@ -37,7 +37,8 @@ public interface IHttpPollyService
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url, Dictionary<string, string>? headers = null);
+    Task<string> GetAsync(HttpGroupEnum httpGroupEnum, string url,
+        Dictionary<string, string>? headers = null);
 
     /// <summary>
     /// Post 请求

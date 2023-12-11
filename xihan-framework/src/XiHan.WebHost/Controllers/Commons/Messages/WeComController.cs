@@ -27,20 +27,15 @@ namespace XiHan.WebHost.Controllers.Commons.Messages;
 /// 企业微信消息推送管理
 /// <code>包含：文本/文档/图片/图文/文件/文本通知卡片/图文展示卡片/上传文件</code>
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="weComPushService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Common)]
-public class WeComController : BaseApiController
+public class WeComController(IWeComPushService weComPushService) : BaseApiController
 {
-    private readonly IWeComPushService _weComPushService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="weComPushService"></param>
-    public WeComController(IWeComPushService weComPushService)
-    {
-        _weComPushService = weComPushService;
-    }
+    private readonly IWeComPushService _weComPushService = weComPushService;
 
     #region 发送消息
 
@@ -51,7 +46,7 @@ public class WeComController : BaseApiController
     [HttpPost("Text")]
     public async Task<ApiResult> WeComToText()
     {
-        List<string> atMobiles = new() { "@all" };
+        List<string> atMobiles = ["@all"];
         WeComText text = new()
         {
             Content = "看万山红遍，层林尽染；漫江碧透，百舸争流。",
@@ -103,8 +98,8 @@ public class WeComController : BaseApiController
     [HttpPost("News")]
     public async Task<ApiResult> WeComToNews()
     {
-        List<WeComArticle> articles = new()
-        {
+        List<WeComArticle> articles =
+        [
             new WeComArticle
             {
                 Title = "中秋节礼品领取",
@@ -112,7 +107,7 @@ public class WeComController : BaseApiController
                 Url = "www.qq.com",
                 PicUrl = "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png"
             }
-        };
+        ];
         WeComNews news = new()
         {
             Articles = articles
@@ -187,8 +182,8 @@ public class WeComController : BaseApiController
         // 二级普通文本
         var subTitleText = "下载企业微信还能抢红包！";
         // 二级标题和文本
-        List<WeComHorizontalContent> horizontalContents = new()
-        {
+        List<WeComHorizontalContent> horizontalContents =
+        [
             new WeComHorizontalContent
             {
                 Type = 0,
@@ -202,17 +197,17 @@ public class WeComController : BaseApiController
                 Value = "点击访问",
                 Url = "https://work.weixin.qq.com/?from=openApi"
             }
-        };
+        ];
         // 跳转指引
-        List<WeComJump> jumps = new()
-        {
+        List<WeComJump> jumps =
+        [
             new WeComJump
             {
                 Type = 1,
                 Url = "https://work.weixin.qq.com/?from=openApi",
                 Title = "企业微信官网"
             }
-        };
+        ];
         // 整体卡片的点击跳转事件，text_notice模版卡片中该字段为必填项
         WeComCardAction cardAction = new()
         {
@@ -289,8 +284,8 @@ public class WeComController : BaseApiController
             }
         };
         // 二级标题和文本
-        List<WeComHorizontalContent> horizontalContents = new()
-        {
+        List<WeComHorizontalContent> horizontalContents =
+        [
             new WeComHorizontalContent
             {
                 Type = 0,
@@ -304,17 +299,17 @@ public class WeComController : BaseApiController
                 Value = "点击访问",
                 Url = "https://work.weixin.qq.com/?from=openApi"
             }
-        };
+        ];
         // 跳转指引
-        List<WeComJump> jumps = new()
-        {
+        List<WeComJump> jumps =
+        [
             new WeComJump
             {
                 Type = 1,
                 Url = "https://work.weixin.qq.com/?from=openApi",
                 Title = "企业微信官网"
             }
-        };
+        ];
         // 整体卡片的点击跳转事件
         WeComCardAction cardAction = new()
         {

@@ -28,20 +28,15 @@ namespace XiHan.Jobs.Jobs;
 /// <summary>
 /// 执行SQL任务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysJobService"></param>
 [AppService(ServiceType = typeof(SqlStatementJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class SqlStatementJob : JobBase, IJob
+public class SqlStatementJob(ISysJobService sysJobService) : JobBase, IJob
 {
     private static readonly ILogger Logger = Log.ForContext<SqlStatementJob>();
-    private readonly ISysJobService _sysJobService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysJobService"></param>
-    public SqlStatementJob(ISysJobService sysJobService)
-    {
-        _sysJobService = sysJobService;
-    }
+    private readonly ISysJobService _sysJobService = sysJobService;
 
     /// <summary>
     /// 执行

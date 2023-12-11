@@ -31,7 +31,7 @@ public static class JobSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddJobSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 添加Quartz服务
         _ = services.AddSingleton<IJobFactory, JobFactory>();

@@ -23,19 +23,14 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统服务器监控管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysServerService"></param>
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysServerController : BaseApiController
+public class SysServerController(ISysServerService sysServerService) : BaseApiController
 {
-    private readonly ISysServerService _sysServerService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysServerService"></param>
-    public SysServerController(ISysServerService sysServerService)
-    {
-        _sysServerService = sysServerService;
-    }
+    private readonly ISysServerService _sysServerService = sysServerService;
 
     /// <summary>
     /// 获取服务器信息

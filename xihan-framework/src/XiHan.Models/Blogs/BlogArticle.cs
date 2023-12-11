@@ -15,7 +15,6 @@
 using SqlSugar;
 using XiHan.Models.Bases.Entities;
 using XiHan.Models.Blogs.Enums;
-using XiHan.Models.Syses;
 
 namespace XiHan.Models.Blogs;
 
@@ -157,7 +156,7 @@ public class BlogArticle : BaseEntity
     /// </summary>
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.ManyToMany, nameof(BlogArticleCategoryTieup.ArticleId), nameof(BlogArticleCategoryTieup.CategoryId))]
-    public List<BlogArticleCategory> Categorys { get; set; } = [];
+    public List<BlogArticleCategory> Categories { get; set; } = [];
 
     /// <summary>
     /// 文章标签

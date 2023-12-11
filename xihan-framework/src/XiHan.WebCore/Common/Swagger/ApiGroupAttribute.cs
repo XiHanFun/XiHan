@@ -17,22 +17,18 @@ namespace XiHan.WebCore.Common.Swagger;
 /// <summary>
 /// ApiGroupAttribute
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="names"></param>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true)]
-public class ApiGroupAttribute : Attribute
+public class ApiGroupAttribute(params ApiGroupNameEnum[] names) : Attribute
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="names"></param>
-    public ApiGroupAttribute(params ApiGroupNameEnum[] names)
-    {
-        GroupNames = names;
-    }
 
     /// <summary>
     /// 分组名
     /// </summary>
-    public ApiGroupNameEnum[] GroupNames { get; set; }
+    public ApiGroupNameEnum[] GroupNames { get; set; } = names;
 }
 
 /// <summary>

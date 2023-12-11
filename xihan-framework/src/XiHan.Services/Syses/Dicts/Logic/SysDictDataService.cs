@@ -28,19 +28,14 @@ namespace XiHan.Services.Syses.Dicts.Logic;
 /// <summary>
 /// 系统字典项服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
 [AppService(ServiceType = typeof(ISysDictDataService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
+public class SysDictDataService(IAppCacheService appCacheService) : BaseService<SysDictData>, ISysDictDataService
 {
-    private readonly IAppCacheService _appCacheService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    public SysDictDataService(IAppCacheService appCacheService)
-    {
-        _appCacheService = appCacheService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
 
     /// <summary>
     /// 校验字典项值是否唯一
@@ -131,7 +126,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
             .Where((t, d) => t.Code == dictCode && d.IsEnable)
             .Select((t, d) => d)
             .ToListAsync();
-        list = list.OrderBy(d => d.SortOrder).ToList();
+        list = [.. list.OrderBy(d => d.SortOrder)];
 
         _ = _appCacheService.SetWithMinutes(key, list, 30);
         return list;
@@ -152,7 +147,7 @@ public class SysDictDataService : BaseService<SysDictData>, ISysDictDataService
             .Where((t, d) => dictCodes.Contains(t.Code) && d.IsEnable)
             .Select((t, d) => d)
             .ToListAsync();
-        list = list.OrderBy(d => d.SortOrder).ToList();
+        list = [.. list.OrderBy(d => d.SortOrder)];
 
         _ = _appCacheService.SetWithMinutes(key, list, 30);
         return list;

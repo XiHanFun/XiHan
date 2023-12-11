@@ -42,48 +42,36 @@ public static class BoardHelper
             {
                 var output = ShellHelper.Bash("dmidecode -t baseboard").Trim();
                 var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Product Name")).Split(':')[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split(':')[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number")).Split(':')[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split(':')[1].Trim();
-                    boardInfo.Product = loadProduct;
-                    boardInfo.Manufacturer = loadManufacturer;
-                    boardInfo.SerialNumber = loadSerialNumber;
-                    boardInfo.Version = loadVersion;
+                    boardInfo.Product = GetParmValue(lines, "Product Name", ':');
+                    boardInfo.Manufacturer = GetParmValue(lines, "Manufacturer", ':');
+                    boardInfo.SerialNumber = GetParmValue(lines, "Serial Number", ':');
+                    boardInfo.Version = GetParmValue(lines, "Version", ':');
                 }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 var output = ShellHelper.Bash("system_profiler SPHardwareDataType").Trim();
                 var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Model Identifier")).Split(':')[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Chip")).Split(':')[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("Serial Number (system)")).Split(':')[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Hardware UUID")).Split(':')[1].Trim();
-                    boardInfo.Product = loadProduct;
-                    boardInfo.Manufacturer = loadManufacturer;
-                    boardInfo.SerialNumber = loadSerialNumber;
-                    boardInfo.Version = loadVersion;
+                    boardInfo.Product = GetParmValue(lines, "Model Identifier", ':');
+                    boardInfo.Manufacturer = GetParmValue(lines, "Chip", ':');
+                    boardInfo.SerialNumber = GetParmValue(lines, "Serial Number (system)", ':');
+                    boardInfo.Version = GetParmValue(lines, "Hardware UUID", ':');
                 }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var output = ShellHelper.Cmd("wmic", "baseboard get Product,Manufacturer,SerialNumber,Version /Value").Trim();
                 var lines = output.Split(Environment.NewLine);
-                if (lines.Any())
+                if (lines.Length != 0)
                 {
-                    var loadProduct = lines.First(s => s.StartsWith("Product")).Split('=')[1].Trim();
-                    var loadManufacturer = lines.First(s => s.StartsWith("Manufacturer")).Split('=')[1].Trim();
-                    var loadSerialNumber = lines.First(s => s.StartsWith("SerialNumber")).Split('=')[1].Trim();
-                    var loadVersion = lines.First(s => s.StartsWith("Version")).Split('=')[1].Trim();
-                    boardInfo.Product = loadProduct;
-                    boardInfo.Manufacturer = loadManufacturer;
-                    boardInfo.SerialNumber = loadSerialNumber;
-                    boardInfo.Version = loadVersion;
+                    boardInfo.Product = GetParmValue(lines, "Product", '=');
+                    boardInfo.Manufacturer = GetParmValue(lines, "Manufacturer", '=');
+                    boardInfo.SerialNumber = GetParmValue(lines, "SerialNumber", '=');
+                    boardInfo.Version = GetParmValue(lines, "Version", '=');
                 }
             }
         }
@@ -93,6 +81,11 @@ public static class BoardHelper
         }
 
         return boardInfo;
+
+        string GetParmValue(string[] lines, string parm, char separator)
+        {
+            return lines.First(s => s.StartsWith(parm)).Split(separator)[1].Trim();
+        }
     }
 }
 

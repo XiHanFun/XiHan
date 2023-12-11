@@ -19,6 +19,7 @@ using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace XiHan.Subscriptions.Bots.Lark;
 
@@ -27,84 +28,99 @@ namespace XiHan.Subscriptions.Bots.Lark;
 /// https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
 /// 自定义机器人的频率控制和普通应用不同，为 100 次/分钟，5 次/秒
 /// </summary>
-public class LarkBot
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="larkConnection"></param>
+public class LarkBot(LarkConnection larkConnection)
 {
-    private readonly string _url;
-    private readonly string? _secret;
-    private readonly string? _keyWord;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="larkConnection"></param>
-    public LarkBot(LarkConnection larkConnection)
-    {
-        _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
-        _secret = larkConnection.Secret;
-        _keyWord = larkConnection.KeyWord;
-    }
+    private readonly string _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
+    private readonly string? _secret = larkConnection.Secret;
+    private readonly string? _keyWord = larkConnection.KeyWord;
 
     /// <summary>
     /// 发送文本消息
     /// </summary>
-    /// <param name="content">内容</param>
+    /// <param name="larkText">内容</param>
     /// <returns></returns>
-    public async Task<ApiResult> TextMessage(LarkText content)
+    public async Task<ApiResult> TextMessage(LarkText larkText)
     {
         var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, content });
+        larkText.Text = _keyWord + "\n" + larkText.Text;
+        var result = await Send(new { msg_type = msgType, content = larkText });
         return result;
     }
 
     /// <summary>
     /// 发送富文本消息
     /// </summary>
-    /// <param name="post"></param>
-    public async Task<ApiResult> PostMessage(LarkPost post)
+    /// <param name="larkPost">Post内容</param>
+    public async Task<ApiResult> PostMessage(LarkPost larkPost)
     {
         var msgType = LarkMsgTypeEnum.Post.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, post });
-        return result;
-    }
+        var objTList = new List<List<object>>();
 
-    /// <summary>
-    /// 发送群卡片消息
-    /// </summary>
-    /// <param name="markdown">Markdown内容</param>
-    /// <param name="atUserIds">被@的人群</param>
-    /// <param name="isAtAll">是否@全员</param>
-    public async Task<ApiResult> ShareChatMessage(LarkMarkdown markdown, List<string>? atUserIds = null,
-        bool isAtAll = false)
-    {
-        var msgType = LarkMsgTypeEnum.ShareChat.GetEnumDescriptionByKey();
-        // 指定目标人群
-        LarkAt at = new()
+        // 拆解内容
+        var contentTList = larkPost.Content;
+        foreach (var contentList in contentTList)
         {
-            AtUserIds = atUserIds
-        };
-        var result = await Send(new { msg_type = msgType, markdown, at });
+            var TList = new List<object>();
+            foreach (var itemT in contentList)
+            {
+                switch (itemT)
+                {
+                    case TagText text:
+                        TList.Add(text);
+                        break;
+
+                    case TagA a:
+                        TList.Add(a);
+                        break;
+
+                    case TagAt at:
+                        TList.Add(at);
+                        break;
+
+                    case TagImg image:
+                        TList.Add(image);
+                        break;
+
+                    default:
+                        Console.WriteLine("Unknown type");
+                        break;
+                }
+            }
+            objTList.Add(TList);
+        }
+        larkPost.Title = _keyWord + "\n" + larkPost.Title;
+        var zh_cn = new { title = larkPost.Title, content = objTList };
+        // 设置语言
+        var post = new { zh_cn };
+        var postContent = new { post };
+        var result = await Send(new { msg_type = msgType, content = postContent });
         return result;
     }
 
     /// <summary>
     /// 发送图片消息
     /// </summary>
-    /// <param name="actionCard">ActionCard内容</param>
-    public async Task<ApiResult> ImageMessage(LarkActionCard actionCard)
+    /// <param name="larkImage">Image内容</param>
+    public async Task<ApiResult> ImageMessage(LarkImage larkImage)
     {
         var msgType = LarkMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, actionCard });
+        var result = await Send(new { msg_type = msgType, content = larkImage });
         return result;
     }
 
     /// <summary>
     /// 发送消息卡片
     /// </summary>
-    /// <param name="feedCard">FeedCard内容</param>
-    public async Task<ApiResult> InterActiveMessage(LarkFeedCard feedCard)
+    /// <param name="larkInterActive">InterActive内容</param>
+    public async Task<ApiResult> InterActiveMessage(LarkInterActive larkInterActive)
     {
         var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
-        var result = await Send(new { msg_type = msgType, feedCard });
+        larkInterActive.Header.Title.Content = _keyWord + "\n" + larkInterActive.Header.Title.Content;
+        var result = await Send(new { msg_type = msgType, card = larkInterActive });
         return result;
     }
 
@@ -116,7 +132,6 @@ public class LarkBot
     private async Task<ApiResult> Send(object objSend)
     {
         var url = _url;
-        var sendMessage = objSend.SerializeTo();
 
         // 安全设置加签，需要使用 UTF-8 字符集
         if (!string.IsNullOrEmpty(_secret))
@@ -135,21 +150,23 @@ public class LarkBot
                 sign = Convert.ToBase64String(hashMessage).UrlEncode();
             }
 
-            // 得到最终的签名
-            url += $"&timestamp={timeStamp}&sign={sign}";
+            // 得到最终的请求体
+            objSend.SetPropertyValue("timeStamp", timeStamp);
+            objSend.SetPropertyValue("sign", sign);
         }
 
         // 发起请求
+        var sendMessage = objSend.SerializeTo();
         var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
         var result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result != null)
         {
-            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功");
+            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功；");
 
             var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
             var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
-            return ApiResult.BadRequest("发送失败，" + info?.Label);
+            return ApiResult.BadRequest("发送失败；" + info?.Label);
         }
 
         return ApiResult.InternalServerError();

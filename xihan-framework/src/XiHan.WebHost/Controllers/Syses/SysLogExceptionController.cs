@@ -26,20 +26,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// <summary>
 /// 系统异常日志管理
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="sysLogExceptionService"></param>
 [Authorize]
 [ApiGroup(ApiGroupNameEnum.Manage)]
-public class SysLogExceptionController : BaseApiController
+public class SysLogExceptionController(ISysLogExceptionService sysLogExceptionService) : BaseApiController
 {
-    private readonly ISysLogExceptionService _sysLogExceptionService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sysLogExceptionService"></param>
-    public SysLogExceptionController(ISysLogExceptionService sysLogExceptionService)
-    {
-        _sysLogExceptionService = sysLogExceptionService;
-    }
+    private readonly ISysLogExceptionService _sysLogExceptionService = sysLogExceptionService;
 
     /// <summary>
     /// 批量删除系统异常日志

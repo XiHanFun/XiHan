@@ -61,7 +61,7 @@ public static class PageExtension
     public static List<TEntity> ToPageList<TEntity>(this IQueryable<TEntity> entities, int currentIndex, int pageSize,
         int defaultFirstIndex = 1) where TEntity : class, new()
     {
-        return entities.Skip((currentIndex - defaultFirstIndex) * pageSize).Take(pageSize).ToList();
+        return [.. entities.Skip((currentIndex - defaultFirstIndex) * pageSize).Take(pageSize)];
     }
 
     /// <summary>
@@ -74,8 +74,8 @@ public static class PageExtension
     public static List<TEntity> ToPageList<TEntity>(this IQueryable<TEntity> entities, PageDto pageDto,
         int defaultFirstIndex = 1) where TEntity : class, new()
     {
-        return entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize)
-            .ToList();
+        return [.. entities.Skip((pageDto.CurrentIndex - defaultFirstIndex) * pageDto.PageSize).Take(pageDto.PageSize)
+];
     }
 
     /// <summary>
@@ -226,7 +226,7 @@ public static class PageExtension
         PageDataDto<TEntity> pageDataDto = new()
         {
             PageInfo = new PageInfoDto(),
-            Data = entities.ToList()
+            Data = [.. entities]
         };
         pageDataDto.PageInfo.CurrentIndex = 1;
         pageDataDto.PageInfo.TotalCount = pageDataDto.Data.Count;

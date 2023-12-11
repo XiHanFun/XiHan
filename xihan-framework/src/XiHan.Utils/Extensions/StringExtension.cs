@@ -417,12 +417,23 @@ public static class StringExtension
     public static string HtmlToTxt(this string strHtml)
     {
         string[] aryReg =
-        {
+        [
             @"<script[^>]*?>.*?</script>",
             @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
-            @"([\r\n])[\s]+", @"&(quot|#34);", @"&(amp|#38);", @"&(lt|#60);", @"&(gt|#62);", @"&(nbsp|#160);",
-            @"&(iexcl|#161);", @"&(cent|#162);", @"&(pound|#163);", @"&(copy|#169);", @"&#(\d+);", @"-->", @"<!--.*\n"
-        };
+            @"([\r\n])[\s]+",
+            @"&(quot|#34);",
+            @"&(amp|#38);",
+            @"&(lt|#60);",
+            @"&(gt|#62);",
+            @"&(nbsp|#160);",
+            @"&(iexcl|#161);",
+            @"&(cent|#162);",
+            @"&(pound|#163);",
+            @"&(copy|#169);",
+            @"&#(\d+);",
+            @"-->",
+            @"<!--.*\n"
+        ];
 
         var newReg = aryReg[0];
         var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase))

@@ -79,7 +79,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 进程标识
     /// </summary>
-    public static string ProcessId => Process.GetCurrentProcess().Id.ToString();
+    public static string ProcessId => Environment.ProcessId.ToString();
 
     /// <summary>
     /// 会话标识
@@ -89,5 +89,5 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 自身依赖的所有包
     /// </summary>
-    public static List<string> InstalledNuGetPackages => ReflectionHelper.GetInstalledNuGetPackages();
+    public static List<NuGetPackage> InstalledNuGetPackages => ReflectionHelper.GetInstalledNuGetPackages();
 }

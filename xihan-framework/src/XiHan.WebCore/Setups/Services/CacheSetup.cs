@@ -34,7 +34,7 @@ public static class CacheSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 内存缓存(默认开启)
         _ = services.AddMemoryCache();

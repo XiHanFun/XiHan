@@ -38,7 +38,7 @@ public static class SwaggerSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 配置Swagger，从路由、控制器和模型构建对象
         _ = services.AddSwaggerGen(options =>
@@ -123,17 +123,17 @@ public static class SwaggerSetup
                 .ToList();
 
             // 所有含 ApiGroupAttribute 的集合
-            List<ApiGroupAttribute> apiGroupAttributeList = new();
+            List<ApiGroupAttribute> apiGroupAttributeList = [];
             // 为空时插入空，减少 if 判断
-            List<ApiGroupAttribute> emptyAttribute = Array.Empty<ApiGroupAttribute>().ToList();
+            List<ApiGroupAttribute> emptyAttribute = [];
             apiGroupAttributeList.AddRange(baseControllerAttributeList ?? emptyAttribute);
             apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
             apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
 
             // 判断所有的分组名称是否含有此名称
-            if (apiGroupAttributeList.Any())
+            if (apiGroupAttributeList.Count != 0)
             {
-                List<bool> containList = new();
+                List<bool> containList = [];
                 // 遍历判断是否包含这个分组
                 apiGroupAttributeList.ForEach(attribute =>
                 {

@@ -26,22 +26,16 @@ namespace XiHan.Services.Syses.Jobs.Logic;
 /// <summary>
 /// 系统任务日志服务
 /// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="appCacheService"></param>
+/// <param name="sysJobService"></param>
 [AppService(ServiceType = typeof(ISysJobLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysJobLogService : BaseService<SysJobLog>, ISysJobLogService
+public class SysJobLogService(IAppCacheService appCacheService, ISysJobService sysJobService) : BaseService<SysJobLog>, ISysJobLogService
 {
-    private readonly IAppCacheService _appCacheService;
-    private readonly ISysJobService _sysJobService;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="appCacheService"></param>
-    /// <param name="sysJobService"></param>
-    public SysJobLogService(IAppCacheService appCacheService, ISysJobService sysJobService)
-    {
-        _appCacheService = appCacheService;
-        _sysJobService = sysJobService;
-    }
+    private readonly IAppCacheService _appCacheService = appCacheService;
+    private readonly ISysJobService _sysJobService = sysJobService;
 
     /// <summary>
     /// 新增任务日志

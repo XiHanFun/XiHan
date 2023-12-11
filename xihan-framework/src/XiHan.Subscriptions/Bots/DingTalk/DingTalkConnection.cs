@@ -19,7 +19,7 @@ namespace XiHan.Subscriptions.Bots.DingTalk;
 /// </summary>
 public class DingTalkConnection
 {
-    private const string DefaultDingTalkWebHookUrl = "https://oapi.dingtalk.com/robot/send";
+    private const string _defaultDingTalkWebHookUrl = "https://oapi.dingtalk.com/robot/send";
 
     private string? _webHookUrl;
 
@@ -28,7 +28,7 @@ public class DingTalkConnection
     /// </summary>
     public string WebHookUrl
     {
-        get => _webHookUrl ??= DefaultDingTalkWebHookUrl;
+        get => _webHookUrl ??= _defaultDingTalkWebHookUrl;
         set => _webHookUrl = value;
     }
 

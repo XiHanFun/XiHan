@@ -171,7 +171,7 @@ public static class Base32
     /// <exception cref="ArgumentNullException"></exception>
     public static string ToBase32String(byte[] bytes)
     {
-        if (bytes == null) throw new ArgumentNullException(nameof(bytes));
+        ArgumentNullException.ThrowIfNull(bytes);
 
         if (bytes.Length == 0) return string.Empty;
 
@@ -213,9 +213,9 @@ public static class Base32
     /// <exception cref="ArgumentException"></exception>
     public static byte[] FromBase32String(string base32String)
     {
-        if (base32String == null) throw new ArgumentNullException(nameof(base32String));
+        ArgumentNullException.ThrowIfNull(base32String);
 
-        if (base32String.Length == 0) return Array.Empty<byte>();
+        if (base32String.Length == 0) return [];
 
         base32String = base32String.TrimEnd('=');
 

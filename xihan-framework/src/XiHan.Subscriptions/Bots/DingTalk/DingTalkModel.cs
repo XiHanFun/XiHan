@@ -25,7 +25,7 @@ namespace XiHan.Subscriptions.Bots.DingTalk;
 public class DingTalkText
 {
     /// <summary>
-    /// 文本内容
+    /// 消息文本
     /// </summary>
     [JsonPropertyName("content")]
     public string Content { get; set; } = string.Empty;

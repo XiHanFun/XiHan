@@ -89,7 +89,7 @@ public static class EnumExtension
     /// <returns></returns>
     public static IEnumerable<EnumDescDto> GetEnumInfos(this Type enumType)
     {
-        List<EnumDescDto> result = new();
+        List<EnumDescDto> result = [];
         var fields = enumType.GetFields().Skip(1).ToList();
         fields.ForEach(field =>
         {
@@ -117,9 +117,9 @@ public static class EnumExtension
     /// <returns></returns>
     public static Dictionary<int, string> GetEnumValueDescriptionToDictionary(this Type enumType)
     {
-        Dictionary<int, string> result = new();
+        Dictionary<int, string> result = [];
         var fields = enumType.GetFields().ToList();
-        if (fields.Any()) return result;
+        if (fields.Count != 0) return result;
 
         fields.ForEach(field =>
         {

@@ -43,7 +43,7 @@ public static class SqlSugarSetup
     /// <exception cref="ArgumentNullException"></exception>
     public static IServiceCollection AddSqlSugarSetup(this IServiceCollection services)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         // 注入多库参考，官方文档 https://www.donet5.com/Home/Doc?typeId=2405
         var connectionConfigs = SqlSugarConfig.GetConnectionConfigs();
