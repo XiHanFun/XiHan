@@ -17,6 +17,4 @@ namespace XiHan.Services.Syses.OnlineUsers;
 /// <summary>
 /// ISysOnlineUserService
 /// </summary>
-public interface ISysOnlineUserService
-{
-}
+public interface ISysOnlineUserService;

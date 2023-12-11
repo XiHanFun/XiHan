@@ -277,10 +277,10 @@ public static class FormatExtension
         // 本月第一周有几天
         var firstWeekEndDay = 7 - (weekday - 1);
         // 当前日期和第一周之差
-        var diffday = dayInMonth - firstWeekEndDay;
-        diffday = diffday > 0 ? diffday : 1;
+        var diffDay = dayInMonth - firstWeekEndDay;
+        diffDay = diffDay > 0 ? diffDay : 1;
         // 当前是第几周，若整除7就减一天
-        return (diffday % 7 == 0 ? diffday / 7 - 1 : diffday / 7) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
+        return (diffDay % 7 == 0 ? diffDay / 7 - 1 : diffDay / 7) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
     }
 
     /// <summary>

@@ -134,8 +134,8 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
 
         // 发起请求
         var sendMessage = objSend.SerializeTo();
-        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        var result = await _httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
+        var httpPollyService = App.GetRequiredService<IHttpPollyService>();
+        var result = await httpPollyService.PostAsync<DingTalkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
         if (result == null) return ApiResult.InternalServerError();
 

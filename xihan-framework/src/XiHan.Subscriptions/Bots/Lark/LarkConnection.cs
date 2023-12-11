@@ -19,9 +19,9 @@ namespace XiHan.Subscriptions.Bots.Lark;
 /// </summary>
 public class LarkConnection
 {
-    private const string _defaultLarkWebHookUrl = "https://open.feishu.cn/open-apis/bot/v2/hook";
+    private const string DefaultLarkWebHookUrl = "https://open.feishu.cn/open-apis/bot/v2/hook";
 
-    private const string _defaultLarkUploadUrl = "https://open.feishu.cn/open-apis/im/v1/images";
+    private const string DefaultLarkUploadUrl = "https://open.feishu.cn/open-apis/im/v1/images";
 
     private string? _webHookUrl;
 
@@ -32,7 +32,7 @@ public class LarkConnection
     /// </summary>
     public string WebHookUrl
     {
-        get => _webHookUrl ??= _defaultLarkWebHookUrl;
+        get => _webHookUrl ??= DefaultLarkWebHookUrl;
         set => _webHookUrl = value;
     }
 
@@ -41,7 +41,7 @@ public class LarkConnection
     /// </summary>
     public string UploadUrl
     {
-        get => _uploadUrl ??= _defaultLarkUploadUrl;
+        get => _uploadUrl ??= DefaultLarkUploadUrl;
         set => _uploadUrl = value;
     }
 

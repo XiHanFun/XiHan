@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -30,7 +29,7 @@ public static class ObjectInfoExtension
     /// <param name="fullName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetObjectFullNameOf([DisallowNull] this object? instance,
+    public static string GetObjectFullNameOf(this object instance,
         [CallerArgumentExpression(nameof(instance))]
         string fullName = "")
     {

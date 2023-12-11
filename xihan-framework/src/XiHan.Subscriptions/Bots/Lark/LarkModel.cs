@@ -100,9 +100,7 @@ public interface ITag
 /// <summary>
 /// Post标签接口
 /// </summary>
-public interface IPostTag : ITag
-{
-}
+public interface IPostTag : ITag;
 
 /// <summary>
 /// 文本标签
@@ -207,9 +205,7 @@ public class InterActiveHeader
 /// <summary>
 /// InterActive标签接口
 /// </summary>
-public interface IInterActiveTag : ITag
-{
-}
+public interface IInterActiveTag : ITag;
 
 /// <summary>
 /// 头部或内容标签

@@ -29,7 +29,7 @@ namespace XiHan.WebCore.Setups.Apps;
 /// <summary>
 /// InitDBSetup
 /// </summary>
-public static class InitDBSetup
+public static class InitDbSetup
 {
     /// <summary>
     /// SqlSugar 应用扩展
@@ -37,7 +37,7 @@ public static class InitDBSetup
     /// <param name="app"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IApplicationBuilder UseInitDBSetup(this IApplicationBuilder app)
+    public static IApplicationBuilder UseInitDbSetup(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
 
@@ -106,15 +106,16 @@ public static class InitDBSetup
                 var instance = Activator.CreateInstance(seedType);
 
                 var hasDataMethod = seedType.GetMethods().First();
-                IEnumerable<object>? seedData = (hasDataMethod?.Invoke(instance, null) as IEnumerable)?.Cast<object>();
+                var seedData = (hasDataMethod.Invoke(instance, null) as IEnumerable)?.Cast<object>();
                 if (seedData == null) return;
 
                 var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();
                 var entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
 
-                $"种子数据【{entityInfo.DbTableName}】初始化，共【{seedData.Count()}】条数据。".WriteLineInfo();
+                var enumerable = seedData as object[] ?? seedData.ToArray();
+                $"种子数据【{entityInfo.DbTableName}】初始化，共【{enumerable.Count()}】条数据。".WriteLineInfo();
 
-                var ignoreUpdate = hasDataMethod?.GetCustomAttribute<IgnoreUpdateAttribute>();
+                var ignoreUpdate = hasDataMethod.GetCustomAttribute<IgnoreUpdateAttribute>();
                 if (client.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())
                 {
                     $"种子数据【{entityInfo.DbTableName}】已初始化，本次跳过。".WriteLineSuccess();
@@ -124,14 +125,14 @@ public static class InitDBSetup
                     if (entityInfo.Columns.Any(u => u.IsPrimarykey))
                     {
                         // 按主键进行批量增加和更新
-                        var storage = client.StorageableByObject(seedData.ToList()).ToStorage();
+                        var storage = client.StorageableByObject(enumerable.ToList()).ToStorage();
                         _ = storage.AsInsertable.ExecuteCommand();
                         if (ignoreUpdate == null) _ = storage.AsUpdateable.ExecuteCommand();
                     }
                     else
                     {
                         // 无主键则只进行插入
-                        _ = client.InsertableByObject(seedData.ToList()).ExecuteCommand();
+                        _ = client.InsertableByObject(enumerable.ToList()).ExecuteCommand();
                     }
                 }
             });

@@ -44,7 +44,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 启动环境
     /// </summary>
-    public static string EnvironmentName => AppSettings.EnvironmentName.GetValue().ToString();
+    public static string EnvironmentName => AppSettings.EnvironmentName.GetValue();
 
     /// <summary>
     /// 文件路径
@@ -64,7 +64,7 @@ public static class ApplicationInfoHelper
     /// <summary>
     /// 运行路径
     /// </summary>
-    public static string ProcessPath => Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName) ?? string.Empty;
+    public static string ProcessPath => Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName) ?? string.Empty;
 
     /// <summary>
     /// 运行时间

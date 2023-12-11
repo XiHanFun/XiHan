@@ -28,12 +28,12 @@ namespace XiHan.WebHost.Controllers.Commons.Messages;
 /// <remarks>
 /// 构造函数
 /// </remarks>
-/// <param name="LarkPushService"></param>
+/// <param name="larkPushService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Common)]
-public class LarkController(ILarkPushService LarkPushService) : BaseApiController
+public class LarkController(ILarkPushService larkPushService) : BaseApiController
 {
-    private readonly ILarkPushService _LarkPushService = LarkPushService;
+    private readonly ILarkPushService _larkPushService = larkPushService;
 
     /// <summary>
     /// 文本
@@ -46,7 +46,7 @@ public class LarkController(ILarkPushService LarkPushService) : BaseApiControlle
         {
             Text = "看万山红遍，层林尽染；漫江碧透，百舸争流。"
         };
-        return await _LarkPushService.LarkToText(text);
+        return await _larkPushService.LarkToText(text);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public class LarkController(ILarkPushService LarkPushService) : BaseApiControlle
                 },
             ]]
         };
-        return await _LarkPushService.LarkToPost(post);
+        return await _larkPushService.LarkToPost(post);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class LarkController(ILarkPushService LarkPushService) : BaseApiControlle
         {
             ImageKey = "image",
         };
-        return await _LarkPushService.LarkToImage(image);
+        return await _larkPushService.LarkToImage(image);
     }
 
     /// <summary>
@@ -132,6 +132,6 @@ public class LarkController(ILarkPushService LarkPushService) : BaseApiControlle
                 }
             ]
         };
-        return await _LarkPushService.LarkToInterActive(interActive);
+        return await _larkPushService.LarkToInterActive(interActive);
     }
 }

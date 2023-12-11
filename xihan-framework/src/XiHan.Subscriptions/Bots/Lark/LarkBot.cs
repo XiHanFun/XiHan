@@ -19,7 +19,6 @@ using XiHan.Infrastructures.Requests.Https;
 using XiHan.Infrastructures.Responses;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Serializes;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace XiHan.Subscriptions.Bots.Lark;
 
@@ -64,25 +63,25 @@ public class LarkBot(LarkConnection larkConnection)
         var contentTList = larkPost.Content;
         foreach (var contentList in contentTList)
         {
-            var TList = new List<object>();
+            var list = new List<object>();
             foreach (var itemT in contentList)
             {
                 switch (itemT)
                 {
                     case TagText text:
-                        TList.Add(text);
+                        list.Add(text);
                         break;
 
                     case TagA a:
-                        TList.Add(a);
+                        list.Add(a);
                         break;
 
                     case TagAt at:
-                        TList.Add(at);
+                        list.Add(at);
                         break;
 
                     case TagImg image:
-                        TList.Add(image);
+                        list.Add(image);
                         break;
 
                     default:
@@ -90,12 +89,12 @@ public class LarkBot(LarkConnection larkConnection)
                         break;
                 }
             }
-            objTList.Add(TList);
+            objTList.Add(list);
         }
         larkPost.Title = _keyWord + "\n" + larkPost.Title;
-        var zh_cn = new { title = larkPost.Title, content = objTList };
+        var zhCn = new { title = larkPost.Title, content = objTList };
         // 设置语言
-        var post = new { zh_cn };
+        var post = new { zh_cn=zhCn };
         var postContent = new { post };
         var result = await Send(new { msg_type = msgType, content = postContent });
         return result;
@@ -157,18 +156,15 @@ public class LarkBot(LarkConnection larkConnection)
 
         // 发起请求
         var sendMessage = objSend.SerializeTo();
-        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        var result = await _httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
+        var httpPollyService = App.GetRequiredService<IHttpPollyService>();
+        var result = await httpPollyService.PostAsync<LarkResultInfoDto>(HttpGroupEnum.Remote, url, sendMessage);
         // 包装返回信息
-        if (result != null)
-        {
-            if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功；");
+        if (result == null) return ApiResult.InternalServerError();
+        if (result.Code == 0 || result.Msg == "success") return ApiResult.Success("发送成功；");
 
-            var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
-            var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
-            return ApiResult.BadRequest("发送失败；" + info?.Label);
-        }
+        var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
+        var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
+        return ApiResult.BadRequest("发送失败；" + info?.Label);
 
-        return ApiResult.InternalServerError();
     }
 }

@@ -20,6 +20,4 @@ namespace XiHan.Services.Syses.OAuths;
 /// <summary>
 /// ISysOAuthService
 /// </summary>
-public interface ISysOAuthService : IBaseService<SysOAuth>
-{
-}
+public interface ISysOAuthService : IBaseService<SysOAuth>;

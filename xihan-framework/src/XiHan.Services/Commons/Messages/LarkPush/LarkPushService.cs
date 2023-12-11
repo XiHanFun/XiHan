@@ -29,15 +29,15 @@ namespace XiHan.Services.Commons.Messages.LarkPush;
 [AppService(ServiceType = typeof(ILarkPushService), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
 public class LarkPushService : BaseService<SysBot>, ILarkPushService
 {
-    private readonly LarkBot _LarkBot;
+    private readonly LarkBot _larkBot;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public LarkPushService()
     {
-        var LarkConnection = GetLarkConn().Result ?? throw new CustomException("未添加飞书推送配置或配置不可用！");
-        _LarkBot = new LarkBot(LarkConnection);
+        var larkConnection = GetLarkConn().Result ?? throw new CustomException("未添加飞书推送配置或配置不可用！");
+        _larkBot = new LarkBot(larkConnection);
     }
 
     /// <summary>
@@ -50,8 +50,8 @@ public class LarkPushService : BaseService<SysBot>, ILarkPushService
         var config = new TypeAdapterConfig().ForType<SysBot, LarkConnection>()
             .Map(dest => dest.AccessToken, src => src.AccessTokenOrKey)
             .Config;
-        var LarkConnection = sysCustomBot.Adapt<LarkConnection>(config);
-        return LarkConnection;
+        var larkConnection = sysCustomBot.Adapt<LarkConnection>(config);
+        return larkConnection;
     }
 
     #region Lark
@@ -63,7 +63,7 @@ public class LarkPushService : BaseService<SysBot>, ILarkPushService
     /// <returns></returns>
     public async Task<ApiResult> LarkToText(LarkText larkText)
     {
-        return await _LarkBot.TextMessage(larkText);
+        return await _larkBot.TextMessage(larkText);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class LarkPushService : BaseService<SysBot>, ILarkPushService
     /// <returns></returns>
     public async Task<ApiResult> LarkToPost(LarkPost larkPost)
     {
-        return await _LarkBot.PostMessage(larkPost);
+        return await _larkBot.PostMessage(larkPost);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class LarkPushService : BaseService<SysBot>, ILarkPushService
     /// <returns></returns>
     public async Task<ApiResult> LarkToImage(LarkImage larkImage)
     {
-        return await _LarkBot.ImageMessage(larkImage);
+        return await _larkBot.ImageMessage(larkImage);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class LarkPushService : BaseService<SysBot>, ILarkPushService
     /// <returns></returns>
     public async Task<ApiResult> LarkToInterActive(LarkInterActive larkInterActive)
     {
-        return await _LarkBot.InterActiveMessage(larkInterActive);
+        return await _larkBot.InterActiveMessage(larkInterActive);
     }
 
     #endregion Lark

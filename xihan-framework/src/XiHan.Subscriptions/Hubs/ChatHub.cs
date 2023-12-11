@@ -48,7 +48,6 @@ public class ChatHub(IAppCacheService appCacheService) : Hub<IChatHub>
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null) return;
 
         var clientInfo = httpCurrent.GetClientInfo();
         var addressInfo = httpCurrent.GetAddressInfo();

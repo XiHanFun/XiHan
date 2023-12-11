@@ -298,7 +298,7 @@ public static class AppSettings
         /// <summary>
         /// 端口
         /// </summary>
-        public static int Port { get; set; }
+        public static int ThePort { get; set; }
 
         /// <summary>
         /// 重试次数

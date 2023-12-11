@@ -20,6 +20,4 @@ namespace XiHan.Services.Bases;
 /// 服务基类接口
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IBaseService<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
-{
-}
+public interface IBaseService<TEntity> : IBaseRepository<TEntity> where TEntity : class, new();

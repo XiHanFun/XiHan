@@ -14,6 +14,4 @@
 
 namespace XiHan.Test.Common;
 
-public class TestCodeFile
-{
-}
+public class TestCodeFile;

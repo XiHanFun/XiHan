@@ -44,7 +44,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> TextMessage(WeComText weComText)
     {
         var msgType = WeComMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, text = weComText });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            text = weComText
+        });
         return result;
     }
 
@@ -56,7 +60,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> MarkdownMessage(WeComMarkdown weComMarkdown)
     {
         var msgType = WeComMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, markdown = weComMarkdown });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            markdown = weComMarkdown
+        });
         return result;
     }
 
@@ -68,7 +76,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> ImageMessage(WeComImage weComImage)
     {
         var msgType = WeComMsgTypeEnum.Image.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, image = weComImage });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            image = weComImage
+        });
         return result;
     }
 
@@ -80,7 +92,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> NewsMessage(WeComNews weComNews)
     {
         var msgType = WeComMsgTypeEnum.News.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, news = weComNews });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            news = weComNews
+        });
         return result;
     }
 
@@ -92,7 +108,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> FileMessage(WeComFile weComFile)
     {
         var msgType = WeComMsgTypeEnum.File.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, file = weComFile });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            file = weComFile
+        });
         return result;
     }
 
@@ -104,7 +124,11 @@ public class WeComBot(WeComConnection weChatConnection)
     public async Task<ApiResult> VoiceMessage(WeComVoice weComVoice)
     {
         var msgType = WeComMsgTypeEnum.Voice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, voice = weComVoice });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            voice = weComVoice
+        });
         return result;
     }
 
@@ -117,7 +141,11 @@ public class WeComBot(WeComConnection weChatConnection)
     {
         var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         weComTemplateCardTextNotice.CardType = WeComTemplateCardType.TextNotice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, template_card = weComTemplateCardTextNotice });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            template_card = weComTemplateCardTextNotice
+        });
         return result;
     }
 
@@ -130,7 +158,11 @@ public class WeComBot(WeComConnection weChatConnection)
     {
         var msgType = WeComMsgTypeEnum.TemplateCard.GetEnumDescriptionByKey();
         weComTemplateCardNewsNotice.CardType = WeComTemplateCardType.NewsNotice.GetEnumDescriptionByKey();
-        var result = await SendMessage(new { msgtype = msgType, template_card = weComTemplateCardNewsNotice });
+        var result = await SendMessage(new
+        {
+            msgtype = msgType,
+            template_card = weComTemplateCardNewsNotice
+        });
         return result;
     }
 
@@ -149,8 +181,12 @@ public class WeComBot(WeComConnection weChatConnection)
     {
         Dictionary<string, string> headers = new()
         {
-            { "filename", fileStream.Name },
-            { "filelength", fileStream.Length.ToString() }
+            {
+                "filename", fileStream.Name
+            },
+            {
+                "filelength", fileStream.Length.ToString()
+            }
         };
 
         var type = uploadType switch
@@ -161,30 +197,24 @@ public class WeComBot(WeComConnection weChatConnection)
         };
 
         // 发起请求，上传地址
-        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        var result =
-            await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _uploadUrl + type, fileStream,
-                headers);
+        var httpPollyService = App.GetRequiredService<IHttpPollyService>();
+        var result = await httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _uploadUrl + type, fileStream, headers);
         // 包装返回信息
-        if (result != null)
+        if (result == null) return ApiResult.InternalServerError();
+        if (result.ErrCode == 0 || result.ErrMsg == "ok")
         {
-            if (result.ErrCode == 0 || result.ErrMsg == "ok")
+            WeComUploadResultDto uploadResult = new()
             {
-                WeComUploadResultDto uploadResult = new()
-                {
-                    Message = "上传成功",
-                    Type = result.Type,
-                    MediaId = result.MediaId
-                };
-                return ApiResult.Success(uploadResult);
-            }
-            else
-            {
-                return ApiResult.BadRequest("上传失败");
-            }
+                Message = "上传成功",
+                Type = result.Type,
+                MediaId = result.MediaId
+            };
+            return ApiResult.Success(uploadResult);
         }
-
-        return ApiResult.InternalServerError();
+        else
+        {
+            return ApiResult.BadRequest("上传失败");
+        }
     }
 
     /// <summary>
@@ -196,8 +226,8 @@ public class WeComBot(WeComConnection weChatConnection)
     {
         // 发起请求
         var sendMessage = objSend.SerializeTo();
-        var _httpPollyService = App.GetRequiredService<IHttpPollyService>();
-        var result = await _httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
+        var httpPollyService = App.GetRequiredService<IHttpPollyService>();
+        var result = await httpPollyService.PostAsync<WeComResultInfoDto>(HttpGroupEnum.Remote, _messageUrl, sendMessage);
         // 包装返回信息
         return result != null
             ? result.ErrCode == 0 || result.ErrMsg == "ok" ? ApiResult.Success("发送成功；") : ApiResult.BadRequest("发送失败；")

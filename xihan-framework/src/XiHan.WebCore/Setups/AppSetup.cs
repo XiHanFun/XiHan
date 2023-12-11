@@ -48,7 +48,7 @@ public static class AppSetup
         AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
         // 数据库初始化
-        _ = app.UseInitDBSetup();
+        _ = app.UseInitDbSetup();
         // Http
         _ = app.UseHttpSetup();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输

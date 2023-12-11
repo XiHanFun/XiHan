@@ -58,7 +58,6 @@ public static class SqlSugarSetup
 
                 // 获取当前请求上下文信息
                 var httpCurrent = App.HttpContextCurrent;
-                if (httpCurrent != null)
                 {
                     var user = httpCurrent.GetAuthInfo();
                     // 非超级管理员或未登录用户，添加过滤假删除数据的条件
@@ -141,8 +140,7 @@ public static class SqlSugarSetup
         dbProvider.Aop.OnLogExecuting = (sql, pars) =>
         {
             var param = dbProvider.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
-            var sqlInfo = $"【数据库{configId}】执行SQL语句：" + Environment.NewLine +
-                          UtilMethods.GetSqlString(config.DbType, sql, pars);
+            var sqlInfo = $"【数据库{configId}】执行SQL语句：" + Environment.NewLine + UtilMethods.GetSqlString(config.DbType, sql, pars);
             // SQL控制台打印
             if (databaseConsole)
             {
@@ -165,7 +163,7 @@ public static class SqlSugarSetup
         dbProvider.Aop.OnLogExecuted = (_, _) =>
         {
             var handleInfo = $"【数据库{configId}】执行SQL时间：" + Environment.NewLine +
-                             dbProvider.Ado.SqlExecutionTime;
+                dbProvider.Ado.SqlExecutionTime;
             _ = MiniProfiler.Current.CustomTiming("执行SQL时间", handleInfo);
             if (databaseConsole) handleInfo.WriteLineHandle();
 
@@ -176,8 +174,8 @@ public static class SqlSugarSetup
         dbProvider.Aop.OnError = exp =>
         {
             var errorInfo = $"【数据库{configId}】执行SQL出错：" + Environment.NewLine +
-                            exp.Message + Environment.NewLine +
-                            UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
+                exp.Message + Environment.NewLine +
+                UtilMethods.GetSqlString(config.DbType, exp.Sql, (SugarParameter[])exp.Parametres);
             _ = MiniProfiler.Current.CustomTiming("执行SQL出错", errorInfo);
             if (databaseConsole) errorInfo.WriteLineError();
 

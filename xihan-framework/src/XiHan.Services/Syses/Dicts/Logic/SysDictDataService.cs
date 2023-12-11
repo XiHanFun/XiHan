@@ -139,7 +139,7 @@ public class SysDictDataService(IAppCacheService appCacheService) : BaseService<
     /// <returns></returns>
     public async Task<List<SysDictData>> GetDictDataListByTypes(string[] dictCodes)
     {
-        var key = $"GetDictDataByType_{dictCodes.GetArrayStr(',')}";
+        var key = $"GetDictDataByType_{dictCodes.GetArrayStr()}";
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
 
         list = await Context.Queryable<SysDictType>()

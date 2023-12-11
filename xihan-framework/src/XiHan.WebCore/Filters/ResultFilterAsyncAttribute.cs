@@ -43,7 +43,7 @@ public class ResultFilterAsyncAttribute(bool isIgnore = false) : Attribute, IAsy
     /// <exception cref="NotImplementedException"></exception>
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (IsIgnore || context.Result == null || context.HttpContext.IsDownloadFile()) return;
+        if (IsIgnore || context.HttpContext.IsDownloadFile()) return;
 
         // 结果不为空就做序列化处理
         context.Result = context.Result switch

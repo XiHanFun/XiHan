@@ -45,6 +45,4 @@ namespace XiHan.Infrastructures.Apps.Services;
 /// </summary>
 /// <remarks>由此启发：<see href="https://www.cnblogs.com/loogn/p/10566510.html"/></remarks>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class AutowiredServiceAttribute : Attribute
-{
-}
+public class AutowiredServiceAttribute : Attribute;

@@ -22,6 +22,4 @@ namespace XiHan.Services.Syses.Roles.Logic;
 /// 系统角色权限服务(为某角色分派权限)
 /// </summary>
 [AppService(ServiceType = typeof(ISysRolePermissionService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysRolePermissionService : BaseService<SysRolePermissionTieup>, ISysRolePermissionService
-{
-}
+public class SysRolePermissionService : BaseService<SysRolePermissionTieup>, ISysRolePermissionService;

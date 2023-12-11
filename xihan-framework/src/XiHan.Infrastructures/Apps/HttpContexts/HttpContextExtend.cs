@@ -422,8 +422,8 @@ public static class HttpContextExtend
     /// <returns></returns>
     public static string GetUserRole(this HttpContext context)
     {
-        List<string> roleIds = context.User.FindAll(ClaimConst.UserRole).Select(r => r.Value).ToList();
-        return roleIds.GetListStr(',');
+        var roleIds = context.User.FindAll(ClaimConst.UserRole).Select(r => r.Value).ToList();
+        return roleIds.GetListStr();
     }
 
     /// <summary>
@@ -544,7 +544,7 @@ public static class HttpContextExtend
         // 获取 HttpRequest 对象
         var httpRequest = context.Request;
         var url = httpRequest.Host.Value + httpRequest.Path.Value + httpRequest.QueryString.Value;
-        return url ?? string.Empty;
+        return url;
     }
 
     /// <summary>

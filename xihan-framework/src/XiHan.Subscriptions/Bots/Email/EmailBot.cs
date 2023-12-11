@@ -60,7 +60,7 @@ public class EmailBot(EmailFromModel fromModel)
         //在有附件的情况下添加附件
         try
         {
-            if (toModel.AttachmentsPath != null && toModel.AttachmentsPath.Count > 0)
+            if (toModel.AttachmentsPath.Count > 0)
                 toModel.AttachmentsPath.ForEach(attachmentFile =>
                 {
                     MimePart attachment = new()
@@ -85,13 +85,13 @@ public class EmailBot(EmailFromModel fromModel)
         {
             using SmtpClient client = new();
             // 解决远程证书验证无效
-            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            client.ServerCertificateValidationCallback = (_, _, _, _) => true;
             // 异步连接
             await client.ConnectAsync(_fromModel.SmtpHost, _fromModel.SmtpPort, _fromModel.UseSsl);
             // 异步登录
             await client.AuthenticateAsync(_fromModel.FromUserName, _fromModel.FromPassword);
             // 异步发送
-            var result = await client.SendAsync(message);
+            await client.SendAsync(message);
             // 异步断连
             await client.DisconnectAsync(true);
 

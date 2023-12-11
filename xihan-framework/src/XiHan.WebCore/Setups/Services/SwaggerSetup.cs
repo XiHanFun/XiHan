@@ -127,8 +127,8 @@ public static class SwaggerSetup
             // 为空时插入空，减少 if 判断
             List<ApiGroupAttribute> emptyAttribute = [];
             apiGroupAttributeList.AddRange(baseControllerAttributeList ?? emptyAttribute);
-            apiGroupAttributeList.AddRange(controllerAttributeList ?? emptyAttribute);
-            apiGroupAttributeList.AddRange(actionAttributeList ?? emptyAttribute);
+            apiGroupAttributeList.AddRange(controllerAttributeList);
+            apiGroupAttributeList.AddRange(actionAttributeList);
 
             // 判断所有的分组名称是否含有此名称
             if (apiGroupAttributeList.Count != 0)

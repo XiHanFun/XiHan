@@ -9,8 +9,11 @@
     <projectFile profileName="Test">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/DevelopmentLinux.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/DevelopmentWindows.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
+    <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/Docker.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
+    <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/Linux.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/ProductionLinux.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/ProductionWindows.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
+    <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/Windows.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile pubXmlPath="XiHan.WebHost/Properties/PublishProfiles/registry.hub.docker.com_xihanfun.pubxml">XiHan.WebHost/XiHan.WebHost.csproj</projectFile>
     <projectFile kind="DockerCompose">docker-compose.dcproj</projectFile>
   </component>
@@ -20,6 +23,65 @@
   <component name="ChangeListManager">
     <list default="true" id="11cbe5ef-ef94-43b6-acfd-d6ee59141707" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Configs/AppSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Configs/AppSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/AppHttpContextProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/AppHttpContextProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/HttpContextExtend.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/HttpContextExtend.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Infos/ApplicationInfoHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Infos/ApplicationInfoHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Jobs/Jobs/NetworkRequestJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Jobs/Jobs/NetworkRequestJob.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/IgnoreUpdateAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/IgnoreUpdateAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/SystemTableAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/SystemTableAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Entities/BaseEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Entities/BaseEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Models/Syses/Enums/OAuthTypeEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Syses/Enums/OAuthTypeEnum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Repositories/Bases/BaseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Repositories/Bases/BaseRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Repositories/Extensions/EntityExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Repositories/Extensions/EntityExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Bases/BaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Bases/BaseService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Bases/IBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Bases/IBaseService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Commons/Messages/LarkPush/LarkPushService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Commons/Messages/LarkPush/LarkPushService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Dicts/Logic/SysDictDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Dicts/Logic/SysDictDataService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Logging/Logic/SysLogOperationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Logging/Logic/SysLogOperationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Menus/ISysMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Menus/ISysMenuService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/ISysOAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/ISysOAuthService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/Logic/SysOAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/Logic/SysOAuthService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/ISysOnlineUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/ISysOnlineUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/Logic/SysOnlineUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/Logic/SysOnlineUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/ISysPermissionMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/ISysPermissionMenuService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/Logic/SysPermissionMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/Logic/SysPermissionMenuService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/ISysRolePermissionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/ISysRolePermissionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/Logic/SysRolePermissionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/Logic/SysRolePermissionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkBot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkConnection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Email/EmailBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Email/EmailBot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkBot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkConnection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComBot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComConnection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Hubs/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Hubs/ChatHub.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Test/CodeGenerator/Copyrights/IdentificationMaterials.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Test/CodeGenerator/Copyrights/IdentificationMaterials.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Test/Common/TestCodeFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Test/Common/TestCodeFile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Encryptions/AesEncryptionHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Encryptions/AesEncryptionHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Encryptions/DesEncryptionHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Encryptions/DesEncryptionHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/FormatExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/FormatExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/ObjectInfoExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/ObjectInfoExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Common/Seo/SeoHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Common/Seo/SeoHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Filters/AuthorizationFilterAsyncAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Filters/AuthorizationFilterAsyncAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Filters/ResultFilterAsyncAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Filters/ResultFilterAsyncAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Handlers/JwtHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Handlers/JwtHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Middlewares/GlobalLogMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Middlewares/GlobalLogMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/AppSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/AppSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/HttpSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/HttpSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/JobSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/JobSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/HttpPollySetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/HttpPollySetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SqlSugarSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SqlSugarSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SwaggerSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SwaggerSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/BaseApiController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Commons/Messages/LarkController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Commons/Messages/LarkController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Syses/SysJobController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Syses/SysJobController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Tests/TestController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Tests/TestController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,27 +123,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "CodeInspectionSettingsId",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\zhaifanhua\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\zhaifanhua\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\zhaifanhua\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\zhaifanhua\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\zhaifanhua\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\zhaifanhua\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET 启动设置配置文件.XiHan.WebHost: Development">
     <configuration name="XiHan.WebHost: DevelopmentLinux" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Debug" platform="Any CPU" publish_profile="DevelopmentLinux.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/DevelopmentLinux.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
@@ -91,12 +153,24 @@
       <riderPublish configuration="Debug" platform="Any CPU" publish_profile="DevelopmentWindows.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/DevelopmentWindows.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
       <method v="2" />
     </configuration>
+    <configuration name="XiHan.WebHost: Docker" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish publish_profile="Docker.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/Docker.pubxml" user_name="xihanfun" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
+      <method v="2" />
+    </configuration>
+    <configuration name="XiHan.WebHost: Linux" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish configuration="Release" platform="Any CPU" publish_profile="Linux.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/Linux.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
+      <method v="2" />
+    </configuration>
     <configuration name="XiHan.WebHost: ProductionLinux" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="ProductionLinux.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/ProductionLinux.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
       <method v="2" />
     </configuration>
     <configuration name="XiHan.WebHost: ProductionWindows" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="ProductionWindows.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/ProductionWindows.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
+      <method v="2" />
+    </configuration>
+    <configuration name="XiHan.WebHost: Windows" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish configuration="Release" platform="Any CPU" publish_profile="Windows.pubxml" pubxml_path="$PROJECT_DIR$/XiHan.WebHost/Properties/PublishProfiles/Windows.pubxml" uuid_high="5476448813993706711" uuid_low="-5080191892443868275" />
       <method v="2" />
     </configuration>
     <configuration name="XiHan.WebHost: registry.hub.docker.com_xihanfun" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
@@ -221,6 +295,23 @@
       <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue=".NET 启动设置配置文件.XiHan.WebHost: IIS Express" />
+      <item itemvalue=".NET 启动设置配置文件.XiHan.WebHost: Development" />
+      <item itemvalue=".NET 启动设置配置文件.XiHan.WebHost: Production" />
+      <item itemvalue=".NET 启动设置配置文件.XiHan.WebHost: Test" />
+      <item itemvalue=".NET 项目.XiHan.Test" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Docker.XiHan.WebHost/Dockerfile" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: Docker" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: Linux" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: Windows" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: DevelopmentLinux" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: DevelopmentWindows" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: ProductionLinux" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: ProductionWindows" />
+      <item itemvalue="发布到 IIS.XiHan.WebHost: registry.hub.docker.com_xihanfun" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

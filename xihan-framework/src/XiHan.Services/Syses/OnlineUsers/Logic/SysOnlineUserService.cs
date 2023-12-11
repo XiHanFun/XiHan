@@ -17,6 +17,4 @@ namespace XiHan.Services.Syses.OnlineUsers.Logic;
 /// <summary>
 /// 在线用户服务
 /// </summary>
-public class SysOnlineUserService
-{
-}
+public class SysOnlineUserService;

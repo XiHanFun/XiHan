@@ -100,7 +100,7 @@ public class SysLogOperationService : BaseService<SysLogOperation>, ISysLogOpera
         var whereDto = pageWhere.Where;
 
         // 时间为空，默认查询当天
-        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(0).GetDayMinDate();
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
         Expressionable<SysLogOperation> whereExpression = Expressionable.Create<SysLogOperation>();

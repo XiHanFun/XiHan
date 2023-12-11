@@ -15,7 +15,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
@@ -210,7 +209,6 @@ public static class JwtHandler
         return bearerToken.StartsWith(tokenPrefix, true, null) && bearerToken.Length > prefixLenght
             ? bearerToken[prefixLenght..]
             : throw new AuthenticationException("获取 JWT Bearer Token 失败！");
-        ;
     }
 
     /// <summary>

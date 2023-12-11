@@ -20,6 +20,4 @@ namespace XiHan.Services.Syses.Roles;
 /// <summary>
 /// ISysRolePermissionService
 /// </summary>
-public interface ISysRolePermissionService : IBaseService<SysRolePermissionTieup>
-{
-}
+public interface ISysRolePermissionService : IBaseService<SysRolePermissionTieup>;

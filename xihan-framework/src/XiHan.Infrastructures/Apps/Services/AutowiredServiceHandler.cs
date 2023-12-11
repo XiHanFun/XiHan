@@ -65,7 +65,7 @@ public class AutowiredServiceHandler(IServiceProvider serviceProvider)
                 // 字段赋值
                 setList.AddRange(
                     from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public |
-                                                        BindingFlags.NonPublic)
+                        BindingFlags.NonPublic)
                     let autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let fieldExp = Expression.Field(obj, field)
@@ -74,7 +74,7 @@ public class AutowiredServiceHandler(IServiceProvider serviceProvider)
                 // 属性赋值
                 setList.AddRange(
                     from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public |
-                                                               BindingFlags.NonPublic)
+                        BindingFlags.NonPublic)
                     let autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let propExp = Expression.Property(obj, property)
@@ -83,8 +83,7 @@ public class AutowiredServiceHandler(IServiceProvider serviceProvider)
             }
 
             var bodyExp = Expression.Block(setList);
-            Action<object, IServiceProvider> setAction =
-                Expression.Lambda<Action<object, IServiceProvider>>(bodyExp, objParam, spParam).Compile();
+            var setAction = Expression.Lambda<Action<object, IServiceProvider>>(bodyExp, objParam, spParam).Compile();
             _autowiredActions[serviceType] = setAction;
             setAction(service, serviceProvider);
         }

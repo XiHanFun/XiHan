@@ -17,6 +17,4 @@ namespace XiHan.Models.Bases.Entities;
 /// <summary>
 /// 实体基类，含主键，新增，修改，删除，审核，状态
 /// </summary>
-public abstract class BaseEntity : BaseStateEntity
-{
-}
+public abstract class BaseEntity : BaseStateEntity;

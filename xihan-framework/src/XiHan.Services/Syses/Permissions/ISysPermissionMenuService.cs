@@ -20,6 +20,4 @@ namespace XiHan.Services.Syses.Permissions;
 /// <summary>
 /// ISysPermissionMenuService
 /// </summary>
-public interface ISysPermissionMenuService : IBaseService<SysPermissionMenuTieup>
-{
-}
+public interface ISysPermissionMenuService : IBaseService<SysPermissionMenuTieup>;

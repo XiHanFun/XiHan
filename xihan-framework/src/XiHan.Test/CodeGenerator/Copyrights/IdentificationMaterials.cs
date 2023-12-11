@@ -29,7 +29,7 @@ public class IdentificationMaterials
     public static void Generate()
     {
         $@"开始读取所有代码文件……".WriteLineHandle();
-        var files = FindAllFiles(@"E:\Repository\XiHanFun\XiHan.Framework\xihan-framework\src", "cs");
+        var files = FindAllFiles(@"E:\Repository\XiHanFun\XiHan.Framework\xihan-framework\src");
         $@"找到代码文件共{files.Count}个。".WriteLineHandle();
 
         var ignorePaths = new List<string>()
@@ -80,8 +80,8 @@ public class IdentificationMaterials
     /// <summary>
     /// 移除忽略文件
     /// </summary>
-    /// <param name="path"></param>
-    /// <param name="suffix"></param>
+    /// <param name="filePaths"></param>
+    /// <param name="ignorePaths"></param>
     /// <returns></returns>
     private static List<string> IgnorePathFiles(List<string> filePaths, List<string> ignorePaths)
     {

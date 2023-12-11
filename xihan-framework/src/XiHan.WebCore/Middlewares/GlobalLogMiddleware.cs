@@ -39,7 +39,7 @@ namespace XiHan.WebCore.Middlewares;
 public class GlobalLogMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
-    private static readonly ILogger _logger = Log.ForContext<GlobalLogMiddleware>();
+    private static readonly ILogger Logger = Log.ForContext<GlobalLogMiddleware>();
 
     /// <summary>
     /// 异步调用
@@ -64,7 +64,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         {
             // 记录异常日志
             status = false;
-            _logger.Error(ex, ex.Message);
+            Logger.Error(ex, ex.Message);
             await RecordLogException(ex);
 
             // 处理异常
@@ -104,7 +104,6 @@ public class GlobalLogMiddleware(RequestDelegate next)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null) return;
 
         var clientInfo = httpCurrent.GetClientInfo();
         var addressInfo = httpCurrent.GetAddressInfo();
@@ -140,7 +139,6 @@ public class GlobalLogMiddleware(RequestDelegate next)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null) return;
 
         var clientInfo = httpCurrent.GetClientInfo();
         var addressInfo = httpCurrent.GetAddressInfo();
@@ -177,7 +175,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
 
         var sysLogExceptionService = App.GetRequiredService<ISysLogExceptionService>();
         _ = await sysLogExceptionService.CreateLogException(sysLogException);
-        _logger.Error(ex, ex.Message);
+        Logger.Error(ex, ex.Message);
     }
 
     /// <summary>
@@ -190,7 +188,6 @@ public class GlobalLogMiddleware(RequestDelegate next)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null) return;
 
         var clientInfo = httpCurrent.GetClientInfo();
         var addressInfo = httpCurrent.GetAddressInfo();

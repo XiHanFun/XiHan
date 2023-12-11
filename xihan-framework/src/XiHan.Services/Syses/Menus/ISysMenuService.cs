@@ -20,6 +20,4 @@ namespace XiHan.Services.Syses.Menus;
 /// <summary>
 /// ISysMenuService
 /// </summary>
-public interface ISysMenuService : IBaseService<SysMenu>
-{
-}
+public interface ISysMenuService : IBaseService<SysMenu>;

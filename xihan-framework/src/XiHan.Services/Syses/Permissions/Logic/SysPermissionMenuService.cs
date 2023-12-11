@@ -22,6 +22,4 @@ namespace XiHan.Services.Syses.Permissions.Logic;
 /// 系统权限菜单服务(为某权限分派菜单)
 /// </summary>
 [AppService(ServiceType = typeof(ISysPermissionMenuService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysPermissionMenuService : BaseService<SysPermissionMenuTieup>, ISysPermissionMenuService
-{
-}
+public class SysPermissionMenuService : BaseService<SysPermissionMenuTieup>, ISysPermissionMenuService;

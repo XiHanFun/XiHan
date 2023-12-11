@@ -14,7 +14,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Quartz;
 using XiHan.Infrastructures.Apps.Logging;
 using XiHan.Infrastructures.Responses;

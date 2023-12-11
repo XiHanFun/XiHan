@@ -22,6 +22,4 @@ namespace XiHan.Services.Syses.OAuths.Logic;
 /// 系统三方开放授权协议服务
 /// </summary>
 [AppService(ServiceType = typeof(ISysOAuthService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysOAuthService : BaseService<SysOAuth>, ISysOAuthService
-{
-}
+public class SysOAuthService : BaseService<SysOAuth>, ISysOAuthService;

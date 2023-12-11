@@ -33,7 +33,7 @@ public static class AesEncryptionHelper
     private const int Iterations = 10000;
 
     //分割器
-    private static readonly char[] separator = [':'];
+    private static readonly char[] Separator = [':'];
 
     /// <summary>
     /// 加密方法
@@ -87,7 +87,7 @@ public static class AesEncryptionHelper
         if (string.IsNullOrEmpty(cipherText)) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         // 解析盐和密文
-        var parts = cipherText.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        var parts = cipherText.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 2) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         var salt = Convert.FromBase64String(parts[0]);

@@ -20,7 +20,6 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
-using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Reflections;
 using Yitter.IdGenerator;
 
@@ -49,7 +48,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices;
 
     /// <summary>
     /// 全局配置构建器
@@ -64,7 +63,7 @@ public static class App
     /// <summary>
     /// 全局请求上下文
     /// </summary>
-    public static HttpContext? HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
+    public static HttpContext HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
 
     /// <summary>
     /// 上传根路径
@@ -132,7 +131,7 @@ public static class App
     public static object GetRequiredService(Type type)
     {
         var service = ServiceProvider.GetRequiredService(type);
-        return service!;
+        return service;
     }
 
     /// <summary>

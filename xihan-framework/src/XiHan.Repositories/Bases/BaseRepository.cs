@@ -41,7 +41,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     /// <summary>
     /// 多租户事务
     /// </summary>
-    protected ITenant? _tenant = null;
+    protected readonly ITenant? Tenant;
 
     /// <summary>
     /// 构造函数
@@ -50,25 +50,24 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
     protected BaseRepository(ISqlSugarClient? context = null) : base(context)
     {
         // 设置租户接口
-        _tenant = App.GetRequiredService<ISqlSugarClient>().AsTenant();
+        Tenant = App.GetRequiredService<ISqlSugarClient>().AsTenant();
 
         // 若实体贴有多库特性，则返回指定的连接
         if (typeof(TEntity).IsDefined(typeof(TenantAttribute), false))
         {
-            Context = _tenant.GetConnectionScopeWithAttr<TEntity>();
+            Context = Tenant.GetConnectionScopeWithAttr<TEntity>();
             return;
         }
 
         // 若实体贴有系统表特性，则返回默认的连接
         if (typeof(TEntity).IsDefined(typeof(SystemTableAttribute), false))
         {
-            Context = _tenant.GetConnectionScope(SqlSugarConst.DefaultTenantId);
+            Context = Tenant.GetConnectionScope(SqlSugarConst.DefaultTenantId);
             return;
         }
 
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null) return;
 
         // 若当前未登录或是默认租户Id，则返回默认的连接
         var tenantId = httpCurrent.GetAuthInfo().TenantId;

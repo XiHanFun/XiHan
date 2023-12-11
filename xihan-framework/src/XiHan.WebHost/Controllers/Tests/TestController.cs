@@ -57,8 +57,6 @@ public class TestController : BaseApiController
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
-        if (httpCurrent == null)
-            return ApiResult.BadRequest("当前请求上下文信息为空！");
 
         var clientInfo = httpCurrent.GetClientInfo();
         var addressInfo = httpCurrent.GetAddressInfo();

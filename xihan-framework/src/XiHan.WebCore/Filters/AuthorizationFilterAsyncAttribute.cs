@@ -38,8 +38,8 @@ public class AuthorizationFilterAsyncAttribute : Attribute, IAsyncAuthorizationF
         {
             // 是否授权访问
             var isAuthorize = context.Filters.Any(filter => filter is IAuthorizationFilter)
-                              || actionDescriptor.ControllerTypeInfo!.IsDefined(typeof(AuthorizeAttribute), true)
-                              || actionDescriptor.MethodInfo!.IsDefined(typeof(AuthorizeAttribute), true);
+                              || actionDescriptor.ControllerTypeInfo.IsDefined(typeof(AuthorizeAttribute), true)
+                              || actionDescriptor.MethodInfo.IsDefined(typeof(AuthorizeAttribute), true);
             // 授权访问就进行权限检查
             if (isAuthorize)
             {

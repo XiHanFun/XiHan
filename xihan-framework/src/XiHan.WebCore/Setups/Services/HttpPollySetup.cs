@@ -55,7 +55,7 @@ public static class HttpPollySetup
         _ = services.AddHttpClient(HttpGroupEnum.Remote.ToString(),
                 options => { options.DefaultRequestHeaders.Add("Accept", "application/json"); })
             // 忽略 SSL 不安全检查，或 HTTPS 不安全或 HTTPS 证书有误
-            .ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler
+            .ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (_, _, _, _) => true
             })

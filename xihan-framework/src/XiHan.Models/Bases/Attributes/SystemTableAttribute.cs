@@ -18,6 +18,4 @@ namespace XiHan.Models.Bases.Attributes;
 /// 系统表特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-public class SystemTableAttribute : Attribute
-{
-}
+public class SystemTableAttribute : Attribute;

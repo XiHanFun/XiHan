@@ -34,8 +34,8 @@ public static class DesEncryptionHelper
     static DesEncryptionHelper()
     {
         // 构造函数，初始化密钥和向量
-        const string defultPassword = "ZhaiFanhua";
-        PasswordDeriveBytes pdb = new(defultPassword, null);
+        const string defaultPassword = "ZhaiFanhua";
+        PasswordDeriveBytes pdb = new(defaultPassword, null);
         KeyBytes = pdb.GetBytes(8);
         IvBytes = pdb.GetBytes(8);
     }

@@ -18,6 +18,4 @@ namespace XiHan.Models.Bases.Attributes;
 /// 忽略更新种子数据特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public class IgnoreUpdateAttribute : Attribute
-{
-}
+public class IgnoreUpdateAttribute : Attribute;

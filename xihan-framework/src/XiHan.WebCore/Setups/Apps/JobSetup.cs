@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using XiHan.Infrastructures.Apps;

@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel;
-using System.Xml;
 using System.Xml.Serialization;
 using XiHan.Utils.Extensions;
 
