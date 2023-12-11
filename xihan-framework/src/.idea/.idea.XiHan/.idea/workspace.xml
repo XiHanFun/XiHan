@@ -22,7 +22,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11cbe5ef-ef94-43b6-acfd-d6ee59141707" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/GenericityInfoExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/GenericityInfoExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +50,9 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/Repository/XiHanFun/XiHan.Framework/xihan-framework/src/XiHan.Models/Blogs/BlogArticle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/310996a79d1149159bd2db82f26fdd7f55000/8d/cd394842/HttpContext.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -66,6 +71,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET 启动设置配置文件.XiHan.WebHost: Development.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",

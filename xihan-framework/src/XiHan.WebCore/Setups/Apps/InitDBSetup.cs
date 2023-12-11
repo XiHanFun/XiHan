@@ -69,7 +69,7 @@ public static class InitDbSetup
 
             "创建数据表……".WriteLineInfo();
             // 获取继承自 BaseIdEntity 含有 SugarTable 的所有实体
-            Type[] dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
+            var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
             if (dbEntities.Length == 0) return;
             // 支持分表，官方文档 https://www.donet5.com/Home/Doc?typeId=1201
             client.CodeFirst.SetStringDefaultLength(256).SplitTables().InitTables(dbEntities);
@@ -98,7 +98,7 @@ public static class InitDbSetup
             "种子数据正在初始化……".WriteLineInfo();
 
             // 获取继承自泛型接口 ISeedData<> 的所有类
-            List<Type> seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
+            var seedTypes = ReflectionHelper.GetSubClassesByGenericInterface(typeof(ISeedDataFilter<>)).ToList();
             if (seedTypes.Count == 0) return;
 
             seedTypes.ForEach(seedType =>

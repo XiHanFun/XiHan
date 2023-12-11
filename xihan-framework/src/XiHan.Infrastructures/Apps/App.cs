@@ -20,6 +20,7 @@ using System.Reflection;
 using XiHan.Infrastructures.Apps.Configs;
 using XiHan.Infrastructures.Apps.Environments;
 using XiHan.Infrastructures.Apps.HttpContexts;
+using XiHan.Infrastructures.Apps.Services;
 using XiHan.Utils.Reflections;
 using Yitter.IdGenerator;
 
@@ -48,7 +49,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent.RequestServices;
+    public static IServiceProvider ServiceProvider => AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
