@@ -22,66 +22,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11cbe5ef-ef94-43b6-acfd-d6ee59141707" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Configs/AppSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Configs/AppSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/AppHttpContextProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/AppHttpContextProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/HttpContextExtend.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/HttpContexts/HttpContextExtend.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/Services/AutowiredServiceHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Infos/ApplicationInfoHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Infos/ApplicationInfoHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Jobs/Jobs/NetworkRequestJob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Jobs/Jobs/NetworkRequestJob.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/IgnoreUpdateAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/IgnoreUpdateAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/SystemTableAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Attributes/SystemTableAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Models/Bases/Entities/BaseEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Bases/Entities/BaseEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Models/Syses/Enums/OAuthTypeEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Models/Syses/Enums/OAuthTypeEnum.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Repositories/Bases/BaseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Repositories/Bases/BaseRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Repositories/Extensions/EntityExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Repositories/Extensions/EntityExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Bases/BaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Bases/BaseService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Bases/IBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Bases/IBaseService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Commons/Messages/LarkPush/LarkPushService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Commons/Messages/LarkPush/LarkPushService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Dicts/Logic/SysDictDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Dicts/Logic/SysDictDataService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Logging/Logic/SysLogOperationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Logging/Logic/SysLogOperationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Menus/ISysMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Menus/ISysMenuService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/ISysOAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/ISysOAuthService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/Logic/SysOAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OAuths/Logic/SysOAuthService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/ISysOnlineUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/ISysOnlineUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/Logic/SysOnlineUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/OnlineUsers/Logic/SysOnlineUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/ISysPermissionMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/ISysPermissionMenuService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/Logic/SysPermissionMenuService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Permissions/Logic/SysPermissionMenuService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/ISysRolePermissionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/ISysRolePermissionService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/Logic/SysRolePermissionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Services/Syses/Roles/Logic/SysRolePermissionService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/DingTalk/DingTalkConnection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Email/EmailBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Email/EmailBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkConnection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/Lark/LarkModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Bots/WeCom/WeComConnection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Subscriptions/Hubs/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Subscriptions/Hubs/ChatHub.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Test/CodeGenerator/Copyrights/IdentificationMaterials.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Test/CodeGenerator/Copyrights/IdentificationMaterials.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Test/Common/TestCodeFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Test/Common/TestCodeFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Encryptions/AesEncryptionHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Encryptions/AesEncryptionHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Encryptions/DesEncryptionHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Encryptions/DesEncryptionHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/FormatExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/FormatExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/ObjectInfoExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/ObjectInfoExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Common/Seo/SeoHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Common/Seo/SeoHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Filters/AuthorizationFilterAsyncAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Filters/AuthorizationFilterAsyncAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Filters/ResultFilterAsyncAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Filters/ResultFilterAsyncAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Handlers/JwtHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Handlers/JwtHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Middlewares/GlobalLogMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Middlewares/GlobalLogMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/AppSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/AppSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/HttpSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/HttpSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/JobSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/JobSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/HttpPollySetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/HttpPollySetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SqlSugarSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SqlSugarSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SwaggerSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Services/SwaggerSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/BaseApiController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Commons/Messages/LarkController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Commons/Messages/LarkController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Syses/SysJobController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Syses/SysJobController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Tests/TestController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/Controllers/Tests/TestController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XiHan.Utils/Extensions/GenericityInfoExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Utils/Extensions/GenericityInfoExtension.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

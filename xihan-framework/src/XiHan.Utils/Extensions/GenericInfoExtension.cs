@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:GenericityInfoExtension
+// FileName:GenericInfoExtension
 // Guid:a5574e0a-f226-4b0a-89bc-4bd9e9618a3d
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -20,7 +20,7 @@ namespace XiHan.Utils.Extensions;
 /// <summary>
 /// 泛型信息拓展类
 /// </summary>
-public static class GenericityInfoExtension
+public static class GenericInfoExtension
 {
     #region 属性信息
 
@@ -57,7 +57,6 @@ public static class GenericityInfoExtension
                 $"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
 
         var paramObj = Expression.Parameter(typeof(TEntity));
-        var paramVal = Expression.Parameter(typeof(TValue));
 
         // 转成真实类型，防止Dynamic类型转换成object
         var bodyObj = Expression.Convert(paramObj, objectType);
@@ -85,7 +84,6 @@ public static class GenericityInfoExtension
 
         var paramObj = Expression.Parameter(objectType);
         var paramVal = Expression.Parameter(typeof(TValue));
-        var bodyObj = Expression.Convert(paramObj, objectType);
         var bodyVal = Expression.Convert(paramVal, propertyInfo.PropertyType);
 
         // 获取设置属性的值的方法
@@ -163,7 +161,7 @@ public static class GenericityInfoExtension
         if (specialList.Count != 0) newList = newList.Where(s => !specialList.Contains(s.PropertyName));
 
         var enumerable = newList.ToList();
-        return enumerable.ToList().Count == 0 ? string.Empty : SerializeHelper.SerializeTo(enumerable);
+        return enumerable.ToList().Count == 0 ? string.Empty : enumerable.SerializeTo();
     }
 
     #endregion
