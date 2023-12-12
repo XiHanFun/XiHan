@@ -58,6 +58,7 @@ public static class SqlSugarSetup
 
                 // 获取当前请求上下文信息
                 var httpCurrent = App.HttpContextCurrent;
+                if (httpCurrent != null)
                 {
                     var user = httpCurrent.GetAuthInfo();
                     // 非超级管理员或未登录用户，添加过滤假删除数据的条件

@@ -118,17 +118,20 @@ public static class EntityExtension
 
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return source;
 
         var user = httpCurrent.GetAuthInfo();
-        if (!user.IsAuthenticated) return source;
-        if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
-            types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId);
+        if (user != null && user.IsAuthenticated)
+        {
+            if (propertyInfo.HandleId != null && types.GetProperty(propertyInfo.HandleId) != null)
+                types.GetProperty(propertyInfo.HandleId)?.SetValue(source, user.UserId);
 
-        if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
-            types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account);
+            if (propertyInfo.HandleBy != null && types.GetProperty(propertyInfo.HandleBy) != null)
+                types.GetProperty(propertyInfo.HandleBy)?.SetValue(source, user.Account);
 
-        if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
-            types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId);
+            if (propertyInfo.TenantId != null && types.GetProperty(propertyInfo.TenantId) != null)
+                types.GetProperty(propertyInfo.TenantId)?.SetValue(source, user.TenantId);
+        }
 
         return source;
     }

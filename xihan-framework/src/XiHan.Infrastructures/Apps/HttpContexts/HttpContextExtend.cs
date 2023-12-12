@@ -312,25 +312,21 @@ public static class HttpContextExtend
     {
         try
         {
-            if (context.IsAuthenticated())
+            UserAuthInfo userAuthInfo = new()
             {
-                UserAuthInfo userAuthInfo = new()
-                {
-                    IsAuthenticated = context.IsAuthenticated(),
-                    IsSuperAdmin = context.IsSuperAdmin(),
-                    UserId = context.GetUserId(),
-                    TenantId = context.GetTenantId(),
-                    OrgId = context.GetOrgId(),
-                    Account = context.GetAccount(),
-                    NickName = context.GetNickName(),
-                    RealName = context.GetRealName(),
-                    UserRole = context.GetUserRole(),
-                    UserToken = context.GetUserToken(),
-                    UserClaims = context.GetUserClaims()
-                };
-                return userAuthInfo;
-            }
-            return new UserAuthInfo();
+                IsAuthenticated = context.IsAuthenticated(),
+                IsSuperAdmin = context.IsSuperAdmin(),
+                UserId = context.GetUserId(),
+                TenantId = context.GetTenantId(),
+                OrgId = context.GetOrgId(),
+                Account = context.GetAccount(),
+                NickName = context.GetNickName(),
+                RealName = context.GetRealName(),
+                UserRole = context.GetUserRole(),
+                UserToken = context.GetUserToken(),
+                UserClaims = context.GetUserClaims()
+            };
+            return userAuthInfo;
         }
         catch (Exception ex)
         {

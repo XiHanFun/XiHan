@@ -68,6 +68,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
+        if (httpCurrent == null) return;
 
         // 若当前未登录或是默认租户Id，则返回默认的连接
         var tenantId = httpCurrent.GetAuthInfo().TenantId;
