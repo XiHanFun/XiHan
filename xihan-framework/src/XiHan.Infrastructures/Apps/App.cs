@@ -49,7 +49,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider => HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
@@ -64,7 +64,7 @@ public static class App
     /// <summary>
     /// 全局请求上下文
     /// </summary>
-    public static HttpContext HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
+    public static HttpContext? HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
 
     /// <summary>
     /// 上传根路径

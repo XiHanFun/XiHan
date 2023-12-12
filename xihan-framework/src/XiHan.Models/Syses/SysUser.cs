@@ -116,16 +116,6 @@ public class SysUser : BaseEntity
 
     #endregion
 
-    #region 状态信息
-
-    /// <summary>
-    /// 状态
-    /// </summary>
-    [SugarColumn]
-    public StatusEnum Status { get; set; } = StatusEnum.Enable;
-
-    #endregion
-
     /// <summary>
     /// 是否超级管理员
     /// </summary>

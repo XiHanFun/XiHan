@@ -22,12 +22,12 @@ public class SysDictTypeWDto
     /// <summary>
     /// 字典编码
     ///</summary>
-    public string? Code { get; set; }
+    public string? TypeCode { get; set; }
 
     /// <summary>
     /// 字典名称
     /// </summary>
-    public string? Name { get; set; }
+    public string? TypeName { get; set; }
 
     /// <summary>
     /// 是否启用

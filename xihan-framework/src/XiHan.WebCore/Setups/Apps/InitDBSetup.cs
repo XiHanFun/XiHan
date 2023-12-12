@@ -113,7 +113,7 @@ public static class InitDbSetup
                 var entityInfo = client.EntityMaintenance.GetEntityInfo(entityType);
 
                 var enumerable = seedData as object[] ?? seedData.ToArray();
-                $"种子数据【{entityInfo.DbTableName}】初始化，共【{enumerable.Count()}】条数据。".WriteLineInfo();
+                $"种子数据【{entityInfo.DbTableName}】初始化，共【{enumerable.Length}】条数据。".WriteLineInfo();
 
                 var ignoreUpdate = hasDataMethod.GetCustomAttribute<IgnoreUpdateAttribute>();
                 if (client.Queryable(entityInfo.DbTableName, entityInfo.DbTableName).Any())

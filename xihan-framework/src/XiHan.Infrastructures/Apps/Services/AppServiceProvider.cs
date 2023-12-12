@@ -54,13 +54,12 @@ public static class AppServiceProvider
         var dbPath = Path.Combine(AppContext.BaseDirectory, "IpDatabases", "ip2region.xdb");
         _ = services.AddSingleton<ISearcher>(new Searcher(CachePolicy.File, dbPath));
         // 雪花 Id 生成服务
-        IdGeneratorOptions options = new()
+        YitIdHelper.SetIdGenerator(new IdGeneratorOptions()
         {
             WorkerId = 1,
             WorkerIdBitLength = 1,
             SeqBitLength = 6
-        };
-        YitIdHelper.SetIdGenerator(options);
+        });
     }
 
     /// <summary>
@@ -79,6 +78,7 @@ public static class AppServiceProvider
         // 根据程序路径反射出所有引用的程序集
         List<Type> referencedTypes = [];
         foreach (var library in libraries)
+        {
             try
             {
                 IEnumerable<Type> assemblyTypes = Assembly.Load(library).GetTypes()
@@ -91,6 +91,7 @@ public static class AppServiceProvider
                 Log.Error(ex, errorMsg);
                 errorMsg.WriteLineError();
             }
+        }
 
         // 批量注入
         foreach (var type in referencedTypes)
@@ -114,8 +115,7 @@ public static class AppServiceProvider
                 ServiceLifeTimeEnum.Transient => services.AddTransient(serviceType, type),
                 _ => services.AddTransient(serviceType, type)
             };
-            var infoMsg =
-                $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
+            var infoMsg = $"服务注册({serviceAttribute.ServiceLifetime.GetEnumDescriptionByKey()})：{serviceType.Name}-{type.Name}";
             Log.Information(infoMsg);
             infoMsg.WriteLineSuccess();
         }

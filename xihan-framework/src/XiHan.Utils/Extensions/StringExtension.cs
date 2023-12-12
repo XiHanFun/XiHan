@@ -453,7 +453,7 @@ public static class StringExtension
     /// <returns></returns>
     public static string FirstToUpper(this string value)
     {
-        return value[..1].ToUpper() + value[1..];
+        return value[..1].ToUpperInvariant() + value[1..];
     }
 
     /// <summary>
@@ -463,7 +463,7 @@ public static class StringExtension
     /// <returns></returns>
     public static string FirstToLower(this string value)
     {
-        return value[..1].ToLower() + value[1..];
+        return value[..1].ToLowerInvariant() + value[1..];
     }
 
     #endregion

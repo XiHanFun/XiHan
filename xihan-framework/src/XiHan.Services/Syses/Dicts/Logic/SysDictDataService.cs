@@ -59,7 +59,7 @@ public class SysDictDataService(IAppCacheService appCacheService) : BaseService<
     {
         var sysDictData = dictDataCDto.Adapt<SysDictData>();
 
-        if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
+        if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.TypeCode == sysDictData.TypeCode && t.IsEnable))
             throw new CustomException($"该字典不存在或不可用!");
 
         _ = await CheckDictDataUnique(sysDictData);
@@ -87,7 +87,7 @@ public class SysDictDataService(IAppCacheService appCacheService) : BaseService<
     {
         var sysDictData = dictDataMDto.Adapt<SysDictData>();
 
-        if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.Code == sysDictData.TypeCode && t.IsEnable))
+        if (!await Context.Queryable<SysDictType>().AnyAsync(t => t.TypeCode == sysDictData.TypeCode && t.IsEnable))
             throw new CustomException($"该字典不存在或不可用!");
 
         _ = await CheckDictDataUnique(sysDictData);
@@ -122,8 +122,8 @@ public class SysDictDataService(IAppCacheService appCacheService) : BaseService<
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
 
         list = await Context.Queryable<SysDictType>()
-            .LeftJoin<SysDictData>((t, d) => t.Code == d.TypeCode)
-            .Where((t, d) => t.Code == dictCode && d.IsEnable)
+            .LeftJoin<SysDictData>((t, d) => t.TypeCode == d.TypeCode)
+            .Where((t, d) => t.TypeCode == dictCode && d.IsEnable)
             .Select((t, d) => d)
             .ToListAsync();
         list = [.. list.OrderBy(d => d.SortOrder)];
@@ -143,8 +143,8 @@ public class SysDictDataService(IAppCacheService appCacheService) : BaseService<
         if (_appCacheService.Get(key) is List<SysDictData> list) return list;
 
         list = await Context.Queryable<SysDictType>()
-            .LeftJoin<SysDictData>((t, d) => t.Code == d.TypeCode)
-            .Where((t, d) => dictCodes.Contains(t.Code) && d.IsEnable)
+            .LeftJoin<SysDictData>((t, d) => t.TypeCode == d.TypeCode)
+            .Where((t, d) => dictCodes.Contains(t.TypeCode) && d.IsEnable)
             .Select((t, d) => d)
             .ToListAsync();
         list = [.. list.OrderBy(d => d.SortOrder)];

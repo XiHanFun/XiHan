@@ -74,7 +74,7 @@ public class JobBase
     /// <param name="context"></param>
     /// <param name="jobLog"></param>
     /// <returns></returns>
-    private async Task RecordTasksLog(IJobExecutionContext context, SysJobLog jobLog)
+    private static async Task RecordTasksLog(IJobExecutionContext context, SysJobLog jobLog)
     {
         try
         {

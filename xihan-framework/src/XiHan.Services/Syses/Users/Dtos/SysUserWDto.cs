@@ -50,9 +50,4 @@ public class SysUserWDto
     /// 手机号码
     /// </summary>
     public string? Phone { get; set; }
-
-    /// <summary>
-    /// 状态
-    /// </summary>
-    public StatusEnum? Status { get; set; }
 }

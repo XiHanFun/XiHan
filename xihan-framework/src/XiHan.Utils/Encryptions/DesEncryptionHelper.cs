@@ -22,6 +22,9 @@ namespace XiHan.Utils.Encryptions;
 /// </summary>
 public static class DesEncryptionHelper
 {
+    // 默认密码
+    private const string DefaultPassword = "ZhaiFanhua";
+
     // 加密所需的密钥
     private static readonly byte[] KeyBytes;
 
@@ -34,8 +37,7 @@ public static class DesEncryptionHelper
     static DesEncryptionHelper()
     {
         // 构造函数，初始化密钥和向量
-        const string defaultPassword = "ZhaiFanhua";
-        PasswordDeriveBytes pdb = new(defaultPassword, null);
+        PasswordDeriveBytes pdb = new(DefaultPassword, null);
         KeyBytes = pdb.GetBytes(8);
         IvBytes = pdb.GetBytes(8);
     }

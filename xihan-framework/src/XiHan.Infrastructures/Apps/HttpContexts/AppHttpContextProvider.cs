@@ -30,16 +30,18 @@ public static class AppHttpContextProvider
     /// <summary>
     /// 当前上下文
     /// </summary>
-    public static HttpContext HttpContextCurrent => GetHttpContextCurrent();
+    public static HttpContext? HttpContextCurrent => GetHttpContextCurrent();
 
     /// <summary>
     /// 获取当前 HttpContext 对象
     /// </summary>
-    private static HttpContext GetHttpContextCurrent()
+    private static HttpContext? GetHttpContextCurrent()
     {
         var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())();
+        if (asyncLocal == null) return null;
 
         var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))(asyncLocal);
+        if (holder == null) return null;
 
         var httpContext = (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
         return httpContext;

@@ -21,52 +21,72 @@ namespace XiHan.Utils.Verifications;
 /// </summary>
 public static class CaptchaHelper
 {
+    // 默认数字字符源
+    private const string DefaultNumberSource = "0123456789";
+
+    // 默认大写字母字符源
+    private const string DefaultUpperLetterSource = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    // 默认小写字母字符源
+    private const string DefaultLowerLetterSource = "abcdefghijklmnopqrstuvwxyz";
+
+    // 默认字母或数字字符源
+    private const string DefaultNumberOrLetterSource = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
     /// <summary>
     /// 随机数字
     /// </summary>
     /// <param name="length">生成长度 默认6个字符</param>
-    /// <param name="source">随机数字字符源</param>
+    /// <param name="source">自定义数字字符源</param>
     /// <returns></returns>
-    public static string CodeNumber(int length = 6, string source = "0123456789")
+    public static string CodeNumber(int? length, string? source)
     {
-        return RandomTo(length, source);
+        return RandomTo(length ?? 6, source ?? DefaultNumberSource);
     }
 
     /// <summary>
-    /// 随机字母
+    /// 随机大写字母
     /// </summary>
     /// <param name="length">生成长度 默认6个字符</param>
-    /// <param name="source">随机字母字符源</param>
+    /// <param name="source">自定义大写字母字符源</param>
     /// <returns></returns>
-    public static string CodeLetter(int length = 6,
-        string source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeUpperLetter(int? length, string? source)
     {
-        return RandomTo(length, source);
+        return RandomTo(length ?? 6, source?.ToUpperInvariant() ?? DefaultUpperLetterSource);
+    }
+
+    /// <summary>
+    /// 随机小写字母
+    /// </summary>
+    /// <param name="length">生成长度 默认6个字符</param>
+    /// <param name="source">自定义小写字母字符源</param>
+    /// <returns></returns>
+    public static string CodeLowerLetter(int? length, string? source)
+    {
+        return RandomTo(length ?? 6, source?.ToLowerInvariant() ?? DefaultLowerLetterSource);
     }
 
     /// <summary>
     /// 随机字母或数字
     /// </summary>
     /// <param name="length">生成长度 默认6个字符</param>
-    /// <param name="source">随机字母或数字字符源</param>
+    /// <param name="source">自定义字母或数字字符源</param>
     /// <returns></returns>
-    public static string CodeNumberOrLetter(int length = 6,
-        string source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    public static string CodeNumberOrLetter(int? length, string? source)
     {
-        return RandomTo(length, source);
+        return RandomTo(length ?? 6, source ?? DefaultNumberOrLetterSource);
     }
 
     /// <summary>
-    /// 根据随机字符源生成随机字符
+    /// 根据字符源生成随机字符
     /// </summary>
     /// <param name="length">生成长度</param>
-    /// <param name="source">自定义随机的字符源</param>
+    /// <param name="source">自定义字符源</param>
     /// <returns></returns>
     private static string RandomTo(int length, string source)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
-
-        if (string.IsNullOrEmpty(source)) throw new ArgumentNullException(nameof(source));
+        ArgumentException.ThrowIfNullOrEmpty(source);
 
         StringBuilder result = new();
         Random random = new(~unchecked((int)DateTime.Now.Ticks));

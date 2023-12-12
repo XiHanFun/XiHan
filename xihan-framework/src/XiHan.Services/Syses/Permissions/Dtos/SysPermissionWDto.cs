@@ -13,6 +13,7 @@
 #endregion <<版权版本注释>>
 
 using System.ComponentModel.DataAnnotations;
+using XiHan.Models.Syses.Enums;
 
 namespace XiHan.Services.Syses.Permissions.Dtos;
 
@@ -37,7 +38,6 @@ public class SysPermissionWDto
 
     /// <summary>
     /// 权限类型
-    /// PermissionTypeEnum
     /// </summary>
-    public int? PermissionType { get; set; }
+    public PermissionTypeEnum? PermissionType { get; set; }
 }

@@ -84,11 +84,13 @@ public static class AesEncryptionHelper
     public static string Decrypt(string cipherText, string password)
     {
         // 检查密文的有效性
-        if (string.IsNullOrEmpty(cipherText)) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        if (string.IsNullOrEmpty(cipherText))
+            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         // 解析盐和密文
         var parts = cipherText.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length != 2) throw new ArgumentException("Invalid cipher text", nameof(cipherText));
+        if (parts.Length != 2)
+            throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 
         var salt = Convert.FromBase64String(parts[0]);
         var cipherBytes = Convert.FromBase64String(parts[1]);

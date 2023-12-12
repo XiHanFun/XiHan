@@ -44,12 +44,6 @@ public class SysDictData : BaseModifyEntity
     public string Value { get; set; } = string.Empty;
 
     /// <summary>
-    /// 自定义 SQL
-    /// </summary>
-    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
-    public string? CustomSql { get; set; }
-
-    /// <summary>
     /// 字典项排序
     /// </summary>
     [SugarColumn]

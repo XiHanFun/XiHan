@@ -43,8 +43,8 @@ public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseSe
     /// <returns></returns>
     private async Task<bool> CheckDictTypeUnique(SysDictType sysDictType)
     {
-        var isUnique = await IsAnyAsync(f => f.Code == sysDictType.Code && f.Name == sysDictType.Name);
-        return isUnique ? throw new CustomException($"已存在字典【{sysDictType.Name}】!") : isUnique;
+        var isUnique = await IsAnyAsync(f => f.TypeCode == sysDictType.TypeCode && f.TypeName == sysDictType.TypeName);
+        return isUnique ? throw new CustomException($"已存在字典【{sysDictType.TypeName}】!") : isUnique;
     }
 
     /// <summary>
@@ -75,14 +75,14 @@ public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseSe
         if (isOfficialCount > 0) throw new CustomException($"存在系统内置字典，不能删除！");
 
         // 已分配字典
-        List<string> typeCodes = sysDictTypeList.Select(s => s.Code).ToList();
+        List<string> typeCodes = sysDictTypeList.Select(s => s.TypeCode).ToList();
         List<SysDictData> sysDictDataList = await _sysDictDataService.QueryAsync(f => typeCodes.Contains(f.TypeCode));
         if (sysDictDataList.Count == 0) return await RemoveAsync(s => dictIds.Contains(s.BaseId));
 
         foreach (var sysDictData in sysDictDataList)
         {
-            var sysDictType = sysDictTypeList.First(s => s.Code == sysDictData.TypeCode);
-            throw new CustomException($"字典【{sysDictType.Name}】已分配字典项【{sysDictData.Label}】,不能删除！");
+            var sysDictType = sysDictTypeList.First(s => s.TypeCode == sysDictData.TypeCode);
+            throw new CustomException($"字典【{sysDictType.TypeName}】已分配字典项【{sysDictData.Label}】,不能删除！");
         }
 
         return await RemoveAsync(s => dictIds.Contains(s.BaseId));
@@ -98,7 +98,7 @@ public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseSe
         var sysDictType = dictTypeMDto.Adapt<SysDictType>();
 
         var oldDictType = await FindAsync(x => x.BaseId == sysDictType.BaseId);
-        if (sysDictType.Code != oldDictType.Code || sysDictType.Name != oldDictType.Name)
+        if (sysDictType.TypeCode != oldDictType.TypeCode || sysDictType.TypeName != oldDictType.TypeName)
             _ = await CheckDictTypeUnique(sysDictType);
 
         return await UpdateAsync(sysDictType);
@@ -131,12 +131,12 @@ public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseSe
     public async Task<List<SysDictType>> GetDictTypeList(SysDictTypeWDto whereDto)
     {
         Expressionable<SysDictType> whereExpression = Expressionable.Create<SysDictType>();
-        _ = whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
-        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.TypeCode.IsNotEmptyOrNull(), u => u.TypeCode == whereDto.TypeCode);
+        _ = whereExpression.AndIF(whereDto.TypeName.IsNotEmptyOrNull(), u => u.TypeName.Contains(whereDto.TypeName!));
         _ = whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         _ = whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryAsync(whereExpression.ToExpression(), o => o.Code);
+        return await QueryAsync(whereExpression.ToExpression(), o => o.TypeCode);
     }
 
     /// <summary>
@@ -149,11 +149,11 @@ public class SysDictTypeService(ISysDictDataService sysDictDataService) : BaseSe
         var whereDto = pageWhere.Where;
 
         Expressionable<SysDictType> whereExpression = Expressionable.Create<SysDictType>();
-        _ = whereExpression.AndIF(whereDto.Code.IsNotEmptyOrNull(), u => u.Code == whereDto.Code);
-        _ = whereExpression.AndIF(whereDto.Name.IsNotEmptyOrNull(), u => u.Name.Contains(whereDto.Name!));
+        _ = whereExpression.AndIF(whereDto.TypeCode.IsNotEmptyOrNull(), u => u.TypeCode == whereDto.TypeCode);
+        _ = whereExpression.AndIF(whereDto.TypeName.IsNotEmptyOrNull(), u => u.TypeName.Contains(whereDto.TypeName!));
         _ = whereExpression.AndIF(whereDto.IsEnable != null, u => u.IsEnable == whereDto.IsEnable);
         _ = whereExpression.AndIF(whereDto.IsOfficial != null, u => u.IsOfficial == whereDto.IsOfficial);
 
-        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.Code, pageWhere.IsAsc);
+        return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.TypeCode, pageWhere.IsAsc);
     }
 }

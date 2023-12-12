@@ -15,6 +15,7 @@
 using SqlSugar;
 using XiHan.Models.Bases.Attributes;
 using XiHan.Models.Bases.Entities;
+using XiHan.Models.Syses.Enums;
 
 namespace XiHan.Models.Syses;
 
@@ -45,10 +46,9 @@ public class SysPermission : BaseModifyEntity
 
     /// <summary>
     /// 权限类型
-    /// PermissionTypeEnum
     /// </summary>
     [SugarColumn]
-    public int PermissionType { get; set; }
+    public PermissionTypeEnum PermissionType { get; set; }
 
     /// <summary>
     /// 权限排序

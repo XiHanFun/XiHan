@@ -128,8 +128,7 @@ public static partial class EncodeExtension
     /// <returns>解码后的字符串</returns>
     public static string FromUnicode(this string data)
     {
-        return UnicodeRegex().Replace(data,
-            match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
+        return UnicodeRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)).ToString());
     }
 
     /// <summary>

@@ -146,7 +146,6 @@ public class SysUserService(ISysUserRoleService sysUserRoleService, ISysRoleServ
         var sysUser = userCDto.Adapt<SysUser>();
         return await UpdateAsync(s => new SysUser()
         {
-            Status = sysUser.Status
         }, f => f.BaseId == sysUser.BaseId);
     }
 
@@ -216,7 +215,6 @@ public class SysUserService(ISysUserRoleService sysUserRoleService, ISysRoleServ
         _ = whereExpression.AndIF(whereDto.Gender != null, u => u.Gender == whereDto.Gender);
         _ = whereExpression.AndIF(whereDto.Email.IsNotEmptyOrNull(), u => u.Email.Contains(whereDto.Email!));
         _ = whereExpression.AndIF(whereDto.Phone.IsNotEmptyOrNull(), u => u.Phone.Contains(whereDto.Phone!));
-        _ = whereExpression.AndIF(whereDto.Status != null, u => u.Status == whereDto.Status);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
             pageWhere.IsAsc);

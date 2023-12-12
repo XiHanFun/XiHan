@@ -120,8 +120,6 @@ public class SysAuthController(ISysUserService sysUserService, ISysRoleService s
         {
             if (sysUser == null) throw new Exception("登录失败，用户不存在！");
 
-            if (sysUser.Status == StatusEnum.Disable) throw new Exception("登录失败，用户已被禁用！");
-
             if (sysUser.Password != Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(password)))
                 throw new Exception("登录失败，密码错误！");
 

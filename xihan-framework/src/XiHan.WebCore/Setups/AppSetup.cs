@@ -47,14 +47,12 @@ public static class AppSetup
         // 注入全局服务
         AppServiceProvider.ServiceProvider = app.ApplicationServices;
 
-        // 数据库初始化
-        _ = app.UseInitDbSetup();
+        // MiniProfiler
+        _ = app.UseMiniProfilerSetup();
         // Http
         _ = app.UseHttpSetup();
         // 添加WebSocket支持，SignalR优先使用WebSocket传输
         _ = app.UseWebSockets();
-        // MiniProfiler
-        _ = app.UseMiniProfilerSetup();
         // Swagger
         _ = app.UseSwaggerSetup();
         // 添加静态文件中间件，访问 wwwroot 目录文件，必须在 UseRouting 之前
@@ -71,8 +69,6 @@ public static class AppSetup
         _ = app.UseAuthorization();
         // 开启响应缓存
         _ = app.UseResponseCaching();
-        // 恢复或启动任务
-        _ = app.UseJobSetup();
         // 全局日志中间件
         _ = app.UseMiddleware<GlobalLogMiddleware>();
         // 添加终端中间件
@@ -89,6 +85,10 @@ public static class AppSetup
             // 即时通讯集线器
             _ = endpoints.MapHub<ChatHub>("/ChatHub");
         });
+        // 数据库初始化
+        _ = app.UseInitDbSetup();
+        // 恢复或启动任务
+        _ = app.UseJobSetup();
 
         "XiHan Application Started Successfully！".WriteLineSuccess();
         return app;

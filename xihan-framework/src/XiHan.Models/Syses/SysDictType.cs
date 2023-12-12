@@ -19,23 +19,23 @@ using XiHan.Models.Bases.Entities;
 namespace XiHan.Models.Syses;
 
 /// <summary>
-/// 系统字典表
+/// 系统字典类型表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable, SystemTable]
 public class SysDictType : BaseModifyEntity
 {
     /// <summary>
-    /// 字典编码
+    /// 字典类型编码
     ///</summary>
     [SugarColumn(Length = 64)]
-    public string Code { get; set; } = string.Empty;
+    public string TypeCode { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字典名称
+    /// 字典类型名称
     /// </summary>
     [SugarColumn(Length = 64)]
-    public string Name { get; set; } = string.Empty;
+    public string TypeName { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否启用

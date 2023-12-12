@@ -29,9 +29,7 @@ public static class ObjectInfoExtension
     /// <param name="fullName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string GetObjectFullNameOf(this object instance,
-        [CallerArgumentExpression(nameof(instance))]
-        string fullName = "")
+    public static string GetObjectFullNameOf(this object instance, [CallerArgumentExpression(nameof(instance))] string fullName = "")
     {
         return instance == null
             ? throw new ArgumentNullException(nameof(instance))
