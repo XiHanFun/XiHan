@@ -39,38 +39,45 @@ public static class JwtHandler
     {
         var authJwtSetting = GetAuthJwtSetting();
 
-        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
-        SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
+        try
+        {
+            // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
+            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+            SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
 
-        // Nuget引入：Microsoft.IdentityModel.Tokens
-        List<Claim> claims =
-        [
-            new Claim(ClaimConst.UserId, tokenModel.UserId.ToString()),
-            new Claim(ClaimConst.Account, tokenModel.Account),
-            new Claim(ClaimConst.NickName, tokenModel.NickName),
-            new Claim(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString())
-        ];
-        // 用户被分配多个角色
-        tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
+            // Nuget引入：Microsoft.IdentityModel.Tokens
+            List<Claim> claims =
+            [
+                new Claim(ClaimConst.UserId, tokenModel.UserId.ToString()),
+                new Claim(ClaimConst.Account, tokenModel.Account),
+                new Claim(ClaimConst.NickName, tokenModel.NickName),
+                new Claim(ClaimConst.IsSuperAdmin, tokenModel.IsSuperAdmin.ToString())
+            ];
+            // 用户被分配多个角色
+            tokenModel.UserRole.ForEach(role => claims.Add(new Claim(ClaimConst.UserRole, role.ParseToString())));
 
-        // Nuget引入：System.IdentityModel.Tokens.Jwt
-        JwtSecurityToken securityToken = new(
-            // 自定义选项
-            claims: claims,
-            // 颁发者
-            issuer: authJwtSetting.Issuer,
-            // 签收者
-            audience: authJwtSetting.Audience,
-            // 秘钥
-            signingCredentials: credentials,
-            // 生效时间
-            notBefore: DateTime.UtcNow,
-            // 过期时间
-            expires: DateTime.UtcNow.AddMinutes(authJwtSetting.Expires)
-        );
-        var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
-        return accessToken;
+            // Nuget引入：System.IdentityModel.Tokens.Jwt
+            JwtSecurityToken securityToken = new(
+                // 自定义选项
+                claims: claims,
+                // 颁发者
+                issuer: authJwtSetting.Issuer,
+                // 签收者
+                audience: authJwtSetting.Audience,
+                // 秘钥
+                signingCredentials: credentials,
+                // 生效时间
+                notBefore: DateTime.UtcNow,
+                // 过期时间
+                expires: DateTime.UtcNow.AddMinutes(authJwtSetting.Expires)
+            );
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            return accessToken;
+        }
+        catch (Exception ex)
+        {
+            throw new AuthenticationException($"Token 颁发失败！", ex);
+        }
     }
 
     /// <summary>
@@ -80,23 +87,30 @@ public static class JwtHandler
     /// <returns></returns>
     public static TokenModel TokenSerialize(string token)
     {
-        // Token安全验证
-        if (!IsSafeVerifyToken(token)) throw new AuthenticationException($"JwtToken 字符串解析失败！");
-
-        token = token.ParseToString().Replace(ClaimConst.TokenReplace, string.Empty);
-        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-
-        List<Claim> claims = jwtToken.Claims.ToList();
-        TokenModel tokenModel = new()
+        try
         {
-            UserId = claims.First(claim => claim.Type == ClaimConst.UserId).Value.ParseToLong(),
-            Account = claims.First(claim => claim.Type == ClaimConst.Account).Value,
-            NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
-            RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
-            UserRole = claims.Where(claim => claim.Type == ClaimConst.UserRole).Select(s => s.ParseToLong()).ToList(),
-            IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool()
-        };
-        return tokenModel;
+            if (!IsSafeVerifyToken(token))
+                throw new AuthenticationException($"Token 安全验证未通过！");
+
+            token = token.ParseToString().Replace(ClaimConst.TokenReplace, string.Empty);
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+            List<Claim> claims = jwtToken.Claims.ToList();
+            TokenModel tokenModel = new()
+            {
+                UserId = claims.First(claim => claim.Type == ClaimConst.UserId).Value.ParseToLong(),
+                Account = claims.First(claim => claim.Type == ClaimConst.Account).Value,
+                NickName = claims.First(claim => claim.Type == ClaimConst.NickName).Value,
+                RealName = claims.First(claim => claim.Type == ClaimConst.RealName).Value,
+                UserRole = claims.Where(claim => claim.Type == ClaimConst.UserRole).Select(s => s.ParseToLong()).ToList(),
+                IsSuperAdmin = claims.First(claim => claim.Type == ClaimConst.IsSuperAdmin).Value.ParseToBool()
+            };
+            return tokenModel;
+        }
+        catch (Exception ex)
+        {
+            throw new AuthenticationException($"Token 解析失败！", ex);
+        }
     }
 
     /// <summary>
@@ -108,12 +122,11 @@ public static class JwtHandler
     {
         var authJwtSetting = GetAuthJwtSetting();
 
-        // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
-        SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
-        SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
-
         try
         {
+            // 秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
+            SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(authJwtSetting.SymmetricKey));
+            SigningCredentials credentials = new(signingKey, SecurityAlgorithms.HmacSha512Signature);
             token = token.ParseToString().Replace("Bearer ", string.Empty);
             // 开始Token校验
             if (token.IsEmptyOrNull() || !new JwtSecurityTokenHandler().CanReadToken(token))

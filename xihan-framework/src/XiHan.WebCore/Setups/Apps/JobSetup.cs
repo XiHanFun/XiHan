@@ -43,9 +43,9 @@ public static class JobSetup
         // 环境变量，生产环境
         if (env.IsProduction())
         {
+            RegisterScheduledTasks();
         }
 
-        RegisterScheduledTasks();
         return app;
     }
 
