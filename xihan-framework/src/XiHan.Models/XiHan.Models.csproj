@@ -21,7 +21,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="SqlSugarCore" Version="5.1.4.126" />
+        <PackageReference Include="SqlSugarCore" Version="5.1.4.128" />
         <PackageReference Include="Mapster" Version="7.4.0" />
     </ItemGroup>
 
