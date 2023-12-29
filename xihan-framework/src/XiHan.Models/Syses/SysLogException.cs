@@ -21,7 +21,9 @@ namespace XiHan.Models.Syses;
 /// 系统异常日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable, SystemTable]
+[SystemTable]
+[SplitTable(SplitType.Month)]
+[SugarTable($@"{nameof(SysLogException)}_{{year}}{{month}}{{day}}")]
 public class SysLogException : SysLogVisit
 {
     /// <summary>

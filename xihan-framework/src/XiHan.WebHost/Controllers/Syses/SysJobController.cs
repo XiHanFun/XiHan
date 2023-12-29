@@ -78,7 +78,7 @@ public class SysJobController(ISysJobService sysJobService, ITaskSchedulerServer
             if (result.IsSuccess)
                 // 再删除数据库的任务
                 _ = await _sysJobService.DeleteJobByIds([sysJob.BaseId]);
-            errorMessages.Add(sysJob, result.Data);
+            errorMessages.Add(sysJob, result.Datas);
         });
 
         return ApiResult.Success(errorMessages);

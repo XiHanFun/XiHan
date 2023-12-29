@@ -98,6 +98,10 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
     <ProjectExtensions>
         <VisualStudio>
             <UserProperties properties4launchsettings1jsonJsonSchema="" />

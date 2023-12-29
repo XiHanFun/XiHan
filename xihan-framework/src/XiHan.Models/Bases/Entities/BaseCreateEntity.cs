@@ -39,6 +39,7 @@ public abstract class BaseCreateEntity : BaseIdEntity
     /// 新增时间
     /// </summary>
     /// <remarks>修改不会有此字段</remarks>
+    [SplitField]
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增时间")]
     public virtual DateTime CreatedTime { get; set; } = DateTime.Now;
 }

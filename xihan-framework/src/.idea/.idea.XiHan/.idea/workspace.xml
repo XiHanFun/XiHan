@@ -21,12 +21,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11cbe5ef-ef94-43b6-acfd-d6ee59141707" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.XiHan/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.Infrastructures/Apps/App.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebCore/Setups/Apps/InitDBSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XiHan.WebHost/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/XiHan.WebHost/appsettings.Development.json" afterDir="false" />
-    </list>
+    <list default="true" id="11cbe5ef-ef94-43b6-acfd-d6ee59141707" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,6 +75,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "CodeInspectionSettingsId",
     "vue.rearranger.settings.migration": "true"
   },
@@ -279,6 +275,7 @@
       <workItem from="1701705683881" duration="225000" />
       <workItem from="1701706020112" duration="30000" />
       <workItem from="1701706513817" duration="14000" />
+      <workItem from="1703765421991" duration="42000" />
     </task>
     <servers />
   </component>

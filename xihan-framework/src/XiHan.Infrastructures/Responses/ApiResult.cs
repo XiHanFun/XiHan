@@ -39,7 +39,7 @@ public class ApiResult
     /// <summary>
     /// 数据集合
     /// </summary>
-    public dynamic? Data { get; set; }
+    public dynamic? Datas { get; set; }
 
     /// <summary>
     /// 时间戳
@@ -57,7 +57,7 @@ public class ApiResult
             IsSuccess = true,
             Code = ResponseCodeEnum.Continue,
             Message = ResponseCodeEnum.Continue.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
@@ -72,23 +72,23 @@ public class ApiResult
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
             Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应成功 200
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult Success(string messageData)
+    public static ApiResult Success(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
             Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
@@ -104,39 +104,39 @@ public class ApiResult
             IsSuccess = true,
             Code = ResponseCodeEnum.Success,
             Message = ResponseCodeEnum.Success.GetEnumDescriptionByKey(),
-            Data = data
+            Datas = data
         };
     }
 
     /// <summary>
     /// 响应失败，访问出错 400
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult BadRequest(string messageData)
+    public static ApiResult BadRequest(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.BadRequest,
             Message = ResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
     /// <summary>
     /// 响应失败，访问出错 400
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="errorDatas"></param>
     /// <returns></returns>
-    public static ApiResult BadRequest(dynamic data)
+    public static ApiResult BadRequest(dynamic errorDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.BadRequest,
             Message = ResponseCodeEnum.BadRequest.GetEnumDescriptionByKey(),
-            Data = data
+            Datas = errorDatas
         };
     }
 
@@ -151,23 +151,23 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.Unauthorized,
             Message = ResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应失败，访问未授权 401
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult Unauthorized(string messageData)
+    public static ApiResult Unauthorized(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.Unauthorized,
             Message = ResponseCodeEnum.Unauthorized.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
@@ -182,7 +182,7 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.Forbidden,
             Message = ResponseCodeEnum.Forbidden.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
@@ -197,23 +197,23 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.NotFound,
             Message = ResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应失败，数据未找到 404
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult NotFound(string messageData)
+    public static ApiResult NotFound(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.NotFound,
             Message = ResponseCodeEnum.NotFound.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
@@ -228,55 +228,55 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
             Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
     /// <summary>
     ///  响应失败，参数不合法 422
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult UnprocessableEntity(string messageData)
+    public static ApiResult UnprocessableEntity(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
             Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
     /// <summary>
     /// 响应失败，参数不合法 422
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="errorDatas"></param>
     /// <returns></returns>
-    public static ApiResult UnprocessableEntity(dynamic data)
+    public static ApiResult UnprocessableEntity(dynamic errorDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.UnprocessableEntity,
             Message = ResponseCodeEnum.UnprocessableEntity.GetEnumDescriptionByKey(),
-            Data = data
+            Datas = errorDatas
         };
     }
 
     /// <summary>
     /// 并发请求过多 429
     /// </summary>
-    /// <param name="messageData"></param>
+    /// <param name="messageDatas"></param>
     /// <returns></returns>
-    public static ApiResult TooManyRequests(string messageData)
+    public static ApiResult TooManyRequests(string messageDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.TooManyRequests,
             Message = ResponseCodeEnum.TooManyRequests.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = messageDatas
         };
     }
 
@@ -291,22 +291,23 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.InternalServerError,
             Message = ResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 
     /// <summary>
     /// 响应出错，服务器内部错误 500
     /// </summary>
+    /// <param name="errorDatas"></param>
     /// <returns></returns>
-    public static ApiResult InternalServerError(string messageData)
+    public static ApiResult InternalServerError(string errorDatas)
     {
         return new ApiResult
         {
             IsSuccess = false,
             Code = ResponseCodeEnum.InternalServerError,
             Message = ResponseCodeEnum.InternalServerError.GetEnumDescriptionByKey(),
-            Data = messageData
+            Datas = errorDatas
         };
     }
 
@@ -321,7 +322,7 @@ public class ApiResult
             IsSuccess = false,
             Code = ResponseCodeEnum.NotImplemented,
             Message = ResponseCodeEnum.NotImplemented.GetEnumDescriptionByKey(),
-            Data = null
+            Datas = null
         };
     }
 }

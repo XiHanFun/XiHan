@@ -22,7 +22,9 @@ namespace XiHan.Models.Syses;
 /// 系统计划任务日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable, SystemTable]
+[SystemTable]
+[SplitTable(SplitType.Month)]
+[SugarTable($@"{nameof(SysJobLog)}_{{year}}{{month}}{{day}}")]
 public class SysJobLog : BaseDeleteEntity
 {
     /// <summary>

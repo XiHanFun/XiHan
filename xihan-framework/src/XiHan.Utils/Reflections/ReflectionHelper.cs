@@ -64,7 +64,8 @@ public static class ReflectionHelper
         foreach (var assembly in assemblies)
         {
             var referencedAssemblies = assembly.GetReferencedAssemblies()
-                .Where(s => !s.FullName.StartsWith("Microsoft") && !s.FullName.StartsWith("System"));
+                .Where(s => !s.FullName.StartsWith("Microsoft") && !s.FullName.StartsWith("System"))
+                .Where(s => !s.FullName.StartsWith("XiHan"));
             foreach (var referencedAssembly in referencedAssemblies)
                 // 检查引用的程序集是否来自 NuGet
                 if (referencedAssembly.FullName.Contains("Version="))

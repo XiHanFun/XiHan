@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases.Entities;
-using XiHan.Models.Blogs.Enums;
 
 namespace XiHan.Models.Blogs;
 
@@ -131,13 +131,13 @@ public class BlogArticle : BaseEntity
     /// 点赞数量
     /// </summary>
     [SugarColumn]
-    public int VoteCount { get; set; }
+    public int UpVoteCount { get; set; }
 
     /// <summary>
     /// 点踩数量
     /// </summary>
     [SugarColumn]
-    public int OpposeCount { get; set; }
+    public int DownVoteCount { get; set; }
 
     /// <summary>
     /// 评论数量
@@ -169,8 +169,8 @@ public class BlogArticle : BaseEntity
     /// 文章赞踩
     /// </summary>
     [SugarColumn(IsIgnore = true)]
-    [Navigate(NavigateType.OneToMany, nameof(BlogArticlePoll.ArticleId))]
-    public List<BlogArticlePoll> Polls { get; set; } = [];
+    [Navigate(NavigateType.OneToMany, nameof(BlogArticleVote.ArticleId))]
+    public List<BlogArticleVote> Votes { get; set; } = [];
 
     /// <summary>
     /// 文章评论
@@ -178,4 +178,83 @@ public class BlogArticle : BaseEntity
     [SugarColumn(IsIgnore = true)]
     [Navigate(NavigateType.OneToMany, nameof(BlogArticleComment.ArticleId))]
     public List<BlogArticleComment> Comments { get; set; } = [];
+}
+
+/// <summary>
+/// 编辑器类型
+/// </summary>
+public enum EditorTypeEnum
+{
+    /// <summary>
+    /// Markdown 类型
+    /// </summary>
+    [Description("Markdown 类型")] Markdown = 0,
+
+    /// <summary>
+    /// Html 类型
+    /// </summary>
+    [Description("Html 类型")] Html = 1
+}
+
+/// <summary>
+/// 发布状态
+/// </summary>
+public enum PubStatusEnum
+{
+    /// <summary>
+    /// 回收站
+    /// </summary>
+    [Description("回收站")] Recycle = 0,
+
+    /// <summary>
+    /// 已发布
+    /// </summary>
+    [Description("已发布")] Published = 1,
+
+    /// <summary>
+    /// 草稿箱
+    /// </summary>
+    [Description("草稿箱")] Drafts = 2
+}
+
+/// <summary>
+/// 公开类型
+/// </summary>
+public enum ExposedTypeEnum
+{
+    /// <summary>
+    /// 保留
+    /// </summary>
+    [Description("保留")] Reserve = 0,
+
+    /// <summary>
+    /// 公开
+    /// </summary>
+    [Description("公开")] Public = 1,
+
+    /// <summary>
+    /// 私密
+    /// </summary>
+    [Description("私密")] Secret = 2
+}
+
+/// <summary>
+/// 文章来源类型
+/// </summary>
+public enum SourceTypeEnum
+{
+    /// <summary>
+    /// 转载
+    /// </summary>
+    [Description("转载")] Reprint = 0,
+
+    /// <summary>
+    /// 原创
+    /// </summary>
+    [Description("原创")] Original = 1,
+
+    /// <summary>
+    /// 衍生
+    /// </summary>
+    [Description("衍生")] Hybrid = 2
 }

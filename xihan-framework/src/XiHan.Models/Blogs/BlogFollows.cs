@@ -13,8 +13,8 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using System.ComponentModel;
 using XiHan.Models.Bases.Entities;
-using XiHan.Models.Blogs.Enums;
 
 namespace XiHan.Models.Blogs;
 
@@ -42,4 +42,28 @@ public class BlogFollows : BaseCreateEntity
     /// </summary>
     [SugarColumn]
     public FollowStatus FollowStatus { get; set; }
+}
+
+/// <summary>
+/// FollowStatus
+/// </summary>
+public enum FollowStatus
+{
+    /// <summary>
+    /// 取消关注
+    /// </summary>
+    [Description("取消关注")]
+    Unfollow = 0,
+
+    /// <summary>
+    /// 已关注
+    /// </summary>
+    [Description("已关注")]
+    Followed = 1,
+
+    /// <summary>
+    /// 相互关注
+    /// </summary>
+    [Description("相互关注")]
+    Mutual = 2,
 }

@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Reflection;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Infos;
 
@@ -31,12 +32,10 @@ public class SysServerService : ISysServerService
     {
         Dictionary<string, object?> result = [];
 
-        List<System.Reflection.PropertyInfo> systemInfoProperties = [.. typeof(SystemInfoHelper).GetProperties()];
-        List<System.Reflection.PropertyInfo> environmentInfoProperties =
-            [.. typeof(EnvironmentInfoHelper).GetProperties()];
-        List<System.Reflection.PropertyInfo> projectInfoProperties = [.. typeof(ProjectInfoHelper).GetProperties()];
-        List<System.Reflection.PropertyInfo> applicationInfoProperties =
-            [.. typeof(ApplicationInfoHelper).GetProperties()];
+        List<PropertyInfo> systemInfoProperties = [.. typeof(SystemInfoHelper).GetProperties()];
+        List<PropertyInfo> environmentInfoProperties = [.. typeof(EnvironmentInfoHelper).GetProperties()];
+        List<PropertyInfo> projectInfoProperties = [.. typeof(ProjectInfoHelper).GetProperties()];
+        List<PropertyInfo> applicationInfoProperties = [.. typeof(ApplicationInfoHelper).GetProperties()];
 
         systemInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });
         environmentInfoProperties.ForEach(property => { result.Add(property.Name, property.GetValue(null)); });

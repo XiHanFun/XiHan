@@ -22,7 +22,9 @@ namespace XiHan.Models.Syses;
 /// 系统登录日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable, SystemTable]
+[SystemTable]
+[SplitTable(SplitType.Month)]
+[SugarTable($@"{nameof(SysLogLogin)}_{{year}}{{month}}{{day}}")]
 public class SysLogLogin : BaseCreateEntity
 {
     /// <summary>

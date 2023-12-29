@@ -22,7 +22,9 @@ namespace XiHan.Models.Syses;
 /// 系统访问日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable, SystemTable]
+[SystemTable]
+[SplitTable(SplitType.Month)]
+[SugarTable($@"{nameof(SysLogVisit)}_{{year}}{{month}}{{day}}")]
 public class SysLogVisit : BaseCreateEntity
 {
     #region 客户端信息

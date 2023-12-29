@@ -22,7 +22,9 @@ namespace XiHan.Models.Syses;
 /// 系统操作日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SugarTable, SystemTable]
+[SystemTable]
+[SplitTable(SplitType.Month)]
+[SugarTable($@"{nameof(SysLogOperation)}_{{year}}{{month}}{{day}}")]
 public class SysLogOperation : SysLogVisit
 {
     /// <summary>
