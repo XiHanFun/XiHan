@@ -23,7 +23,7 @@ namespace XiHan.Models.Bases.Entities;
 public abstract class BaseIdEntity : IBaseIdEntity<long>
 {
     /// <summary>
-    /// 主键标识(雪花ID)
+    /// 主键标识
     /// </summary>
     [SugarColumn(IsPrimaryKey = true, IsIdentity = false, ColumnDescription = "主键标识")]
     public virtual long BaseId { get; set; }

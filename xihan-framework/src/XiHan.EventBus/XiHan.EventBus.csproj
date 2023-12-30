@@ -21,6 +21,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
+      <PackageReference Include="Polly" Version="8.2.0" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\XiHan.Infrastructures\XiHan.Infrastructures.csproj" />
     </ItemGroup>
 
@@ -37,6 +43,11 @@
             <PackagePath>\</PackagePath>
             <Pack>True</Pack>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="RabbitMQ\" />
+      <Folder Include="Kafka\" />
     </ItemGroup>
 
 </Project>
