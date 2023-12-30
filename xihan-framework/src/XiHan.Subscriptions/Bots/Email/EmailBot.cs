@@ -27,8 +27,6 @@ namespace XiHan.Subscriptions.Bots.Email;
 /// <param name="fromModel"></param>
 public class EmailBot(EmailFromModel fromModel)
 {
-    private readonly EmailFromModel _fromModel = fromModel;
-
     /// <summary>
     /// 发送邮件
     /// </summary>
@@ -37,10 +35,10 @@ public class EmailBot(EmailFromModel fromModel)
         MimeMessage message = new()
         {
             // 来源
-            Sender = new MailboxAddress(_fromModel.FromMail, _fromModel.FromMail)
+            Sender = new MailboxAddress(fromModel.FromMail, fromModel.FromMail)
         };
         // 发件人地址集合
-        message.From.Add(new MailboxAddress(_fromModel.FromMail, _fromModel.FromMail));
+        message.From.Add(new MailboxAddress(fromModel.FromMail, fromModel.FromMail));
         // 收件人地址集合
         toModel.ToMail.ForEach(to => message.To.Add(new MailboxAddress(to, to)));
         // 抄送人地址集合
@@ -87,9 +85,9 @@ public class EmailBot(EmailFromModel fromModel)
             // 解决远程证书验证无效
             client.ServerCertificateValidationCallback = (_, _, _, _) => true;
             // 异步连接
-            await client.ConnectAsync(_fromModel.SmtpHost, _fromModel.SmtpPort, _fromModel.UseSsl);
+            await client.ConnectAsync(fromModel.SmtpHost, fromModel.SmtpPort, fromModel.UseSsl);
             // 异步登录
-            await client.AuthenticateAsync(_fromModel.FromUserName, _fromModel.FromPassword);
+            await client.AuthenticateAsync(fromModel.FromUserName, fromModel.FromPassword);
             // 异步发送
             await client.SendAsync(message);
             // 异步断连
