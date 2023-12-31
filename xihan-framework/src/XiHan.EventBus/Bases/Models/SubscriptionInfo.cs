@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SubscriptionInfoEntity
+// FileName:SubscriptionInfo
 // Guid:8375a610-2698-4a1b-9f92-6b3030e7bc80
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,48 +15,42 @@
 namespace XiHan.EventBus.Bases.Models;
 
 /// <summary>
-/// 订阅模型
+/// 订阅信息模型
 /// </summary>
-public class SubscriptionModel
+public class SubscriptionInfo
 {
+    /// <summary>
+    /// 集成器类型
+    /// </summary>
+    public Type HandlerType { get; }
+
     /// <summary>
     /// 是否动态
     /// </summary>
     public bool IsDynamic { get; }
 
     /// <summary>
-    /// 处理器类型
-    /// </summary>
-    public Type HandlerType { get; }
-
-    /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="isDynamic"></param>
-    /// <param name="handlerType"></param>
-    private SubscriptionModel(bool isDynamic, Type handlerType)
+    /// <param name="isDynamic">是否为动态</param>
+    /// <param name="handlerType">集成器类型</param>
+    private SubscriptionInfo(bool isDynamic, Type handlerType)
     {
         IsDynamic = isDynamic;
         HandlerType = handlerType;
     }
 
     /// <summary>
-    /// 动态
+    /// 订阅消息
     /// </summary>
-    /// <param name="handlerType"></param>
+    /// <param name="handlerType">集成器类型</param>
     /// <returns></returns>
-    public static SubscriptionModel Dynamic(Type handlerType)
-    {
-        return new SubscriptionModel(true, handlerType);
-    }
+    public static SubscriptionInfo Dynamic(Type handlerType) => new(true, handlerType);
 
     /// <summary>
-    /// 非动态
+    /// 订阅消息
     /// </summary>
-    /// <param name="handlerType"></param>
+    /// <param name="handlerType">集成器类型</param>
     /// <returns></returns>
-    public static SubscriptionModel NonDynamic(Type handlerType)
-    {
-        return new SubscriptionModel(false, handlerType);
-    }
+    public static SubscriptionInfo Typed(Type handlerType) => new(false, handlerType);
 }

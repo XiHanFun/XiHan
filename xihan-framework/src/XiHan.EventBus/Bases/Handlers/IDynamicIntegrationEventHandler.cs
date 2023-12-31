@@ -15,7 +15,7 @@
 namespace XiHan.EventBus.Bases.Handlers;
 
 /// <summary>
-/// 动态集成事件处理器接口
+/// 集成动态事件处理器接口
 /// </summary>
 public interface IDynamicIntegrationEventHandler
 {
@@ -24,5 +24,5 @@ public interface IDynamicIntegrationEventHandler
     /// </summary>
     /// <param name="eventData"></param>
     /// <returns></returns>
-    Task HandleDynamic(dynamic eventData);
+    Task Handle(dynamic eventData);
 }

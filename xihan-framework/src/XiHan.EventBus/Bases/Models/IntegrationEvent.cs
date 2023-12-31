@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IntegrationEventEntity
+// FileName:IntegrationEvent
 // Guid:20306067-84f1-450f-b1e9-58a88edf7ec7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,14 +17,14 @@ using Newtonsoft.Json;
 namespace XiHan.EventBus.Bases.Models;
 
 /// <summary>
-/// 事件模型
+/// 集成事件基类
 /// </summary>
-public class IntegrationEventModel
+public class IntegrationEvent
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public IntegrationEventModel()
+    public IntegrationEvent()
     {
         BaseId = Guid.NewGuid();
         CreatedTime = DateTime.Now;
@@ -35,7 +35,7 @@ public class IntegrationEventModel
     /// </summary>
     /// <param name="baseId"></param>
     /// <param name="createdTime"></param>
-    public IntegrationEventModel(Guid baseId, DateTime createdTime)
+    public IntegrationEvent(Guid baseId, DateTime createdTime)
     {
         BaseId = baseId;
         CreatedTime = createdTime;

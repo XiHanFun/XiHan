@@ -45,9 +45,4 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="RabbitMQ\" />
-      <Folder Include="Kafka\" />
-    </ItemGroup>
-
 </Project>

@@ -23,34 +23,34 @@ namespace XiHan.EventBus.Bases;
 public interface IEventBus
 {
     /// <summary>
-    /// 发布
+    /// 发布事件
     /// </summary>
     /// <param name="event">事件模型</param>
-    void Publish(IntegrationEventModel @event);
+    void Publish(IntegrationEvent @event);
 
     /// <summary>
-    /// 订阅
+    /// 订阅事件
     /// </summary>
     /// <typeparam name="T">事件模型</typeparam>
     /// <typeparam name="TH">事件处理器(事件模型)</typeparam>
-    void Subscribe<T, TH>() where T : IntegrationEventModel where TH : IIntegrationEventHandler<T>;
+    void Subscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
 
     /// <summary>
-    /// 取消订阅
-    /// </summary>
-    /// <typeparam name="T">事件模型</typeparam>
-    /// <typeparam name="TH">事件处理器(事件模型)</typeparam>
-    void UnSubscribe<T, TH>() where TH : IIntegrationEventHandler<T> where T : IntegrationEventModel;
-
-    /// <summary>
-    /// 动态订阅
+    /// 订阅动态事件
     /// </summary>
     /// <typeparam name="TH">事件处理器</typeparam>
     /// <param name="eventName"></param>
     void SubscribeDynamic<TH>(string eventName) where TH : IDynamicIntegrationEventHandler;
 
     /// <summary>
-    /// 取消动态订阅
+    /// 取消订阅事件
+    /// </summary>
+    /// <typeparam name="T">事件模型</typeparam>
+    /// <typeparam name="TH">事件处理器(事件模型)</typeparam>
+    void UnSubscribe<T, TH>() where TH : IIntegrationEventHandler<T> where T : IntegrationEvent;
+
+    /// <summary>
+    /// 取消订阅动态事件
     /// </summary>
     /// <typeparam name="TH">事件处理器</typeparam>
     /// <param name="eventName"></param>

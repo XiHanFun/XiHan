@@ -17,22 +17,22 @@ using XiHan.EventBus.Bases.Models;
 namespace XiHan.EventBus.Bases.Handlers;
 
 /// <summary>
-/// 集成事件处理器基接口
+/// 定义事件处理器公共接口，所有的事件处理都要实现该接口
 /// </summary>
 public interface IIntegrationEventHandler
 {
 }
 
 /// <summary>
-/// 集成事件处理器泛型接口
+/// 泛型事件处理器接口
 /// </summary>
 /// <typeparam name="TIntegrationEvent"></typeparam>
-public interface IIntegrationEventHandler<in TIntegrationEvent> : IIntegrationEventHandler where TIntegrationEvent : IntegrationEventModel
+public interface IIntegrationEventHandler<in TIntegrationEvent> : IIntegrationEventHandler where TIntegrationEvent : IntegrationEvent
 {
     /// <summary>
     /// 事件处理
     /// </summary>
-    /// <param name="event"></param>
+    /// <param name="event">集成事件</param>
     /// <returns></returns>
     Task Handle(TIntegrationEvent @event);
 }
