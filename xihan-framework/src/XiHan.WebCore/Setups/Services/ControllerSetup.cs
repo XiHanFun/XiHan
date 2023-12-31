@@ -46,7 +46,8 @@ public static class ControllerSetup
                 _ = configure.Filters.Add<AuthorizationFilterAsyncAttribute>();
                 //configure.Filters.Add<ResourceFilterAsyncAttribute>();
                 _ = configure.Filters.Add<ResultFilterAsyncAttribute>();
-                //configure.Filters.Add<ExceptionFilterAsyncAttribute>(); // 已弃用，由 GlobalExceptionMiddleware 全局日志中间件代替
+                // 已弃用，由 GlobalExceptionMiddleware 全局日志中间件代替
+                //configure.Filters.Add<ExceptionFilterAsyncAttribute>();
             }).ConfigureApiBehaviorOptions(setupAction =>
             {
                 // 关闭默认模型验证，通过 ActionFilterAsyncAttribute 自定义验证

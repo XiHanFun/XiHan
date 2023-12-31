@@ -80,7 +80,7 @@ public class SysConfigController(ISysConfigService sysConfigService) : BaseApiCo
     /// </summary>
     /// <param name="configId"></param>
     /// <returns></returns>
-    [HttpPost("Get/ById")]
+    [HttpPost("GetById")]
     [AppLog(Module = "系统配置", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysConfigById([FromBody] long configId)
     {

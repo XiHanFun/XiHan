@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogLoginWDto
+// FileName:SysLoginLogWDto
 // Guid:775abd3b-23a5-4c1d-bbc1-3692077b6869
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@
 namespace XiHan.Services.Syses.Logging.Dtos;
 
 /// <summary>
-/// SysLogLoginWDto
+/// SysLoginLogWDto
 /// </summary>
-public class SysLogLoginWDto
+public class SysLoginLogWDto
 {
     /// <summary>
     /// 开始时间

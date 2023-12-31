@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogExceptionWDto.cs
+// FileName:SysExceptionLogWDto.cs
 // Guid:3fcd7683-0372-44e9-a5be-273ae32aa0e7
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -15,10 +15,15 @@
 namespace XiHan.Services.Syses.Logging.Dtos;
 
 /// <summary>
-/// SysLogExceptionWDto.cs
+/// SysExceptionLogWDto
 /// </summary>
-public class SysLogExceptionWDto
+public class SysExceptionLogWDto
 {
+    /// <summary>
+    /// 日志级别
+    /// </summary>
+    public string? Level { get; set; }
+
     /// <summary>
     /// 开始时间
     /// </summary>
@@ -28,9 +33,4 @@ public class SysLogExceptionWDto
     /// 结束时间
     /// </summary>
     public DateTime? EndTime { get; set; }
-
-    /// <summary>
-    /// 日志级别
-    /// </summary>
-    public string? Level { get; set; }
 }

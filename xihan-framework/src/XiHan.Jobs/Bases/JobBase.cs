@@ -72,9 +72,9 @@ public class JobBase
     /// 记录任务日志
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="jobLog"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
-    private static async Task RecordTasksLog(IJobExecutionContext context, SysJobLog jobLog)
+    private static async Task RecordTasksLog(IJobExecutionContext context, SysJobLog log)
     {
         try
         {
@@ -84,13 +84,13 @@ public class JobBase
 
             // 获取任务详情
             var jobDetail = context.JobDetail;
-            jobLog.JobId = jobDetail.Key.Name.ParseToLong();
-            jobLog.InvokeTarget = jobDetail.JobType.FullName;
-            jobLog = await sysJobLogService.CreateJobLog(jobLog);
-            var logInfo = $"执行任务【{jobDetail.Key.Name}|{jobLog.JobName}】，执行结果：{jobLog.Message}";
+            log.JobId = jobDetail.Key.Name.ParseToLong();
+            log.InvokeTarget = jobDetail.JobType.FullName;
+            log = await sysJobLogService.CreateJobLog(log);
+            var logInfo = $"执行任务【{jobDetail.Key.Name}|{log.JobName}】，执行结果：{log.Message}";
 
             // 若执行成功，则执行次数加一
-            if (jobLog.IsSuccess)
+            if (log.IsSuccess)
             {
                 _ = await sysJobService.UpdateAsync(job => new SysJob()
                 {

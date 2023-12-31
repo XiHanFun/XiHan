@@ -26,12 +26,12 @@ namespace XiHan.Jobs.Jobs.Assembly;
 /// <remarks>
 /// 构造函数
 /// </remarks>
-/// <param name="sysLogOperationService"></param>
+/// <param name="sysOperationLogService"></param>
 /// <param name="sysJobLogService"></param>
 [AppService(ServiceType = typeof(CleanLogsJob), ServiceLifetime = ServiceLifeTimeEnum.Scoped)]
-public class CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysJobLogService sysJobLogService) : JobBase, IJob
+public class CleanLogsJob(ISysOperationLogService sysOperationLogService, ISysJobLogService sysJobLogService) : JobBase, IJob
 {
-    private readonly ISysLogOperationService _sysLogOperationService = sysLogOperationService;
+    private readonly ISysOperationLogService _sysOperationLogService = sysOperationLogService;
     private readonly ISysJobLogService _sysJobLogService = sysJobLogService;
 
     /// <summary>
@@ -53,7 +53,7 @@ public class CleanLogsJob(ISysLogOperationService sysLogOperationService, ISysJo
     {
         var twoMonthsAgo = DateTime.Now.AddMonths(-2);
 
-        _ = await _sysLogOperationService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
+        _ = await _sysOperationLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
         _ = await _sysJobLogService.DeleteAsync(log => log.CreatedTime < twoMonthsAgo);
     }
 }

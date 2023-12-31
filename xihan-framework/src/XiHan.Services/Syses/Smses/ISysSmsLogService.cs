@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysJobLogService
+// FileName:ISysSmsLogService
 // Guid:d8291498-8a92-40a9-a37b-4dd187725363
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,53 +15,53 @@
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Jobs.Dtos;
+using XiHan.Services.Syses.Smses.Dtos;
 
-namespace XiHan.Services.Syses.Jobs;
+namespace XiHan.Services.Syses.Smses;
 
 /// <summary>
-/// ISysJobLogService
+/// ISysSmsLogService
 /// </summary>
-public interface ISysJobLogService : IBaseService<SysJobLog>
+public interface ISysSmsLogService : IBaseService<SysSmsLog>
 {
     /// <summary>
-    /// 新增任务日志
+    /// 新增短信日志
     /// </summary>
     /// <param name="log"></param>
     /// <returns></returns>
-    Task<SysJobLog> CreateJobLog(SysJobLog log);
+    Task<bool> CreateSmsLog(SysSmsLog log);
 
     /// <summary>
-    /// 批量删除任务日志
+    /// 批量删除短信日志
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    Task<bool> DeleteJobLogByIds(long[] ids);
+    Task<bool> DeleteSmsLogByIds(long[] ids);
 
     /// <summary>
-    /// 清空任务日志
+    /// 清空短信日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> CleanJobLog();
+    Task<bool> CleanSmsLog();
 
     /// <summary>
-    /// 查询系统任务日志(根据任务Id)
+    /// 查询系统短信日志(根据Id)
     /// </summary>
-    /// <param name="jobId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<SysJobLog> GetJobLogByJobId(long jobId);
+    Task<SysSmsLog> GetSmsLogById(long id);
 
     /// <summary>
-    /// 查询系统任务日志列表
+    /// 查询系统短信日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysJobLog>> GetJobLogList(SysJobLogWDto whereDto);
+    Task<List<SysSmsLog>> GetSmsLogList(SysSmsLogWDto whereDto);
 
     /// <summary>
-    /// 查询系统任务日志列表(根据分页条件)
+    /// 查询系统短信日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysJobLog>> GetJobLogPageList(PageWhereDto<SysJobLogWDto> pageWhere);
+    Task<PageDataDto<SysSmsLog>> GetSmsLogPageList(PageWhereDto<SysSmsLogWDto> pageWhere);
 }

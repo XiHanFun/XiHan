@@ -39,13 +39,13 @@ public class SysJobLogController(ISysJobLogService sysJobLogService) : BaseApiCo
     /// <summary>
     /// 批量删除系统任务日志
     /// </summary>
-    /// <param name="logIds"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
     [HttpDelete("Delete")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Delete)]
-    public async Task<ApiResult> DeleteJobLog(long[] logIds)
+    public async Task<ApiResult> DeleteJobLog(long[] ids)
     {
-        var result = await _sysJobLogService.DeleteJobLogByIds(logIds);
+        var result = await _sysJobLogService.DeleteJobLogByIds(ids);
         return ApiResult.Success(result);
     }
 
@@ -63,13 +63,13 @@ public class SysJobLogController(ISysJobLogService sysJobLogService) : BaseApiCo
     /// <summary>
     /// 查询系统任务日志(根据任务Id)
     /// </summary>
-    /// <param name="logId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("Get/ByJobId")]
+    [HttpGet("GetByJobId")]
     [AppLog(Module = "系统任务日志", BusinessType = BusinessTypeEnum.Get)]
-    public async Task<ApiResult> GetJobLogById(long logId)
+    public async Task<ApiResult> GetJobLogById(long id)
     {
-        var result = await _sysJobLogService.GetJobLogByJobId(logId);
+        var result = await _sysJobLogService.GetJobLogByJobId(id);
         return ApiResult.Success(result);
     }
 

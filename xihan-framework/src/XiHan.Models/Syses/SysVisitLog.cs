@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogVisit
+// FileName:SysVisitLog
 // Guid:8c87ae80-ee6d-4deb-a4a0-6314a90204e9
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -22,10 +22,8 @@ namespace XiHan.Models.Syses;
 /// 系统访问日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SplitTable(SplitType.Month)]
-[SugarTable($@"{nameof(SysLogVisit)}_{{year}}{{month}}{{day}}")]
-public class SysLogVisit : BaseCreateEntity
+[SugarTable, SystemTable]
+public class SysVisitLog : BaseCreateEntity
 {
     #region 客户端信息
 

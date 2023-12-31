@@ -103,10 +103,10 @@ public static class SqlSugarSetup
                 {
                     nameof(SysJob),
                     nameof(SysJobLog),
-                    nameof(SysLogVisit),
-                    nameof(SysLogOperation),
-                    nameof(SysLogLogin),
-                    nameof(SysLogException)
+                    nameof(SysVisitLog),
+                    nameof(SysOperationLog),
+                    nameof(SysLoginLog),
+                    nameof(SysExceptionLog)
                 };
                 if (entityNames.Any(name => !name.Contains(entity.EntityName)))
                 {

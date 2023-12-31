@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogOperation
+// FileName:SysOperationLog
 // Guid:d7a2c392-4915-4831-9b7c-5cde51f9d618
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -22,10 +22,8 @@ namespace XiHan.Models.Syses;
 /// 系统操作日志表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
-[SystemTable]
-[SplitTable(SplitType.Month)]
-[SugarTable($@"{nameof(SysLogOperation)}_{{year}}{{month}}{{day}}")]
-public class SysLogOperation : SysLogVisit
+[SugarTable, SystemTable]
+public class SysOperationLog : SysVisitLog
 {
     /// <summary>
     /// 操作模块

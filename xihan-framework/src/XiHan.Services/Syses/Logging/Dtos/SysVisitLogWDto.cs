@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogVisitWDto
+// FileName:SysVisitLogWDto
 // Guid:cb7aa82b-1b43-4b73-915c-54a05cde5530
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,9 +15,9 @@
 namespace XiHan.Services.Syses.Logging.Dtos;
 
 /// <summary>
-/// SysLogVisitWDto
+/// SysVisitLogWDto
 /// </summary>
-public class SysLogVisitWDto
+public class SysVisitLogWDto
 {
     /// <summary>
     /// 开始时间

@@ -80,7 +80,7 @@ public class SysDictDataController(ISysDictDataService sysDictDataService) : Bas
     /// </summary>
     /// <param name="dictDataId"></param>
     /// <returns></returns>
-    [HttpPost("Get/ById")]
+    [HttpPost("GetById")]
     [ApiGroup(ApiGroupNameEnum.Display)]
     public async Task<ApiResult> GetDictDataById([FromBody] long dictDataId)
     {

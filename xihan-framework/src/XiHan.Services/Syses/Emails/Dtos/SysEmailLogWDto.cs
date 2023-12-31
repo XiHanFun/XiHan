@@ -3,34 +3,34 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysJobLogWDto
-// Guid:3fcd7683-0372-44e9-a5be-273ae32aa0e7
-// Author:Administrator
+// FileName:SysEmailLogWDto
+// Guid:c36cef24-1621-460e-8e9f-63a6d20991bb
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-21 下午 05:35:16
+// CreateTime:2023/12/31 7:03:21
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Services.Syses.Jobs.Dtos;
+namespace XiHan.Services.Syses.Emails.Dtos;
 
 /// <summary>
-/// SysJobLogWDto
+/// SysEmailLogWDto
 /// </summary>
-public class SysJobLogWDto
+public class SysEmailLogWDto
 {
     /// <summary>
-    /// 任务名称
+    /// 手机号码
     /// </summary>
-    public string? JobName { get; set; }
+    public string? Phone { get; set; }
 
     /// <summary>
-    /// 任务分组
+    /// 是否已发送(1已发送 0未发送)
     /// </summary>
-    public string? JobGroup { get; set; }
+    public bool? IsSend { get; set; }
 
     /// <summary>
-    /// 执行是否成功(1正常 0失败)
+    /// 是否执行成功(1正常 0失败)
     /// </summary>
     public bool? IsSuccess { get; set; }
 

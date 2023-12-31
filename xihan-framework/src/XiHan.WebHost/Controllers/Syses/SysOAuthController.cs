@@ -29,15 +29,15 @@ namespace XiHan.WebHost.Controllers.Syses;
 /// </remarks>
 /// <param name="sysUserService"></param>
 /// <param name="sysRoleService"></param>
-/// <param name="sysLogLoginService"></param>
+/// <param name="sysLoginLogService"></param>
 [AllowAnonymous]
 [ApiGroup(ApiGroupNameEnum.Authorize)]
 public class SysOAuthController(ISysUserService sysUserService, ISysRoleService sysRoleService,
-    ISysLogLoginService sysLogLoginService) : BaseApiController
+    ISysLoginLogService sysLoginLogService) : BaseApiController
 {
     private readonly ISysUserService _sysUserService = sysUserService;
     private readonly ISysRoleService _sysRoleService = sysRoleService;
-    private readonly ISysLogLoginService _sysLogLoginService = sysLogLoginService;
+    private readonly ISysLoginLogService _sysLoginLogService = sysLoginLogService;
 
     ///// <summary>
     ///// 三方登录
@@ -49,7 +49,7 @@ public class SysOAuthController(ISysUserService sysUserService, ISysRoleService 
     //public async Task<ApiResult> SignIn([FromBody] SysUserLoginByAccountCDto loginByAccountCDto)
     //{
     //    SysUser sysUser = await _sysUserService.GetUserByAccount(loginByAccountCDto.Account);
-    //    return await GetTokenAndRecordLogLogin(sysUser, loginByAccountCDto.Password);
+    //    return await GetTokenAndRecordLoginLog(sysUser, loginByAccountCDto.Password);
     //}
 
     ///// <summary>
@@ -58,14 +58,14 @@ public class SysOAuthController(ISysUserService sysUserService, ISysRoleService 
     ///// <param name="sysUser"></param>
     ///// <param name="password"></param>
     ///// <returns></returns>
-    //private async Task<ApiResult> GetTokenAndRecordLogLogin(SysUser sysUser, string password)
+    //private async Task<ApiResult> GetTokenAndRecordLoginLog(SysUser sysUser, string password)
     //{
     //    string token = string.Empty;
 
     //    // 获取当前请求上下文信息
     //    Infrastructures.Apps.HttpContexts.UserClientInfo clientInfo = App.ClientInfo;
     //    Infrastructures.Apps.HttpContexts.UserAddressInfo addressInfo = App.AddressInfo;
-    //    SysLogLogin sysLogLogin = new()
+    //    SysLoginLog sysLoginLog = new()
     //    {
     //        Ip = addressInfo.RemoteIPv4,
     //        Location = addressInfo.Country + "|" + addressInfo.State + "|" + addressInfo.PrefectureLevelCity + "|" + addressInfo.DistrictOrCounty + "|" + addressInfo.Operator,
@@ -86,12 +86,12 @@ public class SysOAuthController(ISysUserService sysUserService, ISysRoleService 
     //            throw new Exception("登录失败，密码错误！");
     //        }
 
-    //        sysLogLogin.IsSuccess = true;
-    //        sysLogLogin.Message = "登录成功！";
-    //        sysLogLogin.Account = sysUser.Account;
-    //        sysLogLogin.RealName = sysUser.RealName;
-    //        sysLogLogin.Account = sysUser.Account;
-    //        sysLogLogin.RealName = sysUser.RealName;
+    //        sysLoginLog.IsSuccess = true;
+    //        sysLoginLog.Message = "登录成功！";
+    //        sysLoginLog.Account = sysUser.Account;
+    //        sysLoginLog.RealName = sysUser.RealName;
+    //        sysLoginLog.Account = sysUser.Account;
+    //        sysLoginLog.RealName = sysUser.RealName;
 
     //        List<long> userRoleIds = await _sysRoleService.GetUserRoleIdsByUserId(sysUser.BaseId);
     //        token = JwtHandler.TokenIssue(new TokenModel()
@@ -104,11 +104,11 @@ public class SysOAuthController(ISysUserService sysUserService, ISysRoleService 
     //    }
     //    catch (Exception ex)
     //    {
-    //        sysLogLogin.IsSuccess = false;
-    //        sysLogLogin.Message = ex.Message;
+    //        sysLoginLog.IsSuccess = false;
+    //        sysLoginLog.Message = ex.Message;
     //    }
 
-    //    _ = await _sysLogLoginService.AddAsync(sysLogLogin);
-    //    return sysLogLogin.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLogLogin.Message);
+    //    _ = await _sysLoginLogService.AddAsync(sysLoginLog);
+    //    return sysLoginLog.IsSuccess ? ApiResult.Success(token) : ApiResult.BadRequest(sysLoginLog.Message);
     //}
 }

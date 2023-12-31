@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysLogVisitService
+// FileName:ISysVisitLogService
 // Guid:25be1572-c261-4a15-a74b-e1891ac15f88
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,48 +19,48 @@ using XiHan.Services.Syses.Logging.Dtos;
 namespace XiHan.Services.Syses.Logging;
 
 /// <summary>
-/// ISysLogVisitService
+/// ISysVisitLogService
 /// </summary>
-public interface ISysLogVisitService
+public interface ISysVisitLogService
 {
     /// <summary>
     /// 新增系统访问日志
     /// </summary>
-    /// <param name="logVisit"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
-    Task<bool> CreateLogVisit(SysLogVisit logVisit);
+    Task<bool> CreateVisitLog(SysVisitLog log);
 
     /// <summary>
     /// 批量删除系统访问日志
     /// </summary>
-    /// <param name="logIds"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    Task<bool> DeleteLogVisitByIds(long[] logIds);
+    Task<bool> DeleteVisitLogByIds(long[] ids);
 
     /// <summary>
     /// 清空系统访问日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> CleanLogVisit();
+    Task<bool> CleanVisitLog();
 
     /// <summary>
     /// 查询系统系统访问日志(根据访问Id)
     /// </summary>
-    /// <param name="visitId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<SysLogVisit> GetLogVisitById(long visitId);
+    Task<SysVisitLog> GetVisitLogById(long id);
 
     /// <summary>
     /// 查询系统系统访问日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysLogVisit>> GetLogVisitList(SysLogVisitWDto whereDto);
+    Task<List<SysVisitLog>> GetVisitLogList(SysVisitLogWDto whereDto);
 
     /// <summary>
     /// 查询系统系统访问日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysLogVisit>> GetLogVisitPageList(PageWhereDto<SysLogVisitWDto> pageWhere);
+    Task<PageDataDto<SysVisitLog>> GetVisitLogPageList(PageWhereDto<SysVisitLogWDto> pageWhere);
 }

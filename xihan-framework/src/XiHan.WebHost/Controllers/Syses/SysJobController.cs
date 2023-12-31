@@ -174,7 +174,7 @@ public class SysJobController(ISysJobService sysJobService, ITaskSchedulerServer
     /// </summary>
     /// <param name="jobId"></param>
     /// <returns></returns>
-    [HttpPost("Get/ById")]
+    [HttpPost("GetById")]
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobById([FromBody] long jobId)
     {
@@ -187,7 +187,7 @@ public class SysJobController(ISysJobService sysJobService, ITaskSchedulerServer
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    [HttpPost("Get/List")]
+    [HttpPost("GetList")]
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobList([FromBody] SysJobWDto whereDto)
     {
@@ -200,7 +200,7 @@ public class SysJobController(ISysJobService sysJobService, ITaskSchedulerServer
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    [HttpPost("Get/PageList")]
+    [HttpPost("GetPageList")]
     [AppLog(Module = "系统任务", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetJobPageList([FromBody] PageWhereDto<SysJobWDto> pageWhere)
     {

@@ -44,11 +44,8 @@ public static class WebHostSetup
         {
             options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
             options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
-            // 文件上传最大限制 100M
-            options.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
-            // 启用 HTTP/3
-            options.ListenAnyIP(port,
-                listenOptions => { listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3; });
+            // 文件上传最大限制 1GB
+            options.Limits.MaxRequestBodySize = 1 * 1024 * 1024 * 1024;
         });
 
         "Host Started Successfully！".WriteLineSuccess();

@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISysLogLoginService
-// Guid:b76c9bed-1830-43d7-9775-c56203578b8e
-// Author:Administrator
+// FileName:ISysExceptionLogService
+// Guid:d8291498-8a92-40a9-a37b-4dd187725363
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023-07-19 下午 02:54:42
+// CreateTime:2023/7/19 1:14:54
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -20,48 +20,48 @@ using XiHan.Services.Syses.Logging.Dtos;
 namespace XiHan.Services.Syses.Logging;
 
 /// <summary>
-/// ISysLogLoginService
+/// ISysExceptionLogService
 /// </summary>
-public interface ISysLogLoginService : IBaseService<SysLogLogin>
+public interface ISysExceptionLogService : IBaseService<SysExceptionLog>
 {
     /// <summary>
-    /// 新增系统登陆日志
+    /// 新增系统异常日志
     /// </summary>
-    /// <param name="logLogin"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
-    Task CreateLogLogin(SysLogLogin logLogin);
+    Task<bool> CreateExceptionLog(SysExceptionLog log);
 
     /// <summary>
-    /// 批量删除系统登陆日志
+    /// 批量删除系统异常日志
     /// </summary>
-    /// <param name="logIds"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    Task<bool> DeleteLogLoginByIds(long[] logIds);
+    Task<bool> DeleteExceptionLogByIds(long[] ids);
 
     /// <summary>
-    /// 清空系统登陆日志
+    /// 清空系统异常日志
     /// </summary>
     /// <returns></returns>
-    Task<bool> CleanLogLogin();
+    Task<bool> CleanExceptionLog();
 
     /// <summary>
-    /// 查询系统登陆日志(根据Id)
+    /// 查询系统异常日志(根据异常Id)
     /// </summary>
-    /// <param name="logId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<SysLogLogin> GetLogLoginById(long logId);
+    Task<SysExceptionLog> GetExceptionLogById(long id);
 
     /// <summary>
-    /// 查询系统登陆日志列表
+    /// 查询系统异常日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    Task<List<SysLogLogin>> GetLogLoginList(SysLogLoginWDto whereDto);
+    Task<List<SysExceptionLog>> GetExceptionLogList(SysExceptionLogWDto whereDto);
 
     /// <summary>
-    /// 查询系统登陆日志列表(根据分页条件)
+    /// 查询系统异常日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    Task<PageDataDto<SysLogLogin>> GetLogLoginPageList(PageWhereDto<SysLogLoginWDto> pageWhere);
+    Task<PageDataDto<SysExceptionLog>> GetExceptionLogPageList(PageWhereDto<SysExceptionLogWDto> pageWhere);
 }

@@ -54,7 +54,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         try
         {
             // 记录访问日志
-            await RecordLogVisit();
+            await RecordVisitLog();
 
             stopwatch.Reset();
             await _next(context);
@@ -65,7 +65,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
             // 记录异常日志
             status = false;
             Logger.Error(ex, ex.Message);
-            await RecordLogException(ex);
+            await RecordExceptionLog(ex);
 
             // 处理异常
             var exceptionResult = ex switch
@@ -92,7 +92,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         finally
         {
             // 记录操作日志
-            await RecordLogOperation(stopwatch.ElapsedMilliseconds, status);
+            await RecordOperationLog(stopwatch.ElapsedMilliseconds, status);
         }
     }
 
@@ -100,7 +100,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
     /// 记录访问日志
     /// </summary>
     /// <returns></returns>
-    private static async Task RecordLogVisit()
+    private static async Task RecordVisitLog()
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
@@ -110,7 +110,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         var authInfo = httpCurrent.GetAuthInfo();
         var actionInfo = await httpCurrent.GetActionInfo();
 
-        SysLogVisit sysLogVisit = new()
+        SysVisitLog sysVisitLog = new()
         {
             // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
@@ -126,8 +126,8 @@ public class GlobalLogMiddleware(RequestDelegate next)
             RequestMethod = actionInfo.RequestMethod,
             RequestUrl = actionInfo.RequestUrl
         };
-        var sysLogVisitService = App.GetRequiredService<ISysLogVisitService>();
-        _ = await sysLogVisitService.CreateLogVisit(sysLogVisit);
+        var sysVisitLogService = App.GetRequiredService<ISysVisitLogService>();
+        _ = await sysVisitLogService.CreateVisitLog(sysVisitLog);
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
     /// </summary>
     /// <param name="ex"></param>
     /// <returns></returns>
-    private static async Task RecordLogException(Exception ex)
+    private static async Task RecordExceptionLog(Exception ex)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
@@ -147,7 +147,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         var stackFrame = new StackTrace(ex, true).GetFrame(0);
         var targetSite = ex.TargetSite;
 
-        SysLogException sysLogException = new()
+        SysExceptionLog sysExceptionLog = new()
         {
             // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
@@ -173,8 +173,8 @@ public class GlobalLogMiddleware(RequestDelegate next)
             StackTrace = ex.StackTrace
         };
 
-        var sysLogExceptionService = App.GetRequiredService<ISysLogExceptionService>();
-        _ = await sysLogExceptionService.CreateLogException(sysLogException);
+        var sysExceptionLogService = App.GetRequiredService<ISysExceptionLogService>();
+        _ = await sysExceptionLogService.CreateExceptionLog(sysExceptionLog);
         Logger.Error(ex, ex.Message);
     }
 
@@ -184,7 +184,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
     /// <param name="elapsed"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    private static async Task RecordLogOperation(long elapsed, bool status)
+    private static async Task RecordOperationLog(long elapsed, bool status)
     {
         // 获取当前请求上下文信息
         var httpCurrent = App.HttpContextCurrent;
@@ -194,7 +194,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
         var authInfo = httpCurrent.GetAuthInfo();
         var actionInfo = await httpCurrent.GetActionInfo();
 
-        SysLogOperation sysLogOperation = new()
+        SysOperationLog sysOperationLog = new()
         {
             // 访问信息
             IsAjaxRequest = clientInfo.IsAjaxRequest,
@@ -218,7 +218,7 @@ public class GlobalLogMiddleware(RequestDelegate next)
             ElapsedTime = elapsed
         };
 
-        var sysLogOperationService = App.GetRequiredService<ISysLogOperationService>();
-        await sysLogOperationService.CreateLogOperation(sysLogOperation);
+        var sysOperationLogService = App.GetRequiredService<ISysOperationLogService>();
+        await sysOperationLogService.CreateOperationLog(sysOperationLog);
     }
 }

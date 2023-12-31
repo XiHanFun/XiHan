@@ -3,106 +3,98 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogVisitService
-// Guid:cc745d02-3511-4de9-8da8-14888c33747e
+// FileName:SysSmsLogService
+// Guid:65179156-6084-40b4-ace3-0cda5ee49eeb
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2023/8/21 1:57:56
+// CreateTime:2023/7/19 1:16:48
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Infrastructures.Apps.Caches;
 using XiHan.Infrastructures.Apps.Services;
 using XiHan.Infrastructures.Responses.Pages;
 using XiHan.Models.Syses;
 using XiHan.Services.Bases;
-using XiHan.Services.Syses.Logging.Dtos;
+using XiHan.Services.Syses.Smses.Dtos;
 using XiHan.Utils.Extensions;
 
-namespace XiHan.Services.Syses.Logging.Logic;
+namespace XiHan.Services.Syses.Smses.Logic;
 
 /// <summary>
-/// 系统访问日志服务
+/// 系统短信日志服务
 /// </summary>
 /// <remarks>
 /// 构造函数
 /// </remarks>
-/// <param name="appCacheService"></param>
-[AppService(ServiceType = typeof(ISysLogVisitService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysLogVisitService(IAppCacheService appCacheService) : BaseService<SysLogVisit>, ISysLogVisitService
+[AppService(ServiceType = typeof(ISysSmsLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysSmsLogService() : BaseService<SysSmsLog>, ISysSmsLogService
 {
-    private readonly IAppCacheService _appCacheService = appCacheService;
-
     /// <summary>
-    /// 新增系统访问日志
+    /// 新增短信日志
     /// </summary>
-    /// <param name="logVisit"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
-    public async Task<bool> CreateLogVisit(SysLogVisit logVisit)
+    public async Task<bool> CreateSmsLog(SysSmsLog log)
     {
-        return await AddAsync(logVisit);
+        return await AddAsync(log);
     }
 
     /// <summary>
-    /// 批量删除系统访问日志
+    /// 批量删除短信日志
     /// </summary>
-    /// <param name="logIds"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteLogVisitByIds(long[] logIds)
+    public async Task<bool> DeleteSmsLogByIds(long[] ids)
     {
-        return await RemoveAsync(logIds);
+        return await RemoveAsync(ids);
     }
 
     /// <summary>
-    /// 清空系统访问日志
+    /// 清空短信日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> CleanLogVisit()
+    public async Task<bool> CleanSmsLog()
     {
         return await CleanAsync();
     }
 
     /// <summary>
-    /// 查询系统系统访问日志(根据访问Id)
+    /// 查询系统短信日志(根据Id)
     /// </summary>
-    /// <param name="visitId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<SysLogVisit> GetLogVisitById(long visitId)
+    public async Task<SysSmsLog> GetSmsLogById(long id)
     {
-        var key = $"GetLogVisitById_{visitId}";
-        if (_appCacheService.Get(key) is SysLogVisit sysLogVisit) return sysLogVisit;
-
-        sysLogVisit = await FindAsync(d => d.BaseId == visitId);
-        _ = _appCacheService.SetWithMinutes(key, sysLogVisit, 30);
-
-        return sysLogVisit;
+        return await FindAsync(d => d.BaseId == id);
     }
 
     /// <summary>
-    /// 查询系统系统访问日志列表
+    /// 查询系统短信日志列表
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysLogVisit>> GetLogVisitList(SysLogVisitWDto whereDto)
+    public async Task<List<SysSmsLog>> GetSmsLogList(SysSmsLogWDto whereDto)
     {
         // 时间为空，默认查询当天
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        Expressionable<SysLogVisit> whereExpression = Expressionable.Create<SysLogVisit>();
+        Expressionable<SysSmsLog> whereExpression = Expressionable.Create<SysSmsLog>();
         _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.IsSend != null, u => u.IsSend == whereDto.IsSend);
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryAsync(whereExpression.ToExpression(), o => o.CreatedTime, false);
     }
 
     /// <summary>
-    /// 查询系统系统访问日志列表(根据分页条件)
+    /// 查询系统短信日志列表(根据分页条件)
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysLogVisit>> GetLogVisitPageList(PageWhereDto<SysLogVisitWDto> pageWhere)
+    public async Task<PageDataDto<SysSmsLog>> GetSmsLogPageList(PageWhereDto<SysSmsLogWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
@@ -110,8 +102,10 @@ public class SysLogVisitService(IAppCacheService appCacheService) : BaseService<
         whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
         whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        Expressionable<SysLogVisit> whereExpression = Expressionable.Create<SysLogVisit>();
+        Expressionable<SysSmsLog> whereExpression = Expressionable.Create<SysSmsLog>();
         _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
+        _ = whereExpression.AndIF(whereDto.IsSend != null, u => u.IsSend == whereDto.IsSend);
+        _ = whereExpression.AndIF(whereDto.IsSuccess != null, u => u.IsSuccess == whereDto.IsSuccess);
 
         return await QueryPageAsync(whereExpression.ToExpression(), pageWhere.Page, o => o.CreatedTime,
             pageWhere.IsAsc);

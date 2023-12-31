@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysLogLoginService
+// FileName:SysLoginLogService
 // Guid:20f98d51-1827-4403-9021-b4fe7953a683
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -25,34 +25,34 @@ namespace XiHan.Services.Syses.Logging.Logic;
 /// <summary>
 /// 系统登陆日志服务
 /// </summary>
-[AppService(ServiceType = typeof(ISysLogLoginService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
-public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
+[AppService(ServiceType = typeof(ISysLoginLogService), ServiceLifetime = ServiceLifeTimeEnum.Transient)]
+public class SysLoginLogService : BaseService<SysLoginLog>, ISysLoginLogService
 {
     /// <summary>
     /// 新增系统登陆日志
     /// </summary>
-    /// <param name="logLogin"></param>
+    /// <param name="log"></param>
     /// <returns></returns>
-    public async Task CreateLogLogin(SysLogLogin logLogin)
+    public async Task CreateLoginLog(SysLoginLog log)
     {
-        _ = await AddAsync(logLogin);
+        _ = await AddAsync(log);
     }
 
     /// <summary>
     /// 批量删除系统登陆日志
     /// </summary>
-    /// <param name="logIds"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    public async Task<bool> DeleteLogLoginByIds(long[] logIds)
+    public async Task<bool> DeleteLoginLogByIds(long[] ids)
     {
-        return await RemoveAsync(logIds);
+        return await RemoveAsync(ids);
     }
 
     /// <summary>
     /// 清空系统登陆日志
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> CleanLogLogin()
+    public async Task<bool> CleanLoginLog()
     {
         return await CleanAsync();
     }
@@ -60,11 +60,11 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// <summary>
     /// 查询系统登陆日志(根据Id)
     /// </summary>
-    /// <param name="logId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<SysLogLogin> GetLogLoginById(long logId)
+    public async Task<SysLoginLog> GetLoginLogById(long id)
     {
-        return await FindAsync(logId);
+        return await FindAsync(id);
     }
 
     /// <summary>
@@ -72,12 +72,13 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// </summary>
     /// <param name="whereDto"></param>
     /// <returns></returns>
-    public async Task<List<SysLogLogin>> GetLogLoginList(SysLogLoginWDto whereDto)
+    public async Task<List<SysLoginLog>> GetLoginLogList(SysLoginLogWDto whereDto)
     {
-        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
-        whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
+        // 时间为空，默认查询当天
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
+        whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        Expressionable<SysLogLogin> whereExpression = Expressionable.Create<SysLogLogin>();
+        Expressionable<SysLoginLog> whereExpression = Expressionable.Create<SysLoginLog>();
         _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
         _ = whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
         _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));
@@ -92,14 +93,15 @@ public class SysLogLoginService : BaseService<SysLogLogin>, ISysLogLoginService
     /// </summary>
     /// <param name="pageWhere"></param>
     /// <returns></returns>
-    public async Task<PageDataDto<SysLogLogin>> GetLogLoginPageList(PageWhereDto<SysLogLoginWDto> pageWhere)
+    public async Task<PageDataDto<SysLoginLog>> GetLoginLogPageList(PageWhereDto<SysLoginLogWDto> pageWhere)
     {
         var whereDto = pageWhere.Where;
 
-        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime(-1);
-        whereDto.EndTime ??= whereDto.EndTime.GetBeginTime(1);
+        // 时间为空，默认查询当天
+        whereDto.BeginTime ??= whereDto.BeginTime.GetBeginTime().GetDayMinDate();
+        whereDto.EndTime ??= whereDto.BeginTime.Value.AddDays(1);
 
-        Expressionable<SysLogLogin> whereExpression = Expressionable.Create<SysLogLogin>();
+        Expressionable<SysLoginLog> whereExpression = Expressionable.Create<SysLoginLog>();
         _ = whereExpression.And(l => l.CreatedTime >= whereDto.BeginTime && l.CreatedTime < whereDto.EndTime);
         _ = whereExpression.AndIF(whereDto.Ip.IsNotEmptyOrNull(), l => l.Ip!.Contains(whereDto.Ip!));
         _ = whereExpression.AndIF(whereDto.Account.IsNotEmptyOrNull(), l => l.Account!.Contains(whereDto.Account!));

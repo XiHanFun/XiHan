@@ -81,7 +81,7 @@ public class SysBotController(ISysBotService sysBotService) : BaseApiController
     /// </summary>
     /// <param name="botId"></param>
     /// <returns></returns>
-    [HttpPost("Get/ById")]
+    [HttpPost("GetById")]
     [AppLog(Module = "系统机器人", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysBotById([FromBody] long botId)
     {

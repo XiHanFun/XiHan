@@ -41,5 +41,5 @@ public abstract class BaseCreateEntity : BaseIdEntity
     /// <remarks>修改不会有此字段</remarks>
     [SplitField]
     [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnDescription = "新增时间")]
-    public virtual DateTime CreatedTime { get; private set; } = DateTime.Now;
+    public virtual DateTime CreatedTime { get; set; } = DateTime.Now;
 }

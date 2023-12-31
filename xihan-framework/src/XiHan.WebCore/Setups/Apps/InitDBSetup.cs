@@ -72,7 +72,7 @@ public static class InitDbSetup
             var dbEntities = ReflectionHelper.GetContainsAttributeSubClasses<BaseIdEntity, SugarTable>().ToArray();
             if (dbEntities.Length == 0) return;
             // 支持分表，官方文档 https://www.donet5.com/Home/Doc?typeId=1201
-            client.CodeFirst.SetStringDefaultLength(256).SplitTables().InitTables(dbEntities);
+            client.CodeFirst.SetStringDefaultLength(512).InitTables(dbEntities);
             "数据表创建成功！".WriteLineSuccess();
 
             "数据库初始化已完成！".WriteLineSuccess();

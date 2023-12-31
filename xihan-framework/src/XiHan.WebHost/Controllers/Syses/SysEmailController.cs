@@ -81,7 +81,7 @@ public class SysEmailController(ISysEmailService sysEmailService) : BaseApiContr
     /// </summary>
     /// <param name="emailId"></param>
     /// <returns></returns>
-    [HttpPost("Get/ById")]
+    [HttpPost("GetById")]
     [AppLog(Module = "系统邮件", BusinessType = BusinessTypeEnum.Get)]
     public async Task<ApiResult> GetSysEmailById([FromBody] long emailId)
     {
