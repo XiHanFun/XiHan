@@ -35,7 +35,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
 {
     private readonly string _url = dingTalkConnection.WebHookUrl + "?access_token=" + dingTalkConnection.AccessToken;
     private readonly string? _secret = dingTalkConnection.Secret;
-    private readonly string? _keyWord = dingTalkConnection.KeyWord;
+    private readonly string? _keyWord = dingTalkConnection.KeyWord == null ? null : dingTalkConnection.KeyWord + "\n";
 
     /// <summary>
     /// 发送文本消息
@@ -46,7 +46,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     public async Task<ApiResult> TextMessage(DingTalkText dingTalkText, DingTalkAt? dingTalkAt)
     {
         var msgType = DingTalkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        dingTalkText.Content = _keyWord + "\n" + dingTalkText.Content;
+        dingTalkText.Content = _keyWord + dingTalkText.Content;
         var result = await Send(new { msgtype = msgType, text = dingTalkText, at = dingTalkAt });
         return result;
     }
@@ -58,7 +58,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     public async Task<ApiResult> LinkMessage(DingTalkLink dingTalkLink)
     {
         var msgType = DingTalkMsgTypeEnum.Link.GetEnumDescriptionByKey();
-        dingTalkLink.Title = _keyWord + "\n" + dingTalkLink.Title;
+        dingTalkLink.Title = _keyWord + dingTalkLink.Title;
         var result = await Send(new { msgtype = msgType, link = dingTalkLink });
         return result;
     }
@@ -71,7 +71,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     public async Task<ApiResult> MarkdownMessage(DingTalkMarkdown dingTalkMarkdown, DingTalkAt? dingTalkAt)
     {
         var msgType = DingTalkMsgTypeEnum.Markdown.GetEnumDescriptionByKey();
-        dingTalkMarkdown.Title = _keyWord + "\n" + dingTalkMarkdown.Title;
+        dingTalkMarkdown.Title = _keyWord + dingTalkMarkdown.Title;
         var result = await Send(new { msgtype = msgType, markdown = dingTalkMarkdown, at = dingTalkAt });
         return result;
     }
@@ -84,7 +84,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     public async Task<ApiResult> ActionCardMessage(DingTalkActionCard dingTalkActionCard)
     {
         var msgType = DingTalkMsgTypeEnum.ActionCard.GetEnumDescriptionByKey();
-        dingTalkActionCard.Title = _keyWord + "\n" + dingTalkActionCard.Title;
+        dingTalkActionCard.Title = _keyWord + dingTalkActionCard.Title;
         dingTalkActionCard.Btns?.ForEach(btn => btn.Title = _keyWord + btn.Title);
         var result = await Send(new { msgtype = msgType, actionCard = dingTalkActionCard });
         return result;
@@ -97,7 +97,7 @@ public class DingTalkBot(DingTalkConnection dingTalkConnection)
     public async Task<ApiResult> FeedCardMessage(DingTalkFeedCard dingTalkFeedCard)
     {
         var msgType = DingTalkMsgTypeEnum.FeedCard.GetEnumDescriptionByKey();
-        dingTalkFeedCard.Links?.ForEach(link => link.Title = _keyWord + "\n" + link.Title);
+        dingTalkFeedCard.Links?.ForEach(link => link.Title = _keyWord + link.Title);
         var result = await Send(new { msgtype = msgType, feedCard = dingTalkFeedCard });
         return result;
     }

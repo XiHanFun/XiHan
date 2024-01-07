@@ -35,7 +35,7 @@ public class LarkBot(LarkConnection larkConnection)
 {
     private readonly string _url = larkConnection.WebHookUrl + "/" + larkConnection.AccessToken;
     private readonly string? _secret = larkConnection.Secret;
-    private readonly string? _keyWord = larkConnection.KeyWord;
+    private readonly string? _keyWord = larkConnection.KeyWord == null ? null : larkConnection.KeyWord + "\n";
 
     /// <summary>
     /// 发送文本消息
@@ -45,7 +45,7 @@ public class LarkBot(LarkConnection larkConnection)
     public async Task<ApiResult> TextMessage(LarkText larkText)
     {
         var msgType = LarkMsgTypeEnum.Text.GetEnumDescriptionByKey();
-        larkText.Text = _keyWord + "\n" + larkText.Text;
+        larkText.Text = _keyWord + larkText.Text;
         var result = await Send(new { msg_type = msgType, content = larkText });
         return result;
     }
@@ -91,10 +91,10 @@ public class LarkBot(LarkConnection larkConnection)
             }
             objTList.Add(list);
         }
-        larkPost.Title = _keyWord + "\n" + larkPost.Title;
+        larkPost.Title = _keyWord + larkPost.Title;
         var zhCn = new { title = larkPost.Title, content = objTList };
         // 设置语言
-        var post = new { zh_cn=zhCn };
+        var post = new { zh_cn = zhCn };
         var postContent = new { post };
         var result = await Send(new { msg_type = msgType, content = postContent });
         return result;
@@ -118,7 +118,7 @@ public class LarkBot(LarkConnection larkConnection)
     public async Task<ApiResult> InterActiveMessage(LarkInterActive larkInterActive)
     {
         var msgType = LarkMsgTypeEnum.InterActive.GetEnumDescriptionByKey();
-        larkInterActive.Header.Title.Content = _keyWord + "\n" + larkInterActive.Header.Title.Content;
+        larkInterActive.Header.Title.Content = _keyWord + larkInterActive.Header.Title.Content;
         var result = await Send(new { msg_type = msgType, card = larkInterActive });
         return result;
     }
@@ -165,6 +165,5 @@ public class LarkBot(LarkConnection larkConnection)
         var resultInfos = typeof(LarkResultErrCodeEnum).GetEnumInfos();
         var info = resultInfos.FirstOrDefault(e => e.Value == result.Code);
         return ApiResult.BadRequest("发送失败；" + info?.Label);
-
     }
 }
