@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestVerificationCode
+// FileName:CaptchaTest
 // Guid:e13c449a-85b1-42b3-89db-1291bb7d6779
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,17 +15,17 @@
 using System.Diagnostics;
 using XiHan.Utils.Verifications;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
-/// 测试生成验证码
+/// 验证码测试
 /// </summary>
-public static class TestVerificationCode
+public static class CaptchaTest
 {
     /// <summary>
     /// 生成验证码
     /// </summary>
-    public static void RunVerificationCode()
+    public static void Run()
     {
         Stopwatch stopwatch = new();
         while (true)

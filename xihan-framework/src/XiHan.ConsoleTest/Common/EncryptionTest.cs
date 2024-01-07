@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestEncryption
+// FileName:EncryptionTest
 // Guid:3bf38913-bf49-4796-aa60-a4f18646a898
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 
 using XiHan.Utils.Encryptions;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
-/// 测试加密
+/// 加密测试
 /// </summary>
-public static class TestEncryption
+public static class EncryptionTest
 {
     /// <summary>
     /// Des

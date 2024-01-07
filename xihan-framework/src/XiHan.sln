@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Main", "5.Main", "{FDE1B7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Test", "6.Test", "{A52DEF4B-2754-4308-8811-761A552E4CB0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Other", "7.Other", "{B784F8FE-8075-4BDF-B380-54FDEBBD5EDB}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Utils", "XiHan.Utils\XiHan.Utils.csproj", "{3977EE38-D759-4BD4-946D-B0942F385BC1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructures", "XiHan.Infrastructures\XiHan.Infrastructures.csproj", "{1B1A5F20-1960-4885-B769-FD391A0E1FF5}"
@@ -37,13 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.WebCore", "XiHan.WebC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.WebHost", "XiHan.WebHost\XiHan.WebHost.csproj", "{4C00412E-4CB4-44D7-B97F-8863CC10538D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test", "XiHan.Test\XiHan.Test.csproj", "{2088B3B6-D253-4DEA-BEBA-B7A019C480C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.ConsoleTest", "XiHan.ConsoleTest\XiHan.ConsoleTest.csproj", "{2088B3B6-D253-4DEA-BEBA-B7A019C480C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{4BF5E23A-AC6A-4F73-9221-74EA0018F872}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EA13005B-46FF-41CE-B3DC-11C69530A11A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Other", "7.Other", "{B784F8FE-8075-4BDF-B380-54FDEBBD5EDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

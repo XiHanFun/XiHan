@@ -32,8 +32,8 @@ public static class AesEncryptionHelper
     // 迭代次数
     private const int Iterations = 10000;
 
-    //分割器
-    private static readonly char[] Separator = [':'];
+    // 分割器
+    private static readonly char Separator = ':';
 
     /// <summary>
     /// 加密方法
@@ -71,7 +71,7 @@ public static class AesEncryptionHelper
         }
 
         // 返回加密结果
-        return $"{Convert.ToBase64String(salt)}:{cipherText}";
+        return $"{Convert.ToBase64String(salt)}{Separator}{cipherText}";
     }
 
     /// <summary>

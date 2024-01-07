@@ -27,7 +27,7 @@
         <PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.0.0" />
         <PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.0.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
-        <PackageReference Include="MiniExcel" Version="1.31.2" />
+        <PackageReference Include="MiniExcel" Version="1.31.3" />
         <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestDiskInformation
+// FileName:DiskInformationTest
 // Guid:0979736c-d1d0-4cb2-ac75-950643d97cb4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -16,12 +16,12 @@ using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
 using XiHan.Utils.HardwareInfos;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
-/// 测试磁盘信息
+/// 磁盘信息测试
 /// </summary>
-public static class TestDiskInformation
+public static class DiskInformationTest
 {
     /// <summary>
     /// 磁盘信息测

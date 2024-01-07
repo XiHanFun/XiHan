@@ -13,16 +13,3 @@
 #endregion <<版权版本注释>>
 
 Console.WriteLine("Hello, World!");
-
-//TestZip.Extract();
-//TestZip.Compress();
-
-//TestEncryption.EncryptionDes();
-//TestEncryption.EncryptionAes();
-//TestEncryption.EncryptionDes();
-//TestEncryption.EncryptionRsa();
-//TestEncryption.EncryptionSha();
-//TestVerificationCode.RunVerificationCode();
-//IdentificationMaterials.Main();
-
-//TestSeo.SeoSiteMap();

@@ -92,7 +92,6 @@ public static class CaptchaHelper
         Random random = new(~unchecked((int)DateTime.Now.Ticks));
         for (var i = 0; i < length; i++)
         {
-            _ = Task.Delay(3);
             _ = result.Append(source[random.Next(0, source.Length)]);
         }
 

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestSeo
+// FileName:SeoTest
 // Guid:e413c111-d3fe-4f40-8bf5-629382dae8b6
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 
 using XiHan.WebCore.Common.Seo;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
-/// TestSeo
+/// SeoTest
 /// </summary>
-public static class TestSeo
+public static class SeoTest
 {
     /// <summary>
     /// 生成 SiteMap

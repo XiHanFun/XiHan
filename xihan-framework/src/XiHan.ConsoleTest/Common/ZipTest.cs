@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestZip
+// FileName:ZipTest
 // Guid:aaac17c3-43c3-4438-a1d4-9e4c2cfcce6d
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 
 using XiHan.Utils.Files;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
-/// TestZip
+/// ZipTest
 /// </summary>
-public static class TestZip
+public static class ZipTest
 {
     public static void Extract()
     {

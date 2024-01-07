@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:TestIpAddress
+// FileName:IpAddressTest
 // Guid:21d6fa55-a9df-4ae0-acf5-940d4c82c2da
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -14,12 +14,12 @@
 
 using System.Net;
 
-namespace XiHan.Test.Common;
+namespace XiHan.ConsoleTest.Common;
 
 /// <summary>
 /// TestIpAddress
 /// </summary>
-public static class TestIpAddress
+public static class IpAddressTest
 {
     /// <summary>
     /// 转换

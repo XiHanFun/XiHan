@@ -16,7 +16,7 @@ using System.Text;
 using XiHan.Utils.Extensions;
 using XiHan.Utils.Files;
 
-namespace XiHan.Test.CodeGenerator.Copyrights;
+namespace XiHan.ConsoleTest.CodeGenerator.Copyrights;
 
 /// <summary>
 /// 生成软件著作权鉴别材料
