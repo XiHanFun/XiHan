@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  xihan.webapi:
+    image: ${DOCKER_REGISTRY-}XiHanCoreCore
+    build:
+      context: .
+      dockerfile: XiHanCoreCore.WebHost/Dockerfile
+    ports:
+      - "9708"
+

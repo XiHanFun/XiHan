@@ -35,13 +35,13 @@
 
 - [x] 三种日志记录，异常/请求响应操作/登录等；
 
-- [x] 搭配全套前端项目：
+- [x] 搭配全套项目：
 
-  - 后端：XiHan.Framework；
+  - 后端：XiHanCore-Backend；
 
-  - 前端：XiHan.Display；
+  - 前端：XiHanCore-Frontend；
 
-  - 文档：XiHan.Docs；
+  - 文档：XiHanCore-Docs；
 
 - [x] 统一集成授权鉴权；
 
@@ -94,7 +94,7 @@
 - [ ] 支持QQ、微信、支付宝、Github、Gitlab、Gitee三方登录；
 - [ ] 新增 Redis 消息队列；
 - [ ] 新增 RabbitMQ 消息队列；
-- [ ] 新增 EventBus 事件总线；
+- [x] 新增 EventBus 事件总线；
 - [ ] 新增 ES 搜索配置；
 
 ### 微服务模块
