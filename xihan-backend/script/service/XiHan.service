@@ -2,8 +2,8 @@
 Description=XiHan
 
 [Service]
-WorkingDirectory=/home/web/xihan.fun/api
-ExecStart=/usr/bin/dotnet /home/web/xihan.fun/api/XiHan.WebHost.dll --urls=http://*:9708 --ip=127.0.0.1
+WorkingDirectory=/home/web/xihan.fun/backend/
+ExecStart=/usr/bin/dotnet /home/web/xihan.fun/backend/XiHan.WebHost.dll --urls="http//*:9708" --ip="127.0.0.1"
 Restart=always
 RestartSec=10
 KillSignal=SIGINT
@@ -11,6 +11,8 @@ SyslogIdentifier=XiHan
 User=root
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=DOTNET_ROOT=/usr/share/dotnet/dotnet
 
 [Install]
 WantedBy=multi-user.target
+
