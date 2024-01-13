@@ -37,11 +37,11 @@
 
 - [x] 搭配全套项目：
 
-  - 后端：XiHanCore-Backend；
+  - 后端：XiHan-Backend；
 
-  - 前端：XiHanCore-Frontend；
+  - 前端：XiHan-Frontend；
 
-  - 文档：XiHanCore-Docs；
+  - 文档：XiHan-Docs；
 
 - [x] 统一集成授权鉴权；
 
