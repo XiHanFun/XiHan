@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./XiHanCore/src/
+        working-directory: ./xihan-backend/src/
 
     steps:
       # 拉取代码
@@ -29,10 +29,10 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: 恢复依赖
-        run: dotnet restore XiHanCore.sln
+        run: dotnet restore XiHan.sln
 
       - name: 构建项目
-        run: dotnet build --no-restore XiHanCore.sln
+        run: dotnet build --no-restore XiHan.sln
 
       - name: 测试后端
-        run: dotnet test --no-build --verbosity normal XiHanCore.sln
+        run: dotnet test --no-build --verbosity normal XiHan.sln
