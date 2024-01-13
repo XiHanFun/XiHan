@@ -19,7 +19,7 @@ namespace XiHan.Subscriptions.Bots.WeCom;
 /// <summary>
 /// 结果信息
 /// </summary>
-public class WeComResultInfoDto
+public record WeComResultInfoDto
 {
     /// <summary>
     /// 结果代码

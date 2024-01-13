@@ -19,7 +19,7 @@ namespace XiHan.Subscriptions.Bots.DingTalk;
 /// <summary>
 /// 结果信息
 /// </summary>
-public class DingTalkResultInfoDto
+public record DingTalkResultInfoDto
 {
     /// <summary>
     /// 结果代码
