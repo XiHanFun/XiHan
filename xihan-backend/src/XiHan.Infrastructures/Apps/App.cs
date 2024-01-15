@@ -49,7 +49,7 @@ public static class App
     /// <summary>
     /// 全局请求服务容器
     /// </summary>
-    public static IServiceProvider ServiceProvider => HttpContextCurrent?.RequestServices ?? AppServiceProvider.ServiceProvider;
+    public static IServiceProvider ServiceProvider => AppServiceProvider.ServiceProvider;
 
     /// <summary>
     /// 全局配置构建器
@@ -64,7 +64,7 @@ public static class App
     /// <summary>
     /// 全局请求上下文
     /// </summary>
-    public static HttpContext? HttpContextCurrent => AppHttpContextProvider.HttpContextCurrent;
+    public static HttpContext? HttpContextCurrent => CatchOrDefault(() => ServiceProvider.GetService<IHttpContextAccessor>()?.HttpContext);
 
     /// <summary>
     /// 上传根路径
@@ -98,8 +98,7 @@ public static class App
     /// <returns></returns>
     public static TService GetService<TService>() where TService : class
     {
-        var service = GetService(typeof(TService)) as TService;
-        return service!;
+        return GetService(typeof(TService)) as TService;
     }
 
     /// <summary>
@@ -109,8 +108,7 @@ public static class App
     /// <returns></returns>
     public static object GetService(Type type)
     {
-        var service = ServiceProvider.GetService(type);
-        return service!;
+        return ServiceProvider.GetService(type);
     }
 
     /// <summary>
@@ -120,8 +118,7 @@ public static class App
     /// <returns></returns>
     public static TService GetRequiredService<TService>() where TService : class
     {
-        var service = GetRequiredService(typeof(TService)) as TService;
-        return service!;
+        return GetRequiredService(typeof(TService)) as TService;
     }
 
     /// <summary>
@@ -131,8 +128,26 @@ public static class App
     /// <returns></returns>
     public static object GetRequiredService(Type type)
     {
-        var service = ServiceProvider.GetRequiredService(type);
-        return service;
+        return ServiceProvider.GetRequiredService(type);
+    }
+
+    /// <summary>
+    /// 处理获取对象异常问题
+    /// </summary>
+    /// <typeparam name="T">类型</typeparam>
+    /// <param name="action">获取对象委托</param>
+    /// <param name="defaultValue">默认值</param>
+    /// <returns>T</returns>
+    private static T CatchOrDefault<T>(Func<T> action, T defaultValue = null) where T : class
+    {
+        try
+        {
+            return action();
+        }
+        catch
+        {
+            return defaultValue ?? null;
+        }
     }
 
     /// <summary>
