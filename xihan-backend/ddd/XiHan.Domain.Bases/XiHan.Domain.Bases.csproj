@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XiHan.Common.Utils\XiHan.Common.Utils.csproj" />
+    <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

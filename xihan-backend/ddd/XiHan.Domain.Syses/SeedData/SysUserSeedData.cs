@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Common.Utils.Encryptions;
+using XiHan.Common.Utilities.Encryptions;
 using XiHan.Domain.Bases.Attributes;
 using XiHan.Domain.Bases.Filters;
 using XiHan.Domain.Consts;

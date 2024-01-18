@@ -15,7 +15,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace XiHan.Common.Utils.Encryptions;
+namespace XiHan.Common.Utilities.Encryptions;
 
 /// <summary>
 /// Md5 生成哈希类
