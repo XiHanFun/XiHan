@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseModifyEntity
+// FileName:BaseModifiedEntity
 // Guid:eb3e5c59-302f-4507-92cb-7b1deab96380
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 修改基类，含主键，新增
 /// </summary>
-public abstract class BaseModifyEntity : BaseCreateEntity
+public abstract class BaseModifiedEntity : BaseCreatedEntity
 {
     /// <summary>
     /// 修改用户主键

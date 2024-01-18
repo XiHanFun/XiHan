@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseCreateEntity
+// FileName:BaseCreatedEntity
 // Guid:2907474d-7eef-489a-8ac4-6b3d72a0e5de
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 新增基类，含主键
 /// </summary>
-public abstract class BaseCreateEntity : BaseIdEntity
+public abstract class BaseCreatedEntity : BaseIdEntity
 {
     /// <summary>
     /// 新增用户主键

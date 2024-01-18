@@ -19,7 +19,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 状态基类，含主键，新增，修改，删除，审核
 /// </summary>
-public abstract class BaseStateEntity : BaseAuditEntity
+public abstract class BaseStateEntity : BaseAuditedEntity
 {
     /// <summary>
     /// 状态项

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseDeleteEntity
+// FileName:BaseDeletedEntity
 // Guid:a6e08e1f-8ebe-4421-9a78-bb21efda05cf
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -20,7 +20,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 删除基类，含主键，新增，修改
 /// </summary>
-public abstract class BaseDeleteEntity : BaseModifyEntity, ISoftDeleteFilter
+public abstract class BaseDeletedEntity : BaseModifiedEntity, ISoftDeletedFilter
 {
     /// <summary>
     /// 是否已删除

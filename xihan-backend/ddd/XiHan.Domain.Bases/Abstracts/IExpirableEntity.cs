@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IExpirable
+// FileName:IExpirableEntity
 // Guid:178047f6-67c7-4bb9-871c-faa20bf4cd46
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,17 +15,17 @@
 namespace XiHan.Domain.Bases.Abstracts;
 
 /// <summary>
-/// 定义可过期性，包含生效时间和过期时间
+/// 通用过期时间接口
 /// </summary>
-public interface IExpirable
+public interface IExpirableEntity
 {
     /// <summary>
-    /// 获取或设置生效时间
+    /// 开始时间
     /// </summary>
     DateTime? BeginTime { get; set; }
 
     /// <summary>
-    /// 获取或设置过期时间
+    /// 结束时间
     /// </summary>
     DateTime? EndTime { get; set; }
 }

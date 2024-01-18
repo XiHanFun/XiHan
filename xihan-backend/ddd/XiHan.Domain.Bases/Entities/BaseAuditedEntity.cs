@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseAuditEntity
+// FileName:BaseAuditedEntity
 // Guid:515de7d1-a2fa-4d72-8389-d427403ec6f0
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 审核基类，含主键，新增，修改，删除
 /// </summary>
-public abstract class BaseAuditEntity : BaseDeleteEntity
+public abstract class BaseAuditedEntity : BaseDeletedEntity
 {
     /// <summary>
     /// 审核用户主键

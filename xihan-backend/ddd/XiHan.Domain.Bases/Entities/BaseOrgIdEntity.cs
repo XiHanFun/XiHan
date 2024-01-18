@@ -3,24 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ITenantIdFilter
-// Guid:db0f9094-3a45-48c5-a093-226ef316dfa2
+// FileName:BaseOrgIdEntity
+// Guid:6cac8147-babc-4326-a85b-eaf0fdddc6a9
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023-08-16 下午 05:31:31
+// CreateTime:2023-08-16 下午 05:29:13
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Filters;
+using XiHan.Domain.Bases.Abstracts;
+
+namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 租户接口过滤器
+/// 机构基类
 /// </summary>
-public interface ITenantIdFilter
+public abstract class BaseOrgIdEntity : IOrgIdEntity<long>
 {
     /// <summary>
-    /// 租户标识
+    /// 机构标识
     /// </summary>
-    long? TenantId { get; set; }
+    public virtual long OrgId { get; set; }
 }

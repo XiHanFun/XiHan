@@ -3,26 +3,28 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseOrgEntity
-// Guid:6cac8147-babc-4326-a85b-eaf0fdddc6a9
+// FileName:BaseTenantIdEntity
+// Guid:806ff1b8-b9d1-4ff5-b212-f42c7fdaf23a
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023-08-16 下午 05:29:13
+// CreateTime:2023-08-16 下午 05:29:43
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Domain.Bases.Filters;
+using SqlSugar;
+using XiHan.Domain.Bases.Abstracts;
 
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 机构部门实体基类
+/// 租户实体基类
 /// </summary>
-public abstract class BaseOrgEntity : BaseEntity, IOrgIdFilter
+public class BaseTenantIdEntity : ITenantIdEntity<long>
 {
     /// <summary>
-    /// 机构部门标识
+    /// 租户标识
     /// </summary>
-    public virtual long? OrgId { get; set; }
+    [SugarColumn(ColumnDescription = "租户标识", IsOnlyIgnoreUpdate = true)]
+    public virtual long TenantId { get; set; }
 }
