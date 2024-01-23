@@ -2,7 +2,7 @@
 
 ![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
- 一款快速，轻量，高效，用心的开发框架和新型去中心化全场景应用软件。 基于 DotNet 和 Vue 构建。
+  一款快速、轻量、高效、用心的开发框架。 基于 DotNet 和 Vue 构建。
 
 ### 高效快速 返哺开源 用心创作 探索未知
 
@@ -127,59 +127,9 @@
 - [x] 限流控制；
 - [ ] 三方登录；
 
-### 博文模块
+### 其他功能模块
 
-- [ ] 文章管理（带加密）、分类（带加密）、标签、历史版本、收藏、统计；
-- [ ] 开源创作（类似git功能）、评论、点赞；
-- [ ] 无障碍阅读；
-- [ ] 无感导入导出其他平台文章；
-
-### 相册模块
-
-- [ ] 照片管理；
-- [ ] 照片信息获取；
-- [ ] 照片轨迹；
-
-### 音乐模块
-
-- [ ] 音乐管理；
-- [ ] 热歌推荐；
-
-### 视频模块
-
-- [ ] 离线下载授权平台视频；
-- [ ] 视频分类；
-- [ ] 视频弹幕；
-
-### 聊天模块
-
-- [ ] 在线聊天；
-
-### 寻他模块
-
-- [ ] 友链申请、状态检测；
-
-- [ ] 公共友链世界、内容共享、流量共享；
-
-
-### 开源模块
-
-- [ ] 开源代码的项目管理；
-
-### 卡密模块
-
-- [ ] 为开源项目的捐赠版或其他资源自动分发授权；
-- [ ] 支付功能；
-
-### 广告模块
-
-- [ ] 广告管理；
-- [ ] 推送规则；
-
-### 智能互联模块
-
-- [ ] 智能家居互联、控制；
-- [ ] DIY互联；
+- [x] 其他插件；
 
 ## 启动
 
