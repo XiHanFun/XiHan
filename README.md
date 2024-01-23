@@ -18,7 +18,7 @@
 
 ## 所用框架
 
-- DotNet7(CSharp)；
+- DotNet8(CSharp)；
 - WebApi；
 
 ### 框架模块
