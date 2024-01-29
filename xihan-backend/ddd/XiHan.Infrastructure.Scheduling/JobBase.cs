@@ -75,33 +75,33 @@ public class JobBase
     {
         try
         {
-            var sysJobService = App.GetRequiredService<ISysJobService>();
-            var sysJobLogService = App.GetRequiredService<ISysJobLogService>();
-            var emailPushService = App.GetRequiredService<IEmailPushService>();
+            //var sysJobService = App.GetRequiredService<ISysJobService>();
+            //var sysJobLogService = App.GetRequiredService<ISysJobLogService>();
+            //var emailPushService = App.GetRequiredService<IEmailPushService>();
 
-            // 获取任务详情
-            var jobDetail = context.JobDetail;
-            log.JobId = jobDetail.Key.Name.ParseToLong();
-            log.InvokeTarget = jobDetail.JobType.FullName;
-            log = await sysJobLogService.CreateJobLog(log);
-            var logInfo = $"执行任务【{jobDetail.Key.Name}|{log.JobName}】，执行结果：{log.Message}";
+            //// 获取任务详情
+            //var jobDetail = context.JobDetail;
+            //log.JobId = jobDetail.Key.Name.ParseToLong();
+            //log.InvokeTarget = jobDetail.JobType.FullName;
+            //log = await sysJobLogService.CreateJobLog(log);
+            //var logInfo = $"执行任务【{jobDetail.Key.Name}|{log.JobName}】，执行结果：{log.Message}";
 
-            // 若执行成功，则执行次数加一
-            if (log.IsSuccess)
-            {
-                _ = await sysJobService.UpdateAsync(job => new SysJob()
-                {
-                    RunTimes = job.RunTimes + 1,
-                    //CycleHasRunTimes = job.CycleHasRunTimes + 1,
-                    LastRunTime = DateTime.Now
-                }, f => f.BaseId == jobDetail.Key.Name.ParseToLong());
-                Logger.Information(logInfo);
-            }
-            else
-            {
-                Logger.Error(logInfo);
-                // 发送邮件
-            }
+            //// 若执行成功，则执行次数加一
+            //if (log.IsSuccess)
+            //{
+            //    _ = await sysJobService.UpdateAsync(job => new SysJob()
+            //    {
+            //        RunTimes = job.RunTimes + 1,
+            //        //CycleHasRunTimes = job.CycleHasRunTimes + 1,
+            //        LastRunTime = DateTime.Now
+            //    }, f => f.BaseId == jobDetail.Key.Name.ParseToLong());
+            //    Logger.Information(logInfo);
+            //}
+            //else
+            //{
+            //    Logger.Error(logInfo);
+            //    // 发送邮件
+            //}
         }
         catch (Exception ex)
         {
