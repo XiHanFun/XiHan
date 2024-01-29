@@ -15,6 +15,7 @@
 using Quartz;
 using Serilog;
 using System.Diagnostics;
+using XiHan.Common.Utilities.Extensions;
 using XiHan.Domain.Syses;
 
 namespace XiHan.Infrastructure.Scheduling;

@@ -130,7 +130,7 @@ public class ExpressionParser<T>
     /// <param name="conditions"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private Expression ParseBetween(SelectConditionDto conditions)
+    private BinaryExpression ParseBetween(SelectConditionDto conditions)
     {
         Expression key = Expression.Property(Parameter, conditions.Field);
         var valueArr = conditions.Value.Split(',');
@@ -141,17 +141,17 @@ public class ExpressionParser<T>
 
         if (double.TryParse(valueArr[0], out double v1) && double.TryParse(valueArr[1], out double v2))
         {
-            Expression startvalue = ToTuple(v1, typeof(double));
+            Expression startvalue = ExpressionParser<T>.ToTuple(v1, typeof(double));
             Expression start = Expression.GreaterThanOrEqual(key, Expression.Convert(startvalue, key.Type));
-            Expression endvalue = ToTuple(v2, typeof(double));
+            Expression endvalue = ExpressionParser<T>.ToTuple(v2, typeof(double));
             Expression end = Expression.LessThanOrEqual(key, Expression.Convert(endvalue, key.Type));
             return Expression.AndAlso(start, end);
         }
         else if (DateTime.TryParse(valueArr[0], out DateTime v3) && DateTime.TryParse(valueArr[1], out DateTime v4))
         {
-            Expression startvalue = ToTuple(v3, typeof(DateTime));
+            Expression startvalue = ExpressionParser<T>.ToTuple(v3, typeof(DateTime));
             Expression start = Expression.GreaterThanOrEqual(key, Expression.Convert(startvalue, key.Type));
-            Expression endvalue = ToTuple(v4, typeof(DateTime));
+            Expression endvalue = ExpressionParser<T>.ToTuple(v4, typeof(DateTime));
             Expression end = Expression.LessThanOrEqual(key, Expression.Convert(endvalue, key.Type));
             return Expression.AndAlso(start, end);
         }
@@ -174,7 +174,7 @@ public class ExpressionParser<T>
         Expression expression = Expression.Constant(false, typeof(bool));
         foreach (var itemVal in valueArr)
         {
-            Expression value = ToTuple(itemVal, typeof(string));
+            Expression value = ExpressionParser<T>.ToTuple(itemVal, typeof(string));
             Expression right;
             if (isEqual)
                 right = Expression.Equal(key, Expression.Convert(value, key.Type));
@@ -191,7 +191,7 @@ public class ExpressionParser<T>
     /// <param name="value"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    private Expression ToTuple(object value, Type type)
+    private static UnaryExpression ToTuple(object value, Type type)
     {
         var tuple = Tuple.Create(value);
         return Expression.Convert(Expression.Property(Expression.Constant(tuple), nameof(tuple.Item1)), type);
