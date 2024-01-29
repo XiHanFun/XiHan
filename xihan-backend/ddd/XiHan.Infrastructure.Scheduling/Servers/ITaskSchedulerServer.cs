@@ -14,7 +14,7 @@
 
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
-using XiHan.Utils.Exceptions;
+using XiHan.Common.Utilities.Exceptions;
 
 namespace XiHan.Infrastructure.Scheduling.Servers;
 

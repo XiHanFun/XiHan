@@ -15,7 +15,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
-using XiHan.Utils.Exceptions;
+using XiHan.Common.Utilities.Exceptions;
 
 namespace XiHan.Infrastructure.Scheduling;
 

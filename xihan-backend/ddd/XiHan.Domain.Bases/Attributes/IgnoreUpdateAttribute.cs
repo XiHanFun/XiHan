@@ -15,7 +15,7 @@
 namespace XiHan.Domain.Bases.Attributes;
 
 /// <summary>
-/// 忽略更新种子数据特性
+/// 忽略更新特性，用于更新时忽略某些种子数据
 /// </summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public class IgnoreUpdateAttribute : Attribute;

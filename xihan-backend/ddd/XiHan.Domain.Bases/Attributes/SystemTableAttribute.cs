@@ -15,7 +15,7 @@
 namespace XiHan.Domain.Bases.Attributes;
 
 /// <summary>
-/// 系统表特性
+/// 系统表特性，用于标记系统表
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
 public class SystemTableAttribute : Attribute;

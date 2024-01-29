@@ -23,7 +23,7 @@ using System.Reflection;
 using XiHan.Infrastructures.Responses;
 using XiHan.Models.Syses;
 using XiHan.Models.Syses.Enums;
-using XiHan.Utils.Exceptions;
+using XiHan.Common.Utilities.Exceptions;
 
 namespace XiHan.Infrastructure.Scheduling.Servers;
 
