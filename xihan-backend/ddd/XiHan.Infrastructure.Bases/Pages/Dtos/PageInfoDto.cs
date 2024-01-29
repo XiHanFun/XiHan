@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PageDto
+// FileName:PageInfoDto
 // Guid:ac953e11-5c32-44d5-a450-d377ef3a0453
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,14 +12,14 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Bases.Responses.Pages;
+namespace XiHan.Infrastructure.Bases.Pages.Dtos;
 
 /// <summary>
-/// 通用分页实体基类
+/// 通用分页信息基类
 /// </summary>
-public class PageDto
+public class PageInfoDto
 {
-    #region 私有字段
+    #region 默认值
 
     /// <summary>
     /// 默认当前页(防止非安全性传参)

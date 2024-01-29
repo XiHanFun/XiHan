@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PageWhereDto
+// FileName:PageQueryDto
 // Guid:c5a5c87a-3140-4f8a-8ce6-4f953c4c1f61
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,31 +12,32 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Bases.Responses.Pages;
+using XiHan.Infrastructure.Bases.Pages.Dtos;
+
+namespace XiHan.Infrastructure.Bases.Pages;
 
 /// <summary>
-/// 通用分页条件基类(包含条件)
+/// 通用分页查询基类
 /// </summary>
-public class PageWhereDto<TWhere> : PageQueryDto where TWhere : class
+public class PageQueryDto
 {
     /// <summary>
-    /// 查询条件
+    /// 是否查询所有
     /// </summary>
-    public TWhere Where { get; set; } = null!;
-}
-
-/// <summary>
-/// 通用分页条件过期时间基类(包含条件)
-/// </summary>
-public class PageWhereExpirableDto<TWhere> : PageWhereDto<TWhere> where TWhere : class
-{
-    /// <summary>
-    /// 开始时间
-    /// </summary>
-    public DateTime? BeginTime { get; set; }
+    public bool IsQueryAll { get; set; }
 
     /// <summary>
-    /// 结束时间
+    /// 分页信息
     /// </summary>
-    public DateTime? EndTime { get; set; }
+    public PageInfoDto PageInfo { get; set; } = new();
+
+    /// <summary>
+    /// 选择条件集合
+    /// </summary>
+    public List<SelectConditionDto> SelectConditions { get; set; } = [];
+
+    /// <summary>
+    /// 排序条件集合
+    /// </summary>
+    public List<OrderConditionDto> OrderConditions { get; set; } = [];
 }

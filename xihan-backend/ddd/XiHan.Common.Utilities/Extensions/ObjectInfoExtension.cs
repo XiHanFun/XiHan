@@ -119,7 +119,7 @@ public static class ObjectInfoExtension
 
     /// <summary>
     /// 利用反射来获取对象所有属性信息
-    /// </summary>
+    /// </summary>+
     /// <param name="instance">对象</param>
     /// <returns>属性信息</returns>
     public static PropertyInfo[] GetObjectProperties(this object? instance)

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:OrderByDto
+// FileName:OrderConditionDto
 // Guid:3b0d54b8-d305-4c58-b052-071a71f71f84
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,12 +12,14 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Bases.Responses.Pages;
+using XiHan.Infrastructure.Bases.Pages.Enums;
+
+namespace XiHan.Infrastructure.Bases.Pages.Dtos;
 
 /// <summary>
-/// OrderByDto
+/// 通用排序条件
 /// </summary>
-public class OrderByDto
+public class OrderConditionDto
 {
     /// <summary>
     /// 排序字段
@@ -25,7 +27,12 @@ public class OrderByDto
     public string Field { get; set; } = string.Empty;
 
     /// <summary>
-    /// 是否降序
+    /// 排序条件
     /// </summary>
-    public bool IsDescending { get; set; }
+    public OrderConditionEnum OrderCondition { get; set; }
+
+    /// <summary>
+    /// 父级排序字段，按先后次序，层次依次升高
+    /// </summary>
+    public List<string> ParentFields { get; set; } = [];
 }
