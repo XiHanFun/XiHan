@@ -19,7 +19,7 @@ using XiHan.Domain.Bases.Entities;
 namespace XiHan.Domain.Syses;
 
 /// <summary>
-/// 系统邮件配置
+/// 系统邮件配置表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable, SystemTable]

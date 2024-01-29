@@ -1,13 +1,13 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2023 ZhaiFanhua All Rights Reserved.
+// Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SysFileOSS
-// Guid:b19f2f8c-3940-4e6d-b57d-4c63bd8a1759
+// FileName:SysSms
+// Guid:67146d85-d705-41c4-9d5a-b31f63d85de5
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-04-19 上午 03:07:02
+// CreateTime:2024/1/30 0:30:08
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,44 +15,31 @@
 using SqlSugar;
 using XiHan.Domain.Bases.Attributes;
 using XiHan.Domain.Bases.Entities;
-using XiHan.Domain.Syses.Enums;
 
 namespace XiHan.Domain.Syses;
 
 /// <summary>
-/// 系统文件对象存储配置表
+/// 系统短信配置表
 /// </summary>
 /// <remarks>记录新增，修改信息</remarks>
 [SugarTable, SystemTable]
-public class SysFileOss : BaseModifiedEntity
+public class SysSms : BaseModifiedEntity
 {
     /// <summary>
-    /// 存储标题
+    /// 配置标题
     /// </summary>
-    [SugarColumn(Length = 256)]
+    [SugarColumn(Length = 64)]
     public string Title { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 存储类型
-    /// </summary>
-    [SugarColumn]
-    public StoredTypeEnum StoredType { get; set; }
-
-    /// <summary>
-    /// 机密Id
-    /// </summary>
-    [SugarColumn(Length = 128)]
-    public string SecretId { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 机密密匙
-    /// </summary>
-    [SugarColumn(Length = 128)]
-    public string SecretKey { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否可用
     /// </summary>
     [SugarColumn]
     public bool IsEnabled { get; set; }
+
+    /// <summary>
+    /// 配置模板
+    /// </summary>
+    [SugarColumn]
+    public string Template { get; set; } = string.Empty;
 }

@@ -20,7 +20,7 @@ using XiHan.Domain.Syses.Enums;
 namespace XiHan.Domain.Syses;
 
 /// <summary>
-/// 用户三方登录授权表
+/// 系统用户三方登录授权表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
 [SugarTable, SystemTable]

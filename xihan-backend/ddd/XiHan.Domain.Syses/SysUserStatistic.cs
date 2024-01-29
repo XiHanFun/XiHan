@@ -19,7 +19,7 @@ using XiHan.Domain.Bases.Entities;
 namespace XiHan.Domain.Syses;
 
 /// <summary>
-/// 用户统计表
+/// 系统用户统计表
 /// </summary>
 /// <remarks>记录新增信息</remarks>
 [SugarTable, SystemTable]
