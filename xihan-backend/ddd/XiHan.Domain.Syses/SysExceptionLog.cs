@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Domain.Bases.Attributes;
+using XiHan.Common.Shared.Attributes;
 
 namespace XiHan.Domain.Syses;
 

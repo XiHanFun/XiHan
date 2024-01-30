@@ -12,9 +12,9 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Common.Shared.Attributes;
+using XiHan.Common.Shared.Filters;
 using XiHan.Common.Utilities.Encryptions;
-using XiHan.Domain.Bases.Attributes;
-using XiHan.Domain.Bases.Filters;
 using XiHan.Domain.Consts;
 
 namespace XiHan.Domain.Syses.SeedData;
@@ -28,7 +28,7 @@ public class SysUserSeedData : ISeedDataFilter<SysUser>
     /// 种子数据
     /// </summary>
     /// <returns></returns>
-    [IgnoreUpdate]
+    [IgnoreUpdateSeedData]
     public IEnumerable<SysUser> HasData()
     {
         var encryptPassword = Md5HashEncryptionHelper.Encrypt(DesEncryptionHelper.Encrypt(GlobalConst.DefaultPassword));

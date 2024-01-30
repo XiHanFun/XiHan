@@ -342,10 +342,10 @@ public class TaskSchedulerServer(IJobFactory jobFactory) : ITaskSchedulerServer
     {
         if (sysJob.TriggerType != TriggerTypeEnum.Interval) throw new AggregateException($"触发器类型错误或触发条件未通过验证！");
         // 设置开始时间和结束时间
-        sysJob.BeginTime ??= DateTime.Now;
+        sysJob.StartTime ??= DateTime.Now;
         sysJob.EndTime ??= DateTime.MaxValue.AddDays(-1);
         sysJob.IntervalSecond ??= 60;
-        var starRunTime = DateBuilder.NextGivenSecondDate(sysJob.BeginTime, 1);
+        var starRunTime = DateBuilder.NextGivenSecondDate(sysJob.StartTime, 1);
         var endRunTime = DateBuilder.NextGivenSecondDate(sysJob.EndTime, 1);
 
         if (sysJob.EndTime <= DateTime.Now) throw new Exception($"结束时间小于当前时间计划将不会被执行！");
@@ -390,9 +390,9 @@ public class TaskSchedulerServer(IJobFactory jobFactory) : ITaskSchedulerServer
     {
         if (sysJob.TriggerType != TriggerTypeEnum.Cron) throw new AggregateException($"触发器类型错误或触发条件未通过验证！");
         // 设置开始时间和结束时间
-        sysJob.BeginTime ??= DateTime.Now;
+        sysJob.StartTime ??= DateTime.Now;
         sysJob.EndTime ??= DateTime.MaxValue.AddDays(-1);
-        var starRunTime = DateBuilder.NextGivenSecondDate(sysJob.BeginTime, 1);
+        var starRunTime = DateBuilder.NextGivenSecondDate(sysJob.StartTime, 1);
         var endRunTime = DateBuilder.NextGivenSecondDate(sysJob.EndTime, 1);
 
         if (sysJob.Cron == null || !CronExpression.IsValidExpression(sysJob.Cron))

@@ -13,10 +13,10 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
+using XiHan.Common.Shared.Attributes;
+using XiHan.Common.Shared.Enums;
 using XiHan.Domain.Bases.Abstracts;
-using XiHan.Domain.Bases.Attributes;
 using XiHan.Domain.Bases.Entities;
-using XiHan.Domain.Bases.Enums;
 using XiHan.Domain.Syses.Enums;
 
 namespace XiHan.Domain.Syses;
@@ -154,7 +154,7 @@ public class SysJob : BaseDeletedEntity, IExpirableEntity
     /// 开始时间
     /// </summary>
     [SugarColumn(IsNullable = true)]
-    public DateTime? BeginTime { get; set; }
+    public DateTime? StartTime { get; set; }
 
     /// <summary>
     /// 结束时间

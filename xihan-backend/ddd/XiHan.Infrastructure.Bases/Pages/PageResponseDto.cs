@@ -19,32 +19,25 @@ namespace XiHan.Infrastructure.Bases.Pages;
 /// <summary>
 /// 通用分页响应基类
 /// </summary>
-public class PageResponseDto
+/// <remarks>
+/// 构造函数
+/// </remarks>
+public class PageResponseDto(PageInfoDto page, int totalCount)
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public PageResponseDto(PageInfoDto page, int totalCount)
-    {
-        Page = page;
-        TotalCount = totalCount;
-        PageCount = (int)Math.Ceiling((decimal)totalCount / page.PageSize);
-    }
-
     /// <summary>
     /// 分页数据
     /// </summary>
-    public PageInfoDto Page { get; set; }
+    public PageInfoDto Page { get; set; } = page;
 
     /// <summary>
     /// 数据总数
     /// </summary>
-    public int TotalCount { get; set; }
+    public int TotalCount { get; set; } = totalCount;
 
     /// <summary>
     /// 总页数
     /// </summary>
-    public int PageCount { get; set; } = 1;
+    public int PageCount { get; set; } = (int)Math.Ceiling((decimal)totalCount / page.PageSize);
 }
 
 /// <summary>

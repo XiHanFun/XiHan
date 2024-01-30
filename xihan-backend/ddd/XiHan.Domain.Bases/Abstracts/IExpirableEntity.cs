@@ -22,7 +22,7 @@ public interface IExpirableEntity
     /// <summary>
     /// 开始时间
     /// </summary>
-    DateTime? BeginTime { get; set; }
+    DateTime? StartTime { get; set; }
 
     /// <summary>
     /// 结束时间

@@ -12,9 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Domain.Bases.Attributes;
-using XiHan.Domain.Bases.Filters;
-using XiHan.Domain.Syses;
+using XiHan.Common.Shared.Attributes;
+using XiHan.Common.Shared.Filters;
 
 namespace XiHan.Domain.Syses.SeedData;
 
@@ -27,7 +26,7 @@ public class SysConfigSeedData : ISeedDataFilter<SysConfig>
     /// 种子数据
     /// </summary>
     /// <returns></returns>
-    [IgnoreUpdate]
+    [IgnoreUpdateSeedData]
     public IEnumerable<SysConfig> HasData()
     {
         List<SysConfig> result = [];

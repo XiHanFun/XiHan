@@ -55,8 +55,7 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',',
-        bool isAllowsDuplicates = true)
+    public static IEnumerable<string> GetStrEnumerable(this string sourceStr, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         IEnumerable<string> result = sourceStr.Split(sepeater);
         return isAllowsDuplicates ? result : result.Distinct();
@@ -99,8 +98,7 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',',
-        bool isAllowsDuplicates = true)
+    public static string GetDictionaryValueStr(this Dictionary<string, string> sourceDictionary, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         IEnumerable<string> sourceEnumerable = sourceDictionary.Values;
         return sourceEnumerable.GetEnumerableStr(sepeater, isAllowsDuplicates);
@@ -113,8 +111,7 @@ public static class StringExtension
     /// <param name="sepeater">分割器</param>
     /// <param name="isAllowsDuplicates">是否允许重复</param>
     /// <returns></returns>
-    public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',',
-        bool isAllowsDuplicates = true)
+    public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         StringBuilder sb = new();
         if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
@@ -436,8 +433,7 @@ public static class StringExtension
         ];
 
         var newReg = aryReg[0];
-        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase))
-            .Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
+        var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
         strOutput = strOutput.Replace("<", string.Empty).Replace(">", string.Empty).Replace("\r\n", string.Empty);
         return strOutput;
     }

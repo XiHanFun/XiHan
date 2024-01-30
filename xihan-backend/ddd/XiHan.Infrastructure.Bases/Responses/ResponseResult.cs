@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Common.Shared.Enums;
 using XiHan.Common.Utilities.Extensions;
 
 namespace XiHan.Infrastructure.Bases.Responses;

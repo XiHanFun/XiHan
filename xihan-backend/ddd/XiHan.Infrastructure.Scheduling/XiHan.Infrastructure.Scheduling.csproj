@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\XiHan.Domain.Syses\XiHan.Domain.Syses.csproj" />
     <ProjectReference Include="..\XiHan.Infrastructure.Bases\XiHan.Infrastructure.Bases.csproj" />
-    <ProjectReference Include="..\XiHan.Infrastructure.Logging\XiHan.Infrastructure.Logging.csproj" />
   </ItemGroup>
 
 </Project>

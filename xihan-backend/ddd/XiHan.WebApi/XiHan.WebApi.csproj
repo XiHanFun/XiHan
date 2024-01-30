@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,6 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XiHan.AppService.Bases\XiHan.AppService.Bases.csproj" />
+    <ProjectReference Include="..\XiHan.AppService.Syses\XiHan.AppService.Syses.csproj" />
   </ItemGroup>
 
 </Project>

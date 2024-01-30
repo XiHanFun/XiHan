@@ -24,14 +24,7 @@ public static class FormatExtension
 {
     #region FileSize
 
-    private static readonly string[] Suffixes = [
-        "B",
-        "KB",
-        "MB",
-        "GB",
-        "TB",
-        "PB"
-    ];
+    private static readonly string[] Suffixes = ["B", "KB", "MB", "GB", "TB", "PB"];
 
     /// <summary>
     /// 格式化文件大小显示为字符串
@@ -46,7 +39,6 @@ public static class FormatExtension
             var current = Math.Pow(1024, i + 1);
             var temp = bytes / current;
             if (temp < 1) return (bytes / last).ToString("f3") + Suffixes[i];
-
             last = current;
         }
 

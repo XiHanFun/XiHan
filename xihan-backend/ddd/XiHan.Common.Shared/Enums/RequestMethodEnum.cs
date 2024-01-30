@@ -14,10 +14,10 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Domain.Bases.Enums;
+namespace XiHan.Common.Shared.Enums;
 
 /// <summary>
-/// 网络请求方式
+/// 网络请求方式枚举
 /// </summary>
 public enum RequestMethodEnum
 {

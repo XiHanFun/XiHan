@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IgnoreUpdateAttribute
+// FileName:IgnoreUpdateSeedDataAttribute
 // Guid:ff1ef8ec-7cbb-4e43-b21f-976470644504
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,10 +12,10 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Attributes;
+namespace XiHan.Common.Shared.Attributes;
 
 /// <summary>
-/// 忽略更新特性，用于更新时忽略某些种子数据
+/// 忽略更新种子数据特性，用于更新时忽略某些种子数据
 /// </summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public class IgnoreUpdateAttribute : Attribute;
+public class IgnoreUpdateSeedDataAttribute : Attribute;

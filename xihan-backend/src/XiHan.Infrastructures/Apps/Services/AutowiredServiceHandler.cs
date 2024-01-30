@@ -64,8 +64,7 @@ public class AutowiredServiceHandler(IServiceProvider serviceProvider)
             {
                 // 字段赋值
                 setList.AddRange(
-                    from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public |
-                        BindingFlags.NonPublic)
+                    from field in serviceType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     let autowiredAttr = field.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let fieldExp = Expression.Field(obj, field)
@@ -73,8 +72,7 @@ public class AutowiredServiceHandler(IServiceProvider serviceProvider)
                     select Expression.Assign(fieldExp, Expression.Convert(createService, field.FieldType)));
                 // 属性赋值
                 setList.AddRange(
-                    from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public |
-                        BindingFlags.NonPublic)
+                    from property in serviceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     let autowiredAttr = property.GetCustomAttribute<AutowiredServiceAttribute>()
                     where autowiredAttr != null
                     let propExp = Expression.Property(obj, property)

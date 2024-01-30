@@ -15,7 +15,7 @@
 namespace XiHan.Domain.Consts;
 
 /// <summary>
-/// 全局静态常量
+/// 全局常量
 /// </summary>
 public static class GlobalConst
 {

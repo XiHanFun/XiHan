@@ -26,7 +26,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr">打印文本</param>
     /// <param name="frontColor">前置颜色</param>
-    private static void WriteColorLine(string inputStr, ConsoleColor frontColor)
+    private static void WriteColorLine(string? inputStr, ConsoleColor frontColor)
     {
         lock (ObjLock)
         {
@@ -42,7 +42,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineInfo(this string inputStr, ConsoleColor frontColor = ConsoleColor.White)
+    public static void WriteLineInfo(this string? inputStr, ConsoleColor frontColor = ConsoleColor.White)
     {
         WriteColorLine(inputStr, frontColor);
     }
@@ -52,7 +52,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineSuccess(this string inputStr, ConsoleColor frontColor = ConsoleColor.Green)
+    public static void WriteLineSuccess(this string? inputStr, ConsoleColor frontColor = ConsoleColor.Green)
     {
         WriteColorLine(inputStr, frontColor);
     }
@@ -62,7 +62,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineHandle(this string inputStr, ConsoleColor frontColor = ConsoleColor.Cyan)
+    public static void WriteLineHandle(this string? inputStr, ConsoleColor frontColor = ConsoleColor.Cyan)
     {
         WriteColorLine(inputStr, frontColor);
     }
@@ -72,7 +72,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineWarning(this string inputStr, ConsoleColor frontColor = ConsoleColor.Yellow)
+    public static void WriteLineWarning(this string? inputStr, ConsoleColor frontColor = ConsoleColor.Yellow)
     {
         WriteColorLine(inputStr, frontColor);
     }
@@ -82,7 +82,7 @@ public static class ConsoleExtension
     /// </summary>
     /// <param name="inputStr"></param>
     /// <param name="frontColor"></param>
-    public static void WriteLineError(this string inputStr, ConsoleColor frontColor = ConsoleColor.Red)
+    public static void WriteLineError(this string? inputStr, ConsoleColor frontColor = ConsoleColor.Red)
     {
         WriteColorLine(inputStr, frontColor);
     }

@@ -46,10 +46,10 @@ public static class ObjectInfoExtension
     /// <returns>是否包含</returns>
     public static bool IsObjectContainField(this object? instance, string fieldName)
     {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) return false;
+        if (instance == null || string.IsNullOrEmpty(fieldName))
+            return false;
 
-        var foundFieldInfo = instance.GetType()
-            .GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundFieldInfo != null;
     }
 
@@ -61,10 +61,10 @@ public static class ObjectInfoExtension
     /// <returns>字段信息</returns>
     public static FieldInfo GetObjectField(this object? instance, string fieldName)
     {
-        if (instance == null || string.IsNullOrEmpty(fieldName)) throw new NotImplementedException(nameof(fieldName));
+        if (instance == null || string.IsNullOrEmpty(fieldName))
+            throw new NotImplementedException(nameof(fieldName));
 
-        var foundFieldInfo = instance.GetType()
-            .GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundFieldInfo = instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundFieldInfo ?? throw new NotImplementedException(nameof(fieldName));
     }
 
@@ -75,10 +75,10 @@ public static class ObjectInfoExtension
     /// <returns>字段信息</returns>
     public static FieldInfo[] GetObjectFields(this object? instance)
     {
-        if (instance == null) throw new NotImplementedException(nameof(instance));
+        if (instance == null)
+            throw new NotImplementedException(nameof(instance));
 
-        var foundFieldInfos = instance.GetType()
-            .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundFieldInfos = instance.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundFieldInfos ?? throw new NotImplementedException(nameof(foundFieldInfos));
     }
 
@@ -94,10 +94,10 @@ public static class ObjectInfoExtension
     /// <returns>是否包含</returns>
     public static bool IsContainObjectProperty(this object? instance, string propertyName)
     {
-        if (instance == null || string.IsNullOrEmpty(propertyName)) return false;
+        if (instance == null || string.IsNullOrEmpty(propertyName))
+            return false;
 
-        var foundPropertyInfo = instance.GetType().GetProperty(propertyName,
-            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundPropertyInfo != null;
     }
 
@@ -112,8 +112,7 @@ public static class ObjectInfoExtension
         if (instance == null || string.IsNullOrEmpty(propertyName))
             throw new NotImplementedException(nameof(propertyName));
 
-        var foundPropertyInfo = instance.GetType().GetProperty(propertyName,
-            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundPropertyInfo = instance.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundPropertyInfo ?? throw new NotImplementedException(nameof(foundPropertyInfo));
     }
 
@@ -124,10 +123,10 @@ public static class ObjectInfoExtension
     /// <returns>属性信息</returns>
     public static PropertyInfo[] GetObjectProperties(this object? instance)
     {
-        if (instance == null) throw new NotImplementedException(nameof(instance));
+        if (instance == null)
+            throw new NotImplementedException(nameof(instance));
 
-        var foundPropertyInfos = instance.GetType()
-            .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var foundPropertyInfos = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         return foundPropertyInfos ?? throw new NotImplementedException(nameof(foundPropertyInfos));
     }
 

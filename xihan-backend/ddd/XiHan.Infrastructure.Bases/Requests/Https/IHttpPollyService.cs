@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Common.Shared.Enums;
+
 namespace XiHan.Infrastructure.Bases.Requests.Https;
 
 /// <summary>

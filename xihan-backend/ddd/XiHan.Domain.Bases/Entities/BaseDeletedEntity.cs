@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Domain.Bases.Filters;
+using XiHan.Common.Shared.Filters;
 
 namespace XiHan.Domain.Bases.Entities;
 
