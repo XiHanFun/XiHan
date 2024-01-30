@@ -62,14 +62,14 @@ public class SysEmail : BaseModifiedEntity
     public string FromMail { get; set; } = string.Empty;
 
     /// <summary>
-    /// 发自密码
-    /// </summary>
-    [SugarColumn(Length = 64)]
-    public string FromPassword { get; set; } = string.Empty;
-
-    /// <summary>
     /// 发自名称
     /// </summary>
     [SugarColumn(Length = 64)]
     public string FromUserName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 发自密码
+    /// </summary>
+    [SugarColumn(Length = 64)]
+    public string FromPassword { get; set; } = string.Empty;
 }

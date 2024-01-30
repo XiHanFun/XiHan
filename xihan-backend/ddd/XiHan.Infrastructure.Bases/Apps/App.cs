@@ -33,12 +33,12 @@ public static class App
     /// <summary>
     /// 有效程序集
     /// </summary>
-    public static IEnumerable<Assembly> EffectiveAssemblies => ReflectionHelper.GetEffectivePatchAssemblies();
+    public static IEnumerable<Assembly> EffectiveAssemblies => ReflectionHelper.GetXiHanAssemblies();
 
     /// <summary>
     /// 有效程序集类型
     /// </summary>
-    public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetEffectiveTypes();
+    public static IEnumerable<Type> EffectiveTypes => ReflectionHelper.GetXiHanTypes();
 
     /// <summary>
     /// 全局宿主环境

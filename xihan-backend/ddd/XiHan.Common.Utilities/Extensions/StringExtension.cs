@@ -432,7 +432,6 @@ public static class StringExtension
             @"<!--.*\n"
         ];
 
-        var newReg = aryReg[0];
         var strOutput = aryReg.Select(t => new Regex(t, RegexOptions.IgnoreCase)).Aggregate(strHtml, (current, regex) => regex.Replace(current, string.Empty));
         strOutput = strOutput.Replace("<", string.Empty).Replace(">", string.Empty).Replace("\r\n", string.Empty);
         return strOutput;

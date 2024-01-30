@@ -33,12 +33,12 @@ public static class ReflectionHelper
     }
 
     /// <summary>
-    /// 获取符合条件前后缀名称的程序集，默认为开头 XiHan 名，结尾 dll 名
+    /// 获取符合条件前后缀名称的程序集
     /// </summary>
     /// <param name="prefix">前缀名</param>
     /// <param name="suffix">后缀名</param>
     /// <returns></returns>
-    public static IEnumerable<Assembly> GetEffectivePatchAssemblies(string prefix = "XiHan", string suffix = "dll")
+    public static IEnumerable<Assembly> GetEffectivePatchAssemblies(string prefix, string suffix)
     {
         return GetAllAssemblies()
             .Where(assembly => assembly.ManifestModule.Name.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))
@@ -47,15 +47,33 @@ public static class ReflectionHelper
     }
 
     /// <summary>
-    /// 获取符合条件包含名称的程序集，默认为包含 AppService 名
+    /// 获取符合条件包含名称的程序集
     /// </summary>
     /// <param name="contain">包含名</param>
     /// <returns></returns>
-    public static IEnumerable<Assembly> GetEffectiveCenterAssemblies(string contain = "AppService")
+    public static IEnumerable<Assembly> GetEffectiveCenterAssemblies(string contain)
     {
         return GetAllAssemblies()
             .Where(assembly => assembly.ManifestModule.Name.Contains(contain, StringComparison.InvariantCultureIgnoreCase))
             .Distinct();
+    }
+
+    /// <summary>
+    /// 获取曦寒程序集
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<Assembly> GetXiHanAssemblies()
+    {
+        return GetEffectivePatchAssemblies("XiHan", "dll");
+    }
+
+    /// <summary>
+    /// 获取应用服务程序集
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<Assembly> GetAppServiceAssemblies()
+    {
+        return GetEffectiveCenterAssemblies("AppService");
     }
 
     #endregion
@@ -74,12 +92,12 @@ public static class ReflectionHelper
     }
 
     /// <summary>
-    /// 获取符合条件的程序集类，默认为自身应用程序集
+    /// 获取曦寒程序集类
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<Type> GetEffectiveTypes()
+    public static IEnumerable<Type> GetXiHanTypes()
     {
-        return GetEffectivePatchAssemblies()
+        return GetXiHanAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
             .Distinct();
     }
@@ -96,7 +114,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetContainsAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(e => e.CustomAttributes.Any(g => g.AttributeType == typeof(TAttribute)));
     }
 
@@ -108,7 +126,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetContainsAttributeTypes(Attribute attribute)
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(e => e.CustomAttributes.Any(g => g.AttributeType == attribute.GetType()));
     }
 
@@ -124,7 +142,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetFilterAttributeTypes<TAttribute>() where TAttribute : Attribute
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(e => e.CustomAttributes.All(g => g.AttributeType != typeof(TAttribute)));
     }
 
@@ -136,7 +154,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetFilterAttributeTypes(Attribute attribute)
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(e => e.CustomAttributes.All(g => g.AttributeType != attribute.GetType()));
     }
 
@@ -152,7 +170,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClasses<T>() where T : class
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
             .Where(t => typeof(T).IsAssignableFrom(t));
     }
@@ -165,7 +183,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClasses(Type type)
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(t => t is { IsInterface: false, IsAbstract: false, IsClass: true })
             .Where(type.IsAssignableFrom);
     }
@@ -177,7 +195,7 @@ public static class ReflectionHelper
     /// <returns></returns>
     public static IEnumerable<Type> GetSubClassesByGenericInterface(Type interfaceType)
     {
-        return GetEffectiveTypes()
+        return GetXiHanTypes()
             .Where(type => type is { IsClass: true, IsAbstract: false } && type.GetInterfaces()
             .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType))
             .ToList();
@@ -251,8 +269,8 @@ public static class ReflectionHelper
     {
         List<NuGetPackage> nugetPackages = [];
 
-        // 获取当前应用程序的所有程序集（默认获取自身应用）
-        var assemblies = GetEffectivePatchAssemblies();
+        // 获取当前应用程序集
+        var assemblies = GetXiHanAssemblies();
 
         // 查找被引用程序集中的 NuGet 库依赖项
         foreach (var assembly in assemblies)

@@ -39,6 +39,12 @@ public class SysFileOss : BaseModifiedEntity
     public StoredTypeEnum StoredType { get; set; }
 
     /// <summary>
+    /// 本地存储物理路径
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string LocalPath { get; set; } = string.Empty;
+
+    /// <summary>
     /// 机密Id
     /// </summary>
     [SugarColumn(Length = 128)]
@@ -49,6 +55,24 @@ public class SysFileOss : BaseModifiedEntity
     /// </summary>
     [SugarColumn(Length = 128)]
     public string SecretKey { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Bucket
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string Bucket { get; set; } = string.Empty;
+
+    /// <summary>
+    /// EndPoint
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string EndPoint { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 域名
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string Domain { get; set; } = string.Empty;
 
     /// <summary>
     /// 是否可用

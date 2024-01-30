@@ -38,6 +38,30 @@ public class SysSms : BaseModifiedEntity
     public bool IsEnabled { get; set; }
 
     /// <summary>
+    /// Api 地址
+    /// </summary>
+    [SugarColumn]
+    public string ApiUrl { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 平台登录账户或Appkey
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string AccessTokenOrKey { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 平台通讯密钥或Secret
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string Secret { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 短信签名
+    /// </summary>
+    [SugarColumn(Length = 128)]
+    public string Sign { get; set; } = string.Empty;
+
+    /// <summary>
     /// 配置模板
     /// </summary>
     [SugarColumn]
