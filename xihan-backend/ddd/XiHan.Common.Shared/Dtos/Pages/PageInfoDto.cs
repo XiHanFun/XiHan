@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Bases.Pages.Dtos;
+namespace XiHan.Common.Shared.Dtos.Pages;
 
 /// <summary>
 /// 通用分页信息基类

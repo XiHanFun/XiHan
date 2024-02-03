@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using System.Linq.Expressions;
+using XiHan.Common.Shared.Dtos.Pages;
+using XiHan.Common.Shared.Enums.Pages;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Infrastructure.Bases.Pages.Dtos;
-using XiHan.Infrastructure.Bases.Pages.Enums;
 
 namespace XiHan.Infrastructure.Bases.Pages.Expressions;
 

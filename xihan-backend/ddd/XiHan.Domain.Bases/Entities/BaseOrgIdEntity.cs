@@ -19,7 +19,7 @@ namespace XiHan.Domain.Bases.Entities;
 /// <summary>
 /// 机构基类
 /// </summary>
-public abstract class BaseOrgIdEntity : IOrgIdEntity<long>
+public abstract class BaseOrgIdEntity : IBaseOrgIdEntity<long>
 {
     /// <summary>
     /// 机构标识

@@ -26,7 +26,7 @@ namespace XiHan.Domain.Syses;
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
 [SugarTable, SystemTable]
-public class SysJob : BaseDeletedEntity, IExpirableEntity
+public class SysJob : BaseDeletedEntity, IBaseExpirableEntity
 {
     /// <summary>
     /// 任务分组

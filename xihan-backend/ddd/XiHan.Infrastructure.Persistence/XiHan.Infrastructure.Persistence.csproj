@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.140" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XiHan.Common.Shared\XiHan.Common.Shared.csproj" />
+    <ProjectReference Include="..\XiHan.Infrastructure.Bases\XiHan.Infrastructure.Bases.csproj" />
+  </ItemGroup>
+
 </Project>

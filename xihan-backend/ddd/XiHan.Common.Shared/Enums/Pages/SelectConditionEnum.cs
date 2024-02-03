@@ -14,7 +14,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructure.Bases.Pages.Enums;
+namespace XiHan.Common.Shared.Enums.Pages;
 
 /// <summary>
 /// 选择条件枚举

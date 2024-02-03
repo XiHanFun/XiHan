@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Scheduling;
+namespace XiHan.Common.Shared.Attributes;
 
 /// <summary>
 /// JobAttribute

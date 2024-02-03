@@ -3,46 +3,36 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SelectConditionDto
-// Guid:20a53f95-527f-4f4f-80e5-81052263269e
+// FileName:OrderConditionDto
+// Guid:3b0d54b8-d305-4c58-b052-071a71f71f84
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/1/29 21:16:10
+// CreateTime:2024/1/25 11:22:34
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Bases.Pages.Enums;
+using XiHan.Common.Shared.Enums.Pages;
 
-namespace XiHan.Infrastructure.Bases.Pages.Dtos;
+namespace XiHan.Common.Shared.Dtos.Pages;
 
 /// <summary>
-/// 通用选择条件
+/// 通用排序条件
 /// </summary>
-public class SelectConditionDto
+public class OrderConditionDto
 {
     /// <summary>
-    /// 选择字段
+    /// 排序字段
     /// </summary>
     public string Field { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字段值
+    /// 排序条件
     /// </summary>
-    public string Value { get; set; } = string.Empty;
+    public OrderConditionEnum OrderCondition { get; set; }
 
     /// <summary>
-    /// 值类型
-    /// </summary>
-    public string ValueType { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 选择条件
-    /// </summary>
-    public SelectConditionEnum SelectCondition { get; set; }
-
-    /// <summary>
-    /// 父表字段集合，按先后次序，层次依次升高
+    /// 父级排序字段，按先后次序，层次依次升高
     /// </summary>
     public List<string> ParentFields { get; set; } = [];
 }

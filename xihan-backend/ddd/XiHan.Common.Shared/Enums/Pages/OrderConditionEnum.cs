@@ -3,29 +3,39 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IExpirableEntity
-// Guid:178047f6-67c7-4bb9-871c-faa20bf4cd46
+// FileName:OrderConditionEnum
+// Guid:53bfac82-7773-43fe-a3f3-d76baade29fe
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/1/17 8:39:15
+// CreateTime:2024/1/29 21:01:43
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Abstracts;
+using System.ComponentModel;
+
+namespace XiHan.Common.Shared.Enums.Pages;
 
 /// <summary>
-/// 通用过期时间接口
+/// 排序条件枚举
 /// </summary>
-public interface IExpirableEntity
+public enum OrderConditionEnum
 {
     /// <summary>
-    /// 开始时间
+    /// 不排序
     /// </summary>
-    DateTime? StartTime { get; set; }
+    [Description("不排序")]
+    None,
 
     /// <summary>
-    /// 结束时间
+    /// 升序
     /// </summary>
-    DateTime? EndTime { get; set; }
+    [Description("升序")]
+    Asc,
+
+    /// <summary>
+    /// 降序
+    /// </summary>
+    [Description("降序")]
+    Desc
 }
