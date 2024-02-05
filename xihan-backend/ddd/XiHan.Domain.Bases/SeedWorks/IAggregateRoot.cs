@@ -3,29 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseExpirableEntity
-// Guid:178047f6-67c7-4bb9-871c-faa20bf4cd46
+// FileName:IAggregateRoot
+// Guid:d8af89b2-a075-4b85-9a2e-0be172c75155
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/1/17 8:39:15
+// CreateTime:2024/2/5 12:32:05
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Abstracts;
+namespace XiHan.Domain.Bases.SeedWorks;
 
 /// <summary>
-/// 通用过期时间接口
+/// 聚合根接口定义
 /// </summary>
-public interface IBaseExpirableEntity
+public interface IAggregateRoot
 {
-    /// <summary>
-    /// 开始时间
-    /// </summary>
-    DateTime? StartTime { get; set; }
-
-    /// <summary>
-    /// 结束时间
-    /// </summary>
-    DateTime? EndTime { get; set; }
 }

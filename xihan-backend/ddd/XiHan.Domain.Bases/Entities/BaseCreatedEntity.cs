@@ -17,7 +17,7 @@ using SqlSugar;
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 新增基类，含主键
+/// 新增抽象类，含主键
 /// </summary>
 public abstract class BaseCreatedEntity : BaseIdEntity
 {

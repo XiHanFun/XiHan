@@ -12,19 +12,17 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
-using XiHan.Domain.Bases.Abstracts;
+using XiHan.Domain.Bases.Entities.Interfaces;
 
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 主键基类
+/// 主键抽象类
 /// </summary>
-public abstract class BaseIdEntity : IBaseIdEntity<long>
+public abstract class BaseIdEntity : IBaseId<long>
 {
     /// <summary>
     /// 主键标识
     /// </summary>
-    [SugarColumn(IsPrimaryKey = true, IsIdentity = false, ColumnDescription = "主键标识")]
     public virtual long BaseId { get; set; }
 }

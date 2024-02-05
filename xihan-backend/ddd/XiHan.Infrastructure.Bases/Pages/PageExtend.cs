@@ -15,6 +15,7 @@
 using System.Linq.Expressions;
 using XiHan.Common.Shared.Dtos.Pages;
 using XiHan.Common.Shared.Enums.Pages;
+using XiHan.Common.Utilities.Extensions;
 using XiHan.Infrastructure.Bases.Pages.Expressions;
 using XiHan.Infrastructure.Bases.Responses;
 
@@ -139,64 +140,104 @@ public static class PageExtend
     /// <param name="page"></param>
     /// <param name="defaultFirstIndex"></param>
     /// <returns></returns>
-    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, PageInfoDto page, int defaultFirstIndex = 1) where T : class, new()
+    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, PageInfoDto page, int defaultFirstIndex = 1)
+        where T : class, new()
     {
         return query.Skip((page.CurrentIndex - defaultFirstIndex) * page.PageSize).Take(page.PageSize);
     }
 
-    #endregion
-
-    #region 空数据分页结果
+    /// <summary>
+    /// 数据选择分页
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="page"></param>
+    /// <param name="selectConditions"></param>
+    /// <returns></returns>
+    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, PageInfoDto page, IEnumerable<SelectConditionDto> selectConditions)
+        where T : class, new()
+    {
+        return query.ToSelect(selectConditions).ToPage(page);
+    }
 
     /// <summary>
-    /// 空数据分页结果
+    /// 数据排序分页
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="page"></param>
+    /// <param name="orderConditions"></param>
+    /// <returns></returns>
+    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, PageInfoDto page, IEnumerable<OrderConditionDto> orderConditions)
+        where T : class, new()
+    {
+        return query.ToOrder(orderConditions).ToPage(page);
+    }
+
+    /// <summary>
+    /// 数据查询分页
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="page"></param>
+    /// <param name="selectConditions"></param>
+    /// <param name="orderConditions"></param>
+    /// <returns></returns>
+    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, PageInfoDto page, IEnumerable<SelectConditionDto> selectConditions, IEnumerable<OrderConditionDto> orderConditions)
+        where T : class, new()
+    {
+        return query.ToQuery(selectConditions, orderConditions).ToPage(page);
+    }
+
+    #endregion
+
+    #region 分页信息
+
+    /// <summary>
+    /// 响应分页信息
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="query"></param>
     /// <param name="page"></param>
     /// <returns></returns>
-    public static PageResponseDto ToPageResponse<T>(this IQueryable<T> query, PageInfoDto page) where T : class, new()
+    public static PageResponseDto ToPageResponse<T>(this IQueryable<T> query, PageInfoDto page)
+        where T : class, new()
     {
-        return new PageResponseDto(page, query.Count());
+        var datas = query.ToPage(page).ToList();
+        return new PageResponseDto(page, datas.Count);
     }
 
-    #endregion
-
-    #region 有数据分页结果
-
     /// <summary>
-    /// 有数据分页结果
+    /// 响应分页信息和数据结果
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="query"></param>
     /// <param name="page"></param>
-    /// <param name="defaultFirstIndex"></param>
     /// <returns></returns>
-    public static PageResponseDataDto<T> ToPageResponseData<T>(this IQueryable<T> query, PageInfoDto page) where T : class, new()
+    public static PageResponseDataDto<T> ToPageResponseData<T>(this IQueryable<T> query, PageInfoDto page)
+        where T : class, new()
     {
-        return new PageResponseDataDto<T>(page, query.Count(), query.ToPage(page));
+        var datas = query.ToPage(page).ToList();
+        return new PageResponseDataDto<T>(page, datas);
     }
 
-    #endregion
-
-    #region 全部数据分页结果
-
     /// <summary>
-    /// 全部数据分页结果
+    /// 响应分页信息和全部数据结果
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static PageResponseDataDto<T> ToPageResponseAllData<T>(this IQueryable<T> query) where T : class, new()
+    public static PageResponseDataDto<T> ToPageResponseAllData<T>(this IQueryable<T> query)
+        where T : class, new()
     {
-        return new PageResponseDataDto<T>(new PageResponseDto(new PageInfoDto
-        {
-            CurrentIndex = 1,
-            PageSize = query.Count()
-        }, query.Count()), query);
+        var datas = query.ToList();
+        var page = new PageInfoDto(currentIndex: 1, pageSize: datas.Count);
+        return new PageResponseDataDto<T>(page, datas);
     }
 
     #endregion
+
+    #region 包装标准结果
 
     /// <summary>
     /// 包装标准结果
@@ -204,26 +245,45 @@ public static class PageExtend
     /// <typeparam name="T"></typeparam>
     /// <param name="pageQuery"></param>
     /// <returns></returns>
-    public static ResponseResult ToResponse<T>(this PageQueryDto pageQuery) where T : class, new()
+    public static ResponseResult ToResponse<T>(this PageQueryDto pageQuery)
+        where T : class, new()
     {
         var query = new List<T>().AsQueryable();
 
-        if (pageQuery.IsQueryAll)
+        pageQuery.IsQueryAll ??= pageQuery.IsQueryAll.ParseToBool();
+        pageQuery.IsOnlyPage ??= pageQuery.IsOnlyPage.ParseToBool();
+        pageQuery.PageInfo ??= new PageInfoDto();
+
+        // 是否查询所有数据
+        if (pageQuery.IsQueryAll == true)
         {
             return ResponseResult.Success(query.ToPageResponseAllData());
         }
+
+        // 查询数据条件
+        if (pageQuery.SelectConditions is not null && pageQuery.OrderConditions is not null)
+        {
+            query = query.ToPage(pageQuery.PageInfo, pageQuery.SelectConditions, pageQuery.OrderConditions);
+        }
+        else if (pageQuery.SelectConditions is not null)
+        {
+            query = query.ToPage(pageQuery.PageInfo, pageQuery.SelectConditions);
+        }
+        else if (pageQuery.OrderConditions is not null)
+        {
+            query = query.ToPage(pageQuery.PageInfo, pageQuery.OrderConditions);
+        }
+
+        // 是否只返回分页信息
+        if (pageQuery.IsOnlyPage == true)
+        {
+            return ResponseResult.Success(query.ToPageResponseData(pageQuery.PageInfo));
+        }
         else
         {
-            var result = query.ToQuery(pageQuery.SelectConditions, pageQuery.OrderConditions);
-
-            if (result.ToList().Count != 0)
-            {
-                return ResponseResult.Success(result.ToPage(pageQuery.PageInfo).ToPageResponseData(pageQuery.PageInfo));
-            }
-            else
-            {
-                return ResponseResult.Success(result.ToPage(pageQuery.PageInfo).ToPageResponse(pageQuery.PageInfo));
-            }
+            return ResponseResult.Success(query.ToPageResponse(pageQuery.PageInfo));
         }
     }
+
+    #endregion
 }

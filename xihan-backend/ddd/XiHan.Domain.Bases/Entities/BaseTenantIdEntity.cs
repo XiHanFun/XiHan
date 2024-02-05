@@ -13,14 +13,14 @@
 #endregion <<版权版本注释>>
 
 using SqlSugar;
-using XiHan.Domain.Bases.Abstracts;
+using XiHan.Domain.Bases.Entities.Interfaces;
 
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 租户实体基类
+/// 租户实体抽象类
 /// </summary>
-public class BaseTenantIdEntity : IBaseTenantIdEntity<long>
+public class BaseTenantIdEntity : IBaseTenantId<long>
 {
     /// <summary>
     /// 租户标识

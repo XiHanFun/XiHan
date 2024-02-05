@@ -1,20 +1,22 @@
 ﻿#region <<版权版本注释>>
 
 // ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseEntity
-// Guid:84d15648-b4c6-40a5-8195-aae92765eb04
+// FileName:ValueObject
+// Guid:e659ed59-3658-43ba-9fe0-50c2599f54d7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2022-05-08 下午 04:12:12
+// CreateTime:2024/2/5 12:36:18
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Entities;
+namespace XiHan.Domain.Bases.SeedWorks;
 
 /// <summary>
-/// 实体抽象类，含主键，新增，修改，删除，审核，状态
+/// 值对象抽象类
 /// </summary>
-public abstract class BaseEntity : BaseStateEntity;
+public abstract class ValueObject
+{
+}

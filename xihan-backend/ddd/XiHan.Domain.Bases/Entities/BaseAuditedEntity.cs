@@ -17,7 +17,7 @@ using SqlSugar;
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 审核基类，含主键，新增，修改，删除
+/// 审核抽象类，含主键，新增，修改，删除
 /// </summary>
 public abstract class BaseAuditedEntity : BaseDeletedEntity
 {

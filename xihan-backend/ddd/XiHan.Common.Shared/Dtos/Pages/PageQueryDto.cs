@@ -20,22 +20,29 @@ namespace XiHan.Common.Shared.Dtos.Pages;
 public class PageQueryDto
 {
     /// <summary>
-    /// 是否查询所有
+    /// 是否查询所有数据
+    /// 是则忽略分页信息，返回所有数据并绑定默认分页信息
     /// </summary>
-    public bool IsQueryAll { get; set; }
+    public bool? IsQueryAll { get; set; }
+
+    /// <summary>
+    /// 是否只返回分页信息
+    /// 是则只返回分页信息，否则返回分页信息及结果数据
+    /// </summary>
+    public bool? IsOnlyPage { get; set; }
 
     /// <summary>
     /// 分页信息
     /// </summary>
-    public PageInfoDto PageInfo { get; set; } = new();
+    public PageInfoDto? PageInfo { get; set; }
 
     /// <summary>
     /// 选择条件集合
     /// </summary>
-    public List<SelectConditionDto> SelectConditions { get; set; } = [];
+    public List<SelectConditionDto>? SelectConditions { get; set; }
 
     /// <summary>
     /// 排序条件集合
     /// </summary>
-    public List<OrderConditionDto> OrderConditions { get; set; } = [];
+    public List<OrderConditionDto>? OrderConditions { get; set; }
 }

@@ -38,6 +38,24 @@ public class PageInfoDto
 
     #endregion
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public PageInfoDto()
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="currentIndex"></param>
+    /// <param name="pageSize"></param>
+    public PageInfoDto(int currentIndex, int pageSize)
+    {
+        CurrentIndex = currentIndex;
+        PageSize = pageSize;
+    }
+
     private int _currentIndex = 1;
 
     /// <summary>
@@ -53,7 +71,7 @@ public class PageInfoDto
         }
     }
 
-    private int _pageSize = 10;
+    private int _pageSize = 20;
 
     /// <summary>
     /// 每页大小

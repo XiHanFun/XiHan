@@ -1,0 +1,193 @@
+﻿#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2024 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
+// FileName:RabbitMQConnection
+// Guid:f4084e83-9f9a-4c39-85c6-37d9d9afa78b
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreateTime:2024/2/6 4:43:24
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
+
+using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Exceptions;
+using System.Net.Sockets;
+using System.Text;
+
+namespace XiHan.Infrastructure.EventBus.RabbitMQ;
+
+/// <summary>
+/// RabbitMQ 持久连接
+/// </summary>
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="logger"></param>
+/// <param name="connectionFactory"></param>
+/// <param name="retryCount"></param>
+public class RabbitMQConnection(ILogger<RabbitMQConnection> logger,
+    IConnectionFactory connectionFactory,
+    int retryCount = 5) : IRabbitMQConnection
+{
+    private readonly ILogger<RabbitMQConnection> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly IConnectionFactory _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+    private readonly int _retryCount = retryCount;
+
+    private IConnection _connection;
+    private readonly bool _disposed;
+    private readonly object sync_root = new();
+
+    /// <summary>
+    /// 是否已经连接
+    /// </summary>
+    public bool IsConnected
+    {
+        get
+        {
+            return _connection != null && _connection.IsOpen && !_disposed;
+        }
+    }
+
+    /// <summary>
+    /// 尝试重连
+    /// </summary>
+    /// <returns></returns>
+    public bool TryConnect()
+    {
+        _logger.LogInformation("RabbitMQ Client is trying to connect");
+
+        lock (sync_root)
+        {
+            var policy = RetryPolicy.Handle<SocketException>()
+                .Or<BrokerUnreachableException>()
+                .WaitAndRetry(_retryCount, retryAttempt =>
+                        TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                        {
+                            _logger.LogWarning(ex, "RabbitMQ Client could not connect after {TimeOut}s ({ExceptionMessage})", $"{time.TotalSeconds:n1}", ex.Message);
+                        }
+            );
+
+            policy.Execute(() =>
+            {
+                _connection = _connectionFactory
+                      .CreateConnection();
+            });
+
+            if (IsConnected)
+            {
+                _connection.ConnectionShutdown += OnConnectionShutdown;
+                _connection.CallbackException += OnCallbackException;
+                _connection.ConnectionBlocked += OnConnectionBlocked;
+
+                _logger.LogInformation("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to failure events", _connection.Endpoint.HostName);
+
+                return true;
+            }
+            else
+            {
+                _logger.LogCritical("FATAL ERROR: RabbitMQ connections could not be created and opened");
+
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 创建 Model
+    /// </summary>
+    /// <returns></returns>
+    public IModel CreateModel()
+    {
+        if (!IsConnected)
+        {
+            throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
+        }
+
+        return _connection.CreateModel();
+    }
+
+    /// <summary>
+    /// 发布消息
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="exchangeName"></param>
+    /// <param name="routingKey"></param>
+    public void PublishMessage(string message, string exchangeName, string routingKey)
+    {
+        if (!IsConnected)
+        {
+            _logger.LogWarning("RabbitMQ Client is not connected to a broker to publish message");
+            return;
+        }
+
+        using var channel = CreateModel();
+        channel.ExchangeDeclare(exchange: exchangeName, type: "direct");
+
+        var body = Encoding.UTF8.GetBytes(message);
+
+        channel.BasicPublish(exchange: exchangeName, routingKey: routingKey, basicProperties: null, body: body);
+
+        _logger.LogInformation("Published message '{Message}' to exchange '{ExchangeName}' with routing key '{RoutingKey}'", message, exchangeName, routingKey);
+    }
+
+    /// <summary>
+    /// 订阅消息
+    /// </summary>
+    /// <param name="queueName"></param>
+    public void StartConsuming(string queueName)
+    {
+        using var channel = CreateModel();
+        channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+
+        var consumer = new EventingBasicConsumer(channel);
+        consumer.Received += async (model, ea) =>
+        {
+            var header = ea.BasicProperties.Headers;
+            var body = ea.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+            await Task.CompletedTask;
+
+            _logger.LogInformation("Received message '{Message}' from queue '{QueueName}'", message, queueName);
+        };
+        _connection.CreateModel();
+        channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+    }
+
+    #region 内部方法
+
+    private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
+    {
+        if (_disposed) return;
+
+        _logger.LogWarning("A RabbitMQ connection is shutdown. Trying to re-connect...");
+
+        TryConnect();
+    }
+
+    private void OnCallbackException(object sender, CallbackExceptionEventArgs e)
+    {
+        if (_disposed) return;
+
+        _logger.LogWarning("A RabbitMQ connection throw exception. Trying to re-connect...");
+
+        TryConnect();
+    }
+
+    private void OnConnectionShutdown(object sender, ShutdownEventArgs reason)
+    {
+        if (_disposed) return;
+
+        _logger.LogWarning("A RabbitMQ connection is on shutdown. Trying to re-connect...");
+
+        TryConnect();
+    }
+
+    #endregion
+}

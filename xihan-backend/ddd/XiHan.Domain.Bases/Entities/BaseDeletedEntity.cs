@@ -18,7 +18,7 @@ using XiHan.Common.Shared.Filters;
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 删除基类，含主键，新增，修改
+/// 删除抽象类，含主键，新增，修改
 /// </summary>
 public abstract class BaseDeletedEntity : BaseModifiedEntity, ISoftDeletedFilter
 {

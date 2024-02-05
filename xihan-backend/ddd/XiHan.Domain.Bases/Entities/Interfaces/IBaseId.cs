@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseIdEntity
+// FileName:IBaseId
 // Guid:29d06d8a-063b-405c-b8f5-a9cdce847576
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -12,12 +12,12 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Abstracts;
+namespace XiHan.Domain.Bases.Entities.Interfaces;
 
 /// <summary>
 /// 通用主键接口
 /// </summary>
-public interface IBaseIdEntity<TKey>
+public interface IBaseId<TKey>
 {
     /// <summary>
     /// 主键

@@ -3,24 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseOrgIdEntity
-// Guid:69aa4300-716c-4525-ad9e-e523605e8722
+// FileName:IBaseTenantId
+// Guid:db0f9094-3a45-48c5-a093-226ef316dfa2
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2023-08-16 下午 05:31:13
+// CreateTime:2023-08-16 下午 05:31:31
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Domain.Bases.Abstracts;
+namespace XiHan.Domain.Bases.Entities.Interfaces;
 
 /// <summary>
-/// 通用机构接口
+/// 通用租户接口
 /// </summary>
-public interface IBaseOrgIdEntity<TKey>
+public interface IBaseTenantId<TKey>
 {
     /// <summary>
-    /// 机构标识
+    /// 租户标识
     /// </summary>
-    TKey OrgId { get; set; }
+    TKey TenantId { get; set; }
 }

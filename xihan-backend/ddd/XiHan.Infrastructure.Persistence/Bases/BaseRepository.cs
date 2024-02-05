@@ -16,7 +16,7 @@ using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Common.Shared.Attributes;
 using XiHan.Common.Shared.Dtos.Pages;
-using XiHan.Domain.Bases.Repositories;
+using XiHan.Domain.Bases.SeedWorks;
 using XiHan.Domain.Consts;
 using XiHan.Infrastructure.Bases.Apps;
 using XiHan.Infrastructure.Persistence.Extensions;
@@ -36,7 +36,7 @@ namespace XiHan.Infrastructure.Persistence.Bases;
 /// 查找 Find
 /// 查询 Query
 /// </remarks>
-public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
+public class BaseRepository<TEntity> : SimpleClient<TEntity>, IRepository<TEntity> where TEntity : class, new()
 {
     /// <summary>
     /// 多租户事务
@@ -110,7 +110,7 @@ public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TE
 
     #endregion
 
-    #region 新增新增或更新
+    #region 新增或更新
 
     /// <summary>
     /// 新增或更新

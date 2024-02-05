@@ -301,6 +301,9 @@ public static class TypeExtension
 
     #region 私有方法
 
+    /// <summary>
+    /// 内置类型名称
+    /// </summary>
     private static readonly Dictionary<Type, string> BuiltInTypeNames = new()
     {
         { typeof(bool), "bool" },
@@ -321,6 +324,12 @@ public static class TypeExtension
         { typeof(void), "void" }
     };
 
+    /// <summary>
+    /// 处理类型
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <param name="fullName"></param>
     private static void ProcessType(StringBuilder builder, Type type, bool fullName)
     {
         if (type.IsGenericType)
@@ -342,6 +351,12 @@ public static class TypeExtension
         }
     }
 
+    /// <summary>
+    /// 处理数组类型
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <param name="fullName"></param>
     private static void ProcessArrayType(StringBuilder builder, Type type, bool fullName)
     {
         var innerType = type;
@@ -358,6 +373,14 @@ public static class TypeExtension
         }
     }
 
+    /// <summary>
+    /// 处理泛型类型
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <param name="genericArguments"></param>
+    /// <param name="length"></param>
+    /// <param name="fullName"></param>
     private static void ProcessGenericType(StringBuilder builder, Type type, IReadOnlyList<Type> genericArguments, int length,
         bool fullName)
     {

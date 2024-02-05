@@ -41,38 +41,21 @@ public class PageResponseDto(PageInfoDto page, int totalCount)
 /// <summary>
 /// 通用分页数据实体基类
 /// </summary>
-public class PageResponseDataDto<TEntity> where TEntity : class
+/// <remarks>
+/// 构造函数
+/// </remarks>
+/// <param name="page"></param>
+/// <param name="totalCount"></param>
+/// <param name="datas"></param>
+public class PageResponseDataDto<TEntity>(PageInfoDto page, List<TEntity> datas)
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="page"></param>
-    /// <param name="totalCount"></param>
-    /// <param name="datas"></param>
-    public PageResponseDataDto(PageInfoDto page, int totalCount, IEnumerable<TEntity> datas)
-    {
-        PageResponse = new PageResponseDto(page, totalCount);
-        Datas = datas.ToList();
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="pageResponse"></param>
-    /// <param name="datas"></param>
-    public PageResponseDataDto(PageResponseDto pageResponse, IEnumerable<TEntity> datas)
-    {
-        PageResponse = pageResponse;
-        Datas = datas.ToList();
-    }
-
     /// <summary>
     /// 分页数据
     /// </summary>
-    public PageResponseDto PageResponse { get; init; }
+    public PageResponseDto PageResponse { get; init; } = new PageResponseDto(page, datas.Count);
 
     /// <summary>
     /// 数据集合
     /// </summary>
-    public List<TEntity> Datas { get; init; }
+    public List<TEntity> Datas { get; init; } = datas;
 }

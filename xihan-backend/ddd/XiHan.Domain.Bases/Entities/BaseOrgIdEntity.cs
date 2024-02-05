@@ -12,14 +12,14 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Domain.Bases.Abstracts;
+using XiHan.Domain.Bases.Entities.Interfaces;
 
 namespace XiHan.Domain.Bases.Entities;
 
 /// <summary>
-/// 机构基类
+/// 机构抽象类
 /// </summary>
-public abstract class BaseOrgIdEntity : IBaseOrgIdEntity<long>
+public abstract class BaseOrgIdEntity : IBaseOrgId<long>
 {
     /// <summary>
     /// 机构标识

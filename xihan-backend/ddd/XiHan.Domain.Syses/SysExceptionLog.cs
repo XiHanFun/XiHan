@@ -58,7 +58,7 @@ public class SysExceptionLog : SysVisitLog
     /// 事件对象
     /// </summary>
     [SugarColumn(Length = 256, IsNullable = true)]
-    public string? Event { get; set; }
+    public string? EventModel { get; set; }
 
     /// <summary>
     /// 消息描述

@@ -15,8 +15,8 @@
 using SqlSugar;
 using XiHan.Common.Shared.Attributes;
 using XiHan.Common.Shared.Enums;
-using XiHan.Domain.Bases.Abstracts;
 using XiHan.Domain.Bases.Entities;
+using XiHan.Domain.Bases.Entities.Interfaces;
 using XiHan.Domain.Syses.Enums;
 
 namespace XiHan.Domain.Syses;
@@ -26,7 +26,7 @@ namespace XiHan.Domain.Syses;
 /// </summary>
 /// <remarks>记录新增，修改，删除信息</remarks>
 [SugarTable, SystemTable]
-public class SysJob : BaseDeletedEntity, IBaseExpirableEntity
+public class SysJob : BaseDeletedEntity, IBaseExpirable
 {
     /// <summary>
     /// 任务分组

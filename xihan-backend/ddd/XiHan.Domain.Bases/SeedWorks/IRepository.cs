@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseRepository
+// FileName:IRepository
 // Guid:7850231b-660e-4660-8747-5da8c607c53c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,18 +12,26 @@
 
 #endregion <<版权版本注释>>
 
-using SqlSugar;
 using System.Linq.Expressions;
 using XiHan.Common.Shared.Dtos.Pages;
 
-namespace XiHan.Domain.Bases.Repositories;
+namespace XiHan.Domain.Bases.SeedWorks;
 
 /// <summary>
-/// 仓储基类接口
+/// 仓储抽象接口
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity : class, new()
+public interface IRepository<TEntity> where TEntity : IAggregateRoot
 {
+    #region 工作单元
+
+    /// <summary>
+    /// 工作单元
+    /// </summary>
+    IUnitOfWork UnitOfWork { get; }
+
+    #endregion
+
     #region 新增
 
     /// <summary>
@@ -49,7 +57,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
 
     #endregion
 
-    #region 新增新增或更新
+    #region 新增或更新
 
     /// <summary>
     /// 新增或更新
@@ -113,7 +121,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    new Task<bool> UpdateAsync(TEntity entity);
+    Task<bool> UpdateAsync(TEntity entity);
 
     /// <summary>
     /// 修改某列
@@ -121,7 +129,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="columns"></param>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
-    new Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression);
+    Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression);
 
     /// <summary>
     /// 批量修改
@@ -170,7 +178,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    new Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression);
+    Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> expression);
 
     /// <summary>
     /// 自定义条件查询
@@ -188,7 +196,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryAsync(int currentIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryAsync(int currentIndex, int pageSize, ref int totalCount);
 
     /// <summary>
     /// 自定义条件分页查询
@@ -198,7 +206,7 @@ public interface IBaseRepository<TEntity> : ISimpleClient<TEntity> where TEntity
     /// <param name="pageSize">页面大小</param>
     /// <param name="totalCount">查询到的总数</param>
     /// <returns></returns>
-    Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, RefAsync<int> totalCount);
+    Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> whereExpression, int currentIndex, int pageSize, ref int totalCount);
 
     /// <summary>
     /// 分页查询

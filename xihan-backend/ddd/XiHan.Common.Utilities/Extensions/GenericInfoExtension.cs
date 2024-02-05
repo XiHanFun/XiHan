@@ -25,6 +25,38 @@ public static class GenericInfoExtension
     #region 属性信息
 
     /// <summary>
+    /// 获取泛型类型名称
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static string GetGenericTypeName(this Type type)
+    {
+        var typeName = string.Empty;
+
+        if (type.IsGenericType)
+        {
+            var genericTypes = string.Join(",", type.GetGenericArguments().Select(t => t.Name).ToArray());
+            typeName = $"{type.Name.Remove(type.Name.IndexOf('`'))}<{genericTypes}>";
+        }
+        else
+        {
+            typeName = type.Name;
+        }
+
+        return typeName;
+    }
+
+    /// <summary>
+    /// 获取泛型类型名称
+    /// </summary>
+    /// <param name="object"></param>
+    /// <returns></returns>
+    public static string GetGenericTypeName(this object @object)
+    {
+        return @object.GetType().GetGenericTypeName();
+    }
+
+    /// <summary>
     /// 递归获取最深层次的任何类型的属性
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
@@ -36,7 +68,8 @@ public static class GenericInfoExtension
         while (true)
         {
             var value = GetPropertyValue<TEntity, TEntity>(entity, propertyName);
-            if (value == null) return entity;
+            if (value == null)
+                return entity;
         }
     }
 
@@ -53,8 +86,7 @@ public static class GenericInfoExtension
         var objectType = typeof(TEntity);
         var propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
-            throw new ArgumentException(
-                $"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
 
         var paramObj = Expression.Parameter(typeof(TEntity));
 
@@ -79,8 +111,7 @@ public static class GenericInfoExtension
         var objectType = typeof(TEntity);
         var propertyInfo = objectType.GetProperty(propertyName);
         if (propertyInfo == null || !propertyInfo.PropertyType.IsGenericType)
-            throw new ArgumentException(
-                $"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
+            throw new ArgumentException($"The property '{propertyName}' does not exist or is not a generic type in type '{objectType.Name}'.");
 
         var paramObj = Expression.Parameter(objectType);
         var paramVal = Expression.Parameter(typeof(TValue));
@@ -90,11 +121,11 @@ public static class GenericInfoExtension
         var setMethod = propertyInfo.GetSetMethod(true);
 
         // 如果只是只读,则 setMethod==null
-        if (setMethod == null) return false;
+        if (setMethod == null)
+            return false;
 
         var body = Expression.Call(paramObj, setMethod, bodyVal);
-        var setValue =
-            Expression.Lambda<Action<TEntity, TValue>>(body, paramObj, paramVal).Compile();
+        var setValue = Expression.Lambda<Action<TEntity, TValue>>(body, paramObj, paramVal).Compile();
         setValue(entity, value);
 
         return true;
@@ -104,7 +135,8 @@ public static class GenericInfoExtension
     /// 获取对象属性信息列表
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public static List<CustomPropertyInfo> GetProperties<TEntity>(this TEntity entity) where TEntity : class
+    public static List<CustomPropertyInfo> GetProperties<TEntity>(this TEntity entity)
+        where TEntity : class
     {
         var type = typeof(TEntity);
         var properties = type.GetProperties();
@@ -123,8 +155,8 @@ public static class GenericInfoExtension
     /// <param name="entity1">对象实例1</param>
     /// <param name="entity2">对象实例2</param>
     /// <returns></returns>
-    public static IEnumerable<CustomPropertyVariance> GetPropertiesDetailedCompare<TEntity>(this TEntity entity1,
-        TEntity entity2) where TEntity : class
+    public static IEnumerable<CustomPropertyVariance> GetPropertiesDetailedCompare<TEntity>(this TEntity entity1, TEntity entity2)
+        where TEntity : class
     {
         var propertyInfo = typeof(TEntity).GetProperties();
         return propertyInfo.Select(variance => new CustomPropertyVariance
@@ -147,8 +179,8 @@ public static class GenericInfoExtension
     /// <param name="newVal">对象实例2</param>
     /// <param name="specialList">要排除某些特殊属性</param>
     /// <returns></returns>
-    public static string GetPropertiesChangedNote<TEntity>(this TEntity oldVal, TEntity newVal,
-        List<string> specialList) where TEntity : class
+    public static string GetPropertiesChangedNote<TEntity>(this TEntity oldVal, TEntity newVal, List<string> specialList)
+        where TEntity : class
     {
         // 要排除某些特殊属性
         var list = GetPropertiesDetailedCompare(oldVal, newVal);
