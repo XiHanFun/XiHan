@@ -15,8 +15,8 @@
 using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using XiHan.Common.Utilities.Extensions;
+using XiHan.Common.Utilities.Serializes;
 using XiHan.Infrastructure.EventBus.Bases;
 using XiHan.Infrastructure.EventBus.Bases.Models;
 
@@ -25,23 +25,31 @@ namespace XiHan.Infrastructure.EventBus.Kafka;
 /// <summary>
 /// 基于 Kafka 的事件总线
 /// </summary>
-/// <remarks>
-/// 构造函数
-/// </remarks>
-/// <param name="logger"></param>
-/// <param name="subscriptionManager"></param>
-/// <param name="connectionPool"></param>
-/// <param name="options"></param>
-/// <exception cref="ArgumentNullException"></exception>
-public class EventBusKafka(ILogger<EventBusKafka> logger,
-    IEventBusSubscriptionManager subscriptionManager,
-    IKafkaConnectionPool connectionPool,
-    IOptions<KafkaOptions> options) : IEventBus
+public class EventBusKafka : IEventBus
 {
-    private readonly ILogger<EventBusKafka> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    private readonly IEventBusSubscriptionManager _subscriptionManager = subscriptionManager ?? throw new ArgumentNullException(nameof(subscriptionManager));
-    private readonly IKafkaConnectionPool _connectionPool = connectionPool ?? throw new ArgumentNullException(nameof(connectionPool));
-    private readonly KafkaOptions _options = options.Value;
+    private readonly ILogger<EventBusKafka> _logger;
+    private readonly IEventBusSubscriptionManager _subscriptionManager;
+    private readonly IKafkaConnectionPool _connectionPool;
+    private readonly KafkaOptions _options;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="subscriptionManager"></param>
+    /// <param name="connectionPool"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public EventBusKafka(ILogger<EventBusKafka> logger,
+        IEventBusSubscriptionManager subscriptionManager,
+        IKafkaConnectionPool connectionPool,
+        IOptions<KafkaOptions> options)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _subscriptionManager = subscriptionManager ?? throw new ArgumentNullException(nameof(subscriptionManager));
+        _connectionPool = connectionPool ?? throw new ArgumentNullException(nameof(connectionPool));
+        _options = options.Value;
+    }
 
     /// <summary>
     /// 发布事件
@@ -53,7 +61,7 @@ public class EventBusKafka(ILogger<EventBusKafka> logger,
         try
         {
             var eventName = @event.GetType().Name;
-            var body = JsonConvert.SerializeObject(@event).ToBinary();
+            var body = SerializeHelper.SerializeTo(@event).ToBinary();
             DeliveryResult<string, byte[]> result = producer.ProduceAsync(_options.Topic, new Message<string, byte[]>
             {
                 Key = eventName,
@@ -62,7 +70,7 @@ public class EventBusKafka(ILogger<EventBusKafka> logger,
         }
         catch (Exception ex)
         {
-            _logger.LogWarning($"Could not publish event: {@event.Id:N} ({ex.Message});Message:{JsonConvert.SerializeObject(@event)}");
+            _logger.LogWarning($"Could not publish event: {@event.Id:N} ({ex.Message});Message:{SerializeHelper.SerializeTo(@event)}");
         }
         finally
         {

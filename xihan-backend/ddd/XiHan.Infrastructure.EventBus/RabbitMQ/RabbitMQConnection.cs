@@ -26,23 +26,29 @@ namespace XiHan.Infrastructure.EventBus.RabbitMQ;
 /// <summary>
 /// RabbitMQ 持久连接
 /// </summary>
-/// <remarks>
-/// 构造函数
-/// </remarks>
-/// <param name="logger"></param>
-/// <param name="connectionFactory"></param>
-/// <param name="retryCount"></param>
-public class RabbitMQConnection(ILogger<RabbitMQConnection> logger,
-    IConnectionFactory connectionFactory,
-    int retryCount = 5) : IRabbitMQConnection
+public class RabbitMQConnection : IRabbitMQConnection
 {
-    private readonly ILogger<RabbitMQConnection> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    private readonly IConnectionFactory _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-    private readonly int _retryCount = retryCount;
-
+    private readonly ILogger<RabbitMQConnection> _logger;
+    private readonly IConnectionFactory _connectionFactory;
+    private readonly int _retryCount;
     private IConnection _connection;
     private readonly bool _disposed;
     private readonly object sync_root = new();
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="connectionFactory"></param>
+    /// <param name="retryCount"></param>
+    public RabbitMQConnection(ILogger<RabbitMQConnection> logger,
+        IConnectionFactory connectionFactory,
+        int retryCount = 5)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+        _retryCount = retryCount;
+    }
 
     /// <summary>
     /// 是否已经连接
@@ -164,7 +170,8 @@ public class RabbitMQConnection(ILogger<RabbitMQConnection> logger,
 
     private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
 
         _logger.LogWarning("A RabbitMQ connection is shutdown. Trying to re-connect...");
 
@@ -173,7 +180,8 @@ public class RabbitMQConnection(ILogger<RabbitMQConnection> logger,
 
     private void OnCallbackException(object sender, CallbackExceptionEventArgs e)
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
 
         _logger.LogWarning("A RabbitMQ connection throw exception. Trying to re-connect...");
 
@@ -182,7 +190,8 @@ public class RabbitMQConnection(ILogger<RabbitMQConnection> logger,
 
     private void OnConnectionShutdown(object sender, ShutdownEventArgs reason)
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
 
         _logger.LogWarning("A RabbitMQ connection is on shutdown. Trying to re-connect...");
 

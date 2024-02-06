@@ -14,8 +14,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -23,6 +21,7 @@ using RabbitMQ.Client.Exceptions;
 using System.Net.Sockets;
 using System.Text;
 using XiHan.Common.Utilities.Extensions;
+using XiHan.Common.Utilities.Serializes;
 using XiHan.Infrastructure.EventBus.Bases;
 using XiHan.Infrastructure.EventBus.Bases.Models;
 using XiHan.Infrastructure.EventBus.RabbitMQ.Consts;
@@ -42,7 +41,6 @@ public class EventBusRabbitMQ : IEventBus
     private readonly int _retryCount;
 
     private string _queueName;
-
     private IModel _consumerChannel;
 
     /// <summary>
@@ -103,8 +101,7 @@ public class EventBusRabbitMQ : IEventBus
 
         channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
 
-        var message = JsonConvert.SerializeObject(@event);
-        var body = Encoding.UTF8.GetBytes(message);
+        var body = SerializeHelper.SerializeTo(@event).ToBinary();
 
         policy.Execute(() =>
         {
@@ -302,10 +299,10 @@ public class EventBusRabbitMQ : IEventBus
     }
 
     /// <summary>
-    /// 处理事件
+    /// 接收到消息进行处理
     /// </summary>
-    /// <param name="eventName"></param>
-    /// <param name="message"></param>
+    /// <param name="eventName">事件名称</param>
+    /// <param name="message">消息内容</param>
     /// <returns></returns>
     private async Task ProcessEvent(string eventName, string message)
     {
@@ -322,7 +319,7 @@ public class EventBusRabbitMQ : IEventBus
                     if (scope.ServiceProvider.GetService(subscription.HandlerType) is not IDynamicIntegrationEventHandler handler)
                         continue;
 
-                    dynamic eventData = JObject.Parse(message);
+                    dynamic eventData = SerializeHelper.DeserializeTo<dynamic>(message)!;
 
                     await Task.Yield();
                     await handler.Handle(eventData);
@@ -334,7 +331,7 @@ public class EventBusRabbitMQ : IEventBus
                         continue;
 
                     var eventType = _subscriptionManager.GetEventTypeByName(eventName);
-                    var integrationEvent = JsonConvert.DeserializeObject(message, eventType)!;
+                    var integrationEvent = SerializeHelper.DeserializeTo(message)!;
                     var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
                     await Task.Yield();

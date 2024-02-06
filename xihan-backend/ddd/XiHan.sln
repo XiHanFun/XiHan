@@ -15,7 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Domain.Bases", "XiHan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Domain.Syses", "XiHan.Domain.Syses\XiHan.Domain.Syses.csproj", "{890BD39B-A530-4535-B619-2CC4D63BCA19}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructures", "3.Infrastructures", "{9EB2E6D7-EBDC-45B0-98F4-DABA6F7C8FE2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.AppServices", "3.AppServices", "{F6624DD5-EC77-42C6-BF97-04CE1B6C02BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.AppService.Bases", "XiHan.AppService.Bases\XiHan.AppService.Bases.csproj", "{DD5C7EB0-734D-42F4-BE93-B66FDA7E3FF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.AppService.Syses", "XiHan.AppService.Syses\XiHan.AppService.Syses.csproj", "{E2C821ED-0D55-4A97-AD49-95B82B24E364}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructures", "4.Infrastructures", "{9EB2E6D7-EBDC-45B0-98F4-DABA6F7C8FE2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Bases", "XiHan.Infrastructure.Bases\XiHan.Infrastructure.Bases.csproj", "{8BEB66BD-24B1-4655-A8C0-07EF232166A6}"
 EndProject
@@ -33,21 +39,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Schedu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Scheduling.Tasks", "XiHan.Infrastructure.Scheduling.Tasks\XiHan.Infrastructure.Scheduling.Tasks.csproj", "{17E7434D-121E-46B2-A87A-B2611B958C8B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.AppServices", "4.AppServices", "{F6624DD5-EC77-42C6-BF97-04CE1B6C02BB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.AppService.Bases", "XiHan.AppService.Bases\XiHan.AppService.Bases.csproj", "{DD5C7EB0-734D-42F4-BE93-B66FDA7E3FF0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.AppService.Syses", "XiHan.AppService.Syses\XiHan.AppService.Syses.csproj", "{E2C821ED-0D55-4A97-AD49-95B82B24E364}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.WebApis", "5.WebApis", "{6FDFE743-E0B4-47C0-8B9E-41592FC6954C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.WebApi", "XiHan.WebApi\XiHan.WebApi.csproj", "{A9883631-BA5C-49EF-8EC1-F788494FEE0F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Test", "6.Test", "{0C1C70FF-465F-4745-950B-077530E713C4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Other", "7.Other", "{6A9E81D1-74D5-466E-B052-C7CE9B2C59A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{52D8EEEB-B715-417C-9393-1249A105923D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{52D8EEEB-B715-417C-9393-1249A105923D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Other", "7.Other", "{6A9E81D1-74D5-466E-B052-C7CE9B2C59A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

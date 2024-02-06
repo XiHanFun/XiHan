@@ -12,10 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.EventBus.Bases;
 using XiHan.Infrastructure.EventBus.Bases.Models;
 
-namespace XiHan.Infrastructure.EventBus.RabbitMQ;
+namespace XiHan.Infrastructure.EventBus.Bases;
 
 /// <summary>
 /// 基于内存的事件总线订阅管理器

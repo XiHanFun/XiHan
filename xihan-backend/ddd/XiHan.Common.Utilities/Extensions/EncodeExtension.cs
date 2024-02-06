@@ -12,6 +12,7 @@
 
 #endregion <<版权版本注释>>
 
+using System.Collections;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -76,6 +77,16 @@ public static partial class EncodeExtension
     public static byte[] ToBinary(this string data)
     {
         return Encoding.UTF8.GetBytes(data);
+    }
+
+    /// <summary>
+    /// 将字符串转化为文件流
+    /// </summary>
+    /// <param name="data">待转换的字符串</param>
+    /// <returns>转换后的二进制数组</returns>
+    public static Stream ToStream(this string data)
+    {
+        return new MemoryStream(Encoding.UTF8.GetBytes(data));
     }
 
     /// <summary>

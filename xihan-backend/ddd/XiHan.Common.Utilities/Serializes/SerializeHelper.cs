@@ -15,6 +15,8 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using XiHan.Common.Utilities.Extensions;
 using XiHan.Common.Utilities.Serializes.Converters;
 
 namespace XiHan.Common.Utilities.Serializes;
@@ -85,5 +87,15 @@ public static class SerializeHelper
     public static TEntity? DeserializeTo<TEntity>(this string jsonString)
     {
         return JsonSerializer.Deserialize<TEntity>(jsonString, JsonSerializerOptionsInstance);
+    }
+
+    /// <summary>
+    /// 反序列化为对象
+    /// </summary>
+    /// <param name="jsonString"></param>
+    /// <returns></returns>
+    public static object? DeserializeTo(this string jsonString)
+    {
+        return JsonSerializer.Deserialize(jsonString.ToStream(), JsonTypeInfo.CreateJsonTypeInfo(typeof(object), JsonSerializerOptionsInstance));
     }
 }
