@@ -1,6 +1,0 @@
-@XiHan.WebApi_HostAddress = http://localhost:5080
-
-GET {{XiHan.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

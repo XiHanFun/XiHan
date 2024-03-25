@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XiHan.Domain.Bases\XiHan.Domain.Bases.csproj" />
+    <ProjectReference Include="..\XiHan.Infrastructure.Bases\XiHan.Infrastructure.Bases.csproj" />
+  </ItemGroup>
+
+</Project>
