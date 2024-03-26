@@ -262,7 +262,7 @@ public static class GenericInfoExtension
 /// <summary>
 /// 属性信息
 /// </summary>
-public class CustomPropertyInfo
+public record CustomPropertyInfo
 {
     /// <summary>
     /// 属性名称
@@ -283,7 +283,7 @@ public class CustomPropertyInfo
 /// <summary>
 /// 属性变化
 /// </summary>
-public class CustomPropertyVariance
+public record CustomPropertyVariance
 {
     /// <summary>
     /// 属性名称

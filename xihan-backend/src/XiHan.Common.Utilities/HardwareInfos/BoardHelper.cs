@@ -92,7 +92,7 @@ public static class BoardHelper
 /// <summary>
 /// 主板信息
 /// </summary>
-public class BoardInfo
+public record BoardInfo
 {
     /// <summary>
     /// 型号

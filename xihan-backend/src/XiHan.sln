@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Presentation", "XiHan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{6C119216-F507-4430-97C8-B1C8F6DFEDE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Infrastructure.Persistence", "XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj", "{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{6C119216-F507-4430-97C8-B1C8F6DFEDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C119216-F507-4430-97C8-B1C8F6DFEDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C119216-F507-4430-97C8-B1C8F6DFEDE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{83C349A6-D53E-4301-A7F4-FAE17EF29911} = {C47184A5-2317-47B8-9306-5B1CB36C0DB3}
 		{75848A3D-0CC8-423E-8A7E-8BAB777E11CA} = {3B8B9EBA-C058-4E93-A43B-D2F04571E095}
 		{6C119216-F507-4430-97C8-B1C8F6DFEDE3} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
+		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3} = {8C9CD295-05B0-42D9-B607-84AA1DE60D2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}
