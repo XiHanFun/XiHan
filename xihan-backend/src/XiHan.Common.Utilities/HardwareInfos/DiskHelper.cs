@@ -117,7 +117,7 @@ public static class DiskHelper
 /// <summary>
 /// 磁盘信息
 /// </summary>
-public class DiskInfo
+public record DiskInfo
 {
     /// <summary>
     /// 磁盘名称

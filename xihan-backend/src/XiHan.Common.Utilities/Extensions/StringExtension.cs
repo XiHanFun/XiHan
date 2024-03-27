@@ -114,7 +114,9 @@ public static class StringExtension
     public static string GetEnumerableStr(this IEnumerable<string> sourceEnumerable, char sepeater = ',', bool isAllowsDuplicates = true)
     {
         StringBuilder sb = new();
-        if (!isAllowsDuplicates) sourceEnumerable = sourceEnumerable.Distinct();
+
+        if (!isAllowsDuplicates)
+            sourceEnumerable = sourceEnumerable.Distinct();
 
         var enumerable = sourceEnumerable.ToList();
         foreach (var item in enumerable)
@@ -284,12 +286,12 @@ public static class StringExtension
     #region 是否SQL安全字符串
 
     /// <summary>
-    /// 是否SQL安全字符串
+    /// 转换为SQL安全字符串
     /// </summary>
     /// <param name="sourceStr"></param>
     /// <param name="isDel"></param>
     /// <returns></returns>
-    public static string SqlSafeString(this string sourceStr, bool isDel)
+    public static string GetSqlSafe(this string sourceStr, bool isDel)
     {
         if (isDel)
         {
@@ -340,7 +342,7 @@ public static class StringExtension
     /// </summary>
     /// <param name="inputString">参数字符串</param>
     /// <returns></returns>
-    public static int StrLength(this string inputString)
+    public static int GetStrLength(this string inputString)
     {
         ASCIIEncoding ascii = new();
         var tempLen = 0;

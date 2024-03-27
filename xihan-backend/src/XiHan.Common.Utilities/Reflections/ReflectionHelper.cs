@@ -303,7 +303,7 @@ public static class ReflectionHelper
 /// <summary>
 /// NuGet程序集
 /// </summary>
-public class NuGetPackage
+public record NuGetPackage
 {
     /// <summary>
     /// 程序集名称

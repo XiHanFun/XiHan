@@ -20,13 +20,18 @@ namespace XiHan.Common.Utilities.Serializes;
 /// <summary>
 /// JsonHelper
 /// </summary>
-/// <remarks>
-/// 构造函数
-/// </remarks>
-/// <param name="jsonFilePath">文件路径</param>
-public class JsonHelper(string jsonFilePath)
+public class JsonHelper
 {
-    private readonly string _jsonFilePath = jsonFilePath;
+    private readonly string _jsonFilePath;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="jsonFilePath">文件路径</param>
+    public JsonHelper(string jsonFilePath)
+    {
+        _jsonFilePath = jsonFilePath;
+    }
 
     /// <summary>
     /// 加载整个文件并反序列化为一个对象

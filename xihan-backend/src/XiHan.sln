@@ -7,29 +7,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Commons", "1.Commons", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domains", "2.Domains", "{033178E4-70C4-4901-947B-FCC964FC0709}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Infrastructures", "2.Infrastructures", "{8C9CD295-05B0-42D9-B607-84AA1DE60D2F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructures", "2.Infrastructures", "{8C9CD295-05B0-42D9-B607-84AA1DE60D2F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Applications", "3.Applications", "{C47184A5-2317-47B8-9306-5B1CB36C0DB3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Applications", "3.Applications", "{C47184A5-2317-47B8-9306-5B1CB36C0DB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Presentations", "4.Presentations", "{3B8B9EBA-C058-4E93-A43B-D2F04571E095}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Presentations", "4.Presentations", "{3B8B9EBA-C058-4E93-A43B-D2F04571E095}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Tests", "5.Tests", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Tests", "5.Tests", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Others", "6.Others", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Others", "6.Others", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Common.Utilities", "XiHan.Common.Utilities\XiHan.Common.Utilities.csproj", "{84FB508C-5D72-40FC-8E28-AF4656040CBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common.Utilities", "XiHan.Common.Utilities\XiHan.Common.Utilities.csproj", "{84FB508C-5D72-40FC-8E28-AF4656040CBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Domain.Core", "XiHan.Domain.Core\XiHan.Domain.Core.csproj", "{6CB37456-7F69-44AA-AF61-7EB410A87924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Domain.Core", "XiHan.Domain.Core\XiHan.Domain.Core.csproj", "{6CB37456-7F69-44AA-AF61-7EB410A87924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Infrastructure.Core", "XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj", "{0C59FD7E-17B3-4F1F-B995-AC2F3580BFAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Core", "XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj", "{0C59FD7E-17B3-4F1F-B995-AC2F3580BFAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Application.Core", "XiHan.Application.Core\XiHan.Application.Core.csproj", "{83C349A6-D53E-4301-A7F4-FAE17EF29911}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Application.Core", "XiHan.Application.Core\XiHan.Application.Core.csproj", "{83C349A6-D53E-4301-A7F4-FAE17EF29911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Presentation", "XiHan.Presentation\XiHan.Presentation.csproj", "{75848A3D-0CC8-423E-8A7E-8BAB777E11CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Presentation.Web.Host", "XiHan.Presentation.Web.Host\XiHan.Presentation.Web.Host.csproj", "{75848A3D-0CC8-423E-8A7E-8BAB777E11CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{6C119216-F507-4430-97C8-B1C8F6DFEDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.UnitTest", "XiHan.UnitTest\XiHan.UnitTest.csproj", "{6C119216-F507-4430-97C8-B1C8F6DFEDE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Infrastructure.Persistence", "XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj", "{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Persistence", "XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj", "{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Presentation.Web.Core", "XiHan.Presentation.Web.Core\XiHan.Presentation.Web.Core.csproj", "{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Common.Shared", "XiHan.Common.Shared\XiHan.Common.Shared.csproj", "{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,14 @@ Global
 		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +89,8 @@ Global
 		{75848A3D-0CC8-423E-8A7E-8BAB777E11CA} = {3B8B9EBA-C058-4E93-A43B-D2F04571E095}
 		{6C119216-F507-4430-97C8-B1C8F6DFEDE3} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
 		{B3108EBF-3D3A-4122-BDD9-F47A536E81E3} = {8C9CD295-05B0-42D9-B607-84AA1DE60D2F}
+		{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557} = {3B8B9EBA-C058-4E93-A43B-D2F04571E095}
+		{EEBEEFF1-3A8F-4FF6-9635-12A63C399173} = {A661BDC1-48C2-4064-8058-7F394B98A075}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}

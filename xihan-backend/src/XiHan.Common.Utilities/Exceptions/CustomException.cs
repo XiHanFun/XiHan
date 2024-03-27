@@ -21,21 +21,15 @@ namespace XiHan.Common.Utilities.Exceptions;
 /// </summary>
 public class CustomException : Exception
 {
-    /// <summary>
-    /// 提示信息
-    /// </summary>
-    public new string? Message { get; set; }
-
-    /// <summary>
-    /// 异常详情
-    /// </summary>
-    public new Exception? InnerException { get; set; }
+    private const string DefaultMessage = "服务器端程序错误!";
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CustomException() : base("服务器端程序错误")
+    public CustomException()
     {
+        var messageConsole = DefaultMessage;
+        ConsoleWriteLine(messageConsole);
     }
 
     /// <summary>
@@ -44,7 +38,8 @@ public class CustomException : Exception
     /// <param name="message"></param>
     public CustomException(string? message) : base(message)
     {
-        message?.WriteLineError();
+        var messageConsole = DefaultMessage + message;
+        ConsoleWriteLine(messageConsole);
     }
 
     /// <summary>
@@ -54,7 +49,16 @@ public class CustomException : Exception
     /// <param name="innerException"></param>
     public CustomException(string? message, Exception? innerException) : base(message, innerException)
     {
-        message?.WriteLineError();
-        throw innerException!;
+        var messageConsole = DefaultMessage + message;
+        ConsoleWriteLine(messageConsole);
+    }
+
+    /// <summary>
+    /// 控制台输出错误信息
+    /// </summary>
+    /// <param name="message"></param>
+    public void ConsoleWriteLine(string message)
+    {
+        message.WriteLineError();
     }
 }

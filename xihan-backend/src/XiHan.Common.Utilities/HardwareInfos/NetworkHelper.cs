@@ -68,7 +68,7 @@ public static class NetworkHelper
 /// <summary>
 /// 网卡信息
 /// </summary>
-public class NetworkInfo
+public record NetworkInfo
 {
     /// <summary>
     /// 名称

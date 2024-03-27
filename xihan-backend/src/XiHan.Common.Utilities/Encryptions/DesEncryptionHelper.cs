@@ -26,10 +26,10 @@ public static class DesEncryptionHelper
     private const string DefaultPassword = "ZhaiFanhua";
 
     // 加密所需的密钥
-    private static readonly byte[] KeyBytes;
+    private static readonly byte[] _keyBytes;
 
     // 加密所需的密钥
-    private static readonly byte[] IvBytes;
+    private static readonly byte[] _ivBytes;
 
     /// <summary>
     /// 构造函数
@@ -38,8 +38,8 @@ public static class DesEncryptionHelper
     {
         // 构造函数，初始化密钥和向量
         PasswordDeriveBytes pdb = new(DefaultPassword, null);
-        KeyBytes = pdb.GetBytes(8);
-        IvBytes = pdb.GetBytes(8);
+        _keyBytes = pdb.GetBytes(8);
+        _ivBytes = pdb.GetBytes(8);
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public static class DesEncryptionHelper
         // 创建加密算法实例
         using var des = DES.Create();
         // 设置加密算法的密钥和向量
-        des.Key = KeyBytes;
-        des.IV = IvBytes;
+        des.Key = _keyBytes;
+        des.IV = _ivBytes;
 
         // 创建内存流，并使用 CryptoStream 对象包装它
         using MemoryStream ms = new();
@@ -89,8 +89,8 @@ public static class DesEncryptionHelper
         // 创建解密算法实例
         using var des = DES.Create();
         // 设置解密算法的密钥和向量
-        des.Key = KeyBytes;
-        des.IV = IvBytes;
+        des.Key = _keyBytes;
+        des.IV = _ivBytes;
 
         // 创建内存流，并使用 CryptoStream 对象包装它
         using MemoryStream ms = new();

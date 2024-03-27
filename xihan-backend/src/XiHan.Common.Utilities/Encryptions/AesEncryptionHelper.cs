@@ -33,7 +33,7 @@ public static class AesEncryptionHelper
     private const int Iterations = 10000;
 
     // 分割器
-    private static readonly char Separator = ':';
+    private static readonly char _separator = ':';
 
     /// <summary>
     /// 加密字符串
@@ -75,7 +75,7 @@ public static class AesEncryptionHelper
         }
 
         // 返回加密结果
-        return $"{Convert.ToBase64String(salt)}{Separator}{cipherText}";
+        return $"{Convert.ToBase64String(salt)}{_separator}{cipherText}";
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public static class AesEncryptionHelper
         ArgumentException.ThrowIfNullOrEmpty(password, nameof(password));
 
         // 解析盐和密文
-        var parts = cipherText.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
+        var parts = cipherText.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 2)
             throw new ArgumentException("Invalid cipher text", nameof(cipherText));
 

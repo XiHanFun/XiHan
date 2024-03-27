@@ -139,7 +139,7 @@ public static class EnumExtension
 /// <summary>
 /// EnumDescDto
 /// </summary>
-public class EnumDescDto
+public record EnumDescDto
 {
     /// <summary>
     /// 键

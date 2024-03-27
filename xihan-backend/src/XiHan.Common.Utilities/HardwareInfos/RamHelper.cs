@@ -104,7 +104,7 @@ public static class RamHelper
 /// <summary>
 /// 内存信息
 /// </summary>
-public class RamInfo
+public record RamInfo
 {
     /// <summary>
     /// 总大小

@@ -8,12 +8,12 @@
 		<RepositoryUrl>https://github.com/XiHanFun/XiHan-Backend</RepositoryUrl>
 		<AssemblyVersion>0.4.2</AssemblyVersion>
 		<FileVersion>0.4.2</FileVersion>
-		<Title>XiHan.Application.Core</Title>
+		<Title>XiHan.Common.Shared</Title>
 		<Version>0.4.2</Version>
 		<Authors>ZhaiFanhua</Authors>
 		<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>XiHan.Application.Core</Description>
+		<Description>XiHan.Common.Shared</Description>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageIcon>readme.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -22,25 +22,22 @@
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\XiHan.Domain.Core\XiHan.Domain.Core.csproj" />
-    <ProjectReference Include="..\XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj" />
-    <ProjectReference Include="..\XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="LICENSE">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-    <None Update="readme.md">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-    <None Update="readme.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-  </ItemGroup>
-
+	<ItemGroup>
+	  <Folder Include="Enums\" />
+	</ItemGroup>
 </Project>

@@ -23,6 +23,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="MediatR" Version="12.2.0" />
 	  <PackageReference Include="SqlSugarCore" Version="5.1.4.148" />
 	</ItemGroup>

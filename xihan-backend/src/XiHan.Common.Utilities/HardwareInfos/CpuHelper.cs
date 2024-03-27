@@ -80,7 +80,7 @@ public static class CpuHelper
 /// <summary>
 /// 处理器信息
 /// </summary>
-public class CpuInfo
+public record CpuInfo
 {
     /// <summary>
     /// 处理器个数
