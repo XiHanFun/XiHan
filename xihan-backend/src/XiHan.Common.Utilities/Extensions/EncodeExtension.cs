@@ -110,31 +110,11 @@ public static partial class EncodeExtension
     }
 
     /// <summary>
-    /// 将字符串转化为二进制
-    /// </summary>
-    /// <param name="data">待转换的字符串</param>
-    /// <returns>转换后的二进制数组</returns>
-    public static byte[] ToBinary(this string data)
-    {
-        return Encoding.UTF8.GetBytes(data);
-    }
-
-    /// <summary>
-    /// 将二进制数据转化为字符串
-    /// </summary>
-    /// <param name="data">待转换的二进制数组</param>
-    /// <returns>转换后的字符串</returns>
-    public static string FromBinary(this byte[] data)
-    {
-        return Encoding.UTF8.GetString(data);
-    }
-
-    /// <summary>
     /// 将字符串转为 Unicode 编码
     /// </summary>
     /// <param name="data">待转码的字符串</param>
     /// <returns>转码后的字符串</returns>
-    public static string ToUnicode(this string data)
+    public static string UnicodeEncode(this string data)
     {
         StringBuilder sb = new();
         foreach (var t in data) _ = sb.Append($@"\u{(int)t:x4}");
@@ -147,9 +127,29 @@ public static partial class EncodeExtension
     /// </summary>
     /// <param name="data">待解码的字符串</param>
     /// <returns>解码后的字符串</returns>
-    public static string FromUnicode(this string data)
+    public static string UnicodeDecode(this string data)
     {
         return UnicodeRegex().Replace(data, match => ((char)int.Parse(match.Groups[1].Value, NumberStyles.HexNumber)).ToString());
+    }
+
+    /// <summary>
+    /// 将字符串转化为二进制
+    /// </summary>
+    /// <param name="data">待转换的字符串</param>
+    /// <returns>转换后的二进制数组</returns>
+    public static byte[] BinaryEncode(this string data)
+    {
+        return Encoding.UTF8.GetBytes(data);
+    }
+
+    /// <summary>
+    /// 将二进制数据转化为字符串
+    /// </summary>
+    /// <param name="data">待转换的二进制数组</param>
+    /// <returns>转换后的字符串</returns>
+    public static string BinaryDecode(this byte[] data)
+    {
+        return Encoding.UTF8.GetString(data);
     }
 
     /// <summary>

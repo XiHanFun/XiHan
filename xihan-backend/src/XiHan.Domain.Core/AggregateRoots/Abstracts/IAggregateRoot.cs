@@ -15,7 +15,7 @@
 namespace XiHan.Domain.Core.AggregateRoots.Abstracts;
 
 /// <summary>
-/// 通用聚合根接口
+/// 聚合根接口
 /// </summary>
 public interface IAggregateRoot
 {

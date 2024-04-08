@@ -13,7 +13,7 @@
 		<Authors>ZhaiFanhua</Authors>
 		<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>XiHan.Common.Shared</Description>
+		<Description>曦寒公共共享组件库</Description>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageIcon>readme.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -21,6 +21,10 @@
 		<SignAssembly>False</SignAssembly>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="LICENSE">
@@ -38,6 +42,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Enums\" />
+	  <ProjectReference Include="..\XiHan.Common.Core\XiHan.Common.Core.csproj" />
 	</ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:RsaEncryptionHelper
+// PathName:RsaEncryptionHelper
 // Guid:fa690f78-718e-4573-9710-aa74828385a6
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -41,23 +41,23 @@ public static class RsaEncryptionHelper
     /// <summary>
     /// 生成一个新的 RSA 密钥对，并将公钥和私钥存储到文件中
     /// </summary>
-    /// <param name="publicKeyFile"></param>
-    /// <param name="privateKeyFile"></param>
-    public static void GenerateKeys(string publicKeyFile, string privateKeyFile)
+    /// <param name="publicKeyPath">公钥路径</param>
+    /// <param name="privateKeyPath">私钥路径</param>
+    public static void GenerateKeys(string publicKeyPath, string privateKeyPath)
     {
         // 保存公钥
         var publicKey = _rsaProvider.ToXmlString(false);
-        File.WriteAllText(publicKeyFile, publicKey);
+        File.WriteAllText(publicKeyPath, publicKey);
 
         // 保存私钥
         var privateKey = _rsaProvider.ToXmlString(true);
-        File.WriteAllText(privateKeyFile, privateKey);
+        File.WriteAllText(privateKeyPath, privateKey);
     }
 
     /// <summary>
     /// 使用公钥加密数据
     /// </summary>
-    /// <param name="plainText"></param>
+    /// <param name="plainText">要加密的文本</param>
     /// <returns>加密结果</returns>
     /// <remarks>
     /// 须先调用 GenerateKeys 方法生成密钥对
@@ -87,23 +87,23 @@ public static class RsaEncryptionHelper
     /// <summary>
     /// 加载一个已有的 RSA 密钥对
     /// </summary>
-    /// <param name="publicKeyFile"></param>
-    /// <param name="privateKeyFile"></param>
-    public static void LoadKeys(string publicKeyFile, string privateKeyFile)
+    /// <param name="publicKeyPath">公钥路径</param>
+    /// <param name="privateKeyPath">私钥路径</param>
+    public static void LoadKeys(string publicKeyPath, string privateKeyPath)
     {
         // 加载公钥
-        var publicKey = File.ReadAllText(publicKeyFile);
+        var publicKey = File.ReadAllText(publicKeyPath);
         _rsaProvider.FromXmlString(publicKey);
 
         // 加载私钥
-        var privateKey = File.ReadAllText(privateKeyFile);
+        var privateKey = File.ReadAllText(privateKeyPath);
         _rsaProvider.FromXmlString(privateKey);
     }
 
     /// <summary>
     /// 使用私钥解密数据
     /// </summary>
-    /// <param name="encryptedText"></param>
+    /// <param name="encryptedText">要加密的文本</param>
     /// <returns>解密结果</returns>
     /// <remarks>
     /// 须先调用 LoadKeys 方法加载密钥对

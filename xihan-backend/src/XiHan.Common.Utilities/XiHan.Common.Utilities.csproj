@@ -13,7 +13,7 @@
 		<Authors>ZhaiFanhua</Authors>
 		<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>XiHan.Common.Utilities</Description>
+		<Description>曦寒公共通用组件库</Description>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageIcon>readme.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -21,6 +21,14 @@
 		<SignAssembly>False</SignAssembly>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Common.Core\XiHan.Common.Core.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="LICENSE">

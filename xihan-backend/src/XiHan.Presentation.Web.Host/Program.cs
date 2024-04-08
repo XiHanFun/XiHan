@@ -12,13 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Application.Core.Modules;
-using XiHan.Domain.Core.Modules;
-using XiHan.Domain.Core.Modules.Extensions;
-using XiHan.Infrastructure.Core.Modules;
-using XiHan.Infrastructure.Persistence.Modules;
-using XiHan.Presentation.Web.Core.Modules;
-using XiHan.Presentation.Web.Host.Modules;
+using Serilog;
+using XiHan.Common.Core.Extensions;
+using XiHan.Presentation.Web.Host.Consoles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,30 +23,11 @@ ConsoleProjectInfo.SayHello();
 // 打印服务器信息
 ConsoleServerInfo.ConfirmServerInfo();
 
-// 配置日志
-var log = builder.Logging;
-log.AddLogSetup();
-
 try
 {
-    // 创建配置
-    var config = builder.Configuration;
+    builder.ConfigureExtraServices();
 
-    // 配置主机
-    var host = builder.WebHost;
-
-    // 配置服务
-    var services = builder.Services;
-    services.AddConfigureServicesByModules(
-        config,
-        new DomainCoreModule(),
-        new InfrastructureCoreModule(),
-        new InfrastructurePersistenceModule(),
-        new ApplicationCoreModule(),
-        new PresentationWebCoreModule(),
-        new PresentationWebHostModule());
-
-    // 配置应用
+    // 应用
     var app = builder.Build();
     app.UseConfigureByModules();
 

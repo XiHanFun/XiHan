@@ -28,6 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Domain.Core\XiHan.Domain.Core.csproj" />
 	  <ProjectReference Include="..\XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj" />
 	</ItemGroup>
 
