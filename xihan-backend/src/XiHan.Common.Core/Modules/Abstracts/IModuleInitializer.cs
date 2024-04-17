@@ -34,14 +34,14 @@ public interface IModuleInitializer
     IEnumerable<IInitializerOptions> GetInitializerOptions();
 
     /// <summary>
-    /// 配置服务
+    /// 初始化服务
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     void InitializeServices(IServiceCollection services, IConfiguration configuration);
 
     /// <summary>
-    /// 配置应用程序
+    /// 初始化应用
     /// </summary>
     void Initialize(IApplicationBuilder builder, IWebHostEnvironment environment);
 }

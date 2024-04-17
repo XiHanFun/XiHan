@@ -15,14 +15,13 @@
 using SqlSugar;
 using XiHan.Domain.Core.AggregateRoots.Abstracts;
 using XiHan.Domain.Core.Entities.Abstracts;
-using XiHan.Domain.Core.Events;
 
 namespace XiHan.Domain.Core.AggregateRoots;
 
 /// <summary>
 /// 聚合根
 /// </summary>
-public class AggregateRoot : BaseDomainEvents, IAggregateRoot, IEntity<long>,
+public class AggregateRoot : IAggregateRoot, IEntity<long>,
     IHasCreated<long?>, IHasModified<long?>, IHasDeleted<long?>, ISoftDeleted<long?>, IHasAudited<long?>
 {
     /// <summary>

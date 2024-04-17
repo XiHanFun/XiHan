@@ -14,13 +14,14 @@
 
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
+using XiHan.Domain.Core.Events;
 
 namespace XiHan.Domain.Core.Entities.Bases;
 
 /// <summary>
 /// 领域实体基类
 /// </summary>
-public abstract class BaseEntity : IEntity<long>
+public abstract class BaseEntity : BaseDomainEvents, IEntity<long>
 {
     /// <summary>
     /// 主键标识
