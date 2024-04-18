@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\common.props" />
+	
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Title>XiHan.Core</Title>
+		
+		<Description>曦寒核心组件库</Description>
+		
+		<SignAssembly>False</SignAssembly>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="readme.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

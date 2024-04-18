@@ -1,0 +1,41 @@
+# 名称
+name: 部署前端
+
+# 触发条件：在 push 和 pull 到 main 分支后
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# 任务
+jobs:
+  deploy-gh-pages:
+    # 服务器环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ui/
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: 安装依赖
+        run: pnpm install --no-frozen-lockfile
+
+      - name: 构建项目
+        run: pnpm run build

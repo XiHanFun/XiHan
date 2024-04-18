@@ -1,0 +1,35 @@
+{
+  "name": "xihan-docs",
+  "version": "0.4.1",
+  "type": "module",
+  "description": "XiHan document project. A fast, lightweight, efficient, and dedicated development framework and new decentralized full scenario application software. Built based on DotNet and Vue.",
+  "author": {
+    "name": "ZhaiFanhua",
+    "email": "zhaifanhua@foxmail.com",
+    "url": "https://github.com/XiHanFun/XiHan-Docs"
+  },
+  "license": "MulanPSL-2.0",
+  "homepage": "https://docs.xihan.fun",
+  "repository": {
+    "url": "https://github.com/XiHanFun/XiHan-Docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/XiHanFun/XiHan-Docs/issues"
+  },
+  "scripts": {
+    "bootstrap": "pnpm install",
+    "dev": "vitepress dev --host",
+    "build": "vitepress build",
+    "serve": "vitepress serve",
+    "preview": "vitepress preview",
+    "update-pkg": "ncu --deep -u",
+    "clean": "rimraf .vitepress/cache && rimraf pnpm-lock.yaml && rimraf package.lock.json && rimraf node_modules"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.1"
+  },
+  "devDependencies": {
+    "vue": "^3.4.21",
+    "rimraf": "^5.0.5"
+  }
+}

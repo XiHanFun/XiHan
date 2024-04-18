@@ -1,0 +1,30 @@
+# 告诉EditorConfig插件，这是根文件，不用继续往上查找。
+root = true
+
+# 匹配全部文件。
+[*]
+# 使用`utf-8`字符集。
+charset=utf-8
+# 结尾换行符，可选`lf`、`cr`、`crlf`。
+end_of_line=lf
+# 在文件结尾插入新行
+insert_final_newline=true
+# 缩进的样式为空格。
+indent_style=space
+# 缩进为2
+indent_size=2
+# 行最大长度为100
+max_line_length = 100
+
+# 匹配以`.yml`、`.yaml`、`.json`结尾的文件
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2
+
+# 匹配以`.md`结尾的文件
+[*.md]
+# 修剪尾随空格
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 866.53 639.65">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#GradientFill_1-2);
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: url(#GradientFill_1);
+      }
+    </style>
+    <linearGradient id="GradientFill_1" data-name="GradientFill 1" x1="339.55" y1="639.65" x2="339.55" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3890cf"/>
+      <stop offset="1" stop-color="#77c7c0"/>
+    </linearGradient>
+    <linearGradient id="GradientFill_1-2" data-name="GradientFill 1" x1="526.97" x2="526.97" xlink:href="#GradientFill_1"/>
+  </defs>
+  <path class="cls-2" d="m679.1,319.82l-92.33,159.91-.02.04h-91.26l40.55-70.24,51.8-89.72-51.8-89.71-51.8-89.72H206.21l-44.09,76.37H0l32.82-56.85L125.15,0h369.3l92.32,159.91,92.33,159.91h0Zm-329.52,319.82l-81.06-140.39h-62.32l-44.09-76.37H0l32.83,56.85,92.33,159.91h224.43Z"/>
+  <path class="cls-1" d="m187.42,319.82l92.33,159.91,92.32,159.91h369.3l92.33-159.91,32.83-56.85h-162.11l-44.09,76.37h-278.05l-51.8-89.72-51.8-89.72,51.8-89.71,40.55-70.24h-91.26l-.02.04-92.33,159.91h0Zm410.58-179.43L516.94,0h224.44l92.33,159.91,32.82,56.85h-162.11l-44.09-76.37h-62.32Z"/>
+</svg>

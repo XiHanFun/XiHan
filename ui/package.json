@@ -1,0 +1,61 @@
+{
+  "name": "xihan-frontend",
+  "private": false,
+  "version": "0.4.1",
+  "type": "module",
+  "description": "XiHan frontend project. A fast, lightweight, efficient, and dedicated development framework and new decentralized full scenario application software. Built based on DotNet and Vue.",
+  "author": {
+    "name": "ZhaiFanhua",
+    "email": "zhaifanhua@foxmail.com",
+    "url": "https://github.com/XiHanFun/XiHan-Frontend"
+  },
+  "license": "MulanPSL-2.0",
+  "homepage": "https://frontend.xihan.fun",
+  "repository": {
+    "url": "https://github.com/XiHanFun/XiHan-Frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/XiHanFun/XiHan-Frontend/issues"
+  },
+  "keywords": [
+    "Vue",
+    "Vite",
+    "TypeScript",
+    "NaiveUI",
+    "XiHan",
+    "XiHanFun"
+  ],
+  "scripts": {
+    "bootstrap": "pnpm install",
+    "dev": "vite dev --host",
+    "serve": "vite serve --host",
+    "build": "vue-tsc && vite build",
+    "preview": "npm run build && vite preview",
+    "update-pkg": "ncu --deep -u",
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf package.lock.json && rimraf node_modules && npm run bootstrap"
+  },
+  "dependencies": {
+    "@microsoft/signalr": "^8.0.0",
+    "axios": "^1.6.5",
+    "echarts": "^5.4.3",
+    "naive-ui": "^2.37.3",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
+    "qrcode": "^1.5.3",
+    "vfonts": "^0.0.3",
+    "vue": "^3.4.13",
+    "vue-i18n": "^9.9.0",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.3",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.1",
+    "rimraf": "^5.0.5",
+    "stylelint": "^16.1.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "vue-tsc": "^1.8.27"
+  },
+  "packageManager": "pnpm@8.1.0"
+}
