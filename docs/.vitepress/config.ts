@@ -50,16 +50,8 @@ const Nav: DefaultTheme.NavItem[] = [
             link: "https://github.com/XiHanFun",
           },
           {
-            text: "文档",
-            link: "https://github.com/XiHanFun/XiHan-Docs",
-          },
-          {
-            text: "后端",
-            link: "https://github.com/XiHanFun/XiHan-Backend",
-          },
-          {
-            text: "前端",
-            link: "https://github.com/XiHanFun/XiHan-Frontend",
+            text: "项目",
+            link: "https://github.com/XiHanFun/XiHan",
           },
         ],
       },
@@ -71,16 +63,8 @@ const Nav: DefaultTheme.NavItem[] = [
             link: "https://gitee.com/XiHanFun",
           },
           {
-            text: "文档",
-            link: "https://gitee.com/XiHanFun/XiHan-Docs",
-          },
-          {
-            text: "后端",
-            link: "https://gitee.com/XiHanFun/XiHan-Backend",
-          },
-          {
-            text: "前端",
-            link: "https://gitee.com/XiHanFun/XiHan-Frontend",
+            text: "项目",
+            link: "https://gitee.com/XiHanFun/XiHan",
           },
         ],
       },

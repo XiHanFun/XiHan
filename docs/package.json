@@ -1,20 +1,20 @@
 {
   "name": "xihan-docs",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "type": "module",
-  "description": "XiHan document project. A fast, lightweight, efficient, and dedicated development framework and new decentralized full scenario application software. Built based on DotNet and Vue.",
+  "description": "XiHan document project. Fast, lightweight, efficient, and dedicated development framework and new decentralized full scenario application software. Built based on DotNet and Vue.",
   "author": {
     "name": "ZhaiFanhua",
     "email": "zhaifanhua@foxmail.com",
-    "url": "https://github.com/XiHanFun/XiHan-Docs"
+    "url": "https://github.com/XiHanFun/XiHan"
   },
   "license": "MulanPSL-2.0",
   "homepage": "https://docs.xihan.fun",
   "repository": {
-    "url": "https://github.com/XiHanFun/XiHan-Docs.git"
+    "url": "https://github.com/XiHanFun/XiHan.git"
   },
   "bugs": {
-    "url": "https://github.com/XiHanFun/XiHan-Docs/issues"
+    "url": "https://github.com/XiHanFun/XiHan/issues"
   },
   "scripts": {
     "bootstrap": "pnpm install",
