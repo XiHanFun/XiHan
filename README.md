@@ -2,24 +2,19 @@
 
 ![last commit](https://img.shields.io/github/last-commit/XiHanBlog/XiHan.Framework.svg?style=flat-square) ![downloads](https://img.shields.io/github/downloads/XiHanBlog/XiHan.Framework/total?style=flat-square) ![release](https://img.shields.io/github/v/release/XiHanBlog/XiHan.Framework?style=flat-square) ![commit activity](https://img.shields.io/github/commit-activity/y/XiHanBlog/XiHan.Framework?style=flat-square) ![issues](https://img.shields.io/github/issues/XiHanBlog/XiHan.Framework?style=flat-square) ![issues closed raw](https://img.shields.io/github/issues-closed-raw/XiHanBlog/XiHan.Framework?style=flat-square) ![forks](https://img.shields.io/github/forks/XiHanBlog/XiHan.Framework?style=flat-square) ![stars](https://img.shields.io/github/stars/XiHanBlog/XiHan.Framework?style=flat-square) ![watchers](https://img.shields.io/github/watchers/XiHanBlog/XiHan.Framework?style=flat-square)
 
-  一款快速、轻量、高效、用心的开发框架。 基于 DotNet 和 Vue 构建。
+快速、轻量、高效、用心的开发框架，基于 DotNet 和 Vue 构建。
 
-### 高效快速 返哺开源 用心创作 探索未知
+高效快速 返哺开源 用心创作 探索未知
 
-
-
-## 快速开始
+# 快速开始
 
 官方文档：[曦寒官方文档](https://docs.xihan.fun)
 
 在线体验：[曦寒接口文档](https://api.xihan.fun)
 
+# 后端框架
 
-
-## 所用框架
-
-- DotNet8(CSharp)；
-- WebApi；
+- DotNet；
 
 ### 框架模块
 
@@ -103,9 +98,17 @@
 - [x] 可配合 Nginx 实现负载均衡；
 - [ ] 可配合 Ids4 实现认证中心；
 
+# 前端框架
 
+- TypeScript；
+- Vue；
+- Vite；
+- Pinia；
+- Axios；
+- Vue Router；
+- Naive UI；
 
-## 开发计划（插件形式）
+# 开发计划
 
 ### 基础功能模块
 
@@ -137,13 +140,13 @@
 dotnet /yourpath/XiHan.WebApi.dll --environment=Production --urls=http://*:9708 --ip=127.0.0.1
 ```
 
-## 项目相关
+# 项目相关
 
 贡献代码：[贡献代码](CONTRIBUTING.md)
 
 更新沿程：[更新沿程](CHANGELOG.md)
 
-## Status
+# 仓库状态
 
 ![Status](https://repobeats.axiom.co/api/embed/6e6dcd83875e06131527cf7e55007e5f72fd1860.svg)
 

@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./framework/src/
+        working-directory: ./backend/src/
 
     steps:
       # 拉取代码
