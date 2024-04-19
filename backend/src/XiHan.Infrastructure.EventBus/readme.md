@@ -1,1 +1,1 @@
-﻿## XiHan.Infrastructure.EventBus
+﻿## 曦寒基础设施事件总线组件库
