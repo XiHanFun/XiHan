@@ -5,58 +5,72 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Commons", "1.Commons", "{A661BDC1-48C2-4064-8058-7F394B98A075}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Core", "XiHan.Core\XiHan.Core.csproj", "{FE255334-5198-425A-83AD-A5CECC6CC3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Core", "src\XiHan.Core\XiHan.Core.csproj", "{FE255334-5198-425A-83AD-A5CECC6CC3F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common.Utilities", "XiHan.Common.Utilities\XiHan.Common.Utilities.csproj", "{84FB508C-5D72-40FC-8E28-AF4656040CBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common.Utilities", "src\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj", "{84FB508C-5D72-40FC-8E28-AF4656040CBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common.Shared", "XiHan.Common.Shared\XiHan.Common.Shared.csproj", "{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Common.Shared", "src\XiHan.Common.Shared\XiHan.Common.Shared.csproj", "{EEBEEFF1-3A8F-4FF6-9635-12A63C399173}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domains", "2.Domains", "{033178E4-70C4-4901-947B-FCC964FC0709}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Domain.Core", "XiHan.Domain.Core\XiHan.Domain.Core.csproj", "{6CB37456-7F69-44AA-AF61-7EB410A87924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Domain.Core", "src\XiHan.Domain.Core\XiHan.Domain.Core.csproj", "{6CB37456-7F69-44AA-AF61-7EB410A87924}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructures", "3.Infrastructures", "{8C9CD295-05B0-42D9-B607-84AA1DE60D2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Core", "XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj", "{0C59FD7E-17B3-4F1F-B995-AC2F3580BFAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Core", "src\XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj", "{0C59FD7E-17B3-4F1F-B995-AC2F3580BFAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Logging", "XiHan.Infrastructure.Logging\XiHan.Infrastructure.Logging.csproj", "{37371590-19A0-41B2-B15C-F4E25FB8F3BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Logging", "src\XiHan.Infrastructure.Logging\XiHan.Infrastructure.Logging.csproj", "{37371590-19A0-41B2-B15C-F4E25FB8F3BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Caching", "XiHan.Infrastructure.Caching\XiHan.Infrastructure.Caching.csproj", "{5F5F2EF4-CC96-4EFC-9621-6CFCCBF36577}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Caching", "src\XiHan.Infrastructure.Caching\XiHan.Infrastructure.Caching.csproj", "{5F5F2EF4-CC96-4EFC-9621-6CFCCBF36577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Persistence", "XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj", "{028F25CC-BBC7-411A-9B83-4D0548F1811C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Persistence", "src\XiHan.Infrastructure.Persistence\XiHan.Infrastructure.Persistence.csproj", "{028F25CC-BBC7-411A-9B83-4D0548F1811C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Auth", "XiHan.Infrastructure.Auth\XiHan.Infrastructure.Auth.csproj", "{35784F53-7E19-4E5E-B276-E0248354657F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Auth", "src\XiHan.Infrastructure.Auth\XiHan.Infrastructure.Auth.csproj", "{35784F53-7E19-4E5E-B276-E0248354657F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Scheduling", "XiHan.Infrastructure.Scheduling\XiHan.Infrastructure.Scheduling.csproj", "{057A82D2-5B3E-4941-88C0-ABABFB29F1DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Scheduling", "src\XiHan.Infrastructure.Scheduling\XiHan.Infrastructure.Scheduling.csproj", "{057A82D2-5B3E-4941-88C0-ABABFB29F1DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.EventBus", "XiHan.Infrastructure.EventBus\XiHan.Infrastructure.EventBus.csproj", "{C3C1492E-DDBD-4F96-8396-F6EB4C139F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.EventBus", "src\XiHan.Infrastructure.EventBus\XiHan.Infrastructure.EventBus.csproj", "{C3C1492E-DDBD-4F96-8396-F6EB4C139F18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Applications", "4.Applications", "{C47184A5-2317-47B8-9306-5B1CB36C0DB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Application.Core", "XiHan.Application.Core\XiHan.Application.Core.csproj", "{83C349A6-D53E-4301-A7F4-FAE17EF29911}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Application.Core", "src\XiHan.Application.Core\XiHan.Application.Core.csproj", "{83C349A6-D53E-4301-A7F4-FAE17EF29911}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Presentations", "5.Presentations", "{3B8B9EBA-C058-4E93-A43B-D2F04571E095}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Presentation.Web.Core", "XiHan.Presentation.Web.Core\XiHan.Presentation.Web.Core.csproj", "{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Presentation.Web.Core", "src\XiHan.Presentation.Web.Core\XiHan.Presentation.Web.Core.csproj", "{2BAE6EC4-80AE-4D92-9A96-1E3FB4F26557}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Presentation.Web.Host", "XiHan.Presentation.Web.Host\XiHan.Presentation.Web.Host.csproj", "{75848A3D-0CC8-423E-8A7E-8BAB777E11CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Presentation.Web.Host", "src\XiHan.Presentation.Web.Host\XiHan.Presentation.Web.Host.csproj", "{75848A3D-0CC8-423E-8A7E-8BAB777E11CA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Tests", "7.Tests", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Tests", "6.Tests", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Unit", "XiHan.Test.Unit\XiHan.Test.Unit.csproj", "{6C119216-F507-4430-97C8-B1C8F6DFEDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Unit", "src\XiHan.Test.Unit\XiHan.Test.Unit.csproj", "{6C119216-F507-4430-97C8-B1C8F6DFEDE3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Console", "XiHan.Test.Console\XiHan.Test.Console.csproj", "{694CD9B8-A926-450F-BD1C-A556D6F5B71D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Console", "src\XiHan.Test.Console\XiHan.Test.Console.csproj", "{694CD9B8-A926-450F-BD1C-A556D6F5B71D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Web", "XiHan.Test.Web\XiHan.Test.Web.csproj", "{C64B043D-A797-4A1E-B148-8F0FD161EC18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Web", "src\XiHan.Test.Web\XiHan.Test.Web.csproj", "{C64B043D-A797-4A1E-B148-8F0FD161EC18}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Others", "6.Others", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Others", "7.Others", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.AI", "src\XiHan.Infrastructure.AI\XiHan.Infrastructure.AI.csproj", "{94EF96A3-923A-4D9D-8CAA-F6AC155E193D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Communication", "src\XiHan.Infrastructure.Communication\XiHan.Infrastructure.Communication.csproj", "{87785897-5D92-4AEC-B10C-163AAFA51729}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{367CCAF5-7C5E-43CD-AEC7-0E58E7CFAED3}"
 	ProjectSection(SolutionItems) = preProject
-		..\props\common.props = ..\props\common.props
+		props\common.props = props\common.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.AI", "XiHan.Infrastructure.AI\XiHan.Infrastructure.AI.csproj", "{94EF96A3-923A-4D9D-8CAA-F6AC155E193D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "snks", "snks", "{4FB4A566-E4E8-4C87-A98D-647B7CF57C07}"
+	ProjectSection(SolutionItems) = preProject
+		snks\XiHan.snk = snks\XiHan.snk
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.Communication", "XiHan.Infrastructure.Communication\XiHan.Infrastructure.Communication.csproj", "{87785897-5D92-4AEC-B10C-163AAFA51729}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{F83407CC-A669-481B-BB94-99DF69DCD7BF}"
+	ProjectSection(SolutionItems) = preProject
+		readme\LICENSE = readme\LICENSE
+		readme\readme.md = readme\readme.md
+		readme\readme.png = readme\readme.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,6 +178,9 @@ Global
 		{C64B043D-A797-4A1E-B148-8F0FD161EC18} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
 		{94EF96A3-923A-4D9D-8CAA-F6AC155E193D} = {8C9CD295-05B0-42D9-B607-84AA1DE60D2F}
 		{87785897-5D92-4AEC-B10C-163AAFA51729} = {8C9CD295-05B0-42D9-B607-84AA1DE60D2F}
+		{367CCAF5-7C5E-43CD-AEC7-0E58E7CFAED3} = {20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}
+		{4FB4A566-E4E8-4C87-A98D-647B7CF57C07} = {20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}
+		{F83407CC-A669-481B-BB94-99DF69DCD7BF} = {20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}

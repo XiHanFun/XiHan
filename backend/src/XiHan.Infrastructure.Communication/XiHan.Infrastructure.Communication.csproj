@@ -27,7 +27,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Common.Core\XiHan.Core.csproj" />
 	  <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
 	</ItemGroup>
 

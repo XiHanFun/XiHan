@@ -51,8 +51,4 @@
 	  <Folder Include="Specifications\Constraints\" />
 	  <Folder Include="Modules\" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Common.Core\XiHan.Core.csproj" />
-	</ItemGroup>
 </Project>

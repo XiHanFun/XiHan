@@ -1,51 +1,72 @@
 <Project>
+	<!-- 项目属性 -->
 	<PropertyGroup>
+		<!-- 设置C#语言版本 -->
 		<LangVersion>latest</LangVersion>
+		<!-- 指定目标框架 -->
+		<TargetFramework>net8.0</TargetFramework>
+		<!-- 设置程序集的版本信息 -->
 		<AssemblyVersion>0.4.2</AssemblyVersion>
 		<FileVersion>0.4.2</FileVersion>
 		<Version>0.4.2</Version>
-		<TargetFramework>net8.0</TargetFramework>
+		<!-- 启用隐式全局usings -->
 		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- 设置可空引用类型 -->
 		<Nullable>enable</Nullable>
+		<!-- 生成XML文档文件 -->
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<!-- 指定源代码仓库类型 -->
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/XiHanFun/XiHan-Backend</RepositoryUrl>
+		<!-- 指定源代码仓库URL -->
+		<RepositoryUrl>https://github.com/XiHanFun/XiHan</RepositoryUrl>
+		<!-- 指定作者信息 -->
 		<Authors>ZhaiFanhua</Authors>
-		<Copyright>Copyright © ZhaiFanhua All Rights Reserved.</Copyright>
+		<!-- 指定版权信息 -->
+		<Copyright>Copyright ©2024 ZhaiFanhua All Rights Reserved.</Copyright>
+		<!-- 构建时生成NuGet包 -->
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<!-- NuGet包图标 -->
 		<PackageIcon>readme.png</PackageIcon>
+		<!-- NuGet包附带的README文件 -->
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<!-- 要求用户在接受许可证协议后才能安装包 -->
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<!-- NuGet包附带的许可证文件 -->
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<!-- 项目网址 -->
 		<PackageProjectUrl>https://docs.xihan.fun/</PackageProjectUrl>
+		<!-- 定义NuGet包的标签 -->
 		<PackageTags>csharp aspnetcore framework web webapp xihan zhaifanhua</PackageTags>
-		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+		<!-- NuGet包输出路径 -->
+		<PackageOutputPath>..\..\nupkgs</PackageOutputPath>
+		<!-- 程序集签名 -->
+		<SignAssembly>True</SignAssembly>
+		<!-- 延迟签名（不使用） -->
+		<DelaySign>False</DelaySign>
+		<!-- 指定用于签名的密钥文件 -->
+		<AssemblyOriginatorKeyFile>..\..\snks\XiHan.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
+
+	<!-- 项目文件包含 -->
 	<ItemGroup>
-		<None Include="..\..\NuGet.md" Pack="true" PackagePath="\" />
+		<!-- 将readme.md作为None类型文件包含在NuGet包中 -->
+		<None Update="readme.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
+
+	<!-- 其他文件包含 -->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
-	<ItemGroup Condition="'$(UsingMicrosoftNETSdkWeb)' != 'true' AND '$(UsingMicrosoftNETSdkRazor)' != 'true'">
-		<None Remove="*.abppkg.analyze.json" />
-		<Content Include="*.abppkg.analyze.json">
-			<Pack>true</Pack>
-			<PackagePath>content\</PackagePath>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="*.abppkg" />
-		<Content Include="*.abppkg">
-			<Pack>true</Pack>
-			<PackagePath>content\</PackagePath>
-		</Content>
-	</ItemGroup>
-	<ItemGroup Condition="$(AssemblyName.EndsWith('HttpApi.Client'))">
-		<EmbeddedResource Include="**\*generate-proxy.json" />
-		<Content Remove="**\*generate-proxy.json" />
+		<!-- 将readme.png作为NuGet包图标 -->
+		<None Include="..\..\readme\readme.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<!-- 将LICENSE文件包含在NuGet包中 -->
+		<None Include="..\..\readme\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>
