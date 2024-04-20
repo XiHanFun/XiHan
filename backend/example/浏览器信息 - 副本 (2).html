@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>System and Browser Info</title>
+    <script>
+        // 检测用户代理字符串以确定操作系统和浏览器信息
+        function getSystemAndBrowserInfo() {
+            var ua = navigator.userAgent; // 获取用户代理字符串
+            var info = {
+                system: 'Unknown',
+                systemVersion: 'Unknown',
+                browser: 'Unknown',
+                browserVersion: 'Unknown'
+            };
+
+            // 正则表达式检测操作系统
+            var osRegex = [
+                { name: 'Windows', regex: /Windows NT ([\d.]+)/ },
+                // 其他操作系统的正则表达式...
+            ];
+
+            // 正则表达式检测浏览器
+            var browserRegex = [
+                { name: 'Chrome', regex: /Chrome\/([\d.]+)/ },
+                // 其他浏览器的正则表达式...
+            ];
+
+            // 检测操作系统
+            osRegex.forEach(function (os) {
+                if (new RegExp(os.regex).test(ua)) {
+                    info.system = os.name;
+                    info.systemVersion = RegExp.$1;
+                }
+            });
+
+            // 检测浏览器
+            browserRegex.forEach(function (browser) {
+                if (new RegExp(browser.regex).test(ua)) {
+                    info.browser = browser.name;
+                    info.browserVersion = RegExp.$1;
+                }
+            });
+
+            // 返回检测到的信息
+            return info;
+        }
+
+        // 当页面加载完成后，执行以下代码
+        window.onload = function () {
+            // 获取系统和浏览器信息
+            var info = getSystemAndBrowserInfo();
+
+            // 获取显示信息的元素
+            var infoElement = document.getElementById('info');
+
+            // 创建显示信息的文本
+            var infoText = '系统：' + info.system + ' ' + info.systemVersion + ' ' +
+                '浏览器：' + info.browser + ' ' + info.browserVersion;
+
+            // 将文本设置到元素中
+            infoElement.innerText = infoText;
+        };
+    </script>
+</head>
+
+<body>
+    <!-- 页面上显示检测结果的元素 -->
+    <div id="info"></div>
+</body>
+
+</html>

@@ -18,7 +18,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// ServiceConfigurationContext
+///
 /// </summary>
 public class ServiceConfigurationContext
 {
@@ -36,15 +36,17 @@ public class ServiceConfigurationContext
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    //public object? this[string key]
-    //{
-    //    get => Items.GetOrDefault(key);
-    //    set => Items[key] = value;
-    //}
+    public object? this[string key]
+    {
+        get => Items.GetOrDefault(key);
+        set => Items[key] = value;
+    }
 
-    //public ServiceConfigurationContext([NotNull] IServiceCollection services)
-    //{
-    //    Services = Check.NotNull(services, nameof(services));
-    //    Items = new Dictionary<string, object?>();
-    //}
+    public ServiceConfigurationContext([NotNull] IServiceCollection services)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(nameof(services));
+
+        Services = Check.NotNull(services, nameof(services));
+        Items = new Dictionary<string, object?>();
+    }
 }

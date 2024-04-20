@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> New Document </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta charset="utf-8" />
+
+    <script language=javascript>
+        // 封装浏览器检测逻辑
+        function detectBrowser(userAgent) {
+            userAgent = userAgent || navigator.userAgent;
+            const browserMap = {
+                "Trident": userAgent.indexOf("Trident") > -1 || userAgent.indexOf("NET CLR") > -1,
+                "Presto": userAgent.indexOf("Presto") > -1,
+                "WebKit": userAgent.indexOf("AppleWebKit") > -1,
+                "Gecko": userAgent.indexOf("Gecko/") > -1,
+                "Safari": userAgent.indexOf("Safari") > -1,
+                "Edge": userAgent.indexOf("Edge") > -1 || userAgent.indexOf("Edg") > -1,
+                "Chrome": userAgent.indexOf("Chrome") > -1 || userAgent.indexOf("CriOS") > -1,
+                "IE": userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1,
+                "Firefox": userAgent.indexOf("Firefox") > -1 || userAgent.indexOf("FxiOS") > -1,
+                "Firefox Focus": userAgent.indexOf("Focus") > -1,
+                "Chromium": userAgent.indexOf("Chromium") > -1,
+                "Opera": userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1,
+                "Vivaldi": userAgent.indexOf("Vivaldi") > -1,
+                "Yandex": userAgent.indexOf("YaBrowser") > -1,
+                "Kindle": userAgent.indexOf("Kindle") > -1 || userAgent.indexOf("Silk/") > -1,
+                "360": userAgent.indexOf("360EE") > -1 || userAgent.indexOf("360SE") > -1,
+                "UC": userAgent.indexOf("UC") > -1 || userAgent.indexOf(" UBrowser") > -1,
+                "QQBrowser": userAgent.indexOf("QQBrowser") > -1,
+                "QQ": userAgent.indexOf("QQ/") > -1,
+                "Baidu": userAgent.indexOf("Baidu") > -1 || userAgent.indexOf("BIDUBrowser") > -1,
+                "Maxthon": userAgent.indexOf("Maxthon") > -1,
+                "Sogou": userAgent.indexOf("MetaSr") > -1 || userAgent.indexOf("Sogou") > -1,
+                "LBBROWSER": userAgent.indexOf("LBBROWSER") > -1,
+                "2345Explorer": userAgent.indexOf("2345Explorer") > -1,
+                "TheWorld": userAgent.indexOf("TheWorld") > -1,
+                "XiaoMi": userAgent.indexOf("MiuiBrowser") > -1,
+                "Quark": userAgent.indexOf("Quark") > -1,
+                "Qiyu": userAgent.indexOf("Qiyu") > -1,
+                "Wechat": userAgent.indexOf("MicroMessenger") > -1,
+                "Taobao": userAgent.indexOf("AliApp(TB") > -1,
+                "Alipay": userAgent.indexOf("AliApp(AP") > -1,
+                "Weibo": userAgent.indexOf("Weibo") > -1,
+                "Douban": userAgent.indexOf("com.douban.frodo") > -1,
+                "Suning": userAgent.indexOf("SNEBUY-APP") > -1,
+                "iQiYi": userAgent.indexOf("IqiyiApp") > -1,
+            };
+
+            const browser = Object.keys(browserMap).find(key => browserMap[key]);
+            return browser || "Unknow App";
+        }
+
+        // 封装操作系统检测逻辑
+        function detectOS(userAgent) {
+            const osMap = {
+                "Windows": userAgent.indexOf("Windows") > -1,
+                "Linux": userAgent.indexOf("Linux") > -1 || userAgent.indexOf("X11") > -1,
+                "macOS": userAgent.indexOf("Macintosh") > -1,
+                "Android": userAgent.indexOf("Android") > -1 || userAgent.indexOf("Adr") > -1,
+                "Ubuntu": userAgent.indexOf("Ubuntu") > -1,
+                "FreeBSD": userAgent.indexOf("FreeBSD") > -1,
+                "Debian": userAgent.indexOf("Debian") > -1,
+                "Windows Phone": userAgent.indexOf("IEMobile") > -1 || userAgent.indexOf("Windows Phone") > -1,
+                "BlackBerry": userAgent.indexOf("BlackBerry") > -1 || userAgent.indexOf("RIM") > -1 || userAgent.indexOf("BB10") > -1,
+                "MeeGo": userAgent.indexOf("MeeGo") > -1,
+                "Symbian": userAgent.indexOf("Symbian") > -1,
+                "iOS": userAgent.indexOf("like Mac OS X") > -1,
+                "Chrome OS": userAgent.indexOf("CrOS") > -1,
+                "WebOS": userAgent.indexOf("hpwOS") > -1,
+                "Mobile": userAgent.indexOf("Mobi") > -1 || userAgent.indexOf("iPh") > -1 || userAgent.indexOf("480") > -1,
+                "Tablet": userAgent.indexOf("Tablet") > -1 || userAgent.indexOf("Pad") > -1 || userAgent.indexOf("Nexus 7") > -1,
+            };
+
+            const os = Object.keys(osMap).find(key => osMap[key]);
+            return os || "Unknow OS";
+        }
+
+        // 示例版本获取函数，需要根据实际情况实现
+        function getVersion(userAgent, browser) {
+            // 这里根据具体浏览器和操作系统的版本信息提取逻辑来实现
+            // 示例返回空字符串
+            return "";
+        }
+
+        window.onload = function () {
+            const divID = document.getElementById("elInfo");
+            const userAgent = navigator.userAgent;
+            console.log(userAgent);
+            const browser = detectBrowser(userAgent);
+            const os = detectOS(userAgent);
+            // 假设存在函数getVersion来获取版本号，这里没有实现具体逻辑，仅为示例
+            const version = getVersion(userAgent, browser);
+            const txt = document.createTextNode(`系统：${os} ${version}；浏览器：${browser} ${version}`);
+            divID.appendChild(txt);
+        };
+    </script>
+
+</head>
+
+<body>
+    <div id="elInfo"></div>
+</body>
+
+</html>
