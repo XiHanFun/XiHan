@@ -28,8 +28,9 @@ public static class MethodInfoExtensions
     /// <returns></returns>
     public static bool IsAsync(this MethodInfo method)
     {
-        return method.ReturnType == typeof(Task) || method.ReturnType.IsGenericType &&
-            method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
+        return method.ReturnType == typeof(Task)
+            || method.ReturnType.IsGenericType
+            && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
     }
 
     /// <summary>
