@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.RateLimiting;
 using XiHan.Common.Utilities.Extensions;
+using XiHan.Core.Format;
 using XiHan.Infrastructure.Core.Apps.RequestOrResponse;
 
 namespace XiHan.Infrastructure.Core.Modules;

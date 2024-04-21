@@ -14,6 +14,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using XiHan.Core.System.Collections.Generic;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Modularity;
 
@@ -22,16 +24,20 @@ namespace XiHan.Core.Modularity;
 /// </summary>
 public class ServiceConfigurationContext
 {
+    /// <summary>
+    ///
+    /// </summary>
     public IServiceCollection Services { get; }
 
+    /// <summary>
+    ///
+    /// </summary>
     public IDictionary<string, object?> Items { get; }
 
     /// <summary>
     /// Gets/sets arbitrary named objects those can be stored during
     /// the service registration phase and shared between modules.
-    ///
     /// This is a shortcut usage of the <see cref="Items"/> dictionary.
-    ///
     /// Returns null if given key is not found in the <see cref="Items"/> dictionary.
     /// </summary>
     /// <param name="key"></param>
@@ -42,11 +48,15 @@ public class ServiceConfigurationContext
         set => Items[key] = value;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="services"></param>
     public ServiceConfigurationContext([NotNull] IServiceCollection services)
     {
         ArgumentException.ThrowIfNullOrEmpty(nameof(services));
 
-        Services = Check.NotNull(services, nameof(services));
+        Services = CheckHelper.NotNull(services, nameof(services));
         Items = new Dictionary<string, object?>();
     }
 }

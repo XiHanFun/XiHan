@@ -19,7 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Common.Utilities.Serializes;
+using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 
 namespace XiHan.Infrastructure.EventBus.Kafka;

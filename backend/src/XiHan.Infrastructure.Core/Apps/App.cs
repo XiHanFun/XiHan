@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using XiHan.Common.Utilities.Reflections;
+using XiHan.Core.System.Reflection;
 using XiHan.Infrastructure.Core.Apps.Configs;
 using XiHan.Infrastructure.Core.Apps.Environments;
 using XiHan.Infrastructure.Core.Apps.Services;

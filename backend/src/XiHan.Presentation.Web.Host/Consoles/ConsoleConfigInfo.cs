@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Common.Utilities.Serializes;
+using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.Apps.Configs;
 using XiHan.Infrastructure.Core.Apps.Infos;
 

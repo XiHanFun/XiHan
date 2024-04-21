@@ -19,7 +19,16 @@ namespace XiHan.Core.Modularity;
 /// </summary>
 public interface IXiHanModule
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     Task ConfigureServicesAsync(ServiceConfigurationContext context);
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="context"></param>
     void ConfigureServices(ServiceConfigurationContext context);
 }

@@ -16,7 +16,8 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Common.Utilities.Serializes;
+using XiHan.Core.System;
+using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
 
