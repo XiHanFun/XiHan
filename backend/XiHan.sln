@@ -50,6 +50,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Web", "src\XiHan.Test.Web\XiHan.Test.Web.csproj", "{C64B043D-A797-4A1E-B148-8F0FD161EC18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Others", "7.Others", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Infrastructure.AI", "src\XiHan.Infrastructure.AI\XiHan.Infrastructure.AI.csproj", "{94EF96A3-923A-4D9D-8CAA-F6AC155E193D}"
 EndProject
@@ -70,11 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{F83407
 		readme\LICENSE = readme\LICENSE
 		readme\readme.md = readme\readme.md
 		readme\readme.png = readme\readme.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3897A233-5CA6-48D5-A5E5-C6789A5D4BA7}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global
