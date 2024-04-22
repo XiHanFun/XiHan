@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using System.Diagnostics;
 using JetBrains.Annotations;
+using System.Diagnostics;
 using XiHan.Core.System;
 
 namespace XiHan.Core.Verification;

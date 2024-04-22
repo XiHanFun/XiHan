@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:XiHanModuleHelper
+// FileName:ModuleHelper
 // Guid:c4a6b768-894e-4704-b49b-3be8c802443d
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -20,9 +20,9 @@ using XiHan.Core.System.Collections.Generic;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 曦寒模块帮助类
+/// 模块帮助类
 /// </summary>
-public static class XiHanModuleHelper
+public static class ModuleHelper
 {
     /// <summary>
     /// 查找所有模块类型
@@ -45,7 +45,7 @@ public static class XiHanModuleHelper
     /// <returns></returns>
     public static List<Type> FindDependedModuleTypes(Type moduleType)
     {
-        XiHanModule.CheckXiHanModuleType(moduleType);
+        Module.CheckModuleType(moduleType);
 
         var dependencies = new List<Type>();
 
@@ -98,7 +98,7 @@ public static class XiHanModuleHelper
     /// <param name="depth"></param>
     private static void AddModuleAndDependenciesRecursively(List<Type> moduleTypes, Type moduleType, ILogger? logger, int depth = 0)
     {
-        XiHanModule.CheckXiHanModuleType(moduleType);
+        Module.CheckModuleType(moduleType);
 
         if (moduleTypes.Contains(moduleType))
         {

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:XiHanApplicationCreationOptions
+// FileName:ApplicationCreationOptions
 // Guid:b518acb4-c1e5-45f3-8451-c02da3d2babd
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -20,9 +20,9 @@ using XiHan.Core.Verification;
 namespace XiHan.Core.Options;
 
 /// <summary>
-/// 曦寒应用创建选项
+/// 应用创建选项
 /// </summary>
-public class XiHanApplicationCreationOptions
+public class ApplicationCreationOptions
 {
     /// <summary>
     /// 服务容器
@@ -40,7 +40,7 @@ public class XiHanApplicationCreationOptions
     /// 此属性中的选项仅在未注册 IConfiguration 时生效。
     /// </summary>
     [NotNull]
-    public XiHanConfigurationBuilderOptions Configuration { get; }
+    public ConfigurationBuilderOptions Configuration { get; }
 
     /// <summary>
     /// 是否跳过配置服务
@@ -61,7 +61,7 @@ public class XiHanApplicationCreationOptions
     /// 构造函数
     /// </summary>
     /// <param name="services"></param>
-    public XiHanApplicationCreationOptions([NotNull] IServiceCollection services)
+    public ApplicationCreationOptions([NotNull] IServiceCollection services)
     {
         Services = CheckHelper.NotNull(services, nameof(services));
         PlugInSources = [];

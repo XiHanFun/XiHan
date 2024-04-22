@@ -3,34 +3,28 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IXiHanModule
-// Guid:85ec6b99-74ea-418f-a64c-c117dce646e3
+// FileName:ILocalizeErrorMessage
+// Guid:a618c88c-9431-43dd-ab00-7c1526423b7d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/19 1:46:20
+// CreateTime:2024/4/23 0:58:17
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Modularity.Contexts;
+using XiHan.Core.Localization;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Exceptions.Handling.Abstracts;
 
 /// <summary>
-/// 曦寒模块，模块化服务配置接口
+/// 本地化报错信息接口
 /// </summary>
-public interface IXiHanModule
+public interface ILocalizeErrorMessage
 {
     /// <summary>
-    /// 服务配置，异步
+    /// 本地化报错信息
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task ConfigureServicesAsync(ServiceConfigurationContext context);
-
-    /// <summary>
-    /// 服务配置
-    /// </summary>
-    /// <param name="context"></param>
-    void ConfigureServices(ServiceConfigurationContext context);
+    string LocalizeErrorMessage(LocalizationContext context);
 }

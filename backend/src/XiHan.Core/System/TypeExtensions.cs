@@ -12,9 +12,9 @@
 
 #endregion <<版权版本注释>>
 
+using JetBrains.Annotations;
 using System.Collections;
 using System.ComponentModel;
-using JetBrains.Annotations;
 using System.Text;
 using XiHan.Core.System.Reflection;
 using XiHan.Core.Verification;

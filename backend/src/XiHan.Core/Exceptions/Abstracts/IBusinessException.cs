@@ -3,27 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModuleContainer
-// Guid:cecaa7e3-0cd0-4320-b6dc-f73d1e0ad0ed
-// Author:Administrator
+// FileName:IBusinessException
+// Guid:278d2e53-36da-4e4c-a30d-aaa23f8401d1
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 05:13:43
+// CreateTime:2024/4/23 0:49:31
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using JetBrains.Annotations;
-
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Exceptions.Abstracts;
 
 /// <summary>
-/// 模块容器接口
+/// 业务异常接口
 /// </summary>
-public interface IModuleContainer
+public interface IBusinessException
 {
-    /// <summary>
-    /// 模块列表
-    /// </summary>
-    [NotNull]
-    IReadOnlyList<IModuleDescriptor> Modules { get; }
 }

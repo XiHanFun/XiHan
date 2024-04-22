@@ -3,27 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModuleContainer
-// Guid:cecaa7e3-0cd0-4320-b6dc-f73d1e0ad0ed
-// Author:Administrator
+// FileName:ISingletonDependency
+// Guid:c37becad-85d7-4c70-a68b-229a2d283c02
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 05:13:43
+// CreateTime:2024/4/23 1:23:22
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using JetBrains.Annotations;
-
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.DependencyInjection.Abstracts;
 
 /// <summary>
-/// 模块容器接口
+/// 单例依赖接口
 /// </summary>
-public interface IModuleContainer
+public interface ISingletonDependency
 {
-    /// <summary>
-    /// 模块列表
-    /// </summary>
-    [NotNull]
-    IReadOnlyList<IModuleDescriptor> Modules { get; }
 }

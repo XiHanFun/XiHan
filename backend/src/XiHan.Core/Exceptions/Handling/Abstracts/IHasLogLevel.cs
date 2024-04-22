@@ -3,27 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModuleContainer
-// Guid:cecaa7e3-0cd0-4320-b6dc-f73d1e0ad0ed
-// Author:Administrator
+// FileName:IHasLogLevel
+// Guid:379d82c0-7354-45f0-93a8-d271aba2d9b3
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 05:13:43
+// CreateTime:2024/4/23 0:54:36
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Exceptions.Handling.Abstracts;
 
 /// <summary>
-/// 模块容器接口
+/// 日志级别接口
 /// </summary>
-public interface IModuleContainer
+public interface IHasLogLevel
 {
     /// <summary>
-    /// 模块列表
+    /// 日志级别
     /// </summary>
-    [NotNull]
-    IReadOnlyList<IModuleDescriptor> Modules { get; }
+    LogLevel LogLevel { get; set; }
 }

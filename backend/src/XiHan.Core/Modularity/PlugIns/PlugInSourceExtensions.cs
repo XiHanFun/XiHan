@@ -35,7 +35,7 @@ public static class PlugInSourceExtensions
         CheckHelper.NotNull(plugInSource, nameof(plugInSource));
 
         return plugInSource.GetModules()
-            .SelectMany(type => XiHanModuleHelper.FindAllModuleTypes(type, logger))
+            .SelectMany(type => ModuleHelper.FindAllModuleTypes(type, logger))
             .Distinct().ToArray();
     }
 }

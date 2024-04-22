@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IXiHanModuleDescriptor
+// FileName:IModuleDescriptor
 // Guid:f55a9333-469a-4629-a50a-8873489708b7
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Reflection;
 namespace XiHan.Core.Modularity.Abstracts;
 
 /// <summary>
-/// 曦寒模块描述器接口
+/// 模块描述器接口
 /// </summary>
-public interface IXiHanModuleDescriptor
+public interface IModuleDescriptor
 {
     /// <summary>
     /// 模块类
@@ -40,7 +40,7 @@ public interface IXiHanModuleDescriptor
     /// <summary>
     /// 曦寒模块类的实例(单例)
     /// </summary>
-    IXiHanModule Instance { get; }
+    IModule Instance { get; }
 
     /// <summary>
     /// 该模块是否作为插件加载
@@ -51,5 +51,5 @@ public interface IXiHanModuleDescriptor
     /// 此模块所依赖的模块
     /// 一个模块可以通过<see cref="DependsOnAttribute"/>属性依赖于另一个模块
     /// </summary>
-    IReadOnlyList<IXiHanModuleDescriptor> Dependencies { get; }
+    IReadOnlyList<IModuleDescriptor> Dependencies { get; }
 }

@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.DependencyInjection;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using XiHan.Core.Abstracts;
 using XiHan.Core.Exceptions;
@@ -142,7 +142,7 @@ public static class ServiceCollectionCommonExtensions
     /// <returns></returns>
     internal static T? GetService<T>(this IServiceCollection services)
     {
-        return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetService<T>();
+        return services.GetSingletonInstance<IApplication>().ServiceProvider.GetService<T>();
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public static class ServiceCollectionCommonExtensions
     /// <returns></returns>
     internal static object? GetService(this IServiceCollection services, Type type)
     {
-        return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetService(type);
+        return services.GetSingletonInstance<IApplication>().ServiceProvider.GetService(type);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public static class ServiceCollectionCommonExtensions
     /// <returns></returns>
     public static T GetRequiredService<T>(this IServiceCollection services) where T : notnull
     {
-        return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetRequiredService<T>();
+        return services.GetSingletonInstance<IApplication>().ServiceProvider.GetRequiredService<T>();
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public static class ServiceCollectionCommonExtensions
     /// <returns></returns>
     public static object GetRequiredService(this IServiceCollection services, Type type)
     {
-        return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetRequiredService(type);
+        return services.GetSingletonInstance<IApplication>().ServiceProvider.GetRequiredService(type);
     }
 
     /// <summary>

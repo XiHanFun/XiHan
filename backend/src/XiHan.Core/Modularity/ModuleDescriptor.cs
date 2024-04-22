@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:XiHanModuleDescriptor
+// FileName:ModuleDescriptor
 // Guid:ce79c86a-5010-43c7-ad6a-de2ef2003ef7
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using System.Collections.Immutable;
 using JetBrains.Annotations;
 using System.Reflection;
 using XiHan.Core.Modularity.Abstracts;
@@ -22,11 +21,11 @@ using XiHan.Core.Verification;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 曦寒模块描述器
+/// 模块描述器
 /// </summary>
-public class XiHanModuleDescriptor : IXiHanModuleDescriptor
+public class ModuleDescriptor : IModuleDescriptor
 {
-    private readonly List<IXiHanModuleDescriptor> _dependencies;
+    private readonly List<IModuleDescriptor> _dependencies;
 
     /// <summary>
     /// 模块类
@@ -47,7 +46,7 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
     /// <summary>
     /// 曦寒模块类的实例(单例)
     /// </summary>
-    public IXiHanModule Instance { get; }
+    public IModule Instance { get; }
 
     /// <summary>
     /// 该模块是否作为插件加载
@@ -58,7 +57,7 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
     /// 此模块所依赖的模块
     /// 一个模块可以通过<see cref="DependsOnAttribute"/>属性依赖于另一个模块
     /// </summary>
-    public IReadOnlyList<IXiHanModuleDescriptor> Dependencies => [.. _dependencies];
+    public IReadOnlyList<IModuleDescriptor> Dependencies => [.. _dependencies];
 
     /// <summary>
     /// 构造函数
@@ -67,11 +66,11 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
     /// <param name="instance"></param>
     /// <param name="isLoadedAsPlugIn"></param>
     /// <exception cref="ArgumentException"></exception>
-    public XiHanModuleDescriptor([NotNull] Type type, [NotNull] IXiHanModule instance, bool isLoadedAsPlugIn)
+    public ModuleDescriptor([NotNull] Type type, [NotNull] IModule instance, bool isLoadedAsPlugIn)
     {
         CheckHelper.NotNull(type, nameof(type));
         CheckHelper.NotNull(instance, nameof(instance));
-        XiHanModule.CheckXiHanModuleType(type);
+        Module.CheckModuleType(type);
 
         if (!type.GetTypeInfo().IsAssignableFrom(instance.GetType()))
         {
@@ -80,7 +79,7 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
 
         Type = type;
         Assembly = type.Assembly;
-        AllAssemblies = XiHanModuleHelper.GetAllAssemblies(type);
+        AllAssemblies = ModuleHelper.GetAllAssemblies(type);
         Instance = instance;
         IsLoadedAsPlugIn = isLoadedAsPlugIn;
 
@@ -91,7 +90,7 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
     /// 添加依赖项
     /// </summary>
     /// <param name="descriptor"></param>
-    public void AddDependency(IXiHanModuleDescriptor descriptor)
+    public void AddDependency(IModuleDescriptor descriptor)
     {
         _dependencies.AddIfNotContains(descriptor);
     }

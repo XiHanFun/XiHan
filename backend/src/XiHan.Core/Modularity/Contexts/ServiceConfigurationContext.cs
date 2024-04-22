@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.DependencyInjection;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.System.Collections.Generic;
 using XiHan.Core.Verification;
 

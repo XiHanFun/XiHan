@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:XiHanModule
+// FileName:Module
 // Guid:2909728d-05d0-4da7-9647-c08f6da40f5e
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -25,9 +25,9 @@ using XiHan.Core.Modularity.Contexts;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 曦寒模块，模块化服务配置基类
+/// 模块化服务配置基类
 /// </summary>
-public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostConfigureServices,
+public abstract class Module : IPreConfigureServices, IModule, IPostConfigureServices,
     IOnPreApplicationInitialization, IOnApplicationInitialization, IOnPostApplicationInitialization, IOnApplicationShutdown
 {
     private ServiceConfigurationContext? _serviceConfigurationContext;
@@ -50,30 +50,30 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     }
 
     /// <summary>
-    /// 是否为曦寒模块
+    /// 是否为模块
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static bool IsXiHanModule(Type type)
+    public static bool IsModule(Type type)
     {
         var typeInfo = type.GetTypeInfo();
 
         return typeInfo.IsClass &&
             !typeInfo.IsAbstract &&
             !typeInfo.IsGenericType &&
-            typeof(IXiHanModule).GetTypeInfo().IsAssignableFrom(type);
+            typeof(IModule).GetTypeInfo().IsAssignableFrom(type);
     }
 
     /// <summary>
-    /// 检测曦寒模块类
+    /// 检测模块类
     /// </summary>
     /// <param name="moduleType"></param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void CheckXiHanModuleType(Type moduleType)
+    internal static void CheckModuleType(Type moduleType)
     {
-        if (!IsXiHanModule(moduleType))
+        if (!IsModule(moduleType))
         {
-            throw new ArgumentException("给定的类型不是曦寒模块:" + moduleType.AssemblyQualifiedName);
+            throw new ArgumentException("给定的类型不是模块:" + moduleType.AssemblyQualifiedName);
         }
     }
 

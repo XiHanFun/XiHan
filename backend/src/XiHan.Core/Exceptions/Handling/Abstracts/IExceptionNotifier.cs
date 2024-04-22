@@ -3,27 +3,28 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModuleContainer
-// Guid:cecaa7e3-0cd0-4320-b6dc-f73d1e0ad0ed
-// Author:Administrator
+// FileName:IExceptionNotifier
+// Guid:88ba0f7b-0ee4-44be-8f03-52bf1e40c51a
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 05:13:43
+// CreateTime:2024/4/23 1:02:47
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Exceptions.Handling.Abstracts;
 
 /// <summary>
-/// 模块容器接口
+/// 异常通知器
 /// </summary>
-public interface IModuleContainer
+public interface IExceptionNotifier
 {
     /// <summary>
-    /// 模块列表
+    /// 通知
     /// </summary>
-    [NotNull]
-    IReadOnlyList<IModuleDescriptor> Modules { get; }
+    /// <param name="context"></param>
+    /// <returns></returns>
+    Task NotifyAsync([NotNull] ExceptionNotificationContext context);
 }
