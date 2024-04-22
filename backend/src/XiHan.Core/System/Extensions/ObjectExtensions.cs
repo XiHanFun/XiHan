@@ -15,7 +15,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 对象扩展方法

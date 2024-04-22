@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Verification;
 
-namespace XiHan.Core.System.Collections.Generic;
+namespace XiHan.Core.System.Collections.Generic.Extensions;
 
 /// <summary>
 /// 集合扩展方法

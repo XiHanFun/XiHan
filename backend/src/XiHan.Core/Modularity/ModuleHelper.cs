@@ -15,7 +15,7 @@
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using XiHan.Core.Modularity.Abstracts;
-using XiHan.Core.System.Collections.Generic;
+using XiHan.Core.System.Collections.Generic.Extensions;
 
 namespace XiHan.Core.Modularity;
 

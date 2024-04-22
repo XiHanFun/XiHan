@@ -15,8 +15,8 @@
 using JetBrains.Annotations;
 using System.Reflection;
 using XiHan.Core.Modularity.Abstracts;
-using XiHan.Core.System.Collections.Generic;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Collections.Generic.Extensions;
+using XiHan.Core.System.Verification;
 
 namespace XiHan.Core.Modularity;
 

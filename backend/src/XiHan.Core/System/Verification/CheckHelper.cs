@@ -14,9 +14,9 @@
 
 using JetBrains.Annotations;
 using System.Diagnostics;
-using XiHan.Core.System;
+using XiHan.Core.System.Extensions;
 
-namespace XiHan.Core.Verification;
+namespace XiHan.Core.System.Verification;
 
 /// <summary>
 /// 数据检测帮助类

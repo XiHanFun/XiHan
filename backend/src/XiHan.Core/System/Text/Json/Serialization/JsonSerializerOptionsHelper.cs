@@ -15,7 +15,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using XiHan.Core.System.Collections.Generic;
+using XiHan.Core.System.Collections.Generic.Extensions;
 using XiHan.Core.System.Text.Json.Converter;
 
 namespace XiHan.Core.System.Text.Json.Serialization;

@@ -15,7 +15,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Core.System;
+using XiHan.Core.System.Extensions;
 using XiHan.Core.System.Reflection;
 using XiHan.Infrastructure.Core.Apps.Services;
 

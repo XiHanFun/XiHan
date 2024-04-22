@@ -15,7 +15,7 @@
 using System.Linq.Expressions;
 using XiHan.Core.System.Text.Json.Serialization;
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 泛型扩展方法

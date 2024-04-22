@@ -14,8 +14,8 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.System.Collections.Generic;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Collections.Generic.Extensions;
+using XiHan.Core.System.Verification;
 
 namespace XiHan.Core.Modularity.Contexts;
 

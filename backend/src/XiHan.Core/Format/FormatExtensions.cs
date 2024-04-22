@@ -14,7 +14,7 @@
 
 using System.Globalization;
 using System.Net;
-using XiHan.Core.System;
+using XiHan.Core.System.Extensions;
 
 namespace XiHan.Core.Format;
 

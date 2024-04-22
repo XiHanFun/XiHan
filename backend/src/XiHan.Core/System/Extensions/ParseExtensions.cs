@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using System.Collections;
-using XiHan.Core.System.Reflection;
+using XiHan.Core.System.Reflection.Extensions;
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 对象转换扩展方法

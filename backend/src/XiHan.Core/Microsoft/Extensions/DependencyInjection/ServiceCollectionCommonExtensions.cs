@@ -18,7 +18,7 @@ using System.Reflection;
 using XiHan.Core.Abstracts;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Reflection;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Verification;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 

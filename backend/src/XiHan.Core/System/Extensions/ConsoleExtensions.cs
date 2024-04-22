@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 控制台输出扩展

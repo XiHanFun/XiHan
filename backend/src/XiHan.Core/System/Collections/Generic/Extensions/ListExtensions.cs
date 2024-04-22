@@ -13,9 +13,10 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Extensions;
+using XiHan.Core.System.Verification;
 
-namespace XiHan.Core.System.Collections.Generic;
+namespace XiHan.Core.System.Collections.Generic.Extensions;
 
 /// <summary>
 /// 列表扩展方法

@@ -14,7 +14,7 @@
 
 using System.Reflection;
 
-namespace XiHan.Core.System.Reflection;
+namespace XiHan.Core.System.Reflection.Extensions;
 
 /// <summary>
 /// 属性信息扩展方法

@@ -14,8 +14,8 @@
 
 using System.Runtime.InteropServices;
 using XiHan.Core.Format;
-using XiHan.Core.System;
 using XiHan.Core.System.Diagnostics;
+using XiHan.Core.System.Extensions;
 
 namespace XiHan.Common.Utilities.HardwareInfos;
 

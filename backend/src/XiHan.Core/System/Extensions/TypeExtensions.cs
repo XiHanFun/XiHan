@@ -16,10 +16,10 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.ComponentModel;
 using System.Text;
-using XiHan.Core.System.Reflection;
-using XiHan.Core.Verification;
+using XiHan.Core.System.Reflection.Extensions;
+using XiHan.Core.System.Verification;
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 类型扩展方法

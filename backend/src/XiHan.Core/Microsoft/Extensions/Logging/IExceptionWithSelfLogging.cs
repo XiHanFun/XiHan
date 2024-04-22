@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace XiHan.Core.Microsoft.Extensions.Logging;
 
 /// <summary>
-/// 自身日志扩展
+/// 自身日志接口
 /// </summary>
 public interface IExceptionWithSelfLogging
 {

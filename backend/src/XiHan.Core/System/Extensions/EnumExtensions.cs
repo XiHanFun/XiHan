@@ -15,7 +15,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace XiHan.Core.System;
+namespace XiHan.Core.System.Extensions;
 
 /// <summary>
 /// 枚举扩展方法

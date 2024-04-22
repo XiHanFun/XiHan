@@ -21,7 +21,7 @@ using RabbitMQ.Client.Exceptions;
 using System.Net.Sockets;
 using System.Text;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Core.System;
+using XiHan.Core.System.Extensions;
 using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
