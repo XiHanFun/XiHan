@@ -17,54 +17,54 @@ using System.Reflection;
 namespace XiHan.Core.Options;
 
 /// <summary>
-/// XiHanConfigurationBuilderOptions
+/// 曦寒配置生成器选项
 /// </summary>
 public class XiHanConfigurationBuilderOptions
 {
     /// <summary>
-    /// Used to set assembly which is used to get the user secret id for the application.
-    /// Use this or <see cref="UserSecretsId"/> (higher priority)
+    /// 用于设置用于获取应用程序的用户秘密id的程序集
+    /// 使用这个或者<see cref="UserSecretsId"/>(更高优先级)
     /// </summary>
     public Assembly? UserSecretsAssembly { get; set; }
 
     /// <summary>
-    /// Used to set user secret id for the application.
-    /// Use this (higher priority) or <see cref="UserSecretsAssembly"/>
+    /// 用于设置应用程序的用户秘密id
+    /// 使用this(高优先级)或<see cref="UserSecretsAssembly"/>
     /// </summary>
     public string? UserSecretsId { get; set; }
 
     /// <summary>
-    /// Default value: "appsettings".
+    /// 默认值:“appsettings”
     /// </summary>
     public string FileName { get; set; } = "appsettings";
 
     /// <summary>
-    /// Whether the file is optional, Default value: true.
+    /// 是否为可选项，默认值:true
     /// </summary>
     public bool Optional { get; set; } = true;
 
     /// <summary>
-    /// Whether the configuration should be reloaded if the file changes, Default value: true.
+    /// 如果文件发生变化，是否需要重新加载配置。默认值:true
     /// </summary>
     public bool ReloadOnChange { get; set; } = true;
 
     /// <summary>
-    /// Environment name. Generally used "Development", "Staging" or "Production".
+    /// 环境的名字。一般为"Development", "Staging" 或 "Production"
     /// </summary>
     public string? EnvironmentName { get; set; }
 
     /// <summary>
-    /// Base path to read the configuration file indicated by <see cref="FileName"/>.
+    /// 读取由<see cref="FileName"/>指示的配置文件的基本路径
     /// </summary>
     public string? BasePath { get; set; }
 
     /// <summary>
-    /// Prefix for the environment variables.
+    /// 环境变量的前缀
     /// </summary>
     public string? EnvironmentVariablesPrefix { get; set; }
 
     /// <summary>
-    /// Command line arguments.
+    /// 命令行参数
     /// </summary>
     public string[]? CommandLineArgs { get; set; }
 }

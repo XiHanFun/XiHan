@@ -26,6 +26,8 @@ namespace XiHan.Core.Modularity;
 /// </summary>
 public class XiHanModuleDescriptor : IXiHanModuleDescriptor
 {
+    private readonly List<IXiHanModuleDescriptor> _dependencies;
+
     /// <summary>
     /// 模块类
     /// </summary>
@@ -56,9 +58,7 @@ public class XiHanModuleDescriptor : IXiHanModuleDescriptor
     /// 此模块所依赖的模块
     /// 一个模块可以通过<see cref="DependsOnAttribute"/>属性依赖于另一个模块
     /// </summary>
-    public IReadOnlyList<IXiHanModuleDescriptor> Dependencies => _dependencies.ToImmutableList();
-
-    private readonly List<IXiHanModuleDescriptor> _dependencies;
+    public IReadOnlyList<IXiHanModuleDescriptor> Dependencies => [.. _dependencies];
 
     /// <summary>
     /// 构造函数

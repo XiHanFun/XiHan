@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using JetBrains.Annotations;
+
 namespace XiHan.Core.Modularity.Abstracts;
 
 /// <summary>
@@ -23,5 +25,6 @@ public interface IDependedTypesProvider
     /// 获取依赖类型
     /// </summary>
     /// <returns></returns>
+    [NotNull]
     Type[] GetDependedTypes();
 }

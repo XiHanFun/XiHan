@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using JetBrains.Annotations;
+
 namespace XiHan.Core.Modularity.PlugIns;
 
 /// <summary>
@@ -23,5 +25,6 @@ public interface IPlugInSource
     /// 获取模块类型
     /// </summary>
     /// <returns></returns>
+    [NotNull]
     Type[] GetModules();
 }

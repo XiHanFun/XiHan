@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Modularity.Contexts;
+namespace XiHan.Core.Contexts;
 
 /// <summary>
 /// 应用初始化上下文

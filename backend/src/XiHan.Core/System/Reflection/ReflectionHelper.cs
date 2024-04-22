@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using System.Diagnostics;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
@@ -492,7 +492,7 @@ public static class ReflectionHelper
         try
         {
             assembly.GetTypes();
-            assembly.DefinedTypes.ToList();
+            _ = assembly.DefinedTypes.ToList();
             return true;
         }
         catch (ReflectionTypeLoadException)

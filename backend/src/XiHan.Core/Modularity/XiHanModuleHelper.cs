@@ -86,7 +86,7 @@ public static class XiHanModuleHelper
 
         assemblies.Add(moduleType.Assembly);
 
-        return assemblies.ToArray();
+        return [.. assemblies];
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public static class XiHanModuleHelper
         }
 
         moduleTypes.Add(moduleType);
-        logger?.Log(LogLevel.Information, $"{new string(' ', depth * 2)}- {moduleType.FullName}");
+        logger?.Log(LogLevel.Information, "{new string(' ', {depth} * 2)}- {FullName}", depth, moduleType.FullName);
 
         foreach (var dependedModuleType in FindDependedModuleTypes(moduleType))
         {

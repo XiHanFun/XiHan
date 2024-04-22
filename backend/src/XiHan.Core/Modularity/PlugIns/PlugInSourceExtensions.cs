@@ -3,36 +3,39 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:PlugInSourceList
-// Guid:ae40351e-c619-423a-a6da-dc99459c80d8
-// Author:Administrator
+// FileName:PlugInSourceExtensions
+// Guid:767c376e-94ab-424b-a594-725e03a44061
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 06:04:39
+// CreateTime:2024/4/22 22:59:17
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Modularity.PlugIns;
 
 /// <summary>
-/// 插件源列表
+/// 插件源扩展
 /// </summary>
-public class PlugInSourceList : List<IPlugInSource>
+public static class PlugInSourceExtensions
 {
     /// <summary>
-    /// 获取所有模块
+    /// 获取所有模块和依赖项
     /// </summary>
+    /// <param name="plugInSource"></param>
     /// <param name="logger"></param>
     /// <returns></returns>
     [NotNull]
-    internal Type[] GetAllModules(ILogger logger)
+    public static Type[] GetModulesWithAllDependencies([NotNull] this IPlugInSource plugInSource, ILogger logger)
     {
-        return this
-            .SelectMany(pluginSource => pluginSource.GetModulesWithAllDependencies(logger))
-            .Distinct()
-            .ToArray();
+        CheckHelper.NotNull(plugInSource, nameof(plugInSource));
+
+        return plugInSource.GetModules()
+            .SelectMany(type => XiHanModuleHelper.FindAllModuleTypes(type, logger))
+            .Distinct().ToArray();
     }
 }

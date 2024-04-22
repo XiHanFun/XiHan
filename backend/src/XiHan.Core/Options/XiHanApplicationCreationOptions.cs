@@ -12,10 +12,10 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.Extensions.DependencyInjection;
 using JetBrains.Annotations;
-using XiHan.Core.Verification;
+using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.PlugIns;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Options;
 
@@ -37,15 +37,24 @@ public class XiHanApplicationCreationOptions
     public PlugInSourceList PlugInSources { get; }
 
     /// <summary>
-    /// 此属性中的选项仅在未注册IConfiguration时生效。
+    /// 此属性中的选项仅在未注册 IConfiguration 时生效。
     /// </summary>
     [NotNull]
     public XiHanConfigurationBuilderOptions Configuration { get; }
 
+    /// <summary>
+    /// 是否跳过配置服务
+    /// </summary>
     public bool SkipConfigureServices { get; set; }
 
+    /// <summary>
+    /// 应用名称
+    /// </summary>
     public string? ApplicationName { get; set; }
 
+    /// <summary>
+    /// 环境
+    /// </summary>
     public string? Environment { get; set; }
 
     /// <summary>

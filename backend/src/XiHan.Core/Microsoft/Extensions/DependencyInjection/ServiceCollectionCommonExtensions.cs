@@ -81,12 +81,7 @@ public static class ServiceCollectionCommonExtensions
     public static T GetSingletonInstance<T>(this IServiceCollection services)
     {
         var service = services.GetSingletonInstanceOrNull<T>();
-        if (service == null)
-        {
-            throw new InvalidOperationException($"找不到单例服务: {typeof(T).AssemblyQualifiedName}");
-        }
-
-        return service;
+        return service == null ? throw new InvalidOperationException($"找不到单例服务: {typeof(T).AssemblyQualifiedName}") : service;
     }
 
     /// <summary>
@@ -142,76 +137,103 @@ public static class ServiceCollectionCommonExtensions
     /// 使用给定的服务容器解析依赖项
     /// 该方法只能在依赖注入注册阶段完成后使用
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="services"></param>
+    /// <returns></returns>
     internal static T? GetService<T>(this IServiceCollection services)
     {
         return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetService<T>();
     }
 
     /// <summary>
-    /// Resolves a dependency using given <see cref="IServiceCollection"/>.
-    /// This method should be used only after dependency injection registration phase completed.
+    /// 使用给定的 <see cref="IServiceCollection"/>解析依赖项
+    /// 该方法只能在依赖注入注册阶段完成后使用
     /// </summary>
+    /// <param name="services"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     internal static object? GetService(this IServiceCollection services, Type type)
     {
         return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetService(type);
     }
 
     /// <summary>
-    /// Resolves a dependency using given <see cref="IServiceCollection"/>.
-    /// Throws exception if service is not registered.
-    /// This method should be used only after dependency injection registration phase completed.
+    /// 使用给定的<see cref="IServiceCollection"/>解析依赖项
+    /// 如果未注册服务则抛出异常，该方法只能在依赖注入注册阶段完成后使用
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static T GetRequiredService<T>(this IServiceCollection services) where T : notnull
     {
         return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetRequiredService<T>();
     }
 
     /// <summary>
-    /// Resolves a dependency using given <see cref="IServiceCollection"/>.
-    /// Throws exception if service is not registered.
-    /// This method should be used only after dependency injection registration phase completed.
+    /// 使用给定的<see cref="IServiceCollection"/>解析依赖项
+    /// 如果未注册服务则抛出异常，该方法只能在依赖注入注册阶段完成后使用
     /// </summary>
+    /// <param name="services"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static object GetRequiredService(this IServiceCollection services, Type type)
     {
         return services.GetSingletonInstance<IXiHanApplication>().ServiceProvider.GetRequiredService(type);
     }
 
     /// <summary>
-    /// Returns a <see cref="Lazy{T}"/> to resolve a service from given <see cref="IServiceCollection"/>
-    /// once dependency injection registration phase completed.
+    /// 返回一个<see cref="Lazy{T}"/>从给定的<see cref="IServiceCollection"/>解析服务
+    /// 一旦依赖注入注册阶段完成
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static Lazy<T?> GetServiceLazy<T>(this IServiceCollection services)
     {
         return new Lazy<T?>(services.GetService<T>, true);
     }
 
     /// <summary>
-    /// Returns a <see cref="Lazy{T}"/> to resolve a service from given <see cref="IServiceCollection"/>
-    /// once dependency injection registration phase completed.
+    /// 返回一个<see cref="Lazy{T}"/>从给定的<see cref="IServiceCollection"/>解析服务
+    /// 一旦依赖注入注册阶段完成
     /// </summary>
+    /// <param name="services"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Lazy<object?> GetServiceLazy(this IServiceCollection services, Type type)
     {
         return new Lazy<object?>(() => services.GetService(type), true);
     }
 
     /// <summary>
-    /// Returns a <see cref="Lazy{T}"/> to resolve a service from given <see cref="IServiceCollection"/>
-    /// once dependency injection registration phase completed.
+    /// 返回一个<see cref="Lazy{T}"/>从给定的<see cref="IServiceCollection"/>解析服务
+    /// 一旦依赖注入注册阶段完成
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static Lazy<T> GetRequiredServiceLazy<T>(this IServiceCollection services) where T : notnull
     {
         return new Lazy<T>(services.GetRequiredService<T>, true);
     }
 
     /// <summary>
-    /// Returns a <see cref="Lazy{T}"/> to resolve a service from given <see cref="IServiceCollection"/>
-    /// once dependency injection registration phase completed.
+    /// 返回一个<see cref="Lazy{T}"/>从给定的<see cref="IServiceCollection"/>解析服务
+    /// 一旦依赖注入注册阶段完成
     /// </summary>
+    /// <param name="services"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Lazy<object> GetRequiredServiceLazy(this IServiceCollection services, Type type)
     {
         return new Lazy<object>(() => services.GetRequiredService(type), true);
     }
 
+    /// <summary>
+    /// 获取服务提供器或空
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceProvider? GetServiceProviderOrNull(this IServiceCollection services)
     {
         return services.GetObjectOrNull<IServiceProvider>();

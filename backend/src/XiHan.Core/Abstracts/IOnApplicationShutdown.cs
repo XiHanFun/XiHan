@@ -3,35 +3,35 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IOnApplicationInitialization
-// Guid:7dd7a9b3-1fae-46e8-9b99-81892242441e
+// FileName:IOnApplicationShutdown
+// Guid:10ddc08c-aa9b-4679-89a1-1eef1870cb15
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:38:25
+// CreateTime:2024-04-22 上午 10:38:41
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Modularity.Contexts;
+using XiHan.Core.Contexts;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Abstracts;
 
 /// <summary>
-/// 程序初始化接口
+/// 程序关闭时接口
 /// </summary>
-public interface IOnApplicationInitialization
+public interface IOnApplicationShutdown
 {
     /// <summary>
-    /// 程序初始化，异步
+    /// 程序关闭时，异步
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task OnApplicationInitializationAsync([NotNull] ApplicationInitializationContext context);
+    Task OnApplicationShutdownAsync([NotNull] ApplicationShutdownContext context);
 
     /// <summary>
-    /// 程序初始化
+    /// 程序关闭时
     /// </summary>
     /// <param name="context"></param>
-    void OnApplicationInitialization([NotNull] ApplicationInitializationContext context);
+    void OnApplicationShutdown([NotNull] ApplicationShutdownContext context);
 }

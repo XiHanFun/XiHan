@@ -14,8 +14,9 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using JetBrains.Annotations;
 using System.Reflection;
+using XiHan.Core.Abstracts;
+using XiHan.Core.Contexts;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.Abstracts;
@@ -29,6 +30,53 @@ namespace XiHan.Core.Modularity;
 public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostConfigureServices,
     IOnPreApplicationInitialization, IOnApplicationInitialization, IOnPostApplicationInitialization, IOnApplicationShutdown
 {
+    private ServiceConfigurationContext? _serviceConfigurationContext;
+
+    /// <summary>
+    /// 服务配置上下文
+    /// </summary>
+    protected internal ServiceConfigurationContext ServiceConfigurationContext
+    {
+        get
+        {
+            if (_serviceConfigurationContext == null)
+            {
+                throw new CustomException($"{nameof(ServiceConfigurationContext)}只能在{nameof(ConfigureServices)}、{nameof(PreConfigureServices)}和{nameof(PostConfigureServices)}方法中使用。");
+            }
+
+            return _serviceConfigurationContext;
+        }
+        internal set => _serviceConfigurationContext = value;
+    }
+
+    /// <summary>
+    /// 是否为曦寒模块
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static bool IsXiHanModule(Type type)
+    {
+        var typeInfo = type.GetTypeInfo();
+
+        return typeInfo.IsClass &&
+            !typeInfo.IsAbstract &&
+            !typeInfo.IsGenericType &&
+            typeof(IXiHanModule).GetTypeInfo().IsAssignableFrom(type);
+    }
+
+    /// <summary>
+    /// 检测曦寒模块类
+    /// </summary>
+    /// <param name="moduleType"></param>
+    /// <exception cref="ArgumentException"></exception>
+    internal static void CheckXiHanModuleType(Type moduleType)
+    {
+        if (!IsXiHanModule(moduleType))
+        {
+            throw new ArgumentException("给定的类型不是曦寒模块:" + moduleType.AssemblyQualifiedName);
+        }
+    }
+
     #region 服务配置
 
     /// <summary>
@@ -97,7 +145,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public Task OnPreApplicationInitializationAsync([NotNull] ApplicationInitializationContext context)
+    public Task OnPreApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         OnPreApplicationInitialization(context);
         return Task.CompletedTask;
@@ -108,7 +156,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// </summary>
     /// <param name="context"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public void OnPreApplicationInitialization([NotNull] ApplicationInitializationContext context)
+    public void OnPreApplicationInitialization(ApplicationInitializationContext context)
     {
     }
 
@@ -118,7 +166,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task OnApplicationInitializationAsync([NotNull] ApplicationInitializationContext context)
+    public Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         OnApplicationInitialization(context);
         return Task.CompletedTask;
@@ -129,7 +177,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// </summary>
     /// <param name="context"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public void OnApplicationInitialization([NotNull] ApplicationInitializationContext context)
+    public void OnApplicationInitialization(ApplicationInitializationContext context)
     {
     }
 
@@ -138,7 +186,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public Task OnPostApplicationInitializationAsync([NotNull] ApplicationInitializationContext context)
+    public Task OnPostApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         OnPostApplicationInitialization(context);
         return Task.CompletedTask;
@@ -148,9 +196,8 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// 程序初始化后
     /// </summary>
     /// <param name="context"></param>
-    public void OnPostApplicationInitialization([NotNull] ApplicationInitializationContext context)
+    public void OnPostApplicationInitialization(ApplicationInitializationContext context)
     {
-        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -158,7 +205,7 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public Task OnApplicationShutdownAsync([NotNull] ApplicationShutdownContext context)
+    public Task OnApplicationShutdownAsync(ApplicationShutdownContext context)
     {
         OnApplicationShutdown(context);
         return Task.CompletedTask;
@@ -168,58 +215,13 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     /// 程序关闭时
     /// </summary>
     /// <param name="context"></param>
-    public void OnApplicationShutdown([NotNull] ApplicationShutdownContext context)
+    public void OnApplicationShutdown(ApplicationShutdownContext context)
     {
     }
 
     #endregion
 
-    private ServiceConfigurationContext? _serviceConfigurationContext;
-
-    /// <summary>
-    /// 服务配置上下文
-    /// </summary>
-    protected internal ServiceConfigurationContext ServiceConfigurationContext
-    {
-        get
-        {
-            if (_serviceConfigurationContext == null)
-            {
-                throw new CustomException($"{nameof(ServiceConfigurationContext)}只能在{nameof(ConfigureServices)}、{nameof(PreConfigureServices)}和{nameof(PostConfigureServices)}方法中使用。");
-            }
-
-            return _serviceConfigurationContext;
-        }
-        internal set => _serviceConfigurationContext = value;
-    }
-
-    /// <summary>
-    /// 是否为曦寒模块
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public static bool IsXiHanModule(Type type)
-    {
-        var typeInfo = type.GetTypeInfo();
-
-        return typeInfo.IsClass &&
-            !typeInfo.IsAbstract &&
-            !typeInfo.IsGenericType &&
-            typeof(IXiHanModule).GetTypeInfo().IsAssignableFrom(type);
-    }
-
-    /// <summary>
-    /// 检测曦寒模块类
-    /// </summary>
-    /// <param name="moduleType"></param>
-    /// <exception cref="ArgumentException"></exception>
-    internal static void CheckXiHanModuleType(Type moduleType)
-    {
-        if (!IsXiHanModule(moduleType))
-        {
-            throw new ArgumentException("给定的类型不是曦寒模块:" + moduleType.AssemblyQualifiedName);
-        }
-    }
+    #region 配置选项
 
     /// <summary>
     /// 配置选项
@@ -311,4 +313,6 @@ public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostCo
     {
         ServiceConfigurationContext.Services.PostConfigureAll(configureOptions);
     }
+
+    #endregion
 }
