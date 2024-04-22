@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using XiHan.Core.Verification;
 
 namespace XiHan.Core.System.Collections.Generic;

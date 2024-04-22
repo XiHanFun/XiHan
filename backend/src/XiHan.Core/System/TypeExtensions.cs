@@ -14,7 +14,7 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using System.Text;
 using XiHan.Core.System.Reflection;
 using XiHan.Core.Verification;

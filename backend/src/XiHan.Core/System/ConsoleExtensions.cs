@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2022 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConsoleExtension
+// FileName:ConsoleExtensions
 // Guid:824ca05d-f5be-49a9-96f9-8a6502e5b064
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -12,12 +12,12 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Common.Utilities.Extensions;
+namespace XiHan.Core.System;
 
 /// <summary>
-/// 控制台输出拓展类
+/// 控制台输出扩展
 /// </summary>
-public static class ConsoleExtension
+public static class ConsoleExtensions
 {
     private static readonly object _objLock = new();
 

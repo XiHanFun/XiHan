@@ -15,6 +15,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using XiHan.Common.Utilities.Extensions;
+using XiHan.Core.System;
 using XiHan.Core.System.Text.Json;
 
 namespace XiHan.Infrastructure.Core.Apps.Configs;

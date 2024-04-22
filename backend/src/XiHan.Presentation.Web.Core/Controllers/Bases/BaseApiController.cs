@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using XiHan.Common.Utilities.Exceptions;
 using XiHan.Common.Utilities.Files;
+using XiHan.Core.Exceptions;
 using XiHan.Infrastructure.Core.Apps;
 using XiHan.Infrastructure.Core.Apps.HttpContexts;
 using XiHan.Infrastructure.Core.Apps.ImportOrExports;

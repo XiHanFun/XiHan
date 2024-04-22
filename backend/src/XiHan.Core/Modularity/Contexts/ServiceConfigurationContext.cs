@@ -13,32 +13,31 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using XiHan.Core.System.Collections.Generic;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Modularity;
+namespace XiHan.Core.Modularity.Contexts;
 
 /// <summary>
-///
+/// 服务配置上下文
 /// </summary>
 public class ServiceConfigurationContext
 {
     /// <summary>
-    ///
+    /// 服务
     /// </summary>
     public IServiceCollection Services { get; }
 
     /// <summary>
-    ///
+    /// 服务存储器
     /// </summary>
     public IDictionary<string, object?> Items { get; }
 
     /// <summary>
-    /// Gets/sets arbitrary named objects those can be stored during
-    /// the service registration phase and shared between modules.
-    /// This is a shortcut usage of the <see cref="Items"/> dictionary.
-    /// Returns null if given key is not found in the <see cref="Items"/> dictionary.
+    /// 过程中可以存储的任意命名对象，服务注册阶段并在模块之间共享
+    /// 这是<see cref="Items"/> 字典的一种快捷用法
+    /// 如果给定的键在<see cref="Items"/> 字典中没有找到，则返回null
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -49,13 +48,11 @@ public class ServiceConfigurationContext
     }
 
     /// <summary>
-    ///
+    /// 构造函数
     /// </summary>
     /// <param name="services"></param>
     public ServiceConfigurationContext([NotNull] IServiceCollection services)
     {
-        ArgumentException.ThrowIfNullOrEmpty(nameof(services));
-
         Services = CheckHelper.NotNull(services, nameof(services));
         Items = new Dictionary<string, object?>();
     }

@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Text;
+namespace XiHan.Core.System;
 
 /// <summary>
 /// 字符串扩展方法

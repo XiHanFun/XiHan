@@ -3,32 +3,25 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IXiHanModule
-// Guid:85ec6b99-74ea-418f-a64c-c117dce646e3
-// Author:zhaifanhua
+// FileName:IDependedTypesProvider
+// Guid:88035bb9-3ada-4d5c-aadc-cfef76fcfddb
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/19 1:46:20
+// CreateTime:2024-04-22 下午 05:22:37
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Modularity;
+namespace XiHan.Core.Modularity.Abstracts;
 
 /// <summary>
-/// IXiHanModule
+/// 依赖类型提供器接口
 /// </summary>
-public interface IXiHanModule
+public interface IDependedTypesProvider
 {
     /// <summary>
-    ///
+    /// 获取依赖类型
     /// </summary>
-    /// <param name="context"></param>
     /// <returns></returns>
-    Task ConfigureServicesAsync(ServiceConfigurationContext context);
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="context"></param>
-    void ConfigureServices(ServiceConfigurationContext context);
+    Type[] GetDependedTypes();
 }
