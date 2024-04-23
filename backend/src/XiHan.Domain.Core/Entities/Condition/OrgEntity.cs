@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 机构抽象类
 /// </summary>
-public abstract class BaseOrgEntity : IMustHaveOrg<long>
+public abstract class OrgEntity : IMustHaveOrg<long>
 {
     /// <summary>
     /// 机构标识

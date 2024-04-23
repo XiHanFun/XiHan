@@ -17,7 +17,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Text;
 using XiHan.Core.System.Reflection.Extensions;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.System.Extensions;
 

@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 新增抽象类，含主键
 /// </summary>
-public abstract class BaseCreatedEntity : BaseEntity, IHasCreated<long?>
+public abstract class CreatedEntity : IdEntity, IHasCreated<long?>
 {
     /// <summary>
     /// 新增用户主键

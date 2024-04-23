@@ -15,9 +15,9 @@
 namespace XiHan.Domain.Core.Entities.Abstracts;
 
 /// <summary>
-/// 通用实体接口，是所有实体的基接口
+/// 通用实体主键接口，是所有实体的基接口
 /// </summary>
-public interface IEntity<TKey> where TKey : IEquatable<TKey>
+public interface IHasId<TKey> where TKey : IEquatable<TKey>
 {
     /// <summary>
     /// 实体标识

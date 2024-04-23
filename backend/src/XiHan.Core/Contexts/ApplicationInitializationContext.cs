@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 using XiHan.Core.DependencyInjection.Abstracts;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Contexts;
 

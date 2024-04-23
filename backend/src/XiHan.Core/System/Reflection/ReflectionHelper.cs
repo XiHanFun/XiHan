@@ -18,7 +18,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Runtime.Loader;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.System.Reflection;
 

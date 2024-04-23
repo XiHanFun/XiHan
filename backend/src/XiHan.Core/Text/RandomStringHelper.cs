@@ -14,7 +14,7 @@
 
 using System.Text;
 
-namespace XiHan.Common.Utilities.Randoms;
+namespace XiHan.Core.Text;
 
 /// <summary>
 /// 随机数帮助类

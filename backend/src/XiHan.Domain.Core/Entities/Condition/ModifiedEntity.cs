@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 修改抽象类，含主键，新增
 /// </summary>
-public abstract class BaseModifiedEntity : BaseCreatedEntity, IHasModified<long?>
+public abstract class ModifiedEntity : CreatedEntity, IHasModified<long?>
 {
     /// <summary>
     /// 修改用户主键

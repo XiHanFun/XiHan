@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Exceptions.Handling.Abstracts;
 using XiHan.Core.Microsoft.Extensions.Logging;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Exceptions.Handling;
 

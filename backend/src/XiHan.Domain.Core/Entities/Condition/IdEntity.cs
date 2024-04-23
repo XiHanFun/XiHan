@@ -16,12 +16,12 @@ using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 using XiHan.Domain.Core.Events;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
-/// 领域实体基类
+/// 主键抽象类
 /// </summary>
-public abstract class BaseEntity : BaseDomainEvents, IEntity<long>
+public abstract class IdEntity : BaseDomainEvents, IHasId<long>
 {
     /// <summary>
     /// 主键标识
@@ -49,7 +49,7 @@ public abstract class BaseEntity : BaseDomainEvents, IEntity<long>
     /// <returns></returns>
     public override bool Equals(object? obj)
     {
-        if (obj is BaseEntity entity)
+        if (obj is IdEntity entity)
         {
             return entity.BaseId == BaseId;
         }

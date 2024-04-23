@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 删除抽象类，含主键，新增，修改
 /// </summary>
-public abstract class BaseDeletedEntity : BaseModifiedEntity, IHasDeleted<long?>, ISoftDeleted<long?>
+public abstract class DeletedEntity : ModifiedEntity, IHasDeleted<long?>, ISoftDeleted<long?>
 {
     /// <summary>
     /// 是否已删除

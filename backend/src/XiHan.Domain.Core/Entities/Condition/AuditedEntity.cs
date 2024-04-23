@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseAuditedEntity
+// FileName:AuditedEntity
 // Guid:0dac25ea-e09c-4ffb-828f-dd039c435781
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 审核抽象类，含主键，新增，修改，删除
 /// </summary>
-public abstract class BaseAuditedEntity : BaseDeletedEntity, IHasAudited<long?>
+public abstract class AuditedEntity : DeletedEntity, IHasAudited<long?>
 {
     /// <summary>
     /// 审核用户主键

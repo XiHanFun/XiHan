@@ -15,7 +15,7 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using XiHan.Core.Exceptions.Extensions;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.Exceptions.Handling;
 

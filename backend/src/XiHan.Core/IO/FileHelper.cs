@@ -14,7 +14,7 @@
 
 using System.Security.Cryptography;
 using System.Text;
-using XiHan.Core.System.Text;
+using XiHan.Core.Text;
 
 namespace XiHan.Core.IO;
 

@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 using XiHan.Core.System.Extensions;
-using XiHan.Core.System.Verification;
+using XiHan.Core.Verification;
 
 namespace XiHan.Core.System.Collections.Generic.Extensions;
 

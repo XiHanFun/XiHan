@@ -15,12 +15,12 @@
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
 
-namespace XiHan.Domain.Core.Entities.Bases;
+namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 租户抽象类
 /// </summary>
-public class BaseTenantEntity : IMustHaveTenant<long>
+public class TenantEntity : IMustHaveTenant<long>
 {
     /// <summary>
     /// 租户标识
