@@ -15,8 +15,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using XiHan.Core.Abstracts;
-using XiHan.Core.Contexts;
+using XiHan.Core.Application.Abstracts;
+using XiHan.Core.Application.Contexts;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.Abstracts;
@@ -48,6 +48,11 @@ public abstract class Module : IPreConfigureServices, IModule, IPostConfigureSer
         }
         internal set => _serviceConfigurationContext = value;
     }
+
+    /// <summary>
+    /// 是否跳过自动服务注册
+    /// </summary>
+    protected internal bool SkipAutoServiceRegistration { get; protected set; }
 
     /// <summary>
     /// 是否为模块

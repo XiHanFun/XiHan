@@ -21,7 +21,7 @@ namespace XiHan.Domain.Core.Entities.Condition;
 /// <summary>
 /// 主键抽象类
 /// </summary>
-public abstract class IdEntity : BaseDomainEvents, IHasId<long>
+public abstract class IdEntity : DomainEvents, IHasId<long>
 {
     /// <summary>
     /// 主键标识

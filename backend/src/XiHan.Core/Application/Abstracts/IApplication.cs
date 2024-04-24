@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.Options;
 
-namespace XiHan.Core.Abstracts;
+namespace XiHan.Core.Application.Abstracts;
 
 /// <summary>
 /// 应用接口
@@ -42,7 +42,7 @@ public interface IApplication : IModuleContainer, IApplicationInfoAccessor, IDis
 
     /// <summary>
     /// 调用模块的 Pre/Post/ConfigureServicesAsync 方法
-    /// 如果你使用这个方法，你必须设置 <see cref="ApplicationCreationOptions.SkipConfigureServices"/> 选项为true之前
+    /// 在使用这个方法之前，必须设置 <see cref="ApplicationCreationOptions.SkipConfigureServices"/> 选项为true
     /// </summary>
     Task ConfigureServicesAsync();
 

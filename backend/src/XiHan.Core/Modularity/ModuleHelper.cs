@@ -33,7 +33,7 @@ public static class ModuleHelper
     public static List<Type> FindAllModuleTypes(Type startupModuleType, ILogger? logger)
     {
         var moduleTypes = new List<Type>();
-        logger?.Log(LogLevel.Information, "加载曦寒模块:");
+        logger?.Log(LogLevel.Information, "加载模块:");
         AddModuleAndDependenciesRecursively(moduleTypes, startupModuleType, logger);
         return moduleTypes;
     }
@@ -49,8 +49,7 @@ public static class ModuleHelper
 
         var dependencies = new List<Type>();
 
-        var dependencyDescriptors = moduleType
-            .GetCustomAttributes()
+        var dependencyDescriptors = moduleType.GetCustomAttributes()
             .OfType<IDependedTypesProvider>();
 
         foreach (var descriptor in dependencyDescriptors)

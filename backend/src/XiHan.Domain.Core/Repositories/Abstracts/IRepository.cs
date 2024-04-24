@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseRepository
+// FileName:IRepository
 // Guid:97fcd417-1b69-4e17-b86b-70eaaa311e89
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -21,7 +21,7 @@ namespace XiHan.Domain.Core.Repositories.Abstracts;
 /// 通用仓储接口
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IBaseRepository<TEntity> where TEntity : class, new()
+public interface IRepository<TEntity> where TEntity : class, new()
 {
     #region 新增
 

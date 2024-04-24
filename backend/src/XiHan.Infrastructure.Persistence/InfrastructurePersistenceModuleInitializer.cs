@@ -35,7 +35,7 @@ public class InfrastructurePersistenceModuleInitializer : IModuleInitializer
     public void InitializeServices(IServiceCollection services, IConfiguration configuration)
     {
         //因为是泛型，所以不能用AddScoped<IBaseRepository<>,typeof(BaseRepository<>>这种方式注册
-        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
     }
 
     /// <summary>

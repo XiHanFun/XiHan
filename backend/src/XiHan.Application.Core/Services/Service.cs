@@ -27,4 +27,4 @@ namespace XiHan.Application.Core.Services;
 /// 修改：Modify
 /// 查询：Get
 /// </remarks>
-public class BaseService<TEntity> : BaseRepository<TEntity> where TEntity : class, new();
+public class Service<TEntity> : Repository<TEntity> where TEntity : class, new();

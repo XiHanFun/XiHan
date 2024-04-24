@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:BaseRepository
+// FileName:Repository
 // Guid:40526d9b-7d9b-417c-9918-9085acb23226
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -31,7 +31,7 @@ namespace XiHan.Infrastructure.Persistence.Repositories;
 /// 查找 Find
 /// 查询 Query
 /// </remarks>
-public abstract class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity> where TEntity : class, new()
+public abstract class Repository<TEntity> : SimpleClient<TEntity>, IRepository<TEntity> where TEntity : class, new()
 {
     ///// <summary>
     ///// 多租户事务

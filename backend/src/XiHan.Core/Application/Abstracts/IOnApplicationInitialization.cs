@@ -3,35 +3,35 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IOnPostApplicationInitialization
-// Guid:8da548f0-321c-4938-b111-f01c2f7c343d
+// FileName:IOnApplicationInitialization
+// Guid:7dd7a9b3-1fae-46e8-9b99-81892242441e
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:38:33
+// CreateTime:2024-04-22 上午 10:38:25
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Contexts;
+using XiHan.Core.Application.Contexts;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Application.Abstracts;
 
 /// <summary>
-/// 程序初始化后接口
+/// 程序初始化接口
 /// </summary>
-public interface IOnPostApplicationInitialization
+public interface IOnApplicationInitialization
 {
     /// <summary>
-    /// 程序初始化后，异步
+    /// 程序初始化，异步
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task OnPostApplicationInitializationAsync([NotNull] ApplicationInitializationContext context);
+    Task OnApplicationInitializationAsync([NotNull] ApplicationInitializationContext context);
 
     /// <summary>
-    /// 程序初始化后
+    /// 程序初始化
     /// </summary>
     /// <param name="context"></param>
-    void OnPostApplicationInitialization([NotNull] ApplicationInitializationContext context);
+    void OnApplicationInitialization([NotNull] ApplicationInitializationContext context);
 }

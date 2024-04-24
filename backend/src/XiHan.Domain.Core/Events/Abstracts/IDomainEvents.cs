@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IBaseDomainEvents
+// FileName:IDomainEvents
 // Guid:1d53805c-e998-4e54-b75b-722ff6b22957
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -19,7 +19,7 @@ namespace XiHan.Domain.Core.Events.Abstracts;
 /// <summary>
 /// 通用领域事件接口
 /// </summary>
-public interface IBaseDomainEvents
+public interface IDomainEvents
 {
     /// <summary>
     /// 获取领域事件
