@@ -145,8 +145,6 @@ public class ApplicationBase : IApplication
     public virtual void Dispose()
     {
         //TODO: 如果之前没有完成，就进行关闭?
-
-        GC.SuppressFinalize(this);
     }
 
     #endregion
