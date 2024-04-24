@@ -19,7 +19,8 @@ namespace XiHan.Core.DependencyInjection;
 /// <summary>
 /// 依赖特性
 /// </summary>
-public class DependencyAttribute
+[AttributeUsage(AttributeTargets.All)]
+public class DependencyAttribute : Attribute
 {
     /// <summary>
     /// 生命周期

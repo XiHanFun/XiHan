@@ -3,25 +3,25 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ITypeFinder
-// Guid:64df6a54-ea03-437b-a823-f48aaec74155
-// Author:Administrator
+// FileName:IHasSimpleStateCheckers
+// Guid:b47451b9-b6bd-475d-86bf-2b0a9a431ab7
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 03:59:41
+// CreateTime:2024/4/24 23:13:59
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Reflection;
+namespace XiHan.Core.SimpleStateChecking.Abstracts;
 
 /// <summary>
-/// 类型查找器接口
-/// 它可能不会返回所有类型，但这些类型都与模块相关
+/// 具有简单状态检查器接口接口
 /// </summary>
-public interface ITypeFinder
+public interface IHasSimpleStateCheckers<TState>
+    where TState : IHasSimpleStateCheckers<TState>
 {
     /// <summary>
-    /// 类型列表
+    /// 状态检查器列表
     /// </summary>
-    IReadOnlyList<Type> Types { get; }
+    List<ISimpleStateChecker<TState>> StateCheckers { get; }
 }

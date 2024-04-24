@@ -26,7 +26,7 @@ using XiHan.Core.Logging;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.Modularity.Contexts;
-using XiHan.Core.Options;
+using XiHan.Core.System.Extensions;
 using XiHan.Core.Verification;
 using IHostEnvironment = XiHan.Core.Application.Abstracts.IHostEnvironment;
 
@@ -115,8 +115,10 @@ public class ApplicationBase : IApplication
         }
     }
 
+    #region 关闭应用程序
+
     /// <summary>
-    /// 用于优雅地关闭应用程序和所有模块
+    /// 关闭应用程序和所有模块
     /// </summary>
     public virtual async Task ShutdownAsync()
     {
@@ -127,7 +129,7 @@ public class ApplicationBase : IApplication
     }
 
     /// <summary>
-    /// 用于优雅地关闭应用程序和所有模块
+    /// 关闭应用程序和所有模块
     /// </summary>
     public virtual void Shutdown()
     {
@@ -142,8 +144,12 @@ public class ApplicationBase : IApplication
     /// </summary>
     public virtual void Dispose()
     {
-        //TODO: Shutdown if not done before?
+        //TODO: 如果之前没有完成，就进行关闭?
+
+        GC.SuppressFinalize(this);
     }
+
+    #endregion
 
     /// <summary>
     /// 设置服务提供器
@@ -154,6 +160,8 @@ public class ApplicationBase : IApplication
         ServiceProvider = serviceProvider;
         ServiceProvider.GetRequiredService<ObjectAccessor<IServiceProvider>>().Value = ServiceProvider;
     }
+
+    #region 初始化模块
 
     /// <summary>
     /// 初始化模块，异步
@@ -179,6 +187,8 @@ public class ApplicationBase : IApplication
             .GetRequiredService<IModuleManager>()
             .InitializeModules(new ApplicationInitializationContext(scope.ServiceProvider));
     }
+
+    #endregion
 
     /// <summary>
     /// 记录初始化日志
@@ -215,9 +225,10 @@ public class ApplicationBase : IApplication
             .LoadModules(services, StartupModuleType, options.PlugInSources);
     }
 
+    #region 配置服务
+
     /// <summary>
-    /// 调用模块的 PreConfigureServicesAsync、ConfigureServicesAsync、PostConfigureServicesAsync 方法
-    /// 在使用这个方法之前，必须设置 <see cref="ApplicationCreationOptions.SkipConfigureServices"/> 选项为true
+    /// 配置服务
     /// </summary>
     public virtual async Task ConfigureServicesAsync()
     {
@@ -316,7 +327,7 @@ public class ApplicationBase : IApplication
     }
 
     /// <summary>
-    ///
+    /// 配置服务
     /// </summary>
     /// <exception cref="InitializationException"></exception>
     public virtual void ConfigureServices()
@@ -403,8 +414,10 @@ public class ApplicationBase : IApplication
         TryToSetEnvironment(Services);
     }
 
+    #endregion
+
     /// <summary>
-    ///
+    /// 获取应用程序名称
     /// </summary>
     /// <param name="options"></param>
     /// <returns></returns>
@@ -435,7 +448,7 @@ public class ApplicationBase : IApplication
     }
 
     /// <summary>
-    ///
+    /// 尝试设置环境
     /// </summary>
     /// <param name="services"></param>
     private static void TryToSetEnvironment(IServiceCollection services)

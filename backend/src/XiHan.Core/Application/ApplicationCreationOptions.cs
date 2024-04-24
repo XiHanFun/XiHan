@@ -14,10 +14,11 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using XiHan.Core.Microsoft.Extensions.Configuration;
 using XiHan.Core.Modularity.PlugIns;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Options;
+namespace XiHan.Core.Application;
 
 /// <summary>
 /// 应用创建选项

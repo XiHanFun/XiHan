@@ -44,3 +44,4 @@ public class InitializationException : Exception
     public InitializationException(string? message, Exception? innerException) : base(DefaultMessage + message, innerException)
     {
     }
+}

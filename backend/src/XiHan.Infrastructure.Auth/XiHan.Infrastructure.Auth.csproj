@@ -17,7 +17,7 @@
 		<PackageReference Include="AspNet.Security.OAuth.GitLab" Version="8.0.0" />
 		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.0.0" />
 		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>

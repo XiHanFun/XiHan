@@ -18,6 +18,7 @@ using System.Reflection;
 using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Reflection;
+using XiHan.Core.System.Extensions;
 
 namespace XiHan.Core.DependencyInjection;
 
@@ -101,7 +102,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取依赖特性
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -111,7 +112,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取生命周期
     /// </summary>
     /// <param name="type"></param>
     /// <param name="dependencyAttribute"></param>
@@ -122,7 +123,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 从类层次结构中获取服务生命周期
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -147,7 +148,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取默认生命周期
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -157,7 +158,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取暴露的服务类型
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -167,7 +168,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取暴露的键值服务类型
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -177,7 +178,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 创建服务描述器
     /// </summary>
     /// <param name="implementationType"></param>
     /// <param name="serviceKey"></param>
@@ -232,7 +233,7 @@ public abstract class ConventionalRegistrarBase : IConventionalRegistrar
     }
 
     /// <summary>
-    ///
+    /// 获取重定向类型或空
     /// </summary>
     /// <param name="implementationType"></param>
     /// <param name="exposingServiceType"></param>

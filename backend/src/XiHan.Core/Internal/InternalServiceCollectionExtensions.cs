@@ -15,13 +15,18 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Logging;
 using XiHan.Core.Microsoft.Extensions.Configuration;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity;
-using XiHan.Core.Options;
+using XiHan.Core.Modularity.Abstracts;
+using XiHan.Core.Modularity.Contributors;
 using XiHan.Core.Reflection;
+using XiHan.Core.Reflection.Abstracts;
+using XiHan.Core.SimpleStateChecking;
+using XiHan.Core.SimpleStateChecking.Abstracts;
 
 namespace XiHan.Core.Internal;
 
@@ -57,11 +62,7 @@ internal static class InternalServiceCollectionExtensions
 
         if (!services.IsAdded<IConfiguration>())
         {
-            services.ReplaceConfiguration(
-                ConfigurationHelper.BuildConfiguration(
-                    applicationCreationOptions.Configuration
-                )
-            );
+            services.ReplaceConfiguration(ConfigurationHelper.BuildConfiguration(applicationCreationOptions.Configuration));
         }
 
         services.TryAddSingleton<IModuleLoader>(moduleLoader);

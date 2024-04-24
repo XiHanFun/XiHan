@@ -12,6 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -22,6 +24,105 @@ namespace XiHan.Core.System.Extensions;
 /// </summary>
 public static class ObjectExtensions
 {
+    #region 转换检查
+
+    /// <summary>
+    /// 用于简化和美化将对象转换为类型的操作
+    /// </summary>
+    /// <typeparam name="T">要转换的类型</typeparam>
+    /// <param name="obj">要转换的对象</param>
+    /// <returns>转换后的对象</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T As<T>(this object obj)
+        where T : class
+    {
+        return (T)obj;
+    }
+
+    /// <summary>
+    /// 使用 <see cref="Convert.ChangeType(object,Type)"/> 方法将给定对象转换为值类型
+    /// </summary>
+    /// <param name="obj">要转换的对象</param>
+    /// <typeparam name="T">目标对象的类型</typeparam>
+    /// <returns>转换后的对象</returns>
+    public static T To<T>(this object obj)
+        where T : struct
+    {
+        if (typeof(T) == typeof(Guid))
+        {
+            return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(obj.ToString()!)!;
+        }
+
+        return (T)Convert.ChangeType(obj, typeof(T), CultureInfo.InvariantCulture);
+    }
+
+    /// <summary>
+    /// 检查一个项目是否在列表中
+    /// </summary>
+    /// <param name="item">要检查的项目</param>
+    /// <param name="list">项目列表</param>
+    /// <typeparam name="T">项目的类型</typeparam>
+    public static bool IsIn<T>(this T item, params T[] list)
+    {
+        return list.Contains(item);
+    }
+
+    /// <summary>
+    /// 检查一个项目是否在给定的可枚举对象中
+    /// </summary>
+    /// <param name="item">要检查的项目</param>
+    /// <param name="items">项目</param>
+    /// <typeparam name="T">项目的类型</typeparam>
+    public static bool IsIn<T>(this T item, IEnumerable<T> items)
+    {
+        return items.Contains(item);
+    }
+
+    /// <summary>
+    /// 可用于有条件地对对象执行一个函数并返回修改后的或原始对象
+    /// 它对于链式调用很有用
+    /// </summary>
+    /// <param name="obj">一个对象</param>
+    /// <param name="condition">一个条件</param>
+    /// <param name="func">仅当条件为 <code>true</code> 时才执行的函数</param>
+    /// <typeparam name="T">对象的类型</typeparam>
+    /// <returns>
+    /// 如果 <paramref name="condition"/> 为 <code>true</code>，则返回由 <paramref name="func"/> 修改后的对象（）
+    /// 如果 <paramref name="condition"/> 为 <code>false</code>，则返回原始对象
+    /// </returns>
+    public static T If<T>(this T obj, bool condition, Func<T, T> func)
+    {
+        if (condition)
+        {
+            return func(obj);
+        }
+
+        return obj;
+    }
+
+    /// <summary>
+    /// 可用于有条件地对一个对象执行一个操作并返回原始对象
+    /// 它对于对象的链式调用很有用
+    /// </summary>
+    /// <param name="obj">一个对象</param>
+    /// <param name="condition">一个条件</param>
+    /// <param name="action">仅当条件为 <code>true</code> 时才执行的操作</param>
+    /// <typeparam name="T">对象的类型</typeparam>
+    /// <returns>
+    /// 返回原始对象
+    /// </returns>
+    public static T If<T>(this T obj, bool condition, Action<T> action)
+    {
+        if (condition)
+        {
+            action(obj);
+        }
+
+        return obj;
+    }
+
+    #endregion
+
     #region 对象全名
 
     /// <summary>
