@@ -15,7 +15,7 @@
 namespace XiHan.Core.System.Extensions;
 
 /// <summary>
-/// 控制台输出扩展
+/// 控制台输出扩展方法
 /// </summary>
 public static class ConsoleExtensions
 {

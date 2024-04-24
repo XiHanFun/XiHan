@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 服务描述器扩展
+/// 服务描述器扩展方法
 /// 包括该服务的类型、实现和生存期
 /// </summary>
 public static class ServiceDescriptorExtensions

@@ -19,7 +19,7 @@ using XiHan.Core.Exceptions.Handling.Abstracts;
 namespace XiHan.Core.Exceptions.Extensions;
 
 /// <summary>
-/// 异常扩展
+/// 异常扩展方法
 /// </summary>
 public static class ExceptionExtensions
 {

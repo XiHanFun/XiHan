@@ -19,7 +19,7 @@ using XiHan.Core.Verification;
 namespace XiHan.Core.Modularity.PlugIns;
 
 /// <summary>
-/// 插件源扩展
+/// 插件源扩展方法
 /// </summary>
 public static class PlugInSourceExtensions
 {

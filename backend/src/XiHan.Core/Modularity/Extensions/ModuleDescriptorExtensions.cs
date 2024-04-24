@@ -18,7 +18,7 @@ using XiHan.Core.Modularity.Abstracts;
 namespace XiHan.Core.Modularity.Extensions;
 
 /// <summary>
-/// 模块描述器扩展
+/// 模块描述器扩展方法
 /// </summary>
 public static class ModuleDescriptorExtensions
 {

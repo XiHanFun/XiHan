@@ -54,7 +54,7 @@ public static class AesHelper
             rng.GetBytes(salt);
         }
 
-        // 扩展密码为 IV 和 KEY
+        // 扩展方法密码为 IV 和 KEY
         var key = DeriveKey(password, salt, KeySize / 8);
         var iv = DeriveKey(password, salt, BlockSize / 8);
 
@@ -99,7 +99,7 @@ public static class AesHelper
         var salt = Convert.FromBase64String(parts[0]);
         var cipherBytes = Convert.FromBase64String(parts[1]);
 
-        // 扩展密码为 IV 和 KEY
+        // 扩展方法密码为 IV 和 KEY
         var key = DeriveKey(password, salt, KeySize / 8);
         var iv = DeriveKey(password, salt, BlockSize / 8);
 
@@ -120,7 +120,7 @@ public static class AesHelper
     }
 
     /// <summary>
-    /// 扩展密码为 IV 和 KEY
+    /// 扩展方法密码为 IV 和 KEY
     /// </summary>
     /// <param name="password"></param>
     /// <param name="salt"></param>

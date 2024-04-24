@@ -21,7 +21,7 @@ using XiHan.Core.System.Collections.Generic.Extensions;
 namespace XiHan.Core.Microsoft.Extensions.Logging;
 
 /// <summary>
-/// 日志扩展
+/// 日志扩展方法
 /// </summary>
 public static class LoggerExtensions
 {

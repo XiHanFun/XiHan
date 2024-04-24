@@ -152,7 +152,7 @@ public static class MimeTypes
         public const string XhtmlXml = "application/xhtml+xml";
 
         /// <summary>
-        /// 表示可扩展标记语言（XML）文档的MIME类型，XML是一种用于存储和传输数据的格式。
+        /// 表示可扩展方法标记语言（XML）文档的MIME类型，XML是一种用于存储和传输数据的格式。
         /// </summary>
         public const string Xml = "application/xml";
 
@@ -162,7 +162,7 @@ public static class MimeTypes
         public const string XmlDtd = "application/xml-dtd";
 
         /// <summary>
-        /// 表示可扩展样式表语言转换（XSLT）文档的MIME类型，XSLT用于将XML文档转换成HTML、文本或其他XML文档。
+        /// 表示可扩展方法样式表语言转换（XSLT）文档的MIME类型，XSLT用于将XML文档转换成HTML、文本或其他XML文档。
         /// </summary>
         public const string XsltXml = "application/xslt+xml";
 
@@ -331,12 +331,12 @@ public static class MimeTypes
         public const string H264 = "video/h264";
 
         /// <summary>
-        /// 表示MPEG-4 Part 14视频文件的MIME类型，通常以.mp4扩展名出现，是一种非常流行的视频文件格式，支持流媒体和视频播放设备。
+        /// 表示MPEG-4 Part 14视频文件的MIME类型，通常以.mp4扩展方法名出现，是一种非常流行的视频文件格式，支持流媒体和视频播放设备。
         /// </summary>
         public const string Mp4 = "video/mp4";
 
         /// <summary>
-        /// 表示MPEG视频文件的MIME类型，MPEG是一种早期的视频压缩标准，用于DVD视频和旧式的在线视频，以.mpeg或.mpg扩展名常见。
+        /// 表示MPEG视频文件的MIME类型，MPEG是一种早期的视频压缩标准，用于DVD视频和旧式的在线视频，以.mpeg或.mpg扩展方法名常见。
         /// </summary>
         public const string Mpeg = "video/mpeg";
 

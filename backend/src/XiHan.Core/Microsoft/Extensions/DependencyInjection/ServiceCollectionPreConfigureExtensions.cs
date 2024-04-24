@@ -19,7 +19,7 @@ using XiHan.Core.Options;
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 服务容器预配置扩展
+/// 服务容器预配置扩展方法
 /// </summary>
 public static class ServiceCollectionPreConfigureExtensions
 {

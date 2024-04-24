@@ -23,7 +23,7 @@ using XiHan.Core.Verification;
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 服务容器常用扩展
+/// 服务容器常用扩展方法
 /// </summary>
 public static class ServiceCollectionCommonExtensions
 {

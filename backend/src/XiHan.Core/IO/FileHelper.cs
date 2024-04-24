@@ -216,7 +216,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 从文件的绝对路径中获取文件名(包含扩展名)
+    /// 从文件的绝对路径中获取文件名(包含扩展方法名)
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
@@ -245,8 +245,8 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 从文件的绝对路径中获取扩展名
-    /// 文件扩展名是包含点（.）的
+    /// 从文件的绝对路径中获取扩展方法名
+    /// 文件扩展方法名是包含点（.）的
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
@@ -256,7 +256,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 从文件的绝对路径中获取文件名(不包含扩展名)
+    /// 从文件的绝对路径中获取文件名(不包含扩展方法名)
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
@@ -268,7 +268,7 @@ public static class FileHelper
     /// <summary>
     /// 生成唯一的文件名，上传文件使用
     /// </summary>
-    /// <param name="fileName">包含扩展名的源文件名</param>
+    /// <param name="fileName">包含扩展方法名的源文件名</param>
     /// <returns></returns>
     public static string GetUniqueFileName(string fileName)
     {
