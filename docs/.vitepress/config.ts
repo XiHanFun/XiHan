@@ -119,7 +119,7 @@ export default defineConfig({
       message:
         "Released under the <a href='http://license.coscl.org.cn/MulanPSL2' target='_blank'>MulanPSL2</a> License.",
       copyright:
-        "Copyright ©2023 <a href='https://www.zhaifanhua.com' target='_blank'>ZhaiFanhua</a> All Rights Reserved.",
+        "Copyright ©2021-2024 <a href='https://www.zhaifanhua.com' target='_blank'>ZhaiFanhua</a> All Rights Reserved.",
     },
   },
 });
