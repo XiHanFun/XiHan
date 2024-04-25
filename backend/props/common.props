@@ -22,7 +22,7 @@
 		<!-- 指定作者信息 -->
 		<Authors>ZhaiFanhua</Authors>
 		<!-- 指定版权信息 -->
-		<Copyright>Copyright ©2024 ZhaiFanhua All Rights Reserved.</Copyright>
+		<Copyright>Copyright ©2021-2024 ZhaiFanhua All Rights Reserved.</Copyright>
 		<!-- 构建时生成NuGet包 -->
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<!-- NuGet包图标 -->
