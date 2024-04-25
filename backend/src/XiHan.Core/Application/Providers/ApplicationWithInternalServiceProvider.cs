@@ -14,10 +14,9 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
-namespace XiHan.Core.Application;
+namespace XiHan.Core.Application.Providers;
 
 /// <summary>
 /// 具有内部服务的应用程序提供器

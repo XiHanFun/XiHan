@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.DependencyInjection;
+namespace XiHan.Core.DependencyInjection.Attributes;
 
 /// <summary>
 /// 禁止常规注册特性

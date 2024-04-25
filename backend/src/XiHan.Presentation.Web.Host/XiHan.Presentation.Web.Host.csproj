@@ -19,8 +19,6 @@
 	  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XiHan.Common.Shared\XiHan.Common.Shared.csproj" />
-    <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
     <ProjectReference Include="..\XiHan.Presentation.Web.Core\XiHan.Presentation.Web.Core.csproj" />
   </ItemGroup>
 </Project>

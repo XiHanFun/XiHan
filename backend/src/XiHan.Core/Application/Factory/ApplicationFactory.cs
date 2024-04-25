@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Application.Abstracts;
+using XiHan.Core.Application.Providers;
 using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Application.Factory;

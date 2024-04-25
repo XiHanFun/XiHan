@@ -14,7 +14,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace XiHan.Core.DependencyInjection;
+namespace XiHan.Core.DependencyInjection.Attributes;
 
 /// <summary>
 /// 依赖特性

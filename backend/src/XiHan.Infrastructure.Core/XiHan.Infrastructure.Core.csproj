@@ -18,8 +18,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\XiHan.Common.Shared\XiHan.Common.Shared.csproj" />
-		<ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
 		<ProjectReference Include="..\XiHan.Domain.Core\XiHan.Domain.Core.csproj" />
 	</ItemGroup>
 

@@ -3,26 +3,28 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IExposedServiceTypesProvider
-// Guid:a1598fb8-bcd7-4aae-be28-1759e1957a3b
+// FileName:IExposedKeyedServiceTypesProvider
+// Guid:a1a4a4a8-cfb1-47f4-bdc4-62eecfe10639
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 22:34:52
+// CreateTime:2024/4/24 22:41:27
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.Microsoft.Extensions.DependencyInjection;
+
+namespace XiHan.Core.DependencyInjection.Providers;
 
 /// <summary>
-/// 暴露服务类型提供器接口
+/// 暴露键服务类型提供器接口
 /// </summary>
-public interface IExposedServiceTypesProvider
+public interface IExposedKeyedServiceTypesProvider
 {
     /// <summary>
     /// 获取暴露的服务类型
     /// </summary>
     /// <param name="targetType"></param>
     /// <returns></returns>
-    Type[] GetExposedServiceTypes(Type targetType);
+    ServiceIdentifier[] GetExposedServiceTypes(Type targetType);
 }

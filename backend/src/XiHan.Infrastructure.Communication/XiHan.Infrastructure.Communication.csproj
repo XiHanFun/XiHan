@@ -15,10 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Folder Include="Webhooks\" />
 	</ItemGroup>
 </Project>

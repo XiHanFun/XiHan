@@ -19,9 +19,5 @@
 		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Common.Shared\XiHan.Common.Shared.csproj" />
-	</ItemGroup>
 </Project>
 

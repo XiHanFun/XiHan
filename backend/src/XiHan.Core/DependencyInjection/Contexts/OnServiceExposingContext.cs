@@ -13,11 +13,10 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.DependencyInjection;
+namespace XiHan.Core.DependencyInjection.Contexts;
 
 /// <summary>
 /// 服务暴露时上下文

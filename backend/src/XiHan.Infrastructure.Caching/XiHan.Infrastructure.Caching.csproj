@@ -13,10 +13,5 @@
 	<ItemGroup>
 		<PackageReference Include="Caching.CSRedis" Version="3.8.800" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Common.Shared\XiHan.Common.Shared.csproj" />
-	  <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
-	</ItemGroup>
 </Project>
 

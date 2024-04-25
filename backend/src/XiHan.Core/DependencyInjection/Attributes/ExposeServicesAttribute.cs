@@ -13,11 +13,11 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection.Providers;
 using XiHan.Core.System.Collections.Generic.Extensions;
 using XiHan.Core.System.Extensions;
 
-namespace XiHan.Core.DependencyInjection;
+namespace XiHan.Core.DependencyInjection.Attributes;
 
 /// <summary>
 /// 暴露服务特性

@@ -12,7 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection.Attributes;
+using XiHan.Core.DependencyInjection.Providers;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.System.Collections.Generic.Extensions;
 

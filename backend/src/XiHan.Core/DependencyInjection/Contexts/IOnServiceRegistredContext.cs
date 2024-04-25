@@ -15,7 +15,7 @@
 using XiHan.Core.Collections;
 using XiHan.Core.DynamicProxy.Abstracts;
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection.Contexts;
 
 /// <summary>
 /// 服务注册上下文接口

@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\XiHan.Common.Utilities\XiHan.Common.Utilities.csproj" />
-  </ItemGroup>
-
 </Project>

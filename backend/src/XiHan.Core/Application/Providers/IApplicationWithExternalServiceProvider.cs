@@ -13,8 +13,9 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
+using XiHan.Core.Application.Abstracts;
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Core.Application.Providers;
 
 /// <summary>
 /// 具有外部服务的应用程序提供器接口

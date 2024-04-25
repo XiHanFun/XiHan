@@ -14,7 +14,7 @@
 
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection.Contexts;
 
 /// <summary>
 /// 服务暴露时上下文接口

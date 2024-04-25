@@ -14,8 +14,9 @@
 
 using System.Linq.Expressions;
 using System.Reflection;
+using XiHan.Core.DependencyInjection.Attributes;
 
-namespace XiHan.Common.Shared.Services;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// 属性或字段自动装配服务处理器

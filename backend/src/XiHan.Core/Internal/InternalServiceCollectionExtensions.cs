@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
+using XiHan.Core.DependencyInjection;
 using XiHan.Core.Logging;
 using XiHan.Core.Microsoft.Extensions.Configuration;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
@@ -69,6 +70,8 @@ internal static class InternalServiceCollectionExtensions
         services.TryAddSingleton<IAssemblyFinder>(assemblyFinder);
         services.TryAddSingleton<ITypeFinder>(typeFinder);
         services.TryAddSingleton<IInitLoggerFactory>(new DefaultInitLoggerFactory());
+        // 属性或字段自动注入服务
+        services.AddSingleton<AutowiredServiceHandler>();
 
         services.AddAssemblyOf<IApplication>();
 
