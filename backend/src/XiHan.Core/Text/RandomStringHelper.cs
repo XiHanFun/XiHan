@@ -17,10 +17,13 @@ using System.Text;
 namespace XiHan.Core.Text;
 
 /// <summary>
-/// 随机数帮助类
+/// 随机字符串帮助类
 /// </summary>
 public static class RandomStringHelper
 {
+    // 默认随机数生成器
+    private static readonly Random Rnd = new();
+
     // 默认数字字符源
     private const string DefaultNumberSource = "0123456789";
 
@@ -89,10 +92,13 @@ public static class RandomStringHelper
         ArgumentException.ThrowIfNullOrEmpty(source);
 
         StringBuilder result = new();
-        Random random = new(~unchecked((int)DateTime.Now.Ticks));
-        for (var i = 0; i < length; i++)
+
+        lock (Rnd)
         {
-            _ = result.Append(source[random.Next(0, source.Length)]);
+            for (var i = 0; i < length; i++)
+            {
+                _ = result.Append(source[Rnd.Next(0, source.Length)]);
+            }
         }
 
         return result.ToString();
