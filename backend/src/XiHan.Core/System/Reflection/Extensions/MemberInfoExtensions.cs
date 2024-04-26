@@ -33,15 +33,15 @@ public static class MemberInfoExtensions
     /// <returns>返回 Description 特性描述信息，如不存在则返回成员的名称</returns>
     public static string GetDescription(this MemberInfo member, bool inherit = true)
     {
-        var desc = member.GetAttribute<DescriptionAttribute>(inherit);
+        var desc = member.GetSingleAttributeOrNull<DescriptionAttribute>(inherit);
         if (desc != null)
             return desc.Description;
 
-        var displayName = member.GetAttribute<DisplayNameAttribute>(inherit);
+        var displayName = member.GetSingleAttributeOrNull<DisplayNameAttribute>(inherit);
         if (displayName != null)
             return displayName.DisplayName;
 
-        var display = member.GetAttribute<DisplayAttribute>(inherit);
+        var display = member.GetSingleAttributeOrNull<DisplayAttribute>(inherit);
         return display != null
             ? display.Name ?? string.Empty : member.Name;
     }
@@ -53,38 +53,58 @@ public static class MemberInfoExtensions
     /// <summary>
     /// 检查指定指定类型成员中是否存在指定的Attribute特性
     /// </summary>
-    /// <typeparam name="T">要检查的Attribute特性类型</typeparam>
-    /// <param name="memberInfo">要检查的类型成员</param>
+    /// <typeparam name="TAttribute">要检查的Attribute特性类型</typeparam>
+    /// <param name="memberInfo">要检查的成员</param>
     /// <param name="inherit">是否从继承中查找</param>
     /// <returns>是否存在</returns>
-    public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    public static bool HasAttribute<TAttribute>(this MemberInfo memberInfo, bool inherit = true) where TAttribute : Attribute
     {
-        return memberInfo.IsDefined(typeof(T), inherit);
+        return memberInfo.IsDefined(typeof(TAttribute), inherit);
     }
 
     /// <summary>
-    /// 从类型成员获取指定Attribute特性
+    /// 获取成员的单个特性
     /// </summary>
-    /// <typeparam name="T">Attribute特性类型</typeparam>
-    /// <param name="memberInfo">类型类型成员</param>
+    /// <typeparam name="TAttribute">要检查的Attribute特性类型</typeparam>
+    /// <param name="memberInfo">要检查的成员</param>
     /// <param name="inherit">是否从继承中查找</param>
-    /// <returns>存在返回第一个，不存在返回null</returns>
-    public static T? GetAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    /// <returns>Returns the attribute object if found. Returns null if not found.</returns>
+    public static TAttribute? GetSingleAttributeOrNull<TAttribute>(this MemberInfo memberInfo, bool inherit = true)
+        where TAttribute : Attribute
     {
-        var attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
-        return attributes.FirstOrDefault() as T;
+        ArgumentNullException.ThrowIfNull(memberInfo);
+
+        var attrs = memberInfo.GetCustomAttributes(typeof(TAttribute), inherit).ToArray();
+        if (attrs.Length > 0)
+        {
+            return (TAttribute)attrs[0];
+        }
+
+        return default;
     }
 
     /// <summary>
-    /// 从类型成员获取指定Attribute特性
+    /// 获取特定类型或基类型的单个属性（或为 null）
     /// </summary>
-    /// <typeparam name="T">Attribute特性类型</typeparam>
-    /// <param name="memberInfo">类型类型成员</param>
+    /// <typeparam name="TAttribute">要检查的Attribute特性类型</typeparam>
+    /// <param name="type">要检查的类型成员</param>
     /// <param name="inherit">是否从继承中查找</param>
-    /// <returns>返回所有指定Attribute特性的数组</returns>
-    public static T[] GetAttributes<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
+    /// <returns></returns>
+    public static TAttribute? GetSingleAttributeOfTypeOrBaseTypesOrNull<TAttribute>(this Type type, bool inherit = true)
+        where TAttribute : Attribute
     {
-        return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
+        var attr = type.GetTypeInfo().GetSingleAttributeOrNull<TAttribute>();
+        if (attr != null)
+        {
+            return attr;
+        }
+
+        if (type.GetTypeInfo().BaseType == null)
+        {
+            return null;
+        }
+
+        return type.GetTypeInfo().BaseType?.GetSingleAttributeOfTypeOrBaseTypesOrNull<TAttribute>(inherit);
     }
 
     #endregion

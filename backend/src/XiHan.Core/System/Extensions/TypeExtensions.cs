@@ -184,7 +184,7 @@ public static class TypeExtensions
         var result = string.Empty;
         var fullName = type.FullName ?? result;
 
-        var desc = type.GetAttribute<DescriptionAttribute>(inherit);
+        var desc = type.GetSingleAttributeOrNull<DescriptionAttribute>(inherit);
 
         if (desc == null)
             return result;
