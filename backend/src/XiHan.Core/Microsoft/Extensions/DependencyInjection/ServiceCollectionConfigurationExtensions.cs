@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using XiHan.Core.Exceptions;
+using XiHan.Core.Application;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
@@ -42,12 +42,12 @@ public static class ServiceCollectionConfigurationExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    /// <exception cref="CustomException"></exception>
+    /// <exception cref="XiHanException"></exception>
     [NotNull]
     public static IConfiguration GetConfiguration(this IServiceCollection services)
     {
         return services.GetConfigurationOrNull() ??
-               throw new CustomException($"在服务集合中找不到{typeof(IConfiguration).AssemblyQualifiedName}的实现。");
+               throw new XiHanException($"在服务集合中找不到{typeof(IConfiguration).AssemblyQualifiedName}的实现。");
     }
 
     /// <summary>

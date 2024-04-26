@@ -115,7 +115,7 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
     }
 
     /// <summary>
-    /// 内部是否启用
+    /// 集成是否启用
     /// </summary>
     /// <param name="state"></param>
     /// <param name="useBatchChecker"></param>

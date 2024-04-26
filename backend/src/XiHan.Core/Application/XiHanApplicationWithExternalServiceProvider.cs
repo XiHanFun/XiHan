@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ApplicationWithExternalServiceProvider
+// FileName:XiHanApplicationWithExternalServiceProvider
 // Guid:3f21f488-c1cc-4fd3-b658-5671f163c222
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,14 +14,15 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Application.Providers;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 具有外部服务的应用程序提供器
+/// 具有外部服务的曦寒应用提供器
 /// </summary>
-internal class ApplicationWithExternalServiceProvider : ApplicationBase, IApplicationWithExternalServiceProvider
+internal class XiHanApplicationWithExternalServiceProvider : XiHanApplicationBase, IXiHanApplicationWithExternalServiceProvider
 {
     /// <summary>
     /// 构造函数
@@ -29,18 +30,18 @@ internal class ApplicationWithExternalServiceProvider : ApplicationBase, IApplic
     /// <param name="startupModuleType"></param>
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
-    public ApplicationWithExternalServiceProvider(
+    public XiHanApplicationWithExternalServiceProvider(
         [NotNull] Type startupModuleType,
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction) : base(startupModuleType, services, optionsAction)
+        Action<XiHanApplicationCreationOptions>? optionsAction) : base(startupModuleType, services, optionsAction)
     {
-        services.AddSingleton<IApplicationWithExternalServiceProvider>(this);
+        services.AddSingleton<IXiHanApplicationWithExternalServiceProvider>(this);
     }
 
     /// <summary>
     /// 设置服务提供器，但不初始化模块
     /// </summary>
-    void IApplicationWithExternalServiceProvider.SetServiceProvider([NotNull] IServiceProvider serviceProvider)
+    void IXiHanApplicationWithExternalServiceProvider.SetServiceProvider([NotNull] IServiceProvider serviceProvider)
     {
         CheckHelper.NotNull(serviceProvider, nameof(serviceProvider));
 
@@ -59,7 +60,7 @@ internal class ApplicationWithExternalServiceProvider : ApplicationBase, IApplic
 
     /// <summary>
     /// 设置服务提供器并初始化所有模块，异步
-    /// 如果之前调用过 <see cref="IApplicationWithExternalServiceProvider.SetServiceProvider"/>，则应将相同的 <paramref name="serviceProvider"/> 实例传递给此方法
+    /// 如果之前调用过 <see cref="IXiHanApplicationWithExternalServiceProvider.SetServiceProvider"/>，则应将相同的 <paramref name="serviceProvider"/> 实例传递给此方法
     /// </summary>
     public async Task InitializeAsync(IServiceProvider serviceProvider)
     {
@@ -72,7 +73,7 @@ internal class ApplicationWithExternalServiceProvider : ApplicationBase, IApplic
 
     /// <summary>
     /// 设置服务提供器并初始化所有模块，异步
-    /// 如果之前调用过 <see cref="IApplicationWithExternalServiceProvider.SetServiceProvider"/>，则应将相同的 <paramref name="serviceProvider"/> 实例传递给此方法
+    /// 如果之前调用过 <see cref="IXiHanApplicationWithExternalServiceProvider.SetServiceProvider"/>，则应将相同的 <paramref name="serviceProvider"/> 实例传递给此方法
     /// </summary>
     public void Initialize([NotNull] IServiceProvider serviceProvider)
     {

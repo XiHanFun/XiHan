@@ -12,8 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Application.Contexts;
+using XiHan.Core.Application;
 using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Modularity.Contributors;
@@ -29,7 +28,7 @@ public class OnPostApplicationInitializationModuleLifecycleContributor : ModuleL
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    public override async Task InitializeAsync(ApplicationInitializationContext context, IModule module)
+    public override async Task InitializeAsync(ApplicationInitializationContext context, IXiHanModule module)
     {
         if (module is IOnPostApplicationInitialization onPostApplicationInitialization)
         {
@@ -42,7 +41,7 @@ public class OnPostApplicationInitializationModuleLifecycleContributor : ModuleL
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    public override void Initialize(ApplicationInitializationContext context, IModule module)
+    public override void Initialize(ApplicationInitializationContext context, IXiHanModule module)
     {
         (module as IOnPostApplicationInitialization)?.OnPostApplicationInitialization(context);
     }

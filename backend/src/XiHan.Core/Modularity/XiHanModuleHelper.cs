@@ -20,9 +20,9 @@ using XiHan.Core.System.Collections.Generic.Extensions;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块帮助类
+/// 曦寒模块帮助类
 /// </summary>
-public static class ModuleHelper
+public static class XiHanModuleHelper
 {
     /// <summary>
     /// 查找所有模块类型
@@ -33,7 +33,7 @@ public static class ModuleHelper
     public static List<Type> FindAllModuleTypes(Type startupModuleType, ILogger? logger)
     {
         var moduleTypes = new List<Type>();
-        logger?.Log(LogLevel.Information, "加载模块:");
+        logger?.Log(LogLevel.Information, "加载曦寒模块:");
         AddModuleAndDependenciesRecursively(moduleTypes, startupModuleType, logger);
         return moduleTypes;
     }
@@ -45,7 +45,7 @@ public static class ModuleHelper
     /// <returns></returns>
     public static List<Type> FindDependedModuleTypes(Type moduleType)
     {
-        Module.CheckModuleType(moduleType);
+        XiHanModule.CheckXiHanModuleType(moduleType);
 
         var dependencies = new List<Type>();
 
@@ -97,7 +97,7 @@ public static class ModuleHelper
     /// <param name="depth"></param>
     private static void AddModuleAndDependenciesRecursively(List<Type> moduleTypes, Type moduleType, ILogger? logger, int depth = 0)
     {
-        Module.CheckModuleType(moduleType);
+        XiHanModule.CheckXiHanModuleType(moduleType);
 
         if (moduleTypes.Contains(moduleType))
         {

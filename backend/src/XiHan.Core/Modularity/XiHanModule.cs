@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:Module
+// FileName:XiHanModule
 // Guid:2909728d-05d0-4da7-9647-c08f6da40f5e
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -15,9 +15,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Application.Contexts;
-using XiHan.Core.Exceptions;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.Modularity.Contexts;
@@ -25,9 +24,9 @@ using XiHan.Core.Modularity.Contexts;
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块化服务配置基类
+/// 曦寒模块化服务配置基类
 /// </summary>
-public abstract class Module : IPreConfigureServices, IModule, IPostConfigureServices,
+public abstract class XiHanModule : IPreConfigureServices, IXiHanModule, IPostConfigureServices,
     IOnPreApplicationInitialization, IOnApplicationInitialization, IOnPostApplicationInitialization, IOnApplicationShutdown
 {
     private ServiceConfigurationContext? _serviceConfigurationContext;
@@ -41,7 +40,7 @@ public abstract class Module : IPreConfigureServices, IModule, IPostConfigureSer
         {
             if (_serviceConfigurationContext == null)
             {
-                throw new CustomException($"{nameof(ServiceConfigurationContext)}只能在{nameof(ConfigureServices)}、{nameof(PreConfigureServices)}和{nameof(PostConfigureServices)}方法中使用。");
+                throw new XiHanException($"{nameof(ServiceConfigurationContext)}只能在{nameof(ConfigureServices)}、{nameof(PreConfigureServices)}和{nameof(PostConfigureServices)}方法中使用。");
             }
 
             return _serviceConfigurationContext;
@@ -55,30 +54,30 @@ public abstract class Module : IPreConfigureServices, IModule, IPostConfigureSer
     protected internal bool SkipAutoServiceRegistration { get; protected set; }
 
     /// <summary>
-    /// 是否为模块
+    /// 是否为曦寒模块
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static bool IsModule(Type type)
+    public static bool IsXiHanModule(Type type)
     {
         var typeInfo = type.GetTypeInfo();
 
         return typeInfo.IsClass &&
             !typeInfo.IsAbstract &&
             !typeInfo.IsGenericType &&
-            typeof(IModule).GetTypeInfo().IsAssignableFrom(type);
+            typeof(IXiHanModule).GetTypeInfo().IsAssignableFrom(type);
     }
 
     /// <summary>
-    /// 检测模块类
+    /// 检测曦寒模块类
     /// </summary>
     /// <param name="moduleType"></param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void CheckModuleType(Type moduleType)
+    internal static void CheckXiHanModuleType(Type moduleType)
     {
-        if (!IsModule(moduleType))
+        if (!IsXiHanModule(moduleType))
         {
-            throw new ArgumentException("给定的类型不是模块:" + moduleType.AssemblyQualifiedName);
+            throw new ArgumentException("给定的类型不是曦寒模块:" + moduleType.AssemblyQualifiedName);
         }
     }
 

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModule
+// FileName:IXiHanModule
 // Guid:85ec6b99-74ea-418f-a64c-c117dce646e3
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using XiHan.Core.Modularity.Contexts;
 namespace XiHan.Core.Modularity.Abstracts;
 
 /// <summary>
-/// 模块化服务配置接口
+/// 曦寒模块化服务配置接口
 /// </summary>
-public interface IModule
+public interface IXiHanModule
 {
     /// <summary>
     /// 服务配置，异步

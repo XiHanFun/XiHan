@@ -46,7 +46,7 @@ public class ModuleDescriptor : IModuleDescriptor
     /// <summary>
     /// 曦寒模块类的实例(单例)
     /// </summary>
-    public IModule Instance { get; }
+    public IXiHanModule Instance { get; }
 
     /// <summary>
     /// 该模块是否作为插件加载
@@ -66,11 +66,11 @@ public class ModuleDescriptor : IModuleDescriptor
     /// <param name="instance"></param>
     /// <param name="isLoadedAsPlugIn"></param>
     /// <exception cref="ArgumentException"></exception>
-    public ModuleDescriptor([NotNull] Type type, [NotNull] IModule instance, bool isLoadedAsPlugIn)
+    public ModuleDescriptor([NotNull] Type type, [NotNull] IXiHanModule instance, bool isLoadedAsPlugIn)
     {
         CheckHelper.NotNull(type, nameof(type));
         CheckHelper.NotNull(instance, nameof(instance));
-        Module.CheckModuleType(type);
+        XiHanModule.CheckXiHanModuleType(type);
 
         if (!type.GetTypeInfo().IsAssignableFrom(instance.GetType()))
         {
@@ -79,7 +79,7 @@ public class ModuleDescriptor : IModuleDescriptor
 
         Type = type;
         Assembly = type.Assembly;
-        AllAssemblies = ModuleHelper.GetAllAssemblies(type);
+        AllAssemblies = XiHanModuleHelper.GetAllAssemblies(type);
         Instance = instance;
         IsLoadedAsPlugIn = isLoadedAsPlugIn;
 

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ApplicationBase
+// FileName:XiHanApplicationBase
 // Guid:eb838cc8-ff1d-4bd5-ae74-fcdc93e34a00
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,7 +18,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Application.Contexts;
 using XiHan.Core.DependencyInjection;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Internal;
@@ -28,14 +27,13 @@ using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.Modularity.Contexts;
 using XiHan.Core.System.Extensions;
 using XiHan.Core.Verification;
-using IHostEnvironment = XiHan.Core.Application.Abstracts.IHostEnvironment;
 
 namespace XiHan.Core.Application;
 
 /// <summary>
-/// 应用基类
+/// 曦寒应用基类
 /// </summary>
-public class ApplicationBase : IApplication
+public class XiHanApplicationBase : IXiHanApplication
 {
     /// <summary>
     /// 应用程序启动(入口)模块的类型
@@ -44,14 +42,12 @@ public class ApplicationBase : IApplication
     public Type StartupModuleType { get; }
 
     /// <summary>
-    /// 所有服务注册的列表
-    /// 应用程序初始化后，不能向这个集合添加新的服务
+    /// 所有服务注册的列表，应用程序初始化后，不能向这个集合添加新的服务
     /// </summary>
     public IServiceCollection Services { get; }
 
     /// <summary>
-    /// 应用程序根服务提供器
-    /// 在初始化应用程序之前不能使用
+    /// 应用程序根服务提供器，在初始化应用程序之前不能使用
     /// </summary>
     public IServiceProvider ServiceProvider { get; private set; } = default!;
 
@@ -78,10 +74,10 @@ public class ApplicationBase : IApplication
     /// <param name="startupModuleType"></param>
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
-    internal ApplicationBase(
+    internal XiHanApplicationBase(
         [NotNull] Type startupModuleType,
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction)
+        Action<XiHanApplicationCreationOptions>? optionsAction)
     {
         CheckHelper.NotNull(startupModuleType, nameof(startupModuleType));
         CheckHelper.NotNull(services, nameof(services));
@@ -91,15 +87,15 @@ public class ApplicationBase : IApplication
 
         services.TryAddObjectAccessor<IServiceProvider>();
 
-        var options = new ApplicationCreationOptions(services);
+        var options = new XiHanApplicationCreationOptions(services);
         optionsAction?.Invoke(options);
 
         ApplicationName = GetApplicationName(options);
 
-        services.AddSingleton<IApplication>(this);
+        services.AddSingleton<IXiHanApplication>(this);
         services.AddSingleton<IApplicationInfoAccessor>(this);
         services.AddSingleton<IModuleContainer>(this);
-        services.AddSingleton<IHostEnvironment>(new HostEnvironment()
+        services.AddSingleton<IXiHanHostEnvironment>(new XiHanHostEnvironment()
         {
             EnvironmentName = options.Environment
         });
@@ -115,39 +111,86 @@ public class ApplicationBase : IApplication
         }
     }
 
-    #region 关闭应用程序
+    #region 初始化模块
 
     /// <summary>
-    /// 关闭应用程序和所有模块
+    /// 记录初始化日志
     /// </summary>
-    public virtual async Task ShutdownAsync()
+    /// <param name="serviceProvider"></param>
+    protected virtual void WriteInitLogs(IServiceProvider serviceProvider)
     {
-        using var scope = ServiceProvider.CreateScope();
-        await scope.ServiceProvider
-            .GetRequiredService<IModuleManager>()
-            .ShutdownModulesAsync(new ApplicationShutdownContext(scope.ServiceProvider));
+        var logger = serviceProvider.GetService<ILogger<XiHanApplicationBase>>();
+        if (logger == null)
+        {
+            return;
+        }
+
+        var initLogger = serviceProvider.GetRequiredService<IInitLoggerFactory>().Create<XiHanApplicationBase>();
+
+        foreach (var entry in initLogger.Entries)
+        {
+            logger.Log(entry.LogLevel, entry.EventId, entry.State, entry.Exception, entry.Formatter);
+        }
+
+        initLogger.Entries.Clear();
     }
 
     /// <summary>
-    /// 关闭应用程序和所有模块
+    /// 加载模块
     /// </summary>
-    public virtual void Shutdown()
+    /// <param name="services"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    protected virtual IReadOnlyList<IModuleDescriptor> LoadModules(IServiceCollection services, XiHanApplicationCreationOptions options)
     {
-        using var scope = ServiceProvider.CreateScope();
-        scope.ServiceProvider
-            .GetRequiredService<IModuleManager>()
-            .ShutdownModules(new ApplicationShutdownContext(scope.ServiceProvider));
+        return services
+            .GetSingletonInstance<IModuleLoader>()
+            .LoadModules(services, StartupModuleType, options.PlugInSources);
     }
 
     /// <summary>
-    /// 释放
+    /// 获取应用程序名称
     /// </summary>
-    public virtual void Dispose()
+    /// <param name="options"></param>
+    /// <returns></returns>
+    private static string? GetApplicationName(XiHanApplicationCreationOptions options)
     {
-        //TODO: 如果之前没有完成，就进行关闭?
+        if (!string.IsNullOrWhiteSpace(options.ApplicationName))
+        {
+            return options.ApplicationName!;
+        }
+
+        var configuration = options.Services.GetConfigurationOrNull();
+        if (configuration != null)
+        {
+            var appNameConfig = configuration["ApplicationName"];
+            if (!string.IsNullOrWhiteSpace(appNameConfig))
+            {
+                return appNameConfig!;
+            }
+        }
+
+        var entryAssembly = Assembly.GetEntryAssembly();
+        if (entryAssembly != null)
+        {
+            return entryAssembly.GetName().Name;
+        }
+
+        return null;
     }
 
-    #endregion
+    /// <summary>
+    /// 尝试设置环境
+    /// </summary>
+    /// <param name="services"></param>
+    private static void TryToSetEnvironment(IServiceCollection services)
+    {
+        var HostEnvironment = services.GetSingletonInstance<IXiHanHostEnvironment>();
+        if (HostEnvironment.EnvironmentName.IsNullOrWhiteSpace())
+        {
+            HostEnvironment.EnvironmentName = Environments.Production;
+        }
+    }
 
     /// <summary>
     /// 设置服务提供器
@@ -158,8 +201,6 @@ public class ApplicationBase : IApplication
         ServiceProvider = serviceProvider;
         ServiceProvider.GetRequiredService<ObjectAccessor<IServiceProvider>>().Value = ServiceProvider;
     }
-
-    #region 初始化模块
 
     /// <summary>
     /// 初始化模块，异步
@@ -188,41 +229,6 @@ public class ApplicationBase : IApplication
 
     #endregion
 
-    /// <summary>
-    /// 记录初始化日志
-    /// </summary>
-    /// <param name="serviceProvider"></param>
-    protected virtual void WriteInitLogs(IServiceProvider serviceProvider)
-    {
-        var logger = serviceProvider.GetService<ILogger<ApplicationBase>>();
-        if (logger == null)
-        {
-            return;
-        }
-
-        var initLogger = serviceProvider.GetRequiredService<IInitLoggerFactory>().Create<ApplicationBase>();
-
-        foreach (var entry in initLogger.Entries)
-        {
-            logger.Log(entry.LogLevel, entry.EventId, entry.State, entry.Exception, entry.Formatter);
-        }
-
-        initLogger.Entries.Clear();
-    }
-
-    /// <summary>
-    /// 加载模块
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
-    protected virtual IReadOnlyList<IModuleDescriptor> LoadModules(IServiceCollection services, ApplicationCreationOptions options)
-    {
-        return services
-            .GetSingletonInstance<IModuleLoader>()
-            .LoadModules(services, StartupModuleType, options.PlugInSources);
-    }
-
     #region 配置服务
 
     /// <summary>
@@ -237,7 +243,7 @@ public class ApplicationBase : IApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = context;
             }
@@ -252,7 +258,7 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPreConfigureServices.PreConfigureServicesAsync)} 阶段发生错误。查看内部异常以获取详细信息。", ex);
+                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPreConfigureServices.PreConfigureServicesAsync)} 阶段发生错误。查看集成异常以获取详细信息。", ex);
             }
         }
 
@@ -261,7 +267,7 @@ public class ApplicationBase : IApplication
         // ConfigureServices
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 if (!Module.SkipAutoServiceRegistration)
                 {
@@ -282,7 +288,7 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IModule.ConfigureServicesAsync)} 阶段发生了一个错误。查看内部异常以获取详细信息。", ex);
+                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IXiHanModule.ConfigureServicesAsync)} 阶段发生了一个错误。查看集成异常以获取详细信息。", ex);
             }
         }
 
@@ -295,13 +301,13 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPostConfigureServices.PostConfigureServicesAsync)} 阶段发生了一个错误。查看内部异常以了解详细信息。", ex);
+                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPostConfigureServices.PostConfigureServicesAsync)} 阶段发生了一个错误。查看集成异常以了解详细信息。", ex);
             }
         }
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = null!;
             }
@@ -337,7 +343,7 @@ public class ApplicationBase : IApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = context;
             }
@@ -352,7 +358,7 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块  {module.Type.AssemblyQualifiedName}  的  {nameof(IPreConfigureServices.PreConfigureServices)}  阶段发生了一个错误。查看内部异常以获取详细信息。", ex);
+                throw new InitializationException($"在模块  {module.Type.AssemblyQualifiedName}  的  {nameof(IPreConfigureServices.PreConfigureServices)}  阶段发生了一个错误。查看集成异常以获取详细信息。", ex);
             }
         }
 
@@ -361,7 +367,7 @@ public class ApplicationBase : IApplication
         // ConfigureServices
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 if (!Module.SkipAutoServiceRegistration)
                 {
@@ -382,7 +388,7 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IModule.ConfigureServices)} 阶段发生了一个错误。查看内部异常以获取详细信息。", ex);
+                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IXiHanModule.ConfigureServices)} 阶段发生了一个错误。查看集成异常以获取详细信息。", ex);
             }
         }
 
@@ -395,13 +401,13 @@ public class ApplicationBase : IApplication
             }
             catch (Exception ex)
             {
-                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPostConfigureServices.PostConfigureServices)} 阶段发生了一个错误。查看内部异常以获取详细信息。", ex);
+                throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的 {nameof(IPostConfigureServices.PostConfigureServices)} 阶段发生了一个错误。查看集成异常以获取详细信息。", ex);
             }
         }
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.Module Module)
+            if (module.Instance is Modularity.XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = null!;
             }
@@ -414,47 +420,37 @@ public class ApplicationBase : IApplication
 
     #endregion
 
+    #region 关闭应用
+
     /// <summary>
-    /// 获取应用程序名称
+    /// 关闭应用
     /// </summary>
-    /// <param name="options"></param>
-    /// <returns></returns>
-    private static string? GetApplicationName(ApplicationCreationOptions options)
+    public virtual async Task ShutdownAsync()
     {
-        if (!string.IsNullOrWhiteSpace(options.ApplicationName))
-        {
-            return options.ApplicationName!;
-        }
-
-        var configuration = options.Services.GetConfigurationOrNull();
-        if (configuration != null)
-        {
-            var appNameConfig = configuration["ApplicationName"];
-            if (!string.IsNullOrWhiteSpace(appNameConfig))
-            {
-                return appNameConfig!;
-            }
-        }
-
-        var entryAssembly = Assembly.GetEntryAssembly();
-        if (entryAssembly != null)
-        {
-            return entryAssembly.GetName().Name;
-        }
-
-        return null;
+        using var scope = ServiceProvider.CreateScope();
+        await scope.ServiceProvider
+            .GetRequiredService<IModuleManager>()
+            .ShutdownModulesAsync(new ApplicationShutdownContext(scope.ServiceProvider));
     }
 
     /// <summary>
-    /// 尝试设置环境
+    /// 关闭应用
     /// </summary>
-    /// <param name="services"></param>
-    private static void TryToSetEnvironment(IServiceCollection services)
+    public virtual void Shutdown()
     {
-        var HostEnvironment = services.GetSingletonInstance<IHostEnvironment>();
-        if (HostEnvironment.EnvironmentName.IsNullOrWhiteSpace())
-        {
-            HostEnvironment.EnvironmentName = Environments.Production;
-        }
+        using var scope = ServiceProvider.CreateScope();
+        scope.ServiceProvider
+            .GetRequiredService<IModuleManager>()
+            .ShutdownModules(new ApplicationShutdownContext(scope.ServiceProvider));
     }
+
+    /// <summary>
+    /// 释放
+    /// </summary>
+    public virtual void Dispose()
+    {
+        //TODO: 如果之前没有完成，就进行关闭?
+    }
+
+    #endregion
 }

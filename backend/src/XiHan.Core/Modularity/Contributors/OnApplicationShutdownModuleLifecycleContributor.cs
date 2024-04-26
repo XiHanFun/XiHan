@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
+using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Application.Contexts;
 using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Modularity.Contributors;
@@ -29,7 +29,7 @@ public class OnApplicationShutdownModuleLifecycleContributor : ModuleLifecycleCo
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    public override async Task ShutdownAsync(ApplicationShutdownContext context, IModule module)
+    public override async Task ShutdownAsync(ApplicationShutdownContext context, IXiHanModule module)
     {
         if (module is IOnApplicationShutdown onApplicationShutdown)
         {
@@ -42,7 +42,7 @@ public class OnApplicationShutdownModuleLifecycleContributor : ModuleLifecycleCo
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    public override void Shutdown(ApplicationShutdownContext context, IModule module)
+    public override void Shutdown(ApplicationShutdownContext context, IXiHanModule module)
     {
         (module as IOnApplicationShutdown)?.OnApplicationShutdown(context);
     }

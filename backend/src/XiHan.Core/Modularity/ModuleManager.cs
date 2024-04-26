@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using XiHan.Core.Application.Contexts;
+using XiHan.Core.Application;
 using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Modularity.Abstracts;
@@ -71,7 +71,7 @@ public class ModuleManager : IModuleManager, ISingletonDependency
                 }
                 catch (Exception ex)
                 {
-                    throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的初始化 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看内部异常以获取详细信息。", ex);
+                    throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的初始化 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看集成异常以获取详细信息。", ex);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class ModuleManager : IModuleManager, ISingletonDependency
                 }
                 catch (Exception ex)
                 {
-                    throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的初始化 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看内部异常以获取详细信息。", ex);
+                    throw new InitializationException($"在模块 {module.Type.AssemblyQualifiedName} 的初始化 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看集成异常以获取详细信息。", ex);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class ModuleManager : IModuleManager, ISingletonDependency
                 }
                 catch (Exception ex)
                 {
-                    throw new ShutdownException($"在模块 {module.Type.AssemblyQualifiedName} 的关闭 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看内部异常以获取详细信息。", ex);
+                    throw new ShutdownException($"在模块 {module.Type.AssemblyQualifiedName} 的关闭 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看集成异常以获取详细信息。", ex);
                 }
             }
         }
@@ -148,7 +148,7 @@ public class ModuleManager : IModuleManager, ISingletonDependency
                 }
                 catch (Exception ex)
                 {
-                    throw new ShutdownException($"在模块 {module.Type.AssemblyQualifiedName} 的关闭 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看内部异常以获取详细信息。", ex);
+                    throw new ShutdownException($"在模块 {module.Type.AssemblyQualifiedName} 的关闭 {contributor.GetType().FullName} 阶段发生错误：{ex.Message}。查看集成异常以获取详细信息。", ex);
                 }
             }
         }

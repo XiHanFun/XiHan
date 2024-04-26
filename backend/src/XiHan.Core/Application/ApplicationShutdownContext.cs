@@ -3,36 +3,35 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ApplicationInitializationContext
-// Guid:5a8648c4-82bd-41ad-bd1a-967d24b63ca1
+// FileName:ApplicationShutdownContext
+// Guid:f8f6b474-258c-42e1-b2a5-66692906a275
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:52:14
+// CreateTime:2024-04-22 上午 11:17:35
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.DependencyInjection.Abstracts;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Application.Contexts;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 应用初始化上下文
+/// 应用关闭上下文
 /// </summary>
-public class ApplicationInitializationContext : IServiceProviderAccessor
+public class ApplicationShutdownContext
 {
     /// <summary>
     /// 服务提供者
     /// </summary>
-    public IServiceProvider ServiceProvider { get; set; }
+    public IServiceProvider ServiceProvider { get; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="serviceProvider"></param>
-    public ApplicationInitializationContext([NotNull] IServiceProvider serviceProvider)
+    public ApplicationShutdownContext([NotNull] IServiceProvider serviceProvider)
     {
         CheckHelper.NotNull(serviceProvider, nameof(serviceProvider));
 

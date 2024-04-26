@@ -83,10 +83,10 @@ public class ModuleLoader : IModuleLoader
         Type startupModuleType,
         PlugInSourceList plugInSources)
     {
-        var logger = services.GetInitLogger<ApplicationBase>();
+        var logger = services.GetInitLogger<XiHanApplicationBase>();
 
         // 所有从启动模块开始的模块
-        foreach (var moduleType in ModuleHelper.FindAllModuleTypes(startupModuleType, logger))
+        foreach (var moduleType in XiHanModuleHelper.FindAllModuleTypes(startupModuleType, logger))
         {
             modules.Add(CreateModuleDescriptor(services, moduleType));
         }
@@ -146,9 +146,9 @@ public class ModuleLoader : IModuleLoader
     /// <param name="services"></param>
     /// <param name="moduleType"></param>
     /// <returns></returns>
-    protected virtual IModule CreateAndRegisterModule(IServiceCollection services, Type moduleType)
+    protected virtual IXiHanModule CreateAndRegisterModule(IServiceCollection services, Type moduleType)
     {
-        var module = (IModule)Activator.CreateInstance(moduleType)!;
+        var module = (IXiHanModule)Activator.CreateInstance(moduleType)!;
         services.AddSingleton(moduleType, module);
         return module;
     }
@@ -161,7 +161,7 @@ public class ModuleLoader : IModuleLoader
     /// <exception cref="Exception"></exception>
     protected virtual void SetDependencies(List<ModuleDescriptor> modules, ModuleDescriptor module)
     {
-        foreach (var dependedModuleType in ModuleHelper.FindDependedModuleTypes(module.Type))
+        foreach (var dependedModuleType in XiHanModuleHelper.FindDependedModuleTypes(module.Type))
         {
             var dependedModule = modules.FirstOrDefault(m => m.Type == dependedModuleType) ??
                 throw new Exception($"在 {module.Type.AssemblyQualifiedName} 无法找到依赖的模块 {dependedModuleType.AssemblyQualifiedName}！");

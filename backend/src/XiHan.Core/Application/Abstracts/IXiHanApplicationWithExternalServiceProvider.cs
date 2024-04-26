@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IApplicationWithExternalServiceProvider
+// FileName:IXiHanApplicationWithExternalServiceProvider
 // Guid:8767ed6f-442d-40d7-b9b3-fbd4d0d9d098
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -13,14 +13,13 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Application.Abstracts;
 
-namespace XiHan.Core.Application.Providers;
+namespace XiHan.Core.Application.Abstracts;
 
 /// <summary>
-/// 具有外部服务的应用程序提供器接口
+/// 具有外部服务的曦寒应用提供器接口
 /// </summary>
-public interface IApplicationWithExternalServiceProvider : IApplication
+public interface IXiHanApplicationWithExternalServiceProvider : IXiHanApplication
 {
     /// <summary>
     /// 设置服务提供器，但不初始化模块

@@ -40,7 +40,7 @@ public interface IModuleDescriptor
     /// <summary>
     /// 曦寒模块类的实例(单例)
     /// </summary>
-    IModule Instance { get; }
+    IXiHanModule Instance { get; }
 
     /// <summary>
     /// 该模块是否作为插件加载

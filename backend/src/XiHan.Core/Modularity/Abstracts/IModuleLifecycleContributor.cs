@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Application.Contexts;
+using XiHan.Core.Application;
 using XiHan.Core.DependencyInjection.Abstracts;
 
 namespace XiHan.Core.Modularity.Abstracts;
@@ -29,14 +29,14 @@ public interface IModuleLifecycleContributor : ITransientDependency
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    Task InitializeAsync([NotNull] ApplicationInitializationContext context, [NotNull] IModule module);
+    Task InitializeAsync([NotNull] ApplicationInitializationContext context, [NotNull] IXiHanModule module);
 
     /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    void Initialize([NotNull] ApplicationInitializationContext context, [NotNull] IModule module);
+    void Initialize([NotNull] ApplicationInitializationContext context, [NotNull] IXiHanModule module);
 
     /// <summary>
     /// 关闭，异步
@@ -44,12 +44,12 @@ public interface IModuleLifecycleContributor : ITransientDependency
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    Task ShutdownAsync([NotNull] ApplicationShutdownContext context, [NotNull] IModule module);
+    Task ShutdownAsync([NotNull] ApplicationShutdownContext context, [NotNull] IXiHanModule module);
 
     /// <summary>
     /// 关闭
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    void Shutdown([NotNull] ApplicationShutdownContext context, [NotNull] IModule module);
+    void Shutdown([NotNull] ApplicationShutdownContext context, [NotNull] IXiHanModule module);
 }

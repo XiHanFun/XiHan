@@ -16,10 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Application.Factory;
-using XiHan.Core.Application.Providers;
 using XiHan.Core.Modularity.Abstracts;
-using IHostEnvironment = XiHan.Core.Application.Abstracts.IHostEnvironment;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
@@ -35,12 +32,12 @@ public static class ServiceCollectionApplicationExtensions
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithExternalServiceProvider AddApplication<TStartupModule>(
+    public static IXiHanApplicationWithExternalServiceProvider AddApplication<TStartupModule>(
        [NotNull] this IServiceCollection services,
-       Action<ApplicationCreationOptions>? optionsAction = null)
-       where TStartupModule : IModule
+       Action<XiHanApplicationCreationOptions>? optionsAction = null)
+       where TStartupModule : IXiHanModule
     {
-        return ApplicationFactory.Create<TStartupModule>(services, optionsAction);
+        return XiHanApplicationFactory.Create<TStartupModule>(services, optionsAction);
     }
 
     /// <summary>
@@ -50,12 +47,12 @@ public static class ServiceCollectionApplicationExtensions
     /// <param name="startupModuleType"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithExternalServiceProvider AddApplication(
+    public static IXiHanApplicationWithExternalServiceProvider AddApplication(
         [NotNull] this IServiceCollection services,
         [NotNull] Type startupModuleType,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        return ApplicationFactory.Create(startupModuleType, services, optionsAction);
+        return XiHanApplicationFactory.Create(startupModuleType, services, optionsAction);
     }
 
     /// <summary>
@@ -65,12 +62,12 @@ public static class ServiceCollectionApplicationExtensions
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithExternalServiceProvider> AddApplicationAsync<TStartupModule>(
+    public static async Task<IXiHanApplicationWithExternalServiceProvider> AddApplicationAsync<TStartupModule>(
         [NotNull] this IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction = null)
-        where TStartupModule : IModule
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
+        where TStartupModule : IXiHanModule
     {
-        return await ApplicationFactory.CreateAsync<TStartupModule>(services, optionsAction);
+        return await XiHanApplicationFactory.CreateAsync<TStartupModule>(services, optionsAction);
     }
 
     /// <summary>
@@ -80,12 +77,12 @@ public static class ServiceCollectionApplicationExtensions
     /// <param name="startupModuleType"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithExternalServiceProvider> AddApplicationAsync(
+    public static async Task<IXiHanApplicationWithExternalServiceProvider> AddApplicationAsync(
         [NotNull] this IServiceCollection services,
         [NotNull] Type startupModuleType,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        return await ApplicationFactory.CreateAsync(startupModuleType, services, optionsAction);
+        return await XiHanApplicationFactory.CreateAsync(startupModuleType, services, optionsAction);
     }
 
     /// <summary>
@@ -115,8 +112,8 @@ public static class ServiceCollectionApplicationExtensions
     /// <param name="services"></param>
     /// <returns></returns>
     [NotNull]
-    public static IHostEnvironment GetHostEnvironment(this IServiceCollection services)
+    public static IXiHanHostEnvironment GetHostEnvironment(this IServiceCollection services)
     {
-        return services.GetSingletonInstance<IHostEnvironment>();
+        return services.GetSingletonInstance<IXiHanHostEnvironment>();
     }
 }

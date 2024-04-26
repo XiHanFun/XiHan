@@ -32,7 +32,7 @@ using XiHan.Core.SimpleStateChecking.Abstracts;
 namespace XiHan.Core.Internal;
 
 /// <summary>
-/// 内部服务集合扩展方法
+/// 集成服务集合扩展方法
 /// </summary>
 internal static class InternalServiceCollectionExtensions
 {
@@ -54,8 +54,8 @@ internal static class InternalServiceCollectionExtensions
     /// <param name="Application"></param>
     /// <param name="applicationCreationOptions"></param>
     internal static void AddCoreServices(this IServiceCollection services,
-        IApplication Application,
-        ApplicationCreationOptions applicationCreationOptions)
+        IXiHanApplication Application,
+        XiHanApplicationCreationOptions applicationCreationOptions)
     {
         var moduleLoader = new ModuleLoader();
         var assemblyFinder = new AssemblyFinder(Application);
@@ -73,7 +73,7 @@ internal static class InternalServiceCollectionExtensions
         // 属性或字段自动注入服务
         services.AddSingleton<AutowiredServiceHandler>();
 
-        services.AddAssemblyOf<IApplication>();
+        services.AddAssemblyOf<IXiHanApplication>();
 
         services.AddTransient(typeof(ISimpleStateCheckerManager<>), typeof(SimpleStateCheckerManager<>));
 

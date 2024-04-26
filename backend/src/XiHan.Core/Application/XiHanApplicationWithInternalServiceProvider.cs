@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ApplicationWithInternalServiceProvider
+// FileName:XiHanApplicationWithInternalServiceProvider
 // Guid:7ae70b99-4656-405f-ac77-e65c516811e5
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,14 +14,15 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
-namespace XiHan.Core.Application.Providers;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 具有内部服务的应用程序提供器
+/// 具有集成服务的曦寒应用提供器
 /// </summary>
-public class ApplicationWithInternalServiceProvider : ApplicationBase, IApplicationWithInternalServiceProvider
+public class XiHanApplicationWithInternalServiceProvider : XiHanApplicationBase, IXiHanApplicationWithInternalServiceProvider
 {
     /// <summary>
     /// 作用域服务
@@ -33,7 +34,7 @@ public class ApplicationWithInternalServiceProvider : ApplicationBase, IApplicat
     /// </summary>
     /// <param name="startupModuleType"></param>
     /// <param name="optionsAction"></param>
-    public ApplicationWithInternalServiceProvider([NotNull] Type startupModuleType, Action<ApplicationCreationOptions>? optionsAction)
+    public XiHanApplicationWithInternalServiceProvider([NotNull] Type startupModuleType, Action<XiHanApplicationCreationOptions>? optionsAction)
         : this(startupModuleType, new ServiceCollection(), optionsAction)
     {
     }
@@ -44,12 +45,12 @@ public class ApplicationWithInternalServiceProvider : ApplicationBase, IApplicat
     /// <param name="startupModuleType"></param>
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
-    private ApplicationWithInternalServiceProvider(
+    private XiHanApplicationWithInternalServiceProvider(
         [NotNull] Type startupModuleType,
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction) : base(startupModuleType, services, optionsAction)
+        Action<XiHanApplicationCreationOptions>? optionsAction) : base(startupModuleType, services, optionsAction)
     {
-        Services.AddSingleton<IApplicationWithInternalServiceProvider>(this);
+        Services.AddSingleton<IXiHanApplicationWithInternalServiceProvider>(this);
     }
 
     /// <summary>

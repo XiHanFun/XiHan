@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ApplicationFactory
+// FileName:XiHanApplicationFactory
 // Guid:13544933-ab7f-4c65-9939-afa01a8dcb98
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,27 +14,27 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Application.Providers;
+using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Modularity.Abstracts;
 
-namespace XiHan.Core.Application.Factory;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 应用工厂
+/// 曦寒应用工厂
 /// </summary>
-public static class ApplicationFactory
+public static class XiHanApplicationFactory
 {
-    #region 创建内部服务应用
+    #region 创建集成服务应用
 
     /// <summary>
-    /// 创建内部服务应用，异步
+    /// 创建集成服务应用，异步
     /// </summary>
     /// <typeparam name="TStartupModule"></typeparam>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithInternalServiceProvider> CreateAsync<TStartupModule>(
-        Action<ApplicationCreationOptions>? optionsAction = null)
-        where TStartupModule : IModule
+    public static async Task<IXiHanApplicationWithInternalServiceProvider> CreateAsync<TStartupModule>(
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
+        where TStartupModule : IXiHanModule
     {
         var app = Create(typeof(TStartupModule), options =>
         {
@@ -46,16 +46,16 @@ public static class ApplicationFactory
     }
 
     /// <summary>
-    /// 创建内部服务应用，异步
+    /// 创建集成服务应用，异步
     /// </summary>
     /// <param name="startupModuleType"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithInternalServiceProvider> CreateAsync(
+    public static async Task<IXiHanApplicationWithInternalServiceProvider> CreateAsync(
         [NotNull] Type startupModuleType,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        var app = new ApplicationWithInternalServiceProvider(startupModuleType, options =>
+        var app = new XiHanApplicationWithInternalServiceProvider(startupModuleType, options =>
         {
             options.SkipConfigureServices = true;
             optionsAction?.Invoke(options);
@@ -65,29 +65,29 @@ public static class ApplicationFactory
     }
 
     /// <summary>
-    /// 创建内部服务应用
+    /// 创建集成服务应用
     /// </summary>
     /// <typeparam name="TStartupModule"></typeparam>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithInternalServiceProvider Create<TStartupModule>(
-        Action<ApplicationCreationOptions>? optionsAction = null)
-        where TStartupModule : IModule
+    public static IXiHanApplicationWithInternalServiceProvider Create<TStartupModule>(
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
+        where TStartupModule : IXiHanModule
     {
         return Create(typeof(TStartupModule), optionsAction);
     }
 
     /// <summary>
-    /// 创建内部服务应用
+    /// 创建集成服务应用
     /// </summary>
     /// <param name="startupModuleType"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithInternalServiceProvider Create(
+    public static IXiHanApplicationWithInternalServiceProvider Create(
         [NotNull] Type startupModuleType,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        return new ApplicationWithInternalServiceProvider(startupModuleType, optionsAction);
+        return new XiHanApplicationWithInternalServiceProvider(startupModuleType, optionsAction);
     }
 
     #endregion
@@ -101,10 +101,10 @@ public static class ApplicationFactory
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithExternalServiceProvider> CreateAsync<TStartupModule>(
+    public static async Task<IXiHanApplicationWithExternalServiceProvider> CreateAsync<TStartupModule>(
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction = null)
-        where TStartupModule : IModule
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
+        where TStartupModule : IXiHanModule
     {
         var app = Create(typeof(TStartupModule), services, options =>
         {
@@ -122,12 +122,12 @@ public static class ApplicationFactory
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static async Task<IApplicationWithExternalServiceProvider> CreateAsync(
+    public static async Task<IXiHanApplicationWithExternalServiceProvider> CreateAsync(
         [NotNull] Type startupModuleType,
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        var app = new ApplicationWithExternalServiceProvider(startupModuleType, services, options =>
+        var app = new XiHanApplicationWithExternalServiceProvider(startupModuleType, services, options =>
         {
             options.SkipConfigureServices = true;
             optionsAction?.Invoke(options);
@@ -143,10 +143,10 @@ public static class ApplicationFactory
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithExternalServiceProvider Create<TStartupModule>(
+    public static IXiHanApplicationWithExternalServiceProvider Create<TStartupModule>(
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction = null)
-        where TStartupModule : IModule
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
+        where TStartupModule : IXiHanModule
     {
         return Create(typeof(TStartupModule), services, optionsAction);
     }
@@ -158,12 +158,12 @@ public static class ApplicationFactory
     /// <param name="services"></param>
     /// <param name="optionsAction"></param>
     /// <returns></returns>
-    public static IApplicationWithExternalServiceProvider Create(
+    public static IXiHanApplicationWithExternalServiceProvider Create(
         [NotNull] Type startupModuleType,
         [NotNull] IServiceCollection services,
-        Action<ApplicationCreationOptions>? optionsAction = null)
+        Action<XiHanApplicationCreationOptions>? optionsAction = null)
     {
-        return new ApplicationWithExternalServiceProvider(startupModuleType, services, optionsAction);
+        return new XiHanApplicationWithExternalServiceProvider(startupModuleType, services, optionsAction);
     }
 
     #endregion

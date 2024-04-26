@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using JetBrains.Annotations;
-using XiHan.Core.Application.Contexts;
+using XiHan.Core.Application;
 
 namespace XiHan.Core.Modularity.Abstracts;
 

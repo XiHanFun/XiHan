@@ -12,19 +12,19 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Exceptions;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 自定义异常
+/// 曦寒自定义异常，为特定异常抛出的基本异常类型
 /// </summary>
-public class CustomException : Exception
+public class XiHanException : Exception
 {
-    private const string DefaultMessage = "服务器端程序自定义异常！";
+    private const string DefaultMessage = "曦寒自定义异常！";
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CustomException() : base(DefaultMessage)
+    public XiHanException() : base(DefaultMessage)
     {
     }
 
@@ -32,7 +32,7 @@ public class CustomException : Exception
     /// 构造函数
     /// </summary>
     /// <param name="message"></param>
-    public CustomException(string? message) : base(DefaultMessage + message)
+    public XiHanException(string? message) : base(DefaultMessage + message)
     {
     }
 
@@ -41,7 +41,7 @@ public class CustomException : Exception
     /// </summary>
     /// <param name="message"></param>
     /// <param name="innerException"></param>
-    public CustomException(string? message, Exception? innerException) : base(DefaultMessage + message, innerException)
+    public XiHanException(string? message, Exception? innerException) : base(DefaultMessage + message, innerException)
     {
     }
 }

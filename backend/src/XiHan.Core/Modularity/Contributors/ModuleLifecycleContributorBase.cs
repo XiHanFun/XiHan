@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Application.Contexts;
+using XiHan.Core.Application;
 using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Modularity.Contributors;
@@ -28,7 +28,7 @@ public abstract class ModuleLifecycleContributorBase : IModuleLifecycleContribut
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    public virtual Task InitializeAsync(ApplicationInitializationContext context, IModule module)
+    public virtual Task InitializeAsync(ApplicationInitializationContext context, IXiHanModule module)
     {
         return Task.CompletedTask;
     }
@@ -38,7 +38,7 @@ public abstract class ModuleLifecycleContributorBase : IModuleLifecycleContribut
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    public virtual void Initialize(ApplicationInitializationContext context, IModule module)
+    public virtual void Initialize(ApplicationInitializationContext context, IXiHanModule module)
     {
     }
 
@@ -48,7 +48,7 @@ public abstract class ModuleLifecycleContributorBase : IModuleLifecycleContribut
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    public virtual Task ShutdownAsync(ApplicationShutdownContext context, IModule module)
+    public virtual Task ShutdownAsync(ApplicationShutdownContext context, IXiHanModule module)
     {
         return Task.CompletedTask;
     }
@@ -58,7 +58,7 @@ public abstract class ModuleLifecycleContributorBase : IModuleLifecycleContribut
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    public virtual void Shutdown(ApplicationShutdownContext context, IModule module)
+    public virtual void Shutdown(ApplicationShutdownContext context, IXiHanModule module)
     {
     }
 }

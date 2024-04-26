@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IApplication
+// FileName:IXiHanApplication
 // Guid:da2e2c0a-dcf9-4c3b-a983-ac0ad70bd889
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,9 +18,9 @@ using XiHan.Core.Modularity.Abstracts;
 namespace XiHan.Core.Application.Abstracts;
 
 /// <summary>
-/// 应用接口
+/// 曦寒应用接口
 /// </summary>
-public interface IApplication : IModuleContainer, IApplicationInfoAccessor, IDisposable
+public interface IXiHanApplication : IModuleContainer, IApplicationInfoAccessor, IDisposable
 {
     /// <summary>
     /// 应用程序启动(入口)模块的类型
@@ -41,7 +41,7 @@ public interface IApplication : IModuleContainer, IApplicationInfoAccessor, IDis
 
     /// <summary>
     /// 调用模块的 Pre/Post/ConfigureServicesAsync 方法
-    /// 在使用这个方法之前，必须设置 <see cref="ApplicationCreationOptions.SkipConfigureServices"/> 选项为true
+    /// 在使用这个方法之前，必须设置 <see cref="XiHanApplicationCreationOptions.SkipConfigureServices"/> 选项为true
     /// </summary>
     Task ConfigureServicesAsync();
 
