@@ -14,7 +14,6 @@
 
 using System.Linq.Expressions;
 using System.Reflection;
-using XiHan.Core.DependencyInjection.Attributes;
 
 namespace XiHan.Core.DependencyInjection;
 

@@ -14,8 +14,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.DependencyInjection;
-using XiHan.Core.DependencyInjection.Abstracts;
-using XiHan.Core.DependencyInjection.Contexts;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 

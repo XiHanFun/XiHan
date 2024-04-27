@@ -15,7 +15,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// 常规注册器接口

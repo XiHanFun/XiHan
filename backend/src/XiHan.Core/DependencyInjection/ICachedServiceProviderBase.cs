@@ -14,7 +14,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// 缓存服务提供程序基类接口

@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using System.Text;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Text;
+namespace XiHan.Core.System;
 
 /// <summary>
 /// 随机帮助类

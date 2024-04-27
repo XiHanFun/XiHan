@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConventionalRegistrarList
-// Guid:4489a685-b87e-423b-bed9-2aa6278bb936
-// Author:Administrator
+// FileName:IClientScopeServiceProviderAccessor
+// Guid:876cb4c1-bf12-41da-9e4a-ee58157b6771
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-24 下午 04:52:34
+// CreateTime:2024/4/27 21:56:01
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,8 +15,12 @@
 namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 常规注册器列表
+/// 客户端作用域服务提供访问器
 /// </summary>
-internal class ConventionalRegistrarList : List<IConventionalRegistrar>
+public interface IClientScopeServiceProviderAccessor
 {
+    /// <summary>
+    /// 服务提供器
+    /// </summary>
+    IServiceProvider ServiceProvider { get; }
 }

@@ -3,28 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IExposedKeyedServiceTypesProvider
-// Guid:a1a4a4a8-cfb1-47f4-bdc4-62eecfe10639
+// FileName:IInterceptor
+// Guid:5cd5e378-9a91-4b2b-a2a9-679f9eca179d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 22:41:27
+// CreateTime:2024/4/24 21:39:49
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Microsoft.Extensions.DependencyInjection;
-
-namespace XiHan.Core.DependencyInjection.Providers;
+namespace XiHan.Core.DynamicProxy;
 
 /// <summary>
-/// 暴露键服务类型提供器接口
+/// 拦截器接口
 /// </summary>
-public interface IExposedKeyedServiceTypesProvider
+public interface IInterceptor
 {
     /// <summary>
-    /// 获取暴露的服务类型
+    /// 拦截
     /// </summary>
-    /// <param name="targetType"></param>
+    /// <param name="invocation"></param>
     /// <returns></returns>
-    ServiceIdentifier[] GetExposedServiceTypes(Type targetType);
+    Task InterceptAsync(IMethodInvocation invocation);
 }

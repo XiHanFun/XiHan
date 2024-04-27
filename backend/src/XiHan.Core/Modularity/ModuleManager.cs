@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using XiHan.Core.Application;
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection;
 using XiHan.Core.Exceptions;
 using XiHan.Core.Modularity.Abstracts;
 

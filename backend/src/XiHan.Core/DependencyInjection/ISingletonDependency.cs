@@ -3,25 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IObjectAccessor
-// Guid:a9a7abde-1115-4199-8b71-936733c2fa26
-// Author:Administrator
+// FileName:ISingletonDependency
+// Guid:c37becad-85d7-4c70-a68b-229a2d283c02
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 04:08:09
+// CreateTime:2024/4/23 1:23:22
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 对象访问器接口
+/// 依赖关系注入生命周期，单例依赖接口
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public interface IObjectAccessor<out T>
+public interface ISingletonDependency
 {
-    /// <summary>
-    /// 泛型对象
-    /// </summary>
-    T? Value { get; }
 }

@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ServiceRegistrationActionList
-// Guid:d2d19695-1a0d-44a3-8abb-f8af5599df44
+// FileName:IInjectPropertiesService
+// Guid:8c7cd08f-c083-4d28-8e43-19ec3f7ed39b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 21:49:03
+// CreateTime:2024/4/27 21:57:13
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,12 +15,17 @@
 namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 注册服务时的操作列表
+/// 属性注入服务接口
 /// </summary>
-public class ServiceRegistrationActionList : List<Action<IOnServiceRegistredContext>>
+public interface IInjectPropertiesService
 {
     /// <summary>
-    /// 是否禁用类拦截器
+    /// 注入属性
     /// </summary>
-    public bool IsClassInterceptorsDisabled { get; set; }
+    TService InjectProperties<TService>(TService instance) where TService : notnull;
+
+    /// <summary>
+    /// 注入未设置的属性
+    /// </summary>
+    TService InjectUnsetProperties<TService>(TService instance) where TService : notnull;
 }

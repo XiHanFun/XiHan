@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.DependencyInjection.Attributes;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// AutowiredServiceAttribute

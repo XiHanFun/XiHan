@@ -3,31 +3,33 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IOnServiceExposingContext
-// Guid:8d8a5f02-5c47-4216-9057-3ef3da2c9d9a
+// FileName:OnServiceActivatedContext
+// Guid:8215ad5f-5ff4-4c63-aa5c-aaaf94fc65af
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 21:51:11
+// CreateTime:2024/4/27 22:30:13
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Microsoft.Extensions.DependencyInjection;
-
-namespace XiHan.Core.DependencyInjection.Contexts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 服务暴露时上下文接口
+/// 服务激活时的上下文
 /// </summary>
-public interface IOnServiceExposingContext
+public class OnServiceActivatedContext : IOnServiceActivatedContext
 {
     /// <summary>
-    /// 服务实现类型
+    /// 服务实例
     /// </summary>
-    Type ImplementationType { get; }
+    public object Instance { get; set; }
 
     /// <summary>
-    /// 暴露的服务类型
+    /// 构造函数
     /// </summary>
-    List<ServiceIdentifier> ExposedTypes { get; }
+    /// <param name="instance"></param>
+    public OnServiceActivatedContext(object instance)
+    {
+        Instance = instance;
+    }
 }

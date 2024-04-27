@@ -14,7 +14,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection;
 
 namespace XiHan.Core.Localization;
 

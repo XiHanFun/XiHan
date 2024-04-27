@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ServiceRegistrationActionList
-// Guid:d2d19695-1a0d-44a3-8abb-f8af5599df44
+// FileName:CachedServiceProvider
+// Guid:f0108928-2ba4-472e-9b49-46903141f69b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 21:49:03
+// CreateTime:2024/4/27 21:45:47
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -15,12 +15,16 @@
 namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 注册服务时的操作列表
+/// 已缓存服务提供器
 /// </summary>
-public class ServiceRegistrationActionList : List<Action<IOnServiceRegistredContext>>
+[ExposeServices(typeof(ICachedServiceProvider))]
+public class CachedServiceProvider : CachedServiceProviderBase, ICachedServiceProvider, IScopedDependency
 {
     /// <summary>
-    /// 是否禁用类拦截器
+    /// 构造函数
     /// </summary>
-    public bool IsClassInterceptorsDisabled { get; set; }
+    /// <param name="serviceProvider"></param>
+    public CachedServiceProvider(IServiceProvider serviceProvider) : base(serviceProvider)
+    {
+    }
 }

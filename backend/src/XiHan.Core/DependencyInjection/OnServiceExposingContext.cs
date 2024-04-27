@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.DependencyInjection.Contexts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// 服务暴露时上下文

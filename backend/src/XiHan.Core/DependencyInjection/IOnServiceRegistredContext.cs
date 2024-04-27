@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Core.Collections;
-using XiHan.Core.DynamicProxy.Abstracts;
+using XiHan.Core.DynamicProxy;
 
-namespace XiHan.Core.DependencyInjection.Contexts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
 /// 服务注册上下文接口

@@ -14,7 +14,7 @@
 
 using System.Reflection;
 
-namespace XiHan.Core.DynamicProxy.Abstracts;
+namespace XiHan.Core.DynamicProxy;
 
 /// <summary>
 /// 方法调用接口

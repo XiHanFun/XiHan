@@ -3,24 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IServiceProviderAccessor
-// Guid:2fe15bfb-fd9e-467e-a908-654133e75040
-// Author:Administrator
+// FileName:IExposedServiceTypesProvider
+// Guid:a1598fb8-bcd7-4aae-be28-1759e1957a3b
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:54:21
+// CreateTime:2024/4/24 22:34:52
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.DependencyInjection.Abstracts;
+namespace XiHan.Core.DependencyInjection;
 
 /// <summary>
-/// 服务提供者访问器接口
+/// 暴露服务类型提供器接口
 /// </summary>
-public interface IServiceProviderAccessor
+public interface IExposedServiceTypesProvider
 {
     /// <summary>
-    /// 服务提供者
+    /// 获取暴露的服务类型
     /// </summary>
-    IServiceProvider ServiceProvider { get; }
+    /// <param name="targetType"></param>
+    /// <returns></returns>
+    Type[] GetExposedServiceTypes(Type targetType);
 }

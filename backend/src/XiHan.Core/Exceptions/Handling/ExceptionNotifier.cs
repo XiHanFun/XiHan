@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection;
 using XiHan.Core.Exceptions.Handling.Abstracts;
 using XiHan.Core.Microsoft.Extensions.Logging;
 using XiHan.Core.Verification;

@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 using XiHan.Core.Application;
-using XiHan.Core.DependencyInjection.Abstracts;
+using XiHan.Core.DependencyInjection;
 
 namespace XiHan.Core.Modularity.Abstracts;
 
