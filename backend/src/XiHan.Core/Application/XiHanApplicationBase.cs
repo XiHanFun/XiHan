@@ -24,7 +24,6 @@ using XiHan.Core.Internal;
 using XiHan.Core.Logging;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity;
-using XiHan.Core.Modularity.Contexts;
 using XiHan.Core.System.Extensions;
 using XiHan.Core.Verification;
 
