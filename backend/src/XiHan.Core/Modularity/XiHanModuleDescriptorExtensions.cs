@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ModuleDescriptorExtensions
+// FileName:XiHanModuleDescriptorExtensions
 // Guid:d21eb93b-ed56-4611-8ee9-6fce9d47441b
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -13,14 +13,13 @@
 #endregion <<版权版本注释>>
 
 using System.Reflection;
-using XiHan.Core.Modularity.Abstracts;
 
-namespace XiHan.Core.Modularity.Extensions;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块描述器扩展方法
+/// 曦寒模块描述器扩展方法
 /// </summary>
-public static class ModuleDescriptorExtensions
+public static class XiHanModuleDescriptorExtensions
 {
     /// <summary>
     /// 获取其他程序集

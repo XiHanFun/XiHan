@@ -14,7 +14,7 @@
 
 using System.Reflection;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
 /// 模块描述器接口

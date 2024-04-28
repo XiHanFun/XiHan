@@ -3,27 +3,27 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IAdditionalModuleAssemblyProvider
-// Guid:a7304654-5e0f-479b-b08b-921dac954036
+// FileName:IModuleContainer
+// Guid:cecaa7e3-0cd0-4320-b6dc-f73d1e0ad0ed
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 05:39:59
+// CreateTime:2024-04-22 下午 05:13:43
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.Reflection;
+using JetBrains.Annotations;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 其他模块组装提供器接口
+/// 模块容器接口
 /// </summary>
-public interface IAdditionalModuleAssemblyProvider
+public interface IModuleContainer
 {
     /// <summary>
-    /// 获取程序集
+    /// 模块列表
     /// </summary>
-    /// <returns></returns>
-    Assembly[] GetAssemblies();
+    [NotNull]
+    IReadOnlyList<IModuleDescriptor> Modules { get; }
 }

@@ -19,7 +19,6 @@ using Microsoft.Extensions.Options;
 using XiHan.Core.Application;
 using XiHan.Core.DependencyInjection;
 using XiHan.Core.Exceptions;
-using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Modularity;
 
@@ -42,7 +41,7 @@ public class ModuleManager : IModuleManager, ISingletonDependency
     public ModuleManager(
        IModuleContainer moduleContainer,
        ILogger<ModuleManager> logger,
-       IOptions<ModuleLifecycleOptions> options,
+       IOptions<XiHanModuleLifecycleOptions> options,
        IServiceProvider serviceProvider)
     {
         _moduleContainer = moduleContainer;

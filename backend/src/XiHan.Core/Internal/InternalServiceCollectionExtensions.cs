@@ -22,8 +22,6 @@ using XiHan.Core.Logging;
 using XiHan.Core.Microsoft.Extensions.Configuration;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity;
-using XiHan.Core.Modularity.Abstracts;
-using XiHan.Core.Modularity.Contributors;
 using XiHan.Core.Reflection;
 using XiHan.Core.Reflection.Abstracts;
 using XiHan.Core.SimpleStateChecking;
@@ -77,7 +75,7 @@ internal static class InternalServiceCollectionExtensions
 
         services.AddTransient(typeof(ISimpleStateCheckerManager<>), typeof(SimpleStateCheckerManager<>));
 
-        services.Configure<ModuleLifecycleOptions>(options =>
+        services.Configure<XiHanModuleLifecycleOptions>(options =>
         {
             options.Contributors.Add<OnPreApplicationInitializationModuleLifecycleContributor>();
             options.Contributors.Add<OnApplicationInitializationModuleLifecycleContributor>();

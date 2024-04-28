@@ -3,34 +3,32 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IXiHanModule
-// Guid:85ec6b99-74ea-418f-a64c-c117dce646e3
-// Author:zhaifanhua
+// FileName:IPreConfigureServices
+// Guid:c7e16e66-bb50-4ed9-996e-e804f2821738
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/19 1:46:20
+// CreateTime:2024-04-22 上午 10:38:49
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Modularity.Contexts;
-
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 曦寒模块化服务配置接口
+/// 服务配置前接口
 /// </summary>
-public interface IXiHanModule
+public interface IPreConfigureServices
 {
     /// <summary>
-    /// 服务配置，异步
+    /// 服务配置前，异步
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task ConfigureServicesAsync(ServiceConfigurationContext context);
+    Task PreConfigureServicesAsync(ServiceConfigurationContext context);
 
     /// <summary>
-    /// 服务配置
+    /// 服务配置前
     /// </summary>
     /// <param name="context"></param>
-    void ConfigureServices(ServiceConfigurationContext context);
+    void PreConfigureServices(ServiceConfigurationContext context);
 }

@@ -3,35 +3,32 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IOnPostApplicationInitialization
-// Guid:8da548f0-321c-4938-b111-f01c2f7c343d
-// Author:Administrator
+// FileName:IXiHanModule
+// Guid:85ec6b99-74ea-418f-a64c-c117dce646e3
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:38:33
+// CreateTime:2024/4/19 1:46:20
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using JetBrains.Annotations;
-using XiHan.Core.Application;
-
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 程序初始化后接口
+/// 曦寒模块化服务配置接口
 /// </summary>
-public interface IOnPostApplicationInitialization
+public interface IXiHanModule
 {
     /// <summary>
-    /// 程序初始化后，异步
+    /// 服务配置，异步
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task OnPostApplicationInitializationAsync([NotNull] ApplicationInitializationContext context);
+    Task ConfigureServicesAsync(ServiceConfigurationContext context);
 
     /// <summary>
-    /// 程序初始化后
+    /// 服务配置
     /// </summary>
     /// <param name="context"></param>
-    void OnPostApplicationInitialization([NotNull] ApplicationInitializationContext context);
+    void ConfigureServices(ServiceConfigurationContext context);
 }

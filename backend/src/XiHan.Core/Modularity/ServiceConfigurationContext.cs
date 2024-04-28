@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.System.Collections.Generic.Extensions;
 using XiHan.Core.Verification;
 
-namespace XiHan.Core.Modularity.Contexts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
 /// 服务配置上下文

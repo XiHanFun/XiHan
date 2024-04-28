@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
 /// 依赖类型提供器接口

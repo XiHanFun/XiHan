@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ModuleLifecycleOptions
+// FileName:XiHanModuleLifecycleOptions
 // Guid:7b771171-55c9-48ae-ba9b-9028cad9c69b
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -13,14 +13,13 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Core.Collections;
-using XiHan.Core.Modularity.Abstracts;
 
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块生命周期选项
+/// 曦寒模块生命周期选项
 /// </summary>
-public class ModuleLifecycleOptions
+public class XiHanModuleLifecycleOptions
 {
     /// <summary>
     /// 贡献者
@@ -30,7 +29,7 @@ public class ModuleLifecycleOptions
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ModuleLifecycleOptions()
+    public XiHanModuleLifecycleOptions()
     {
         Contributors = new TypeList<IModuleLifecycleContributor>();
     }

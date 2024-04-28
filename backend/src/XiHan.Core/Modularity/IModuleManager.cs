@@ -15,7 +15,7 @@
 using JetBrains.Annotations;
 using XiHan.Core.Application;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
 /// 模块管理器接口

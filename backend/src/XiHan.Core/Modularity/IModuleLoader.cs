@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.PlugIns;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
 /// 模块加载器接口

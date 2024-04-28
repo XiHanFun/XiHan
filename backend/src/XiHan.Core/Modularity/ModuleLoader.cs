@@ -15,7 +15,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Application;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.Modularity.PlugIns;
 using XiHan.Core.System.Collections.Generic.Extensions;
 using XiHan.Core.Verification;
@@ -62,7 +61,7 @@ public class ModuleLoader : IModuleLoader
         Type startupModuleType,
         PlugInSourceList plugInSources)
     {
-        var modules = new List<ModuleDescriptor>();
+        var modules = new List<XiHanModuleDescriptor>();
 
         FillModules(modules, services, startupModuleType, plugInSources);
         SetDependencies(modules);
@@ -78,7 +77,7 @@ public class ModuleLoader : IModuleLoader
     /// <param name="startupModuleType"></param>
     /// <param name="plugInSources"></param>
     protected virtual void FillModules(
-        List<ModuleDescriptor> modules,
+        List<XiHanModuleDescriptor> modules,
         IServiceCollection services,
         Type startupModuleType,
         PlugInSourceList plugInSources)
@@ -107,7 +106,7 @@ public class ModuleLoader : IModuleLoader
     /// 设置依赖项
     /// </summary>
     /// <param name="modules"></param>
-    protected virtual void SetDependencies(List<ModuleDescriptor> modules)
+    protected virtual void SetDependencies(List<XiHanModuleDescriptor> modules)
     {
         foreach (var module in modules)
         {
@@ -135,9 +134,9 @@ public class ModuleLoader : IModuleLoader
     /// <param name="moduleType"></param>
     /// <param name="isLoadedAsPlugIn"></param>
     /// <returns></returns>
-    protected virtual ModuleDescriptor CreateModuleDescriptor(IServiceCollection services, Type moduleType, bool isLoadedAsPlugIn = false)
+    protected virtual XiHanModuleDescriptor CreateModuleDescriptor(IServiceCollection services, Type moduleType, bool isLoadedAsPlugIn = false)
     {
-        return new ModuleDescriptor(moduleType, CreateAndRegisterModule(services, moduleType), isLoadedAsPlugIn);
+        return new XiHanModuleDescriptor(moduleType, CreateAndRegisterModule(services, moduleType), isLoadedAsPlugIn);
     }
 
     /// <summary>
@@ -159,7 +158,7 @@ public class ModuleLoader : IModuleLoader
     /// <param name="modules"></param>
     /// <param name="module"></param>
     /// <exception cref="Exception"></exception>
-    protected virtual void SetDependencies(List<ModuleDescriptor> modules, ModuleDescriptor module)
+    protected virtual void SetDependencies(List<XiHanModuleDescriptor> modules, XiHanModuleDescriptor module)
     {
         foreach (var dependedModuleType in XiHanModuleHelper.FindDependedModuleTypes(module.Type))
         {

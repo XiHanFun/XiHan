@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Modularity.Abstracts;
+using XiHan.Core.Modularity;
 
 namespace XiHan.Core.Application.Abstracts;
 

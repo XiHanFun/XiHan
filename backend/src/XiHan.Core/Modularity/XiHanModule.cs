@@ -18,8 +18,6 @@ using System.Reflection;
 using XiHan.Core.Application;
 using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Modularity.Abstracts;
-using XiHan.Core.Modularity.Contexts;
 
 namespace XiHan.Core.Modularity;
 

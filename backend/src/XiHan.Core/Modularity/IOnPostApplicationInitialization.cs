@@ -3,34 +3,35 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IPreConfigureServices
-// Guid:c7e16e66-bb50-4ed9-996e-e804f2821738
+// FileName:IOnPostApplicationInitialization
+// Guid:8da548f0-321c-4938-b111-f01c2f7c343d
 // Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 上午 10:38:49
+// CreateTime:2024-04-22 上午 10:38:33
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Modularity.Contexts;
+using JetBrains.Annotations;
+using XiHan.Core.Application;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 服务配置前接口
+/// 程序初始化后接口
 /// </summary>
-public interface IPreConfigureServices
+public interface IOnPostApplicationInitialization
 {
     /// <summary>
-    /// 服务配置前，异步
+    /// 程序初始化后，异步
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    Task PreConfigureServicesAsync(ServiceConfigurationContext context);
+    Task OnPostApplicationInitializationAsync([NotNull] ApplicationInitializationContext context);
 
     /// <summary>
-    /// 服务配置前
+    /// 程序初始化后
     /// </summary>
     /// <param name="context"></param>
-    void PreConfigureServices(ServiceConfigurationContext context);
+    void OnPostApplicationInitialization([NotNull] ApplicationInitializationContext context);
 }

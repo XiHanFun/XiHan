@@ -3,53 +3,61 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IModuleLifecycleContributor
-// Guid:b75ec1da-dac0-4d71-9f4c-6b7e2ecf928f
-// Author:Administrator
+// FileName:ModuleLifecycleContributorBase
+// Guid:4e2ce123-8b33-4574-90e8-036486739c7a
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-24 下午 02:47:09
+// CreateTime:2024/4/24 23:40:20
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using JetBrains.Annotations;
 using XiHan.Core.Application;
-using XiHan.Core.DependencyInjection;
 
-namespace XiHan.Core.Modularity.Abstracts;
+namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块生命周期贡献者接口
+/// 模块生命周期贡献者基类
 /// </summary>
-public interface IModuleLifecycleContributor : ITransientDependency
+public abstract class ModuleLifecycleContributorBase : IModuleLifecycleContributor
 {
     /// <summary>
-    /// 初始化，异步
+    /// 初始化
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
     /// <returns></returns>
-    Task InitializeAsync([NotNull] ApplicationInitializationContext context, [NotNull] IXiHanModule module);
+    public virtual Task InitializeAsync(ApplicationInitializationContext context, IXiHanModule module)
+    {
+        return Task.CompletedTask;
+    }
 
     /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    void Initialize([NotNull] ApplicationInitializationContext context, [NotNull] IXiHanModule module);
-
-    /// <summary>
-    /// 关闭，异步
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="module"></param>
-    /// <returns></returns>
-    Task ShutdownAsync([NotNull] ApplicationShutdownContext context, [NotNull] IXiHanModule module);
+    public virtual void Initialize(ApplicationInitializationContext context, IXiHanModule module)
+    {
+    }
 
     /// <summary>
     /// 关闭
     /// </summary>
     /// <param name="context"></param>
     /// <param name="module"></param>
-    void Shutdown([NotNull] ApplicationShutdownContext context, [NotNull] IXiHanModule module);
+    /// <returns></returns>
+    public virtual Task ShutdownAsync(ApplicationShutdownContext context, IXiHanModule module)
+    {
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// 关闭
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="module"></param>
+    public virtual void Shutdown(ApplicationShutdownContext context, IXiHanModule module)
+    {
+    }
 }

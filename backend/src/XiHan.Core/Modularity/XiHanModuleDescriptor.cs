@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ModuleDescriptor
+// FileName:XiHanModuleDescriptor
 // Guid:ce79c86a-5010-43c7-ad6a-de2ef2003ef7
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -14,16 +14,15 @@
 
 using JetBrains.Annotations;
 using System.Reflection;
-using XiHan.Core.Modularity.Abstracts;
 using XiHan.Core.System.Collections.Generic.Extensions;
 using XiHan.Core.Verification;
 
 namespace XiHan.Core.Modularity;
 
 /// <summary>
-/// 模块描述器
+/// 曦寒模块描述器
 /// </summary>
-public class ModuleDescriptor : IModuleDescriptor
+public class XiHanModuleDescriptor : IModuleDescriptor
 {
     private readonly List<IModuleDescriptor> _dependencies;
 
@@ -66,7 +65,7 @@ public class ModuleDescriptor : IModuleDescriptor
     /// <param name="instance"></param>
     /// <param name="isLoadedAsPlugIn"></param>
     /// <exception cref="ArgumentException"></exception>
-    public ModuleDescriptor([NotNull] Type type, [NotNull] IXiHanModule instance, bool isLoadedAsPlugIn)
+    public XiHanModuleDescriptor([NotNull] Type type, [NotNull] IXiHanModule instance, bool isLoadedAsPlugIn)
     {
         CheckHelper.NotNull(type, nameof(type));
         CheckHelper.NotNull(instance, nameof(instance));
