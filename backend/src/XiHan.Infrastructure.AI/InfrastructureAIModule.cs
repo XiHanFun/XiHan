@@ -3,26 +3,29 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IAssemblyFinder
-// Guid:0fe8f1a1-8f08-4462-9359-baa9e4529a80
-// Author:zhaifanhua
+// FileName:InfrastructureAIModule
+// Guid:b199f478-3f76-4fa4-854e-11e6682c62da
+// Author:Administrator
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 23:02:53
+// CreateTime:2024-04-28 下午 01:25:54
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.Reflection;
+using XiHan.Core.Modularity;
 
-namespace XiHan.Core.Reflection.Abstracts;
+namespace XiHan.Infrastructure.AI;
 
 /// <summary>
-/// 程序集查找器接口
+/// 基础设施人工智能模块
 /// </summary>
-public interface IAssemblyFinder
+public partial class InfrastructureAIModule : XiHanModule
 {
     /// <summary>
-    /// 获取程序集
+    /// 配置服务
     /// </summary>
-    IReadOnlyList<Assembly> Assemblies { get; }
+    /// <param name="context"></param>
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+    }
 }

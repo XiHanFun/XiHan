@@ -3,25 +3,26 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ITypeFinder
-// Guid:64df6a54-ea03-437b-a823-f48aaec74155
-// Author:Administrator
+// FileName:IAssemblyFinder
+// Guid:0fe8f1a1-8f08-4462-9359-baa9e4529a80
+// Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024-04-22 下午 03:59:41
+// CreateTime:2024/4/24 23:02:53
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Reflection.Abstracts;
+using System.Reflection;
+
+namespace XiHan.Core.Reflection;
 
 /// <summary>
-/// 类型查找器接口
-/// 它可能不会返回所有类型，但这些类型都与模块相关
+/// 程序集查找器接口
 /// </summary>
-public interface ITypeFinder
+public interface IAssemblyFinder
 {
     /// <summary>
-    /// 类型列表
+    /// 获取程序集
     /// </summary>
-    IReadOnlyList<Type> Types { get; }
+    IReadOnlyList<Assembly> Assemblies { get; }
 }

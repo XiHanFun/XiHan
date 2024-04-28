@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
 /// 应用信息访问器接口

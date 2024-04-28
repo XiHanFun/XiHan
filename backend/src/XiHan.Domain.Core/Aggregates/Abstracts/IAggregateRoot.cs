@@ -3,20 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IRemoteService
-// Guid:9a75b1ac-5890-4187-a58c-3f88b5b9e80c
+// FileName:IAggregateRoot
+// Guid:af83939c-58a8-4b8e-8aaa-c5b1f58622bb
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/27 0:04:32
+// CreateTime:2024/3/26 7:15:14
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Domain.Core.Aggregates.Abstracts;
 
 /// <summary>
-/// 远程服务接口
+/// 聚合根接口
 /// </summary>
-public interface IRemoteService
+public interface IAggregateRoot
 {
 }

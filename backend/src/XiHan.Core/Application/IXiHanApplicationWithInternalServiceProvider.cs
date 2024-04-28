@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
 /// 具有集成服务的曦寒应用提供器接口

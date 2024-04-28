@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConfigurationBuilderOptions
+// FileName:XiHanConfigurationBuilderOptions
 // Guid:63c806f1-a7c1-4666-b4b6-2465f9a72229
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using System.Reflection;
 namespace XiHan.Core.Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// 配置生成器选项
+/// 曦寒配置生成器选项
 /// </summary>
-public class ConfigurationBuilderOptions
+public class XiHanConfigurationBuilderOptions
 {
     /// <summary>
     /// 用于设置获取应用程序用户密钥ID的程序集

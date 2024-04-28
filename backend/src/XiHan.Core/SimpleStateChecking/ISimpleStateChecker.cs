@@ -3,34 +3,27 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISimpleStateCheckerManager
-// Guid:9eb2752a-809f-4dcc-94c5-9d125ff46f3b
+// FileName:ISimpleStateChecker
+// Guid:a589a3d7-3fed-47bd-8f82-288bb33be41d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 23:12:57
+// CreateTime:2024/4/24 23:14:26
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.SimpleStateChecking.Abstracts;
+namespace XiHan.Core.SimpleStateChecking;
 
 /// <summary>
-/// 简单状态检查器管理器接口
+/// 简单状态检查器接口
 /// </summary>
-public interface ISimpleStateCheckerManager<TState>
+public interface ISimpleStateChecker<TState>
     where TState : IHasSimpleStateCheckers<TState>
 {
     /// <summary>
     /// 是否启用
     /// </summary>
-    /// <param name="state"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
-    Task<bool> IsEnabledAsync(TState state);
-
-    /// <summary>
-    /// 是否启用
-    /// </summary>
-    /// <param name="states"></param>
-    /// <returns></returns>
-    Task<SimpleStateCheckerResult<TState>> IsEnabledAsync(TState[] states);
+    Task<bool> IsEnabledAsync(SimpleStateCheckerContext<TState> context);
 }

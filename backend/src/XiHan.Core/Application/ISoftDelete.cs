@@ -3,25 +3,24 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IHasSimpleStateCheckers
-// Guid:b47451b9-b6bd-475d-86bf-2b0a9a431ab7
+// FileName:ISoftDelete
+// Guid:e581b8a9-6fcc-440c-b8e4-fdf866466ad4
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 23:13:59
+// CreateTime:2024/4/27 0:05:44
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.SimpleStateChecking.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 具有简单状态检查器接口接口
+/// 软删除接口
 /// </summary>
-public interface IHasSimpleStateCheckers<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+public interface ISoftDelete
 {
     /// <summary>
-    /// 状态检查器列表
+    /// 实体是否已删除
     /// </summary>
-    List<ISimpleStateChecker<TState>> StateCheckers { get; }
+    bool IsDeleted { get; }
 }

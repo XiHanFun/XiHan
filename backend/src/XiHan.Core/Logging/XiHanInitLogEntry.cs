@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:InitLogEntry
+// FileName:XiHanInitLogEntry
 // Guid:b9fd048c-b37d-480a-bfcf-d897f3d3fa6a
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -17,9 +17,9 @@ using Microsoft.Extensions.Logging;
 namespace XiHan.Core.Logging;
 
 /// <summary>
-/// 初始化日志入口
+/// 曦寒初始化日志入口
 /// </summary>
-public class InitLogEntry
+public class XiHanInitLogEntry
 {
     /// <summary>
     /// 日志等级

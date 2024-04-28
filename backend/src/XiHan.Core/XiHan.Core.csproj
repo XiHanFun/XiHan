@@ -23,4 +23,9 @@
 	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
 	  <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.13" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Microsoft\Extensions\Localization\" />
+	  <Folder Include="Microsoft\Extensions\Options\" />
+	</ItemGroup>
 </Project>

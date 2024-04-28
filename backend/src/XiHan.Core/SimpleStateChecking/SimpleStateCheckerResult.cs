@@ -12,8 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.SimpleStateChecking.Abstracts;
-
 namespace XiHan.Core.SimpleStateChecking;
 
 /// <summary>

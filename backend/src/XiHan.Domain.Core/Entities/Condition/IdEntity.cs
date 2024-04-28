@@ -14,20 +14,19 @@
 
 using SqlSugar;
 using XiHan.Domain.Core.Entities.Abstracts;
-using XiHan.Domain.Core.Events;
 
 namespace XiHan.Domain.Core.Entities.Condition;
 
 /// <summary>
 /// 主键抽象类
 /// </summary>
-public abstract class IdEntity : DomainEvents, IHasId<long>
+public abstract class IdEntity : IHasId<long>
 {
     /// <summary>
     /// 主键标识
     /// </summary>
     [SugarColumn(IsPrimaryKey = true, IsIdentity = false, ColumnDescription = "主键标识")]
-    public virtual long BaseId { get; private set; }
+    public virtual long BaseId { get; protected set; }
 
     /// <summary>
     /// 判断主键是否为空，常用做判定操作是 新增 还是 编辑

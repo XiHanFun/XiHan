@@ -41,7 +41,7 @@ public class XiHanApplicationCreationOptions
     /// 此属性中的选项仅在未注册 IConfiguration 时生效。
     /// </summary>
     [NotNull]
-    public ConfigurationBuilderOptions Configuration { get; }
+    public XiHanConfigurationBuilderOptions Configuration { get; }
 
     /// <summary>
     /// 是否跳过配置服务

@@ -15,7 +15,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity;
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
 /// 曦寒应用接口

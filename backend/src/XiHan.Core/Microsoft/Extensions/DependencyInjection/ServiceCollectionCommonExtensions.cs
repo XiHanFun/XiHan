@@ -16,8 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using XiHan.Core.Application;
-using XiHan.Core.Application.Abstracts;
-using XiHan.Core.Reflection.Abstracts;
+using XiHan.Core.Reflection;
 using XiHan.Core.Verification;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;

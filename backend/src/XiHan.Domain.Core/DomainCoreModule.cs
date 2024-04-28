@@ -3,27 +3,29 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISimpleBatchStateChecker
-// Guid:73f61c65-5224-4e10-8f51-f368b34db6aa
+// FileName:DomainCoreModule
+// Guid:a982f4a9-d098-431b-a9a7-83e324ac822d
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/24 23:23:15
+// CreateTime:2024/3/28 2:19:56
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.SimpleStateChecking.Abstracts;
+using XiHan.Core.Modularity;
+
+namespace XiHan.Domain.Core;
 
 /// <summary>
-/// 简单批量状态检查器接口
+/// 领域核心模块
 /// </summary>
-public interface ISimpleBatchStateChecker<TState> : ISimpleStateChecker<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+public partial class DomainCoreModule : XiHanModule
 {
     /// <summary>
-    /// 是否启用
+    /// 配置服务
     /// </summary>
     /// <param name="context"></param>
-    /// <returns></returns>
-    Task<SimpleStateCheckerResult<TState>> IsEnabledAsync(SimpleBatchStateCheckerContext<TState> context);
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+    }
 }

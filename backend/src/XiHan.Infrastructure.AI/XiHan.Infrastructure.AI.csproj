@@ -11,7 +11,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MediatR" Version="12.2.0" />
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.152" />
+	  <ProjectReference Include="..\XiHan.Core\XiHan.Core.csproj" />
 	</ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ConfigurationExtensions
+// FileName:XiHanConfigurationExtensions
 // Guid:fa3ba622-23f7-4a62-88b5-0ecdb6b10e62
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -18,9 +18,9 @@ using XiHan.Core.Microsoft.Extensions.Hosting;
 namespace XiHan.Core.Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// 配置扩展方法
+/// 曦寒配置扩展方法
 /// </summary>
-public static class ConfigurationExtensions
+public static class XiHanConfigurationExtensions
 {
     /// <summary>
     /// 用于将应用程序设置和机密信息添加到配置系统中

@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Core.Application;
-using XiHan.Core.Application.Abstracts;
 
 namespace XiHan.Core.Modularity;
 

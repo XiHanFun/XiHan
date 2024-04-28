@@ -3,24 +3,21 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:ISoftDelete
-// Guid:e581b8a9-6fcc-440c-b8e4-fdf866466ad4
+// FileName:IDomainService
+// Guid:4dec286a-0cba-4242-8472-ae090c9335ba
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/4/27 0:05:44
+// CreateTime:2024/3/28 5:45:55
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Core.Application.Abstracts;
+using XiHan.Domain.Core.Repositories.Abstracts;
+
+namespace XiHan.Domain.Core.Services.Abstracts;
 
 /// <summary>
-/// 软删除接口
+/// 通用领域服务接口
 /// </summary>
-public interface ISoftDelete
-{
-    /// <summary>
-    /// 实体是否已删除
-    /// </summary>
-    bool IsDeleted { get; }
-}
+/// <typeparam name="TEntity"></typeparam>
+public interface IDomainService<TEntity> : IRepository<TEntity> where TEntity : class, new();

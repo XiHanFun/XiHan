@@ -13,7 +13,6 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Hosting;
-using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Verification;
 
 namespace XiHan.Core.Application;

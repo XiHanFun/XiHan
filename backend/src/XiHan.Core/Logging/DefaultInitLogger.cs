@@ -25,7 +25,7 @@ public class DefaultInitLogger<T> : IInitLogger<T>
     /// <summary>
     /// 日志记录器
     /// </summary>
-    public List<InitLogEntry> Entries { get; }
+    public List<XiHanInitLogEntry> Entries { get; }
 
     /// <summary>
     /// 构造函数
@@ -46,7 +46,7 @@ public class DefaultInitLogger<T> : IInitLogger<T>
     /// <param name="formatter"></param>
     public virtual void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
-        Entries.Add(new InitLogEntry
+        Entries.Add(new XiHanInitLogEntry
         {
             LogLevel = logLevel,
             EventId = eventId,

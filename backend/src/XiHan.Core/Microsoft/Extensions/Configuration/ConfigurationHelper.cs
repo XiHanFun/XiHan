@@ -29,10 +29,10 @@ public static class ConfigurationHelper
     /// <param name="builderAction"></param>
     /// <returns></returns>
     public static IConfigurationRoot BuildConfiguration(
-       ConfigurationBuilderOptions? options = null,
+       XiHanConfigurationBuilderOptions? options = null,
        Action<IConfigurationBuilder>? builderAction = null)
     {
-        options ??= new ConfigurationBuilderOptions();
+        options ??= new XiHanConfigurationBuilderOptions();
 
         // 设置基础路径
         if (options.BasePath.IsNullOrEmpty())

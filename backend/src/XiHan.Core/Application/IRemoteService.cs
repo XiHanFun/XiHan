@@ -3,21 +3,20 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IService
-// Guid:4dec286a-0cba-4242-8472-ae090c9335ba
+// FileName:IRemoteService
+// Guid:9a75b1ac-5890-4187-a58c-3f88b5b9e80c
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/3/28 5:45:55
+// CreateTime:2024/4/27 0:04:32
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Domain.Core.Repositories.Abstracts;
-
-namespace XiHan.Domain.Core.Services.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
-/// 通用服务接口
+/// 远程服务接口
 /// </summary>
-/// <typeparam name="TEntity"></typeparam>
-public interface IService<TEntity> : IRepository<TEntity> where TEntity : class, new();
+public interface IRemoteService
+{
+}

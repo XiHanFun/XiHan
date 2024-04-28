@@ -16,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using XiHan.Core.Application;
-using XiHan.Core.Application.Abstracts;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 
 namespace XiHan.Core.Modularity;

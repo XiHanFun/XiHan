@@ -3,22 +3,25 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:AggregateRoot
-// Guid:e7c0bce1-c5c4-456c-816a-d84ed63d3f45
+// FileName:IHasSimpleStateCheckers
+// Guid:b47451b9-b6bd-475d-86bf-2b0a9a431ab7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/3/26 22:17:56
+// CreateTime:2024/4/24 23:13:59
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Domain.Core.AggregateRoots.Abstracts;
-
-namespace XiHan.Domain.Core.AggregateRoots;
+namespace XiHan.Core.SimpleStateChecking;
 
 /// <summary>
-/// 聚合根
+/// 具有简单状态检查器接口接口
 /// </summary>
-public class AggregateRoot : IAggregateRoot
+public interface IHasSimpleStateCheckers<TState>
+    where TState : IHasSimpleStateCheckers<TState>
 {
+    /// <summary>
+    /// 状态检查器列表
+    /// </summary>
+    List<ISimpleStateChecker<TState>> StateCheckers { get; }
 }

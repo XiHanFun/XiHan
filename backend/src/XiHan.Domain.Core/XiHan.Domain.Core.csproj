@@ -24,4 +24,8 @@
 	  <Folder Include="Specifications\Constraints\" />
 	  <Folder Include="Modules\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Core\XiHan.Core.csproj" />
+	</ItemGroup>
 </Project>

@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 
-namespace XiHan.Core.Application.Abstracts;
+namespace XiHan.Core.Application;
 
 /// <summary>
 /// 具有外部服务的曦寒应用提供器接口
