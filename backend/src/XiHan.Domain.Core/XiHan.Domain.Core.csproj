@@ -11,18 +11,26 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Enums\**" />
+	  <Compile Remove="Exceptions\**" />
+	  <Compile Remove="Modules\**" />
+	  <EmbeddedResource Remove="Enums\**" />
+	  <EmbeddedResource Remove="Exceptions\**" />
+	  <EmbeddedResource Remove="Modules\**" />
+	  <None Remove="Enums\**" />
+	  <None Remove="Exceptions\**" />
+	  <None Remove="Modules\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="MediatR" Version="12.2.0" />
 	  <PackageReference Include="SqlSugarCore" Version="5.1.4.152" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Events\Handlers\" />
-	  <Folder Include="Exceptions\Domain\" />
-	  <Folder Include="Exceptions\Infrastructure\" />
-	  <Folder Include="Enums\" />
 	  <Folder Include="Specifications\Criteria\" />
 	  <Folder Include="Specifications\Constraints\" />
-	  <Folder Include="Modules\" />
 	</ItemGroup>
 
 	<ItemGroup>
