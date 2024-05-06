@@ -19,7 +19,7 @@ using XiHan.Core.Exceptions.Handling.Abstracts;
 namespace XiHan.Core.Exceptions;
 
 /// <summary>
-/// BusinessException
+/// 业务异常
 /// </summary>
 public class BusinessException : Exception, IBusinessException, IHasErrorCode, IHasErrorDetails, IHasLogLevel
 {

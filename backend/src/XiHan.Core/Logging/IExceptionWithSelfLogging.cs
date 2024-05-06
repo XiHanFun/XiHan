@@ -14,7 +14,7 @@
 
 using Microsoft.Extensions.Logging;
 
-namespace XiHan.Core.Microsoft.Extensions.Logging;
+namespace XiHan.Core.Logging;
 
 /// <summary>
 /// 自身日志接口

@@ -20,7 +20,7 @@ namespace XiHan.Core.DynamicProxy;
 public interface IInterceptor
 {
     /// <summary>
-    /// 拦截
+    /// 异步拦截
     /// </summary>
     /// <param name="invocation"></param>
     /// <returns></returns>

@@ -25,7 +25,7 @@ public class AsyncDisposeFunc : IAsyncDisposable
     private readonly Func<Task> _func;
 
     /// <summary>
-    /// 创建一个新的 <see cref="AsyncDisposeFunc"/> 对象
+    /// 构造函数
     /// </summary>
     /// <param name="func">此对象在执行 DisposeAsync 时要执行的函数</param>
     public AsyncDisposeFunc([NotNull] Func<Task> func)
