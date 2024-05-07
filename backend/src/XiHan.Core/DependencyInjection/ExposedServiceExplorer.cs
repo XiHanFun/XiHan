@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.System.Collections.Generic.Extensions;
 
 namespace XiHan.Core.DependencyInjection;

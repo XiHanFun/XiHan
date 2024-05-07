@@ -46,14 +46,14 @@ internal static class InternalServiceCollectionExtensions
     /// 添加核心服务
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="Application"></param>
+    /// <param name="application"></param>
     /// <param name="applicationCreationOptions"></param>
     internal static void AddCoreServices(this IServiceCollection services,
-        IXiHanApplication Application,
+        IXiHanApplication application,
         XiHanApplicationCreationOptions applicationCreationOptions)
     {
         var moduleLoader = new ModuleLoader();
-        var assemblyFinder = new AssemblyFinder(Application);
+        var assemblyFinder = new AssemblyFinder(application);
         var typeFinder = new TypeFinder(assemblyFinder);
 
         if (!services.IsAdded<IConfiguration>())
