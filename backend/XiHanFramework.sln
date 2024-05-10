@@ -16,9 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Other", "4.Other", "{20EB
 		CodeMaid.config = CodeMaid.config
 		props\common.props = props\common.props
 		readme\LICENSE = readme\LICENSE
-		readme\readme.md = readme\readme.md
 		readme\readme.png = readme\readme.png
-		snks\XiHan.snk = snks\XiHan.snk
+		snks\XiHanFramework.snk = snks\XiHanFramework.snk
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Framework.AI", "src\XiHan.Framework.AI\XiHan.Framework.AI.csproj", "{0228C69E-E3CE-45E3-BFF8-E777919FE750}"
