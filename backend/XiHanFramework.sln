@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{A661BDC1-48C2-4064-8058-7F394B98A075}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Framework", "1.Framework", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Ddd", "2.Ddd", "{033178E4-70C4-4901-947B-FCC964FC0709}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Test", "2.Test", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Test", "3.Test", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Other", "3.Other", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Other", "4.Other", "{20EB1AA9-0BC2-44AA-B89D-71E8DA562A0F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
@@ -57,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Unit", "src\XiHa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Web", "src\XiHan.Test.Web\XiHan.Test.Web.csproj", "{46B5134A-202A-4FCD-BD48-99BA5A5CAA32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Framework.Auditing", "src\XiHan.Framework.Auditing\XiHan.Framework.Auditing.csproj", "{FB570FB2-D936-4E2D-9747-E21BB26520FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Framework.Auditing", "src\XiHan.Framework.Auditing\XiHan.Framework.Auditing.csproj", "{FB570FB2-D936-4E2D-9747-E21BB26520FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,8 +140,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{28FA60F1-F110-4884-9188-FE239574F0FD} = {A661BDC1-48C2-4064-8058-7F394B98A075}
-		{033178E4-70C4-4901-947B-FCC964FC0709} = {A661BDC1-48C2-4064-8058-7F394B98A075}
 		{0228C69E-E3CE-45E3-BFF8-E777919FE750} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{8FAE496A-65D4-4B49-A828-E5FE3D2B3FCB} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{464D349D-CEA3-4243-9601-135429BA244C} = {28FA60F1-F110-4884-9188-FE239574F0FD}
