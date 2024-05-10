@@ -1,21 +1,21 @@
 {
-  "name": "xihan-frontend",
+  "name": "xihanframework",
   "private": false,
   "version": "0.5.1",
   "type": "module",
-  "description": "XiHan frontend project. A fast, lightweight, efficient, and dedicated development framework and new decentralized full scenario application software. Built based on DotNet and Vue.",
+  "description": "XiHan framework project. Fast, lightweight, efficient, and dedicated development framework. Built based on DotNet and Vue.",
   "author": {
     "name": "ZhaiFanhua",
     "email": "zhaifanhua@foxmail.com",
-    "url": "https://github.com/XiHanFun/XiHan-Frontend"
+    "url": "https://github.com/XiHanFun/XiHanFramework"
   },
   "license": "MulanPSL-2.0",
-  "homepage": "https://frontend.xihan.fun",
+  "homepage": "https://docs.xihan.fun",
   "repository": {
-    "url": "https://github.com/XiHanFun/XiHan-Frontend.git"
+    "url": "https://github.com/XiHanFun/XiHanFramework.git"
   },
   "bugs": {
-    "url": "https://github.com/XiHanFun/XiHan-Frontend/issues"
+    "url": "https://github.com/XiHanFun/XiHanFramework/issues"
   },
   "keywords": [
     "Vue",
@@ -23,7 +23,8 @@
     "TypeScript",
     "NaiveUI",
     "XiHan",
-    "XiHanFun"
+    "XiHanFun",
+    "XiHanFramework"
   ],
   "scripts": {
     "bootstrap": "pnpm install",

@@ -18,7 +18,7 @@
 		<!-- 指定源代码仓库类型 -->
 		<RepositoryType>git</RepositoryType>
 		<!-- 指定源代码仓库URL -->
-		<RepositoryUrl>https://github.com/XiHanFun/XiHan</RepositoryUrl>
+		<RepositoryUrl>https://github.com/XiHanFun/XiHanFramework</RepositoryUrl>
 		<!-- 指定作者信息 -->
 		<Authors>ZhaiFanhua</Authors>
 		<!-- 指定版权信息 -->
@@ -34,9 +34,9 @@
 		<!-- NuGet包附带的许可证文件 -->
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<!-- 项目网址 -->
-		<PackageProjectUrl>https://docs.xihan.fun/</PackageProjectUrl>
+		<PackageProjectUrl>https://docs.xihan.fun</PackageProjectUrl>
 		<!-- 定义NuGet包的标签 -->
-		<PackageTags>csharp aspnetcore framework web webapp xihan zhaifanhua</PackageTags>
+		<PackageTags>csharp aspnetcore web webapp xihan framework xihanframework zhaifanhua</PackageTags>
 		<!-- NuGet包输出路径 -->
 		<PackageOutputPath>..\..\nupkgs</PackageOutputPath>
 		<!-- 程序集签名 -->
@@ -44,7 +44,7 @@
 		<!-- 延迟签名（不使用） -->
 		<DelaySign>False</DelaySign>
 		<!-- 指定用于签名的密钥文件 -->
-		<AssemblyOriginatorKeyFile>..\..\snks\XiHan.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>..\..\snks\XiHanFramework.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<!-- 项目文件包含 -->
