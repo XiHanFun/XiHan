@@ -16,9 +16,9 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using XiHan.Infrastructure.Communication.Https.Enums;
+using XiHan.Framework.Communication.Https.Enums;
 
-namespace XiHan.Infrastructure.Communication.Https.Services;
+namespace XiHan.Framework.Communication.Https.Services;
 
 /// <summary>
 /// HttpPollyService

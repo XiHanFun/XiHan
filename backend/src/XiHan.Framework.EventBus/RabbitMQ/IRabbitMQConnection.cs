@@ -14,7 +14,7 @@
 
 using RabbitMQ.Client;
 
-namespace XiHan.Infrastructure.EventBus.RabbitMQ;
+namespace XiHan.Framework.EventBus.RabbitMQ;
 
 /// <summary>
 /// RabbitMQ 持久连接接口

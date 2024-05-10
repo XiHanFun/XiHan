@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Framework", "1.Framework", "{A661BDC1-48C2-4064-8058-7F394B98A075}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{A661BDC1-48C2-4064-8058-7F394B98A075}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Framework", "1.Framework", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Ddd", "2.Ddd", "{033178E4-70C4-4901-947B-FCC964FC0709}"
 EndProject
@@ -56,6 +56,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Unit", "src\XiHan.Test.Unit\XiHan.Test.Unit.csproj", "{526EA079-CDA1-41E9-996E-32719C6492F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Test.Web", "src\XiHan.Test.Web\XiHan.Test.Web.csproj", "{46B5134A-202A-4FCD-BD48-99BA5A5CAA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Framework.Auditing", "src\XiHan.Framework.Auditing\XiHan.Framework.Auditing.csproj", "{FB570FB2-D936-4E2D-9747-E21BB26520FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,10 @@ Global
 		{46B5134A-202A-4FCD-BD48-99BA5A5CAA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B5134A-202A-4FCD-BD48-99BA5A5CAA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B5134A-202A-4FCD-BD48-99BA5A5CAA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB570FB2-D936-4E2D-9747-E21BB26520FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB570FB2-D936-4E2D-9747-E21BB26520FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB570FB2-D936-4E2D-9747-E21BB26520FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB570FB2-D936-4E2D-9747-E21BB26520FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +161,7 @@ Global
 		{C86862E2-43EC-4CCD-9A00-93D325832CF4} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
 		{526EA079-CDA1-41E9-996E-32719C6492F4} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
 		{46B5134A-202A-4FCD-BD48-99BA5A5CAA32} = {7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}
+		{FB570FB2-D936-4E2D-9747-E21BB26520FE} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}

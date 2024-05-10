@@ -18,10 +18,10 @@ using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
 using Polly.Timeout;
-using XiHan.Infrastructure.Communication.Https.Enums;
-using XiHan.Infrastructure.Communication.Https.Services;
+using XiHan.Framework.Communication.Https.Enums;
+using XiHan.Framework.Communication.Https.Services;
 
-namespace XiHan.Infrastructure.Communication.Modules;
+namespace XiHan.Framework.Communication.Modules;
 
 /// <summary>
 /// HttpPollyModule

@@ -14,7 +14,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructure.Communication.Https.Enums;
+namespace XiHan.Framework.Communication.Https.Enums;
 
 /// <summary>
 /// 选择条件枚举

@@ -14,7 +14,7 @@
 
 using System.ComponentModel;
 
-namespace XiHan.Infrastructure.Communication.Https.Enums;
+namespace XiHan.Framework.Communication.Https.Enums;
 
 /// <summary>
 /// 通用响应标识

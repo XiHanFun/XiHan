@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Communication.Https.Entities;
+namespace XiHan.Framework.Communication.Https.Entities;
 
 /// <summary>
 /// 通用分页响应

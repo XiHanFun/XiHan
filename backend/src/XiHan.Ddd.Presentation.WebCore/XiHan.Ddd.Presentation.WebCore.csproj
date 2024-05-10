@@ -10,8 +10,4 @@
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\XiHan.Ddd.Application\XiHan.Ddd.Application.csproj" />
-  </ItemGroup>
-
 </Project>

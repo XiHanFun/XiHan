@@ -21,7 +21,7 @@ using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
 
-namespace XiHan.Infrastructure.EventBus.Kafka;
+namespace XiHan.Framework.EventBus.Kafka;
 
 /// <summary>
 /// 基于 Kafka 的事件总线

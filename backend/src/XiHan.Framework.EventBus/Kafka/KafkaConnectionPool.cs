@@ -16,7 +16,7 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 
-namespace XiHan.Infrastructure.EventBus.Kafka;
+namespace XiHan.Framework.EventBus.Kafka;
 
 /// <summary>
 /// Kafka producer 连接池管理

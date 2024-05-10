@@ -12,9 +12,9 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Communication.Https.Enums;
+using XiHan.Framework.Communication.Https.Enums;
 
-namespace XiHan.Infrastructure.Communication.Https.Entities;
+namespace XiHan.Framework.Communication.Https.Entities;
 
 /// <summary>
 /// 通用选择条件

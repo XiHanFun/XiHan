@@ -1,17 +1,3 @@
-﻿## XiHan.Infrastructure.Auth
+﻿## XiHan.Framework.AI
 
-曦寒基础设施人工智能组件库
-
-## 如何使用
-
-项目引用此 Nuget 包
-
-依赖注入
-
-```csharp
-services.RunModuleInitializers(configuration)
-```
-
-## 包含功能
-
-### 认证
+曦寒框架人工智能组件库

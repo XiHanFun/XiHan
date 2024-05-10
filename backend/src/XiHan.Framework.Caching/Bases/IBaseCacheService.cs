@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.Core.Apps.Caches;
+namespace XiHan.Framework.Caching.Bases;
 
 /// <summary>
 /// IAppCacheService

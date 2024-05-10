@@ -21,7 +21,7 @@ using RabbitMQ.Client.Exceptions;
 using System.Net.Sockets;
 using System.Text;
 
-namespace XiHan.Infrastructure.EventBus.RabbitMQ;
+namespace XiHan.Framework.EventBus.RabbitMQ;
 
 /// <summary>
 /// RabbitMQ 持久连接

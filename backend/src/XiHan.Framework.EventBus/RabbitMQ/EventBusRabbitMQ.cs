@@ -25,9 +25,9 @@ using XiHan.Core.System.Extensions;
 using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
-using XiHan.Infrastructure.EventBus.RabbitMQ.Consts;
+using XiHan.Framework.EventBus.RabbitMQ.Consts;
 
-namespace XiHan.Infrastructure.EventBus.RabbitMQ;
+namespace XiHan.Framework.EventBus.RabbitMQ;
 
 /// <summary>
 /// 基于 RabbitMQ 的事件总线

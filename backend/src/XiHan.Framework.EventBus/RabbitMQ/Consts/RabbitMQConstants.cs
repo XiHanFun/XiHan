@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.EventBus.RabbitMQ.Consts;
+namespace XiHan.Framework.EventBus.RabbitMQ.Consts;
 
 /// <summary>
 /// RabbitMQ 常量

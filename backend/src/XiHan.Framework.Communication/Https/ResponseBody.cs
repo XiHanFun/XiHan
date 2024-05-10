@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Infrastructure.Communication.Https.Enums;
+using XiHan.Framework.Communication.Https.Enums;
 
-namespace XiHan.Infrastructure.Communication.Https;
+namespace XiHan.Framework.Communication.Https;
 
 /// <summary>
 /// 通用响应体

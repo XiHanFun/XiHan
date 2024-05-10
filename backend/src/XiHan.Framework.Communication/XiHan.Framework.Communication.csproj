@@ -3,10 +3,10 @@
 	<Import Project="..\..\props\common.props" />
 
 	<PropertyGroup>
-		<Title>XiHan.Infrastructure.Communication</Title>
-		<AssemblyName>XiHan.Infrastructure.Communication</AssemblyName>
-		<PackageId>XiHan.Infrastructure.Communication</PackageId>
-		<Description>曦寒基础设施通信组件库</Description>
+		<Title>XiHan.Framework.Communication</Title>
+		<AssemblyName>XiHan.Framework.Communication</AssemblyName>
+		<PackageId>XiHan.Framework.Communication</PackageId>
+		<Description>曦寒框架通信组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
@@ -16,6 +16,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Webhooks\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Framework.Core\XiHan.Framework.Core.csproj" />
 	</ItemGroup>
 </Project>
 

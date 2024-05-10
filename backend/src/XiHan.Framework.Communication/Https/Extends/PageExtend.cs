@@ -14,10 +14,10 @@
 
 using System.Linq.Expressions;
 using XiHan.Common.Utilities.Extensions;
-using XiHan.Infrastructure.Communication.Https.Entities;
-using XiHan.Infrastructure.Communication.Https.Enums;
+using XiHan.Framework.Communication.Https.Entities;
+using XiHan.Framework.Communication.Https.Enums;
 
-namespace XiHan.Infrastructure.Communication.Https.Extends;
+namespace XiHan.Framework.Communication.Https.Extends;
 
 /// <summary>
 /// 分页扩展

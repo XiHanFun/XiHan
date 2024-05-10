@@ -1,6 +1,6 @@
 ﻿## XiHan.Framework.Core
 
-曦寒核心组件库
+曦寒框架核心组件库
 
 ## 如何使用
 
@@ -10,15 +10,15 @@
 
 ### 模块化自动注入
 
-假设开发一个模块 XiHan.AI ，模块中包含了一些 AI 服务等，可以通过模块化自动注入功能，将模块中的服务，控制器等自动注入到 ASP.NET Core 的依赖注入容器中。
+假设开发一个模块 XiHan.Framework.AI ，模块中包含了一些 AI 服务等，可以通过模块化自动注入功能，将模块中的服务，控制器等自动注入到 ASP.NET Core 的依赖注入容器中。
 
-创建模块类，继承 XiHanModule 即可。
+创建 XiHanFrameworkAIModule 模块类，继承 XiHanModule 即可。
 
 ```csharp
 /// <summary>
-/// 人工智能模块
+/// 曦寒框架人工智能模块
 /// </summary>
-public partial class XiHanAIModule : XiHanModule
+public partial class XiHanFrameworkAIModule : XiHanModule
 {
     /// <summary>
     /// 配置服务

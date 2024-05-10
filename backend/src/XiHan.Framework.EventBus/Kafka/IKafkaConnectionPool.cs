@@ -14,7 +14,7 @@
 
 using Confluent.Kafka;
 
-namespace XiHan.Infrastructure.EventBus.Kafka;
+namespace XiHan.Framework.EventBus.Kafka;
 
 /// <summary>
 /// Kafka 连接池

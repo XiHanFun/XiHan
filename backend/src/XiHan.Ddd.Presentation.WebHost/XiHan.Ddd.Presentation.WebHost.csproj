@@ -17,8 +17,4 @@
 	  <ItemGroup>
 	    <None Include="Properties\PublishProfiles\Linux.pubxml.user" />
 	  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\XiHan.Presentation.Web.Core\XiHan.Presentation.Web.Core.csproj" />
-  </ItemGroup>
 </Project>

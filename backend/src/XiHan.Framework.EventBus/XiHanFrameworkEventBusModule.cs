@@ -3,33 +3,22 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:HttpGroupEnum
-// Guid:5f9c4118-4cb8-43df-8ccc-1e4f0119c452
+// FileName:XiHanFrameworkEventBusModule
+// Guid:0bc89149-d0df-467f-a3be-c571b00af610
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/3/28 6:36:58
+// CreateTime:2024/3/28 9:25:06
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using System.ComponentModel;
+using XiHan.Framework.Core.Modularity;
 
-namespace XiHan.Framework.Communication.Https.Enums;
+namespace XiHan.Framework.EventBus;
 
 /// <summary>
-/// 网络请求组别
+/// 曦寒框架集成事件模块
 /// </summary>
-public enum HttpGroupEnum
+public class XiHanFrameworkEventBusModule : XiHanModule
 {
-    /// <summary>
-    /// 远程
-    /// </summary>
-    [Description("远程")]
-    Remote,
-
-    /// <summary>
-    /// 本地
-    /// </summary>
-    [Description("本地")]
-    Local
 }

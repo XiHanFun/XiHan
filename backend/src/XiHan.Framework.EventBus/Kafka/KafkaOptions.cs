@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Infrastructure.EventBus.Kafka;
+namespace XiHan.Framework.EventBus.Kafka;
 
 /// <summary>
 /// Kafka 配置项

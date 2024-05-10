@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>XiHan.Framework.Auditing</Title>
+		<AssemblyName>XiHan.Framework.Auditing</AssemblyName>
+		<PackageId>XiHan.Framework.Auditing</PackageId>
+		<Description>曦寒框架审计组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+</Project>

@@ -3,15 +3,19 @@
 	<Import Project="..\..\props\common.props" />
 
 	<PropertyGroup>
-		<Title>XiHan.Infrastructure.Caching</Title>
-		<AssemblyName>XiHan.Infrastructure.Caching</AssemblyName>
-		<PackageId>XiHan.Infrastructure.Caching</PackageId>
-		<Description>曦寒基础设施缓存组件库</Description>
+		<Title>XiHan.Framework.Caching</Title>
+		<AssemblyName>XiHan.Framework.Caching</AssemblyName>
+		<PackageId>XiHan.Framework.Caching</PackageId>
+		<Description>曦寒框架缓存组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Caching.CSRedis" Version="3.8.800" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Framework.Core\XiHan.Framework.Core.csproj" />
 	</ItemGroup>
 </Project>
 

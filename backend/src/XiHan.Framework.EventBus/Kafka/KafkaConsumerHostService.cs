@@ -22,7 +22,7 @@ using XiHan.Common.Utilities.Extensions;
 using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 
-namespace XiHan.Infrastructure.EventBus.Kafka;
+namespace XiHan.Framework.EventBus.Kafka;
 
 /// <summary>
 /// Kafka 消费者监听服务

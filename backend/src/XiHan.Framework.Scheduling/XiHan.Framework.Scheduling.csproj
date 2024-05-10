@@ -3,10 +3,10 @@
 	<Import Project="..\..\props\common.props" />
 
 	<PropertyGroup>
-		<Title>XiHan.Scheduling</Title>
-		<AssemblyName>XiHan.Scheduling</AssemblyName>
-		<PackageId>XiHan.Scheduling</PackageId>
-		<Description>曦寒计划任务组件库</Description>
+		<Title>XiHan.Framework.Scheduling</Title>
+		<AssemblyName>XiHan.Framework.Scheduling</AssemblyName>
+		<PackageId>XiHan.Framework.Scheduling</PackageId>
+		<Description>曦寒框架计划任务组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 

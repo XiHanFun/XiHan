@@ -1,17 +1,3 @@
-﻿## XiHan.Common.Core
+﻿## XiHan.Framework.Caching
 
-曦寒基础设施缓存组件库
-
-## 如何使用
-
-项目引用此 Nuget 包
-
-依赖注入
-
-```csharp
-services.RunModuleInitializers(configuration)
-```
-
-## 包含功能
-
-### 缓存
+曦寒框架缓存组件库

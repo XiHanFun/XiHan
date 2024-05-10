@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:InfrastructureAIModule
+// FileName:XiHanFrameworkAIModule
 // Guid:b199f478-3f76-4fa4-854e-11e6682c62da
 // Author:Administrator
 // Email:me@zhaifanhua.com
@@ -12,14 +12,14 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Modularity;
+using XiHan.Framework.Core.Modularity;
 
-namespace XiHan.Infrastructure.AI;
+namespace XiHan.Framework.AI;
 
 /// <summary>
-/// 基础设施人工智能模块
+/// 曦寒框架人工智能组件库
 /// </summary>
-public partial class InfrastructureAIModule : XiHanModule
+public partial class XiHanFrameworkAIModule : XiHanModule
 {
     /// <summary>
     /// 配置服务

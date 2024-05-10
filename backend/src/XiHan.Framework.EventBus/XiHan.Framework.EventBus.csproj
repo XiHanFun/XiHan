@@ -3,10 +3,10 @@
 	<Import Project="..\..\props\common.props" />
 
 	<PropertyGroup>
-		<Title>XiHan.Infrastructure.EventBus</Title>
-		<AssemblyName>XiHan.Infrastructure.EventBus</AssemblyName>
-		<PackageId>XiHan.Infrastructure.EventBus</PackageId>
-		<Description>曦寒基础设施事件总线组件库</Description>
+		<Title>XiHan.Framework.EventBus</Title>
+		<AssemblyName>XiHan.Framework.EventBus</AssemblyName>
+		<PackageId>XiHan.Framework.EventBus</PackageId>
+		<Description>曦寒框架事件总线组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
 	
@@ -17,6 +17,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <ProjectReference Include="..\XiHan.Infrastructure.Core\XiHan.Infrastructure.Core.csproj" />
+	  <ProjectReference Include="..\XiHan.Framework.Core\XiHan.Framework.Core.csproj" />
 	</ItemGroup>
 </Project>
