@@ -45,7 +45,7 @@ public class ExposedServiceExplorer
 
         if (exposedServiceTypesProviders.IsNullOrEmpty() && type.GetCustomAttributes(true).OfType<IExposedKeyedServiceTypesProvider>().Any())
         {
-            // 如果有任何 IExposedKeyedServiceTypesProvider，但没有 IExposedServiceTypesProvider，我们将不会公开默认服务
+            // 如果有任何 IExposedKeyedServiceTypesProvider，但没有 IExposedServiceTypesProvider，将不会公开默认服务
             return [];
         }
 

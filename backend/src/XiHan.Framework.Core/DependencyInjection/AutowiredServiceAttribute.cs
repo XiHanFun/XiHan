@@ -34,7 +34,7 @@ namespace XiHan.Framework.Core.DependencyInjection;
 /// public class FieldClass
 /// {
 ///     [AutowiredService]
-///     public IService _service;
+///     private IService _service;
 ///
 ///     public FieldClass(AutowiredServiceHandler autowiredServiceHandler)
 ///     {

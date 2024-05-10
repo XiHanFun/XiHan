@@ -241,7 +241,7 @@ public class XiHanApplicationBase : IXiHanApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = context;
             }
@@ -265,7 +265,7 @@ public class XiHanApplicationBase : IXiHanApplication
         // ConfigureServices
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 if (!Module.SkipAutoServiceRegistration)
                 {
@@ -305,7 +305,7 @@ public class XiHanApplicationBase : IXiHanApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = null!;
             }
@@ -314,18 +314,6 @@ public class XiHanApplicationBase : IXiHanApplication
         _configuredServices = true;
 
         TryToSetEnvironment(Services);
-    }
-
-    /// <summary>
-    /// 检查多个配置服务
-    /// </summary>
-    /// <exception cref="InitializationException"></exception>
-    private void CheckMultipleConfigureServices()
-    {
-        if (_configuredServices)
-        {
-            throw new InitializationException("服务已被配置！如果调用 ConfigureServicesAsync 方法，必须在此之前将 ApplicationCreationOptions.SkipConfigureServices 设置为 true");
-        }
     }
 
     /// <summary>
@@ -341,7 +329,7 @@ public class XiHanApplicationBase : IXiHanApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = context;
             }
@@ -365,7 +353,7 @@ public class XiHanApplicationBase : IXiHanApplication
         // ConfigureServices
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 if (!Module.SkipAutoServiceRegistration)
                 {
@@ -405,7 +393,7 @@ public class XiHanApplicationBase : IXiHanApplication
 
         foreach (var module in Modules)
         {
-            if (module.Instance is Modularity.XiHanModule Module)
+            if (module.Instance is XiHanModule Module)
             {
                 Module.ServiceConfigurationContext = null!;
             }
@@ -414,6 +402,18 @@ public class XiHanApplicationBase : IXiHanApplication
         _configuredServices = true;
 
         TryToSetEnvironment(Services);
+    }
+
+    /// <summary>
+    /// 检查多个配置服务
+    /// </summary>
+    /// <exception cref="InitializationException"></exception>
+    private void CheckMultipleConfigureServices()
+    {
+        if (_configuredServices)
+        {
+            throw new InitializationException("服务已被配置！如果调用 ConfigureServicesAsync 方法，必须在此之前将 ApplicationCreationOptions.SkipConfigureServices 设置为 true");
+        }
     }
 
     #endregion
