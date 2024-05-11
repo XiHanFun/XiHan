@@ -9,4 +9,9 @@
 		<Description>曦寒应用核心组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Ddd.Domain\XiHan.Ddd.Domain.csproj" />
+	  <ProjectReference Include="..\XiHan.Framework.Persistence\XiHan.Framework.Persistence.csproj" />
+	</ItemGroup>
 </Project>

@@ -16,6 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Framework.Communication\XiHan.Framework.Communication.csproj" />
 	  <ProjectReference Include="..\XiHan.Framework.Core\XiHan.Framework.Core.csproj" />
 	</ItemGroup>
 </Project>

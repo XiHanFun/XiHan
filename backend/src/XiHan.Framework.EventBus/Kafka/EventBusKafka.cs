@@ -15,9 +15,9 @@
 using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using XiHan.Common.Utilities.Extensions;
-using XiHan.Core.System.Extensions;
-using XiHan.Core.System.Text.Json.Serialization;
+using XiHan.Framework.Core.System.Extensions;
+using XiHan.Framework.Core.System.Text;
+using XiHan.Framework.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
 
@@ -62,7 +62,7 @@ public class EventBusKafka : IEventBus
         try
         {
             var eventName = @event.GetType().Name;
-            var body = SerializeHelper.SerializeTo(@event).ToBinary();
+            var body = SerializeHelper.SerializeTo(@event).BinaryEncode();
             DeliveryResult<string, byte[]> result = producer.ProduceAsync(_options.Topic, new Message<string, byte[]>
             {
                 Key = eventName,

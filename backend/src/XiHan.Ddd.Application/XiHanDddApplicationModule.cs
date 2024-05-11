@@ -3,29 +3,22 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:DomainCoreModule
-// Guid:a982f4a9-d098-431b-a9a7-83e324ac822d
+// FileName:XiHanDddApplicationModule
+// Guid:75bf7ed1-ea64-4e94-918e-a9c667b1a6f0
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/3/28 2:19:56
+// CreateTime:2024/3/28 2:10:14
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Modularity;
+using XiHan.Framework.Core.Modularity;
 
-namespace XiHan.Ddd.Domain;
+namespace XiHan.Ddd.Application;
 
 /// <summary>
-/// 领域核心模块
+/// 曦寒领域驱动应用模块
 /// </summary>
-public partial class DomainCoreModule : XiHanModule
+public partial class XiHanDddApplicationModule : XiHanModule
 {
-    /// <summary>
-    /// 配置服务
-    /// </summary>
-    /// <param name="context"></param>
-    public override void ConfigureServices(ServiceConfigurationContext context)
-    {
-    }
 }

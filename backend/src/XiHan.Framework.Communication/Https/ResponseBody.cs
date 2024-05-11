@@ -12,8 +12,8 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Common.Utilities.Extensions;
 using XiHan.Framework.Communication.Https.Enums;
+using XiHan.Framework.Core.System.Extensions;
 
 namespace XiHan.Framework.Communication.Https;
 

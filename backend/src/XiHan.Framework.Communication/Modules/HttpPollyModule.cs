@@ -12,7 +12,6 @@
 
 #endregion <<版权版本注释>>
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;

@@ -20,12 +20,12 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 using System.Net.Sockets;
 using System.Text;
-using XiHan.Common.Utilities.Extensions;
-using XiHan.Core.System.Extensions;
-using XiHan.Core.System.Text.Json.Serialization;
+using XiHan.Framework.Core.System.Extensions;
+using XiHan.Framework.Core.System.Text;
+using XiHan.Framework.Core.System.Text.Json.Serialization;
+using XiHan.Framework.EventBus.RabbitMQ.Consts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
-using XiHan.Framework.EventBus.RabbitMQ.Consts;
 
 namespace XiHan.Framework.EventBus.RabbitMQ;
 
@@ -102,7 +102,7 @@ public class EventBusRabbitMQ : IEventBus
 
         channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
 
-        var body = SerializeHelper.SerializeTo(@event).ToBinary();
+        var body = SerializeHelper.SerializeTo(@event).BinaryEncode();
 
         policy.Execute(() =>
         {

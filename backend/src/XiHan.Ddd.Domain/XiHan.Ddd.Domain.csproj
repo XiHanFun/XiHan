@@ -32,4 +32,8 @@
 	  <Folder Include="Specifications\Criteria\" />
 	  <Folder Include="Specifications\Constraints\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Framework.Core\XiHan.Framework.Core.csproj" />
+	</ItemGroup>
 </Project>

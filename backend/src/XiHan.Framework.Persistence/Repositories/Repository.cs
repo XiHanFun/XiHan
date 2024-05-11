@@ -14,7 +14,6 @@
 
 using SqlSugar;
 using System.Linq.Expressions;
-using XiHan.Ddd.Domain.Repositories.Abstracts;
 
 namespace XiHan.Infrastructure.Persistence.Repositories;
 

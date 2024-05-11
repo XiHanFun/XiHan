@@ -18,8 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using XiHan.Common.Utilities.Extensions;
-using XiHan.Core.System.Text.Json.Serialization;
+using XiHan.Framework.Core.System.Text;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 
 namespace XiHan.Framework.EventBus.Kafka;
@@ -82,7 +81,7 @@ public class KafkaConsumerHostService : BackgroundService
                 {
                     if (consumerResult.IsPartitionEOF || consumerResult.Message.Value == null) continue;
 
-                    var @event = consumerResult.Message.Value.FromBinary();
+                    var @event = consumerResult.Message.Value.BinaryDecode();
                     await ProcessEvent(consumerResult.Message.Key, @event);
                 }
                 catch (ConsumeException e)
