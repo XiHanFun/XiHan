@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:SerializeHelper
+// FileName:SerializeExtensions
 // Guid:1345864e-97d1-4fbf-8f3e-5f9d5d51176e
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
@@ -18,9 +18,9 @@ using System.Text.Json.Serialization.Metadata;
 namespace XiHan.Framework.Core.System.Text.Json.Serialization;
 
 /// <summary>
-/// 序列化帮助类
+/// 序列化扩展方法
 /// </summary>
-public static class SerializeHelper
+public static class SerializeExtensions
 {
     /// <summary>
     /// 公共参数

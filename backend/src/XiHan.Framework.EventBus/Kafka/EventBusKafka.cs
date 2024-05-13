@@ -62,7 +62,7 @@ public class EventBusKafka : IEventBus
         try
         {
             var eventName = @event.GetType().Name;
-            var body = SerializeHelper.SerializeTo(@event).BinaryEncode();
+            var body = SerializeExtensions.SerializeTo(@event).BinaryEncode();
             DeliveryResult<string, byte[]> result = producer.ProduceAsync(_options.Topic, new Message<string, byte[]>
             {
                 Key = eventName,
@@ -71,7 +71,7 @@ public class EventBusKafka : IEventBus
         }
         catch (Exception ex)
         {
-            _logger.LogWarning($"无法发布事件：{@event.Id:N} ({ex.Message});信息：{SerializeHelper.SerializeTo(@event)}");
+            _logger.LogWarning($"无法发布事件：{@event.Id:N} ({ex.Message});信息：{SerializeExtensions.SerializeTo(@event)}");
         }
         finally
         {

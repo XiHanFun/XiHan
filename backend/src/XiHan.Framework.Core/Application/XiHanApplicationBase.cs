@@ -80,16 +80,20 @@ public class XiHanApplicationBase : IXiHanApplication
         CheckHelper.NotNull(startupModuleType, nameof(startupModuleType));
         CheckHelper.NotNull(services, nameof(services));
 
+        // 设置启动模块
         StartupModuleType = startupModuleType;
         Services = services;
 
+        // 添加一个空的对象访问器，该访问器的值会在初始化的时候被赋值
         services.TryAddObjectAccessor<IServiceProvider>();
 
+        // 调用用户传入的配置委托
         var options = new XiHanApplicationCreationOptions(services);
         optionsAction?.Invoke(options);
 
         ApplicationName = GetApplicationName(options);
 
+        // 注册自己
         services.AddSingleton<IXiHanApplication>(this);
         services.AddSingleton<IApplicationInfoAccessor>(this);
         services.AddSingleton<IModuleContainer>(this);
@@ -98,9 +102,12 @@ public class XiHanApplicationBase : IXiHanApplication
             EnvironmentName = options.Environment
         });
 
+        // 添加日志等基础设施组件
         services.AddCoreServices();
+        // 添加核心的 XiHan 服务，主要是模块系统相关组件
         services.AddCoreServices(this, options);
 
+        // 加载模块，并按照依赖关系排序，依次执行他们的生命周期方法
         Modules = LoadModules(services, options);
 
         if (!options.SkipConfigureServices)

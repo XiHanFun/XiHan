@@ -25,50 +25,25 @@ namespace XiHan.Common.Utilities.HardwareInfos;
 public static class OsPlatformHelper
 {
     /// <summary>
-    /// 操作系统
+    /// 获取操作系统信息
     /// </summary>
-    public static string OperatingSystem => GetOperatingSystem();
-
-    /// <summary>
-    /// 是否 Unix 系统
-    /// </summary>
-    public static bool OsIsUnix => RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ||
-                                   RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-
-    /// <summary>
-    /// 系统描述
-    /// </summary>
-    public static string OsDescription => RuntimeInformation.OSDescription;
-
-    /// <summary>
-    /// 系统版本
-    /// </summary>
-    public static string OsVersion => Environment.OSVersion.Version.ToString();
-
-    /// <summary>
-    /// 系统平台
-    /// </summary>
-    public static string Platform => Environment.OSVersion.Platform.ToString();
-
-    /// <summary>
-    /// 系统架构
-    /// </summary>
-    public static string OsArchitecture => RuntimeInformation.OSArchitecture.ToString();
-
-    /// <summary>
-    /// 系统目录
-    /// </summary>
-    public static string SystemDirectory => Environment.SystemDirectory;
-
-    /// <summary>
-    /// 运行时间
-    /// </summary>
-    public static string RunningTime => GetRunningTime();
-
-    /// <summary>
-    /// 交互模式
-    /// </summary>
-    public static string InteractiveMode => Environment.UserInteractive ? "交互运行" : "非交互运行";
+    /// <returns></returns>
+    public static OsPlatformInfo GetOsPlatformInfos()
+    {
+        OsPlatformInfo osPlatformInfo = new()
+        {
+            OperatingSystem = GetOperatingSystem(),
+            OsIsUnix = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux),
+            OsDescription = RuntimeInformation.OSDescription,
+            OsVersion = Environment.OSVersion.Version.ToString(),
+            Platform = Environment.OSVersion.Platform.ToString(),
+            OsArchitecture = RuntimeInformation.OSArchitecture.ToString(),
+            SystemDirectory = Environment.SystemDirectory,
+            RunningTime = GetRunningTime(),
+            InteractiveMode = Environment.UserInteractive ? "交互运行" : "非交互运行"
+        };
+        return osPlatformInfo;
+    }
 
     /// <summary>
     /// 获取操作系统
@@ -159,4 +134,55 @@ public static class OsPlatformHelper
 
         return new TimeSpan(days, hours, minutes, 0);
     }
+}
+
+/// <summary>
+/// 操作系统信息
+/// </summary>
+public record OsPlatformInfo
+{
+    /// <summary>
+    /// 操作系统
+    /// </summary>
+    public string OperatingSystem { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 是否 Unix 系统
+    /// </summary>
+    public bool OsIsUnix { get; set; }
+
+    /// <summary>
+    /// 系统描述
+    /// </summary>
+    public string OsDescription { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 系统版本
+    /// </summary>
+    public string OsVersion { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 系统平台
+    /// </summary>
+    public string Platform { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 系统架构
+    /// </summary>
+    public string OsArchitecture { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 系统目录
+    /// </summary>
+    public string SystemDirectory { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 运行时间
+    /// </summary>
+    public string RunningTime { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 交互模式
+    /// </summary>
+    public string InteractiveMode { get; set; } = string.Empty;
 }

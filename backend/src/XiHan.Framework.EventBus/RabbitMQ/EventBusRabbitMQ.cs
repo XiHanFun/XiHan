@@ -102,7 +102,7 @@ public class EventBusRabbitMQ : IEventBus
 
         channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
 
-        var body = SerializeHelper.SerializeTo(@event).BinaryEncode();
+        var body = SerializeExtensions.SerializeTo(@event).BinaryEncode();
 
         policy.Execute(() =>
         {
@@ -320,7 +320,7 @@ public class EventBusRabbitMQ : IEventBus
                     if (scope.ServiceProvider.GetService(subscription.HandlerType) is not IDynamicIntegrationEventHandler handler)
                         continue;
 
-                    dynamic eventData = SerializeHelper.DeserializeTo<dynamic>(message)!;
+                    dynamic eventData = SerializeExtensions.DeserializeTo<dynamic>(message)!;
 
                     await Task.Yield();
                     await handler.Handle(eventData);
@@ -332,7 +332,7 @@ public class EventBusRabbitMQ : IEventBus
                         continue;
 
                     var eventType = _subscriptionManager.GetEventTypeByName(eventName);
-                    var integrationEvent = SerializeHelper.DeserializeTo(message)!;
+                    var integrationEvent = SerializeExtensions.DeserializeTo(message)!;
                     var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
                     await Task.Yield();

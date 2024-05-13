@@ -34,7 +34,7 @@ public static class DiskHelper
 
         try
         {
-            if (OsPlatformHelper.OsIsUnix)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 var output = ShellHelper.Bash("df -k | awk '{print $1,$2,$3,$4,$6}' | tail -n +2").Trim();
                 var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
