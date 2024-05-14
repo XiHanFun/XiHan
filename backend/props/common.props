@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<!-- 设置C#语言版本 -->
 		<LangVersion>latest</LangVersion>
-		<!-- 指定目标框架 -->
+		<!-- 指定目标 -->
 		<TargetFramework>net8.0</TargetFramework>
 		<!-- 设置程序集的版本信息 -->
 		<AssemblyVersion>0.5.1</AssemblyVersion>
@@ -47,24 +47,20 @@
 		<AssemblyOriginatorKeyFile>..\..\snks\XiHanFramework.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
-	<!-- 项目文件包含 -->
-	<ItemGroup>
-		<!-- 将readme.md作为None类型文件包含在NuGet包中 -->
-		<None Update="readme.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-	</ItemGroup>
-
 	<!-- 其他文件包含 -->
 	<ItemGroup>
 		<!-- 将readme.png作为NuGet包图标 -->
-		<None Include="..\..\readme\readme.png">
+		<None Include="..\..\nuget\readme.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<!-- 将readme.md作为None类型文件包含在NuGet包中 -->
+		<None Include="..\..\nuget\readme.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
 		<!-- 将LICENSE文件包含在NuGet包中 -->
-		<None Include="..\..\readme\LICENSE">
+		<None Include="..\..\nuget\LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>

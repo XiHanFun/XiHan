@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Framework.Core.Modularity;
+using XiHan.Core.Modularity;
 
 namespace XiHan.Ddd.Domain;
 

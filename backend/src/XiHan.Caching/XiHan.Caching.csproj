@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>XiHan.Caching</Title>
+		<AssemblyName>XiHan.Caching</AssemblyName>
+		<PackageId>XiHan.Caching</PackageId>
+		<Description>曦寒缓存组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Caching.CSRedis" Version="3.8.800" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Core\XiHan.Core.csproj" />
+	</ItemGroup>
+</Project>
+

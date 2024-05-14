@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Infrastructure.Persistence.Repositories;
+using XiHan.Persistence.Repositories;
 
 namespace XiHan.Ddd.Application.Services;
 

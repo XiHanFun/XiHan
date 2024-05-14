@@ -12,6 +12,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\XiHan.Ddd.Domain\XiHan.Ddd.Domain.csproj" />
-	  <ProjectReference Include="..\XiHan.Framework.Persistence\XiHan.Framework.Persistence.csproj" />
+	  <ProjectReference Include="..\XiHan.Persistence\XiHan.Persistence.csproj" />
 	</ItemGroup>
 </Project>
