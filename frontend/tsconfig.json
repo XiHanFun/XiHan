@@ -25,9 +25,9 @@
     "types": ["vite/client"],
     "paths": {
       "/@/*": ["src/*"],
-      "/#/*": ["types/*"],
+      "/#/*": ["src/types/*"],
       "@/*": ["src/*"],
-      "#/*": ["types/*"]
+      "#/*": ["src/types/*"]
     }
   },
   "include": [
@@ -35,8 +35,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
+    "src/types/**/*.d.ts",
+    "src/types/**/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",

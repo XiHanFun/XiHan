@@ -4,3 +4,8 @@ declare interface ViteEnv {
   VITE_GLOB_APP_TITLE: string;
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
 }
+
+declare interface Window {
+  /** NProgress instance */
+  NProgress?: import('nprogress').NProgress;
+}
