@@ -49,6 +49,9 @@
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
+    "@types/echarts": "^4.9.22",
+    "@types/nprogress": "^0.2.3",
+    "@types/qrcode": "^1.5.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",

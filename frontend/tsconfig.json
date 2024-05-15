@@ -1,33 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "baseUrl": ".",
-    "declaration": false,
     "types": ["vite/client"],
+    "moduleResolution": "node",
     "paths": {
       "/@/*": ["src/*"],
-      "/#/*": ["src/types/*"],
+      "/#/*": ["types/*"],
       "@/*": ["src/*"],
-      "#/*": ["src/types/*"]
+      "#/*": ["types/*"]
     }
   },
   "include": [
@@ -35,11 +18,12 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/types/**/*.d.ts",
-    "src/types/**/*.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",
     "vite.config.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "dist"]
 }
