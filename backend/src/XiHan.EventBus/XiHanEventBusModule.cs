@@ -3,22 +3,22 @@
 // ----------------------------------------------------------------
 // Copyright ©2024 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:XiHanFrameworkPersistenceModule
-// Guid:baa046da-681d-478e-bd3e-eead2f3dcbe8
+// FileName:XiHanEventBusModule
+// Guid:0bc89149-d0df-467f-a3be-c571b00af610
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreateTime:2024/3/28 9:36:32
+// CreateTime:2024/3/28 9:25:06
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
 
 using XiHan.Core.Modularity;
 
-namespace XiHan.Persistence;
+namespace XiHan.EventBus;
 
 /// <summary>
-/// 基础设施数据持久化模块初始化
+/// 曦寒集成事件模块
 /// </summary>
-public class XiHanFrameworkPersistenceModule : XiHanModule
+public class XiHanEventBusModule : XiHanModule
 {
 }
