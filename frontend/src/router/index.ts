@@ -8,6 +8,7 @@ import {
   RouterHistory,
 } from 'vue-router';
 import { close, start } from '@/utils/nprogress';
+import { basicRoutes } from './routes';
 import { strict } from 'assert';
 
 // 白名单应该包含基本静态路由

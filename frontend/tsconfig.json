@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "module": "ESNext",
+    "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "types": ["vite/client"],
     "moduleResolution": "node",
