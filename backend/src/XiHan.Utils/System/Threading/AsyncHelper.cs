@@ -16,7 +16,7 @@ using Nito.AsyncEx;
 using System.Reflection;
 using XiHan.Utils.Verification;
 
-namespace XiHan.Utils.Threading;
+namespace XiHan.Utils.System.Threading;
 
 /// <summary>
 /// 与异步方法协作的辅助方法
@@ -41,7 +41,7 @@ public static class AsyncHelper
     /// <returns></returns>
     public static bool IsTaskOrTaskOfT(this Type type)
     {
-        return type == typeof(Task) || (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>));
+        return type == typeof(Task) || type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>);
     }
 
     /// <summary>

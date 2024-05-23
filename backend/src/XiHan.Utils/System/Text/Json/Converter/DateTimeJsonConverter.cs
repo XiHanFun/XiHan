@@ -16,7 +16,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using XiHan.Utils.Extensions.System;
 
-namespace XiHan.Utils.Text.Json.Converter;
+namespace XiHan.Utils.System.Text.Json.Converter;
 
 /// <summary>
 /// DateTimeJsonConverter

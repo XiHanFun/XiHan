@@ -14,7 +14,7 @@
 
 using System.IO.Compression;
 
-namespace XiHan.Utils.IO;
+namespace XiHan.Utils.System.IO;
 
 /// <summary>
 /// 压缩帮助类

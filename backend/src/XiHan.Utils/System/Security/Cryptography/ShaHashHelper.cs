@@ -15,7 +15,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace XiHan.Utils.Security.Cryptography;
+namespace XiHan.Utils.System.Security.Cryptography;
 
 /// <summary>
 /// Sha 生成哈希

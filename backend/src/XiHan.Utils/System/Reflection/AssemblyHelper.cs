@@ -20,7 +20,7 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.Loader;
 using XiHan.Utils.Verification;
 
-namespace XiHan.Utils.Reflection;
+namespace XiHan.Utils.System.Reflection;
 
 /// <summary>
 /// 程序集帮助类

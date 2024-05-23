@@ -15,7 +15,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace XiHan.Utils.Security.Cryptography;
+namespace XiHan.Utils.System.Security.Cryptography;
 
 /// <summary>
 /// RSA 加密解密，非对称

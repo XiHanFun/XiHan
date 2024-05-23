@@ -18,7 +18,7 @@ using System.Text.Json.Serialization;
 using XiHan.Utils.Extensions.Collections.Generic;
 using XiHan.Utils.Text.Json.Converter;
 
-namespace XiHan.Utils.Text.Json.Serialization;
+namespace XiHan.Utils.System.Text.Json.Serialization;
 
 /// <summary>
 /// 序列化参数帮助类

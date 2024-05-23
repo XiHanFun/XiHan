@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 // Copyright ©2023 ZhaiFanhua All Rights Reserved.
 // Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:LongJsonConverter
-// Guid:6c399d59-ef12-4354-a5b6-d9af73b04f8b
+// FileName:DecimalJsonConverter
+// Guid:302db373-1155-429b-b57b-07744a04c1b7
 // Author:zhaifanhua
 // Email:me@zhaifanhua.com
-// CreatedTime:2023-04-25 下午 11:04:51
+// CreatedTime:2023-04-25 下午 10:57:32
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
@@ -16,14 +16,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using XiHan.Utils.Extensions.System;
 
-namespace XiHan.Utils.Text.Json.Converter;
+namespace XiHan.Utils.System.Text.Json.Converter;
 
 /// <summary>
-/// LongJsonConverter
+/// DecimalJsonConverter
 /// 参考定义：
 /// <see href="https://learn.microsoft.com/zh-cn/dotnet/standard/serialization/system-text-json/converters-how-to">如何在 .NET 中编写用于 JSON 序列化(封送)的自定义转换器</see>
 /// </summary>
-public class LongJsonConverter : JsonConverter<long>
+public class DecimalJsonConverter : JsonConverter<decimal>
 {
     /// <summary>
     /// 读
@@ -32,20 +32,19 @@ public class LongJsonConverter : JsonConverter<long>
     /// <param name="typeToConvert"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.TokenType == JsonTokenType.Number ? reader.GetInt64() : reader.GetString().ParseToLong();
+        return reader.TokenType == JsonTokenType.Number ? reader.GetDecimal() : reader.GetString().ParseToDecimal();
     }
 
     /// <summary>
     /// 写
-    /// Guid数据在前端会出现丢失精度，故转换为string类型
     /// </summary>
     /// <param name="writer"></param>
     /// <param name="value"></param>
     /// <param name="options"></param>
-    public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString());
+        writer.WriteNumberValue(value);
     }
 }

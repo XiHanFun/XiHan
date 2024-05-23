@@ -16,7 +16,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using XiHan.Utils.Text.Json.Serialization;
+using XiHan.Utils.System.Text.Json.Serialization;
 
 namespace XiHan.Caching.Bases;
 

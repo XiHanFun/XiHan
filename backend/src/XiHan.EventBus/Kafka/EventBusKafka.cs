@@ -18,7 +18,7 @@ using Microsoft.Extensions.Options;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
 using XiHan.Utils.Extensions.System;
-using XiHan.Utils.Text.Json.Serialization;
+using XiHan.Utils.System.Text.Json.Serialization;
 
 namespace XiHan.EventBus.Kafka;
 

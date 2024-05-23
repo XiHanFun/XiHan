@@ -17,7 +17,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using XiHan.Core.Application;
 using XiHan.Utils.Extensions.Collections.Generic;
-using XiHan.Utils.Reflection;
+using XiHan.Utils.System.Reflection;
 using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Modularity.PlugIns;

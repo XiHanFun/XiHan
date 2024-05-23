@@ -17,7 +17,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Utils.Extensions.System;
-using XiHan.Utils.Reflection;
+using XiHan.Utils.System.Reflection;
 
 namespace XiHan.Core.DependencyInjection;
 

@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-namespace XiHan.Utils.IO;
+namespace XiHan.Utils.System.IO;
 
 /// <summary>
 /// 目录帮助类
