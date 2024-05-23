@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Persistence", "src\Xi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Scheduling", "src\XiHan.Scheduling\XiHan.Scheduling.csproj", "{6185AA9E-8DF7-4167-BF84-8F70E2952B81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Utils", "src\XiHan.Utils\XiHan.Utils.csproj", "{D2B9D429-D0FC-4F7C-A952-839BE6675525}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{6185AA9E-8DF7-4167-BF84-8F70E2952B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6185AA9E-8DF7-4167-BF84-8F70E2952B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6185AA9E-8DF7-4167-BF84-8F70E2952B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +148,7 @@ Global
 		{9825E176-70B6-4AE4-9550-BFAE2395EAA0} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{0660E9CB-71A5-4806-8FF9-F7B2DAC4CA6A} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{6185AA9E-8DF7-4167-BF84-8F70E2952B81} = {28FA60F1-F110-4884-9188-FE239574F0FD}
+		{D2B9D429-D0FC-4F7C-A952-839BE6675525} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}

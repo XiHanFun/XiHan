@@ -16,9 +16,9 @@ using JetBrains.Annotations;
 using System.Reflection;
 using System.Runtime.Loader;
 using XiHan.Core.Application;
-using XiHan.Core.Reflection;
-using XiHan.Core.System.Collections.Generic.Extensions;
-using XiHan.Core.Verification;
+using XiHan.Utils.Extensions.Collections.Generic;
+using XiHan.Utils.Reflection;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Modularity.PlugIns;
 

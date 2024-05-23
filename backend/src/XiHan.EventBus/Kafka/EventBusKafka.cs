@@ -15,11 +15,10 @@
 using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using XiHan.Core.System.Extensions;
-using XiHan.Core.System.Text;
-using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
+using XiHan.Utils.Extensions.System;
+using XiHan.Utils.Text.Json.Serialization;
 
 namespace XiHan.EventBus.Kafka;
 

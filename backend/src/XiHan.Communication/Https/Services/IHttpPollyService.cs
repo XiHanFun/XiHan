@@ -12,6 +12,19 @@
 
 #endregion <<版权版本注释>>
 
+#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
+// FileName:IHttpPollyService
+// Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreatedTime:2022-12-06 下午 03:22:05
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 #region <<版权版本注释>>
 
@@ -27,6 +40,19 @@
 
 #endregion <<版权版本注释>>
 
+#region <<版权版本注释>>
+
+// ----------------------------------------------------------------
+// Copyright ©2022 ZhaiFanhua All Rights Reserved.
+// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
+// FileName:IHttpPollyService
+// Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
+// Author:zhaifanhua
+// Email:me@zhaifanhua.com
+// CreatedTime:2022-12-06 下午 03:22:05
+// ----------------------------------------------------------------
+
+#endregion <<版权版本注释>>
 
 #region <<版权版本注释>>
 
@@ -42,7 +68,6 @@
 
 #endregion <<版权版本注释>>
 
-
 #region <<版权版本注释>>
 
 // ----------------------------------------------------------------
@@ -57,7 +82,6 @@
 
 #endregion <<版权版本注释>>
 
-
 #region <<版权版本注释>>
 
 // ----------------------------------------------------------------
@@ -71,37 +95,6 @@
 // ----------------------------------------------------------------
 
 #endregion <<版权版本注释>>
-
-
-#region <<版权版本注释>>
-
-// ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IHttpPollyService
-// Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
-// Author:zhaifanhua
-// Email:me@zhaifanhua.com
-// CreatedTime:2022-12-06 下午 03:22:05
-// ----------------------------------------------------------------
-
-#endregion <<版权版本注释>>
-
-
-#region <<版权版本注释>>
-
-// ----------------------------------------------------------------
-// Copyright ©2022 ZhaiFanhua All Rights Reserved.
-// Licensed under the MulanPSL2 License. See LICENSE in the project root for license information.
-// FileName:IHttpPollyService
-// Guid:6cd09b99-c24d-4ef5-b8ca-15aa97f898c5
-// Author:zhaifanhua
-// Email:me@zhaifanhua.com
-// CreatedTime:2022-12-06 下午 03:22:05
-// ----------------------------------------------------------------
-
-#endregion <<版权版本注释>>
-
 
 #region <<版权版本注释>>
 

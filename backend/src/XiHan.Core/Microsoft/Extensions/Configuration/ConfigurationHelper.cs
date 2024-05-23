@@ -13,7 +13,7 @@
 #endregion <<版权版本注释>>
 
 using Microsoft.Extensions.Configuration;
-using XiHan.Core.System.Extensions;
+using XiHan.Utils.Extensions.System;
 
 namespace XiHan.Core.Microsoft.Extensions.Configuration;
 

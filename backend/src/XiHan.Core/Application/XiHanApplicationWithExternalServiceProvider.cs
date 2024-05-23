@@ -14,7 +14,7 @@
 
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using XiHan.Core.Verification;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Application;
 

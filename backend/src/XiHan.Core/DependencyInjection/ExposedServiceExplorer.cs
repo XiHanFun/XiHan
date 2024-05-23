@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.System.Collections.Generic.Extensions;
+using XiHan.Utils.Extensions.System;
 
 namespace XiHan.Core.DependencyInjection;
 

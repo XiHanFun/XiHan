@@ -41,7 +41,7 @@ public static class HttpPollyModule
         ArgumentNullException.ThrowIfNull(services);
 
         // 注入 Http 相关实例
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IHttpPollyService, HttpPollyService>();
 
         // 若超时则抛出此异常

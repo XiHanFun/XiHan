@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using XiHan.Core.Application;
 using XiHan.Core.Reflection;
-using XiHan.Core.Verification;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Microsoft.Extensions.DependencyInjection;
 

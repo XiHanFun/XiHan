@@ -12,7 +12,7 @@
 
 #endregion <<版权版本注释>>
 
-using XiHan.Core.Verification;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Application;
 

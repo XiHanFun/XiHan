@@ -15,7 +15,7 @@
 using System.Linq.Expressions;
 using XiHan.Communication.Https.Entities;
 using XiHan.Communication.Https.Enums;
-using XiHan.Core.System.Extensions;
+using XiHan.Utils.Extensions.System;
 
 namespace XiHan.Communication.Https.Extends;
 

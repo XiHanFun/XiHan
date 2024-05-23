@@ -14,7 +14,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using XiHan.Core.System.Collections.Generic.Extensions;
+using XiHan.Utils.Extensions.Collections.Generic;
 
 namespace XiHan.Core.SimpleStateChecking;
 

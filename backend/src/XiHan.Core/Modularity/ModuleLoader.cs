@@ -16,8 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Application;
 using XiHan.Core.Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Modularity.PlugIns;
-using XiHan.Core.System.Collections.Generic.Extensions;
-using XiHan.Core.Verification;
+using XiHan.Utils.Extensions.Collections.Generic;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Modularity;
 

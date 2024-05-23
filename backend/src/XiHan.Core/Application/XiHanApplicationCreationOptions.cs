@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using XiHan.Core.Microsoft.Extensions.Configuration;
 using XiHan.Core.Modularity.PlugIns;
-using XiHan.Core.Verification;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.Application;
 

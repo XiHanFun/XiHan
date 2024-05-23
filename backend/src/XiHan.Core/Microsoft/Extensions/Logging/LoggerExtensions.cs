@@ -17,7 +17,7 @@ using System.Text;
 using XiHan.Core.Exceptions.Extensions;
 using XiHan.Core.Exceptions.Handling.Abstracts;
 using XiHan.Core.Logging;
-using XiHan.Core.System.Collections.Generic.Extensions;
+using XiHan.Utils.Extensions.Collections.Generic;
 
 namespace XiHan.Core.Microsoft.Extensions.Logging;
 

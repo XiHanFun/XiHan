@@ -20,12 +20,10 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 using System.Net.Sockets;
 using System.Text;
-using XiHan.Core.System.Extensions;
-using XiHan.Core.System.Text;
-using XiHan.Core.System.Text.Json.Serialization;
 using XiHan.EventBus.RabbitMQ.Consts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Abstracts;
 using XiHan.Infrastructure.Core.EventBus.Bases.Models;
+using XiHan.Utils.Extensions.System;
 
 namespace XiHan.EventBus.RabbitMQ;
 

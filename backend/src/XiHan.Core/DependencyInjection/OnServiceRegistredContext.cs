@@ -15,7 +15,7 @@
 using JetBrains.Annotations;
 using XiHan.Core.Collections;
 using XiHan.Core.DynamicProxy;
-using XiHan.Core.Verification;
+using XiHan.Utils.Verification;
 
 namespace XiHan.Core.DependencyInjection;
 
