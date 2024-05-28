@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Core", "1.Core", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Framwork", "1.Framwork", "{28FA60F1-F110-4884-9188-FE239574F0FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Test", "2.Test", "{7A3C9D16-7CD5-4C05-A43A-416A239ED8A6}"
 EndProject
@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Persistence", "src\Xi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Scheduling", "src\XiHan.Scheduling\XiHan.Scheduling.csproj", "{6185AA9E-8DF7-4167-BF84-8F70E2952B81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Utils", "src\XiHan.Utils\XiHan.Utils.csproj", "{D2B9D429-D0FC-4F7C-A952-839BE6675525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XiHan.Utils", "src\XiHan.Utils\XiHan.Utils.csproj", "{D2B9D429-D0FC-4F7C-A952-839BE6675525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XiHan.Swashbuckle", "src\XiHan.Swashbuckle\XiHan.Swashbuckle.csproj", "{DD13E438-B7E0-4E2F-B122-DD77E577C441}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +129,10 @@ Global
 		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B9D429-D0FC-4F7C-A952-839BE6675525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD13E438-B7E0-4E2F-B122-DD77E577C441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD13E438-B7E0-4E2F-B122-DD77E577C441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD13E438-B7E0-4E2F-B122-DD77E577C441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD13E438-B7E0-4E2F-B122-DD77E577C441}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +155,7 @@ Global
 		{0660E9CB-71A5-4806-8FF9-F7B2DAC4CA6A} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{6185AA9E-8DF7-4167-BF84-8F70E2952B81} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 		{D2B9D429-D0FC-4F7C-A952-839BE6675525} = {28FA60F1-F110-4884-9188-FE239574F0FD}
+		{DD13E438-B7E0-4E2F-B122-DD77E577C441} = {28FA60F1-F110-4884-9188-FE239574F0FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD12BB5A-EB6A-4FA7-A0AD-BEA6178584F5}

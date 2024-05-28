@@ -13,9 +13,9 @@
 #endregion <<版权版本注释>>
 
 using System.Runtime.InteropServices;
-using XiHan.Utils.Diagnostics;
 
 using XiHan.Utils.Extensions.System;
+using XiHan.Utils.System.Diagnostics;
 
 namespace XiHan.Utils.Hardware;
 

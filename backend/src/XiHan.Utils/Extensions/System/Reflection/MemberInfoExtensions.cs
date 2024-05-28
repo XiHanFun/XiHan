@@ -16,7 +16,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace XiHan.Utils.Extensions.Reflection;
+namespace XiHan.Utils.Extensions.System.Reflection;
 
 /// <summary>
 /// 成员信息扩展方法

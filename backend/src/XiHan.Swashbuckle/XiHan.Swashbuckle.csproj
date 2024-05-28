@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\props\common.props" />
+
+	<PropertyGroup>
+		<Title>XiHan.Swashbuckle</Title>
+		<AssemblyName>XiHan.Swashbuckle</AssemblyName>
+		<PackageId>XiHan.Swashbuckle</PackageId>
+		<Description>曦寒Swagger组件库</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
+	</ItemGroup>
+</Project>

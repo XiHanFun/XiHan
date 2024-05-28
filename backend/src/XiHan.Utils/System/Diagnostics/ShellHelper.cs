@@ -14,7 +14,7 @@
 
 using System.Diagnostics;
 
-namespace XiHan.Utils.Diagnostics;
+namespace XiHan.Utils.System.Diagnostics;
 
 /// <summary>
 /// Shell 帮助类

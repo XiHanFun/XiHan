@@ -30,7 +30,8 @@ public static class ExcelHelper
     /// <param name="fullPath">Excel 文件全路径</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>对象列表</returns>
-    public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName) where T : class, new()
+    public static IEnumerable<T> ReadFromExcel<T>(string fullPath, string sheetName)
+        where T : class, new()
     {
         return MiniExcel.Query<T>(fullPath, sheetName);
     }
@@ -93,7 +94,8 @@ public static class ExcelHelper
     /// <param name="fullPath">Excel 文件名(包含扩展名)</param>
     /// <param name="sheetName">工作表名称</param>
     /// <returns>指定类型的对象序列</returns>
-    public static IEnumerable<T> ImportToExcel<T>(string fullPath, string sheetName) where T : class, new()
+    public static IEnumerable<T> ImportToExcel<T>(string fullPath, string sheetName)
+        where T : class, new()
     {
         // 读取 Excel 文件
         return ReadFromExcel<T>(fullPath, sheetName);
