@@ -9,4 +9,8 @@
 		<Description>曦寒AspNetCore组件库</Description>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Core\XiHan.Core.csproj" />
+	</ItemGroup>
 </Project>

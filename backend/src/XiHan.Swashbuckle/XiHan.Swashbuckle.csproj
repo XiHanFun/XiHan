@@ -14,4 +14,8 @@
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	  <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XiHan.Core\XiHan.Core.csproj" />
+	</ItemGroup>
 </Project>
